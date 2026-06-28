@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// BDO player classes (0-34 per bdocodex)
+model BdoClass {
+  id        Int     @id // bdocodex class id (0-34)
+  name      String  @unique
+  slug      String  @unique
+  iconPath  String?
+  awakened  Boolean @default(false)
+  // Awakening / Succession weapon types
+  awakeningWeapon String?
+  mainWeapon      String?
+  skills   Skill[]
+
+  @@map("bdo_classes")
+}
+
+// Skills - one row per bdocodex skill_id (rank I, II, III, IV are separate rows)
+model Skill {
+  id                  String   @id @default(cuid())
+  skillId             Int      @unique // bdocodex skill_id
+  groupId             Int?     // skill group id (parent skill rank chain)
+  name                String
+  krName              String?
+  // bdocodex class id (0-34)
+  classId             Int?
+  className           String?
+  iconPath            String?
+  requiredLevel       Int      @default(1)
+  skillPoints         Int      @default(0)
+  maxLevel            Int      @default(1)
+  command             String?  // input command, e.g. "F", "S+LMB"
+  cooldown            String?  // raw cooldown string e.g. "5 sec"
+  cooldownSec         Float?   // parsed cooldown in seconds
+  description         String?
+  damageRowsJson      String?  // JSON: [{label, value, pvpOnly, note}]
+  ccTypes             String?  // comma-separated CC: Knockback,Knockdown,...
+  protectionTypes     String?  // comma-separated: Super Armor,Forward Guard,I-Frame
+  pvpDamagePercent    Float?   // PvP damage multiplier (e.g. 70 => 70%)
+  isQuickSlot         Boolean  @default(false)
+  isAbsolute          Boolean  @default(false)
+  isAwakening         Boolean  @default(false)
+  isSuccession        Boolean  @default(false)
+  isBlackSpirit       Boolean  @default(false)
+  isPassive           Boolean  @default(false)
+  prerequisiteIds     String?  // comma-separated skill IDs
+  videoUrl            String?  // bdocodex preview video URL
+  animationDurationMs Int?     // video duration in ms = animation duration proxy
+  tooltipRawHtml      String?  // raw tooltip HTML
+  addonsJson          String?  // JSON: [{type, effect, ...}]
+  syncedAt            DateTime @default(now())
+
+  bdoClass            BdoClass? @relation(fields: [classId], references: [id])
+
+  @@index([classId])
+  @@index([name])
+  @@index([groupId])
+  @@index([className])
+  @@index([isAbsolute])
+  @@index([isAwakening])
+  @@index([isBlackSpirit])
+  @@map("skills")
+}
+
+// Sync log to track ingestion progress
+model SyncLog {
+  id        String   @id @default(cuid())
+  type      String   // "skill_list" | "class_tree" | "tooltip" | "video_duration"
+  status    String   // "started" | "success" | "error" | "partial"
+  count     Int      @default(0)
+  total     Int?
+  message   String?
+  createdAt DateTime @default(now())
+
+  @@map("sync_logs")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String?
+  published Boolean  @default(false)
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
