@@ -368,3 +368,34 @@ also committed for continuity.
 - CC filter handling: special value `__pvp_only__` triggers both a DB-level
   filter (`ccTypes IS NOT NULL`) and a post-query filter (`ccCounters > 0`
   after excluding PvE-only CCs).
+
+---
+
+## [1.9.0] — 2025-06-29 (Cooldown Slider Fix + PAZ Docs + GitHub Backup)
+
+### Added
+- **Cooldown slider with Black Spirit jump**: Slider goes 0-240s smoothly (covers
+  all non-Black-Spirit skills), with an "Include Black Spirit (20m)" button that
+  jumps the max to 1200s, skipping all values in between. Black Spirit rage skills
+  are the only ones at 1200s.
+- **`docs/PAZ_EXTRACTION.md`**: Complete guide for extracting skill data directly
+  from BDO's PAZ game files. Includes:
+  - File locations for skill XML, .pac animation files, and icons
+  - How to parse .pac files for frame-accurate animation duration (frame_count / 60)
+  - Class prefix mapping (phm=Warrior, pef=Ranger, pwk=Sorceress, etc.)
+  - Live database injection workflow for patch updates
+  - Comparison: bdocodex (video-based) vs PAZ extraction (frame-accurate)
+- **GitHub backup**: Repo at https://github.com/Random1495701/bdo-meta with all
+  code + 10 version tags (v1.0.0 through v1.9.0).
+
+### Fixed
+- **db/custom.db removed from git**: Was 102MB (exceeds GitHub's 100MB limit).
+  Used git filter-branch to remove from all history. DB exported as JSON (2.2MB)
+  at `db/skills-export.json` instead.
+- **Cooldown range**: Changed from 60s (90th percentile) to 240s (actual max
+  before Black Spirit skills). Now covers 3-5 minute cooldown skills.
+
+### Security
+- **⚠️ Token hygiene**: GitHub token was shared in chat. User should revoke at
+  https://github.com/settings/tokens after this session. Token was NOT saved to
+  any file in the repo. Remote URL is clean (no embedded token).

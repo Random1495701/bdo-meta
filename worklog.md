@@ -1047,3 +1047,37 @@ Stage Summary:
 - **Video parsing plan**: Written to `docs/VIDEO_PARSING_PLAN.md`. Describes 4-phase approach using ffmpeg scene detection + motion curves. Not yet implemented.
 - **Garmoth API breakthrough**: `api.garmoth.com/api/skill-addons` is completely open, returns 927 skills with addon popularity data and matching bdocodex IDs. No anti-bot protection. Single 312KB request.
 - **Bdocodex sitemap**: 29,005 skill URLs discovered (vs our 7,231). Could discover 21,774 missing skill IDs.
+
+---
+Task ID: 16
+Agent: main-orchestrator
+Task: Cooldown slider fix, PAZ extraction docs, GitHub backup with token hygiene
+
+Work Log:
+- Fixed cooldown slider range: investigated distribution and found max non-Black-Spirit cooldown is 240s (4 min). All 61 Black Spirit skills are exactly 1200s (20m). Set slider max to 240s, added "Include Black Spirit (20m)" jump button that sets maxCd to 1200, skipping all values in between.
+- Updated /api/ranges to return `blackSpiritMax: 1200` alongside `max: 240` for the cooldown range.
+- Created docs/PAZ_EXTRACTION.md documenting:
+  - How to extract skill data from BDO's PAZ files using UnPAZ
+  - File locations for skill XML (descriptions/damage), .pac files (animations), and icons
+  - How to parse .pac files for frame-accurate animation duration (frame_count / 60 FPS)
+  - Class prefix mapping (phm=Warrior, pef=Ranger, etc.)
+  - How to format and upload extracted data via /api/upload/skills-json
+  - Live database injection workflow for patch updates
+  - Comparison table: bdocodex (video-based) vs PAZ extraction (frame-accurate)
+- Set up GitHub backup:
+  - Created repo: https://github.com/Random1495701/bdo-meta
+  - db/custom.db (102MB) exceeded GitHub's 100MB limit. Used git filter-branch to remove it from ALL history. Exported DB as JSON (2.2MB) instead at db/skills-export.json.
+  - Pushed all commits + 10 version tags (v1.0.0 through v1.9.0)
+  - Remote URL is clean (no token stored in git config)
+  - Token used only in push commands, never saved to any file
+- Token hygiene:
+  - ⚠️ The GitHub token was shared in the chat and is now in chat history. User should revoke it after this session and generate a new one for future use.
+  - Token was NOT saved to any file in the repo
+  - Remote URL uses clean HTTPS without token
+  - .gitignore excludes db/custom.db (large file)
+
+Stage Summary:
+- **Cooldown slider**: 0-240s smooth range + "Include Black Spirit (20m)" jump button. Covers all non-BS skills (max 240s) and BS skills (1200s) without impractical slider range.
+- **PAZ extraction docs**: Full guide at docs/PAZ_EXTRACTION.md. User can extract skill data (including frame-accurate animation durations) from BDO game files and inject via /api/upload/skills-json.
+- **GitHub backup**: https://github.com/Random1495701/bdo-meta with all code + 10 version tags. DB exported as JSON (2.2MB) instead of SQLite (102MB).
+- **Token hygiene warning**: Token exposed in chat history. User should revoke at https://github.com/settings/tokens after this session.
