@@ -58,13 +58,16 @@ function SkillIconLarge({ skill, size }: { skill: Skill; size: number }) {
   if (!skill.iconUrl || errored) {
     return (
       <div
-        className="flex items-center justify-center rounded-lg border border-zinc-700/60 font-bold"
+        className="flex items-center justify-center rounded-sm border-2 font-bold"
         style={{
           width: size,
           height: size,
+          borderColor: `${fallbackColor}aa`,
           backgroundColor: `${fallbackColor}1a`,
           color: fallbackColor,
           fontSize: size * 0.4,
+          boxShadow:
+            'inset 0 0 0 1px rgba(240,208,96,0.3), inset 0 0 14px rgba(0,0,0,0.7)',
         }}
       >
         {firstLetter}
@@ -74,10 +77,10 @@ function SkillIconLarge({ skill, size }: { skill: Skill; size: number }) {
 
   return (
     <div
-      className="relative shrink-0 overflow-hidden rounded-lg border border-zinc-700/60 bg-zinc-900"
+      className="bdo-icon-frame relative shrink-0 overflow-hidden"
       style={{ width: size, height: size }}
     >
-      {!loaded && <div className="absolute inset-0 animate-pulse bg-zinc-800" />}
+      {!loaded && <div className="absolute inset-0 animate-pulse bg-bdo-leather" />}
       <img
         src={skill.iconUrl}
         alt={skill.name}
@@ -102,35 +105,50 @@ function StatCard({
   icon: React.ReactNode
   label: string
   value: string
-  accent?: 'amber' | 'red' | 'cyan' | 'green'
+  accent?: 'amber' | 'red' | 'cyan' | 'green' | 'pink'
   hint?: string
 }) {
-  const accentClass =
+  const accentBorder =
     accent === 'amber'
-      ? 'text-amber-300 border-amber-500/30 bg-amber-500/5'
+      ? 'border-amber-500/50'
       : accent === 'red'
-        ? 'text-red-300 border-red-500/30 bg-red-500/5'
+        ? 'border-red-700/50'
         : accent === 'cyan'
-          ? 'text-cyan-300 border-cyan-500/30 bg-cyan-500/5'
+          ? 'border-cyan-700/50'
           : accent === 'green'
-            ? 'text-emerald-300 border-emerald-500/30 bg-emerald-500/5'
-            : 'text-zinc-200 border-zinc-800 bg-zinc-900/40'
+            ? 'border-emerald-700/50'
+            : accent === 'pink'
+              ? 'border-pink-700/50'
+              : 'border-amber-900/50'
+
+  const accentText =
+    accent === 'amber'
+      ? 'text-amber-300'
+      : accent === 'red'
+        ? 'text-red-300'
+        : accent === 'cyan'
+          ? 'text-cyan-300'
+          : accent === 'green'
+            ? 'text-emerald-300'
+            : accent === 'pink'
+              ? 'text-pink-300'
+              : 'text-amber-100'
 
   return (
     <TooltipProvider delayDuration={150}>
       <div
         className={cn(
-          'flex flex-col gap-0.5 rounded-md border px-3 py-2',
-          accentClass,
+          'bdo-stat-box flex flex-col gap-0.5',
+          accentBorder,
         )}
       >
-        <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+        <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-amber-200/50">
           {icon}
           <span>{label}</span>
           {hint && (
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className="ml-auto cursor-help text-[10px] text-zinc-600">
+                <span className="ml-auto cursor-help text-[10px] text-amber-700/70">
                   ⓘ
                 </span>
               </TooltipTrigger>
@@ -140,7 +158,7 @@ function StatCard({
             </Tooltip>
           )}
         </div>
-        <div className="font-mono text-lg font-semibold tabular-nums">
+        <div className={cn('font-mono text-base font-semibold tabular-nums', accentText)}>
           {value}
         </div>
       </div>
@@ -160,7 +178,7 @@ function DamageRowItem({ row }: { row: DamageRow }) {
             ? 'text-pink-300'
             : row.kind === 'buff'
               ? 'text-emerald-300'
-              : 'text-zinc-300'
+              : 'text-amber-100/80'
 
   return (
     <div className="flex items-baseline gap-2 py-1 text-sm">
@@ -170,17 +188,17 @@ function DamageRowItem({ row }: { row: DamageRow }) {
       )}
       <span className="ml-auto flex items-center gap-1">
         {row.pvpOnly && (
-          <Badge className="border-pink-500/40 bg-pink-500/10 text-pink-300">
+          <Badge className="border-pink-700/50 bg-pink-900/20 text-pink-300">
             PvP only
           </Badge>
         )}
         {row.pveOnly && (
-          <Badge className="border-emerald-500/40 bg-emerald-500/10 text-emerald-300">
+          <Badge className="border-emerald-700/50 bg-emerald-900/20 text-emerald-300">
             PvE only
           </Badge>
         )}
         {row.kind !== 'note' && row.kind !== 'damage' && (
-          <span className="text-[10px] uppercase tracking-wider text-zinc-600">
+          <span className="text-[10px] uppercase tracking-wider text-amber-200/40">
             {row.kind}
           </span>
         )}
@@ -200,7 +218,7 @@ function Section({
 }) {
   return (
     <section className="space-y-2">
-      <h4 className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+      <h4 className="bdo-heading flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-amber-200/70">
         {icon}
         {title}
       </h4>
@@ -217,6 +235,8 @@ export function SkillDetailDrawer() {
   const selectSkill = useSkillStore((s) => s.selectSkill)
   const skillId = useSkillStore((s) => s.selectedSkillId)
 
+  // Refetch the open skill every 15s so the lurker's enrichment shows up
+  // live without needing to close/reopen the drawer.
   const query = useQuery({
     queryKey: ['skill', skillId],
     queryFn: () => {
@@ -224,6 +244,8 @@ export function SkillDetailDrawer() {
       return fetchSkill(skillId)
     },
     enabled: skillId != null && open,
+    refetchInterval: skillId != null && open ? 15_000 : false,
+    refetchIntervalInBackground: true,
   })
 
   const skill = query.data
@@ -231,30 +253,38 @@ export function SkillDetailDrawer() {
   const typeMeta = type ? SKILL_TYPE_META[type] : null
   const color = skill ? classColor(skill.className) : '#a1a1aa'
 
-  // Reset internal error state when skill changes.
-  React.useEffect(() => {
-    // no-op; the query hook manages itself.
-  }, [skillId])
-
   const handleOpenChange = (next: boolean) => {
     setOpen(next)
-    if (!next) {
-      // Keep selectedSkillId so we can re-open quickly, but visually clear.
-      // Optional: clear on close for cleanliness.
-      // selectSkill(null)
-    }
   }
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent
         side="right"
-        className="w-full gap-0 border-l border-zinc-800 bg-zinc-950 p-0 sm:max-w-[560px] lg:max-w-[640px]"
+        className="w-full gap-0 border-l-2 border-amber-800/60 bg-bdo-ink p-0 sm:max-w-[560px] lg:max-w-[640px]"
         aria-describedby={undefined}
+        style={{
+          backgroundImage:
+            'linear-gradient(to bottom, #0a0908 0%, #0d0a08 100%)',
+          boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.15)',
+        }}
       >
         <SheetTitle className="sr-only">
           {skill?.name ?? 'Skill detail'}
         </SheetTitle>
+
+        {/* Top loading bar — visible while a background refetch is in-flight */}
+        {query.isFetching && !query.isPending && (
+          <div
+            className="relative h-0.5 w-full overflow-hidden bg-amber-950/30"
+            aria-hidden
+          >
+            <div className="bdo-loadbar absolute inset-0" />
+          </div>
+        )}
+
+        {/* Ornate top border accent */}
+        <div className="h-px bg-gradient-to-r from-transparent via-amber-600/60 to-transparent" />
 
         {/* Body */}
         <div className="flex h-full flex-col">
@@ -263,12 +293,12 @@ export function SkillDetailDrawer() {
               <DrawerSkeleton />
             ) : query.isError || !skill ? (
               <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-                <Skull className="size-8 text-zinc-500" />
+                <Skull className="size-8 text-amber-500/60" />
                 <div>
-                  <h3 className="text-base font-semibold text-zinc-200">
+                  <h3 className="bdo-heading text-base text-amber-100">
                     Could not load skill
                   </h3>
-                  <p className="mt-1 text-sm text-zinc-500">
+                  <p className="mt-1 text-sm text-amber-200/50">
                     Skill ID {skillId} may not exist in the database.
                   </p>
                 </div>
@@ -287,22 +317,22 @@ export function SkillDetailDrawer() {
                   <header className="flex items-start gap-4">
                     <SkillIconLarge skill={skill} size={96} />
                     <div className="min-w-0 flex-1">
-                      <h2 className="text-2xl font-bold leading-tight text-zinc-50">
+                      <h2 className="bdo-title text-2xl leading-tight">
                         {skill.name}
                       </h2>
                       {skill.krName && (
-                        <p className="mt-0.5 text-sm text-zinc-500">
+                        <p className="mt-0.5 text-sm text-amber-200/50">
                           {skill.krName}
                         </p>
                       )}
                       <div className="mt-2 flex flex-wrap items-center gap-1.5">
                         {skill.className && (
                           <span
-                            className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium"
+                            className="flex items-center gap-1 rounded-sm px-2 py-0.5 text-xs font-medium"
                             style={{
                               backgroundColor: `${color}1a`,
                               color: color,
-                              boxShadow: `inset 0 0 0 1px ${color}33`,
+                              boxShadow: `inset 0 0 0 1px ${color}55`,
                             }}
                           >
                             <span
@@ -314,11 +344,11 @@ export function SkillDetailDrawer() {
                         )}
                         {typeMeta && (
                           <span
-                            className="rounded-full px-2 py-0.5 text-xs font-semibold"
+                            className="rounded-sm px-2 py-0.5 text-xs font-semibold"
                             style={{
                               backgroundColor: `${typeMeta.color}1a`,
                               color: typeMeta.color,
-                              boxShadow: `inset 0 0 0 1px ${typeMeta.color}33`,
+                              boxShadow: `inset 0 0 0 1px ${typeMeta.color}55`,
                             }}
                             title={typeMeta.description}
                           >
@@ -332,32 +362,32 @@ export function SkillDetailDrawer() {
                   {/* Flag badges */}
                   <div className="flex flex-wrap items-center gap-1.5">
                     {skill.isAwakening && (
-                      <Badge className="border-amber-500/30 bg-amber-500/10 text-amber-300">
+                      <Badge className="border-amber-500/40 bg-amber-500/10 text-amber-300">
                         <Sparkles className="size-3" /> Awakening
                       </Badge>
                     )}
                     {skill.isSuccession && (
-                      <Badge className="border-emerald-500/30 bg-emerald-500/10 text-emerald-300">
+                      <Badge className="border-emerald-700/50 bg-emerald-900/20 text-emerald-300">
                         <Sword className="size-3" /> Succession
                       </Badge>
                     )}
                     {skill.isAbsolute && (
-                      <Badge className="border-red-500/30 bg-red-500/10 text-red-300">
+                      <Badge className="border-red-700/50 bg-red-900/20 text-red-300">
                         Absolute
                       </Badge>
                     )}
                     {skill.isBlackSpirit && (
-                      <Badge className="border-violet-500/30 bg-violet-500/10 text-violet-300">
+                      <Badge className="border-amber-700/50 bg-amber-900/20 text-amber-200">
                         Black Spirit
                       </Badge>
                     )}
                     {skill.isPassive && (
-                      <Badge className="border-cyan-500/30 bg-cyan-500/10 text-cyan-300">
+                      <Badge className="border-cyan-700/50 bg-cyan-900/20 text-cyan-300">
                         Passive
                       </Badge>
                     )}
                     {skill.isQuickSlot && (
-                      <Badge className="border-zinc-700 bg-zinc-800/60 text-zinc-300">
+                      <Badge className="border-amber-900/50 bg-bdo-leather-dark text-amber-200/70">
                         <Keyboard className="size-3" /> Quick-slot
                       </Badge>
                     )}
@@ -405,7 +435,7 @@ export function SkillDetailDrawer() {
                   {/* Description */}
                   {skill.description && (
                     <Section title="Description" icon={<Activity className="size-3" />}>
-                      <p className="whitespace-pre-line text-sm leading-relaxed text-zinc-300">
+                      <p className="whitespace-pre-line text-sm leading-relaxed text-amber-100/80">
                         {skill.description}
                       </p>
                     </Section>
@@ -418,7 +448,8 @@ export function SkillDetailDrawer() {
                         {skill.command.split(/\s*\+\s*|\s+/).map((part, i) => (
                           <kbd
                             key={i}
-                            className="rounded border border-zinc-700 bg-zinc-900 px-2 py-1 font-mono text-xs text-zinc-200 shadow-[0_2px_0_rgb(0_0_0_/_0.4)]"
+                            className="rounded-sm border border-amber-800/60 bg-bdo-leather-dark px-2 py-1 font-mono text-xs text-amber-200/80"
+                            style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
                           >
                             {part}
                           </kbd>
@@ -430,7 +461,10 @@ export function SkillDetailDrawer() {
                   {/* Damage breakdown */}
                   {skill.damageRows && skill.damageRows.length > 0 && (
                     <Section title="Damage & Effects" icon={<Sparkles className="size-3" />}>
-                      <div className="divide-y divide-zinc-800/60 rounded-md border border-zinc-800 bg-zinc-900/40 px-3">
+                      <div
+                        className="divide-y divide-amber-900/40 rounded-sm border border-amber-900/40 bg-bdo-leather-dark px-3"
+                        style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
+                      >
                         {skill.damageRows.map((row, i) => (
                           <DamageRowItem key={i} row={row} />
                         ))}
@@ -447,7 +481,7 @@ export function SkillDetailDrawer() {
                             {skill.ccTypes.map((c) => (
                               <span
                                 key={c}
-                                className="rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-xs text-red-300"
+                                className="rounded-sm border border-red-700/50 bg-red-900/20 px-2 py-0.5 text-xs text-red-300"
                               >
                                 {c}
                               </span>
@@ -464,7 +498,7 @@ export function SkillDetailDrawer() {
                             {skill.protectionTypes.map((p) => (
                               <span
                                 key={p}
-                                className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2 py-0.5 text-xs text-cyan-300"
+                                className="rounded-sm border border-cyan-700/50 bg-cyan-900/20 px-2 py-0.5 text-xs text-cyan-300"
                               >
                                 {p}
                               </span>
@@ -484,31 +518,32 @@ export function SkillDetailDrawer() {
                             key={p.skillId}
                             type="button"
                             onClick={() => selectSkill(p.skillId)}
-                            className="group flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900/40 px-2.5 py-1.5 text-left transition-colors hover:border-amber-500/40 hover:bg-amber-500/5"
+                            className="group flex items-center gap-2 rounded-sm border border-amber-900/40 bg-bdo-leather-dark px-2.5 py-1.5 text-left transition-colors hover:border-amber-500/60 hover:bg-amber-900/10"
+                            style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
                           >
                             {p.iconUrl ? (
                               <img
                                 src={p.iconUrl}
                                 alt={p.name}
                                 loading="lazy"
-                                className="size-7 rounded border border-zinc-700/60 bg-zinc-900 object-cover"
+                                className="size-7 rounded-sm border border-amber-800/60 bg-bdo-leather object-cover"
                               />
                             ) : (
-                              <div className="flex size-7 items-center justify-center rounded border border-zinc-700/60 bg-zinc-900 text-xs font-bold text-zinc-500">
+                              <div className="flex size-7 items-center justify-center rounded-sm border border-amber-800/60 bg-bdo-leather text-xs font-bold text-amber-200/60">
                                 {p.name[0]}
                               </div>
                             )}
                             <div className="min-w-0 flex-1">
-                              <div className="truncate text-sm text-zinc-200 group-hover:text-amber-200">
+                              <div className="truncate text-sm text-amber-100/80 group-hover:text-amber-200">
                                 {p.name}
                               </div>
                               {p.className && (
-                                <div className="text-[10px] text-zinc-500">
+                                <div className="text-[10px] text-amber-200/40">
                                   {p.className} · Lv {p.requiredLevel}
                                 </div>
                               )}
                             </div>
-                            <ChevronRight className="size-4 text-zinc-600 group-hover:text-amber-400" />
+                            <ChevronRight className="size-4 text-amber-700/60 group-hover:text-amber-400" />
                           </button>
                         ))}
                       </div>
@@ -524,11 +559,12 @@ export function SkillDetailDrawer() {
                             key={r.skillId}
                             type="button"
                             onClick={() => selectSkill(r.skillId)}
-                            className="group flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/40 px-2.5 py-1 text-xs text-zinc-300 transition-colors hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-200"
+                            className="group flex items-center gap-1.5 rounded-sm border border-amber-900/40 bg-bdo-leather-dark px-2.5 py-1 text-xs text-amber-100/70 transition-colors hover:border-amber-500/60 hover:bg-amber-900/10 hover:text-amber-200"
+                            style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
                             title={`Lv ${r.requiredLevel}`}
                           >
                             <span className="truncate max-w-[180px]">{r.name}</span>
-                            <span className="rounded-full bg-zinc-800 px-1.5 py-px text-[10px] text-zinc-500 group-hover:bg-amber-500/20 group-hover:text-amber-300">
+                            <span className="rounded-sm bg-bdo-leather px-1.5 py-px text-[10px] text-amber-200/50 group-hover:bg-amber-500/20 group-hover:text-amber-200">
                               Lv {r.requiredLevel}
                             </span>
                           </button>
@@ -540,7 +576,9 @@ export function SkillDetailDrawer() {
                   {/* Video preview */}
                   {skill.videoUrl && (
                     <Section title="Video Preview" icon={<Film className="size-3" />}>
-                      <div className="overflow-hidden rounded-md border border-zinc-800 bg-black">
+                      <div className="overflow-hidden rounded-sm border-2 border-amber-800/60 bg-black"
+                        style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.2)' }}
+                      >
                         <video
                           src={skill.videoUrl}
                           autoPlay
@@ -558,7 +596,7 @@ export function SkillDetailDrawer() {
                           <span className="font-mono font-semibold">
                             {formatAnimDuration(skill.animationDurationMs)}
                           </span>
-                          <span className="text-zinc-500">
+                          <span className="text-amber-200/40">
                             (measured from preview video via ffprobe)
                           </span>
                         </p>
@@ -572,13 +610,16 @@ export function SkillDetailDrawer() {
 
           {/* Footer */}
           {skill && (
-            <footer className="border-t border-zinc-800/80 bg-zinc-950/80 px-5 py-3">
-              <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-zinc-500">
+            <footer
+              className="border-t border-amber-900/40 bg-bdo-ink/80 px-5 py-3"
+              style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-amber-200/50">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-zinc-400">
+                  <span className="font-mono text-amber-200/70">
                     Skill ID: {skill.skillId}
                   </span>
-                  <span className="text-zinc-700">·</span>
+                  <span className="text-amber-700/50">·</span>
                   <span>
                     Synced{' '}
                     {new Date(skill.syncedAt).toLocaleString(undefined, {
@@ -591,7 +632,7 @@ export function SkillDetailDrawer() {
                   href={skill.bdocodexUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 rounded-md border border-zinc-800 bg-zinc-900/60 px-2 py-1 text-zinc-300 transition-colors hover:border-amber-500/40 hover:text-amber-300"
+                  className="bdo-btn flex items-center gap-1 !py-1 !text-[11px]"
                 >
                   <ExternalLink className="size-3" />
                   View on bdocodex.com
@@ -609,25 +650,25 @@ function DrawerSkeleton() {
   return (
     <div className="space-y-5 p-5">
       <div className="flex items-start gap-4">
-        <Skeleton className="size-24 rounded-lg bg-zinc-800" />
+        <Skeleton className="size-24 rounded-sm bg-amber-950/40" />
         <div className="flex-1 space-y-2">
-          <Skeleton className="h-7 w-3/4 bg-zinc-800" />
-          <Skeleton className="h-4 w-1/2 bg-zinc-800" />
+          <Skeleton className="h-7 w-3/4 bg-amber-950/40" />
+          <Skeleton className="h-4 w-1/2 bg-amber-950/40" />
           <div className="flex gap-1.5">
-            <Skeleton className="h-5 w-20 rounded-full bg-zinc-800" />
-            <Skeleton className="h-5 w-16 rounded-full bg-zinc-800" />
+            <Skeleton className="h-5 w-20 rounded-sm bg-amber-950/40" />
+            <Skeleton className="h-5 w-16 rounded-sm bg-amber-950/40" />
           </div>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
-          <Skeleton key={i} className="h-16 rounded-md bg-zinc-800" />
+          <Skeleton key={i} className="h-16 rounded-sm bg-amber-950/40" />
         ))}
       </div>
-      <Skeleton className="h-4 w-24 bg-zinc-800" />
-      <Skeleton className="h-20 w-full bg-zinc-800" />
-      <Skeleton className="h-4 w-24 bg-zinc-800" />
-      <Skeleton className="h-32 w-full bg-zinc-800" />
+      <Skeleton className="h-4 w-24 bg-amber-950/40" />
+      <Skeleton className="h-20 w-full bg-amber-950/40" />
+      <Skeleton className="h-4 w-24 bg-amber-950/40" />
+      <Skeleton className="h-32 w-full bg-amber-950/40" />
     </div>
   )
 }

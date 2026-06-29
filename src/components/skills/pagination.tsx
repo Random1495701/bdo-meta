@@ -62,32 +62,32 @@ export function Pagination() {
   const range = pageRange(page, totalPages)
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-zinc-800/80 px-1 py-3">
-      <div className="flex items-center gap-3 text-xs text-zinc-400">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-amber-900/40 px-1 py-3">
+      <div className="flex items-center gap-3 text-xs text-amber-200/60">
         <span>
           Showing{' '}
-          <span className="font-mono font-semibold text-zinc-200">{from}</span>
+          <span className="font-mono font-semibold text-amber-100">{from}</span>
           {' – '}
-          <span className="font-mono font-semibold text-zinc-200">{to}</span>
+          <span className="font-mono font-semibold text-amber-100">{to}</span>
           {' of '}
-          <span className="font-mono font-semibold text-zinc-200">
+          <span className="font-mono font-semibold text-amber-100">
             {total.toLocaleString()}
           </span>{' '}
           skills
         </span>
         <div className="flex items-center gap-1.5">
-          <span className="text-zinc-500">Per page</span>
+          <span className="text-amber-200/40">Per page</span>
           <Select
             value={String(pageSize)}
             onValueChange={(v) => setPageSize(Number(v))}
           >
             <SelectTrigger
               size="sm"
-              className="h-7 w-[72px] border-zinc-800 bg-zinc-900/60 text-xs text-zinc-200"
+              className="bdo-input h-7 w-[72px] text-xs"
             >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
+            <SelectContent className="bdo-recessed border-amber-800/50 text-amber-100">
               {PAGE_SIZE_OPTIONS.map((n) => (
                 <SelectItem
                   key={n}
@@ -104,9 +104,7 @@ export function Pagination() {
 
       <div className="flex items-center gap-1">
         <Button
-          variant="outline"
-          size="icon"
-          className="size-8 border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300 disabled:opacity-30"
+          className="bdo-btn size-8 p-0"
           onClick={() => setPage(1)}
           disabled={page <= 1}
           title="First page"
@@ -114,9 +112,7 @@ export function Pagination() {
           <ChevronsLeft className="size-4" />
         </Button>
         <Button
-          variant="outline"
-          size="icon"
-          className="size-8 border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300 disabled:opacity-30"
+          className="bdo-btn size-8 p-0"
           onClick={() => setPage(page - 1)}
           disabled={page <= 1}
           title="Previous page"
@@ -128,7 +124,7 @@ export function Pagination() {
           p < 0 ? (
             <span
               key={`gap-${p}`}
-              className="px-2 text-xs text-zinc-600"
+              className="px-2 text-xs text-amber-700/60"
               aria-hidden
             >
               …
@@ -136,13 +132,9 @@ export function Pagination() {
           ) : (
             <Button
               key={p}
-              variant={p === page ? 'default' : 'outline'}
-              size="icon"
               className={cn(
-                'h-8 w-8 text-xs tabular-nums',
-                p === page
-                  ? 'border-amber-500/60 bg-amber-500 text-zinc-950 hover:bg-amber-400'
-                  : 'border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300',
+                'bdo-btn h-8 w-8 p-0 text-xs tabular-nums',
+                p === page && 'bdo-chip-on',
               )}
               onClick={() => setPage(p)}
             >
@@ -152,9 +144,7 @@ export function Pagination() {
         )}
 
         <Button
-          variant="outline"
-          size="icon"
-          className="size-8 border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300 disabled:opacity-30"
+          className="bdo-btn size-8 p-0"
           onClick={() => setPage(page + 1)}
           disabled={page >= totalPages}
           title="Next page"
@@ -162,9 +152,7 @@ export function Pagination() {
           <ChevronRight className="size-4" />
         </Button>
         <Button
-          variant="outline"
-          size="icon"
-          className="size-8 border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300 disabled:opacity-30"
+          className="bdo-btn size-8 p-0"
           onClick={() => setPage(totalPages)}
           disabled={page >= totalPages}
           title="Last page"

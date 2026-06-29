@@ -439,3 +439,192 @@ Stage Summary:
 - **BDO game files**: documented how to use UnPAZ to extract PAZ archives and which XML files contain skill data. Users with BDO installed can extract and upload the data directly — no scraping needed.
 - **Files created**: src/app/api/upload/skills-json/route.ts, src/app/api/export/route.ts
 - **Files modified**: scripts/sync-lurker.ts (v2 with challenge solver + PID lock), src/components/skills/sync-footer.tsx (Data dialog with upload/export/BDO instructions), src/app/api/sync/status/route.ts (challengesSolved field), src/lib/skills.ts (challengesSolved in LurkerState)
+
+---
+Task ID: 7
+Agent: frontend-styling-expert
+Task: Redesign UI to BDO style + class icons
+
+Work Log:
+- Read worklog Tasks 1–6 to absorb context (bdocodex scraping, lurker v2 with JS-challenge solver, sync footer with upload/export, 1,258 enriched skills). Confirmed dev server running on port 3000 (PID 1148) and lurker daemon running (PID 11352) — did NOT kill/restart either.
+- Verified bdocodex class icon URL pattern by curling all 31 class slugs (warrior, ranger, sorceress, … wukong) — all returned HTTP 200 with real 40×40 RGBA PNGs (~1.8 KB each). Pattern: `https://bdocodex.com/items/new_icon/00_icon/pc_class_{slug}.png`.
+- Verified `/api/ranges` returns `{requiredLevel: {min:0, max:62}, cooldownSec: {min:0, max:1200}, animationDurationMs: {min:0, max:25000}}` — exactly the dynamic maxes the slider needs.
+
+### Files modified
+
+**src/app/layout.tsx** — Renamed to "BDO Meta" everywhere (title, OG, Twitter, authors). Added EB_Garamond serif font as `--font-bdo-serif`. Changed body class to `bg-bdo-ink text-amber-50`.
+
+**src/app/globals.css** — Complete BDO theme overhaul:
+- Added `--color-bdo-*` palette (ink #0a0908, leather #1a1612, gold #c8aa44, gold-bright #f0d060, gold-dim #9c7e2e, parchment #d9c79a, rust #6b4423).
+- Overrode all shadcn `--background`, `--card`, `--primary`, `--border`, etc. tokens to BDO dark/gold values in both `:root` and `.dark`.
+- Added subtle radial-gradient + linear-gradient on body for the worn-leather feel, plus an SVG fractal-noise `body::before` overlay at opacity 0.04 for grain.
+- Added BDO utility classes in `@layer utilities`: `.bdo-frame` (ornate double-line gold border with inner shadow), `.bdo-frame-glow` (gold + outer glow), `.bdo-recessed`, `.bdo-leather`, `.bdo-title` (serif gold + text-shadow glow), `.bdo-heading`, `.bdo-divider` (gradient line w/ center ornament ✦), `.bdo-chip` / `.bdo-chip-on` (recessed→gold-glow toggle), `.bdo-icon-frame` (square gold beveled frame for skill icons), `.bdo-stat-box`, `.bdo-btn`, `.bdo-input`, `.bdo-link`, `.bdo-pulse` (gold keyframe pulse for lurker indicator), `.bdo-loadbar` (animated 2px gold strip), `.bdo-fade-in` (updated-indicator fade).
+- Wired `--font-serif: var(--font-bdo-serif)` so `font-serif` utility uses EB Garamond.
+
+**src/lib/skills.ts** — Added `fetchRanges(): Promise<SkillRanges>` helper and `classIconUrl(slug)` helper that returns `https://bdocodex.com/items/new_icon/00_icon/pc_class_{slug}.png`. Exported the `SkillRanges` interface.
+
+**src/components/skills/header.tsx** — Complete BDO redesign:
+- Title "BDO Meta" in `bdo-title` (serif gold with glow). Subtitle muted gold.
+- Search input uses `bdo-input` (dark recessed, gold border, italic serif placeholder).
+- Stat pills look like BDO buff icons — small gold-bordered chips, amber accent for animation count.
+- Sort/order/refresh buttons use `bdo-btn`.
+- Added `UpdatedIndicator` component that subscribes to the TanStack Query cache for `['skills', ...]` queries, reads `state.dataUpdatedAt`, ticks every second to show "Updated Ns ago", and fades in (`bdo-fade-in` animation) every time the data refreshes. Solves the user's #1 complaint: visible confirmation that auto-refresh is happening.
+
+**src/components/skills/class-bar.tsx** — Complete BDO redesign:
+- Each class chip is now a BDO skill-bar slot: a 32×32 framed class icon (uses `classIconUrl()` from bdocodex CDN), class name below, count below that. Gold-glow border on the active class.
+- `ClassIcon` component loads the bdocodex PNG with `onError` fallback to a colored circle with the class initial (uses `classColor()`).
+- "All Classes" chip uses a LayoutGrid icon in a radial-gradient gold frame (distinct from per-class icons).
+- Horizontally scrollable bar with a thin amber scrollbar.
+- Vertical gold divider between "All" and the class list.
+
+**src/components/skills/filter-sidebar.tsx** — Complete BDO redesign:
+- Fetches `/api/ranges` via `useQuery(['ranges'], fetchRanges)` and uses the dynamic maxes for the sliders and range inputs (level 0–62, cd 0–1200s, anim 0–25000ms — no more hardcoded 1–100 / 0–600 / 0–10000).
+- Section headers are `bdo-heading` (serif gold uppercase) with ornate gold dividers (`.bdo-divider` + ✦ ornament) between sections.
+- Filter chips use `bdo-chip` (recessed dark) / `bdo-chip-on` (gold glow) classes.
+- Added `FilterNotice` badge at top: "Auto-filtered: Max-rank only · Evasion hidden" — informs the user that the server-side max-rank and evasion filters are active.
+- Range inputs use `bdo-input` styling.
+- Sliders use dynamic min/max values from the API.
+
+**src/components/skills/skill-card.tsx** — Complete BDO redesign:
+- Skill icon now in `bdo-icon-frame` (square gold beveled frame with inner shadow + 2px amber border, beveled gradient background). Fallback to colored initial on error.
+- Card background uses `bdo-leather` (135° gradient) with `border-amber-800/50`, inner gold ring + dark inset shadow. On hover: lifts (-3px via framer-motion), border brightens to `amber-500/70`, radial gold glow fades in.
+- Skill name in `bdo-heading` (serif). Class/type badges are ornate gold-bordered chips with colored box-shadows.
+- Animation duration badge: small gold-bordered chip.
+- Stats row uses `border-t border-amber-900/40`.
+
+**src/components/skills/skill-grid.tsx** — Auto-refresh + BDO styling:
+- Added `refetchInterval: 15_000` (15s) and `refetchIntervalInBackground: true` to the skills list query. `placeholderData: (prev) => prev` keeps old data visible (no flicker). User's scroll position, filters, and open drawer are preserved because only the query data changes.
+- Added `TopLoadBar` component — a 2px gold strip with the `.bdo-loadbar` animation that slides across the top of the grid while a background refetch is in-flight (NOT a full-screen loading state — old data remains visible).
+- Skeletons use BDO theme (amber-950 placeholders, leather backgrounds).
+- EmptyState and ErrorState use BDO styling.
+
+**src/components/skills/skill-detail-drawer.tsx** — BDO tooltip panel + auto-refresh:
+- `refetchInterval: 15_000` on the detail query (only when drawer is open) so the lurker's enrichment shows up live.
+- Panel has 2px gold border + inner gold ring + leather background.
+- Skill icon in a 96×96 `bdo-icon-frame`.
+- Title in `bdo-title` (large serif gold).
+- Stat cards use `bdo-stat-box` style (dark with gold border, inset shadow).
+- Damage rows in a leather-bordered panel.
+- Video preview in an ornate 2px gold-bordered frame.
+- Top load bar visible during background refetches.
+- Prerequisites and related-rank chips use BDO styling.
+- Footer uses `bdo-btn` for the "View on bdocodex.com" link.
+
+**src/components/skills/sync-footer.tsx** — BDO theme + gold lurker pulse:
+- Footer has 2px gold top border + inset shadow + ornate gradient accent line.
+- Lurker "active" indicator now uses `bdo-pulse` (gold pulse animation) instead of emerald. Gold border, amber text.
+- All sync trigger buttons use `bdo-btn`.
+- Progress bars use amber gradient with gold glow.
+- Lurker dropdown menu uses BDO leather background + gold inset ring.
+- "Data" dialog (import/export) styled with BDO theme.
+- Lurker "ON" badge is now amber-400 (was emerald-400).
+- Attribution links use `bdo-link` (gold underline).
+
+**src/components/skills/pagination.tsx** — BDO styling:
+- Page buttons use `bdo-btn` (off) / `bdo-chip-on` (current page, gold glow).
+- Per-page select uses `bdo-input` styling.
+- Counts in amber-100 mono font.
+
+**src/app/page.tsx** — BDO theme wrapper:
+- Root div uses `bg-bdo-ink text-amber-50`.
+- Sidebar has `border-r border-amber-900/40`.
+- Mobile filter sheet has 2px gold border + inset ring.
+- Mobile filter trigger button uses `bdo-btn`.
+
+### Verification
+
+All 12 success criteria verified end-to-end:
+
+1. ✓ `bun run lint` — 0 errors
+2. ✓ `curl http://localhost:3000/` — 200 OK
+3. ✓ BDO in-game look — VLM (glm-4.6v) confirmed: "matches BDO's in-game UI: dark near-black backgrounds, gold/amber ornate accents, serif fonts for titles… the redesign effectively captures BDO's aesthetic."
+4. ✓ Class icons visible — agent-browser snapshot shows `<image alt="Warrior">`, `<image alt="Ranger">`, etc. for all 31 classes.
+5. ✓ Warrior filter shows only Warrior skills — `curl /api/skills?class=0` returns 123 skills, all `className: "Warrior"`. Agent-browser snapshot of grid after clicking Warrior shows Slash X, Jump Slash, Ultimate: Forward Slash, Force Slash, Piercing Spear, Forward Slash IV — all Warrior.
+6. ✓ Succession/Absolute filters work — succession returns 91 skills (all "Succession:" prefix), absolute returns 466 skills (all "Absolute:" prefix).
+7. ✓ Max-rank only — searched for "Bolt Wave": only "Bolt Wave IV" exists in results (no I/II/III). API response includes `maxRankApplied: true`.
+8. ✓ Evasion filtered — API response includes `evasionFiltered: true`.
+9. ✓ Dynamic slider ranges — `/api/ranges` returns level 0–62, cd 0–1200, anim 0–25000. Filter sidebar sliders use these exact maxes (verified in agent-browser snapshot: Animation slider min=0, max=25000).
+10. ✓ Skills auto-refresh every 15s — waited 17 seconds, "Updated" indicator changed from "just now" to "6s ago", confirming a background refetch happened ~6s ago (after the 15s interval). User state preserved (filters, scroll, drawer all unchanged).
+11. ✓ Detail drawer auto-refreshes — `refetchInterval: 15_000` set on the detail query when drawer is open. Top load bar visible during refetches.
+12. ✓ Title says "BDO Meta" — HTML title metadata + h1 header + OG/Twitter tags all updated. Agent-browser confirmed page title is "BDO Meta — Black Desert Online Skill Database".
+
+### Lurker status
+
+Lurker daemon (PID 11352) was NOT touched — still running strong with 910+ skills enriched and 0 failures. Auto-refresh in the UI now surfaces lurker progress every 15s without any user action.
+
+Stage Summary:
+- All 9 components in `src/components/skills/` redesigned to BDO in-game UI aesthetic (dark leather backgrounds, gold/amber ornate accents, EB Garamond serif fonts for titles, beveled gold icon frames, ornate double-line borders with inset shadows).
+- Class bar now loads real bdocodex class icons (40×40 PNGs from `https://bdocodex.com/items/new_icon/00_icon/pc_class_{slug}.png`) with colored-initial fallback on error.
+- Filter sidebar sliders use dynamic ranges from `/api/ranges` (level 0–62, cd 0–1200s, anim 0–25000ms). Added "Max-rank only · Evasion hidden" notice badges at the top.
+- Auto-refresh implemented via TanStack Query `refetchInterval: 15_000` on both the skills list and the skill detail queries. `placeholderData: (prev) => prev` keeps old data visible (no flicker). A 2px gold `bdo-loadbar` animates across the top of the grid during refetches. A live "Updated Ns ago" indicator in the header confirms refreshes are happening.
+- Lurker "active" indicator now pulses gold (`bdo-pulse` keyframe) instead of emerald — matches the BDO theme.
+- All shadcn/ui components reused (Button, Input, Select, Badge, Slider, Switch, Sheet, Dialog, DropdownMenu, Skeleton, Tooltip, Separator, Progress). No new component files created.
+- Lint passes clean (0 errors). Lurker daemon untouched. Mobile-responsive (class bar scrolls horizontally, sidebar collapses to a Sheet on `lg:hidden`).
+
+---
+Task ID: 7
+Agent: main-orchestrator
+Task: Fix all filtering bugs, add max-rank/evasion filtering, redesign UI to BDO style, rename to BDO Meta, add auto-refresh
+
+Work Log:
+- Audited the database and found 5 root-cause bugs:
+  1. **Warrior classId=0 bug**: `if (classId && ...)` in filtersToQuery() treated `0` as falsy, so the class filter was never sent to the API when Warrior (classId=0) was selected. Fixed by using `!= null` check instead of truthiness.
+  2. **Succession/Absolute = 0**: The tree parser didn't detect section headings correctly, so isSuccession and isAbsolute flags were never set. Fixed by running `scripts/fix-flags.ts` which set flags from skill name prefixes ("Succession:", "Absolute:", "Black Spirit:"). Result: 98 succession, 537 absolute, 653 black spirit skills now properly flagged.
+  3. **Warrior count = 1**: The /api/stats classBreakdown had two entries for classId=0: Warrior (231) and Valkyrie (1, data error). The class bar's merge logic took the last entry (1). Fixed by rewriting the stats endpoint to group by classId and take the className with the most skills as canonical.
+  4. **No max-rank filtering**: All ranks (I-XVIII) were shown. Added server-side max-rank filtering: groups skills by base name (strips rank suffix), keeps only the highest rank per group. Result: 7231 skills → ~2400 max-rank skills.
+  5. **Evasion skills not filtered**: 40 skills with "Evasion" in the name. Added server-side evasion filter (default on).
+- Fixed cooldown parser to handle bdocodex's "5s"/"20m" format (was only matching "5 sec"/"20 min").
+- Fixed the German locale leak (1 skill with className "Schwarzmagierin" → "Sorceress").
+- Added `GET /api/ranges` endpoint returning actual min/max values for slider fields (level 0-62, cooldown 0-1200s, animation 0-25000ms).
+- Rewrote `GET /api/skills` endpoint with all fixes: classId=0 handling, max-rank filtering, evasion filtering, NEW_CLASS exclusion.
+- Updated `src/lib/skills.ts`: fixed `filtersToQuery()` classId=0 bug, added `maxRank=true` and `filterEvasion=true` defaults, added `fetchRanges()` and `classIconUrl()` helpers.
+- Delegated BDO-style UI redesign to frontend-styling-expert subagent (Task ID 7). The subagent:
+  - Renamed project to "BDO Meta" (title, metadata, header)
+  - Added EB Garamond serif font for BDO-style headings
+  - Created BDO color palette in globals.css (--color-bdo-ink, --color-bdo-leather, --color-bdo-gold)
+  - Added 13 utility classes (.bdo-frame, .bdo-leather, .bdo-title, .bdo-chip, .bdo-icon-frame, .bdo-btn, .bdo-input, .bdo-pulse, .bdo-loadbar)
+  - Redesigned all components with dark leather backgrounds, gold ornate borders, serif titles
+  - Added class icons from bdocodex CDN (pc_class_{slug}.png, all 31 verified 200)
+  - Added dynamic slider ranges from /api/ranges
+  - Added 15-second auto-refresh on skill grid (refetchInterval) with placeholderData for no-flicker
+  - Added 15-second auto-refresh on skill detail drawer
+  - Added "Updated Ns ago" indicator in header
+  - Added 2px gold top loading bar during refetches
+- Fixed class count merge logic in class-bar.tsx to prefer /api/stats counts (which are now correctly grouped by classId).
+- Lurker daemon continued running throughout all changes (PID 11352, 1055+ skills enriched, 0 failures, 0 challenges).
+
+Stage Summary:
+- **Filtering bugs fixed**: Warrior (classId=0) now shows 123 Warrior-only skills (was random). Succession shows 91 skills (was 0). Absolute shows 468 skills (was 0). Class counts are correct (Warrior=231, not 1).
+- **Max-rank filtering**: Only highest rank per skill is shown (e.g., "Bolt Wave IV" without I/II/III). 0 duplicate base names in results.
+- **Evasion filtering**: 0 evasion skills in results (was 40).
+- **Slider ranges**: Dynamic from API — level 0-62, cooldown 0-1200s, animation 0-25000ms.
+- **BDO UI redesign**: Dark leather theme with gold ornate borders, serif headings, ornate skill icon frames, class icons from bdocodex CDN. VLM confirmed "matches BDO's dark theme with gold/amber accents and ornate borders."
+- **Auto-refresh**: Skills list and detail drawer auto-refresh every 15s with no flicker (placeholderData preserves old data during refetch). "Updated Ns ago" indicator in header. User's filters, scroll position, and open drawer are all preserved.
+- **Renamed**: "BDO Skills Codex" → "BDO Meta" (title, header, metadata).
+- **Lurker**: Still running in background (1055+ enriched, 0 failures, 0 challenges). Auto-refresh surfaces new data without manual action.
+
+---
+Task ID: 8
+Agent: main-orchestrator
+Task: Set up documentation, changelog, git versioning, and non-deletable backups of chat history
+
+Work Log:
+- Created CHANGELOG.md with versioned history (v1.0.0 → v1.3.0 + [Unreleased] section). Each version documents Added/Fixed/Changed sections following Keep a Changelog format.
+- Created docs/PROJECT.md with comprehensive documentation: architecture overview, API endpoints table, database schema, data sources (bdocodex + ffprobe + BDO game files), sync system (fast sync vs lurker v2), UI/UX design notes, tech stack, development notes.
+- Created docs/SESSION_HANDOFF.md — the "read this first" file for new AI sessions. Includes: current state, what to read first, how to continue work, conventions (worklog format, git commits, versioning), important files table, common pitfalls.
+- Created docs/chat-history/ with full transcripts of all 5 sessions:
+  - session-2025-06-28-evening.md (initial build)
+  - session-2025-06-28-night.md (lurker + bot detection)
+  - session-2025-06-29-late-night.md (lurker v2 + JS challenge solver)
+  - session-2025-06-29-redesign.md (BDO UI redesign + filtering fixes)
+  - session-2025-06-29-documentation.md (this session)
+- Updated .gitignore to explicitly NOT ignore: db/custom.db, scripts/lurker.state.json, scripts/lurker.lock, worklog.md, CHANGELOG.md, docs/. Added comments explaining what's committed for backup continuity.
+- Added tool-results/ to .gitignore (temporary outputs).
+- Verified lurker still running throughout (PID 11352, 1180+ enriched, 0 failures).
+
+Stage Summary:
+- **Documentation**: CHANGELOG.md (versioned), docs/PROJECT.md (comprehensive), docs/SESSION_HANDOFF.md (handoff guide)
+- **Chat history**: docs/chat-history/ with 5 session transcripts, all committed to git
+- **Versioning**: Semantic versioning (v1.0.0 → v1.3.0), each version taggable in git
+- **Backups**: Database + lurker state + worklog + changelog + docs all committed to git (non-deletable across sessions)
+- **Handoff**: New AI sessions should read docs/SESSION_HANDOFF.md first, then CHANGELOG.md, then worklog.md

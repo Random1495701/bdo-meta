@@ -27,8 +27,9 @@ function MobileFiltersSheet() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetContent
         side="left"
-        className="w-[88%] gap-0 border-r border-zinc-800 bg-zinc-950 p-0 sm:max-w-[360px]"
+        className="w-[88%] gap-0 border-r-2 border-amber-800/60 bg-bdo-ink p-0 sm:max-w-[360px]"
         aria-describedby={undefined}
+        style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.15)' }}
       >
         <SheetTitle className="sr-only">Filters</SheetTitle>
         <FilterSidebar />
@@ -41,9 +42,8 @@ function MobileFilterTrigger() {
   const setFiltersOpen = useSkillStore((s) => s.setFiltersOpen)
   return (
     <Button
-      variant="outline"
+      className="bdo-btn lg:hidden"
       onClick={() => setFiltersOpen(true)}
-      className="border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300 lg:hidden"
     >
       <SlidersHorizontal className="size-4" />
       Filters
@@ -53,20 +53,20 @@ function MobileFilterTrigger() {
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-950 text-zinc-100">
+    <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
       <Header />
       <ClassBar />
 
-      <div className="flex flex-1">
+      <div className="relative flex flex-1">
         {/* Desktop sidebar */}
-        <aside className="sticky top-[152px] hidden h-[calc(100vh-152px)] w-[280px] shrink-0 border-r border-zinc-800/80 bg-zinc-950 lg:block">
+        <aside className="sticky top-[152px] hidden h-[calc(100vh-152px)] w-[280px] shrink-0 border-r border-amber-900/40 bg-bdo-ink lg:block">
           <FilterSidebar />
         </aside>
 
         {/* Main content */}
         <main className="flex min-w-0 flex-1 flex-col">
           <div className="flex items-center justify-between gap-2 px-4 py-2 lg:px-6">
-            <div className="text-xs uppercase tracking-wider text-zinc-500">
+            <div className="bdo-heading text-xs uppercase tracking-widest text-amber-200/50">
               Skills
             </div>
             <MobileFilterTrigger />

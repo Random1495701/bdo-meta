@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Search,
   Swords,
@@ -11,6 +11,7 @@ import {
   Film,
   FileText,
   Database,
+  Sparkles,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -51,17 +52,74 @@ function StatPill({
   return (
     <div
       className={cn(
-        'flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs',
+        'flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-xs',
         accent
-          ? 'border-amber-500/30 bg-amber-500/10 text-amber-300'
-          : 'border-zinc-800 bg-zinc-900/60 text-zinc-300',
+          ? 'border-amber-500/60 bg-amber-500/10 text-amber-300 shadow-[0_0_8px_-2px_rgba(200,170,68,0.4)]'
+          : 'border-amber-800/40 bg-bdo-leather-dark text-amber-200/80',
       )}
       title={label}
+      style={{
+        backgroundImage: accent
+          ? undefined
+          : 'linear-gradient(to bottom, #1a1612, #0d0a08)',
+        boxShadow: accent
+          ? 'inset 0 0 0 1px rgba(240,208,96,0.18)'
+          : 'inset 0 1px 1px rgba(0,0,0,0.6)',
+      }}
     >
-      <span className="shrink-0 opacity-80">{icon}</span>
+      <span className="shrink-0 opacity-90">{icon}</span>
       <span className="font-mono font-semibold tabular-nums">{value}</span>
-      <span className="hidden text-zinc-500 sm:inline">{label}</span>
+      <span className="hidden text-amber-200/50 sm:inline">{label}</span>
     </div>
+  )
+}
+
+// Compact "Updated Ns ago" indicator that fades in when the skills list query
+// receives fresh data. Reads dataUpdatedAt from the global query cache.
+function UpdatedIndicator() {
+  const queryClient = useQueryClient()
+  const [updatedAt, setUpdatedAt] = React.useState<number | null>(null)
+  const [tick, setTick] = React.useState(0)
+  const [flashKey, setFlashKey] = React.useState(0)
+
+  // Subscribe to query cache changes for the skills list.
+  React.useEffect(() => {
+    const unsubscribe = queryClient.getQueryCache().subscribe((event) => {
+      if (
+        event.query.queryKey[0] === 'skills' &&
+        (event.type === 'updated' || event.type === 'fetched')
+      ) {
+        const state = event.query.state
+        if (state.status === 'success' && state.dataUpdatedAt) {
+          setUpdatedAt(state.dataUpdatedAt)
+          setFlashKey((k) => k + 1)
+        }
+      }
+    })
+    return () => unsubscribe()
+  }, [queryClient])
+
+  // Tick every second so "Ns ago" stays fresh.
+  React.useEffect(() => {
+    const t = setInterval(() => setTick((t) => t + 1), 1000)
+    return () => clearInterval(t)
+  }, [])
+
+  if (!updatedAt) return null
+  void tick // referenced so the linter keeps the interval
+  const ago = Math.max(0, Math.floor((Date.now() - updatedAt) / 1000))
+  const label =
+    ago < 5 ? 'just now' : ago < 60 ? `${ago}s ago` : `${Math.floor(ago / 60)}m ago`
+
+  return (
+    <span
+      key={flashKey}
+      className="bdo-fade-in flex items-center gap-1 text-[10px] text-amber-300/80"
+      title={`Last refreshed ${new Date(updatedAt).toLocaleTimeString()}`}
+    >
+      <Sparkles className="size-2.5" />
+      Updated {label}
+    </span>
   )
 }
 
@@ -96,30 +154,44 @@ export function Header() {
   const withAnim = stats?.withAnimation ?? 0
 
   return (
-    <header className="sticky top-0 z-30 border-b border-zinc-800/80 bg-zinc-950/85 backdrop-blur supports-[backdrop-filter]:bg-zinc-950/70">
+    <header className="sticky top-0 z-30 border-b border-amber-900/50 bg-bdo-ink/95 backdrop-blur supports-[backdrop-filter]:bg-bdo-ink/85">
+      {/* Top ornate double-border accent */}
+      <div className="h-px bg-gradient-to-r from-transparent via-amber-700/60 to-transparent" />
       <div className="flex flex-col gap-3 px-4 py-3 lg:px-6">
         {/* Top row: title + actions */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex min-w-0 items-center gap-2.5">
-            <div className="flex size-9 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-400">
-              <Swords className="size-5" />
+            <div
+              className="flex size-10 items-center justify-center rounded-sm border-2"
+              style={{
+                borderColor: 'rgba(156,126,46,0.7)',
+                background:
+                  'radial-gradient(circle at center, #2a2218 0%, #0a0908 70%)',
+                boxShadow:
+                  'inset 0 0 0 1px rgba(240,208,96,0.3), 0 0 12px rgba(200,170,68,0.2)',
+              }}
+            >
+              <Swords className="size-5 text-amber-400" />
             </div>
             <div className="min-w-0">
-              <h1 className="truncate text-lg font-bold tracking-tight text-zinc-50">
-                BDO Skills Codex
+              <h1 className="bdo-title truncate text-xl tracking-wide">
+                BDO Meta
               </h1>
-              <p className="hidden text-[11px] text-zinc-400 sm:block">
-                Live skill database synced from bdocodex.com — including
-                animation durations
+              <p className="hidden text-[11px] text-amber-200/50 sm:block">
+                Black Desert Online skill database — synced from bdocodex.com
               </p>
             </div>
           </div>
 
           <div className="ml-auto flex flex-wrap items-center gap-2">
+            <div className="hidden items-center md:flex">
+              <UpdatedIndicator />
+            </div>
+
             <Button
               variant="outline"
               size="sm"
-              className="lg:hidden border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300"
+              className="bdo-btn lg:hidden"
               onClick={() => setFiltersOpen(true)}
             >
               <SlidersHorizontal className="size-4" />
@@ -129,11 +201,11 @@ export function Header() {
             <Select value={sort} onValueChange={(v) => setSort(v as SkillSort)}>
               <SelectTrigger
                 size="sm"
-                className="w-[140px] border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-amber-500/40"
+                className="bdo-input w-[140px] py-1.5 text-xs"
               >
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
+              <SelectContent className="bdo-recessed border-amber-800/50 text-amber-100">
                 {SORT_OPTIONS.map((opt) => (
                   <SelectItem
                     key={opt.value}
@@ -151,7 +223,7 @@ export function Header() {
               size="icon"
               title={`Sort ${order === 'asc' ? 'ascending' : 'descending'}`}
               onClick={toggleOrder}
-              className="border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300"
+              className="bdo-btn size-8 p-0"
             >
               <ArrowUpDown
                 className={cn('size-4 transition-transform', order === 'desc' && 'rotate-180')}
@@ -163,7 +235,7 @@ export function Header() {
               size="icon"
               title="Refresh stats"
               onClick={() => statsQuery.refetch()}
-              className="border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300"
+              className="bdo-btn size-8 p-0"
             >
               <RefreshCw
                 className={cn('size-4', statsQuery.isFetching && 'animate-spin')}
@@ -175,12 +247,12 @@ export function Header() {
         {/* Second row: search + stat pills */}
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative min-w-[220px] flex-1 sm:max-w-md">
-            <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-zinc-500" />
+            <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-amber-500/70" />
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Search by name, KR name, description, or skill ID…"
-              className="border-zinc-800 bg-zinc-900/60 pl-9 text-zinc-100 placeholder:text-zinc-500 focus-visible:border-amber-500/60 focus-visible:ring-amber-500/20"
+              className="bdo-input h-9 pl-9 font-serif text-sm placeholder:font-sans"
             />
           </div>
 
@@ -204,7 +276,7 @@ export function Header() {
             {statsQuery.isError && (
               <Badge
                 variant="outline"
-                className="border-red-500/40 bg-red-500/10 text-red-300"
+                className="border-red-700/50 bg-red-900/20 text-red-300"
               >
                 stats offline
               </Badge>

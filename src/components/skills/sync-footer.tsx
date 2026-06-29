@@ -55,23 +55,32 @@ function MiniProgress({
   label: string
   value: number
   total: number
-  color?: 'amber' | 'cyan' | 'emerald'
+  color?: 'amber' | 'cyan' | 'gold'
 }) {
   const pct = total > 0 ? Math.round((value / total) * 100) : 0
   const barClass =
-    color === 'amber' ? 'bg-amber-500' : color === 'cyan' ? 'bg-cyan-500' : 'bg-emerald-500'
+    color === 'amber'
+      ? 'bg-amber-500'
+      : color === 'cyan'
+        ? 'bg-cyan-500'
+        : 'bg-amber-400'
   return (
     <div className="flex min-w-[140px] flex-1 flex-col gap-1">
-      <div className="flex items-center justify-between text-[10px] text-zinc-400">
+      <div className="flex items-center justify-between text-[10px] text-amber-200/50">
         <span className="uppercase tracking-wider">{label}</span>
-        <span className="font-mono tabular-nums text-zinc-300">
+        <span className="font-mono tabular-nums text-amber-100/80">
           {value.toLocaleString()} / {total.toLocaleString()} ({pct}%)
         </span>
       </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-bdo-leather-dark"
+        style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
+      >
         <div
           className={cn('h-full rounded-full transition-all', barClass)}
-          style={{ width: `${pct}%` }}
+          style={{
+            width: `${pct}%`,
+            boxShadow: '0 0 6px rgba(240,208,96,0.4)',
+          }}
         />
       </div>
     </div>
@@ -176,34 +185,38 @@ export function SyncFooter() {
   const lurkerState = lurker?.state
 
   return (
-    <footer className="mt-auto border-t border-zinc-800/80 bg-zinc-950/95 backdrop-blur">
+    <footer className="mt-auto border-t-2 border-amber-900/50 bg-bdo-ink/95 backdrop-blur"
+      style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.5)' }}
+    >
+      {/* Ornate top accent */}
+      <div className="h-px bg-gradient-to-r from-transparent via-amber-600/40 to-transparent" />
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3 lg:px-6">
         {/* Left: stat totals */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-zinc-400">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-amber-200/60">
           <span className="flex items-center gap-1.5">
             <Database className="size-3.5 text-amber-400" />
-            <span className="font-mono font-semibold tabular-nums text-zinc-200">
+            <span className="font-mono font-semibold tabular-nums text-amber-100">
               {total.toLocaleString()}
             </span>
             <span className="hidden sm:inline">total</span>
           </span>
           <span className="flex items-center gap-1.5">
             <FileText className="size-3.5 text-cyan-400" />
-            <span className="font-mono font-semibold tabular-nums text-zinc-200">
+            <span className="font-mono font-semibold tabular-nums text-amber-100">
               {withDesc.toLocaleString()}
             </span>
             <span className="hidden sm:inline">enriched</span>
           </span>
           <span className="flex items-center gap-1.5">
             <Video className="size-3.5 text-pink-400" />
-            <span className="font-mono font-semibold tabular-nums text-zinc-200">
+            <span className="font-mono font-semibold tabular-nums text-amber-100">
               {withVideo.toLocaleString()}
             </span>
             <span className="hidden sm:inline">w/ video</span>
           </span>
           <span className="flex items-center gap-1.5">
             <Film className="size-3.5 text-amber-400" />
-            <span className="font-mono font-semibold tabular-nums text-zinc-200">
+            <span className="font-mono font-semibold tabular-nums text-amber-100">
               {withAnim.toLocaleString()}
             </span>
             <span className="hidden sm:inline">w/ anim</span>
@@ -216,34 +229,38 @@ export function SyncFooter() {
           <MiniProgress label="Animations" value={withAnim} total={withVideo || 1} color="amber" />
         </div>
 
-        {/* Lurker status indicator */}
+        {/* Lurker status indicator — gold pulse instead of emerald */}
         {lurkerRunning && lurkerState && (
-          <div className="flex items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px]">
-            <Ghost className="size-3.5 animate-pulse text-emerald-400" />
-            <span className="font-semibold text-emerald-300">Lurker active</span>
-            <span className="text-emerald-400/70">·</span>
-            <span className="font-mono text-emerald-200/80">
+          <div
+            className="bdo-pulse flex items-center gap-2 rounded-sm border border-amber-500/60 bg-amber-500/10 px-2.5 py-1 text-[11px]"
+          >
+            <Ghost className="size-3.5 animate-pulse text-amber-300" />
+            <span className="font-semibold text-amber-200">Lurker active</span>
+            <span className="text-amber-500/60">·</span>
+            <span className="font-mono text-amber-200/80">
               {lurkerState.processed} processed
             </span>
-            <span className="text-emerald-400/70">·</span>
-            <span className="font-mono text-emerald-200/80">
+            <span className="text-amber-500/60">·</span>
+            <span className="font-mono text-amber-200/80">
               {lurkerState.enriched} enriched
             </span>
-            {lurkerState.challengesSolved > 0 && (
+            {lurkerState.challengesSolved && lurkerState.challengesSolved > 0 ? (
               <>
-                <span className="text-emerald-400/70">·</span>
-                <span className="font-mono text-emerald-200/80">
+                <span className="text-amber-500/60">·</span>
+                <span className="font-mono text-amber-200/80">
                   {lurkerState.challengesSolved} challenges solved
                 </span>
               </>
-            )}
+            ) : null}
             {lurkerState.currentSkillId && (
               <>
-                <span className="text-emerald-400/70">·</span>
-                <span className="font-mono text-emerald-300">
+                <span className="text-amber-500/60">·</span>
+                <span className="font-mono text-amber-300">
                   skill {lurkerState.currentSkillId}
                 </span>
-                <span className="text-emerald-400/50">via {lurkerState.currentEndpoint}</span>
+                <span className="text-amber-500/50">
+                  via {lurkerState.currentEndpoint}
+                </span>
               </>
             )}
           </div>
@@ -252,28 +269,30 @@ export function SyncFooter() {
         {/* Right: sync triggers */}
         <div className="ml-auto flex items-center gap-2">
           {statusQuery.isFetching && (
-            <RefreshCw className="size-3.5 animate-spin text-zinc-500" />
+            <RefreshCw className="size-3.5 animate-spin text-amber-500/60" />
           )}
 
           {/* Upload/Export dialog */}
           <Dialog open={uploadOpen} onOpenChange={setUploadOpen}>
             <DialogTrigger asChild>
               <Button
-                variant="outline"
+                className="bdo-btn"
                 size="sm"
-                className="border-zinc-700 bg-zinc-800/50 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
               >
                 <Upload className="size-3.5" />
                 <span className="hidden sm:inline">Data</span>
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg border-zinc-800 bg-zinc-950 text-zinc-100">
+            <DialogContent
+              className="max-w-lg border-amber-800/60 bg-bdo-ink text-amber-100"
+              style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.15)' }}
+            >
               <DialogHeader>
-                <DialogTitle className="flex items-center gap-2">
+                <DialogTitle className="bdo-title flex items-center gap-2">
                   <FileJson className="size-5 text-amber-400" />
                   Import / Export Skill Data
                 </DialogTitle>
-                <DialogDescription className="text-zinc-400">
+                <DialogDescription className="text-amber-200/50">
                   Upload a JSON dump to instantly enrich the database, or export what we have.
                 </DialogDescription>
               </DialogHeader>
@@ -281,8 +300,8 @@ export function SyncFooter() {
               <div className="space-y-4 py-2">
                 {/* Upload section */}
                 <div className="space-y-2">
-                  <h4 className="text-sm font-semibold text-zinc-200">Import JSON</h4>
-                  <p className="text-xs text-zinc-500">
+                  <h4 className="bdo-heading text-sm">Import JSON</h4>
+                  <p className="text-xs text-amber-200/50">
                     Upload a JSON file with a <code className="text-amber-300">skills</code> array.
                     Each skill needs at minimum a <code className="text-amber-300">skillId</code> and
                     optionally: name, description, className, cooldown, ccTypes, protectionTypes,
@@ -300,11 +319,10 @@ export function SyncFooter() {
                     }}
                   />
                   <Button
-                    variant="outline"
+                    className="bdo-btn w-full"
                     size="sm"
                     disabled={uploading}
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full border-amber-500/40 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20"
                   >
                     {uploading ? (
                       <RefreshCw className="size-4 animate-spin" />
@@ -316,26 +334,24 @@ export function SyncFooter() {
                 </div>
 
                 {/* Export section */}
-                <div className="space-y-2 border-t border-zinc-800 pt-4">
-                  <h4 className="text-sm font-semibold text-zinc-200">Export JSON</h4>
-                  <p className="text-xs text-zinc-500">
+                <div className="space-y-2 border-t border-amber-900/40 pt-4">
+                  <h4 className="bdo-heading text-sm">Export JSON</h4>
+                  <p className="text-xs text-amber-200/50">
                     Download the current database as a JSON snapshot for backup or transfer.
                   </p>
                   <div className="flex gap-2">
                     <Button
-                      variant="outline"
+                      className="bdo-btn flex-1"
                       size="sm"
                       onClick={() => handleExport(true)}
-                      className="flex-1 border-cyan-500/40 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20"
                     >
                       <HardDriveDownload className="size-4" />
                       Enriched only ({withDesc.toLocaleString()})
                     </Button>
                     <Button
-                      variant="outline"
+                      className="bdo-btn flex-1"
                       size="sm"
                       onClick={() => handleExport(false)}
-                      className="flex-1 border-zinc-600 bg-zinc-800/50 text-zinc-300 hover:bg-zinc-800"
                     >
                       <HardDriveDownload className="size-4" />
                       All ({total.toLocaleString()})
@@ -344,12 +360,12 @@ export function SyncFooter() {
                 </div>
 
                 {/* BDO game files info */}
-                <div className="space-y-2 border-t border-zinc-800 pt-4">
-                  <h4 className="flex items-center gap-2 text-sm font-semibold text-zinc-200">
-                    <Info className="size-4 text-violet-400" />
+                <div className="space-y-2 border-t border-amber-900/40 pt-4">
+                  <h4 className="bdo-heading flex items-center gap-2 text-sm">
+                    <Info className="size-4 text-amber-400" />
                     BDO Game Files (Advanced)
                   </h4>
-                  <div className="space-y-1.5 text-xs text-zinc-500">
+                  <div className="space-y-1.5 text-xs text-amber-200/50">
                     <p>
                       If you have BDO installed, you can extract skill data directly from the game
                       files — no scraping needed:
@@ -361,7 +377,7 @@ export function SyncFooter() {
                           href="https://github.com/AngeloCairo/BDO-UnPAZ"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-amber-300 hover:underline"
+                          className="bdo-link"
                         >
                           UnPAZ
                         </a>{' '}
@@ -375,7 +391,7 @@ export function SyncFooter() {
                         Convert the XML to JSON (or upload the raw XML — we&apos;ll parse it)
                       </li>
                     </ol>
-                    <p className="pt-1 text-zinc-600">
+                    <p className="pt-1 text-amber-200/40">
                       Supported upload formats: JSON array, bdocodex query.php format, or raw XML.
                     </p>
                   </div>
@@ -384,24 +400,23 @@ export function SyncFooter() {
             </DialogContent>
           </Dialog>
 
-          {/* Lurker dropdown */}
+          {/* Lurker dropdown — gold-themed */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="outline"
+                className={cn(
+                  'bdo-btn',
+                  lurkerRunning && 'border-amber-400/70 text-amber-200',
+                )}
                 size="sm"
                 disabled={syncing}
-                className={cn(
-                  'border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 hover:text-emerald-200 disabled:opacity-50',
-                  lurkerRunning && 'border-emerald-400/60 bg-emerald-500/15',
-                )}
               >
                 <Ghost className={cn('size-3.5', lurkerRunning && 'animate-pulse')} />
                 <span className="hidden sm:inline">Lurker</span>
                 {lurkerRunning && (
                   <Badge
                     variant="secondary"
-                    className="h-4 px-1 text-[9px] font-bold text-emerald-700 bg-emerald-400"
+                    className="h-4 px-1 text-[9px] font-bold text-bdo-ink bg-amber-400"
                   >
                     ON
                   </Badge>
@@ -411,44 +426,49 @@ export function SyncFooter() {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-64 border-zinc-800 bg-zinc-900 text-zinc-100"
+              className="w-64 border-amber-800/60 bg-bdo-leather text-amber-100"
+              style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.15)' }}
             >
-              <DropdownMenuLabel className="flex items-center gap-2 text-zinc-400">
-                <Ghost className="size-3.5 text-emerald-400" />
+              <DropdownMenuLabel className="flex items-center gap-2 text-amber-200/60">
+                <Ghost className="size-3.5 text-amber-400" />
                 Lurker v2 — challenge-solving sync
               </DropdownMenuLabel>
-              <DropdownMenuSeparator className="bg-zinc-800" />
+              <DropdownMenuSeparator className="bg-amber-900/40" />
               <DropdownMenuItem
                 onClick={() => handleLurker('daemon', undefined, 'Daemon')}
-                className="focus:bg-emerald-500/15 focus:text-emerald-200"
+                className="focus:bg-amber-500/15 focus:text-amber-200"
               >
-                <Play className="size-4 text-emerald-400" />
+                <Play className="size-4 text-amber-400" />
                 Start daemon (run until done)
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => handleLurker('batch', 100, 'Batch (100)')}
-                className="focus:bg-emerald-500/15 focus:text-emerald-200"
+                className="focus:bg-amber-500/15 focus:text-amber-200"
               >
-                <Ghost className="size-4 text-emerald-400" />
+                <Ghost className="size-4 text-amber-400" />
                 Batch — next 100 skills
-                <span className="ml-auto text-[10px] text-zinc-500">{pendingTooltips} pending</span>
+                <span className="ml-auto text-[10px] text-amber-200/40">
+                  {pendingTooltips} pending
+                </span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => handleLurker('videos', undefined, 'Animations')}
-                className="focus:bg-emerald-500/15 focus:text-emerald-200"
+                className="focus:bg-amber-500/15 focus:text-amber-200"
               >
                 <Film className="size-4 text-amber-400" />
                 Extract animation durations
-                <span className="ml-auto text-[10px] text-zinc-500">{pendingAnimations} pending</span>
+                <span className="ml-auto text-[10px] text-amber-200/40">
+                  {pendingAnimations} pending
+                </span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => handleLurker('kr-names', undefined, 'KR names')}
-                className="focus:bg-emerald-500/15 focus:text-emerald-200"
+                className="focus:bg-amber-500/15 focus:text-amber-200"
               >
                 <Languages className="size-4 text-cyan-400" />
                 Enrich Korean names
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-zinc-800" />
+              <DropdownMenuSeparator className="bg-amber-900/40" />
               <DropdownMenuItem
                 onClick={() => handleLurker('re-enrich', undefined, 'Re-enrich all')}
                 className="focus:bg-amber-500/15 focus:text-amber-200"
@@ -463,10 +483,9 @@ export function SyncFooter() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="outline"
+                className="bdo-btn"
                 size="sm"
                 disabled={syncing}
-                className="border-amber-500/40 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 hover:text-amber-200 disabled:opacity-50"
               >
                 <Download className="size-3.5" />
                 <span className="hidden sm:inline">Fast Sync</span>
@@ -475,12 +494,13 @@ export function SyncFooter() {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-60 border-zinc-800 bg-zinc-900 text-zinc-100"
+              className="w-60 border-amber-800/60 bg-bdo-leather text-amber-100"
+              style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.15)' }}
             >
-              <DropdownMenuLabel className="text-zinc-400">
+              <DropdownMenuLabel className="text-amber-200/60">
                 Fast sync (may trigger bot challenge)
               </DropdownMenuLabel>
-              <DropdownMenuSeparator className="bg-zinc-800" />
+              <DropdownMenuSeparator className="bg-amber-900/40" />
               <DropdownMenuItem
                 onClick={() => handleTrigger('list', undefined, 'Skill list sync')}
                 className="focus:bg-amber-500/15 focus:text-amber-200"
@@ -501,7 +521,9 @@ export function SyncFooter() {
               >
                 <FileText className="size-4 text-cyan-400" />
                 Sync tooltips (next 500)
-                <span className="ml-auto text-[10px] text-zinc-500">{pendingTooltips} pending</span>
+                <span className="ml-auto text-[10px] text-amber-200/40">
+                  {pendingTooltips} pending
+                </span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => handleTrigger('videos', 500, 'Animation sync (next 500)')}
@@ -509,14 +531,16 @@ export function SyncFooter() {
               >
                 <Film className="size-4 text-amber-400" />
                 Sync animations (next 500)
-                <span className="ml-auto text-[10px] text-zinc-500">{pendingAnimations} pending</span>
+                <span className="ml-auto text-[10px] text-amber-200/40">
+                  {pendingAnimations} pending
+                </span>
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-zinc-800" />
+              <DropdownMenuSeparator className="bg-amber-900/40" />
               <DropdownMenuItem
                 onClick={() => handleTrigger('all', undefined, 'Full sync')}
                 className="focus:bg-amber-500/15 focus:text-amber-200"
               >
-                <Sparkles className="size-4 text-violet-400" />
+                <Sparkles className="size-4 text-amber-400" />
                 Full sync
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -525,13 +549,13 @@ export function SyncFooter() {
       </div>
 
       {/* Attribution */}
-      <div className="border-t border-zinc-900 bg-zinc-950 px-4 py-1.5 text-[10px] text-zinc-600 lg:px-6">
+      <div className="border-t border-amber-900/40 bg-bdo-ink px-4 py-1.5 text-[10px] text-amber-200/40 lg:px-6">
         Data source:{' '}
         <a
           href="https://bdocodex.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-zinc-400 hover:text-amber-300"
+          className="bdo-link"
         >
           bdocodex.com
         </a>{' '}
@@ -540,11 +564,11 @@ export function SyncFooter() {
           href="https://ffmpeg.org/ffprobe.html"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-zinc-400 hover:text-amber-300"
+          className="bdo-link"
         >
           ffprobe
         </a>
-        · Lurker v2 solves JS challenge + endpoint rotation + PID lock
+        {' '}· Lurker v2 solves JS challenge + endpoint rotation + PID lock
       </div>
     </footer>
   )

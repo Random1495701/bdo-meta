@@ -183,7 +183,8 @@ export type SkillSort =
 export function filtersToQuery(f: SkillFilters): URLSearchParams {
   const sp = new URLSearchParams()
   if (f.q) sp.set('q', f.q)
-  if (f.classId && f.classId !== 'all') sp.set('class', String(f.classId))
+  // FIXED: handle classId=0 (Warrior) — check for null/undefined, not truthiness
+  if (f.classId != null && f.classId !== 'all') sp.set('class', String(f.classId))
   if (f.type && f.type !== 'all') sp.set('type', f.type)
   if (f.protection) sp.set('protection', f.protection)
   if (f.cc && f.cc.length) sp.set('cc', f.cc.join(','))
@@ -197,6 +198,9 @@ export function filtersToQuery(f: SkillFilters): URLSearchParams {
   if (f.hasAnim != null) sp.set('hasAnim', String(f.hasAnim))
   if (f.quickslot != null) sp.set('quickslot', String(f.quickslot))
   if (f.hasAddon != null) sp.set('hasAddon', String(f.hasAddon))
+  // maxRank and filterEvasion default to true (applied server-side)
+  sp.set('maxRank', 'true')
+  sp.set('filterEvasion', 'true')
   if (f.sort) sp.set('sort', f.sort)
   if (f.order) sp.set('order', f.order)
   if (f.page) sp.set('page', String(f.page))
@@ -233,6 +237,27 @@ export async function fetchSyncStatus(): Promise<SyncStatus> {
   const res = await fetch('/api/sync/status', { cache: 'no-store' })
   if (!res.ok) throw new Error(`Failed to fetch sync status: ${res.status}`)
   return res.json()
+}
+
+// Dynamic filter ranges — used to set slider max values to actual data max
+export interface SkillRanges {
+  requiredLevel: { min: number; max: number }
+  cooldownSec: { min: number; max: number }
+  animationDurationMs: { min: number; max: number }
+}
+
+export async function fetchRanges(): Promise<SkillRanges> {
+  const res = await fetch('/api/ranges', { cache: 'no-store' })
+  if (!res.ok) throw new Error(`Failed to fetch ranges: ${res.status}`)
+  return res.json()
+}
+
+// Returns the bdocodex CDN URL for a class icon. `slug` is the lowercased
+// class name (e.g. "warrior", "sorceress"). These URLs have been verified to
+// return 200 for all 31 BDO classes.
+export function classIconUrl(slug: string | null): string | null {
+  if (!slug) return null
+  return `https://bdocodex.com/items/new_icon/00_icon/pc_class_${slug}.png`
 }
 
 export async function triggerSync(

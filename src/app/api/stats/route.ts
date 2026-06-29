@@ -48,14 +48,21 @@ export async function GET() {
     db.syncLog.findMany({ take: 20, orderBy: { createdAt: 'desc' } }),
   ])
 
-  // Compact by-class breakdown
-  const classBreakdown = byClass
-    .filter((c) => c.className && !c.className.startsWith('NEW_CLASS'))
-    .map((c) => ({
-      className: c.className,
-      classId: c.classId,
-      count: c._count.skillId,
-    }))
+  // Compact by-class breakdown — group by classId, taking the className with the
+  // most skills as the canonical name (fixes data errors where a few skills have
+  // the wrong className but correct classId, e.g. 1 Valkyrie skill tagged classId=0).
+  const byClassIdMap = new Map<number, { className: string; count: number }>()
+  for (const c of byClass) {
+    if (!c.className || c.className.startsWith('NEW_CLASS')) continue
+    const cid = c.classId ?? -1
+    const existing = byClassIdMap.get(cid)
+    if (!existing || c._count.skillId > existing.count) {
+      byClassIdMap.set(cid, { className: c.className, count: c._count.skillId })
+    }
+  }
+  const classBreakdown = Array.from(byClassIdMap.entries())
+    .filter(([cid]) => cid >= 0)
+    .map(([cid, { className, count }]) => ({ className, classId: cid, count }))
 
   const typeBreakdown = {
     main: notAnyTypeCount,

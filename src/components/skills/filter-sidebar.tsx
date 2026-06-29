@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useQuery } from '@tanstack/react-query'
 import {
   RotateCcw,
   Filter,
@@ -11,6 +12,8 @@ import {
   Video,
   MousePointerClick,
   Crosshair,
+  Gem,
+  Ban,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -31,12 +34,13 @@ import {
   PROTECTION_TYPES,
   CC_TYPES,
   SKILL_TYPE_META,
+  fetchRanges,
   type SkillType,
 } from '@/lib/skills'
 import { useSkillStore } from '@/lib/skill-store'
 import { cn } from '@/lib/utils'
 
-// Local helper to render a section header
+// Local helper to render a BDO-style section header with ornate dividers
 function SectionTitle({
   icon,
   children,
@@ -48,20 +52,31 @@ function SectionTitle({
 }) {
   return (
     <div className="mb-2 flex items-center gap-1.5">
-      {icon && <span className="text-zinc-500">{icon}</span>}
-      <h3 className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+      {icon && <span className="text-amber-500/80">{icon}</span>}
+      <h3 className="bdo-heading text-[11px] uppercase tracking-widest">
         {children}
       </h3>
       {hint && (
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="ml-auto cursor-help text-[10px] text-zinc-600">
+            <span className="ml-auto cursor-help text-[10px] text-amber-700/70">
               ⓘ
             </span>
           </TooltipTrigger>
           <TooltipContent side="left">{hint}</TooltipContent>
         </Tooltip>
       )}
+    </div>
+  )
+}
+
+// Ornate gold divider
+function GoldDivider() {
+  return (
+    <div className="flex items-center gap-2 py-1">
+      <div className="bdo-divider flex-1" />
+      <span className="text-amber-700/60 text-[10px]">✦</span>
+      <div className="bdo-divider flex-1" />
     </div>
   )
 }
@@ -82,17 +97,16 @@ function Chip({
       type="button"
       onClick={onClick}
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-all',
-        active
-          ? 'border-transparent text-zinc-50'
-          : 'border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700 hover:bg-zinc-800/60 hover:text-zinc-200',
+        'inline-flex items-center gap-1.5 rounded-sm px-2.5 py-1 text-xs font-medium transition-all',
+        active ? 'bdo-chip-on' : 'bdo-chip',
       )}
       style={
         active && color
           ? {
-              backgroundColor: `${color}26`,
-              borderColor: `${color}80`,
+              borderColor: `${color}aa`,
               color: color,
+              background: `linear-gradient(to bottom, ${color}33, ${color}11)`,
+              boxShadow: `inset 0 0 0 1px ${color}44, 0 0 8px ${color}33`,
             }
           : undefined
       }
@@ -139,9 +153,9 @@ function RangeInputs({
         onChange={(e) =>
           onMin(e.target.value === '' ? undefined : Number(e.target.value))
         }
-        className="h-8 border-zinc-800 bg-zinc-900/60 text-xs text-zinc-200 focus-visible:border-amber-500/50"
+        className="bdo-input h-7 px-2 text-xs"
       />
-      <span className="text-zinc-600">–</span>
+      <span className="text-amber-700/70">–</span>
       <Input
         type="number"
         min={min}
@@ -152,9 +166,11 @@ function RangeInputs({
         onChange={(e) =>
           onMax(e.target.value === '' ? undefined : Number(e.target.value))
         }
-        className="h-8 border-zinc-800 bg-zinc-900/60 text-xs text-zinc-200 focus-visible:border-amber-500/50"
+        className="bdo-input h-7 px-2 text-xs"
       />
-      {suffix && <span className="text-[10px] text-zinc-500">{suffix}</span>}
+      {suffix && (
+        <span className="text-[10px] text-amber-700/70">{suffix}</span>
+      )}
     </div>
   )
 }
@@ -174,13 +190,13 @@ function ToggleRow({
 }) {
   return (
     <div className="flex items-center justify-between gap-2 py-1">
-      <div className="flex items-center gap-2 text-sm text-zinc-300">
-        <span className="text-zinc-500">{icon}</span>
+      <div className="flex items-center gap-2 text-sm text-amber-100/80">
+        <span className="text-amber-500/70">{icon}</span>
         <span>{label}</span>
         {hint && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <span className="cursor-help text-[10px] text-zinc-600">ⓘ</span>
+              <span className="cursor-help text-[10px] text-amber-700/70">ⓘ</span>
             </TooltipTrigger>
             <TooltipContent side="top">{hint}</TooltipContent>
           </Tooltip>
@@ -190,9 +206,35 @@ function ToggleRow({
         checked={checked}
         onCheckedChange={onToggle}
         className={cn(
-          'data-[state=checked]:bg-amber-500 data-[state=unchecked]:bg-zinc-700',
+          'data-[state=checked]:bg-amber-600 data-[state=unchecked]:bg-zinc-800',
         )}
       />
+    </div>
+  )
+}
+
+// Sticky badges at the top of the sidebar — inform the user about the
+// server-applied max-rank and evasion filters.
+function FilterNotice() {
+  return (
+    <div className="flex flex-wrap items-center gap-1.5 rounded-sm border border-amber-800/40 bg-bdo-leather-dark px-2.5 py-1.5">
+      <span className="text-[10px] text-amber-200/50 uppercase tracking-wider">
+        Auto-filtered:
+      </span>
+      <span
+        className="flex items-center gap-1 rounded-sm border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-200"
+        title="Only the highest rank of each skill is shown — duplicates like 'Bolt Wave I/II/III' are hidden."
+      >
+        <Gem className="size-2.5" />
+        Max-rank only
+      </span>
+      <span
+        className="flex items-center gap-1 rounded-sm border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-200"
+        title="Evasion-related movement skills (dashes, back-steps, evades) are excluded from results."
+      >
+        <Ban className="size-2.5" />
+        Evasion hidden
+      </span>
     </div>
   )
 }
@@ -209,6 +251,21 @@ export function FilterSidebar() {
   const toggleHasAnim = useSkillStore((s) => s.toggleHasAnim)
   const toggleQuickslot = useSkillStore((s) => s.toggleQuickslot)
   const resetFilters = useSkillStore((s) => s.resetFilters)
+
+  // Fetch dynamic slider ranges from the API so the max values match the
+  // actual data distribution (level 0–62, cd 0–1200s, anim 0–25000ms).
+  const rangesQuery = useQuery({
+    queryKey: ['ranges'],
+    queryFn: fetchRanges,
+    staleTime: 5 * 60_000,
+  })
+  const ranges = rangesQuery.data
+  const lvlMin = ranges?.requiredLevel.min ?? 0
+  const lvlMax = ranges?.requiredLevel.max ?? 62
+  const cdMin = ranges?.cooldownSec.min ?? 0
+  const cdMax = ranges?.cooldownSec.max ?? 1200
+  const animMin = ranges?.animationDurationMs.min ?? 0
+  const animMax = ranges?.animationDurationMs.max ?? 25000
 
   // Compute active filter count for the badge
   const activeCount = React.useMemo(() => {
@@ -230,29 +287,30 @@ export function FilterSidebar() {
     (typeof SKILL_TYPE_META)[SkillType],
   ][]
 
+  // Slider values use the dynamic max for the "open end" sentinel.
   const levelVals: [number, number] = [
-    filters.minLvl ?? 1,
-    filters.maxLvl ?? 100,
+    filters.minLvl ?? lvlMin,
+    filters.maxLvl ?? lvlMax,
   ]
   const cdVals: [number, number] = [
-    filters.minCd ?? 0,
-    filters.maxCd ?? 600,
+    filters.minCd ?? cdMin,
+    filters.maxCd ?? cdMax,
   ]
   const animVals: [number, number] = [
-    filters.minAnim ?? 0,
-    filters.maxAnim ?? 10000,
+    filters.minAnim ?? animMin,
+    filters.maxAnim ?? animMax,
   ]
 
   return (
     <TooltipProvider delayDuration={150}>
       <div className="flex h-full flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between gap-2 border-b border-zinc-800/80 px-4 py-3">
+        <div className="flex items-center justify-between gap-2 border-b border-amber-900/40 px-4 py-3">
           <div className="flex items-center gap-2">
             <Filter className="size-4 text-amber-400" />
-            <h2 className="text-sm font-semibold text-zinc-100">Filters</h2>
+            <h2 className="bdo-heading text-sm">Filters</h2>
             {activeCount > 0 && (
-              <Badge className="border-amber-500/30 bg-amber-500/15 text-amber-300">
+              <Badge className="border-amber-500/40 bg-amber-500/15 text-amber-200">
                 {activeCount} active
               </Badge>
             )}
@@ -261,14 +319,18 @@ export function FilterSidebar() {
             variant="ghost"
             size="sm"
             onClick={resetFilters}
-            className="h-7 px-2 text-xs text-zinc-400 hover:text-amber-300"
+            className="h-7 px-2 text-xs text-amber-300/70 hover:text-amber-200"
           >
             <RotateCcw className="size-3.5" />
             Reset
           </Button>
         </div>
 
-        <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
+        <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+          <FilterNotice />
+
+          <GoldDivider />
+
           {/* Skill Type */}
           <section>
             <SectionTitle icon={<Crosshair className="size-3.5" />}>
@@ -277,7 +339,7 @@ export function FilterSidebar() {
             <div className="flex flex-wrap gap-1.5">
               <Chip
                 active={filters.type === 'all' || !filters.type}
-                color="#f59e0b"
+                color="#c8aa44"
                 onClick={() => setType('all')}
               >
                 All
@@ -297,7 +359,7 @@ export function FilterSidebar() {
             </div>
           </section>
 
-          <Separator className="bg-zinc-800/60" />
+          <GoldDivider />
 
           {/* Protection */}
           <section>
@@ -316,7 +378,7 @@ export function FilterSidebar() {
                 <Chip
                   key={p}
                   active={filters.protection === p}
-                  color="#22d3ee"
+                  color="#5cbfd6"
                   onClick={() => setProtection(p)}
                 >
                   {p}
@@ -325,7 +387,7 @@ export function FilterSidebar() {
             </div>
           </section>
 
-          <Separator className="bg-zinc-800/60" />
+          <GoldDivider />
 
           {/* CC Types */}
           <section>
@@ -340,7 +402,7 @@ export function FilterSidebar() {
                 <Chip
                   key={c}
                   active={filters.cc?.includes(c) ?? false}
-                  color="#ef4444"
+                  color="#d6533a"
                   onClick={() => toggleCc(c)}
                 >
                   {c}
@@ -349,7 +411,7 @@ export function FilterSidebar() {
             </div>
           </section>
 
-          <Separator className="bg-zinc-800/60" />
+          <GoldDivider />
 
           {/* Required Level */}
           <section>
@@ -357,21 +419,21 @@ export function FilterSidebar() {
               Required Level
             </SectionTitle>
             <Slider
-              min={1}
-              max={100}
+              min={lvlMin}
+              max={lvlMax}
               step={1}
               value={levelVals}
               onValueChange={(v) =>
                 setLevelRange(
-                  v[0] === 1 ? undefined : v[0],
-                  v[1] === 100 ? undefined : v[1],
+                  v[0] === lvlMin ? undefined : v[0],
+                  v[1] === lvlMax ? undefined : v[1],
                 )
               }
               className="my-2"
             />
             <RangeInputs
-              min={1}
-              max={100}
+              min={lvlMin}
+              max={lvlMax}
               minVal={filters.minLvl}
               maxVal={filters.maxLvl}
               onMin={(v) => setLevelRange(v, filters.maxLvl)}
@@ -379,7 +441,7 @@ export function FilterSidebar() {
             />
           </section>
 
-          <Separator className="bg-zinc-800/60" />
+          <GoldDivider />
 
           {/* Cooldown */}
           <section>
@@ -387,21 +449,21 @@ export function FilterSidebar() {
               Cooldown (sec)
             </SectionTitle>
             <Slider
-              min={0}
-              max={600}
+              min={cdMin}
+              max={cdMax}
               step={1}
               value={cdVals}
               onValueChange={(v) =>
                 setCooldownRange(
-                  v[0] === 0 ? undefined : v[0],
-                  v[1] === 600 ? undefined : v[1],
+                  v[0] === cdMin ? undefined : v[0],
+                  v[1] === cdMax ? undefined : v[1],
                 )
               }
               className="my-2"
             />
             <RangeInputs
-              min={0}
-              max={600}
+              min={cdMin}
+              max={cdMax}
               minVal={filters.minCd}
               maxVal={filters.maxCd}
               onMin={(v) => setCooldownRange(v, filters.maxCd)}
@@ -410,7 +472,7 @@ export function FilterSidebar() {
             />
           </section>
 
-          <Separator className="bg-zinc-800/60" />
+          <GoldDivider />
 
           {/* Animation Duration */}
           <section>
@@ -421,22 +483,22 @@ export function FilterSidebar() {
               Animation Duration (ms)
             </SectionTitle>
             <Slider
-              min={0}
-              max={10000}
-              step={50}
+              min={animMin}
+              max={animMax}
+              step={100}
               value={animVals}
               onValueChange={(v) =>
                 setAnimRange(
-                  v[0] === 0 ? undefined : v[0],
-                  v[1] === 10000 ? undefined : v[1],
+                  v[0] === animMin ? undefined : v[0],
+                  v[1] === animMax ? undefined : v[1],
                 )
               }
               className="my-2"
             />
             <RangeInputs
-              min={0}
-              max={10000}
-              step={50}
+              min={animMin}
+              max={animMax}
+              step={100}
               minVal={filters.minAnim}
               maxVal={filters.maxAnim}
               onMin={(v) => setAnimRange(v, filters.maxAnim)}
@@ -445,7 +507,7 @@ export function FilterSidebar() {
             />
           </section>
 
-          <Separator className="bg-zinc-800/60" />
+          <GoldDivider />
 
           {/* Toggles */}
           <section className="space-y-1">
@@ -471,18 +533,17 @@ export function FilterSidebar() {
             />
           </section>
 
-          <Separator className="bg-zinc-800/60" />
+          <GoldDivider />
 
           <Button
-            variant="outline"
-            className="w-full border-zinc-700 bg-zinc-900/60 text-zinc-200 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300"
+            className="bdo-btn w-full"
             onClick={resetFilters}
           >
             <RotateCcw className="size-4" />
             Reset All Filters
           </Button>
 
-          <Label className="block pb-2 text-center text-[10px] text-zinc-600">
+          <Label className="block pb-2 text-center text-[10px] text-amber-700/60">
             Filters apply instantly. Counts reset page to 1.
           </Label>
         </div>

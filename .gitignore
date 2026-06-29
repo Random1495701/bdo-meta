@@ -52,3 +52,13 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# NOTE: The following are NOT ignored (committed for backup continuity):
+# - db/custom.db         (enriched skill data)
+# - scripts/lurker.state.json  (lurker progress)
+# - scripts/lurker.lock        (PID lock)
+# - worklog.md          (agent work log)
+# - CHANGELOG.md        (versioned changelog)
+# - docs/               (project documentation + chat history)
+# - tool-results/       (temporary tool outputs — can be ignored)
+tool-results/
