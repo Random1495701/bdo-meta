@@ -1,14 +1,14 @@
 {
   "pid": 11352,
   "startedAt": "2026-06-29T00:33:58.742Z",
-  "lastHeartbeatAt": "2026-06-29T02:30:41.220Z",
-  "processed": 1295,
+  "lastHeartbeatAt": "2026-06-29T03:12:13.780Z",
+  "processed": 1335,
   "enriched": 1261,
-  "failed": 34,
+  "failed": 74,
   "skipped": 0,
   "challengesSolved": 0,
   "cooldowns": {},
-  "currentSkillId": 1358,
+  "currentSkillId": 4689,
   "currentEndpoint": "tip_us",
   "mode": "daemon",
   "avgDelayMs": 2500
