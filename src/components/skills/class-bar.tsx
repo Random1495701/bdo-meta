@@ -79,14 +79,14 @@ function ClassChip({
   cls,
   active,
   count,
-  spec,
+  specs,
   onClick,
   onSpecClick,
 }: {
   cls: BdoClass
   active: boolean
   count: number
-  spec: 'all' | 'succession' | 'awakening'
+  specs: ('succession' | 'awakening')[]
   onClick: () => void
   onSpecClick: (spec: 'succession' | 'awakening') => void
 }) {
@@ -137,11 +137,11 @@ function ClassChip({
           }}
           className={cn(
             'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
-            spec === 'succession' && active
+            specs.includes('succession') && active
               ? 'bg-emerald-500/30 text-emerald-200 ring-1 ring-emerald-400/60'
               : 'bg-zinc-800/80 text-zinc-500 hover:bg-emerald-900/30 hover:text-emerald-300',
           )}
-          title="Succession spec — click to load Succession skills"
+          title="Succession spec — click to toggle"
         >
           S
         </span>
@@ -154,11 +154,11 @@ function ClassChip({
           }}
           className={cn(
             'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
-            spec === 'awakening' && active
+            specs.includes('awakening') && active
               ? 'bg-amber-500/30 text-amber-200 ring-1 ring-amber-400/60'
               : 'bg-zinc-800/80 text-zinc-500 hover:bg-amber-900/30 hover:text-amber-300',
           )}
-          title="Awakening spec — click to load Awakening skills"
+          title="Awakening spec — click to toggle"
         >
           A
         </span>
@@ -171,8 +171,8 @@ export function ClassBar() {
   const classIds = useSkillStore((s) => s.filters.classIds) ?? []
   const toggleClass = useSkillStore((s) => s.toggleClass)
   const clearClasses = useSkillStore((s) => s.clearClasses)
-  const spec = useSkillStore((s) => s.filters.spec) ?? 'all'
-  const setSpec = useSkillStore((s) => s.setSpec)
+  const specs = useSkillStore((s) => s.filters.specs) ?? []
+  const toggleSpec = useSkillStore((s) => s.toggleSpec)
   const scrollRef = React.useRef<HTMLDivElement>(null)
 
   // Wheel-scroll support: when hovering over the class bar, vertical wheel
@@ -328,15 +328,26 @@ export function ClassBar() {
                     cls={c}
                     count={countMap.get(c.id) ?? c.skillCount ?? 0}
                     active={classIds.includes(c.id)}
-                    spec={spec}
-                    onClick={() => toggleClass(c.id)}
+                    specs={specs}
+                    onClick={() => {
+                      // Clicking the class icon selects it + activates both specs
+                      if (!classIds.includes(c.id)) {
+                        clearClasses()
+                        toggleClass(c.id)
+                        // Activate both specs by default
+                        if (!specs.includes('succession')) toggleSpec('succession')
+                        if (!specs.includes('awakening')) toggleSpec('awakening')
+                      } else {
+                        toggleClass(c.id)
+                      }
+                    }}
                     onSpecClick={(s) => {
-                      // Select the class if not already selected, then set spec
+                      // Select the class if not already selected, then toggle spec
                       if (!classIds.includes(c.id)) {
                         clearClasses()
                         toggleClass(c.id)
                       }
-                      setSpec(s)
+                      toggleSpec(s)
                     }}
                   />
                 ))}

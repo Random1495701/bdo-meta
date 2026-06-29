@@ -26,6 +26,7 @@ interface SkillStore {
   toggleQuickslot: () => void
   toggleHasPrereqs: () => void
   setSpec: (spec: 'all' | 'succession' | 'awakening') => void
+  toggleSpec: (spec: 'succession' | 'awakening') => void
   setSort: (s: SkillSort) => void
   toggleOrder: () => void
   setPage: (p: number) => void
@@ -43,7 +44,7 @@ const DEFAULT_FILTERS: SkillFilters = {
   types: [],
   protections: [],
   cc: [],
-  spec: 'all',
+  specs: [],
   sort: 'skillId',
   order: 'asc',
   page: 1,
@@ -94,7 +95,16 @@ export const useSkillStore = create<SkillStore>((set) => ({
   toggleHasAnim: () => set((s) => ({ filters: { ...s.filters, hasAnim: !s.filters.hasAnim ? true : undefined, page: 1 } })),
   toggleQuickslot: () => set((s) => ({ filters: { ...s.filters, quickslot: !s.filters.quickslot ? true : undefined, page: 1 } })),
   toggleHasPrereqs: () => set((s) => ({ filters: { ...s.filters, hasPrereqs: !s.filters.hasPrereqs ? true : undefined, page: 1 } })),
-  setSpec: (spec) => set((s) => ({ filters: { ...s.filters, spec, types: [], page: 1 } })),
+  setSpec: (spec) => set((s) => {
+    // Legacy single-spec setter — maps to specs array
+    if (spec === 'all') return { filters: { ...s.filters, specs: [], types: [], page: 1 } }
+    return { filters: { ...s.filters, specs: [spec], types: [], page: 1 } }
+  }),
+  toggleSpec: (spec) => set((s) => {
+    const cur = s.filters.specs || []
+    const next = cur.includes(spec) ? cur.filter((x) => x !== spec) : [...cur, spec]
+    return { filters: { ...s.filters, specs: next, types: [], page: 1 } }
+  }),
   setSort: (sort) => set((s) => ({ filters: { ...s.filters, sort, page: 1 } })),
   toggleOrder: () => set((s) => ({ filters: { ...s.filters, order: s.filters.order === 'asc' ? 'desc' : 'asc', page: 1 } })),
   setPage: (p) => set((s) => ({ filters: { ...s.filters, page: p } })),

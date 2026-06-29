@@ -146,7 +146,14 @@ export async function GET(req: NextRequest) {
   const hasPrereqs = sp.get('hasPrereqs')
   const maxRank = sp.get('maxRank') !== 'false'
   const filterEvasion = sp.get('filterEvasion') !== 'false'
-  const spec = sp.get('spec') as 'all' | 'succession' | 'awakening' | null
+  // Multi-spec: comma-separated "succession,awakening"
+  const specsParam = sp.get('specs')
+  const specs: ('succession' | 'awakening')[] = specsParam
+    ? (specsParam.split(',').map((s) => s.trim()).filter((s) => s === 'succession' || s === 'awakening') as ('succession' | 'awakening')[])
+    : []
+  // Legacy single-spec param
+  const legacySpec = sp.get('spec') as 'succession' | 'awakening' | null
+  if (legacySpec && !specs.length) specs.push(legacySpec)
 
   const sort = sp.get('sort') || 'skillId'
   const order = (sp.get('order') || 'asc').toLowerCase() === 'desc' ? 'desc' : 'asc'
@@ -222,42 +229,26 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Spec filter — overrides the type filter entirely.
-  // In BDO, at level 56 a character chooses either Awakening (awakened weapon)
-  // or Succession (enhanced main weapon). Each spec has access to different skills:
+  // Spec filter — supports multi-spec (succession + awakening together).
+  // In BDO, at level 56 a character chooses Awakening (awakened weapon) or
+  // Succession (enhanced main weapon). Each spec has access to different skills:
   //
-  // Succession spec: Succession/Prime skills + Main (no dup) + Absolute (no dup) + BS + Passive
-  //   - Shows Prime:/Succession: versions of skills that have them
-  //   - Shows Main/Absolute versions only for skills WITHOUT a Prime/Succession version
-  //   - Excludes Awakening skills entirely
+  // Succession spec: Prime:/Succession: skills + Main (no dup) + Absolute (no dup) + BS + Passive. No Awakening.
+  // Awakening spec: Awakening skills + Main (no dup) + Absolute (no dup) + BS + Passive. No Succession.
+  // Both specs: All skills (Succession + Awakening + Main + Absolute + BS + Passive), deduped.
   //
-  // Awakening spec: Awakening + Main (no dup) + Absolute (no dup) + BS + Passive
-  //   - Shows Absolute versions of skills that have them
-  //   - Shows Main versions only for skills WITHOUT an Absolute version
-  //   - Excludes Succession/Prime skills entirely
-  if (spec === 'succession') {
+  // The spec-aware deduplication happens post-query in the max-rank path.
+  const hasSuccessionSpec = specs.includes('succession')
+  const hasAwakeningSpec = specs.includes('awakening')
+
+  if (hasSuccessionSpec && !hasAwakeningSpec) {
+    // Succession only: exclude awakening skills
     AND.push({ isAwakening: false })
-    AND.push({
-      OR: [
-        { isSuccession: true },
-        { isAbsolute: true },
-        { isBlackSpirit: true },
-        { isPassive: true },
-        { isAbsolute: false, isSuccession: false, isAwakening: false, isBlackSpirit: false, isPassive: false },
-      ],
-    })
-  } else if (spec === 'awakening') {
+  } else if (hasAwakeningSpec && !hasSuccessionSpec) {
+    // Awakening only: exclude succession skills
     AND.push({ isSuccession: false })
-    AND.push({
-      OR: [
-        { isAwakening: true },
-        { isAbsolute: true },
-        { isBlackSpirit: true },
-        { isPassive: true },
-        { isAbsolute: false, isSuccession: false, isAwakening: false, isBlackSpirit: false, isPassive: false },
-      ],
-    })
   }
+  // If both specs or neither, no type exclusion at DB level
 
   // Multi-select protection filter
   if (protectionParam && protectionParam !== 'all') {
@@ -377,45 +368,75 @@ export async function GET(req: NextRequest) {
     //   Main/Absolute versions with the same base name.
     // For awakening spec: if an Absolute: version exists, exclude the Main
     //   version with the same base name.
+    // For both specs: apply BOTH dedup rules independently.
+    // NOTE: "Black Spirit: " prefix is KEPT — BS skills are separate from regular skills.
     let specFilteredIds = maxRankSkillIds
-    if (spec === 'succession' || spec === 'awakening') {
-      const specMap = new Map<string, { skillIds: number[]; hasSuccession: boolean; hasAbsolute: boolean }>()
+    if (hasSuccessionSpec || hasAwakeningSpec) {
+      // Build spec base name map
+      const specMap = new Map<string, { skillIds: number[]; hasSuccession: boolean; hasAbsolute: boolean; hasAwakening: boolean; isBlackSpirit: boolean; isPassive: boolean }>()
       for (const id of maxRankSkillIds) {
         const s = rowById.get(id)
         if (!s) continue
         let specBase = s.name
-        const isSucc = s.isSuccession || s.name.startsWith('Prime:') || s.name.startsWith('Succession:')
-        const isAbs = s.isAbsolute || s.name.startsWith('Absolute:')
-        if (isSucc) specBase = s.name.replace(/^(Prime:|Succession:)\s+/, '')
-        else if (isAbs) specBase = s.name.replace(/^Absolute:\s+/, '')
+        const isSucc = s.isSuccession || s.name.includes('Prime: ') || s.name.startsWith('Succession:')
+        const isAbs = s.isAbsolute || s.name.includes('Absolute: ')
+        const isAwk = s.isAwakening
+        // Strip ONLY the spec prefix (Prime/Succession/Absolute), keep "Black Spirit: "
+        if (isSucc) specBase = s.name.replace(/(Prime:|Succession:)\s+/, '')
+        else if (isAbs) specBase = s.name.replace(/Absolute:\s+/, '')
         specBase = getBaseName(specBase)
-        const existing = specMap.get(specBase) || { skillIds: [], hasSuccession: false, hasAbsolute: false }
+        const existing = specMap.get(specBase) || { skillIds: [], hasSuccession: false, hasAbsolute: false, hasAwakening: false, isBlackSpirit: false, isPassive: false }
         existing.skillIds.push(id)
         if (isSucc) existing.hasSuccession = true
         if (isAbs) existing.hasAbsolute = true
+        if (isAwk) existing.hasAwakening = true
+        if (s.isBlackSpirit) existing.isBlackSpirit = true
+        if (s.isPassive) existing.isPassive = true
         specMap.set(specBase, existing)
       }
 
       specFilteredIds = []
       for (const [, info] of specMap) {
-        if (spec === 'succession' && info.hasSuccession) {
-          // Include only the succession/prime version, exclude main/absolute
+        if (hasSuccessionSpec && info.hasSuccession) {
+          // Succession spec: show Prime:/Succession: version only (exclude main/absolute)
           for (const id of info.skillIds) {
             const s = rowById.get(id)
-            if (s && (s.isSuccession || s.name.startsWith('Prime:') || s.name.startsWith('Succession:'))) {
+            if (s && (s.isSuccession || s.name.includes('Prime: ') || s.name.startsWith('Succession:'))) {
               specFilteredIds.push(id)
             }
           }
-        } else if (spec === 'awakening' && info.hasAbsolute) {
-          // Include only the absolute version, exclude main
+          // If also awakening spec, show awakening version too
+          if (hasAwakeningSpec && info.hasAwakening) {
+            for (const id of info.skillIds) {
+              const s = rowById.get(id)
+              if (s && s.isAwakening) specFilteredIds.push(id)
+            }
+          }
+        } else if (hasAwakeningSpec && info.hasAbsolute) {
+          // Awakening spec (no succession): show Absolute, exclude Main
           for (const id of info.skillIds) {
             const s = rowById.get(id)
-            if (s && (s.isAbsolute || s.name.startsWith('Absolute:'))) {
+            if (s && (s.isAbsolute || s.name.includes('Absolute: '))) {
+              specFilteredIds.push(id)
+            }
+          }
+          // Also show awakening version if it exists
+          if (info.hasAwakening) {
+            for (const id of info.skillIds) {
+              const s = rowById.get(id)
+              if (s && s.isAwakening) specFilteredIds.push(id)
+            }
+          }
+        } else if (hasSuccessionSpec && info.hasAbsolute && !info.hasAwakening) {
+          // Succession spec, no Prime version but has Absolute: show Absolute, exclude Main
+          for (const id of info.skillIds) {
+            const s = rowById.get(id)
+            if (s && (s.isAbsolute || s.name.includes('Absolute: '))) {
               specFilteredIds.push(id)
             }
           }
         } else {
-          // No spec override — include all
+          // No spec override for this skill — include all versions
           specFilteredIds.push(...info.skillIds)
         }
       }
