@@ -24,11 +24,13 @@ export async function GET() {
     db.skill.findMany({ where: { damageRowsJson: { not: null } }, select: { damageRowsJson: true, pvpDamagePercent: true } }),
   ])
 
-  // Cooldown: use 90th percentile to avoid Black Spirit 20m outlier.
-  // 90% of skills have cooldown ≤ 60s. Black Spirit skills (20m) are still
-  // filterable — they just appear at the far right of the slider.
+  // Cooldown: max is the highest value before the Black Spirit 1200s gap.
+  // All non-Black-Spirit skills are ≤240s. Black Spirit skills are all 1200s.
+  // The slider goes 0→240s smoothly, then has a "jump to 20m" button for 1200s.
   const cdVals = cdSkills.map(s => s.cooldownSec!).filter(v => v > 0)
-  const cdMax = cdVals.length > 0 ? Math.ceil(percentile(cdVals, 90) / 10) * 10 : 300
+  const belowBs = cdVals.filter(v => v < 600) // everything before Black Spirit
+  const cdMax = belowBs.length > 0 ? Math.ceil(belowBs[belowBs.length - 1] / 30) * 30 : 240 // round up to nearest 30s
+  const cdBlackSpirit = 1200 // Black Spirit rage skills
 
   // Animation: use actual max (25s is reasonable for a slider)
   const animVals = animSkills.map(s => s.animationDurationMs!).filter(v => v > 0)
@@ -55,8 +57,9 @@ export async function GET() {
     },
     cooldownSec: {
       min: 0,
-      max: cdMax, // 99th percentile (e.g., ~300s instead of 1200s)
-      absoluteMax: cdVals.length > 0 ? cdVals[cdVals.length - 1] : 1200, // for reference
+      max: cdMax, // highest non-Black-Spirit cooldown (e.g., 240s)
+      blackSpiritMax: cdBlackSpirit, // 1200s — for the "jump to 20m" button
+      absoluteMax: cdVals.length > 0 ? cdVals[cdVals.length - 1] : 1200,
     },
     animationDurationMs: {
       min: 0,
