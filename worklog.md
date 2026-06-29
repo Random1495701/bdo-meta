@@ -864,3 +864,56 @@ Stage Summary:
 - **Card damage**: ⚔ 17.3K% ☠ 5.8K% — compact, no clipping, icons replace "damage" text.
 - **SP removed**: Skill points cost removed from card, table, and detail drawer (irrelevant per user).
 - **Stamina**: Not available from bdocodex data (no structured field). Noted for user.
+
+---
+Task ID: 13
+Agent: main-orchestrator
+Task: Fix CC counter values, X+Y display, PvE-only CC exclusion, redesign detail drawer, protection icons, slider ranges
+
+Work Log:
+- Researched BDO CC counter values from blackdesertfoundry.com and garmoth.com guides:
+  - Stun, Float, Bound, Freeze, Grapple, Knockdown = CC count of 1
+  - Stiffness, Knockback = CC count of 0.7 (can bypass the 2-counter cap)
+- Updated `src/lib/cc.ts`:
+  - Fixed Stiffness counterValue: 1 → 0.7
+  - Fixed Knockback counterValue: 1 → 0.7
+  - Changed Super Armor icon: 🛡 → 💪 (flexing muscles)
+  - Changed Forward Guard icon: ⬛ → 🛡 (shield)
+  - Added `formatCCCounters()` function: returns "X+Y" format (e.g., "1+1" for Stun+Knockdown, "0.7+1" for Stiffness+Stun)
+- Updated API to handle PvE-only CCs:
+  - Parse damageRows to find CCs with `pveOnly` flag
+  - Filter out PvE-only CCs from counter calculation
+  - Add `pveOnlyCCs` array to skill response (list of CCs that are PvE-only)
+  - Add `ccCounterDisplay` string (X+Y format) to skill response
+  - PvE-only CCs show "—" for counter instead of counting toward total
+- Updated `/api/ranges` to include:
+  - `damage` max: 544,962 (actual max from DB, was hardcoded 100,000)
+  - `skillPoints` max: 50 (actual max from DB)
+- Updated filter sidebar:
+  - Damage slider now uses dynamic `dmgMax` from API (was hardcoded 100,000)
+  - All slider ranges match actual DB max values
+- Redesigned skill detail drawer stat cards — reordered by relevance:
+  1. PvE Damage (amber, with ⚔ icon)
+  2. PvP Damage (pink, with ☠ icon) — or Cooldown if no PvP damage
+  3. Cooldown
+  4. Protection (with 💪/🛡/✦ symbols from PROTECTION_META)
+  5. CC Count (PvP) — uses X+Y display format
+  6. Animation Duration
+  7. Required Level (secondary)
+- Added PvE-only CC warning banner in detail drawer: orange alert showing "PvE only: [CC names] — does not count toward PvP CC counter"
+- Updated all CC counter displays across card, list-row, table, and detail drawer to use `ccCounterDisplay` (X+Y format)
+- Verified:
+  - Lint: clean (0 errors)
+  - Sahee's Descent III: ccCounterDisplay="1+1" (Stun+Knockdown), protection shows 💪 (Super Armor)
+  - Sahee's Descent II: Bound is PvE-only → ccCounters=0, display="—", pveOnlyCCs=["Bound"]
+  - Ranges: damage max=544,962 (actual DB max)
+  - Detail drawer shows Damage, Cooldown, Protection, CC Count, Animation in priority order
+  - Protection icons: 💪 SA, 🛡 FG, ✦ IF
+
+Stage Summary:
+- **CC counter values fixed**: Stiffness=0.7, Knockback=0.7 (was both 1). Sourced from foundry + garmoth guides.
+- **X+Y counter display**: Multi-CC skills show "1+1" or "0.7+1" instead of total. Each CC's individual counter value is shown.
+- **PvE-only CC exclusion**: CCs flagged as "PvE only" in tooltip data are excluded from the PvP CC counter. Warning banner shows which CCs are PvE-only.
+- **Detail drawer redesigned**: Stats reordered by relevance: Damage → Cooldown → Protection → CC Count → Animation.
+- **Protection icons changed**: Super Armor = 💪 (flexing muscles), Forward Guard = 🛡 (shield).
+- **Slider ranges**: All use actual DB max values (damage max=544,962, level max=62, cooldown max=1200s, animation max=25000ms).

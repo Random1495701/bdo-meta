@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
 import { calculateDamage, type DamageRow } from '@/lib/damage'
-import { calculateCCCounters, getRealCCs, getNonCCEffects } from '@/lib/cc'
+import { calculateCCCounters, getRealCCs, getNonCCEffects, formatCCCounters } from '@/lib/cc'
 
 export const dynamic = 'force-dynamic'
 
@@ -54,9 +54,25 @@ function serializeSkill(s: any) {
   const damageRows: DamageRow[] | null = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
   const damage = calculateDamage(damageRows, s.pvpDamagePercent)
   const ccTypes = splitCsv(s.ccTypes)
-  const realCCs = getRealCCs(ccTypes)
-  const nonCCEffects = getNonCCEffects(ccTypes)
-  const ccCounters = calculateCCCounters(ccTypes)
+
+  // Determine which CCs are PvE-only by checking damage rows
+  const pveOnlyCCs = new Set<string>()
+  if (damageRows) {
+    for (const r of damageRows) {
+      if (r.kind === 'cc' && r.pveOnly && r.label) {
+        pveOnlyCCs.add(r.label)
+      }
+    }
+  }
+
+  // Separate PvP CCs (count toward counter) from PvE-only CCs (don't count)
+  const pvpCCs = (ccTypes || []).filter((cc) => !pveOnlyCCs.has(cc))
+  const pveCCs = (ccTypes || []).filter((cc) => pveOnlyCCs.has(cc))
+
+  const realCCs = getRealCCs(pvpCCs)
+  const nonCCEffects = getNonCCEffects(pvpCCs)
+  const ccCounters = calculateCCCounters(pvpCCs)
+  const ccCounterDisplay = formatCCCounters(pvpCCs)
 
   return {
     id: s.id,
@@ -79,8 +95,10 @@ function serializeSkill(s: any) {
     damage,
     ccTypes,
     ccCounters,
+    ccCounterDisplay,
     realCCs,
     nonCCEffects,
+    pveOnlyCCs: Array.from(pveOnlyCCs),
     protectionTypes: splitCsv(s.protectionTypes),
     pvpDamagePercent: s.pvpDamagePercent,
     isQuickSlot: s.isQuickSlot,

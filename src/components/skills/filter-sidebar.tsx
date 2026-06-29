@@ -248,9 +248,7 @@ function FilterNotice() {
   )
 }
 
-// Damage range — total PvE damage percent. Most skills fall well under 100k.
-const DAMAGE_MIN = 0
-const DAMAGE_MAX = 100_000
+// Damage range uses dynamic max from the API (can be 500K+ for ultimate skills)
 
 export function FilterSidebar() {
   const filters = useSkillStore((s) => s.filters)
@@ -284,6 +282,8 @@ export function FilterSidebar() {
   const cdMax = ranges?.cooldownSec.max ?? 1200
   const animMin = ranges?.animationDurationMs.min ?? 0
   const animMax = ranges?.animationDurationMs.max ?? 25000
+  const dmgMin = ranges?.damage?.min ?? 0
+  const dmgMax = ranges?.damage?.max ?? 100000
 
   // Compute active filter count for the badge
   const activeCount = React.useMemo(() => {
@@ -573,8 +573,8 @@ export function FilterSidebar() {
               Damage Range (PvE %)
             </SectionTitle>
             <RangeInputs
-              min={DAMAGE_MIN}
-              max={DAMAGE_MAX}
+              min={dmgMin}
+              max={dmgMax}
               step={100}
               minVal={filters.minDamage}
               maxVal={filters.maxDamage}

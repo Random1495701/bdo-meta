@@ -17,6 +17,8 @@ import {
   Skull,
   Activity,
   Lock,
+  Swords,
+  AlertTriangle,
 } from 'lucide-react'
 
 import {
@@ -505,23 +507,74 @@ export function SkillDetailDrawer() {
                     )}
                   </div>
 
-                  {/* Stat cards */}
+                  {/* Primary stat cards — ordered by relevance:
+                      Damage → Cooldown → Protection → CC Count → Animation */}
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                    {/* 1. Damage (most important) */}
+                    {skill.damage && skill.damage.hasDamage ? (
+                      <StatCard
+                        icon={<Swords className="size-3" />}
+                        label="PvE Damage"
+                        value={formatDamage(skill.damage.totalPvE)}
+                        accent="amber"
+                      />
+                    ) : (
+                      <StatCard
+                        icon={<Swords className="size-3" />}
+                        label="PvE Damage"
+                        value="—"
+                      />
+                    )}
+                    {skill.damage && skill.damage.totalPvP != null ? (
+                      <StatCard
+                        icon={<Skull className="size-3" />}
+                        label="PvP Damage"
+                        value={formatDamage(skill.damage.totalPvP)}
+                        accent="pink"
+                      />
+                    ) : (
+                      <StatCard
+                        icon={<Clock className="size-3" />}
+                        label="Cooldown"
+                        value={formatCooldown(skill.cooldownSec)}
+                      />
+                    )}
+                    {/* 2. Cooldown */}
+                    {skill.damage && skill.damage.totalPvP != null && (
+                      <StatCard
+                        icon={<Clock className="size-3" />}
+                        label="Cooldown"
+                        value={formatCooldown(skill.cooldownSec)}
+                      />
+                    )}
+                    {/* 3. Protection */}
+                    {skill.protectionTypes && skill.protectionTypes.length > 0 ? (
+                      <StatCard
+                        icon={<Shield className="size-3" />}
+                        label="Protection"
+                        value={skill.protectionTypes.map((p) => {
+                          const m = PROTECTION_META[p]
+                          return m ? m.symbol : p[0]
+                        }).join(' ')}
+                        accent="amber"
+                        hint={skill.protectionTypes.join(', ')}
+                      />
+                    ) : (
+                      <StatCard
+                        icon={<Shield className="size-3" />}
+                        label="Protection"
+                        value="—"
+                      />
+                    )}
+                    {/* 4. CC Count (PvP only) */}
                     <StatCard
-                      icon={<Gauge className="size-3" />}
-                      label="Required Lv"
-                      value={skill.requiredLevel ? String(skill.requiredLevel) : '—'}
+                      icon={<Zap className="size-3" />}
+                      label="CC Count (PvP)"
+                      value={skill.ccCounterDisplay || '—'}
+                      accent="red"
+                      hint="PvP CC counters (target is CC-immune at 2). PvE-only CCs are excluded."
                     />
-                    <StatCard
-                      icon={<Activity className="size-3" />}
-                      label="Max Lv"
-                      value={skill.maxLevel ? String(skill.maxLevel) : '—'}
-                    />
-                    <StatCard
-                      icon={<Clock className="size-3" />}
-                      label="Cooldown"
-                      value={formatCooldown(skill.cooldownSec)}
-                    />
+                    {/* 5. Animation Duration */}
                     <StatCard
                       icon={<Film className="size-3" />}
                       label="Animation"
@@ -529,24 +582,27 @@ export function SkillDetailDrawer() {
                       accent="amber"
                       hint="Extracted via ffprobe from the bdocodex preview video"
                     />
-                    {skill.pvpDamagePercent != null && (
-                      <StatCard
-                        icon={<Sword className="size-3" />}
-                        label="PvP Dmg %"
-                        value={`${skill.pvpDamagePercent}%`}
-                        accent="pink"
-                      />
-                    )}
-                    {skill.ccCounters != null && skill.ccCounters > 0 && (
-                      <StatCard
-                        icon={<Zap className="size-3" />}
-                        label="CC Counters"
-                        value={String(skill.ccCounters)}
-                        accent="red"
-                        hint="Total CC counters this skill fills (target is CC-immune at 2)"
-                      />
-                    )}
+                    {/* Secondary stats */}
+                    <StatCard
+                      icon={<Gauge className="size-3" />}
+                      label="Required Lv"
+                      value={skill.requiredLevel ? String(skill.requiredLevel) : '—'}
+                    />
                   </div>
+
+                  {/* PvE-only CC warning */}
+                  {skill.pveOnlyCCs && skill.pveOnlyCCs.length > 0 && (
+                    <div
+                      className="flex items-center gap-2 rounded-sm border border-orange-700/50 bg-orange-900/20 px-3 py-2 text-xs text-orange-300"
+                      title="These CCs only work in PvE and do not count toward the PvP CC counter"
+                    >
+                      <AlertTriangle className="size-3.5 shrink-0" />
+                      <span>
+                        <strong className="font-semibold">PvE only:</strong>{' '}
+                        {skill.pveOnlyCCs.join(', ')} — does not count toward PvP CC counter
+                      </span>
+                    </div>
+                  )}
 
                   {/* Damage Summary — large stat cards for PvE + PvP totals */}
                   {skill.damage && skill.damage.hasDamage && (
@@ -681,10 +737,10 @@ export function SkillDetailDrawer() {
                               {counters > 0 && (
                                 <div
                                   className="inline-flex items-center gap-1 rounded-sm border border-red-700/60 bg-red-900/30 px-2 py-0.5 text-xs font-bold text-red-300"
-                                  title="Total CC counters filled (target becomes CC-immune at 2)"
+                                  title="CC counters filled (target becomes CC-immune at 2). Format: X+Y = each CC's individual counter value."
                                 >
                                   <Zap className="size-3" />
-                                  CC Counters: {counters}
+                                  CC Counters: {skill.ccCounterDisplay || counters}
                                 </div>
                               )}
                               {realCCs.length > 0 && (

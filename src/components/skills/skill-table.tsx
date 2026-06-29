@@ -516,10 +516,10 @@ export const SkillTable = React.memo(function SkillTable({
                             {skill.ccCounters != null && skill.ccCounters > 0 ? (
                               <span
                                 className="inline-flex items-center gap-0.5 rounded-sm border border-red-700/60 bg-red-900/30 px-1.5 py-0.5 font-mono text-xs font-bold tabular-nums text-red-300"
-                                title={`CC Counters: ${skill.ccCounters} (target is CC-immune at 2)`}
+                                title={`CC Counters: ${skill.ccCounterDisplay || skill.ccCounters} (PvP only, target is CC-immune at 2)`}
                               >
                                 <Zap className="size-2.5" />
-                                {skill.ccCounters}
+                                {skill.ccCounterDisplay || skill.ccCounters}
                               </span>
                             ) : (
                               <span className="text-amber-200/30">0</span>

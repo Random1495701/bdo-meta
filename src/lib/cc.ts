@@ -1,10 +1,14 @@
 // BDO CC (Crowd Control) System Metadata
 //
-// In BDO's PvP, CCs fill a "CC counter" — at 2 counters, the target becomes
-// CC-immune. Each CC fills 1 counter. The CCs are grouped into resistance
-// categories.
+// CC counter values sourced from:
+// - https://www.blackdesertfoundry.com/cc-and-combos/
+// - https://garmoth.com/guides/post/bdo-basics-combat-guide
 //
-// Sources: BDO PvP guides, garmoth.com combat guide, reddit r/blackdesertonline
+// Stun, Float, Bound, Freeze, Grapple, Knockdown = CC count of 1
+// Stiffness, Knockback = CC count of 0.7
+//
+// At 2 CC counters, the target becomes CC-immune. Stiffness + 2 other CCs can
+// reach 2.7 (bypasses the 2-counter cap).
 //
 // Non-CC effects (displacements, DoTs, damage modifiers) are separated from
 // real CCs. These appear in skill tooltips but don't count toward the CC counter.
@@ -12,7 +16,7 @@
 export interface CCTypeInfo {
   name: string
   shortName: string
-  counterValue: number // how many CC counters this fills (1 = full, 0.7 = partial)
+  counterValue: number // how many CC counters this fills (1 or 0.7)
   resistanceCategory: 'Stun/Stiffness/Freeze' | 'Grapple' | 'Knockdown/Bound' | 'Knockback/Float'
   color: string
   symbol: string // short symbol for compact display
@@ -33,11 +37,11 @@ export const CC_TYPES: Record<string, CCTypeInfo> = {
   Stiffness: {
     name: 'Stiffness',
     shortName: 'Stiff',
-    counterValue: 1,
+    counterValue: 0.7,
     resistanceCategory: 'Stun/Stiffness/Freeze',
     color: '#fbbf24',
     symbol: '✦',
-    description: 'Brief stun. Shorter duration than Stun.',
+    description: 'Brief stun. CC count 0.7. Can bypass the 2-counter cap.',
   },
   Freeze: {
     name: 'Freeze',
@@ -87,16 +91,15 @@ export const CC_TYPES: Record<string, CCTypeInfo> = {
   Knockback: {
     name: 'Knockback',
     shortName: 'KB',
-    counterValue: 1,
+    counterValue: 0.7,
     resistanceCategory: 'Knockback/Float',
     color: '#60a5fa',
     symbol: '←',
-    description: 'Target is pushed backward. Fills CC counter.',
+    description: 'Target is pushed backward. CC count 0.7.',
   },
 }
 
 // Non-CC effects that appear in skill data but don't count toward the CC counter.
-// These are displacements, damage-over-time effects, or damage modifiers.
 export const NON_CC_EFFECTS: Record<string, { category: string; symbol: string; color: string }> = {
   'Push the target': { category: 'Displacement', symbol: '⇐', color: '#94a3b8' },
   'Spin the target': { category: 'Displacement', symbol: '↻', color: '#94a3b8' },
@@ -111,35 +114,31 @@ export const NON_CC_EFFECTS: Record<string, { category: string; symbol: string; 
   'Blind': { category: 'Debuff', symbol: '👁', color: '#64748b' },
 }
 
-// Frostbite is the same as Freeze in BDO
 export const CC_ALIASES: Record<string, string> = {
   Frostbite: 'Freeze',
   Chill: 'Freeze',
 }
 
-// All valid CC names (including aliases) for filtering
 export const ALL_CC_NAMES = new Set([
   ...Object.keys(CC_TYPES),
   ...Object.keys(CC_ALIASES),
   ...Object.keys(NON_CC_EFFECTS),
 ])
 
-// Get CC info for a CC name (handles aliases)
 export function getCCInfo(name: string): CCTypeInfo | { category: string; symbol: string; color: string } | null {
-  // Check aliases first
   const canonical = CC_ALIASES[name] || name
   if (CC_TYPES[canonical]) return CC_TYPES[canonical]
   if (NON_CC_EFFECTS[name]) return NON_CC_EFFECTS[name]
   return null
 }
 
-// Check if a CC name is a real CC (counts toward the counter)
 export function isRealCC(name: string): boolean {
   const canonical = CC_ALIASES[name] || name
   return canonical in CC_TYPES
 }
 
-// Calculate total CC counters for a skill's CC types
+// Calculate total CC counters for a skill's CC types.
+// Returns a number (e.g., 2, 2.7, 1.7).
 export function calculateCCCounters(ccTypes: string[] | null): number {
   if (!ccTypes || ccTypes.length === 0) return 0
   let total = 0
@@ -149,7 +148,25 @@ export function calculateCCCounters(ccTypes: string[] | null): number {
       total += info.counterValue
     }
   }
-  return total
+  return Math.round(total * 10) / 10 // round to 1 decimal
+}
+
+// Format CC counters as X+Y+Z (each CC's counter value) instead of a total.
+// e.g., ["Stun", "Knockdown"] → "1+1", ["Stiffness", "Stun"] → "0.7+1"
+// Returns the total number if only 1 CC, or "—" if none.
+export function formatCCCounters(ccTypes: string[] | null): string {
+  if (!ccTypes || ccTypes.length === 0) return '—'
+  const values: string[] = []
+  for (const cc of ccTypes) {
+    const info = getCCInfo(cc)
+    if (info && 'counterValue' in info) {
+      const v = info.counterValue
+      values.push(v % 1 === 0 ? String(v) : String(v))
+    }
+  }
+  if (values.length === 0) return '—'
+  if (values.length === 1) return values[0]
+  return values.join('+')
 }
 
 // Get only real CCs from a list (prune non-CCs)
@@ -164,16 +181,17 @@ export function getNonCCEffects(ccTypes: string[] | null): string[] {
   return ccTypes.filter((cc) => !isRealCC(cc) && cc in NON_CC_EFFECTS)
 }
 
-// Protection type metadata with symbols
+// Protection type metadata with symbols.
+// Forward Guard = shield icon, Super Armor = flexing muscles icon.
 export const PROTECTION_META: Record<string, { symbol: string; color: string; shortName: string; description: string }> = {
   'Super Armor': {
-    symbol: '🛡',
+    symbol: '💪',
     color: '#fbbf24',
     shortName: 'SA',
     description: 'Immune to CC. Can still take damage.',
   },
   'Forward Guard': {
-    symbol: '⬛',
+    symbol: '🛡',
     color: '#60a5fa',
     shortName: 'FG',
     description: 'Blocks frontal attacks. Immune to frontal CC and damage.',

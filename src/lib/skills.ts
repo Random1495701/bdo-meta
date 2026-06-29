@@ -71,8 +71,10 @@ export interface Skill {
   damage?: DamageCalculation
   ccTypes: string[] | null
   ccCounters?: number
+  ccCounterDisplay?: string
   realCCs?: string[]
   nonCCEffects?: string[]
+  pveOnlyCCs?: string[]
   protectionTypes: string[] | null
   pvpDamagePercent: number | null
   isQuickSlot: boolean
@@ -289,6 +291,8 @@ export interface SkillRanges {
   requiredLevel: { min: number; max: number }
   cooldownSec: { min: number; max: number }
   animationDurationMs: { min: number; max: number }
+  skillPoints?: { min: number; max: number }
+  damage?: { min: number; max: number }
 }
 
 export async function fetchRanges(): Promise<SkillRanges> {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { calculateDamage, type DamageRow } from '@/lib/damage'
-import { calculateCCCounters, getRealCCs, getNonCCEffects } from '@/lib/cc'
+import { calculateCCCounters, getRealCCs, getNonCCEffects, formatCCCounters } from '@/lib/cc'
 
 export const dynamic = 'force-dynamic'
 
@@ -65,9 +65,23 @@ export async function GET(
   const damageRows: DamageRow[] | null = skill.damageRowsJson ? JSON.parse(skill.damageRowsJson) : null
   const damage = calculateDamage(damageRows, skill.pvpDamagePercent)
   const ccTypes = splitCsv(skill.ccTypes)
-  const realCCs = getRealCCs(ccTypes)
-  const nonCCEffects = getNonCCEffects(ccTypes)
-  const ccCounters = calculateCCCounters(ccTypes)
+
+  // Determine which CCs are PvE-only by checking damage rows
+  const pveOnlyCCs = new Set<string>()
+  if (damageRows) {
+    for (const r of damageRows) {
+      if (r.kind === 'cc' && r.pveOnly && r.label) {
+        pveOnlyCCs.add(r.label)
+      }
+    }
+  }
+
+  // Separate PvP CCs (count toward counter) from PvE-only CCs (don't count)
+  const pvpCCs = (ccTypes || []).filter((cc) => !pveOnlyCCs.has(cc))
+  const realCCs = getRealCCs(pvpCCs)
+  const nonCCEffects = getNonCCEffects(pvpCCs)
+  const ccCounters = calculateCCCounters(pvpCCs)
+  const ccCounterDisplay = formatCCCounters(pvpCCs)
 
   const serialized = {
     id: skill.id,
@@ -90,8 +104,10 @@ export async function GET(
     damage,
     ccTypes,
     ccCounters,
+    ccCounterDisplay,
     realCCs,
     nonCCEffects,
+    pveOnlyCCs: Array.from(pveOnlyCCs),
     protectionTypes: splitCsv(skill.protectionTypes),
     pvpDamagePercent: skill.pvpDamagePercent,
     isQuickSlot: skill.isQuickSlot,

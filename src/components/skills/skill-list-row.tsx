@@ -194,10 +194,10 @@ export const SkillListRow = React.memo(function SkillListRow({
         {skill.ccCounters != null && skill.ccCounters > 0 && (
           <div
             className="flex items-center gap-1 rounded-sm border border-red-700/60 bg-red-900/30 px-1.5 py-0.5 font-mono font-bold text-red-300"
-            title={`CC Counters: ${skill.ccCounters}`}
+            title={`CC Counters: ${skill.ccCounterDisplay || skill.ccCounters} (PvP only)`}
           >
             <Zap className="size-2.5" />
-            {skill.ccCounters}
+            {skill.ccCounterDisplay || skill.ccCounters}
           </div>
         )}
         {skill.animationDurationMs != null && (

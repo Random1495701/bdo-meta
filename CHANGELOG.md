@@ -303,3 +303,40 @@ also committed for continuity.
   stamina cost as a structured field — it only appears in passive descriptions
   as buffs ("Max Stamina +5"). The lurker cannot pull this data because it
   doesn't exist in the tooltip structure.
+
+---
+
+## [1.7.0] — 2025-06-29 (CC Counter Fix + Detail Redesign + Slider Ranges)
+
+### Fixed
+- **CC counter values corrected**: Stiffness and Knockback now have CC count 0.7
+  (was 1). Sourced from blackdesertfoundry.com and garmoth.com guides. Stun,
+  Float, Bound, Freeze, Grapple, Knockdown remain at 1. Stiffness + 2 other CCs
+  can reach 2.7 (bypasses the 2-counter cap).
+- **PvE-only CCs excluded from counter**: CCs flagged "PvE only" in the tooltip
+  data are no longer counted toward the PvP CC counter. The API now returns
+  `pveOnlyCCs` array listing which CCs are PvE-only.
+- **Slider ranges**: All filter sliders now use actual DB max values instead of
+  hardcoded guesses. Damage slider max is now 544,962 (was 100,000).
+
+### Added
+- **X+Y CC counter display**: Skills with multiple CCs show "1+1" or "0.7+1"
+  instead of a total. Each CC's individual counter value is shown.
+- **PvE-only warning banner**: Detail drawer shows an orange alert when a skill
+  has PvE-only CCs: "PvE only: [CC names] — does not count toward PvP CC counter".
+- **Dynamic damage range**: `/api/ranges` now includes damage max (544,962) and
+  skillPoints max (50), computed from actual DB data.
+
+### Changed
+- **Detail drawer stat cards reordered** by relevance:
+  1. PvE Damage (⚔ amber)
+  2. PvP Damage (☠ pink)
+  3. Cooldown
+  4. Protection (with symbols)
+  5. CC Count (PvP) — X+Y format
+  6. Animation Duration
+  7. Required Level (secondary)
+- **Protection icons changed**: Super Armor = 💪 (flexing muscles, was 🛡),
+  Forward Guard = 🛡 (shield, was ⬛).
+- **`ccCounterDisplay` field** added to all skill API responses (string like
+  "1+1" or "—" if no PvP CCs).

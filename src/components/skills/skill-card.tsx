@@ -279,10 +279,10 @@ export const SkillCard = React.memo(function SkillCard({
         {skill.ccCounters != null && skill.ccCounters > 0 && (
           <div
             className="flex items-center gap-1 rounded-sm border border-red-700/60 bg-red-900/30 px-1.5 py-0.5 text-[11px] font-bold tabular-nums text-red-300"
-            title={`CC Counters: ${skill.ccCounters} (target is CC-immune at 2)`}
+            title={`CC Counters: ${skill.ccCounterDisplay} (PvP only, target is CC-immune at 2)`}
           >
             <Zap className="size-2.5" />
-            CC: {skill.ccCounters}
+            {skill.ccCounterDisplay}
           </div>
         )}
       </div>
