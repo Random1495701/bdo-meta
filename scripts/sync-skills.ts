@@ -179,7 +179,7 @@ function rxAll(input: string, rx: RegExp): string[] {
   return out
 }
 
-// Parse cooldown string like "5 sec", "30 sec", "1 min 30 sec", "Instant"
+// Parse cooldown string like "5s", "7s", "20m", "1m 30s", "5 sec", "20 min", "Instant"
 function parseCooldown(raw: string | null): { cooldown: string; sec: number | null } | null {
   if (!raw) return null
   const text = stripTags(raw)
@@ -187,8 +187,8 @@ function parseCooldown(raw: string | null): { cooldown: string; sec: number | nu
   if (!cleaned || /^instant/i.test(cleaned)) return { cooldown: 'Instant', sec: 0 }
   let total = 0
   let matched = false
-  const minMatch = cleaned.match(/(\d+(?:\.\d+)?)\s*min/i)
-  const secMatch = cleaned.match(/(\d+(?:\.\d+)?)\s*sec/i)
+  const minMatch = cleaned.match(/(\d+(?:\.\d+)?)\s*m(?:in)?\b/i)
+  const secMatch = cleaned.match(/(\d+(?:\.\d+)?)\s*s(?:ec)?\b/i)
   if (minMatch) {
     total += parseFloat(minMatch[1]) * 60
     matched = true

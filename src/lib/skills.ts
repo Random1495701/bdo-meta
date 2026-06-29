@@ -103,13 +103,31 @@ export interface Stats {
   }[]
 }
 
+export interface LurkerState {
+  pid: number
+  mode: string
+  startedAt: string
+  lastHeartbeatAt: string
+  processed: number
+  enriched: number
+  failed: number
+  skipped: number
+  challengesSolved?: number
+  currentSkillId: number | null
+  currentEndpoint: string | null
+  cooldowns: Record<string, number>
+}
+
 export interface SyncStatus {
   total: number
   withDescription: number
   withVideo: number
   withAnimation: number
+  withKrName: number
   pendingTooltips: number
   pendingAnimations: number
+  pendingKrNames: number
+  lurker: { running: boolean; state: LurkerState | null }
   recentLogs: {
     id: string
     type: string
@@ -224,9 +242,22 @@ export async function triggerSync(
   const res = await fetch('/api/sync/trigger', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phase, limit }),
+    body: JSON.stringify({ phase, limit, script: 'sync' }),
   })
   if (!res.ok) throw new Error(`Failed to trigger sync: ${res.status}`)
+  return res.json()
+}
+
+export async function triggerLurker(
+  phase: 'daemon' | 'batch' | 'videos' | 'kr-names' | 're-enrich' | 'once' = 'daemon',
+  limit?: number,
+): Promise<{ ok: boolean; script: string; phase: string; message: string; pid: number | null }> {
+  const res = await fetch('/api/sync/trigger', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phase, limit, script: 'lurker' }),
+  })
+  if (!res.ok) throw new Error(`Failed to trigger lurker: ${res.status}`)
   return res.json()
 }
 

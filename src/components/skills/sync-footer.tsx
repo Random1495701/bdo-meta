@@ -13,6 +13,14 @@ import {
   ListTree,
   Sparkles,
   ChevronDown,
+  Ghost,
+  Play,
+  Languages,
+  RotateCw,
+  Upload,
+  FileJson,
+  HardDriveDownload,
+  Info,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -25,8 +33,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Badge } from '@/components/ui/badge'
 
-import { fetchSyncStatus, triggerSync } from '@/lib/skills'
+import { fetchSyncStatus, triggerSync, triggerLurker } from '@/lib/skills'
 import { cn } from '@/lib/utils'
 
 function MiniProgress({
@@ -42,12 +59,7 @@ function MiniProgress({
 }) {
   const pct = total > 0 ? Math.round((value / total) * 100) : 0
   const barClass =
-    color === 'amber'
-      ? 'bg-amber-500'
-      : color === 'cyan'
-        ? 'bg-cyan-500'
-        : 'bg-emerald-500'
-
+    color === 'amber' ? 'bg-amber-500' : color === 'cyan' ? 'bg-cyan-500' : 'bg-emerald-500'
   return (
     <div className="flex min-w-[140px] flex-1 flex-col gap-1">
       <div className="flex items-center justify-between text-[10px] text-zinc-400">
@@ -70,6 +82,9 @@ export function SyncFooter() {
   const queryClient = useQueryClient()
   const [syncing, setSyncing] = React.useState(false)
   const [lastTriggered, setLastTriggered] = React.useState<number | null>(null)
+  const [uploadOpen, setUploadOpen] = React.useState(false)
+  const [uploading, setUploading] = React.useState(false)
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
 
   const statusQuery = useQuery({
     queryKey: ['sync-status'],
@@ -77,7 +92,6 @@ export function SyncFooter() {
     refetchInterval: 5_000,
   })
 
-  // Re-enable the sync button after 10s.
   React.useEffect(() => {
     if (lastTriggered == null) return
     const t = setTimeout(() => {
@@ -100,16 +114,54 @@ export function SyncFooter() {
     const promise = triggerSync(phase, limit)
     toast.promise(promise, {
       loading: `Triggering ${label}…`,
-      success: (res) =>
-        `${label} started. ${res.message ?? ''} Phase: ${res.phase}`,
-      error: (err) =>
-        err instanceof Error ? err.message : 'Failed to trigger sync',
+      success: (res) => `${label} started. ${res.message ?? ''}`,
+      error: (err) => (err instanceof Error ? err.message : 'Failed to trigger sync'),
     })
+    try { await promise } catch { /* */ }
+  }
+
+  const handleLurker = async (
+    phase: 'daemon' | 'batch' | 'videos' | 'kr-names' | 're-enrich',
+    limit?: number,
+    label: string,
+  ) => {
+    if (syncing) return
+    setSyncing(true)
+    setLastTriggered(Date.now())
+    const promise = triggerLurker(phase, limit)
+    toast.promise(promise, {
+      loading: `Starting lurker (${label})…`,
+      success: (res) => `${label} lurker started (PID ${res.pid}). ${res.message ?? ''}`,
+      error: (err) => (err instanceof Error ? err.message : 'Failed to start lurker'),
+    })
+    try { await promise } catch { /* */ }
+  }
+
+  const handleUpload = async (file: File) => {
+    setUploading(true)
+    const formData = new FormData()
+    formData.append('file', file)
     try {
-      await promise
-    } catch {
-      // toast already shown
+      const res = await fetch('/api/upload/skills-json', { method: 'POST', body: formData })
+      if (!res.ok) throw new Error(`Upload failed: ${res.status}`)
+      const result = await res.json()
+      toast.success(
+        `Uploaded ${file.name}: ${result.upserted} skills imported, ${result.skipped} skipped`,
+      )
+      void queryClient.invalidateQueries({ queryKey: ['sync-status'] })
+      void queryClient.invalidateQueries({ queryKey: ['stats'] })
+      setUploadOpen(false)
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Upload failed')
+    } finally {
+      setUploading(false)
     }
+  }
+
+  const handleExport = (enrichedOnly: boolean) => {
+    const url = `/api/export?format=snapshot${enrichedOnly ? '&enriched=true' : ''}`
+    window.open(url, '_blank')
+    toast.info(`Exporting ${enrichedOnly ? 'enriched skills only' : 'all skills'} as JSON…`)
   }
 
   const s = statusQuery.data
@@ -119,6 +171,9 @@ export function SyncFooter() {
   const withAnim = s?.withAnimation ?? 0
   const pendingTooltips = s?.pendingTooltips ?? 0
   const pendingAnimations = s?.pendingAnimations ?? 0
+  const lurker = s?.lurker
+  const lurkerRunning = lurker?.running ?? false
+  const lurkerState = lurker?.state
 
   return (
     <footer className="mt-auto border-t border-zinc-800/80 bg-zinc-950/95 backdrop-blur">
@@ -130,7 +185,7 @@ export function SyncFooter() {
             <span className="font-mono font-semibold tabular-nums text-zinc-200">
               {total.toLocaleString()}
             </span>
-            <span className="hidden sm:inline">total skills</span>
+            <span className="hidden sm:inline">total</span>
           </span>
           <span className="flex items-center gap-1.5">
             <FileText className="size-3.5 text-cyan-400" />
@@ -151,31 +206,260 @@ export function SyncFooter() {
             <span className="font-mono font-semibold tabular-nums text-zinc-200">
               {withAnim.toLocaleString()}
             </span>
-            <span className="hidden sm:inline">w/ animation</span>
+            <span className="hidden sm:inline">w/ anim</span>
           </span>
         </div>
 
         {/* Middle: progress bars */}
         <div className="flex min-w-[300px] flex-1 flex-wrap items-center gap-4">
-          <MiniProgress
-            label="Tooltips"
-            value={withDesc}
-            total={total}
-            color="cyan"
-          />
-          <MiniProgress
-            label="Animations"
-            value={withAnim}
-            total={withVideo || 1}
-            color="amber"
-          />
+          <MiniProgress label="Tooltips" value={withDesc} total={total} color="cyan" />
+          <MiniProgress label="Animations" value={withAnim} total={withVideo || 1} color="amber" />
         </div>
 
-        {/* Right: sync trigger */}
+        {/* Lurker status indicator */}
+        {lurkerRunning && lurkerState && (
+          <div className="flex items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px]">
+            <Ghost className="size-3.5 animate-pulse text-emerald-400" />
+            <span className="font-semibold text-emerald-300">Lurker active</span>
+            <span className="text-emerald-400/70">·</span>
+            <span className="font-mono text-emerald-200/80">
+              {lurkerState.processed} processed
+            </span>
+            <span className="text-emerald-400/70">·</span>
+            <span className="font-mono text-emerald-200/80">
+              {lurkerState.enriched} enriched
+            </span>
+            {lurkerState.challengesSolved > 0 && (
+              <>
+                <span className="text-emerald-400/70">·</span>
+                <span className="font-mono text-emerald-200/80">
+                  {lurkerState.challengesSolved} challenges solved
+                </span>
+              </>
+            )}
+            {lurkerState.currentSkillId && (
+              <>
+                <span className="text-emerald-400/70">·</span>
+                <span className="font-mono text-emerald-300">
+                  skill {lurkerState.currentSkillId}
+                </span>
+                <span className="text-emerald-400/50">via {lurkerState.currentEndpoint}</span>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Right: sync triggers */}
         <div className="ml-auto flex items-center gap-2">
           {statusQuery.isFetching && (
             <RefreshCw className="size-3.5 animate-spin text-zinc-500" />
           )}
+
+          {/* Upload/Export dialog */}
+          <Dialog open={uploadOpen} onOpenChange={setUploadOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-zinc-700 bg-zinc-800/50 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
+              >
+                <Upload className="size-3.5" />
+                <span className="hidden sm:inline">Data</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-lg border-zinc-800 bg-zinc-950 text-zinc-100">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  <FileJson className="size-5 text-amber-400" />
+                  Import / Export Skill Data
+                </DialogTitle>
+                <DialogDescription className="text-zinc-400">
+                  Upload a JSON dump to instantly enrich the database, or export what we have.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-4 py-2">
+                {/* Upload section */}
+                <div className="space-y-2">
+                  <h4 className="text-sm font-semibold text-zinc-200">Import JSON</h4>
+                  <p className="text-xs text-zinc-500">
+                    Upload a JSON file with a <code className="text-amber-300">skills</code> array.
+                    Each skill needs at minimum a <code className="text-amber-300">skillId</code> and
+                    optionally: name, description, className, cooldown, ccTypes, protectionTypes,
+                    damageRows, animationDurationMs, videoUrl.
+                  </p>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".json,application/json"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) void handleUpload(file)
+                      e.target.value = ''
+                    }}
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={uploading}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full border-amber-500/40 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20"
+                  >
+                    {uploading ? (
+                      <RefreshCw className="size-4 animate-spin" />
+                    ) : (
+                      <Upload className="size-4" />
+                    )}
+                    {uploading ? 'Uploading…' : 'Choose JSON file'}
+                  </Button>
+                </div>
+
+                {/* Export section */}
+                <div className="space-y-2 border-t border-zinc-800 pt-4">
+                  <h4 className="text-sm font-semibold text-zinc-200">Export JSON</h4>
+                  <p className="text-xs text-zinc-500">
+                    Download the current database as a JSON snapshot for backup or transfer.
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleExport(true)}
+                      className="flex-1 border-cyan-500/40 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20"
+                    >
+                      <HardDriveDownload className="size-4" />
+                      Enriched only ({withDesc.toLocaleString()})
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleExport(false)}
+                      className="flex-1 border-zinc-600 bg-zinc-800/50 text-zinc-300 hover:bg-zinc-800"
+                    >
+                      <HardDriveDownload className="size-4" />
+                      All ({total.toLocaleString()})
+                    </Button>
+                  </div>
+                </div>
+
+                {/* BDO game files info */}
+                <div className="space-y-2 border-t border-zinc-800 pt-4">
+                  <h4 className="flex items-center gap-2 text-sm font-semibold text-zinc-200">
+                    <Info className="size-4 text-violet-400" />
+                    BDO Game Files (Advanced)
+                  </h4>
+                  <div className="space-y-1.5 text-xs text-zinc-500">
+                    <p>
+                      If you have BDO installed, you can extract skill data directly from the game
+                      files — no scraping needed:
+                    </p>
+                    <ol className="ml-4 list-decimal space-y-1">
+                      <li>
+                        Download{' '}
+                        <a
+                          href="https://github.com/AngeloCairo/BDO-UnPAZ"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-amber-300 hover:underline"
+                        >
+                          UnPAZ
+                        </a>{' '}
+                        and extract your BDO PAZ archives
+                      </li>
+                      <li>
+                        Look for files matching:{' '}
+                        <code className="text-amber-300">ui_data/skill/skill*.xml</code>
+                      </li>
+                      <li>
+                        Convert the XML to JSON (or upload the raw XML — we&apos;ll parse it)
+                      </li>
+                    </ol>
+                    <p className="pt-1 text-zinc-600">
+                      Supported upload formats: JSON array, bdocodex query.php format, or raw XML.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          {/* Lurker dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={syncing}
+                className={cn(
+                  'border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 hover:text-emerald-200 disabled:opacity-50',
+                  lurkerRunning && 'border-emerald-400/60 bg-emerald-500/15',
+                )}
+              >
+                <Ghost className={cn('size-3.5', lurkerRunning && 'animate-pulse')} />
+                <span className="hidden sm:inline">Lurker</span>
+                {lurkerRunning && (
+                  <Badge
+                    variant="secondary"
+                    className="h-4 px-1 text-[9px] font-bold text-emerald-700 bg-emerald-400"
+                  >
+                    ON
+                  </Badge>
+                )}
+                <ChevronDown className="size-3 opacity-70" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="w-64 border-zinc-800 bg-zinc-900 text-zinc-100"
+            >
+              <DropdownMenuLabel className="flex items-center gap-2 text-zinc-400">
+                <Ghost className="size-3.5 text-emerald-400" />
+                Lurker v2 — challenge-solving sync
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-zinc-800" />
+              <DropdownMenuItem
+                onClick={() => handleLurker('daemon', undefined, 'Daemon')}
+                className="focus:bg-emerald-500/15 focus:text-emerald-200"
+              >
+                <Play className="size-4 text-emerald-400" />
+                Start daemon (run until done)
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleLurker('batch', 100, 'Batch (100)')}
+                className="focus:bg-emerald-500/15 focus:text-emerald-200"
+              >
+                <Ghost className="size-4 text-emerald-400" />
+                Batch — next 100 skills
+                <span className="ml-auto text-[10px] text-zinc-500">{pendingTooltips} pending</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleLurker('videos', undefined, 'Animations')}
+                className="focus:bg-emerald-500/15 focus:text-emerald-200"
+              >
+                <Film className="size-4 text-amber-400" />
+                Extract animation durations
+                <span className="ml-auto text-[10px] text-zinc-500">{pendingAnimations} pending</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleLurker('kr-names', undefined, 'KR names')}
+                className="focus:bg-emerald-500/15 focus:text-emerald-200"
+              >
+                <Languages className="size-4 text-cyan-400" />
+                Enrich Korean names
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-zinc-800" />
+              <DropdownMenuItem
+                onClick={() => handleLurker('re-enrich', undefined, 'Re-enrich all')}
+                className="focus:bg-amber-500/15 focus:text-amber-200"
+              >
+                <RotateCw className="size-4 text-amber-400" />
+                Re-enrich all (refresh after patch)
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Fast sync dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -185,7 +469,7 @@ export function SyncFooter() {
                 className="border-amber-500/40 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 hover:text-amber-200 disabled:opacity-50"
               >
                 <Download className="size-3.5" />
-                Sync
+                <span className="hidden sm:inline">Fast Sync</span>
                 <ChevronDown className="size-3 opacity-70" />
               </Button>
             </DropdownMenuTrigger>
@@ -194,7 +478,7 @@ export function SyncFooter() {
               className="w-60 border-zinc-800 bg-zinc-900 text-zinc-100"
             >
               <DropdownMenuLabel className="text-zinc-400">
-                Trigger sync phase
+                Fast sync (may trigger bot challenge)
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-zinc-800" />
               <DropdownMenuItem
@@ -212,28 +496,20 @@ export function SyncFooter() {
                 Sync class trees
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() =>
-                  handleTrigger('tooltips', 500, 'Tooltips sync (next 500)')
-                }
+                onClick={() => handleTrigger('tooltips', 500, 'Tooltips sync (next 500)')}
                 className="focus:bg-amber-500/15 focus:text-amber-200"
               >
                 <FileText className="size-4 text-cyan-400" />
                 Sync tooltips (next 500)
-                <span className="ml-auto text-[10px] text-zinc-500">
-                  {pendingTooltips} pending
-                </span>
+                <span className="ml-auto text-[10px] text-zinc-500">{pendingTooltips} pending</span>
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() =>
-                  handleTrigger('videos', 500, 'Animation sync (next 500)')
-                }
+                onClick={() => handleTrigger('videos', 500, 'Animation sync (next 500)')}
                 className="focus:bg-amber-500/15 focus:text-amber-200"
               >
                 <Film className="size-4 text-amber-400" />
                 Sync animations (next 500)
-                <span className="ml-auto text-[10px] text-zinc-500">
-                  {pendingAnimations} pending
-                </span>
+                <span className="ml-auto text-[10px] text-zinc-500">{pendingAnimations} pending</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-zinc-800" />
               <DropdownMenuItem
@@ -259,7 +535,7 @@ export function SyncFooter() {
         >
           bdocodex.com
         </a>{' '}
-        · Animation durations extracted via{' '}
+        · Animation durations via{' '}
         <a
           href="https://ffmpeg.org/ffprobe.html"
           target="_blank"
@@ -268,6 +544,7 @@ export function SyncFooter() {
         >
           ffprobe
         </a>
+        · Lurker v2 solves JS challenge + endpoint rotation + PID lock
       </div>
     </footer>
   )
