@@ -233,12 +233,22 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // CC filter (already multi-select)
-  if (cc) {
-    const ccs = cc.split(',').map((c) => c.trim()).filter(Boolean)
-    if (ccs.length) {
-      AND.push({ OR: ccs.map((c) => ({ ccTypes: { contains: c } })) })
-    }
+  // CC filter (multi-select). Special value "__pvp_only__" filters for skills
+  // that have at least one PvP CC (ccCounters > 0, excluding PvE-only CCs).
+  const pvpOnlyFilter = cc?.includes('__pvp_only__')
+  const ccFilterValues = cc
+    ? cc.split(',').map((c) => c.trim()).filter(Boolean).filter((c) => c !== '__pvp_only__')
+    : []
+
+  if (pvpOnlyFilter) {
+    // Must have at least some CC types (rough DB filter; precise PvE-only
+    // filtering happens post-query in the max-rank path)
+    AND.push({ ccTypes: { not: null } })
+    AND.push({ ccTypes: { not: '' } })
+  }
+
+  if (ccFilterValues.length) {
+    AND.push({ OR: ccFilterValues.map((c) => ({ ccTypes: { contains: c } })) })
   }
 
   // Numeric ranges
@@ -328,7 +338,7 @@ export async function GET(req: NextRequest) {
     // Also pre-compute PvP damage and CC counters when sorting by those columns.
     let filteredIds = maxRankSkillIds
     const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage'
-    const needsCC = sort === 'ccCounters'
+    const needsCC = sort === 'ccCounters' || pvpOnlyFilter
     let dmgPvEMap: Map<number, number> | null = null
     let dmgPvPMap: Map<number, number> | null = null
     let ccMap: Map<number, number> | null = null
@@ -350,9 +360,27 @@ export async function GET(req: NextRequest) {
         const dmg = calculateDamage(rows, s.pvpDamagePercent)
         dmgPvEMap.set(s.skillId, dmg.totalPvE)
         dmgPvPMap.set(s.skillId, dmg.totalPvP ?? 0)
-        const ccArr = s.ccTypes ? s.ccTypes.split(',').map((x) => x.trim()).filter(Boolean) : null
+
+        // Exclude PvE-only CCs from the counter calculation
+        const pveOnlySet = new Set<string>()
+        if (rows) {
+          for (const r of rows) {
+            if (r.kind === 'cc' && r.pveOnly && r.label) {
+              pveOnlySet.add(r.label)
+            }
+          }
+        }
+        const ccArr = s.ccTypes
+          ? s.ccTypes.split(',').map((x) => x.trim()).filter(Boolean).filter((cc) => !pveOnlySet.has(cc))
+          : null
         ccMap.set(s.skillId, calculateCCCounters(ccArr))
       }
+
+      // Filter by PvP CC only (ccCounters > 0 after excluding PvE-only)
+      if (pvpOnlyFilter) {
+        filteredIds = filteredIds.filter((id) => (ccMap!.get(id) ?? 0) > 0)
+      }
+
       // Filter by damage range (PvE)
       if (minDamage || maxDamage) {
         const min = minDamage ? parseFloat(minDamage) : 0

@@ -340,3 +340,31 @@ also committed for continuity.
   Forward Guard = 🛡 (shield, was ⬛).
 - **`ccCounterDisplay` field** added to all skill API responses (string like
   "1+1" or "—" if no PvP CCs).
+
+---
+
+## [1.8.0] — 2025-06-29 (PvP CC Filter + Range Fix + Video Plan + Garmoth API)
+
+### Added
+- **"PvP CC only" filter**: First option in the CC Types section. Filters for
+  skills that have at least one PvP CC (excludes PvE-only CCs). Returns 482
+  max-rank skills with PvP CCs.
+- **`docs/VIDEO_PARSING_PLAN.md`**: Detailed plan for detecting double casts
+  and hanging time in bdocodex preview videos. Uses ffmpeg scene detection
+  and motion curve analysis. Not yet implemented.
+- **Garmoth API discovery**: `api.garmoth.com/api/skill-addons` is completely
+  open (no anti-bot, no Cloudflare). Returns 927 skills with addon popularity
+  data, matching bdocodex IDs. Single 312KB request.
+
+### Fixed
+- **Cooldown slider range**: Now uses 90th percentile (60s) instead of absolute
+  max (1200s). The 1200s max was caused by Black Spirit rage skills with 20m
+  cooldowns — real but impractical for the slider. 90% of skills have ≤60s.
+- **Damage slider range**: Now uses 99th percentile (163K) instead of absolute
+  max (544K). The 544K was a single outlier skill.
+
+### Changed
+- `/api/ranges` now returns `absoluteMax` alongside `max` for reference.
+- CC filter handling: special value `__pvp_only__` triggers both a DB-level
+  filter (`ccTypes IS NOT NULL`) and a post-query filter (`ccCounters > 0`
+  after excluding PvE-only CCs).

@@ -456,6 +456,15 @@ export function FilterSidebar() {
               CC Types
             </SectionTitle>
             <div className="flex flex-wrap gap-1.5">
+              {/* PvP CC only — special filter (first option) */}
+              <Chip
+                active={filters.cc?.includes('__pvp_only__') ?? false}
+                color="#f87171"
+                onClick={() => toggleCc('__pvp_only__')}
+              >
+                <Zap className="mr-0.5 size-3" />
+                PvP CC only
+              </Chip>
               {CC_TYPE_NAMES.map((c) => {
                 const meta = CC_TYPES[c]
                 return (

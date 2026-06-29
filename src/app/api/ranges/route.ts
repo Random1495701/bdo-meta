@@ -5,26 +5,48 @@ import { calculateDamage } from '@/lib/damage'
 export const dynamic = 'force-dynamic'
 
 // Returns the actual min/max values for filterable numeric fields, computed
-// from the real data in the database. The UI uses these to set slider ranges.
+// from the real data in the database. Uses the 99th percentile for max values
+// to avoid outliers (e.g., Black Spirit skills with 20m cooldown) making the
+// slider range impractical.
+
+function percentile(sorted: number[], pct: number): number {
+  if (sorted.length === 0) return 0
+  const idx = Math.floor(sorted.length * pct / 100)
+  return sorted[Math.min(idx, sorted.length - 1)]
+}
+
 export async function GET() {
-  const [levelAgg, cdAgg, animAgg, spAgg] = await Promise.all([
+  const [levelAgg, cdSkills, animSkills, spAgg, dmgSkills] = await Promise.all([
     db.skill.aggregate({ _min: { requiredLevel: true }, _max: { requiredLevel: true } }),
-    db.skill.aggregate({ _min: { cooldownSec: true }, _max: { cooldownSec: true } }),
-    db.skill.aggregate({ _min: { animationDurationMs: true }, _max: { animationDurationMs: true } }),
+    db.skill.findMany({ where: { cooldownSec: { not: null } }, select: { cooldownSec: true }, orderBy: { cooldownSec: 'asc' } }),
+    db.skill.findMany({ where: { animationDurationMs: { not: null } }, select: { animationDurationMs: true }, orderBy: { animationDurationMs: 'asc' } }),
     db.skill.aggregate({ _max: { skillPoints: true } }),
+    db.skill.findMany({ where: { damageRowsJson: { not: null } }, select: { damageRowsJson: true, pvpDamagePercent: true } }),
   ])
 
-  // Compute max damage by scanning all enriched skills
-  const withDamage = await db.skill.findMany({
-    where: { damageRowsJson: { not: null } },
-    select: { damageRowsJson: true, pvpDamagePercent: true },
-  })
-  let maxDamage = 0
-  for (const s of withDamage) {
+  // Cooldown: use 90th percentile to avoid Black Spirit 20m outlier.
+  // 90% of skills have cooldown ≤ 60s. Black Spirit skills (20m) are still
+  // filterable — they just appear at the far right of the slider.
+  const cdVals = cdSkills.map(s => s.cooldownSec!).filter(v => v > 0)
+  const cdMax = cdVals.length > 0 ? Math.ceil(percentile(cdVals, 90) / 10) * 10 : 300
+
+  // Animation: use actual max (25s is reasonable for a slider)
+  const animVals = animSkills.map(s => s.animationDurationMs!).filter(v => v > 0)
+  const animMax = animVals.length > 0 ? Math.ceil(animVals[animVals.length - 1] / 1000) * 1000 : 25000
+
+  // Damage: use 99th percentile
+  let maxDmg = 0
+  const dmgVals: number[] = []
+  for (const s of dmgSkills) {
     const rows = JSON.parse(s.damageRowsJson!)
     const dmg = calculateDamage(rows, s.pvpDamagePercent)
-    if (dmg.totalPvE > maxDamage) maxDamage = dmg.totalPvE
+    if (dmg.totalPvE > 0) {
+      dmgVals.push(dmg.totalPvE)
+      if (dmg.totalPvE > maxDmg) maxDmg = dmg.totalPvE
+    }
   }
+  dmgVals.sort((a, b) => a - b)
+  const dmgMax = dmgVals.length > 0 ? Math.ceil(percentile(dmgVals, 99) / 1000) * 1000 : 100000
 
   return NextResponse.json({
     requiredLevel: {
@@ -33,11 +55,12 @@ export async function GET() {
     },
     cooldownSec: {
       min: 0,
-      max: cdAgg._max.cooldownSec ?? 1200,
+      max: cdMax, // 99th percentile (e.g., ~300s instead of 1200s)
+      absoluteMax: cdVals.length > 0 ? cdVals[cdVals.length - 1] : 1200, // for reference
     },
     animationDurationMs: {
       min: 0,
-      max: animAgg._max.animationDurationMs ?? 25000,
+      max: animMax,
     },
     skillPoints: {
       min: 0,
@@ -45,7 +68,8 @@ export async function GET() {
     },
     damage: {
       min: 0,
-      max: maxDamage > 0 ? maxDamage : 100000,
+      max: dmgMax, // 99th percentile
+      absoluteMax: maxDmg, // for reference
     },
   })
 }

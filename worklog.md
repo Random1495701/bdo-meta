@@ -917,3 +917,133 @@ Stage Summary:
 - **Detail drawer redesigned**: Stats reordered by relevance: Damage → Cooldown → Protection → CC Count → Animation.
 - **Protection icons changed**: Super Armor = 💪 (flexing muscles), Forward Guard = 🛡 (shield).
 - **Slider ranges**: All use actual DB max values (damage max=544,962, level max=62, cooldown max=1200s, animation max=25000ms).
+
+---
+Task ID: 14
+Agent: research-alt-sources-v2
+Task: Test access to BDO skill data from alternative sources (revisit Task 4 findings)
+
+Work Log:
+- Read /home/z/my-project/worklog.md to absorb Task 4 findings (garmoth/grumpygreen/bdolytics/bddatabase all Cloudflare-locked; PA has no public API; calpheonjs has Skills on roadmap but unimplemented; bdocodex endpoint rotation is the only viable path).
+- Tested Pearl Abyss for any new public API since Task 4: `developer.pearlabyss.com` and `api.pearlabyss.com` both still return HTTP 000 (DNS failure). `pearlabyss.com/en-US/Api` returns 200 but is just marketing. Web search "BDO skill data API 2025" returned only marketplace-proxy repos (guy0090/bdo-api, arsha.io Postman collection) and bdocodex-based scrapers. **No PA skill API exists.**
+- **GARMOTH BREAKTHROUGH**: Task 4 reported api.garmoth.com as "open but every path returns canned 404 JSON". Re-probed ~50 endpoint variations; found **2 working endpoints** (Task 4 missed these — likely added recently or Task 4 didn't try these exact paths):
+  - **`/api/skill-addons`** → HTTP 200, **319,853 bytes JSON**, NO Cloudflare, NO rate-limit (10/10 rapid requests all 200 in ~1.4s each). Returns `{"addons": {...60 addon effects...}, "skills": [927 skill objects]}`. Each skill has: `id` (matches bdocodex), `type` (pre/awak/succ), `level`, `addon` (slot count), `class_id`, `name`, `lang`, `img` (PAZ path), `addon_popularity_0`/`addon_popularity_1` (dict of addon_id→vote_count). **The addon popularity data is UNIQUE — bdocodex does not have it.** Verified 5 IDs (7714, 6855, 5488, 2160, 1) against bdocodex tip.php — all return the same skill name (Sahee's Descent I, Blazing Strike I, Hourglass of Death I, Delighted Blast I, Sword Training I).
+  - **`/api/crystals`** → HTTP 200, 90,578 bytes JSON. 289 crystal entries keyed by item ID (matches bdocodex item IDs, e.g. 15281 = "HAN Dawn Crystal - All AP"). Not skill data but useful for future gear features.
+  - All other api.garmoth.com paths (`/api/skills`, `/api/v1/skills`, `/api/data`, `/api/build`, `/api/class`, locale variants `/api/skill-addons/de|fr|kr|...`, etc.) still return the canned 128-byte `{"error":"Not Found","code":404}` JSON. Only `/api/skill-addons` and `/api/crystals` are exposed.
+  - garmoth.com itself (the HTML site) is still Cloudflare 403 to curl — but the JSON API host is wide open. **No headless browser needed.**
+- **BDO CODEX SITEMAP DISCOVERY**: Task 4 didn't check sitemap. Found `https://bdocodex.com/robots.txt` → `Sitemap: https://bdocodex.com/map/sitemap.xml`. Sitemap index lists 5 US sitemaps (sitemap_0_us.txt … sitemap_4_us.txt, 50K URLs each). Inspected each:
+  - `sitemap_2_us.txt` contains **29,005 unique skill URLs** (range IDs 1–65533). This is a COMPLETE inventory of every bdocodex-known skill ID, vs the ~7,231 we currently track (many of the extras are event/life/mount skills like ID 57005 = "[Event] Energy of Happiness" — verified fetches 200, 91 KB). Useful for **discovery** (find skills our DB doesn't have) — same field set as `/us/skill/<id>/` (no new fields).
+  - Other sitemaps: sitemap_0_us=50K items, sitemap_1_us=14.7K items + 20.2K quests + 15.1K NPCs, sitemap_3_us=50K (mixed types), sitemap_4_us=580 recipes.
+  - All sitemaps are plain text URL lists (not XML), one URL per line — trivial to parse.
+- **BDO CODEX "API" check**: All `/api/*`, `/v1/*`, `/api/v1/*`, `/data/*` paths return 301-redirect-to-trailing-slash then 404. No hidden REST API. `query.php?a=` still only responds to `skills` (4.4 MB DataTables, 9599 rows) — all other action names (skill_list, skillbuilder, addons, classes, class_list) return 16-byte empty response.
+- **CALPHEONJS RE-CHECK**: Confirmed repo last pushed 2022-03-27 (abandoned 3+ years). README on master still lists Skills under "Roadmap" — **NOT implemented**. Not viable.
+- **BDO FOUNDRY**: `https://www.blackdesertfoundry.com/warrior-class-guide/` returns 200 (364 KB WordPress HTML). Has 12 HTML tables with skill recommendations but **no skill IDs** (just human-readable names like "Solar Flare Attack"). No JSON-LD for skills. Would require HTML scraping + fuzzy-name-matching to bdocodex IDs (lossy). Not viable as a primary data source.
+- **GitHub re-search**: Same results as Task 4 — `pxds/bdo-skill-list` (Python scraper, not dataset), `marceloclp/bdo-scraper` (deprecated), `man90es/BDO-REST-API` (marketplace only), `guy0090/bdo-api` (marketplace proxy). No pre-extracted BDO skill JSON dump exists in any public repo.
+
+Stage Summary:
+
+### Sources ranked best-to-worst (this round)
+
+| Rank | Source | Curl? | Skill IDs match bdocodex? | Unique fields | Anti-bot? | Viable? |
+|---|---|---|---|---|---|---|
+| 1 | **api.garmoth.com/api/skill-addons** | ✅ HTTP 200 | ✅ YES (verified 5 IDs) | addon_popularity, skill type (pre/awak/succ), addon count, class_id, level, img path | NONE (10/10 rapid reqs OK) | **YES — best new source** |
+| 2 | **bdocodex.com sitemap_2_us.txt** | ✅ HTTP 200 | ✅ YES (same site) | 29,005 skill IDs (full inventory vs our 7,231) — discovery-only, no new fields | shares bdocodex IP rate-limit | YES — for skill ID discovery |
+| 3 | **api.garmoth.com/api/crystals** | ✅ HTTP 200 | ✅ YES (item IDs match) | 289 crystals with stats/price/rarity | NONE | Bonus — not skills, useful for gear features |
+| 4 | Pearl Abyss official API | ❌ DNS fail | n/a | n/a | n/a | NO — doesn't exist |
+| 5 | BDO Foundry | ✅ HTTP 200 | ❌ names only, no IDs | none structured | none | NO — HTML guide, no IDs |
+| 6 | calpheonjs GitHub | n/a | would scrape bdocodex | none | n/a | NO — abandoned, Skills unimplemented |
+| 7 | Other GitHub repos | n/a | n/a | none | n/a | NO — no pre-extracted dataset |
+
+### Key answers
+
+1. **Has anything changed since Task 4?** YES — `api.garmoth.com` now serves 2 real JSON endpoints (Task 4 missed them). `/api/skill-addons` is a major new source for skill-addon popularity data.
+2. **Do the IDs match bdocodex?** YES (verified 5/5: 7714, 6855, 5488, 2160, 1).
+3. **What new fields does garmoth expose?** `addon_popularity_0` / `addon_popularity_1` (which addons real players pick for each skill, as vote counts), `type` (pre/awak/succ), `addon` (slot count). Bdocodex has none of these.
+4. **Is it scrapable via curl?** YES — no Cloudflare on api.garmoth.com, no rate limit observed (10 rapid requests all 200). Just needs a `User-Agent` header.
+5. **How many skills does it cover?** 927 (only skills that have addon slots — this is a subset of all combat skills, focused on endgame builds).
+6. **Did bdocodex add an API?** No. Sitemap exists but no REST API. The 29,005-URL sitemap is the most useful new bdocodex discovery.
+
+### Sample successful requests
+
+```bash
+# GARMOTH skill-addons (NEW — the breakthrough)
+curl -s 'https://api.garmoth.com/api/skill-addons' \
+  -H 'User-Agent: Mozilla/5.0' \
+  | python3 -m json.tool | head -40
+# Returns: {"addons": {1: {id:1, name:"All DP +20 for 10 sec", lang:...}, ...60 total},
+#           "skills": [{id:7714, type:"awak", level:56, addon:2, class_id:24,
+#                       name:"Sahee's Descent I", img:"new_icon/.../pmyf_skill_7714.webp",
+#                       addon_popularity_0: {"2":37, "5":4, ...}, addon_popularity_1: null}, ...927 total]}
+
+# BDO CODEX sitemap (NEW discovery — 29,005 skill IDs)
+curl -s 'https://bdocodex.com/map/sitemap_2_us.txt' -A 'Mozilla/5.0' \
+  | grep '/skill/' | head -5
+# Returns:
+#   https://bdocodex.com/us/skill/57005/
+#   https://bdocodex.com/us/skill/57004/
+#   https://bdocodex.com/us/skill/57007/
+#   https://bdocodex.com/us/skill/57006/
+#   https://bdocodex.com/us/skill/57001/
+
+# GARMOTH crystals (bonus — not skills but useful)
+curl -s 'https://api.garmoth.com/api/crystals' -H 'User-Agent: Mozilla/5.0' | head -c 500
+# Returns: {"15281":{"main_key":15281,"name":"HAN Dawn Crystal - All AP","group":"kharazad",...}}
+```
+
+### Recommendations for next implementation steps
+
+1. **Integrate `api.garmoth.com/api/skill-addons` into the sync pipeline** as a new enrichment phase. It's:
+   - **Free** (no rate limit, no Cloudflare, no JS challenge — unlike bdocodex)
+   - **Fast** (single 312 KB request returns all 927 skills at once)
+   - **Unique data** (addon popularity is not available anywhere else)
+   - **Verified compatible** IDs match bdocodex skill IDs exactly
+   
+   Suggested schema additions to the Skill record: `skillType` ('pre'|'awak'|'succ'), `addonSlots` (int), `addonPopularity` (JSON: `{addonId: voteCount, ...}` for slot 0 and slot 1), `iconPath` (PAZ path).
+
+2. **Use `bdocodex.com/map/sitemap_2_us.txt` for skill ID discovery**. The current DB tracks ~7,231 skills but bdocodex knows of 29,005. Many extras are event/life/mount skills — worth a one-time sync pass to populate the DB with all available IDs (even if most will be marked as "non-combat" / unenriched). Filter to those with `/skill/<id>/` URLs.
+
+3. **Do NOT** invest time in BDO Foundry, calpheonjs, Pearl Abyss API, or other GitHub repos — all confirmed dead ends in this round.
+
+4. **Future enhancement**: Garmoth's `/api/crystals` returns 289 crystals with stat data — useful when the project expands to gear/crystal features.
+
+### Files changed
+- None (research-only task). All probes were performed via curl/python in /tmp.
+
+### Next actions for implementation agent
+- Add a `garmoth-addons` phase to `scripts/sync-lurker.ts` (or new `scripts/sync-garmoth.ts`) that fetches `https://api.garmoth.com/api/skill-addons` once per run, iterates the 927 skills, and upserts `skillType`, `addonSlots`, `addonPopularity`, `iconPath` into the Skill table where `id` matches.
+- Add a `discover-skill-ids` mode that pulls `https://bdocodex.com/map/sitemap_2_us.txt`, extracts the 29,005 skill IDs, and inserts any missing IDs into the Skill table (with `enriched=false`) so the lurker can slowly backfill them.
+
+---
+Task ID: 15
+Agent: main-orchestrator
+Task: PvP CC only filter, fix ranges, video parsing plan, test other data sources
+
+Work Log:
+- Audited cooldown distribution: 90% of skills have ≤60s cooldown, but 5% are Black Spirit skills at 1200s (20m). The 1200s max made the slider impractical.
+- Updated `/api/ranges` to use 90th percentile for cooldown max (60s instead of 1200s). Also uses 99th percentile for damage max (163K instead of 544K). Returns `absoluteMax` for reference.
+- Added "PvP CC only" filter as the first option in the CC Types section:
+  - Special filter value `__pvp_only__` in the cc array
+  - API: adds `ccTypes IS NOT NULL` DB filter + post-query filter for `ccCounters > 0` (excluding PvE-only CCs)
+  - Returns only skills that have at least one PvP CC
+  - Result: 482 skills have PvP CCs (out of ~2400 max-rank skills)
+- Created `docs/VIDEO_PARSING_PLAN.md` — detailed plan for detecting double casts and hanging time in bdocodex preview videos:
+  - Phase 1: Statistical analysis (frame extraction + correlation)
+  - Phase 2: Motion curve analysis using ffmpeg's `scene` filter
+  - Phase 3: Duration correction algorithm (detect hanging time + double cast)
+  - Phase 4: Validation against known BDO frame data (60 FPS, 30-180 frames per skill)
+  - Alternative: manual calibration with a fixed correction factor
+  - Estimated effort: ~6 hours
+- Delegated data source testing to subagent (Task ID 14) which found:
+  - **api.garmoth.com/api/skill-addons**: COMPLETELY OPEN (no anti-bot, no Cloudflare). Returns 927 skills with addon popularity data, matching bdocodex IDs. 312KB JSON in one request. 10/10 rapid requests all 200.
+  - **bdocodex sitemap**: 29,005 skill URLs (vs our 7,231) — many event/life/mount skills we're missing
+  - Pearl Abyss API: still doesn't exist
+  - BDO Foundry: HTML only, no skill IDs
+  - All GitHub repos: abandoned or no skill data
+- Verified: lint clean, PvP CC filter works (482 skills), ranges fixed (cd=60s, dmg=163K), garmoth API accessible (200, 320KB), lurker still running.
+
+Stage Summary:
+- **PvP CC only filter**: Added as first option in CC Types. Filters for skills with at least one PvP CC (482 skills).
+- **Ranges fixed**: Cooldown slider max now 60s (90th percentile, was 1200s). Damage slider max now 163K (99th percentile, was 544K).
+- **Video parsing plan**: Written to `docs/VIDEO_PARSING_PLAN.md`. Describes 4-phase approach using ffmpeg scene detection + motion curves. Not yet implemented.
+- **Garmoth API breakthrough**: `api.garmoth.com/api/skill-addons` is completely open, returns 927 skills with addon popularity data and matching bdocodex IDs. No anti-bot protection. Single 312KB request.
+- **Bdocodex sitemap**: 29,005 skill URLs discovered (vs our 7,231). Could discover 21,774 missing skill IDs.
