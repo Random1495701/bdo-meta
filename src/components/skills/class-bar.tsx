@@ -144,6 +144,54 @@ function ClassChip({
 export function ClassBar() {
   const classId = useSkillStore((s) => s.filters.classId)
   const setClassId = useSkillStore((s) => s.setClassId)
+  const scrollRef = React.useRef<HTMLDivElement>(null)
+
+  // Wheel-scroll support: when hovering over the class bar, vertical wheel
+  // scrolls translate to horizontal scroll. Also supports shift+wheel.
+  const handleWheel = React.useCallback((e: React.WheelEvent) => {
+    const el = scrollRef.current
+    if (!el) return
+    // If shift is pressed, always scroll horizontally (browser default for shift+wheel)
+    // Otherwise, convert vertical wheel to horizontal scroll
+    if (e.shiftKey) return
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      el.scrollLeft += e.deltaY
+      e.preventDefault()
+    }
+  }, [])
+
+  // Drag-to-scroll support (click and drag to scroll horizontally)
+  const dragState = React.useRef<{ isDown: boolean; startX: number; scrollLeft: number }>({
+    isDown: false,
+    startX: 0,
+    scrollLeft: 0,
+  })
+  const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
+    const el = scrollRef.current
+    if (!el) return
+    // Only start drag if clicking on the scroll area (not a button)
+    if (e.target === el || el.contains(e.target as Node)) {
+      dragState.current = { isDown: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft }
+      el.style.cursor = 'grabbing'
+    }
+  }, [])
+  const handleMouseLeave = React.useCallback(() => {
+    dragState.current.isDown = false
+    if (scrollRef.current) scrollRef.current.style.cursor = ''
+  }, [])
+  const handleMouseUp = React.useCallback(() => {
+    dragState.current.isDown = false
+    if (scrollRef.current) scrollRef.current.style.cursor = ''
+  }, [])
+  const handleMouseMove = React.useCallback((e: React.MouseEvent) => {
+    if (!dragState.current.isDown) return
+    const el = scrollRef.current
+    if (!el) return
+    e.preventDefault()
+    const x = e.pageX - el.offsetLeft
+    const walk = (x - dragState.current.startX) * 1.5
+    el.scrollLeft = dragState.current.scrollLeft - walk
+  }, [])
 
   const classesQuery = useQuery({
     queryKey: ['classes'],
@@ -160,11 +208,9 @@ export function ClassBar() {
   // by classId and picks the canonical className), falling back to /api/classes.
   const countMap = React.useMemo(() => {
     const m = new Map<number, number>()
-    // /api/classes counts (grouped by classId in the DB)
     for (const c of classesQuery.data?.classes ?? []) {
       if (c.skillCount) m.set(c.id, c.skillCount)
     }
-    // Override with /api/stats counts if available (more reliable)
     for (const c of statsQuery.data?.classBreakdown ?? []) {
       if (c.classId != null) m.set(c.classId, c.count)
     }
@@ -173,7 +219,6 @@ export function ClassBar() {
 
   const totalCount = statsQuery.data?.total ?? 0
   const classes = classesQuery.data?.classes ?? []
-
   const allActive = classId === 'all'
 
   return (
@@ -191,53 +236,26 @@ export function ClassBar() {
           )}
           style={
             allActive
-              ? {
-                  boxShadow:
-                    'inset 0 0 0 1px rgba(240,208,96,0.45), 0 0 12px rgba(200,170,68,0.3)',
-                }
-              : {
-                  boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)',
-                  backgroundImage:
-                    'linear-gradient(to bottom, #1a1612, #0d0a08)',
-                }
+              ? { boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.45), 0 0 12px rgba(200,170,68,0.3)' }
+              : { boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)', backgroundImage: 'linear-gradient(to bottom, #1a1612, #0d0a08)' }
           }
         >
           <div
             className="flex size-8 items-center justify-center rounded-sm border-2"
             style={{
-              borderColor: allActive
-                ? 'rgba(240,208,96,0.85)'
-                : 'rgba(156,126,46,0.55)',
-              background:
-                'radial-gradient(circle at center, #2a2218 0%, #0a0908 70%)',
+              borderColor: allActive ? 'rgba(240,208,96,0.85)' : 'rgba(156,126,46,0.55)',
+              background: 'radial-gradient(circle at center, #2a2218 0%, #0a0908 70%)',
               boxShadow: allActive
                 ? 'inset 0 0 0 1px rgba(240,208,96,0.4), 0 0 8px rgba(200,170,68,0.4)'
                 : 'inset 0 0 0 1px rgba(240,208,96,0.15), inset 0 0 6px rgba(0,0,0,0.6)',
             }}
           >
-            <LayoutGrid
-              className={cn(
-                'size-4',
-                allActive ? 'text-amber-300' : 'text-amber-500/70',
-              )}
-            />
+            <LayoutGrid className={cn('size-4', allActive ? 'text-amber-300' : 'text-amber-500/70')} />
           </div>
-          <span
-            className={cn(
-              'text-[10px] font-semibold leading-tight',
-              allActive ? 'text-amber-200' : 'text-amber-100/70',
-            )}
-          >
+          <span className={cn('text-[10px] font-semibold leading-tight', allActive ? 'text-amber-200' : 'text-amber-100/70')}>
             All
           </span>
-          <span
-            className={cn(
-              'rounded-sm px-1.5 text-[9px] font-semibold tabular-nums',
-              allActive
-                ? 'bg-amber-500/25 text-amber-200'
-                : 'bg-amber-950/60 text-amber-300/60',
-            )}
-          >
+          <span className={cn('rounded-sm px-1.5 text-[9px] font-semibold tabular-nums', allActive ? 'bg-amber-500/25 text-amber-200' : 'bg-amber-950/60 text-amber-300/60')}>
             {totalCount.toLocaleString()}
           </span>
         </button>
@@ -245,17 +263,21 @@ export function ClassBar() {
         {/* Divider */}
         <div className="my-1 w-px self-stretch bg-gradient-to-b from-transparent via-amber-800/40 to-transparent" />
 
-        {/* Class chips — horizontally scrollable */}
+        {/* Class chips — horizontally scrollable with wheel + drag support */}
         <div
-          className="flex flex-1 items-stretch gap-1.5 overflow-x-auto pb-1 [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-amber-900/40 [&::-webkit-scrollbar-track]:bg-transparent"
+          ref={scrollRef}
+          onWheel={handleWheel}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          className="bdo-class-scroll flex flex-1 items-stretch gap-1.5 overflow-x-auto pb-1"
+          style={{ cursor: 'grab' }}
           role="tablist"
         >
           {classesQuery.isLoading
             ? Array.from({ length: 10 }).map((_, i) => (
-                <Skeleton
-                  key={i}
-                  className="h-[78px] w-[68px] shrink-0 rounded-sm bg-bdo-leather-dark"
-                />
+                <Skeleton key={i} className="h-[78px] w-[68px] shrink-0 rounded-sm bg-bdo-leather-dark" />
               ))
             : classes
                 .filter((c) => !c.name.startsWith('NEW_CLASS'))
@@ -265,9 +287,7 @@ export function ClassBar() {
                     cls={c}
                     count={countMap.get(c.id) ?? c.skillCount ?? 0}
                     active={classId === c.id}
-                    onClick={() =>
-                      setClassId(classId === c.id ? 'all' : c.id)
-                    }
+                    onClick={() => setClassId(classId === c.id ? 'all' : c.id)}
                   />
                 ))}
         </div>

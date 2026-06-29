@@ -628,3 +628,37 @@ Stage Summary:
 - **Versioning**: Semantic versioning (v1.0.0 → v1.3.0), each version taggable in git
 - **Backups**: Database + lurker state + worklog + changelog + docs all committed to git (non-deletable across sessions)
 - **Handoff**: New AI sessions should read docs/SESSION_HANDOFF.md first, then CHANGELOG.md, then worklog.md
+
+---
+Task ID: 9
+Agent: main-orchestrator
+Task: Fix Prime=Succession, class UI scroll, unified scrollbars, class icons not displaying, audit improvements
+
+Work Log:
+- Audited Prime skills: found 867 skills with "Prime:" prefix that should be flagged as succession. bdocodex uses "Prime:" for awakening-rank succession skills. Ran fix-prime.ts to set isSuccession=true on all 867 + 26 "Awakening:" prefix skills. Succession filter now returns 465 max-rank skills (was 91).
+- Diagnosed class icons not displaying: the old URL pattern (https://bdocodex.com/items/new_icon/00_icon/pc_class_{slug}.png) was returning bdocodex's bot-challenge loading page (HTML instead of PNG) when our IP was rate-limited. All 31 icons returned identical 1891-byte placeholder PNGs.
+- Found correct icon URL: bdocodex's skillbuilder page loads class icons from /images/skillcalc/class_{classId}.webp. Used agent-browser (real browser that solves JS challenges) to download all 31 unique webp icons (640b-3214b each, all verified unique via md5sum).
+- Self-hosted icons at public/icons/classes/{slug}.webp. Updated classIconUrl() in src/lib/skills.ts to return local path /icons/classes/{slug}.webp. This eliminates all bot-challenge issues for class icons.
+- Added wheel-scroll support to class bar: onWheel handler converts vertical wheel to horizontal scroll. Shift+wheel also works (browser default).
+- Added drag-to-scroll support: click and drag on the class bar scrolls horizontally with grab/grabbing cursor feedback.
+- Added unified BDO scrollbar styling to globals.css: gold gradient thumbs (#c8aa44 → #9c7e2e), dark tracks (#0a0908), hover state (#f0d060). Firefox scrollbar-color also set. Added .bdo-class-scroll class for thinner (6px) class bar scrollbar with rounded gold gradient thumb.
+- Created docs/IMPROVEMENT_PLAN.md with 20 prioritized improvement items:
+  - P1 Data Quality (4 items): skill add-ons, prerequisite chain, multi-class skills, Flow/Core typing
+  - P2 UI/UX Polish (5 items): add-ons in drawer, mobile swipe, collapsible filters, damage on cards, keyboard nav
+  - P3 Performance (3 items): max-rank column, icon caching, DB indexing
+  - P4 Features (5 items): build calculator, comparison tool, effect search, theme toggle, i18n
+  - P5 Infrastructure (3 items): backup automation, lurker monitoring, API caching
+- Verified all fixes:
+  - Lint: clean (0 errors)
+  - Class icons: 31/31 loading (verified via agent-browser: naturalWidth=60, loaded=true)
+  - Succession: 465 max-rank skills (was 91)
+  - VLM confirmed: "class icons (small portraits) visible in the class bar. They are distinct images, not placeholders."
+  - .bdo-class-scroll element exists with wheel/drag handlers
+- Lurker continued running throughout all changes (PID 11352, 1261+ enriched, 9 failures from transient network issues).
+
+Stage Summary:
+- **Prime → Succession**: 867 skills fixed. Succession filter now returns 465 max-rank skills.
+- **Class icons**: Self-hosted 31 unique webp icons at /icons/classes/. No more bdocodex dependency for icons.
+- **Wheel scroll**: Class bar now scrolls horizontally with mouse wheel + drag-to-scroll.
+- **Unified scrollbars**: All scrollbars use BDO gold-on-dark theme. Class bar has thinner 6px scrollbar.
+- **Improvement plan**: 20 items documented in docs/IMPROVEMENT_PLAN.md with effort estimates.

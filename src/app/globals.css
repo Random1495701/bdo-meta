@@ -333,3 +333,55 @@
     animation: bdo-fade-pulse 1.4s ease-out;
   }
 }
+
+  /* ========================================
+     UNIFIED BDO SCROLLBAR STYLING
+     All scrollbars match the BDO gold-on-dark theme.
+     ======================================== */
+
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0908;
+    border: 1px solid rgba(156, 126, 46, 0.2);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #c8aa44 0%, #9c7e2e 100%);
+    border: 1px solid rgba(240, 208, 96, 0.3);
+    border-radius: 0;
+    min-height: 40px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #f0d060 0%, #c8aa44 100%);
+    border-color: rgba(240, 208, 96, 0.6);
+  }
+  ::-webkit-scrollbar-corner {
+    background: #0a0908;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #9c7e2e #0a0908;
+  }
+
+  /* Class bar horizontal scroll — thinner, no track border */
+  .bdo-class-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+  .bdo-class-scroll::-webkit-scrollbar-track {
+    background: rgba(10, 9, 8, 0.6);
+    border: none;
+  }
+  .bdo-class-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #9c7e2e 0%, #c8aa44 100%);
+    border: none;
+    border-radius: 3px;
+  }
+  .bdo-class-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #c8aa44 0%, #f0d060 100%);
+  }

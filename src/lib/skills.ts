@@ -253,11 +253,12 @@ export async function fetchRanges(): Promise<SkillRanges> {
 }
 
 // Returns the bdocodex CDN URL for a class icon. `slug` is the lowercased
-// class name (e.g. "warrior", "sorceress"). These URLs have been verified to
-// return 200 for all 31 BDO classes.
+// Class icons are self-hosted at /icons/classes/{slug}.webp (downloaded from
+// bdocodex's /images/skillcalc/class_{id}.webp). Self-hosting avoids bot-challenge
+// issues when bdocodex rate-limits our IP.
 export function classIconUrl(slug: string | null): string | null {
   if (!slug) return null
-  return `https://bdocodex.com/items/new_icon/00_icon/pc_class_${slug}.png`
+  return `/icons/classes/${slug}.webp`
 }
 
 export async function triggerSync(

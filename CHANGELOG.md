@@ -12,8 +12,47 @@ recovered with `git checkout vX.Y.Z`.
 ## [Unreleased]
 
 ### In Progress
-- Lurker v2 daemon running in background, enriching remaining ~5,800 skills
-- ~1,180 / 7,231 skills enriched as of last commit
+- Lurker v2 daemon running in background, enriching remaining ~5,600 skills
+- ~1,500 / 7,231 skills enriched as of last commit
+
+---
+
+## [1.4.0] — 2025-06-29 (Prime Fix + Class Icons + Scroll UX)
+
+### Added
+- **Self-hosted class icons**: Downloaded all 31 BDO class icons from bdocodex
+  (`/images/skillcalc/class_{id}.webp`) to `public/icons/classes/{slug}.webp`.
+  Self-hosting eliminates bot-challenge issues when bdocodex rate-limits our IP.
+  All 31 icons verified unique (640b–3,214b each).
+- **Wheel-scroll on class bar**: Hovering over the class bar and scrolling the
+  mouse wheel now scrolls horizontally. Shift+wheel also works.
+- **Drag-to-scroll on class bar**: Click and drag on the class bar to scroll
+  horizontally (grab cursor feedback).
+- **Unified BDO scrollbar styling**: All scrollbars now match the BDO gold-on-dark
+  theme — gold gradient thumbs (`#c8aa44` → `#9c7e2e`), dark tracks (`#0a0908`),
+  with hover state (`#f0d060`). Firefox `scrollbar-color` also set.
+- **Thinner class bar scrollbar**: 6px height with rounded gold gradient thumb.
+- **Improvement plan**: `docs/IMPROVEMENT_PLAN.md` with 20 prioritized improvement
+  items across data quality, UI/UX, performance, features, and infrastructure.
+
+### Fixed
+- **"Prime:" skills now flagged as Succession**: 867 skills with "Prime:" name
+  prefix were missing the `isSuccession` flag. bdocodex uses "Prime:" for
+  awakening-rank succession skills. Fixed via `scripts/fix-prime.ts`. Succession
+  filter now returns 465 max-rank skills (was 91).
+- **"Awakening:" prefix skills flagged**: 26 skills with "Awakening:" prefix
+  now have `isAwakening = true`.
+- **Class icons not displaying**: The old URL pattern
+  (`/items/new_icon/00_icon/pc_class_{slug}.png`) was returning bdocodex's
+  bot-challenge loading page (HTML instead of PNG) when our IP was rate-limited.
+  Fixed by self-hosting icons locally.
+
+### Changed
+- `classIconUrl()` in `src/lib/skills.ts` now returns `/icons/classes/{slug}.webp`
+  (local path) instead of bdocodex CDN URL.
+- Class bar scroll container now has `bdo-class-scroll` CSS class for themed
+  scrollbar + wheel/drag event handlers.
+- Dev server Prisma client refreshes on restart to pick up DB changes.
 
 ---
 
