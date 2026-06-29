@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
+import { calculateDamage, type DamageRow } from '@/lib/damage'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,11 +17,15 @@ function splitCsv(s: string | null): string[] | null {
   return arr.length ? arr : null
 }
 
+// Extended rank map — includes high roman numerals used by passive skills (up to XXX)
 const RANK_MAP: Record<string, number> = {
   I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10,
   XI: 11, XII: 12, XIII: 13, XIV: 14, XV: 15, XVI: 16, XVII: 17, XVIII: 18,
+  XIX: 19, XX: 20, XXI: 21, XXII: 22, XXIII: 23, XXIV: 24, XXV: 25,
+  XXVI: 26, XXVII: 27, XXVIII: 28, XXIX: 29, XXX: 30,
 }
-const RANK_SUFFIX = /\s+(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII)$/
+// Regex ordered longest-first to ensure correct matching (XXX before XX before X)
+const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|IX|VIII|VII|VI|IV|V|III|II|I)$/
 
 function getBaseName(name: string): string {
   return name.replace(RANK_SUFFIX, '')
@@ -32,6 +37,9 @@ function getRank(name: string): number {
 }
 
 function serializeSkill(s: any) {
+  const damageRows: DamageRow[] | null = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
+  const damage = calculateDamage(damageRows, s.pvpDamagePercent)
+
   return {
     id: s.id,
     skillId: s.skillId,
@@ -49,7 +57,8 @@ function serializeSkill(s: any) {
     cooldown: s.cooldown,
     cooldownSec: s.cooldownSec,
     description: s.description,
-    damageRows: s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null,
+    damageRows,
+    damage,
     ccTypes: splitCsv(s.ccTypes),
     protectionTypes: splitCsv(s.protectionTypes),
     pvpDamagePercent: s.pvpDamagePercent,
@@ -76,9 +85,10 @@ export async function GET(req: NextRequest) {
   const pageSize = Math.min(100, Math.max(1, parseInt(sp.get('pageSize') || '24', 10)))
 
   const q = sp.get('q')?.trim() || ''
-  const classId = sp.get('class') // class id or "all"
-  const skillType = sp.get('type')
-  const protection = sp.get('protection')
+  // Multi-select: comma-separated values
+  const classParam = sp.get('class') // "0,1,2" or "all"
+  const typeParam = sp.get('type') // "succession,absolute" or "all"
+  const protectionParam = sp.get('protection') // "Super Armor,Forward Guard" or "none" or "all"
   const cc = sp.get('cc')
   const minLvl = sp.get('minLvl')
   const maxLvl = sp.get('maxLvl')
@@ -86,13 +96,16 @@ export async function GET(req: NextRequest) {
   const maxCd = sp.get('maxCd')
   const minAnim = sp.get('minAnim')
   const maxAnim = sp.get('maxAnim')
+  const minSp = sp.get('minSp')
+  const maxSp = sp.get('maxSp')
+  const minDamage = sp.get('minDamage')
+  const maxDamage = sp.get('maxDamage')
   const hasVideo = sp.get('hasVideo')
   const hasAnim = sp.get('hasAnim')
   const quickslot = sp.get('quickslot')
   const hasAddon = sp.get('hasAddon')
-  // NEW: maxRank filter (default true — only show highest rank per skill)
+  const hasPrereqs = sp.get('hasPrereqs')
   const maxRank = sp.get('maxRank') !== 'false'
-  // NEW: filter out evasion skills (default true)
   const filterEvasion = sp.get('filterEvasion') !== 'false'
 
   const sort = sp.get('sort') || 'skillId'
@@ -103,9 +116,7 @@ export async function GET(req: NextRequest) {
   const AND: Prisma.SkillWhereInput[] = []
 
   // Exclude NEW_CLASS placeholders always
-  AND.push({
-    className: { not: { startsWith: 'NEW_CLASS' } },
-  })
+  AND.push({ className: { not: { startsWith: 'NEW_CLASS' } } })
 
   // Filter out evasion skills by default
   if (filterEvasion) {
@@ -136,40 +147,54 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Class filter — FIXED: handle classId=0 (Warrior) properly
-  if (classId !== null && classId !== undefined && classId !== 'all' && classId !== '') {
-    const cid = parseInt(classId, 10)
-    if (!Number.isNaN(cid)) {
-      // Match by classId OR by className containing the class name (for multi-class skills)
-      AND.push({ classId: cid })
+  // Multi-select class filter
+  if (classParam && classParam !== 'all') {
+    const classIds = classParam.split(',').map((c) => parseInt(c.trim(), 10)).filter((c) => !Number.isNaN(c))
+    if (classIds.length === 1) {
+      AND.push({ classId: classIds[0] })
+    } else if (classIds.length > 1) {
+      AND.push({ classId: { in: classIds } })
     }
   }
 
-  // Skill type filter
-  if (skillType && skillType !== 'all') {
-    if (skillType === 'main') {
-      AND.push({
-        isAbsolute: false,
-        isAwakening: false,
-        isSuccession: false,
-        isBlackSpirit: false,
-        isPassive: false,
-      })
-    } else if (skillType === 'awakening') AND.push({ isAwakening: true })
-    else if (skillType === 'succession') AND.push({ isSuccession: true })
-    else if (skillType === 'absolute') AND.push({ isAbsolute: true })
-    else if (skillType === 'blackspirit') AND.push({ isBlackSpirit: true })
-    else if (skillType === 'passive') AND.push({ isPassive: true })
+  // Multi-select skill type filter
+  if (typeParam && typeParam !== 'all') {
+    const types = typeParam.split(',').map((t) => t.trim()).filter(Boolean)
+    if (types.length > 0) {
+      const typeConditions: Prisma.SkillWhereInput[] = []
+      for (const t of types) {
+        if (t === 'main') {
+          typeConditions.push({
+            isAbsolute: false, isAwakening: false, isSuccession: false,
+            isBlackSpirit: false, isPassive: false,
+          })
+        } else if (t === 'awakening') typeConditions.push({ isAwakening: true })
+        else if (t === 'succession') typeConditions.push({ isSuccession: true })
+        else if (t === 'absolute') typeConditions.push({ isAbsolute: true })
+        else if (t === 'blackspirit') typeConditions.push({ isBlackSpirit: true })
+        else if (t === 'passive') typeConditions.push({ isPassive: true })
+      }
+      if (typeConditions.length === 1) {
+        AND.push(typeConditions[0])
+      } else {
+        AND.push({ OR: typeConditions })
+      }
+    }
   }
 
-  if (protection) {
-    if (protection === 'none') {
+  // Multi-select protection filter
+  if (protectionParam && protectionParam !== 'all') {
+    if (protectionParam === 'none') {
       AND.push({ OR: [{ protectionTypes: null }, { protectionTypes: '' }] })
     } else {
-      AND.push({ protectionTypes: { contains: protection } })
+      const prots = protectionParam.split(',').map((p) => p.trim()).filter(Boolean)
+      if (prots.length > 0) {
+        AND.push({ OR: prots.map((p) => ({ protectionTypes: { contains: p } })) })
+      }
     }
   }
 
+  // CC filter (already multi-select)
   if (cc) {
     const ccs = cc.split(',').map((c) => c.trim()).filter(Boolean)
     if (ccs.length) {
@@ -177,31 +202,17 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  if (minLvl) {
-    const v = parseInt(minLvl, 10)
-    if (!Number.isNaN(v)) AND.push({ requiredLevel: { gte: v } })
-  }
-  if (maxLvl) {
-    const v = parseInt(maxLvl, 10)
-    if (!Number.isNaN(v)) AND.push({ requiredLevel: { lte: v } })
-  }
-  if (minCd) {
-    const v = parseFloat(minCd)
-    if (!Number.isNaN(v)) AND.push({ cooldownSec: { gte: v } })
-  }
-  if (maxCd) {
-    const v = parseFloat(maxCd)
-    if (!Number.isNaN(v)) AND.push({ cooldownSec: { lte: v } })
-  }
-  if (minAnim) {
-    const v = parseInt(minAnim, 10)
-    if (!Number.isNaN(v)) AND.push({ animationDurationMs: { gte: v } })
-  }
-  if (maxAnim) {
-    const v = parseInt(maxAnim, 10)
-    if (!Number.isNaN(v)) AND.push({ animationDurationMs: { lte: v } })
-  }
+  // Numeric ranges
+  if (minLvl) { const v = parseInt(minLvl, 10); if (!Number.isNaN(v)) AND.push({ requiredLevel: { gte: v } }) }
+  if (maxLvl) { const v = parseInt(maxLvl, 10); if (!Number.isNaN(v)) AND.push({ requiredLevel: { lte: v } }) }
+  if (minCd) { const v = parseFloat(minCd); if (!Number.isNaN(v)) AND.push({ cooldownSec: { gte: v } }) }
+  if (maxCd) { const v = parseFloat(maxCd); if (!Number.isNaN(v)) AND.push({ cooldownSec: { lte: v } }) }
+  if (minAnim) { const v = parseInt(minAnim, 10); if (!Number.isNaN(v)) AND.push({ animationDurationMs: { gte: v } }) }
+  if (maxAnim) { const v = parseInt(maxAnim, 10); if (!Number.isNaN(v)) AND.push({ animationDurationMs: { lte: v } }) }
+  if (minSp) { const v = parseInt(minSp, 10); if (!Number.isNaN(v)) AND.push({ skillPoints: { gte: v } }) }
+  if (maxSp) { const v = parseInt(maxSp, 10); if (!Number.isNaN(v)) AND.push({ skillPoints: { lte: v } }) }
 
+  // Has filters
   if (hasVideo === 'true') AND.push({ videoUrl: { not: null } })
   else if (hasVideo === 'false') AND.push({ OR: [{ videoUrl: null }, { videoUrl: '' }] })
   if (hasAnim === 'true') AND.push({ animationDurationMs: { not: null } })
@@ -209,6 +220,8 @@ export async function GET(req: NextRequest) {
   if (quickslot === 'true') AND.push({ isQuickSlot: true })
   else if (quickslot === 'false') AND.push({ isQuickSlot: false })
   if (hasAddon === 'true') AND.push({ addonsJson: { not: null } })
+  if (hasPrereqs === 'true') AND.push({ prerequisiteIds: { not: null } })
+  else if (hasPrereqs === 'false') AND.push({ OR: [{ prerequisiteIds: null }, { prerequisiteIds: '' }] })
 
   if (AND.length) where.AND = AND
 
@@ -220,27 +233,19 @@ export async function GET(req: NextRequest) {
     anim: { animationDurationMs: order === 'asc' ? 'asc' : 'desc' },
     class: { className: order },
     sp: { skillPoints: order },
+    // 'damage' is handled specially below — computed via calculateDamage()
+    damage: { skillId: order },
   }
   const orderBy = sortMap[sort] || sortMap.skillId
 
   // --- Max-rank filtering ---
-  // If maxRank is enabled, we need to:
-  // 1. Fetch ALL matching skills (not just the page)
-  // 2. Group by base name
-  // 3. Keep only the highest rank per group
-  // 4. Then paginate the result
-  //
-  // For performance, we only fetch the fields we need for grouping + the page.
-  
   if (maxRank) {
-    // Fetch all matching skill IDs + names + levels for grouping
     const allMatching = await db.skill.findMany({
       where,
       select: { skillId: true, name: true, requiredLevel: true },
       orderBy: { requiredLevel: 'asc' },
     })
 
-    // Group by base name, keep highest rank
     const baseNameMap = new Map<string, { skillId: number; rank: number; level: number }>()
     for (const s of allMatching) {
       const baseName = getBaseName(s.name)
@@ -249,7 +254,6 @@ export async function GET(req: NextRequest) {
       if (!existing) {
         baseNameMap.set(baseName, { skillId: s.skillId, rank, level: s.requiredLevel })
       } else {
-        // Keep the one with the higher rank, or higher level if same rank
         if (rank > existing.rank || (rank === existing.rank && s.requiredLevel > existing.level)) {
           baseNameMap.set(baseName, { skillId: s.skillId, rank, level: s.requiredLevel })
         }
@@ -257,25 +261,48 @@ export async function GET(req: NextRequest) {
     }
 
     const maxRankSkillIds = Array.from(baseNameMap.values()).map((v) => v.skillId)
-    const total = maxRankSkillIds.length
 
-    // Now fetch the full skill data for just the page's skill IDs
-    // We need to sort and paginate the max-rank skills
-    // Re-fetch with the ID filter and proper sorting
-    const pageIds = maxRankSkillIds
-      .sort((a, b) => {
-        // Apply sort
-        if (sort === 'name') return order === 'asc' ? a - b : b - a // fallback
-        return order === 'asc' ? a - b : b - a
+    // Apply damage range filter post-query (since damage is computed, not stored)
+    let filteredIds = maxRankSkillIds
+    if (minDamage || maxDamage || sort === 'damage') {
+      const skills = await db.skill.findMany({
+        where: { skillId: { in: maxRankSkillIds } },
+        select: { skillId: true, damageRowsJson: true, pvpDamagePercent: true },
       })
-      .slice((page - 1) * pageSize, page * pageSize)
+      // Build skillId → damage map once
+      const dmgMap = new Map<number, number>()
+      for (const s of skills) {
+        const rows = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
+        const dmg = calculateDamage(rows, s.pvpDamagePercent)
+        dmgMap.set(s.skillId, dmg.totalPvE)
+      }
+      // Filter by damage range
+      if (minDamage || maxDamage) {
+        const min = minDamage ? parseFloat(minDamage) : 0
+        const max = maxDamage ? parseFloat(maxDamage) : Infinity
+        filteredIds = filteredIds.filter((id) => {
+          const v = dmgMap.get(id) ?? 0
+          return v >= min && v <= max
+        })
+      }
+      // Sort by damage
+      if (sort === 'damage') {
+        filteredIds = [...filteredIds].sort((a, b) => {
+          const da = dmgMap.get(a) ?? 0
+          const db_ = dmgMap.get(b) ?? 0
+          return order === 'asc' ? da - db_ : db_ - da
+        })
+      }
+    }
+
+    const total = filteredIds.length
+    const pageIds = filteredIds.slice((page - 1) * pageSize, page * pageSize)
 
     const items = await db.skill.findMany({
       where: { skillId: { in: pageIds } },
       orderBy,
     })
 
-    // Sort items to match pageIds order (since findMany with `in` may not preserve order)
     const idOrder = new Map(pageIds.map((id, i) => [id, i]))
     items.sort((a, b) => (idOrder.get(a.skillId) || 0) - (idOrder.get(b.skillId) || 0))
 
@@ -290,7 +317,7 @@ export async function GET(req: NextRequest) {
     })
   }
 
-  // Non-maxRank path (original behavior)
+  // Non-maxRank path
   const [total, items] = await Promise.all([
     db.skill.count({ where }),
     db.skill.findMany({ where, orderBy, skip: (page - 1) * pageSize, take: pageSize }),

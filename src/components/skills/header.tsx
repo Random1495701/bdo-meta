@@ -27,6 +27,7 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { fetchStats, type SkillSort } from '@/lib/skills'
 import { useSkillStore } from '@/lib/skill-store'
+import { LayoutGrid, List, Table as TableIcon } from 'lucide-react'
 
 const SORT_OPTIONS: { value: SkillSort; label: string }[] = [
   { value: 'skillId', label: 'Skill ID' },
@@ -36,7 +37,50 @@ const SORT_OPTIONS: { value: SkillSort; label: string }[] = [
   { value: 'anim', label: 'Animation' },
   { value: 'class', label: 'Class' },
   { value: 'sp', label: 'SP Cost' },
+  { value: 'damage', label: 'Damage (PvE)' },
 ]
+
+// View-mode toggle: Grid / List / Table. Each is a small icon button styled
+// with the BDO chip aesthetic. Active mode gets the gold-glow treatment.
+function ViewModeToggle() {
+  const viewMode = useSkillStore((s) => s.viewMode)
+  const setViewMode = useSkillStore((s) => s.setViewMode)
+  const modes: { key: 'grid' | 'list' | 'table'; label: string; icon: React.ReactNode }[] = [
+    { key: 'grid', label: 'Grid', icon: <LayoutGrid className="size-3.5" /> },
+    { key: 'list', label: 'List', icon: <List className="size-3.5" /> },
+    { key: 'table', label: 'Table', icon: <TableIcon className="size-3.5" /> },
+  ]
+  return (
+    <div
+      className="flex items-center gap-0.5 rounded-sm border border-amber-800/50 bg-bdo-leather-dark p-0.5"
+      style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
+      role="group"
+      aria-label="View mode"
+    >
+      {modes.map((m) => {
+        const active = viewMode === m.key
+        return (
+          <button
+            key={m.key}
+            type="button"
+            onClick={() => setViewMode(m.key)}
+            title={`${m.label} view`}
+            aria-pressed={active}
+            className={cn(
+              'flex items-center gap-1 rounded-sm px-2 py-1 text-xs font-medium transition-all',
+              active
+                ? 'bdo-chip-on text-amber-200'
+                : 'text-amber-200/50 hover:text-amber-200',
+            )}
+          >
+            {m.icon}
+            <span className="hidden sm:inline">{m.label}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
 
 function StatPill({
   icon,
@@ -187,6 +231,8 @@ export function Header() {
             <div className="hidden items-center md:flex">
               <UpdatedIndicator />
             </div>
+
+            <ViewModeToggle />
 
             <Button
               variant="outline"

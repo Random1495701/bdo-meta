@@ -220,3 +220,43 @@ git log --oneline          # view commit history
 The SQLite database (`db/custom.db`) is committed to git so the enriched skill
 data is always recoverable. The lurker state (`scripts/lurker.state.json`) is
 also committed for continuity.
+
+---
+
+## [1.5.0] — 2025-06-29 (Damage Calc + Multi-Select + New Views)
+
+### Added
+- **Damage calculation**: Every skill now includes a computed `damage` field with
+  per-phase breakdown, total PvE damage, and total PvP damage. Parser handles both
+  structured `[damage]` rows ("Attack 1 damage = 8246% x1") and unstructured
+  `[note]` rows ("Standing attack damage 938% x1, max 3 hits").
+- **Multi-select filtering**: Classes, skill types, and protection types all
+  support selecting multiple values simultaneously. API accepts comma-separated
+  params (`class=0,4,8`, `type=succession,absolute`, `protection=Super Armor,Forward Guard`).
+- **Three view modes**: Grid (existing ornate cards), List (compact rows with
+  inline stats), Table (sortable columns with all skill data). View toggle in header.
+- **New filters**: SP cost range (0–20), Damage range (0–100K), Has Prerequisites toggle.
+- **Damage display on cards**: Total PvE damage (amber) and PvP damage (pink)
+  shown on every skill card that has damage data.
+- **Damage summary in detail drawer**: Two large stat cards (Total PvE / Total PvP)
+  plus per-phase breakdown table showing percent, hits, max hits, and total per phase.
+- **Damage sort option**: Sort skills by total PvE damage.
+- **`src/lib/damage.ts`**: Damage calculator utility with `calculateDamage()` and
+  `formatDamage()` functions.
+- **`src/components/skills/skill-list-row.tsx`**: Compact list view component.
+- **`src/components/skills/skill-table.tsx`**: Full table view with sortable columns.
+
+### Fixed
+- **Passive max-rank filtering**: Extended roman numeral support from XVIII (18)
+  to XXX (30). Regex reordered longest-first to ensure correct matching. Passives
+  like "Dark Maneuver XXX" now correctly show only the highest rank.
+- **Skill icon URL**: Fixed to use `iconUrl()` helper consistently in detail route.
+
+### Changed
+- `SkillFilters` interface: `classId` → `classIds: number[]`, `type` → `types: SkillType[]`,
+  `protection` → `protections: string[]`.
+- Zustand store: `toggleClass()`, `toggleType()`, `toggleProtection()` replace
+  single-select setters. Added `clearClasses()`, `clearTypes()`, `clearProtections()`.
+- `filtersToQuery()`: Emits comma-separated values for multi-select params.
+- `serializeSkill()`: Now includes `damage` field computed by `calculateDamage()`.
+- Skill detail API: Includes `damage` field with per-phase breakdown.

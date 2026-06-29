@@ -91,7 +91,7 @@ function ClassChip({
     <button
       type="button"
       onClick={onClick}
-      title={`${cls.name} — ${count} skills`}
+      title={`${cls.name} — ${count} skills${active ? ' (click to deselect)' : ' (click to select)'}`}
       className={cn(
         'group flex shrink-0 flex-col items-center gap-1 rounded-sm border px-2 py-1.5 transition-all',
         active
@@ -142,8 +142,9 @@ function ClassChip({
 }
 
 export function ClassBar() {
-  const classId = useSkillStore((s) => s.filters.classId)
-  const setClassId = useSkillStore((s) => s.setClassId)
+  const classIds = useSkillStore((s) => s.filters.classIds) ?? []
+  const toggleClass = useSkillStore((s) => s.toggleClass)
+  const clearClasses = useSkillStore((s) => s.clearClasses)
   const scrollRef = React.useRef<HTMLDivElement>(null)
 
   // Wheel-scroll support: when hovering over the class bar, vertical wheel
@@ -219,17 +220,19 @@ export function ClassBar() {
 
   const totalCount = statsQuery.data?.total ?? 0
   const classes = classesQuery.data?.classes ?? []
-  const allActive = classId === 'all'
+  // "All Classes" is active when nothing is selected.
+  const allActive = classIds.length === 0
+  const selectedCount = classIds.length
 
   return (
     <div className="sticky top-[97px] z-20 border-b border-amber-900/50 bg-bdo-ink/95 backdrop-blur supports-[backdrop-filter]:bg-bdo-ink/85">
       <div className="flex items-stretch gap-2 px-4 py-2 lg:px-6">
-        {/* "All Classes" chip — distinctive grid icon */}
+        {/* "All Classes" chip — distinctive grid icon. Clicking clears the selection. */}
         <button
           type="button"
-          onClick={() => setClassId('all')}
+          onClick={() => clearClasses()}
           className={cn(
-            'flex shrink-0 flex-col items-center gap-1 rounded-sm border px-2.5 py-1.5 transition-all',
+            'relative flex shrink-0 flex-col items-center gap-1 rounded-sm border px-2.5 py-1.5 transition-all',
             allActive
               ? 'border-amber-400/80 bg-amber-500/10'
               : 'border-amber-900/40 bg-bdo-leather-dark hover:border-amber-600/60 hover:bg-amber-900/10',
@@ -255,15 +258,24 @@ export function ClassBar() {
           <span className={cn('text-[10px] font-semibold leading-tight', allActive ? 'text-amber-200' : 'text-amber-100/70')}>
             All
           </span>
-          <span className={cn('rounded-sm px-1.5 text-[9px] font-semibold tabular-nums', allActive ? 'bg-amber-500/25 text-amber-200' : 'bg-amber-950/60 text-amber-300/60')}>
-            {totalCount.toLocaleString()}
-          </span>
+          {selectedCount > 0 ? (
+            <span
+              className="rounded-sm border border-amber-400/60 bg-amber-500/20 px-1.5 text-[9px] font-semibold tabular-nums text-amber-200"
+              title={`${selectedCount} class${selectedCount === 1 ? '' : 'es'} selected — click to clear`}
+            >
+              {selectedCount} sel
+            </span>
+          ) : (
+            <span className={cn('rounded-sm px-1.5 text-[9px] font-semibold tabular-nums', allActive ? 'bg-amber-500/25 text-amber-200' : 'bg-amber-950/60 text-amber-300/60')}>
+              {totalCount.toLocaleString()}
+            </span>
+          )}
         </button>
 
         {/* Divider */}
         <div className="my-1 w-px self-stretch bg-gradient-to-b from-transparent via-amber-800/40 to-transparent" />
 
-        {/* Class chips — horizontally scrollable with wheel + drag support */}
+        {/* Class chips — horizontally scrollable with wheel + drag support. Multi-select: clicking toggles each class. */}
         <div
           ref={scrollRef}
           onWheel={handleWheel}
@@ -274,6 +286,7 @@ export function ClassBar() {
           className="bdo-class-scroll flex flex-1 items-stretch gap-1.5 overflow-x-auto pb-1"
           style={{ cursor: 'grab' }}
           role="tablist"
+          aria-multiselectable="true"
         >
           {classesQuery.isLoading
             ? Array.from({ length: 10 }).map((_, i) => (
@@ -286,8 +299,8 @@ export function ClassBar() {
                     key={c.id}
                     cls={c}
                     count={countMap.get(c.id) ?? c.skillCount ?? 0}
-                    active={classId === c.id}
-                    onClick={() => setClassId(classId === c.id ? 'all' : c.id)}
+                    active={classIds.includes(c.id)}
+                    onClick={() => toggleClass(c.id)}
                   />
                 ))}
         </div>

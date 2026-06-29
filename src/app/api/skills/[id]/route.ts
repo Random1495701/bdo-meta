@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { calculateDamage, type DamageRow } from '@/lib/damage'
 
 export const dynamic = 'force-dynamic'
 
@@ -60,6 +61,9 @@ export async function GET(
     })
   }
 
+  const damageRows: DamageRow[] | null = skill.damageRowsJson ? JSON.parse(skill.damageRowsJson) : null
+  const damage = calculateDamage(damageRows, skill.pvpDamagePercent)
+
   const serialized = {
     id: skill.id,
     skillId: skill.skillId,
@@ -77,7 +81,8 @@ export async function GET(
     cooldown: skill.cooldown,
     cooldownSec: skill.cooldownSec,
     description: skill.description,
-    damageRows: skill.damageRowsJson ? JSON.parse(skill.damageRowsJson) : null,
+    damageRows,
+    damage,
     ccTypes: splitCsv(skill.ccTypes),
     protectionTypes: splitCsv(skill.protectionTypes),
     pvpDamagePercent: skill.pvpDamagePercent,

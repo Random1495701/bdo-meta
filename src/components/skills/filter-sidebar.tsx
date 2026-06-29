@@ -14,6 +14,9 @@ import {
   Crosshair,
   Gem,
   Ban,
+  Star,
+  Swords,
+  Lock,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -22,7 +25,6 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 import {
   Tooltip,
   TooltipContent,
@@ -45,10 +47,12 @@ function SectionTitle({
   icon,
   children,
   hint,
+  right,
 }: {
   icon?: React.ReactNode
   children: React.ReactNode
   hint?: string
+  right?: React.ReactNode
 }) {
   return (
     <div className="mb-2 flex items-center gap-1.5">
@@ -56,6 +60,7 @@ function SectionTitle({
       <h3 className="bdo-heading text-[11px] uppercase tracking-widest">
         {children}
       </h3>
+      {right}
       {hint && (
         <Tooltip>
           <TooltipTrigger asChild>
@@ -223,7 +228,7 @@ function FilterNotice() {
       </span>
       <span
         className="flex items-center gap-1 rounded-sm border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-200"
-        title="Only the highest rank of each skill is shown — duplicates like 'Bolt Wave I/II/III' are hidden."
+        title="Only the highest rank of each skill is shown — duplicates like 'Bolt Wave I/II/III' are hidden. Passive ranks up to XXX (30) are supported."
       >
         <Gem className="size-2.5" />
         Max-rank only
@@ -239,17 +244,30 @@ function FilterNotice() {
   )
 }
 
+// SP cost slider range — most skills cost 0–20 SP, with a few rare ones up to ~30.
+const SP_MIN = 0
+const SP_MAX = 20
+
+// Damage range — total PvE damage percent. Most skills fall well under 100k.
+const DAMAGE_MIN = 0
+const DAMAGE_MAX = 100_000
+
 export function FilterSidebar() {
   const filters = useSkillStore((s) => s.filters)
-  const setType = useSkillStore((s) => s.setType)
-  const setProtection = useSkillStore((s) => s.setProtection)
+  const toggleType = useSkillStore((s) => s.toggleType)
+  const clearTypes = useSkillStore((s) => s.clearTypes)
+  const toggleProtection = useSkillStore((s) => s.toggleProtection)
+  const clearProtections = useSkillStore((s) => s.clearProtections)
   const toggleCc = useSkillStore((s) => s.toggleCc)
   const setLevelRange = useSkillStore((s) => s.setLevelRange)
   const setCooldownRange = useSkillStore((s) => s.setCooldownRange)
   const setAnimRange = useSkillStore((s) => s.setAnimRange)
+  const setSpRange = useSkillStore((s) => s.setSpRange)
+  const setDamageRange = useSkillStore((s) => s.setDamageRange)
   const toggleHasVideo = useSkillStore((s) => s.toggleHasVideo)
   const toggleHasAnim = useSkillStore((s) => s.toggleHasAnim)
   const toggleQuickslot = useSkillStore((s) => s.toggleQuickslot)
+  const toggleHasPrereqs = useSkillStore((s) => s.toggleHasPrereqs)
   const resetFilters = useSkillStore((s) => s.resetFilters)
 
   // Fetch dynamic slider ranges from the API so the max values match the
@@ -270,15 +288,19 @@ export function FilterSidebar() {
   // Compute active filter count for the badge
   const activeCount = React.useMemo(() => {
     let n = 0
-    if (filters.type && filters.type !== 'all') n++
-    if (filters.protection) n++
+    if (filters.classIds && filters.classIds.length) n++
+    if (filters.types && filters.types.length) n++
+    if (filters.protections && filters.protections.length) n++
     if (filters.cc && filters.cc.length) n++
     if (filters.minLvl != null || filters.maxLvl != null) n++
     if (filters.minCd != null || filters.maxCd != null) n++
     if (filters.minAnim != null || filters.maxAnim != null) n++
+    if (filters.minSp != null || filters.maxSp != null) n++
+    if (filters.minDamage != null || filters.maxDamage != null) n++
     if (filters.hasVideo) n++
     if (filters.hasAnim) n++
     if (filters.quickslot) n++
+    if (filters.hasPrereqs) n++
     return n
   }, [filters])
 
@@ -300,6 +322,13 @@ export function FilterSidebar() {
     filters.minAnim ?? animMin,
     filters.maxAnim ?? animMax,
   ]
+  const spVals: [number, number] = [
+    filters.minSp ?? SP_MIN,
+    filters.maxSp ?? SP_MAX,
+  ]
+
+  const typesActive = filters.types ?? []
+  const protectionsActive = filters.protections ?? []
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -331,27 +360,39 @@ export function FilterSidebar() {
 
           <GoldDivider />
 
-          {/* Skill Type */}
+          {/* Skill Type — multi-select chips */}
           <section>
-            <SectionTitle icon={<Crosshair className="size-3.5" />}>
+            <SectionTitle
+              icon={<Crosshair className="size-3.5" />}
+              hint="Multi-select — match skills with ANY of these types"
+              right={
+                typesActive.length > 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => clearTypes()}
+                    className="ml-auto rounded-sm border border-amber-800/50 bg-bdo-leather-dark px-1.5 py-px text-[10px] text-amber-300/80 hover:border-amber-500/60 hover:text-amber-200"
+                  >
+                    Clear ({typesActive.length})
+                  </button>
+                ) : undefined
+              }
+            >
               Skill Type
             </SectionTitle>
             <div className="flex flex-wrap gap-1.5">
               <Chip
-                active={filters.type === 'all' || !filters.type}
+                active={typesActive.length === 0}
                 color="#c8aa44"
-                onClick={() => setType('all')}
+                onClick={() => clearTypes()}
               >
                 All
               </Chip>
               {typeEntries.map(([key, meta]) => (
                 <Chip
                   key={key}
-                  active={filters.type === key}
+                  active={typesActive.includes(key)}
                   color={meta.color}
-                  onClick={() =>
-                    setType(filters.type === key ? 'all' : key)
-                  }
+                  onClick={() => toggleType(key)}
                 >
                   {meta.label}
                 </Chip>
@@ -361,25 +402,32 @@ export function FilterSidebar() {
 
           <GoldDivider />
 
-          {/* Protection */}
+          {/* Protection — multi-select */}
           <section>
-            <SectionTitle icon={<Shield className="size-3.5" />}>
+            <SectionTitle
+              icon={<Shield className="size-3.5" />}
+              hint="Multi-select — match skills with ANY of these protections"
+              right={
+                protectionsActive.length > 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => clearProtections()}
+                    className="ml-auto rounded-sm border border-amber-800/50 bg-bdo-leather-dark px-1.5 py-px text-[10px] text-amber-300/80 hover:border-amber-500/60 hover:text-amber-200"
+                  >
+                    Clear ({protectionsActive.length})
+                  </button>
+                ) : undefined
+              }
+            >
               Protection
             </SectionTitle>
             <div className="flex flex-wrap gap-1.5">
-              <Chip
-                active={filters.protection === 'none'}
-                color="#71717a"
-                onClick={() => setProtection('none')}
-              >
-                None
-              </Chip>
               {PROTECTION_TYPES.map((p) => (
                 <Chip
                   key={p}
-                  active={filters.protection === p}
+                  active={protectionsActive.includes(p)}
                   color="#5cbfd6"
-                  onClick={() => setProtection(p)}
+                  onClick={() => toggleProtection(p)}
                 >
                   {p}
                 </Chip>
@@ -389,7 +437,7 @@ export function FilterSidebar() {
 
           <GoldDivider />
 
-          {/* CC Types */}
+          {/* CC Types — multi-select (already was) */}
           <section>
             <SectionTitle
               icon={<Zap className="size-3.5" />}
@@ -474,6 +522,62 @@ export function FilterSidebar() {
 
           <GoldDivider />
 
+          {/* SP Cost */}
+          <section>
+            <SectionTitle
+              icon={<Star className="size-3.5" />}
+              hint="Skill points required to unlock this skill rank"
+            >
+              SP Cost
+            </SectionTitle>
+            <Slider
+              min={SP_MIN}
+              max={SP_MAX}
+              step={1}
+              value={spVals}
+              onValueChange={(v) =>
+                setSpRange(
+                  v[0] === SP_MIN ? undefined : v[0],
+                  v[1] === SP_MAX ? undefined : v[1],
+                )
+              }
+              className="my-2"
+            />
+            <RangeInputs
+              min={SP_MIN}
+              max={SP_MAX}
+              minVal={filters.minSp}
+              maxVal={filters.maxSp}
+              onMin={(v) => setSpRange(v, filters.maxSp)}
+              onMax={(v) => setSpRange(filters.minSp, v)}
+              suffix="SP"
+            />
+          </section>
+
+          <GoldDivider />
+
+          {/* Damage Range */}
+          <section>
+            <SectionTitle
+              icon={<Swords className="size-3.5" />}
+              hint="Total PvE damage percent (sum of all phases × hits). Filter applied server-side after max-rank filtering."
+            >
+              Damage Range (PvE %)
+            </SectionTitle>
+            <RangeInputs
+              min={DAMAGE_MIN}
+              max={DAMAGE_MAX}
+              step={100}
+              minVal={filters.minDamage}
+              maxVal={filters.maxDamage}
+              onMin={(v) => setDamageRange(v, filters.maxDamage)}
+              onMax={(v) => setDamageRange(filters.minDamage, v)}
+              suffix="%"
+            />
+          </section>
+
+          <GoldDivider />
+
           {/* Animation Duration */}
           <section>
             <SectionTitle
@@ -530,6 +634,13 @@ export function FilterSidebar() {
               label="Quick-slotable"
               checked={!!filters.quickslot}
               onToggle={toggleQuickslot}
+            />
+            <ToggleRow
+              icon={<Lock className="size-4" />}
+              label="Has prerequisites"
+              hint="Skill requires another skill to be learned first"
+              checked={!!filters.hasPrereqs}
+              onToggle={toggleHasPrereqs}
             />
           </section>
 

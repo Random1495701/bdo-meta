@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { Clock, Film, Gauge, Keyboard, Star } from 'lucide-react'
+import { Clock, Film, Gauge, Keyboard, Star, Swords } from 'lucide-react'
 
 import {
   classColor,
@@ -12,6 +12,7 @@ import {
   skillTypeLabel,
   type Skill,
 } from '@/lib/skills'
+import { formatDamage } from '@/lib/damage'
 import { useSkillStore } from '@/lib/skill-store'
 import { cn } from '@/lib/utils'
 
@@ -91,6 +92,44 @@ function MiniStat({
     >
       <span className="shrink-0 opacity-80">{icon}</span>
       <span className="truncate font-medium">{value}</span>
+    </div>
+  )
+}
+
+// Prominent damage row — total PvE (amber) and PvP (pink) damage values,
+// shown as a dedicated gold-bordered row when the skill has any damage data.
+function DamageRow({ skill }: { skill: Skill }) {
+  const dmg = skill.damage
+  if (!dmg || !dmg.hasDamage) return null
+  const pve = formatDamage(dmg.totalPvE)
+  const pvp = dmg.totalPvP != null ? formatDamage(dmg.totalPvP) : null
+  return (
+    <div
+      className="flex items-center justify-between gap-2 rounded-sm border border-amber-700/40 bg-gradient-to-r from-amber-950/40 to-bdo-leather-dark px-2.5 py-1.5"
+      style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.1)' }}
+    >
+      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-amber-200/60">
+        <Swords className="size-3" />
+        Damage
+      </div>
+      <div className="flex items-center gap-2">
+        <div
+          className="flex items-center gap-1 text-sm font-bold tabular-nums text-amber-300"
+          title={`Total PvE damage: ${dmg.totalPvE.toLocaleString()}%`}
+        >
+          <span className="text-[9px] uppercase tracking-wider text-amber-200/50">PvE</span>
+          {pve}
+        </div>
+        {pvp && (
+          <div
+            className="flex items-center gap-1 text-sm font-bold tabular-nums text-pink-400"
+            title={`Total PvP damage: ${dmg.totalPvP?.toLocaleString()}% (${dmg.pvpDamagePercent}% of PvE)`}
+          >
+            <span className="text-[9px] uppercase tracking-wider text-pink-300/50">PvP</span>
+            {pvp}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
@@ -212,6 +251,9 @@ export const SkillCard = React.memo(function SkillCard({
           </kbd>
         </div>
       )}
+
+      {/* Damage row — prominent amber/pink display */}
+      <DamageRow skill={skill} />
 
       <div
         className="mt-auto flex items-center justify-between gap-2 border-t border-amber-900/40 pt-2"

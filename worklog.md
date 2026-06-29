@@ -662,3 +662,170 @@ Stage Summary:
 - **Wheel scroll**: Class bar now scrolls horizontally with mouse wheel + drag-to-scroll.
 - **Unified scrollbars**: All scrollbars use BDO gold-on-dark theme. Class bar has thinner 6px scrollbar.
 - **Improvement plan**: 20 items documented in docs/IMPROVEMENT_PLAN.md with effort estimates.
+
+---
+Task ID: 10
+Agent: frontend-styling-expert
+Task: Update frontend to use new multi-select filters, display damage calculations, and add new view modes (Grid/List/Table)
+
+Work Log:
+- Read /home/z/my-project/worklog.md (Tasks 1–9) and docs/SESSION_HANDOFF.md. Confirmed dev server running on port 3000 (next-server PID 23475) and lurker daemon running (PID 11352, 1261 enriched). Did NOT kill/restart either.
+- Read the new Zustand store (`src/lib/skill-store.ts`) — confirmed multi-select: `classIds`, `types`, `protections`, plus new `viewMode`, `minSp/maxSp`, `minDamage/maxDamage`, `hasPrereqs` filters and matching actions (`toggleClass`, `toggleType`, `toggleProtection`, `setSpRange`, `setDamageRange`, `toggleHasPrereqs`, `setViewMode`).
+- Read `src/lib/damage.ts` — confirmed `DamageCalculation { phases, totalPvE, totalPvP, pvpDamagePercent, hasDamage }`, `PhaseDamage { phase, percent, hits, maxHits, totalPerHit, totalMax, pvpOnly, pveOnly }`, and `formatDamage()` returns "47,300%" / "5.5K%" / "1.2M%".
+- Verified API supports the new multi-select + new filters via curl:
+  - `?class=0,4,8` → 232 results (all Warrior+Ranger+...) ✓
+  - `?type=succession,absolute` ✓
+  - `?protection=Super Armor,Forward Guard` ✓
+  - `?minSp=5&maxSp=10` ✓
+  - `?minDamage=5000` ✓
+  - `?hasPrereqs=true` ✓
+  - `?sort=damage&order=desc` ✓ (top result: "Black Spirit: Bulletstorm III" at 214,687% PvE)
+
+### Files modified
+
+**src/components/skills/class-bar.tsx** — Converted to multi-select:
+- Removed `classId`/`setClassId` (single-select) and replaced with `classIds` (array) + `toggleClass`/`clearClasses`.
+- A class chip is active when `classIds.includes(c.id)`. Clicking toggles it on/off.
+- "All Classes" chip is active when `classIds.length === 0`. Clicking it calls `clearClasses()`.
+- When one or more classes are selected, the "All" chip's count badge is replaced with a "N sel" badge (amber-bordered) that shows the selected count and acts as a clear-all affordance.
+- Wheel-scroll + drag-to-scroll preserved exactly.
+
+**src/components/skills/filter-sidebar.tsx** — Full multi-select + new filters:
+- Skill Type: changed from single radio to multi-select chips. "All" chip clears via `clearTypes()`. Each chip toggles via `toggleType(key)`. Active count badge appears next to the section title with a "Clear (N)" button.
+- Protection: same multi-select pattern via `toggleProtection(p)` / `clearProtections()`.
+- CC Types: kept multi-select (was already).
+- Added **SP Cost** section (slider 0–20 + min/max number inputs) using `setSpRange()`.
+- Added **Damage Range (PvE %)** section (min/max number inputs, 0–100000) using `setDamageRange()`.
+- Added **Has prerequisites** toggle row using `toggleHasPrereqs()`.
+- Updated active-count computation to include the new filters.
+
+**src/components/skills/skill-card.tsx** — Damage display:
+- Added `DamageRow` component: a gold-bordered row showing "DAMAGE PvE [value] PvP [value]" in amber (PvE) and pink (PvP) when `skill.damage.hasDamage` is true. Uses `formatDamage()`.
+- Inserted between the command row and the mini-stat row so it's prominent.
+
+**src/components/skills/skill-detail-drawer.tsx** — Damage summary + per-phase:
+- Added `PhaseDamageRow` component: renders "Attack 1: 8,246% × 1 = 8,246%" (or with `max N` if maxHits is set). PvE phases use amber text/border, PvP-only phases use pink, PvE-only use emerald.
+- Added `DamageStatCard` component: large stat card with big mono-font value (amber for PvE, pink for PvP) used in the Damage Summary section.
+- Added new **Damage Summary** section (after the stat cards, before the description): two large stat cards showing "Total PvE Damage" and "Total PvP Damage" with `formatDamage()`. If PvP damage is null, shows a "Not available" placeholder card.
+- Added per-phase breakdown to the existing "Damage & Effects" section: list of PhaseDamageRow items followed by an amber "Total PvE" total row and a pink "Total PvP (% of PvE)" total row.
+- Original raw damage rows from bdocodex tooltip are still shown below the per-phase breakdown.
+
+**src/components/skills/skill-list-row.tsx** (NEW) — Compact list view row:
+- 40px gold-framed icon, name + class dot + type badge + Q-Slot indicator, compact key stats row (Lv / SP / CD / Damage / Animation) with responsive hiding.
+- Damage shown as "DMG 94.5K%" in amber bold.
+- Hover: subtle gold gradient overlay + 2px x-shift animation (framer-motion).
+- Clickable to open detail drawer.
+
+**src/components/skills/skill-table.tsx** (NEW) — Full table view:
+- Uses shadcn Table component.
+- Columns: Icon (24px), Name, Class (colored dot + name), Type (badge), Lv, SP, CD, PvE Dmg (amber bold), PvP Dmg (pink bold), Animation.
+- Sortable column headers via `SortHeader` component: Name, Class, Lv, SP, CD, Anim (Type and damage columns don't currently support sort). Clicking toggles asc/desc if already active, otherwise sets that sort.
+- Damage values use `formatDamage()` for compact display.
+- Row click opens detail drawer. Hover: amber highlight + gold border.
+- Mobile: Table's overflow-x-auto lets the table scroll horizontally on narrow viewports.
+
+**src/components/skills/skill-grid.tsx** — Conditional view rendering:
+- Reads `viewMode` from store and conditionally renders:
+  - `grid`: existing SkillCard grid (1/2/3/4/5-col responsive).
+  - `list`: vertical stack of SkillListRow components (gap-1.5).
+  - `table`: SkillTable with the items array.
+- Added `ListSkeleton` and `TableSkeleton` for the initial load state per view mode.
+- Auto-refresh (`refetchInterval: 15_000`, `placeholderData: (prev) => prev`) preserved on all views. `TopLoadBar` shows during background refetches.
+- Empty state and error state unchanged.
+
+**src/components/skills/header.tsx** — View mode toggle + damage sort:
+- Added `ViewModeToggle` component: 3 icon buttons (Grid/List/Table from lucide) in a recessed BDO chip group. Active mode uses `bdo-chip-on` (gold glow).
+- Placed in the top-right action row alongside the sort dropdown and refresh button.
+- Added `{ value: 'damage', label: 'Damage (PvE)' }` to `SORT_OPTIONS`.
+
+**src/lib/skills.ts** — Added `'damage'` to the `SkillSort` union type.
+
+**src/app/api/skills/route.ts** — Backend damage sort support:
+- Added `'damage': { skillId: order }` placeholder to the sortMap (the actual sort is computed below).
+- Updated the post-max-rank path to compute damage for all filtered skills (already done for the damage-range filter), then sort `filteredIds` by computed `totalPvE` damage ascending or descending.
+- Refactored the damage-range + damage-sort branches to share a single `dmgMap` lookup (was re-computing damage per skill in the filter step).
+- This is a small API patch — without it, the frontend "Damage (PvE)" sort option would silently fall back to Skill ID order.
+
+### Verification
+
+All 9 success criteria verified end-to-end via agent-browser:
+
+1. ✓ `bun run lint` — 0 errors (exit code 0).
+2. ✓ `curl http://localhost:3000/` — 200 OK.
+3. ✓ Class bar multi-select — clicked Warrior → "All 1 sel"; clicked Hashashin → "All 2 sel"; clicked All → "All 7,231" (cleared).
+4. ✓ Skill type & protection multi-select — clicked Succession + Absolute → "Clear (2)" badge appeared; clicked Super Armor + Forward Guard → "Clear (2)" badge. Active chips visible in `bdo-chip-on` class via DOM eval.
+5. ✓ Damage values on skill cards — "Infinite Power IV" card shows "DAMAGE PvE 94.5K% PvP 30.4K%".
+6. ✓ Detail drawer shows total PvE/PvP + per-phase breakdown — "DAMAGE SUMMARY" section with two stat cards (Total PvE: 94.5K%, Total PvP: 30.4K%); "DAMAGE & EFFECTS" section shows per-phase breakdown: "Attack: 29,782% × 5 max 12 = 94,514%", then Total PvE/Total PvP summary rows.
+7. ✓ View mode toggle works — Grid/List/Table buttons in header. aria-pressed="true" on active button.
+8. ✓ All three views render with real data:
+   - Grid: 24 ornate cards in responsive grid, damage row visible on cards with damage.
+   - List: 24 compact horizontal rows, 40px icons, "DMG 94.5K%" inline.
+   - Table: shadcn Table with columns Icon, Name, Class, Type, Lv, SP, CD, PvE Dmg, PvP Dmg, Anim. 24 rows, sortable headers, row click opens drawer.
+9. ✓ BDO theme maintained — all new components use existing `.bdo-*` CSS classes (bdo-leather, bdo-chip-on, bdo-icon-frame, bdo-heading, bdo-stat-box, bdo-class-scroll). Amber/gold palette throughout; pink for PvP, emerald for PvE-only phases.
+
+### Lurker status
+
+Lurker daemon (PID 11352) was NOT touched — still running strong (1261 enriched, 104 failed, 1365 processed at last check). Auto-refresh (15s refetchInterval) on all three view modes continues to surface lurker progress without any user action.
+
+Stage Summary:
+- **Multi-select**: Class bar, skill type, and protection filters all support multi-select with toggle behavior, "Clear (N)" badges, and comma-separated API params. The "All Classes" chip now shows "N sel" when classes are selected instead of the total count.
+- **Damage display**: Skill cards show a prominent amber/pink damage row (PvE + PvP totals). Detail drawer has a "Damage Summary" section with two large stat cards plus a per-phase breakdown (percent × hits = total) color-coded by phase type (amber PvE, pink PvP-only, emerald PvE-only).
+- **New view modes**: Header has a 3-button toggle (Grid/List/Table). Grid is the existing ornate card grid. List is a new compact horizontal row layout (40px icon, name, class dot, type badge, key stats inline). Table is a new full-width sortable table using shadcn Table with 10 columns (Icon/Name/Class/Type/Lv/SP/CD/PvE Dmg/PvP Dmg/Anim).
+- **New filters**: SP Cost (slider 0–20 + number inputs), Damage Range (PvE %, number inputs 0–100000), Has Prerequisites toggle. All wired to the new store actions.
+- **Damage sort**: Added "Damage (PvE)" to the sort dropdown. Required a small API patch (`/api/skills` route) to compute damage for all filtered skills and sort by `totalPvE` — the existing max-rank path overrides `orderBy`, so the sort must happen on `filteredIds` directly.
+- **Auto-refresh preserved**: All three view modes (grid/list/table) use the same TanStack Query with 15s `refetchInterval` and `placeholderData: (prev) => prev` for no-flicker background refreshes. TopLoadBar visible during refetches.
+- **Lint clean (0 errors)**. Lurker untouched. BDO theme maintained throughout (dark leather + gold + amber/pink/emerald accents).
+
+---
+Task ID: 11
+Agent: main-orchestrator
+Task: Fix passive max-rank, add damage calculation, multi-select filtering, new view modes
+
+Work Log:
+- Audited passive skill ranks: found passives with roman numerals up to XXX (e.g., "Dark Maneuver XXX"). Extended RANK_MAP from XVIII to XXX and fixed regex ordering (longest-first) to ensure correct matching.
+- Created `src/lib/damage.ts` — damage calculator that parses both [damage] kind rows ("Attack 1 damage = 8246% x1") and [note] kind rows with damage info ("Standing attack damage 938% x1, max 3 hits"). Computes per-phase damage, total PvE damage, and total PvP damage (applying pvpDamagePercent multiplier).
+- Rewrote `src/app/api/skills/route.ts` with:
+  - Extended RANK_MAP (I→XXX) with longest-first regex ordering
+  - Multi-select class filter: `class=0,4,8` (comma-separated)
+  - Multi-select type filter: `type=succession,absolute`
+  - Multi-select protection filter: `protection=Super Armor,Forward Guard`
+  - New filters: minSp/maxSp, minDamage/maxDamage, hasPrereqs
+  - Damage calculation in serializeSkill() — every skill now includes `damage` field
+  - Damage range filtering (post-query) for max-rank path
+- Updated `src/app/api/skills/[id]/route.ts` to include damage calculation in detail response.
+- Rewrote `src/lib/skill-store.ts` for multi-select:
+  - classIds: number[] (was classId: number | 'all')
+  - types: SkillType[] (was type: SkillType | 'all')
+  - protections: string[] (was protection: string)
+  - New: toggleClass(), clearClasses(), toggleType(), clearTypes(), toggleProtection(), clearProtections()
+  - New: viewMode: 'grid' | 'list' | 'table', setViewMode()
+  - New: setSpRange(), setDamageRange(), toggleHasPrereqs()
+- Updated `src/lib/skills.ts`: added DamageCalculation import, updated SkillFilters interface for multi-select, updated filtersToQuery() for comma-separated params.
+- Delegated UI update to frontend-styling-expert subagent (Task ID 10) which:
+  - Updated class-bar.tsx for multi-select (toggle, "N sel" badge, clear)
+  - Updated filter-sidebar.tsx for multi-select type/protection + new SP/Damage/prereqs filters
+  - Updated skill-card.tsx with damage display (PvE amber, PvP pink)
+  - Updated skill-detail-drawer.tsx with damage summary + per-phase breakdown
+  - Created skill-list-row.tsx (compact list view)
+  - Created skill-table.tsx (full table view with sortable columns)
+  - Updated skill-grid.tsx with view mode conditional rendering
+  - Updated header.tsx with view mode toggle + damage sort option
+  - Added 'damage' to SkillSort type + API sort support
+- Verified end-to-end:
+  - Lint: clean (0 errors)
+  - Multi-class (Warrior+Ranger): 232 skills
+  - Multi-type (Succession+Absolute): 936 skills
+  - Damage calc: Sahee's Descent III = 47,300% PvE, 5,463.15% PvP, 4 phases
+  - Passive max-rank: 0 duplicate base names (XXX ranks correctly stripped)
+  - Multi-select UI: "1 sel" → "2 sel" when clicking Warrior then Ranger
+  - Damage on cards: "PvE 17.3K% PvP 5.8K%" visible
+  - View modes: Grid/List/Table toggle working
+  - Lurker still running (PID 11352, 1261 enriched)
+
+Stage Summary:
+- **Passive max-rank**: Extended roman numeral support to XXX (30). Passives like "Dark Maneuver XXX" now correctly show only the highest rank.
+- **Damage calculation**: Every skill now has computed `damage` field with phases, totalPvE, totalPvP. Parser handles both structured [damage] rows and unstructured [note] rows with damage info.
+- **Multi-select filtering**: Classes, skill types, and protection types all support multi-select (comma-separated API params, array-based store).
+- **New filters**: SP cost range, damage range, has prerequisites toggle.
+- **New view modes**: Grid (existing), List (compact rows), Table (sortable columns). View toggle in header.
+- **UI display**: Damage values on skill cards (PvE amber, PvP pink). Damage summary + per-phase breakdown in detail drawer.

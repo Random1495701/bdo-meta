@@ -42,8 +42,10 @@ import {
   SKILL_TYPE_META,
   skillTypeLabel,
   type DamageRow,
+  type PhaseDamage,
   type Skill,
 } from '@/lib/skills'
+import { formatDamage } from '@/lib/damage'
 import { useSkillStore } from '@/lib/skill-store'
 import { cn } from '@/lib/utils'
 
@@ -203,6 +205,114 @@ function DamageRowItem({ row }: { row: DamageRow }) {
           </span>
         )}
       </span>
+    </div>
+  )
+}
+
+// Per-phase damage breakdown row. Format: "Attack 1: 8,246% × 1 = 8,246%"
+// or with maxHits: "Attack 3: 4,082% × 8 max 8 = 32,656%"
+function PhaseDamageRow({ phase }: { phase: PhaseDamage }) {
+  const percent = phase.percent.toLocaleString()
+  const total = phase.totalMax.toLocaleString()
+  const pvpOnly = phase.pvpOnly
+  const pveOnly = phase.pveOnly
+  const color = pvpOnly
+    ? 'text-pink-300'
+    : pveOnly
+      ? 'text-emerald-300'
+      : 'text-amber-300'
+  const borderColor = pvpOnly
+    ? 'border-pink-900/40'
+    : pveOnly
+      ? 'border-emerald-900/40'
+      : 'border-amber-900/40'
+
+  return (
+    <div
+      className={cn(
+        'flex items-baseline justify-between gap-2 rounded-sm border bg-bdo-leather-dark px-2.5 py-1.5 text-sm',
+        borderColor,
+      )}
+      style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
+    >
+      <div className="flex min-w-0 flex-1 items-baseline gap-1.5">
+        <span className="truncate font-medium text-amber-100/90">
+          {phase.phase}
+        </span>
+        {pvpOnly && (
+          <Badge className="border-pink-700/50 bg-pink-900/20 text-pink-300 text-[9px]">
+            PvP
+          </Badge>
+        )}
+        {pveOnly && (
+          <Badge className="border-emerald-700/50 bg-emerald-900/20 text-emerald-300 text-[9px]">
+            PvE
+          </Badge>
+        )}
+      </div>
+      <div className="flex items-baseline gap-1 font-mono text-xs tabular-nums">
+        <span className={cn('font-semibold', color)}>{percent}%</span>
+        <span className="text-amber-700/70">×</span>
+        <span className="text-amber-200/80">{phase.hits}</span>
+        {phase.maxHits != null && (
+          <>
+            <span className="text-amber-700/70">max</span>
+            <span className="text-amber-200/80">{phase.maxHits}</span>
+          </>
+        )}
+        <span className="text-amber-700/70">=</span>
+        <span className={cn('font-bold', color)}>{total}%</span>
+      </div>
+    </div>
+  )
+}
+
+// Large stat card for the damage summary section.
+function DamageStatCard({
+  label,
+  value,
+  accent,
+  hint,
+}: {
+  label: string
+  value: string
+  accent: 'amber' | 'pink'
+  hint?: string
+}) {
+  const isAmber = accent === 'amber'
+  return (
+    <div
+      className={cn(
+        'bdo-stat-box flex flex-col gap-1 rounded-sm border-2 px-3 py-2.5',
+        isAmber ? 'border-amber-500/60' : 'border-pink-700/60',
+      )}
+      style={
+        isAmber
+          ? { boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.25), 0 0 14px rgba(200,170,68,0.18)' }
+          : { boxShadow: 'inset 0 0 0 1px rgba(244,114,182,0.25), 0 0 14px rgba(244,114,182,0.15)' }
+      }
+    >
+      <div
+        className={cn(
+          'text-[10px] font-semibold uppercase tracking-widest',
+          isAmber ? 'text-amber-200/70' : 'text-pink-200/70',
+        )}
+      >
+        {label}
+        {hint && (
+          <span className="ml-1 text-[9px] font-normal normal-case text-amber-200/40">
+            {hint}
+          </span>
+        )}
+      </div>
+      <div
+        className={cn(
+          'font-mono text-2xl font-bold tabular-nums',
+          isAmber ? 'text-amber-300' : 'text-pink-400',
+        )}
+      >
+        {value}
+      </div>
     </div>
   )
 }
@@ -425,12 +535,49 @@ export function SkillDetailDrawer() {
                     {skill.pvpDamagePercent != null && (
                       <StatCard
                         icon={<Sword className="size-3" />}
-                        label="PvP Dmg"
+                        label="PvP Dmg %"
                         value={`${skill.pvpDamagePercent}%`}
                         accent="pink"
                       />
                     )}
                   </div>
+
+                  {/* Damage Summary — large stat cards for PvE + PvP totals */}
+                  {skill.damage && skill.damage.hasDamage && (
+                    <Section
+                      title="Damage Summary"
+                      icon={<Sparkles className="size-3" />}
+                    >
+                      <div className="grid grid-cols-2 gap-3">
+                        <DamageStatCard
+                          label="Total PvE Damage"
+                          value={formatDamage(skill.damage.totalPvE)}
+                          accent="amber"
+                          hint="∑ phases × hits"
+                        />
+                        {skill.damage.totalPvP != null ? (
+                          <DamageStatCard
+                            label="Total PvP Damage"
+                            value={formatDamage(skill.damage.totalPvP)}
+                            accent="pink"
+                            hint={`${skill.damage.pvpDamagePercent}% of PvE`}
+                          />
+                        ) : (
+                          <div
+                            className="flex flex-col items-center justify-center gap-1 rounded-sm border-2 border-amber-900/40 bg-bdo-leather-dark px-3 py-2.5 text-center"
+                            style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
+                          >
+                            <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-200/40">
+                              PvP Damage
+                            </span>
+                            <span className="font-mono text-lg text-amber-200/40">
+                              Not available
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </Section>
+                  )}
 
                   {/* Description */}
                   {skill.description && (
@@ -458,9 +605,47 @@ export function SkillDetailDrawer() {
                     </Section>
                   )}
 
-                  {/* Damage breakdown */}
+                  {/* Damage breakdown — per-phase + raw rows */}
                   {skill.damageRows && skill.damageRows.length > 0 && (
                     <Section title="Damage & Effects" icon={<Sparkles className="size-3" />}>
+                      {/* Per-phase breakdown (computed by /src/lib/damage.ts) */}
+                      {skill.damage && skill.damage.phases.length > 0 && (
+                        <div className="mb-3 space-y-1.5">
+                          <div className="mb-1 flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-amber-200/50">
+                            <span>Per-phase Breakdown</span>
+                            <span>percent × hits = total</span>
+                          </div>
+                          {skill.damage.phases.map((p, i) => (
+                            <PhaseDamageRow key={`${p.phase}-${i}`} phase={p} />
+                          ))}
+                          <div
+                            className="mt-2 flex items-baseline justify-between gap-2 rounded-sm border-2 border-amber-700/60 bg-gradient-to-r from-amber-950/50 to-bdo-leather-dark px-3 py-2"
+                            style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.2)' }}
+                          >
+                            <span className="text-xs font-semibold uppercase tracking-widest text-amber-200/70">
+                              Total PvE
+                            </span>
+                            <span className="font-mono text-lg font-bold tabular-nums text-amber-300">
+                              {formatDamage(skill.damage.totalPvE)}
+                            </span>
+                          </div>
+                          {skill.damage.totalPvP != null && (
+                            <div
+                              className="flex items-baseline justify-between gap-2 rounded-sm border-2 border-pink-800/60 bg-gradient-to-r from-pink-950/30 to-bdo-leather-dark px-3 py-2"
+                              style={{ boxShadow: 'inset 0 0 0 1px rgba(244,114,182,0.2)' }}
+                            >
+                              <span className="text-xs font-semibold uppercase tracking-widest text-pink-200/70">
+                                Total PvP ({skill.damage.pvpDamagePercent}%)
+                              </span>
+                              <span className="font-mono text-lg font-bold tabular-nums text-pink-400">
+                                {formatDamage(skill.damage.totalPvP)}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Raw damage rows from bdocodex tooltip */}
                       <div
                         className="divide-y divide-amber-900/40 rounded-sm border border-amber-900/40 bg-bdo-leather-dark px-3"
                         style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}

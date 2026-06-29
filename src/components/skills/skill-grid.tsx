@@ -7,6 +7,8 @@ import { AlertCircle, SearchX, RotateCcw } from 'lucide-react'
 import { fetchSkills, type SkillFilters } from '@/lib/skills'
 import { useSkillStore } from '@/lib/skill-store'
 import { SkillCard } from './skill-card'
+import { SkillListRow } from './skill-list-row'
+import { SkillTable } from './skill-table'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 
@@ -41,6 +43,56 @@ function GridSkeleton() {
             <Skeleton className="h-3 w-10 bg-amber-950/40" />
             <Skeleton className="h-3 w-10 bg-amber-950/40" />
           </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function ListSkeleton() {
+  return (
+    <div className="flex flex-col gap-2">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div
+          key={i}
+          className="flex items-center gap-3 rounded-sm border border-amber-900/40 bg-bdo-leather p-2.5"
+          style={{ boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)' }}
+        >
+          <Skeleton className="size-10 shrink-0 rounded-sm bg-amber-950/40" />
+          <div className="flex-1 space-y-1.5">
+            <Skeleton className="h-3.5 w-1/3 bg-amber-950/40" />
+            <Skeleton className="h-3 w-1/4 bg-amber-950/40" />
+          </div>
+          <div className="flex gap-3">
+            <Skeleton className="h-3 w-10 bg-amber-950/40" />
+            <Skeleton className="h-3 w-12 bg-amber-950/40" />
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function TableSkeleton() {
+  return (
+    <div
+      className="overflow-hidden rounded-sm border border-amber-900/50 bg-bdo-leather-dark"
+      style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.1)' }}
+    >
+      <div className="flex h-9 items-center gap-2 border-b border-amber-900/50 px-3 text-[10px] uppercase tracking-wider text-amber-200/30">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <Skeleton key={i} className="h-3 w-12 bg-amber-950/40" />
+        ))}
+      </div>
+      {Array.from({ length: 12 }).map((_, i) => (
+        <div
+          key={i}
+          className="flex items-center gap-2 border-b border-amber-900/30 px-3 py-1.5"
+        >
+          <Skeleton className="size-7 rounded-sm bg-amber-950/40" />
+          {Array.from({ length: 9 }).map((_, j) => (
+            <Skeleton key={j} className="h-3 w-16 bg-amber-950/40" />
+          ))}
         </div>
       ))}
     </div>
@@ -115,6 +167,7 @@ function TopLoadBar({ visible }: { visible: boolean }) {
 export function SkillGrid() {
   const filters = useSkillStore((s) => s.filters)
   const resetFilters = useSkillStore((s) => s.resetFilters)
+  const viewMode = useSkillStore((s) => s.viewMode)
 
   // Filter out undefined values so the query key is stable.
   const queryKey = React.useMemo(() => {
@@ -140,7 +193,11 @@ export function SkillGrid() {
   const showTopBar =
     query.isFetching && !query.isPending && !!query.data
 
-  if (query.isPending) return <GridSkeleton />
+  if (query.isPending) {
+    if (viewMode === 'list') return <ListSkeleton />
+    if (viewMode === 'table') return <TableSkeleton />
+    return <GridSkeleton />
+  }
   if (query.isError) {
     return (
       <>
@@ -169,11 +226,21 @@ export function SkillGrid() {
   return (
     <div className="relative">
       <TopLoadBar visible={showTopBar} />
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {items.map((skill) => (
-          <SkillCard key={skill.id} skill={skill} />
-        ))}
-      </div>
+      {viewMode === 'grid' && (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {items.map((skill) => (
+            <SkillCard key={skill.id} skill={skill} />
+          ))}
+        </div>
+      )}
+      {viewMode === 'list' && (
+        <div className="flex flex-col gap-1.5">
+          {items.map((skill) => (
+            <SkillListRow key={skill.id} skill={skill} />
+          ))}
+        </div>
+      )}
+      {viewMode === 'table' && <SkillTable skills={items} />}
     </div>
   )
 }

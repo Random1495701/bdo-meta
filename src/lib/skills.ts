@@ -1,5 +1,9 @@
 // Types and constants for the BDO Skills Database
 
+import type { DamageCalculation } from './damage'
+
+export type { DamageCalculation, PhaseDamage } from './damage'
+
 export interface DamageRow {
   label: string
   value?: string
@@ -40,6 +44,7 @@ export interface Skill {
   cooldownSec: number | null
   description: string | null
   damageRows: DamageRow[] | null
+  damage?: DamageCalculation
   ccTypes: string[] | null
   protectionTypes: string[] | null
   pvpDamagePercent: number | null
@@ -143,9 +148,9 @@ export interface SyncStatus {
 
 export interface SkillFilters {
   q?: string
-  classId?: number | 'all'
-  type?: SkillType | 'all'
-  protection?: string
+  classIds?: number[] // multi-select (empty = all)
+  types?: SkillType[] // multi-select (empty = all)
+  protections?: string[] // multi-select (empty = all)
   cc?: string[]
   minLvl?: number
   maxLvl?: number
@@ -153,10 +158,15 @@ export interface SkillFilters {
   maxCd?: number
   minAnim?: number
   maxAnim?: number
+  minSp?: number
+  maxSp?: number
+  minDamage?: number
+  maxDamage?: number
   hasVideo?: boolean
   hasAnim?: boolean
   quickslot?: boolean
   hasAddon?: boolean
+  hasPrereqs?: boolean
   sort?: SkillSort
   order?: 'asc' | 'desc'
   page?: number
@@ -179,14 +189,15 @@ export type SkillSort =
   | 'anim'
   | 'class'
   | 'sp'
+  | 'damage'
 
 export function filtersToQuery(f: SkillFilters): URLSearchParams {
   const sp = new URLSearchParams()
   if (f.q) sp.set('q', f.q)
-  // FIXED: handle classId=0 (Warrior) — check for null/undefined, not truthiness
-  if (f.classId != null && f.classId !== 'all') sp.set('class', String(f.classId))
-  if (f.type && f.type !== 'all') sp.set('type', f.type)
-  if (f.protection) sp.set('protection', f.protection)
+  // Multi-select: comma-separated values
+  if (f.classIds && f.classIds.length > 0) sp.set('class', f.classIds.join(','))
+  if (f.types && f.types.length > 0) sp.set('type', f.types.join(','))
+  if (f.protections && f.protections.length > 0) sp.set('protection', f.protections.join(','))
   if (f.cc && f.cc.length) sp.set('cc', f.cc.join(','))
   if (f.minLvl != null) sp.set('minLvl', String(f.minLvl))
   if (f.maxLvl != null) sp.set('maxLvl', String(f.maxLvl))
@@ -194,11 +205,15 @@ export function filtersToQuery(f: SkillFilters): URLSearchParams {
   if (f.maxCd != null) sp.set('maxCd', String(f.maxCd))
   if (f.minAnim != null) sp.set('minAnim', String(f.minAnim))
   if (f.maxAnim != null) sp.set('maxAnim', String(f.maxAnim))
+  if (f.minSp != null) sp.set('minSp', String(f.minSp))
+  if (f.maxSp != null) sp.set('maxSp', String(f.maxSp))
+  if (f.minDamage != null) sp.set('minDamage', String(f.minDamage))
+  if (f.maxDamage != null) sp.set('maxDamage', String(f.maxDamage))
   if (f.hasVideo != null) sp.set('hasVideo', String(f.hasVideo))
   if (f.hasAnim != null) sp.set('hasAnim', String(f.hasAnim))
   if (f.quickslot != null) sp.set('quickslot', String(f.quickslot))
   if (f.hasAddon != null) sp.set('hasAddon', String(f.hasAddon))
-  // maxRank and filterEvasion default to true (applied server-side)
+  if (f.hasPrereqs != null) sp.set('hasPrereqs', String(f.hasPrereqs))
   sp.set('maxRank', 'true')
   sp.set('filterEvasion', 'true')
   if (f.sort) sp.set('sort', f.sort)
