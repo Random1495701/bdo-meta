@@ -146,6 +146,7 @@ export async function GET(req: NextRequest) {
   const hasPrereqs = sp.get('hasPrereqs')
   const maxRank = sp.get('maxRank') !== 'false'
   const filterEvasion = sp.get('filterEvasion') !== 'false'
+  const spec = sp.get('spec') as 'all' | 'succession' | 'awakening' | null
 
   const sort = sp.get('sort') || 'skillId'
   const order = (sp.get('order') || 'asc').toLowerCase() === 'desc' ? 'desc' : 'asc'
@@ -219,6 +220,43 @@ export async function GET(req: NextRequest) {
         AND.push({ OR: typeConditions })
       }
     }
+  }
+
+  // Spec filter — overrides the type filter entirely.
+  // In BDO, at level 56 a character chooses either Awakening (awakened weapon)
+  // or Succession (enhanced main weapon). Each spec has access to different skills:
+  //
+  // Succession spec: Succession/Prime skills + Main (no dup) + Absolute (no dup) + BS + Passive
+  //   - Shows Prime:/Succession: versions of skills that have them
+  //   - Shows Main/Absolute versions only for skills WITHOUT a Prime/Succession version
+  //   - Excludes Awakening skills entirely
+  //
+  // Awakening spec: Awakening + Main (no dup) + Absolute (no dup) + BS + Passive
+  //   - Shows Absolute versions of skills that have them
+  //   - Shows Main versions only for skills WITHOUT an Absolute version
+  //   - Excludes Succession/Prime skills entirely
+  if (spec === 'succession') {
+    AND.push({ isAwakening: false })
+    AND.push({
+      OR: [
+        { isSuccession: true },
+        { isAbsolute: true },
+        { isBlackSpirit: true },
+        { isPassive: true },
+        { isAbsolute: false, isSuccession: false, isAwakening: false, isBlackSpirit: false, isPassive: false },
+      ],
+    })
+  } else if (spec === 'awakening') {
+    AND.push({ isSuccession: false })
+    AND.push({
+      OR: [
+        { isAwakening: true },
+        { isAbsolute: true },
+        { isBlackSpirit: true },
+        { isPassive: true },
+        { isAbsolute: false, isSuccession: false, isAwakening: false, isBlackSpirit: false, isPassive: false },
+      ],
+    })
   }
 
   // Multi-select protection filter
@@ -334,9 +372,58 @@ export async function GET(req: NextRequest) {
     const rowById = new Map<number, (typeof allMatching)[number]>()
     for (const s of allMatching) rowById.set(s.skillId, s)
 
+    // --- Spec-aware deduplication ---
+    // For succession spec: if a Prime:/Succession: version exists, exclude
+    //   Main/Absolute versions with the same base name.
+    // For awakening spec: if an Absolute: version exists, exclude the Main
+    //   version with the same base name.
+    let specFilteredIds = maxRankSkillIds
+    if (spec === 'succession' || spec === 'awakening') {
+      const specMap = new Map<string, { skillIds: number[]; hasSuccession: boolean; hasAbsolute: boolean }>()
+      for (const id of maxRankSkillIds) {
+        const s = rowById.get(id)
+        if (!s) continue
+        let specBase = s.name
+        const isSucc = s.isSuccession || s.name.startsWith('Prime:') || s.name.startsWith('Succession:')
+        const isAbs = s.isAbsolute || s.name.startsWith('Absolute:')
+        if (isSucc) specBase = s.name.replace(/^(Prime:|Succession:)\s+/, '')
+        else if (isAbs) specBase = s.name.replace(/^Absolute:\s+/, '')
+        specBase = getBaseName(specBase)
+        const existing = specMap.get(specBase) || { skillIds: [], hasSuccession: false, hasAbsolute: false }
+        existing.skillIds.push(id)
+        if (isSucc) existing.hasSuccession = true
+        if (isAbs) existing.hasAbsolute = true
+        specMap.set(specBase, existing)
+      }
+
+      specFilteredIds = []
+      for (const [, info] of specMap) {
+        if (spec === 'succession' && info.hasSuccession) {
+          // Include only the succession/prime version, exclude main/absolute
+          for (const id of info.skillIds) {
+            const s = rowById.get(id)
+            if (s && (s.isSuccession || s.name.startsWith('Prime:') || s.name.startsWith('Succession:'))) {
+              specFilteredIds.push(id)
+            }
+          }
+        } else if (spec === 'awakening' && info.hasAbsolute) {
+          // Include only the absolute version, exclude main
+          for (const id of info.skillIds) {
+            const s = rowById.get(id)
+            if (s && (s.isAbsolute || s.name.startsWith('Absolute:'))) {
+              specFilteredIds.push(id)
+            }
+          }
+        } else {
+          // No spec override — include all
+          specFilteredIds.push(...info.skillIds)
+        }
+      }
+    }
+
     // Apply damage range filter post-query (since damage is computed, not stored).
     // Also pre-compute PvP damage and CC counters when sorting by those columns.
-    let filteredIds = maxRankSkillIds
+    let filteredIds = specFilteredIds
     const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage'
     const needsCC = sort === 'ccCounters' || pvpOnlyFilter
     let dmgPvEMap: Map<number, number> | null = null

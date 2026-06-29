@@ -25,6 +25,7 @@ interface SkillStore {
   toggleHasAnim: () => void
   toggleQuickslot: () => void
   toggleHasPrereqs: () => void
+  setSpec: (spec: 'all' | 'succession' | 'awakening') => void
   setSort: (s: SkillSort) => void
   toggleOrder: () => void
   setPage: (p: number) => void
@@ -42,6 +43,7 @@ const DEFAULT_FILTERS: SkillFilters = {
   types: [],
   protections: [],
   cc: [],
+  spec: 'all',
   sort: 'skillId',
   order: 'asc',
   page: 1,
@@ -92,6 +94,7 @@ export const useSkillStore = create<SkillStore>((set) => ({
   toggleHasAnim: () => set((s) => ({ filters: { ...s.filters, hasAnim: !s.filters.hasAnim ? true : undefined, page: 1 } })),
   toggleQuickslot: () => set((s) => ({ filters: { ...s.filters, quickslot: !s.filters.quickslot ? true : undefined, page: 1 } })),
   toggleHasPrereqs: () => set((s) => ({ filters: { ...s.filters, hasPrereqs: !s.filters.hasPrereqs ? true : undefined, page: 1 } })),
+  setSpec: (spec) => set((s) => ({ filters: { ...s.filters, spec, types: [], page: 1 } })),
   setSort: (sort) => set((s) => ({ filters: { ...s.filters, sort, page: 1 } })),
   toggleOrder: () => set((s) => ({ filters: { ...s.filters, order: s.filters.order === 'asc' ? 'desc' : 'asc', page: 1 } })),
   setPage: (p) => set((s) => ({ filters: { ...s.filters, page: p } })),

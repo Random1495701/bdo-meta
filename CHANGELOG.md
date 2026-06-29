@@ -399,3 +399,28 @@ also committed for continuity.
 - **⚠️ Token hygiene**: GitHub token was shared in chat. User should revoke at
   https://github.com/settings/tokens after this session. Token was NOT saved to
   any file in the repo. Remote URL is clean (no embedded token).
+
+---
+
+## [2.0.0] — 2025-06-29 (Succession/Awakening Spec Filtering)
+
+### Added
+- **Spec filtering with S/A buttons**: Each class chip now has S (Succession) and
+  A (Awakening) buttons below the class icon, replacing the skill count badge.
+  Clicking S or A auto-selects the class and filters to that spec's skills.
+- **Spec-aware deduplication**:
+  - **Succession spec**: Shows Prime:/Succession: versions of skills. Excludes
+    Main/Absolute versions of skills that have a Prime/Succession version.
+    Excludes Awakening skills entirely.
+  - **Awakening spec**: Shows Absolute versions of skills (replacing Main).
+    Excludes Main versions of skills that have an Absolute version. Excludes
+    Succession/Prime skills entirely.
+- `spec` parameter in `GET /api/skills` (`spec=succession` or `spec=awakening`)
+- `setSpec()` in Zustand store — clears type filters when spec changes
+
+### Changed
+- Class chip: skill count badge replaced with S/A spec buttons
+- `SkillFilters` interface: added `spec` field
+- `filtersToQuery()`: includes `spec` parameter
+- Major version bump to 2.0.0 — this is a significant feature addition that
+  changes how users interact with the class bar.

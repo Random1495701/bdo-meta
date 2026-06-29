@@ -1081,3 +1081,42 @@ Stage Summary:
 - **PAZ extraction docs**: Full guide at docs/PAZ_EXTRACTION.md. User can extract skill data (including frame-accurate animation durations) from BDO game files and inject via /api/upload/skills-json.
 - **GitHub backup**: https://github.com/Random1495701/bdo-meta with all code + 10 version tags. DB exported as JSON (2.2MB) instead of SQLite (102MB).
 - **Token hygiene warning**: Token exposed in chat history. User should revoke at https://github.com/settings/tokens after this session.
+
+---
+Task ID: 17
+Agent: main-orchestrator
+Task: Add Succession/Awakening spec filtering with spec-aware deduplication
+
+Work Log:
+- Learned the BDO spec system:
+  - At level 56, a character chooses Awakening (awakened weapon) or Succession (enhanced main weapon)
+  - Succession spec: uses Prime:/Succession: enhanced versions of main skills + Main (no dup) + Absolute (no dup) + Black Spirit + Passive. No Awakening skills.
+  - Awakening spec: uses Awakening weapon skills + Main (no dup, Absolute replaces Main where it exists) + Black Spirit + Passive. No Succession/Prime skills.
+- Added `spec` field to SkillFilters interface and Zustand store (`spec: 'all' | 'succession' | 'awakening'`)
+- Added `setSpec()` to store — clears type filters when spec changes (spec overrides types)
+- Updated `filtersToQuery()` to include `spec` parameter
+- Added spec filtering to `GET /api/skills`:
+  - `spec=succession`: Excludes awakening skills. Includes succession, absolute, blackspirit, passive, and main (no flags). Post-query dedup: if a Prime:/Succession: version exists, excludes main/absolute versions with the same base name.
+  - `spec=awakening`: Excludes succession skills. Includes awakening, absolute, blackspirit, passive, and main. Post-query dedup: if an Absolute: version exists, excludes main versions with the same base name.
+  - Spec-aware dedup uses base name comparison: strips "Prime: "/"Succession: "/"Absolute: " prefixes + rank suffixes to identify the same skill across versions
+- Updated ClassChip component in class-bar.tsx:
+  - Replaced skill count badge with S/A buttons
+  - S button (emerald when active) = Succession spec
+  - A button (amber when active) = Awakening spec
+  - Clicking S or A auto-selects the class and sets the spec
+  - Buttons use stopPropagation to not trigger class toggle
+- Updated ClassBar to pass spec state and handle spec clicks:
+  - onSpecClick: if class not already selected, clears other classes + selects this class, then sets spec
+- Verified:
+  - Warrior Succession: 79 skills (5 Prime + 6 Absolute + BS + Passive + Main without Prime version)
+  - Warrior Awakening: 85 skills (Absolute replaces Main where available + Awakening + BS + Passive)
+  - Warrior all (no spec): 124 skills
+  - 0 awakening skills in succession spec ✓
+  - 0 succession skills in awakening spec ✓
+  - UI shows 62 S/A buttons (31 classes × 2)
+  - Clicking S for Warrior shows Prime: skills, no Awakening skills ✓
+
+Stage Summary:
+- **Spec filtering**: S/A buttons below each class icon. Clicking S loads Succession spec (Prime skills replace Main/Absolute where available). Clicking A loads Awakening spec (Absolute replaces Main where available).
+- **Spec-aware dedup**: Succession spec excludes Main/Absolute versions of skills that have a Prime/Succession version. Awakening spec excludes Main versions of skills that have an Absolute version.
+- **Skill count badge replaced**: The count badge on class chips is now S/A spec buttons.

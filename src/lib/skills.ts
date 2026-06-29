@@ -181,6 +181,7 @@ export interface SkillFilters {
   types?: SkillType[] // multi-select (empty = all)
   protections?: string[] // multi-select (empty = all)
   cc?: string[]
+  spec?: 'all' | 'succession' | 'awakening' // spec filter (overrides types)
   minLvl?: number
   maxLvl?: number
   minCd?: number
@@ -231,6 +232,7 @@ export function filtersToQuery(f: SkillFilters): URLSearchParams {
   if (f.types && f.types.length > 0) sp.set('type', f.types.join(','))
   if (f.protections && f.protections.length > 0) sp.set('protection', f.protections.join(','))
   if (f.cc && f.cc.length) sp.set('cc', f.cc.join(','))
+  if (f.spec && f.spec !== 'all') sp.set('spec', f.spec)
   if (f.minLvl != null) sp.set('minLvl', String(f.minLvl))
   if (f.maxLvl != null) sp.set('maxLvl', String(f.maxLvl))
   if (f.minCd != null) sp.set('minCd', String(f.minCd))

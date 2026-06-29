@@ -79,12 +79,16 @@ function ClassChip({
   cls,
   active,
   count,
+  spec,
   onClick,
+  onSpecClick,
 }: {
   cls: BdoClass
   active: boolean
   count: number
+  spec: 'all' | 'succession' | 'awakening'
   onClick: () => void
+  onSpecClick: (spec: 'succession' | 'awakening') => void
 }) {
   const color = classColor(cls.name)
   return (
@@ -122,21 +126,43 @@ function ClassChip({
       >
         {cls.name}
       </span>
-      <span
-        className={cn(
-          'rounded-sm px-1.5 text-[9px] font-semibold tabular-nums',
-          active
-            ? 'bg-amber-500/25 text-amber-200'
-            : 'bg-amber-950/60 text-amber-300/60',
-        )}
-        style={
-          !active
-            ? { boxShadow: `inset 0 0 0 1px ${color}33` }
-            : undefined
-        }
-      >
-        {count}
-      </span>
+      {/* S/A spec buttons — replace the skill count badge */}
+      <div className="flex gap-0.5" onClick={(e) => e.stopPropagation()}>
+        <span
+          role="button"
+          tabIndex={0}
+          onClick={(e) => {
+            e.stopPropagation()
+            onSpecClick('succession')
+          }}
+          className={cn(
+            'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
+            spec === 'succession' && active
+              ? 'bg-emerald-500/30 text-emerald-200 ring-1 ring-emerald-400/60'
+              : 'bg-zinc-800/80 text-zinc-500 hover:bg-emerald-900/30 hover:text-emerald-300',
+          )}
+          title="Succession spec — click to load Succession skills"
+        >
+          S
+        </span>
+        <span
+          role="button"
+          tabIndex={0}
+          onClick={(e) => {
+            e.stopPropagation()
+            onSpecClick('awakening')
+          }}
+          className={cn(
+            'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
+            spec === 'awakening' && active
+              ? 'bg-amber-500/30 text-amber-200 ring-1 ring-amber-400/60'
+              : 'bg-zinc-800/80 text-zinc-500 hover:bg-amber-900/30 hover:text-amber-300',
+          )}
+          title="Awakening spec — click to load Awakening skills"
+        >
+          A
+        </span>
+      </div>
     </button>
   )
 }
@@ -145,6 +171,8 @@ export function ClassBar() {
   const classIds = useSkillStore((s) => s.filters.classIds) ?? []
   const toggleClass = useSkillStore((s) => s.toggleClass)
   const clearClasses = useSkillStore((s) => s.clearClasses)
+  const spec = useSkillStore((s) => s.filters.spec) ?? 'all'
+  const setSpec = useSkillStore((s) => s.setSpec)
   const scrollRef = React.useRef<HTMLDivElement>(null)
 
   // Wheel-scroll support: when hovering over the class bar, vertical wheel
@@ -300,7 +328,16 @@ export function ClassBar() {
                     cls={c}
                     count={countMap.get(c.id) ?? c.skillCount ?? 0}
                     active={classIds.includes(c.id)}
+                    spec={spec}
                     onClick={() => toggleClass(c.id)}
+                    onSpecClick={(s) => {
+                      // Select the class if not already selected, then set spec
+                      if (!classIds.includes(c.id)) {
+                        clearClasses()
+                        toggleClass(c.id)
+                      }
+                      setSpec(s)
+                    }}
                   />
                 ))}
         </div>
