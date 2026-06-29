@@ -1120,3 +1120,32 @@ Stage Summary:
 - **Spec filtering**: S/A buttons below each class icon. Clicking S loads Succession spec (Prime skills replace Main/Absolute where available). Clicking A loads Awakening spec (Absolute replaces Main where available).
 - **Spec-aware dedup**: Succession spec excludes Main/Absolute versions of skills that have a Prime/Succession version. Awakening spec excludes Main versions of skills that have an Absolute version.
 - **Skill count badge replaced**: The count badge on class chips is now S/A spec buttons.
+
+---
+Task ID: 19
+Agent: main-orchestrator
+Task: Final commit — update chat history, session handoff, export DB, ensure vault survives session reset
+
+Work Log:
+- Created chat history transcripts for sessions 6-9:
+  - session-2025-06-29-cc-system.md (Task 14-15: CC system, video plan, garmoth API)
+  - session-2025-06-29-cc-fix.md (Task 13: CC counter fix, detail redesign, slider ranges)
+  - session-2025-06-29-github-paz.md (Task 16: cooldown slider, PAZ docs, GitHub backup)
+  - session-2025-06-29-spec-filtering.md (Task 17-18: spec filtering, multi-spec)
+- Updated docs/SESSION_HANDOFF.md with current state (v2.0.0+):
+  - Added "CRITICAL: Dev Server Must Use Node spawn" warning
+  - Added "CRITICAL: Lurker Has PID Lock" warning
+  - Updated key features list (spec filtering, multi-spec, CC system, damage calc)
+  - Updated file table with all new docs
+  - Added GitHub backup section (token revoked note)
+  - Added common pitfalls (10 items)
+- Exported fresh DB snapshot: db/skills-export.json (enriched skills only, 2.2MB)
+- Verified .gitignore protects db/custom.db (102MB, not committed)
+- Committed everything to local git with final tag v2.1.0
+
+Stage Summary:
+- **Chat history**: 9 session transcripts in docs/chat-history/ (sessions 1-9)
+- **Session handoff**: Updated with current state, critical warnings, and file table
+- **DB snapshot**: Fresh export at db/skills-export.json (1,605 enriched skills)
+- **Git**: All changes committed locally. GitHub push requires new token (old one revoked).
+- **Vault**: All documentation, chat history, worklog, changelog, and DB export are in git. The project can be fully restored from git clone + db/skills-export.json import.
