@@ -14,9 +14,9 @@ import {
   Crosshair,
   Gem,
   Ban,
-  Star,
   Swords,
   Lock,
+  Sparkles,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -34,7 +34,11 @@ import {
 
 import {
   PROTECTION_TYPES,
+  CC_TYPE_NAMES,
+  NON_CC_TYPES,
   CC_TYPES,
+  NON_CC_EFFECTS,
+  PROTECTION_META,
   SKILL_TYPE_META,
   fetchRanges,
   type SkillType,
@@ -244,10 +248,6 @@ function FilterNotice() {
   )
 }
 
-// SP cost slider range — most skills cost 0–20 SP, with a few rare ones up to ~30.
-const SP_MIN = 0
-const SP_MAX = 20
-
 // Damage range — total PvE damage percent. Most skills fall well under 100k.
 const DAMAGE_MIN = 0
 const DAMAGE_MAX = 100_000
@@ -259,10 +259,10 @@ export function FilterSidebar() {
   const toggleProtection = useSkillStore((s) => s.toggleProtection)
   const clearProtections = useSkillStore((s) => s.clearProtections)
   const toggleCc = useSkillStore((s) => s.toggleCc)
+  const clearCc = useSkillStore((s) => s.clearCc)
   const setLevelRange = useSkillStore((s) => s.setLevelRange)
   const setCooldownRange = useSkillStore((s) => s.setCooldownRange)
   const setAnimRange = useSkillStore((s) => s.setAnimRange)
-  const setSpRange = useSkillStore((s) => s.setSpRange)
   const setDamageRange = useSkillStore((s) => s.setDamageRange)
   const toggleHasVideo = useSkillStore((s) => s.toggleHasVideo)
   const toggleHasAnim = useSkillStore((s) => s.toggleHasAnim)
@@ -295,7 +295,6 @@ export function FilterSidebar() {
     if (filters.minLvl != null || filters.maxLvl != null) n++
     if (filters.minCd != null || filters.maxCd != null) n++
     if (filters.minAnim != null || filters.maxAnim != null) n++
-    if (filters.minSp != null || filters.maxSp != null) n++
     if (filters.minDamage != null || filters.maxDamage != null) n++
     if (filters.hasVideo) n++
     if (filters.hasAnim) n++
@@ -321,10 +320,6 @@ export function FilterSidebar() {
   const animVals: [number, number] = [
     filters.minAnim ?? animMin,
     filters.maxAnim ?? animMax,
-  ]
-  const spVals: [number, number] = [
-    filters.minSp ?? SP_MIN,
-    filters.maxSp ?? SP_MAX,
   ]
 
   const typesActive = filters.types ?? []
@@ -422,40 +417,87 @@ export function FilterSidebar() {
               Protection
             </SectionTitle>
             <div className="flex flex-wrap gap-1.5">
-              {PROTECTION_TYPES.map((p) => (
-                <Chip
-                  key={p}
-                  active={protectionsActive.includes(p)}
-                  color="#5cbfd6"
-                  onClick={() => toggleProtection(p)}
-                >
-                  {p}
-                </Chip>
-              ))}
+              {PROTECTION_TYPES.map((p) => {
+                const meta = PROTECTION_META[p]
+                return (
+                  <Chip
+                    key={p}
+                    active={protectionsActive.includes(p)}
+                    color={meta?.color ?? '#5cbfd6'}
+                    onClick={() => toggleProtection(p)}
+                  >
+                    {meta && <span className="mr-0.5">{meta.symbol}</span>}
+                    {p}
+                  </Chip>
+                )
+              })}
             </div>
           </section>
 
           <GoldDivider />
 
-          {/* CC Types — multi-select (already was) */}
+          {/* CC Types — multi-select (8 real CCs that count toward the PvP CC counter) */}
           <section>
             <SectionTitle
               icon={<Zap className="size-3.5" />}
-              hint="Multi-select — match skills with ANY of these CC effects"
+              hint="Real CCs that count toward the PvP CC counter (2 = target is CC-immune)"
+              right={
+                filters.cc && filters.cc.length > 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => clearCc()}
+                    className="ml-auto rounded-sm border border-amber-800/50 bg-bdo-leather-dark px-1.5 py-px text-[10px] text-amber-300/80 hover:border-amber-500/60 hover:text-amber-200"
+                  >
+                    Clear ({filters.cc.length})
+                  </button>
+                ) : undefined
+              }
             >
               CC Types
             </SectionTitle>
             <div className="flex flex-wrap gap-1.5">
-              {CC_TYPES.map((c) => (
-                <Chip
-                  key={c}
-                  active={filters.cc?.includes(c) ?? false}
-                  color="#d6533a"
-                  onClick={() => toggleCc(c)}
-                >
-                  {c}
-                </Chip>
-              ))}
+              {CC_TYPE_NAMES.map((c) => {
+                const meta = CC_TYPES[c]
+                return (
+                  <Chip
+                    key={c}
+                    active={filters.cc?.includes(c) ?? false}
+                    color={meta?.color ?? '#d6533a'}
+                    onClick={() => toggleCc(c)}
+                  >
+                    <span className="mr-0.5">{meta?.symbol}</span>
+                    {c}
+                  </Chip>
+                )
+              })}
+            </div>
+          </section>
+
+          <GoldDivider />
+
+          {/* Other Effects — multi-select (non-CC: displacements, DoTs, smashes) */}
+          <section>
+            <SectionTitle
+              icon={<Sparkles className="size-3.5" />}
+              hint="Non-CC effects (displacements, DoTs, damage modifiers). These do NOT count toward the PvP CC counter."
+            >
+              Other Effects
+            </SectionTitle>
+            <div className="flex flex-wrap gap-1.5">
+              {NON_CC_TYPES.map((e) => {
+                const meta = NON_CC_EFFECTS[e]
+                return (
+                  <Chip
+                    key={e}
+                    active={filters.cc?.includes(e) ?? false}
+                    color={meta?.color ?? '#94a3b8'}
+                    onClick={() => toggleCc(e)}
+                  >
+                    <span className="mr-0.5">{meta?.symbol}</span>
+                    {e}
+                  </Chip>
+                )
+              })}
             </div>
           </section>
 
@@ -517,40 +559,6 @@ export function FilterSidebar() {
               onMin={(v) => setCooldownRange(v, filters.maxCd)}
               onMax={(v) => setCooldownRange(filters.minCd, v)}
               suffix="s"
-            />
-          </section>
-
-          <GoldDivider />
-
-          {/* SP Cost */}
-          <section>
-            <SectionTitle
-              icon={<Star className="size-3.5" />}
-              hint="Skill points required to unlock this skill rank"
-            >
-              SP Cost
-            </SectionTitle>
-            <Slider
-              min={SP_MIN}
-              max={SP_MAX}
-              step={1}
-              value={spVals}
-              onValueChange={(v) =>
-                setSpRange(
-                  v[0] === SP_MIN ? undefined : v[0],
-                  v[1] === SP_MAX ? undefined : v[1],
-                )
-              }
-              className="my-2"
-            />
-            <RangeInputs
-              min={SP_MIN}
-              max={SP_MAX}
-              minVal={filters.minSp}
-              maxVal={filters.maxSp}
-              onMin={(v) => setSpRange(v, filters.maxSp)}
-              onMax={(v) => setSpRange(filters.minSp, v)}
-              suffix="SP"
             />
           </section>
 

@@ -1,8 +1,32 @@
 // Types and constants for the BDO Skills Database
 
 import type { DamageCalculation } from './damage'
+import {
+  CC_TYPES as CC_TYPES_RECORD,
+  NON_CC_EFFECTS,
+  calculateCCCounters,
+  getNonCCEffects,
+  getRealCCs,
+  getCCInfo,
+  isRealCC,
+  PROTECTION_META,
+} from './cc'
 
 export type { DamageCalculation, PhaseDamage } from './damage'
+
+// Re-export the CC system so consumers can import everything from one place.
+// NOTE: the array-form `CC_TYPE_NAMES` below is a separate export for places
+// that need a plain list of CC names (e.g. filter sidebar).
+export {
+  calculateCCCounters,
+  getRealCCs,
+  getNonCCEffects,
+  isRealCC,
+  getCCInfo,
+  CC_TYPES,
+  NON_CC_EFFECTS,
+  PROTECTION_META,
+} from './cc'
 
 export interface DamageRow {
   label: string
@@ -46,6 +70,9 @@ export interface Skill {
   damageRows: DamageRow[] | null
   damage?: DamageCalculation
   ccTypes: string[] | null
+  ccCounters?: number
+  realCCs?: string[]
+  nonCCEffects?: string[]
   protectionTypes: string[] | null
   pvpDamagePercent: number | null
   isQuickSlot: boolean
@@ -190,6 +217,9 @@ export type SkillSort =
   | 'class'
   | 'sp'
   | 'damage'
+  | 'pvpDamage'
+  | 'ccCounters'
+  | 'type'
 
 export function filtersToQuery(f: SkillFilters): URLSearchParams {
   const sp = new URLSearchParams()
@@ -360,32 +390,16 @@ export function formatAnimDuration(ms: number | null): string {
 
 export const PROTECTION_TYPES = ['Super Armor', 'Forward Guard', 'I-Frame', 'Crouching'] as const
 
-export const CC_TYPES = [
-  'Knockback',
-  'Knockdown',
-  'Stiffness',
-  'Stun',
-  'Freeze',
-  'Float',
-  'Grapple',
-  'Bound',
-  'Slow',
-  'Push the target',
-  'Spin the target',
-  'Pull the target',
-  'Burn',
-  'Frostbite',
-  'Chill',
-  'Bleeding',
-  'Poison',
-  'Electrocute',
-  'Down Smash',
-  'Air Smash',
-  'Smash',
-  'Dehydrate',
-  'Blind',
-  'Shock',
-] as const
+// Array of the 8 real CC names (count toward the CC counter in PvP).
+// Derived from the CC_TYPES Record (see src/lib/cc.ts) so the source of truth
+// stays in one place. Use this for filter iteration; use CC_TYPES (the Record)
+// for symbol/color/counterValue metadata.
+export const CC_TYPE_NAMES = Object.keys(CC_TYPES_RECORD) as (keyof typeof CC_TYPES_RECORD)[]
+
+// Non-CC effects (displacements, DoTs, damage modifiers) — shown separately in
+// the UI. Frostbite/Chill are aliases for Freeze (a real CC), so they are NOT
+// listed here. Derived from the NON_CC_EFFECTS Record.
+export const NON_CC_TYPES = Object.keys(NON_CC_EFFECTS)
 
 export const SKILL_TYPE_META: Record<
   SkillType,
@@ -431,4 +445,58 @@ export function skillTypeLabel(s: Skill): SkillType | null {
   if (s.isBlackSpirit) return 'blackspirit'
   if (s.isPassive) return 'passive'
   return 'main'
+}
+
+// Short 3-letter class abbreviation for compact table/cards.
+const CLASS_ABBREV_MAP: Record<string, string> = {
+  Warrior: 'War',
+  Ranger: 'Ran',
+  Sorceress: 'Sor',
+  Berserker: 'Ber',
+  Tamer: 'Tam',
+  Valkyrie: 'Val',
+  Wizard: 'Wiz',
+  Witch: 'Wit',
+  Musa: 'Mus',
+  Maehwa: 'Mae',
+  Lahn: 'Lah',
+  Striker: 'Str',
+  Mystic: 'Mys',
+  Kunoichi: 'Kun',
+  Ninja: 'Nin',
+  'Dark Knight': 'DK',
+  Archer: 'Arc',
+  Shai: 'Sha',
+  Guardian: 'Gua',
+  Hashashin: 'Has',
+  Nova: 'Nov',
+  Sage: 'Sag',
+  Corsair: 'Cor',
+  Drakania: 'Dra',
+  Woosa: 'Woo',
+  Maegu: 'Mae',
+  Scholar: 'Sch',
+  Dosa: 'Dos',
+  Seraph: 'Ser',
+  Deadeye: 'Dea',
+  Wukong: 'Wuk',
+}
+
+export function classAbbrev(name: string | null): string {
+  if (!name) return '—'
+  return CLASS_ABBREV_MAP[name] ?? name.slice(0, 3)
+}
+
+// Short 3-4 letter type abbreviation for the compact table view.
+const TYPE_ABBREV: Record<SkillType, string> = {
+  main: 'Main',
+  awakening: 'Awk',
+  succession: 'Suc',
+  absolute: 'Abs',
+  blackspirit: 'BS',
+  passive: 'Pas',
+}
+
+export function typeAbbrev(t: SkillType | null): string {
+  return t ? TYPE_ABBREV[t] : '—'
 }

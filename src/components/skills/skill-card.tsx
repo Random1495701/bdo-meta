@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { Clock, Film, Gauge, Keyboard, Star, Swords } from 'lucide-react'
+import { Clock, Film, Gauge, Keyboard, Skull, Swords, Zap } from 'lucide-react'
 
 import {
   classColor,
@@ -96,40 +96,42 @@ function MiniStat({
   )
 }
 
-// Prominent damage row — total PvE (amber) and PvP (pink) damage values,
-// shown as a dedicated gold-bordered row when the skill has any damage data.
+// Compact damage row — shows total PvE (amber, ⚔) and PvP (pink, ☠) inline.
+// Both values fit on a single line; the icons replace the legacy "DAMAGE"
+// label which used to clip on narrow cards.
 function DamageRow({ skill }: { skill: Skill }) {
   const dmg = skill.damage
-  if (!dmg || !dmg.hasDamage) return null
+  if (!dmg || !dmg.hasDamage) {
+    return (
+      <div className="flex items-center gap-1.5 rounded-sm border border-amber-900/40 bg-bdo-leather-dark px-2.5 py-1.5 text-xs text-amber-200/30">
+        <Swords className="size-3" />
+        <span>—</span>
+      </div>
+    )
+  }
   const pve = formatDamage(dmg.totalPvE)
   const pvp = dmg.totalPvP != null ? formatDamage(dmg.totalPvP) : null
   return (
     <div
-      className="flex items-center justify-between gap-2 rounded-sm border border-amber-700/40 bg-gradient-to-r from-amber-950/40 to-bdo-leather-dark px-2.5 py-1.5"
+      className="flex items-center gap-2.5 rounded-sm border border-amber-700/40 bg-gradient-to-r from-amber-950/40 to-bdo-leather-dark px-2.5 py-1.5"
       style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.1)' }}
     >
-      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-amber-200/60">
-        <Swords className="size-3" />
-        Damage
+      <div
+        className="flex items-center gap-1 text-sm font-bold tabular-nums text-amber-300"
+        title={`Total PvE damage: ${dmg.totalPvE.toLocaleString()}%`}
+      >
+        <Swords className="size-3.5 text-amber-400" />
+        {pve}
       </div>
-      <div className="flex items-center gap-2">
+      {pvp && (
         <div
-          className="flex items-center gap-1 text-sm font-bold tabular-nums text-amber-300"
-          title={`Total PvE damage: ${dmg.totalPvE.toLocaleString()}%`}
+          className="flex items-center gap-1 text-sm font-bold tabular-nums text-pink-400"
+          title={`Total PvP damage: ${dmg.totalPvP?.toLocaleString()}% (${dmg.pvpDamagePercent}% of PvE)`}
         >
-          <span className="text-[9px] uppercase tracking-wider text-amber-200/50">PvE</span>
-          {pve}
+          <Skull className="size-3.5 text-pink-400/80" />
+          {pvp}
         </div>
-        {pvp && (
-          <div
-            className="flex items-center gap-1 text-sm font-bold tabular-nums text-pink-400"
-            title={`Total PvP damage: ${dmg.totalPvP?.toLocaleString()}% (${dmg.pvpDamagePercent}% of PvE)`}
-          >
-            <span className="text-[9px] uppercase tracking-wider text-pink-300/50">PvP</span>
-            {pvp}
-          </div>
-        )}
-      </div>
+      )}
     </div>
   )
 }
@@ -274,12 +276,14 @@ export const SkillCard = React.memo(function SkillCard({
           label="Animation"
           accent={skill.animationDurationMs != null}
         />
-        {skill.skillPoints > 0 && (
-          <MiniStat
-            icon={<Star className="size-3" />}
-            value={`${skill.skillPoints} SP`}
-            label="Skill points"
-          />
+        {skill.ccCounters != null && skill.ccCounters > 0 && (
+          <div
+            className="flex items-center gap-1 rounded-sm border border-red-700/60 bg-red-900/30 px-1.5 py-0.5 text-[11px] font-bold tabular-nums text-red-300"
+            title={`CC Counters: ${skill.ccCounters} (target is CC-immune at 2)`}
+          >
+            <Zap className="size-2.5" />
+            CC: {skill.ccCounters}
+          </div>
         )}
       </div>
     </motion.button>

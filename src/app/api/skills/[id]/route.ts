@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { calculateDamage, type DamageRow } from '@/lib/damage'
+import { calculateCCCounters, getRealCCs, getNonCCEffects } from '@/lib/cc'
 
 export const dynamic = 'force-dynamic'
 
@@ -63,6 +64,10 @@ export async function GET(
 
   const damageRows: DamageRow[] | null = skill.damageRowsJson ? JSON.parse(skill.damageRowsJson) : null
   const damage = calculateDamage(damageRows, skill.pvpDamagePercent)
+  const ccTypes = splitCsv(skill.ccTypes)
+  const realCCs = getRealCCs(ccTypes)
+  const nonCCEffects = getNonCCEffects(ccTypes)
+  const ccCounters = calculateCCCounters(ccTypes)
 
   const serialized = {
     id: skill.id,
@@ -83,7 +88,10 @@ export async function GET(
     description: skill.description,
     damageRows,
     damage,
-    ccTypes: splitCsv(skill.ccTypes),
+    ccTypes,
+    ccCounters,
+    realCCs,
+    nonCCEffects,
     protectionTypes: splitCsv(skill.protectionTypes),
     pvpDamagePercent: skill.pvpDamagePercent,
     isQuickSlot: skill.isQuickSlot,

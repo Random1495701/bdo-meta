@@ -8,7 +8,6 @@ import {
   Gauge,
   Clock,
   Film,
-  Star,
   Sparkles,
   Sword,
   Shield,
@@ -39,6 +38,9 @@ import {
   fetchSkill,
   formatAnimDuration,
   formatCooldown,
+  PROTECTION_META,
+  CC_TYPES,
+  NON_CC_EFFECTS,
   SKILL_TYPE_META,
   skillTypeLabel,
   type DamageRow,
@@ -511,11 +513,6 @@ export function SkillDetailDrawer() {
                       value={skill.requiredLevel ? String(skill.requiredLevel) : '—'}
                     />
                     <StatCard
-                      icon={<Star className="size-3" />}
-                      label="SP Cost"
-                      value={skill.skillPoints ? String(skill.skillPoints) : '—'}
-                    />
-                    <StatCard
                       icon={<Activity className="size-3" />}
                       label="Max Lv"
                       value={skill.maxLevel ? String(skill.maxLevel) : '—'}
@@ -538,6 +535,15 @@ export function SkillDetailDrawer() {
                         label="PvP Dmg %"
                         value={`${skill.pvpDamagePercent}%`}
                         accent="pink"
+                      />
+                    )}
+                    {skill.ccCounters != null && skill.ccCounters > 0 && (
+                      <StatCard
+                        icon={<Zap className="size-3" />}
+                        label="CC Counters"
+                        value={String(skill.ccCounters)}
+                        accent="red"
+                        hint="Total CC counters this skill fills (target is CC-immune at 2)"
                       />
                     )}
                   </div>
@@ -660,34 +666,170 @@ export function SkillDetailDrawer() {
                   {/* CC + Protection */}
                   {(skill.ccTypes?.length || skill.protectionTypes?.length) && (
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      {skill.ccTypes?.length ? (
-                        <Section title="CC Types" icon={<Zap className="size-3" />}>
-                          <div className="flex flex-wrap gap-1.5">
-                            {skill.ccTypes.map((c) => (
-                              <span
-                                key={c}
-                                className="rounded-sm border border-red-700/50 bg-red-900/20 px-2 py-0.5 text-xs text-red-300"
-                              >
-                                {c}
-                              </span>
-                            ))}
-                          </div>
-                        </Section>
-                      ) : null}
+                      {/* CC Types (real CCs only) + counter badge */}
+                      {(() => {
+                        const realCCs = skill.realCCs ?? []
+                        const nonCCEffects = skill.nonCCEffects ?? []
+                        const counters = skill.ccCounters ?? 0
+                        if (!realCCs.length && !nonCCEffects.length) return null
+                        return (
+                          <Section
+                            title={`CC Types`}
+                            icon={<Zap className="size-3" />}
+                          >
+                            <div className="space-y-2">
+                              {counters > 0 && (
+                                <div
+                                  className="inline-flex items-center gap-1 rounded-sm border border-red-700/60 bg-red-900/30 px-2 py-0.5 text-xs font-bold text-red-300"
+                                  title="Total CC counters filled (target becomes CC-immune at 2)"
+                                >
+                                  <Zap className="size-3" />
+                                  CC Counters: {counters}
+                                </div>
+                              )}
+                              {realCCs.length > 0 && (
+                                <div className="flex flex-wrap gap-1.5">
+                                  {realCCs.map((c) => {
+                                    const meta = CC_TYPES[c]
+                                    if (!meta) {
+                                      return (
+                                        <span
+                                          key={c}
+                                          className="rounded-sm border border-red-700/50 bg-red-900/20 px-2 py-0.5 text-xs text-red-300"
+                                        >
+                                          {c}
+                                        </span>
+                                      )
+                                    }
+                                    return (
+                                      <Tooltip key={c}>
+                                        <TooltipTrigger asChild>
+                                          <span
+                                            className="flex items-center gap-1 rounded-sm border px-2 py-0.5 text-xs font-medium"
+                                            style={{
+                                              borderColor: `${meta.color}66`,
+                                              backgroundColor: `${meta.color}1a`,
+                                              color: meta.color,
+                                            }}
+                                          >
+                                            <span>{meta.symbol}</span>
+                                            <span>{c}</span>
+                                            <span className="ml-0.5 text-[10px] opacity-70">
+                                              ({meta.counterValue})
+                                            </span>
+                                          </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="top" className="max-w-[220px]">
+                                          <div className="space-y-1">
+                                            <div className="font-semibold">{meta.name}</div>
+                                            <div className="text-[10px] opacity-80">
+                                              {meta.description}
+                                            </div>
+                                            <div className="text-[10px] opacity-70">
+                                              Resistance: {meta.resistanceCategory} · Counter: {meta.counterValue}
+                                            </div>
+                                          </div>
+                                        </TooltipContent>
+                                      </Tooltip>
+                                    )
+                                  })}
+                                </div>
+                              )}
+                              {nonCCEffects.length > 0 && (
+                                <div>
+                                  <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-amber-200/50">
+                                    Other Effects
+                                  </div>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {nonCCEffects.map((e) => {
+                                      const meta = NON_CC_EFFECTS[e]
+                                      if (!meta) {
+                                        return (
+                                          <span
+                                            key={e}
+                                            className="rounded-sm border border-amber-900/50 bg-bdo-leather-dark px-2 py-0.5 text-xs text-amber-200/70"
+                                          >
+                                            {e}
+                                          </span>
+                                        )
+                                      }
+                                      return (
+                                        <Tooltip key={e}>
+                                          <TooltipTrigger asChild>
+                                            <span
+                                              className="flex items-center gap-1 rounded-sm border px-2 py-0.5 text-xs font-medium"
+                                              style={{
+                                                borderColor: `${meta.color}66`,
+                                                backgroundColor: `${meta.color}1a`,
+                                                color: meta.color,
+                                              }}
+                                            >
+                                              <span>{meta.symbol}</span>
+                                              <span>{e}</span>
+                                            </span>
+                                          </TooltipTrigger>
+                                          <TooltipContent side="top" className="max-w-[220px]">
+                                            <div className="space-y-1">
+                                              <div className="font-semibold">{e}</div>
+                                              <div className="text-[10px] opacity-80">
+                                                {meta.category} — does not count toward the CC counter
+                                              </div>
+                                            </div>
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      )
+                                    })}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </Section>
+                        )
+                      })()}
+
+                      {/* Protection — uses PROTECTION_META symbols (🛡 SA, ⬛ FG, ✦ IF) */}
                       {skill.protectionTypes?.length ? (
                         <Section
                           title="Protection"
                           icon={<Shield className="size-3" />}
                         >
                           <div className="flex flex-wrap gap-1.5">
-                            {skill.protectionTypes.map((p) => (
-                              <span
-                                key={p}
-                                className="rounded-sm border border-cyan-700/50 bg-cyan-900/20 px-2 py-0.5 text-xs text-cyan-300"
-                              >
-                                {p}
-                              </span>
-                            ))}
+                            {skill.protectionTypes.map((p) => {
+                              const meta = PROTECTION_META[p]
+                              if (!meta) {
+                                return (
+                                  <span
+                                    key={p}
+                                    className="rounded-sm border border-cyan-700/50 bg-cyan-900/20 px-2 py-0.5 text-xs text-cyan-300"
+                                  >
+                                    {p}
+                                  </span>
+                                )
+                              }
+                              return (
+                                <Tooltip key={p}>
+                                  <TooltipTrigger asChild>
+                                    <span
+                                      className="flex items-center gap-1 rounded-sm border px-2 py-0.5 text-xs font-medium"
+                                      style={{
+                                        borderColor: `${meta.color}66`,
+                                        backgroundColor: `${meta.color}1a`,
+                                        color: meta.color,
+                                      }}
+                                    >
+                                      <span className="text-sm leading-none">{meta.symbol}</span>
+                                      <span>{meta.shortName}</span>
+                                    </span>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top" className="max-w-[220px]">
+                                    <div className="space-y-1">
+                                      <div className="font-semibold">{p}</div>
+                                      <div className="text-[10px] opacity-80">{meta.description}</div>
+                                    </div>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )
+                            })}
                           </div>
                         </Section>
                       ) : null}

@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { Clock, Film, Gauge, Star } from 'lucide-react'
+import { Clock, Film, Gauge, Skull, Swords, Zap } from 'lucide-react'
 
 import {
   classColor,
@@ -160,15 +160,6 @@ export const SkillListRow = React.memo(function SkillListRow({
           <Gauge className="size-3 text-amber-500/70" />
           <span className="font-mono">{skill.requiredLevel || '—'}</span>
         </div>
-        {skill.skillPoints > 0 && (
-          <div
-            className="hidden items-center gap-1 text-amber-100/70 md:flex"
-            title="Skill points"
-          >
-            <Star className="size-3 text-amber-500/70" />
-            <span className="font-mono">{skill.skillPoints}</span>
-          </div>
-        )}
         <div
           className="hidden items-center gap-1 text-amber-100/70 md:flex"
           title="Cooldown"
@@ -176,17 +167,37 @@ export const SkillListRow = React.memo(function SkillListRow({
           <Clock className="size-3 text-amber-500/70" />
           <span className="font-mono">{cd}</span>
         </div>
-        {hasDmg && (
+        {hasDmg ? (
           <div
-            className="flex items-center gap-1 font-mono font-bold text-amber-300"
+            className="flex items-center gap-2"
             title={`PvE: ${dmg!.totalPvE.toLocaleString()}%${
               dmg!.totalPvP != null ? ` · PvP: ${dmg!.totalPvP.toLocaleString()}%` : ''
             }`}
           >
-            <span className="text-[9px] uppercase tracking-wider text-amber-200/50">
-              DMG
+            <span className="flex items-center gap-1 font-mono font-bold text-amber-300">
+              <Swords className="size-3 text-amber-400" />
+              {formatDamage(dmg!.totalPvE)}
             </span>
-            {formatDamage(dmg!.totalPvE)}
+            {dmg!.totalPvP != null && (
+              <span className="flex items-center gap-1 font-mono font-bold text-pink-400">
+                <Skull className="size-3 text-pink-400/80" />
+                {formatDamage(dmg!.totalPvP)}
+              </span>
+            )}
+          </div>
+        ) : (
+          <span className="flex items-center gap-1 text-amber-200/30">
+            <Swords className="size-3" />
+            <span>—</span>
+          </span>
+        )}
+        {skill.ccCounters != null && skill.ccCounters > 0 && (
+          <div
+            className="flex items-center gap-1 rounded-sm border border-red-700/60 bg-red-900/30 px-1.5 py-0.5 font-mono font-bold text-red-300"
+            title={`CC Counters: ${skill.ccCounters}`}
+          >
+            <Zap className="size-2.5" />
+            {skill.ccCounters}
           </div>
         )}
         {skill.animationDurationMs != null && (

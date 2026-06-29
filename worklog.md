@@ -829,3 +829,38 @@ Stage Summary:
 - **New filters**: SP cost range, damage range, has prerequisites toggle.
 - **New view modes**: Grid (existing), List (compact rows), Table (sortable columns). View toggle in header.
 - **UI display**: Damage values on skill cards (PvE amber, PvP pink). Damage summary + per-phase breakdown in detail drawer.
+
+---
+Task ID: 12
+Agent: main-orchestrator + frontend-styling-expert
+Task: CC system, protection icons, table sorting, column picker, card damage fix, SP removal
+
+Work Log:
+- Researched BDO CC counter system: 8 real CCs (Stun, Stiffness, Freeze, Knockdown, Float, Bound, Grapple, Knockback) each fill 1 CC counter. Non-CC effects (displacements, DoTs, smashes) pruned from CC list.
+- Created `src/lib/cc.ts` with:
+  - CC_TYPES: 8 real CCs with symbol, color, shortName, counterValue, description
+  - NON_CC_EFFECTS: 11 non-CC effects categorized (Displacement, DoT, Damage Modifier, Debuff)
+  - PROTECTION_META: 5 protection types with symbols (🛡 SA, ⬛ FG, ✦ IF)
+  - calculateCCCounters(), getRealCCs(), getNonCCEffects(), isRealCC(), getCCInfo()
+  - CC_ALIASES: Frostbite→Freeze, Chill→Freeze
+- Updated API to include ccCounters, realCCs, nonCCEffects in skill responses
+- Updated Skill interface with ccCounters, realCCs, nonCCEffects fields
+- Pruned CC_TYPES constant from 24 to 8 real CCs, added NON_CC_TYPES constant
+- Checked stamina cost: bdocodex doesn't expose structured stamina cost data. Only 22 skills mention "stamina" in descriptions (as buffs, not costs). Noted that stamina cost is not available from the data source.
+- Delegated UI work to frontend-styling-expert subagent which:
+  - Fixed card damage display: uses ⚔ (Swords) for PvE + ☠ (Skull) for PvP, compact inline, no "damage" text
+  - Added CC counters badge on cards (⚡ CC: 2)
+  - Updated detail drawer: protection uses PROTECTION_META symbols (🛡 SA, ⬛ FG, ✦ IF), CC section split into real CCs + other effects with symbols
+  - Rewrote table view: all columns sortable, column picker with checkboxes (saved to localStorage), compact symbols for CC/Protection/Class/Type
+  - Updated filter sidebar: 8 real CCs + separate "Other Effects" section for non-CCs
+  - Removed SP cost from UI (not relevant per user request)
+- Verified: lint clean, API returns ccCounters/realCCs/nonCCEffects, table has 8 columns + 7 sortable headers + column picker, card damage shows icons, CC counters visible
+
+Stage Summary:
+- **CC system**: 8 real CCs (Stun, Stiffness, Freeze, Knockdown, Float, Bound, Grapple, Knockback) separated from 11 non-CC effects. Each skill shows ccCounters (0-2+) and realCCs vs nonCCEffects.
+- **Protection icons**: 🛡 SA (gold), ⬛ FG (blue), ✦ IF (purple) used in detail drawer and table.
+- **Table sorting**: All columns sortable. Column picker with checkboxes, saved to localStorage.
+- **Compact symbols**: CC types show symbols (⚡↓↓), protection shows symbols (🛡⬛), class shows 3-letter abbreviations.
+- **Card damage**: ⚔ 17.3K% ☠ 5.8K% — compact, no clipping, icons replace "damage" text.
+- **SP removed**: Skill points cost removed from card, table, and detail drawer (irrelevant per user).
+- **Stamina**: Not available from bdocodex data (no structured field). Noted for user.

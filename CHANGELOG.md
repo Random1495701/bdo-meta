@@ -260,3 +260,46 @@ also committed for continuity.
 - `filtersToQuery()`: Emits comma-separated values for multi-select params.
 - `serializeSkill()`: Now includes `damage` field computed by `calculateDamage()`.
 - Skill detail API: Includes `damage` field with per-phase breakdown.
+
+---
+
+## [1.6.0] — 2025-06-29 (CC System + Protection Icons + Table Sort + Column Picker)
+
+### Added
+- **BDO CC counter system**: Researched and implemented the real BDO PvP CC system.
+  8 CC types (Stun, Stiffness, Freeze, Knockdown, Float, Bound, Grapple, Knockback)
+  each fill 1 CC counter. At 2 counters, target becomes CC-immune. Non-CC effects
+  (displacements, DoTs, smashes) pruned from the CC list and shown separately.
+- **CC metadata** (`src/lib/cc.ts`): Each CC type has a symbol (⚡🛡↓↓ etc.), color,
+  shortName, counterValue, and description. Protection types have symbols too
+  (🛡 SA, ⬛ FG, ✦ IF).
+- **CC counters on cards**: Skills with CC show a "⚡ CC: 2" badge.
+- **CC counters in table**: Sortable column showing total CC counter value.
+- **Column picker for table view**: Dropdown with checkboxes to toggle columns.
+  Selection saved to localStorage.
+- **Sortable table columns**: All table columns are now sortable (click header).
+- **Compact symbols in table**: CC types show symbols (⚡↓↓), protection shows
+  symbols (🛡⬛), class shows 3-letter abbreviations.
+- **Protection icons in detail drawer**: Uses PROTECTION_META symbols with
+  tooltips showing descriptions.
+- **Split CC section in detail drawer**: Real CCs (with counter values) shown
+  separately from non-CC effects (displacements, DoTs, smashes).
+
+### Fixed
+- **Card damage clipping**: Removed "DAMAGE" label text. Now uses compact icons:
+  ⚔ (Swords) for PvE + ☠ (Skull) for PvP, both fitting on one line.
+- **Passive max-rank**: Extended roman numeral support to XXX (30) in v1.5.0.
+
+### Changed
+- **SP cost removed**: Skill points cost removed from cards, table, and detail
+  drawer (it's the cost to learn, not per-use — irrelevant per user).
+- **CC_TYPES pruned**: From 24 entries to 8 real CCs. Non-CC effects moved to
+  `NON_CC_TYPES` constant and shown in separate "Other Effects" filter section.
+- **Filter sidebar**: CC Types section shows 8 real CCs. New "Other Effects"
+  section for displacements, DoTs, and smashes.
+
+### Notes
+- **Stamina cost**: Not available from bdocodex data. bdocodex doesn't expose
+  stamina cost as a structured field — it only appears in passive descriptions
+  as buffs ("Max Stamina +5"). The lurker cannot pull this data because it
+  doesn't exist in the tooltip structure.

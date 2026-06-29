@@ -36,8 +36,10 @@ const SORT_OPTIONS: { value: SkillSort; label: string }[] = [
   { value: 'cooldown', label: 'Cooldown' },
   { value: 'anim', label: 'Animation' },
   { value: 'class', label: 'Class' },
-  { value: 'sp', label: 'SP Cost' },
+  { value: 'type', label: 'Skill Type' },
   { value: 'damage', label: 'Damage (PvE)' },
+  { value: 'pvpDamage', label: 'Damage (PvP)' },
+  { value: 'ccCounters', label: 'CC Counters' },
 ]
 
 // View-mode toggle: Grid / List / Table. Each is a small icon button styled

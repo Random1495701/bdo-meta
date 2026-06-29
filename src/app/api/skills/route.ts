@@ -2,8 +2,22 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
 import { calculateDamage, type DamageRow } from '@/lib/damage'
+import { calculateCCCounters, getRealCCs, getNonCCEffects } from '@/lib/cc'
 
 export const dynamic = 'force-dynamic'
+
+// Type sort priority order — matches the SKILL_TYPE_META order: main, awakening,
+// succession, absolute, blackspirit, passive. Implemented as a multi-flag
+// Prisma orderBy so it works server-side without computed columns.
+function typeOrderBy(order: 'asc' | 'desc'): Prisma.SkillOrderByWithRelationInput[] {
+  return [
+    { isPassive: order },
+    { isBlackSpirit: order },
+    { isAbsolute: order },
+    { isSuccession: order },
+    { isAwakening: order },
+  ]
+}
 
 function iconUrl(iconPath: string | null): string | null {
   if (!iconPath) return null
@@ -39,6 +53,10 @@ function getRank(name: string): number {
 function serializeSkill(s: any) {
   const damageRows: DamageRow[] | null = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
   const damage = calculateDamage(damageRows, s.pvpDamagePercent)
+  const ccTypes = splitCsv(s.ccTypes)
+  const realCCs = getRealCCs(ccTypes)
+  const nonCCEffects = getNonCCEffects(ccTypes)
+  const ccCounters = calculateCCCounters(ccTypes)
 
   return {
     id: s.id,
@@ -59,7 +77,10 @@ function serializeSkill(s: any) {
     description: s.description,
     damageRows,
     damage,
-    ccTypes: splitCsv(s.ccTypes),
+    ccTypes,
+    ccCounters,
+    realCCs,
+    nonCCEffects,
     protectionTypes: splitCsv(s.protectionTypes),
     pvpDamagePercent: s.pvpDamagePercent,
     isQuickSlot: s.isQuickSlot,
@@ -225,7 +246,7 @@ export async function GET(req: NextRequest) {
 
   if (AND.length) where.AND = AND
 
-  const sortMap: Record<string, Prisma.SkillOrderByWithRelationInput> = {
+  const sortMap: Record<string, Prisma.SkillOrderByWithRelationInput | Prisma.SkillOrderByWithRelationInput[]> = {
     skillId: { skillId: order },
     name: { name: order },
     level: { requiredLevel: order },
@@ -233,16 +254,35 @@ export async function GET(req: NextRequest) {
     anim: { animationDurationMs: order === 'asc' ? 'asc' : 'desc' },
     class: { className: order },
     sp: { skillPoints: order },
-    // 'damage' is handled specially below — computed via calculateDamage()
+    // 'damage', 'pvpDamage', 'ccCounters' are computed — handled specially below.
     damage: { skillId: order },
+    pvpDamage: { skillId: order },
+    ccCounters: { skillId: order },
+    // 'type' uses a multi-flag orderBy for a stable type-priority sort.
+    type: typeOrderBy(order),
   }
   const orderBy = sortMap[sort] || sortMap.skillId
 
   // --- Max-rank filtering ---
   if (maxRank) {
+    // Include all sort-relevant fields up-front so we can sort filteredIds
+    // directly (the page slice + items.sort pattern below only stable-sorts
+    // by idOrder, so the orderBy on the inner query would otherwise be lost).
     const allMatching = await db.skill.findMany({
       where,
-      select: { skillId: true, name: true, requiredLevel: true },
+      select: {
+        skillId: true,
+        name: true,
+        requiredLevel: true,
+        className: true,
+        cooldownSec: true,
+        animationDurationMs: true,
+        isPassive: true,
+        isBlackSpirit: true,
+        isAbsolute: true,
+        isSuccession: true,
+        isAwakening: true,
+      },
       orderBy: { requiredLevel: 'asc' },
     })
 
@@ -262,37 +302,133 @@ export async function GET(req: NextRequest) {
 
     const maxRankSkillIds = Array.from(baseNameMap.values()).map((v) => v.skillId)
 
-    // Apply damage range filter post-query (since damage is computed, not stored)
+    // Build a skillId → row map for sorting (avoids re-querying).
+    const rowById = new Map<number, (typeof allMatching)[number]>()
+    for (const s of allMatching) rowById.set(s.skillId, s)
+
+    // Apply damage range filter post-query (since damage is computed, not stored).
+    // Also pre-compute PvP damage and CC counters when sorting by those columns.
     let filteredIds = maxRankSkillIds
-    if (minDamage || maxDamage || sort === 'damage') {
+    const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage'
+    const needsCC = sort === 'ccCounters'
+    let dmgPvEMap: Map<number, number> | null = null
+    let dmgPvPMap: Map<number, number> | null = null
+    let ccMap: Map<number, number> | null = null
+    if (needsDmg || needsCC) {
       const skills = await db.skill.findMany({
         where: { skillId: { in: maxRankSkillIds } },
-        select: { skillId: true, damageRowsJson: true, pvpDamagePercent: true },
+        select: {
+          skillId: true,
+          damageRowsJson: true,
+          pvpDamagePercent: true,
+          ccTypes: true,
+        },
       })
-      // Build skillId → damage map once
-      const dmgMap = new Map<number, number>()
+      dmgPvEMap = new Map<number, number>()
+      dmgPvPMap = new Map<number, number>()
+      ccMap = new Map<number, number>()
       for (const s of skills) {
         const rows = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
         const dmg = calculateDamage(rows, s.pvpDamagePercent)
-        dmgMap.set(s.skillId, dmg.totalPvE)
+        dmgPvEMap.set(s.skillId, dmg.totalPvE)
+        dmgPvPMap.set(s.skillId, dmg.totalPvP ?? 0)
+        const ccArr = s.ccTypes ? s.ccTypes.split(',').map((x) => x.trim()).filter(Boolean) : null
+        ccMap.set(s.skillId, calculateCCCounters(ccArr))
       }
-      // Filter by damage range
+      // Filter by damage range (PvE)
       if (minDamage || maxDamage) {
         const min = minDamage ? parseFloat(minDamage) : 0
         const max = maxDamage ? parseFloat(maxDamage) : Infinity
         filteredIds = filteredIds.filter((id) => {
-          const v = dmgMap.get(id) ?? 0
+          const v = dmgPvEMap!.get(id) ?? 0
           return v >= min && v <= max
         })
       }
-      // Sort by damage
-      if (sort === 'damage') {
-        filteredIds = [...filteredIds].sort((a, b) => {
-          const da = dmgMap.get(a) ?? 0
-          const db_ = dmgMap.get(b) ?? 0
-          return order === 'asc' ? da - db_ : db_ - da
-        })
+    }
+
+    // Sort filteredIds by the requested sort column. We sort in-place so the
+    // page slice + items.sort(by idOrder) below preserves the sort.
+    const dir = order === 'asc' ? 1 : -1
+    // Nulls always sort last, regardless of asc/desc. This matches user
+    // expectations (e.g. clicking "CD desc" shows highest CDs first, not a
+    // wall of null cooldowns).
+    function cmpNull(a: any, b: any): number {
+      if (a == null && b == null) return 0
+      if (a == null) return 1
+      if (b == null) return -1
+      return 0
+    }
+    if (sort === 'damage') {
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const da = dmgPvEMap!.get(a) ?? 0
+        const db_ = dmgPvEMap!.get(b) ?? 0
+        return dir * (da - db_)
+      })
+    } else if (sort === 'pvpDamage') {
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const da = dmgPvPMap!.get(a) ?? 0
+        const db_ = dmgPvPMap!.get(b) ?? 0
+        return dir * (da - db_)
+      })
+    } else if (sort === 'ccCounters') {
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const ca = ccMap!.get(a) ?? 0
+        const cb_ = ccMap!.get(b) ?? 0
+        return dir * (ca - cb_)
+      })
+    } else if (sort === 'name') {
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const ra = rowById.get(a)!
+        const rb = rowById.get(b)!
+        return dir * ra.name.localeCompare(rb.name)
+      })
+    } else if (sort === 'level') {
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const ra = rowById.get(a)!
+        const rb = rowById.get(b)!
+        return dir * ((ra.requiredLevel ?? 0) - (rb.requiredLevel ?? 0))
+      })
+    } else if (sort === 'cooldown') {
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const ra = rowById.get(a)!
+        const rb = rowById.get(b)!
+        const c = cmpNull(ra.cooldownSec, rb.cooldownSec)
+        if (c !== 0) return c
+        return dir * ((ra.cooldownSec ?? 0) - (rb.cooldownSec ?? 0))
+      })
+    } else if (sort === 'anim') {
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const ra = rowById.get(a)!
+        const rb = rowById.get(b)!
+        const c = cmpNull(ra.animationDurationMs, rb.animationDurationMs)
+        if (c !== 0) return c
+        return dir * ((ra.animationDurationMs ?? 0) - (rb.animationDurationMs ?? 0))
+      })
+    } else if (sort === 'class') {
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const ra = rowById.get(a)!
+        const rb = rowById.get(b)!
+        const ca = ra.className ?? ''
+        const cb = rb.className ?? ''
+        const c = cmpNull(ra.className, rb.className)
+        if (c !== 0) return c
+        return dir * ca.localeCompare(cb)
+      })
+    } else if (sort === 'type') {
+      // Type priority: main, awakening, succession, absolute, blackspirit, passive
+      const typePriority = (s: (typeof allMatching)[number]): number => {
+        if (s.isPassive) return 5
+        if (s.isBlackSpirit) return 4
+        if (s.isAbsolute) return 3
+        if (s.isSuccession) return 2
+        if (s.isAwakening) return 1
+        return 0
       }
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const ra = rowById.get(a)!
+        const rb = rowById.get(b)!
+        return dir * (typePriority(ra) - typePriority(rb))
+      })
     }
 
     const total = filteredIds.length
