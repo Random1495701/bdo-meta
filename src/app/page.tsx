@@ -12,6 +12,7 @@ import { SkillDetailDrawer } from '@/components/skills/skill-detail-drawer'
 import { SyncFooter } from '@/components/skills/sync-footer'
 import { MetaPage } from '@/components/skills/meta-page'
 import { DocsPage } from '@/components/skills/docs-page'
+import { TierListPage } from '@/components/skills/tier-list-page'
 import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
 
 import {
@@ -96,6 +97,8 @@ export default function Home() {
       } else if (e.key === '2') {
         setView('meta')
       } else if (e.key === '3') {
+        setView('tierlist')
+      } else if (e.key === '4') {
         setView('docs')
       }
     }
@@ -118,6 +121,16 @@ export default function Home() {
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
         <DocsPage />
+        <SyncFooter />
+      </div>
+    )
+  }
+
+  if (view === 'tierlist') {
+    return (
+      <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <TabSwitcher view={view} onChange={setView} />
+        <TierListPage />
         <SyncFooter />
       </div>
     )

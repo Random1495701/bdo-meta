@@ -312,7 +312,7 @@ export async function fetchRanges(): Promise<SkillRanges> {
 // issues when bdocodex rate-limits our IP.
 export function classIconUrl(slug: string | null): string | null {
   if (!slug) return null
-  return `/icons/classes/${slug}.webp`
+  return `/icons/classes-transparent/${slug}.webp`
 }
 
 export async function triggerSync(
