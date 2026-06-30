@@ -150,7 +150,7 @@ export async function GET() {
   const cached = getCached('meta')
   if (cached) return NextResponse.json(cached)
 
-  const classes = await db.bdoClass.findMany({ orderBy: { id: 'asc' } })
+  const classes = await db.bdoClass.findMany({ orderBy: { name: 'asc' } })
 
   const allSkills = await db.skill.findMany({
     where: {

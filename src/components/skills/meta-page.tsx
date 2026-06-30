@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Zap, ArrowUpDown, Table2, LayoutGrid } from 'lucide-react'
+import { Zap, ArrowUpDown, Table2, LayoutGrid, Database, X, ChevronDown } from 'lucide-react'
 
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { formatDamage as fmtDmg } from '@/lib/damage'
@@ -51,15 +51,17 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 // Portrait is the card background, with a dark gradient overlay for readability.
 // Framed class icon in top-right corner with spec-colored border.
 // Card is clickable → navigates to Data tab with class+spec pre-filtered.
-function SpecCard({ cls, specName, stats, sortKey, onClick }: {
+function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpanded, onExpand }: {
   cls: ClassStats
   specName: 'awakening' | 'succession' | 'ascension'
   stats: SpecStats
   sortKey: SortKey
   onClick: () => void
+  onDataClick: () => void
+  isExpanded: boolean
+  onExpand: () => void
 }) {
   const iconUrl = classIconUrl(cls.slug)
-  // Use spec-specific portrait as background
   const specPortraitUrl = `/icons/portraits/specs/${cls.slug}-${specName}.jpg`
   const mainPortraitUrl = `/icons/portraits/${cls.slug}.jpg`
   const bgPortraitUrl = specName === 'awakening' || specName === 'succession'
@@ -68,19 +70,22 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
   const specMeta = SPEC_META[specName]
   const specColor = specMeta.color
 
-  // Skip empty specs (0 skills = not available for this class)
   if (stats.skillCount === 0) return null
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      onClick={onClick}
-      className="group relative flex cursor-pointer flex-col gap-2 overflow-hidden rounded-sm border-2 transition-transform hover:scale-[1.02]"
+      onClick={onExpand}
+      className={cn(
+        'group relative flex cursor-pointer flex-col gap-2 overflow-hidden border-2 transition-all',
+        isExpanded ? 'col-span-full lg:col-span-2 xl:col-span-3' : '',
+      )}
       style={{
-        borderColor: `${specColor}88`,
-        boxShadow: `0 4px 12px rgba(0,0,0,0.6), inset 0 0 0 1px ${specColor}33`,
-        minHeight: 200,
+        borderColor: specColor,
+        boxShadow: `0 0 0 1px ${specColor}33, 0 4px 12px rgba(0,0,0,0.6)`,
+        minHeight: isExpanded ? 400 : 200,
+        borderRadius: '4px',
       }}
     >
       {/* Background portrait */}
@@ -156,16 +161,14 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
           <StatBox label="Avg PvP" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'avgPvpDamage'} />
           <StatBox label="Med PvP" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'medianPvpDamage'} />
           <StatBox label="CC" value={String(stats.pvpCcSkillCount)} color="#f87171" highlighted={sortKey === 'pvpCcSkillCount'} />
-          <StatBox label="Chain" value={String(stats.ccChainPotential)} color="#fb923c" highlighted={sortKey === 'ccChainPotential'} />
           <StatBox label="💪 SA" value={String(stats.superArmorCount)} color="#fbbf24" highlighted={sortKey === 'superArmorCount'} />
           <StatBox label="🛡 FG" value={String(stats.forwardGuardCount)} color="#60a5fa" highlighted={sortKey === 'forwardGuardCount'} />
           <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
         </div>
 
-        {/* New metrics: DPS estimate + Protected coverage */}
-        <div className="grid grid-cols-2 gap-1">
-          <StatBox label="DPS Est." value={stats.dpsEstimate > 0 ? fmtDmg(stats.dpsEstimate) : '—'} color="#34d399" />
-          <StatBox label="Prot %" value={`${stats.protectedCoverage}%`} color="#60a5fa" />
+        {/* Protected coverage */}
+        <div className="grid grid-cols-1 gap-1">
+          <StatBox label="Protected Skills" value={`${stats.protectedCoverage}%`} color="#60a5fa" />
         </div>
 
         {/* Top PvP damage skill */}
@@ -185,10 +188,105 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
           </div>
         )}
 
-        {/* Skill count footer */}
-        <div className="text-[10px] text-amber-200/40">{stats.skillCount} skills</div>
+        {/* Skill count + Data button */}
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-amber-200/40">{stats.skillCount} skills</span>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onDataClick()
+              }}
+              className="flex items-center gap-1 rounded-sm border border-amber-700/40 bg-amber-900/10 px-2 py-0.5 text-[9px] font-semibold text-amber-300/70 transition-all hover:border-amber-500/50 hover:bg-amber-500/10 hover:text-amber-200"
+            >
+              <Database className="size-2.5" />
+              Data
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onExpand()
+              }}
+              className="flex items-center gap-1 rounded-sm border border-amber-700/40 bg-amber-900/10 px-2 py-0.5 text-[9px] font-semibold text-amber-300/70 transition-all hover:border-amber-500/50 hover:bg-amber-500/10 hover:text-amber-200"
+            >
+              {isExpanded ? <X className="size-2.5" /> : <ChevronDown className="size-2.5" />}
+              {isExpanded ? 'Close' : 'Expand'}
+            </button>
+          </div>
+        </div>
+
+        {/* Expanded view — big class image + detailed stats */}
+        {isExpanded && (
+          <div className="mt-2 grid grid-cols-1 gap-4 border-t border-amber-900/30 pt-3 lg:grid-cols-2">
+            {/* Big class portrait */}
+            <div className="relative overflow-hidden rounded-sm border-2" style={{ borderColor: specColor, minHeight: 200 }}>
+              <img
+                src={bgPortraitUrl}
+                alt={`${cls.className} ${specMeta.label}`}
+                className="h-full w-full object-cover"
+                onError={(e) => { const img = e.target as HTMLImageElement; if (img.src !== mainPortraitUrl) img.src = mainPortraitUrl }}
+              />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,9,8,0.9), transparent 60%)' }} />
+              <div className="absolute bottom-2 left-2">
+                <div className="bdo-title text-2xl font-bold text-amber-50 drop-shadow-lg">{cls.className}</div>
+                <div className="text-sm font-semibold" style={{ color: specColor }}>{specMeta.label}</div>
+              </div>
+            </div>
+
+            {/* Detailed stats */}
+            <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-2">
+                <DetailedStat label="Total Skills" value={String(stats.skillCount)} />
+                <DetailedStat label="Protected Skills" value={`${stats.protectedCoverage}%`} />
+                <DetailedStat label="Avg PvP Damage" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} />
+                <DetailedStat label="Median PvP Damage" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} />
+                <DetailedStat label="PvP CC Skills" value={String(stats.pvpCcSkillCount)} />
+                <DetailedStat label="Top PvP Skill" value={stats.topPvpDamageSkill?.name || '—'} />
+              </div>
+
+              {/* Protection breakdown */}
+              <div>
+                <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-amber-200/40">Protection Breakdown</div>
+                <div className="flex gap-2">
+                  <div className="flex items-center gap-1 rounded-sm border border-amber-700/30 px-2 py-1">
+                    <span className="text-amber-400">💪</span>
+                    <span className="text-xs font-bold text-amber-300">{stats.superArmorCount}</span>
+                    <span className="text-[9px] text-amber-200/40">Super Armor</span>
+                  </div>
+                  <div className="flex items-center gap-1 rounded-sm border border-blue-700/30 px-2 py-1">
+                    <span className="text-blue-400">🛡</span>
+                    <span className="text-xs font-bold text-blue-300">{stats.forwardGuardCount}</span>
+                    <span className="text-[9px] text-amber-200/40">Forward Guard</span>
+                  </div>
+                  <div className="flex items-center gap-1 rounded-sm border border-purple-700/30 px-2 py-1">
+                    <span className="text-purple-400">✦</span>
+                    <span className="text-xs font-bold text-purple-300">{stats.iFrameCount}</span>
+                    <span className="text-[9px] text-amber-200/40">I-Frame</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Combos placeholder */}
+              <div>
+                <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-amber-200/40">Combos</div>
+                <div className="rounded-sm border border-amber-900/30 bg-bdo-ink/50 px-3 py-2 text-xs text-amber-200/40">
+                  Combo data coming soon — will show PvP and PvE combo sequences from community guides.
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </motion.div>
+  )
+}
+
+function DetailedStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-sm border border-amber-900/30 bg-bdo-ink/50 px-2 py-1.5">
+      <div className="text-[8px] font-semibold uppercase tracking-wider text-amber-200/40">{label}</div>
+      <div className="truncate font-mono text-sm font-bold text-amber-100">{value}</div>
+    </div>
   )
 }
 
@@ -238,7 +336,6 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
     { key: 'className', label: 'Class' },
     { key: 'avgPvpDamage', label: 'Avg PvP' },
     { key: 'medianPvpDamage', label: 'Med PvP' },
-    { key: 'dpsEstimate', label: 'DPS' },
     { key: 'pvpCcSkillCount', label: 'CC' },
     { key: 'superArmorCount', label: '💪 SA' },
     { key: 'forwardGuardCount', label: '🛡 FG' },
@@ -294,7 +391,6 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
                 </td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.avgPvpDamage > 0 ? fmtDmg(row.stats.avgPvpDamage) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.medianPvpDamage > 0 ? fmtDmg(row.stats.medianPvpDamage) : '—'}</td>
-                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-emerald-300">{row.stats.dpsEstimate > 0 ? fmtDmg(row.stats.dpsEstimate) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-red-300">{row.stats.pvpCcSkillCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-amber-300">{row.stats.superArmorCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-blue-300">{row.stats.forwardGuardCount}</td>
@@ -311,8 +407,9 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
 
 export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec: 'awakening' | 'succession' | 'ascension') => void }) {
   const [viewMode, setViewMode] = React.useState<'cards' | 'table'>('cards')
-  const [sortKey, setSortKey] = React.useState<SortKey>('avgPvpDamage')
-  const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('desc')
+  const [sortKey, setSortKey] = React.useState<SortKey>('className')
+  const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('asc')
+  const [expandedCard, setExpandedCard] = React.useState<string | null>(null)
 
   const metaQuery = useQuery({
     queryKey: ['meta'],
@@ -356,9 +453,7 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
     { key: 'className', label: 'Class', icon: null },
     { key: 'avgPvpDamage', label: 'Avg PvP', icon: null },
     { key: 'medianPvpDamage', label: 'Med PvP', icon: null },
-    { key: 'dpsEstimate', label: 'DPS', icon: null },
     { key: 'pvpCcSkillCount', label: 'CC Skills', icon: <Zap className="size-3" /> },
-    { key: 'ccChainPotential', label: 'Chain', icon: null },
     { key: 'superArmorCount', label: 'SA', icon: <span>💪</span> },
     { key: 'forwardGuardCount', label: 'FG', icon: <span>🛡</span> },
     { key: 'iFrameCount', label: 'IF', icon: <span>✦</span> },
@@ -430,16 +525,22 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
           </div>
         ) : viewMode === 'cards' ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {specCards.map(({ cls, spec, stats }) => (
-              <SpecCard
-                key={`${cls.classId}-${spec}`}
-                cls={cls}
-                specName={spec}
-                stats={stats}
-                sortKey={sortKey}
-                onClick={() => onCardClick?.(cls.classId, spec)}
-              />
-            ))}
+            {specCards.map(({ cls, spec, stats }) => {
+              const cardKey = `${cls.classId}-${spec}`
+              return (
+                <SpecCard
+                  key={cardKey}
+                  cls={cls}
+                  specName={spec}
+                  stats={stats}
+                  sortKey={sortKey}
+                  onClick={() => onCardClick?.(cls.classId, spec)}
+                  onDataClick={() => onCardClick?.(cls.classId, spec)}
+                  isExpanded={expandedCard === cardKey}
+                  onExpand={() => setExpandedCard(expandedCard === cardKey ? null : cardKey)}
+                />
+              )
+            })}
           </div>
         ) : (
           <MetaTable classes={classes} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />

@@ -348,6 +348,7 @@ export function ClassBar() {
               ))
             : classes
                 .filter((c) => !c.name.startsWith('NEW_CLASS'))
+                .sort((a, b) => a.name.localeCompare(b.name))
                 .map((c) => (
                   <ClassChip
                     key={c.id}
