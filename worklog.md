@@ -1247,3 +1247,111 @@ Next actions for orchestrator:
 - (Optional) For larger class portraits, consider scraping the official BDO site (`https://www.naeu.playblackdesert.com/`) or garmoth.com — out of scope here, would need a separate research+scrape task.
 - (Optional) Re-run `/home/z/icon-dl/download.py` after future bdocodex sync runs that add new skills — it auto-skips already-downloaded icons and only fetches new ones.
 - The download script lives at `/home/z/icon-dl/download.py` (outside the repo). If preserved, future sync runs can re-invoke it. If not, the logic is straightforward to recreate from this worklog.
+
+---
+Task ID: 30
+Agent: general-purpose (audit)
+Task: Comprehensive audit of BDO Meta — forgotten tasks, UX/UI, branding, data quality, meta metrics brainstorm
+
+Work Log:
+- Read `/home/z/my-project/worklog.md` (last 5 sections: Task 11 damage calc + multi-select, Task 17 spec filtering, Task 19 final commit, Task 23 Ascension research, Task 25 class portraits + skill icons). Read `docs/ROADMAP.md` (24 items, 6 phases). Read `CHANGELOG.md` (v1.0.0 → v2.5.0). Read `docs/IMPROVEMENT_PLAN.md` (20 items, 5 priorities). Read `docs/SESSION_HANDOFF.md` (current state v2.0.0+).
+- Audited all 11 UI files listed in the task brief + supporting files (`src/app/layout.tsx`, `src/lib/skills.ts`, `src/lib/skill-store.ts`, `src/lib/cache.ts`, `src/app/api/skills/route.ts`, `src/app/api/meta/route.ts`, `src/app/api/ranges/route.ts`, `src/components/skills/pagination.tsx`, `src/components/skills/skill-list-row.tsx`, `src/components/skills/skill-table.tsx`).
+- Verified public assets: 31 class icons (`/icons/classes/{slug}.webp`), 2,889 skill icons (`/icons/skills/*.webp`), 31 main portraits + 56 spec portraits (`/icons/portraits/...`).
+- Ran live API checks against `http://localhost:3000`:
+  - `/api/skills?pageSize=3` → 3 valid items, all 31 classes return data, no NEW_CLASS leakage, iconUrl correctly returns `/icons/skills/*.webp` (self-hosted).
+  - `/api/meta` → 31 classes. Awakening/Succession populated for 25 normal classes; Ascension populated for 6 ascension-only classes (Wukong=56, Scholar=47, Shai=31, Archer=51, Seraph=39, Deadeye=41). 56 total spec cards (matches docs-page claim).
+  - `/api/stats` → total=7231, enriched=4019 (55.6%), withVideo=1813, withAnim=1753, withCc=2706, withProtection=2098. typeBreakdown: main=4145, awakening=815, succession=968, absolute=539, blackSpirit=653, passive=157.
+  - `/api/ranges` → requiredLevel 0-62, cooldownSec max=450 (was supposed to be 240 per changelog v1.9.0), blackSpiritMax=1200, animationDurationMs max=25000, skillPoints max=50, damage max=171000 (99th pct), absoluteMax=908292.
+  - `/api/sync/status` → lurker pid 1657 alive, last heartbeat 5+ min stale at first call (running=false), then refreshed to 03:21:08Z (alive). Process is enriching at ~1 skill/min (extremely slow — likely adaptive backoff).
+- Confirmed gaps in worklog: Task IDs 18, 20, 21, 22, 24 are missing (worklog jumps 17 → 19 → 23 → 25). CHANGELOG v2.2.0 through v2.5.0 were not given worklog entries.
+
+Findings — Forgotten Tasks:
+1. **Cooldown "Include Black Spirit (20m)" button is MISSING from UI.** CHANGELOG v1.9.0, SESSION_HANDOFF.md line 65, and docs-page.tsx v1.9.0 entry all promise a "jump to 20m" button on the cooldown slider. The `/api/ranges` route still computes `blackSpiritMax: 1200` for this purpose (line 38, 66 of `src/app/api/ranges/route.ts`). But `src/components/skills/filter-sidebar.tsx` lines 545-572 (Cooldown section) only renders a Slider + RangeInputs — no Black Spirit jump button anywhere. The feature was lost during a refactor. *Recovery: re-add the button below the cooldown RangeInputs that toggles `cdMax` from 450 → 1200.*
+2. **Lurker enrichment stalled at 55.6%.** Stats endpoint reports `withDescription=4019 / 7231` (55.6%). Worklog Task 19 / CHANGELOG [Unreleased] claimed ~1,700 enriched and "lurker still running" — lurker has progressed to 4,019 but is now processing at ~1 skill/min (5 skills in 5 minutes during audit). 3,212 skills still pending. 60 animations still pending. The lurker is technically alive (PID 1657) but functionally stalled in adaptive backoff.
+3. **Garmoth addon data is collected but invisible in UI.** Worklog/CHANGELOG v2.3.0 claims "Garmoth addon data: 800 skills with addon popularity". DB has 725 skills with `addonsJson` populated (verified via `?hasAddon=true`). `/api/skills/[id]/route.ts` line 148 correctly returns `addons: skill.addonsJson ? JSON.parse(skill.addonsJson) : null`. But:
+   - `/api/skills/route.ts` `serializeSkill()` (lines 67-132) does NOT include the `addons` field — list endpoint can filter by `hasAddon` but never returns the actual data.
+   - `src/components/skills/skill-detail-drawer.tsx` has NO section showing addons data (verified: zero `addons` references in `src/components`).
+   - `src/lib/skills.ts` line 91 has `addons?: any` in the Skill type but it's unused.
+   The garmoth API was scraped and stored but never exposed to users. *Recovery: add `addons` to serializeSkill + add an "Addons" section to the detail drawer.*
+4. **API caching only applied to 1 of 4 promised endpoints.** `src/lib/cache.ts` comment says "Used by /api/classes, /api/ranges, /api/stats, /api/meta" but grep confirms only `/api/ranges/route.ts` actually calls `getCached/setCached`. CHANGELOG v2.3.0 only claims `/api/ranges` caching (so the cache.ts comment is aspirational). Other endpoints still hit DB on every request.
+5. **Worklog gaps.** Tasks 18, 20, 21, 22, 24 (covering v2.2.0 Ascension spec, v2.3.0 Skill Icons + Garmoth, v2.4.0 Split Spec Cards, v2.5.0 PA Portraits) were never appended to `worklog.md`. Only CHANGELOG and chat-history transcripts document them.
+6. **`docs/ROADMAP.md` is stale.** Last updated 2025-06-30 but says "Only 1,700/7,231 skills enriched (23%)" and lists P1.2 (Garmoth addons) and P2.1 (Class portraits) as "Not started" — both have since been completed (v2.3.0 and v2.4.0/v2.5.0 respectively). The Top 5 Recommended Next Steps is out of date.
+7. **Meta page disclaimer is partially inaccurate.** `meta-page.tsx` line 406: "Black Spirit rage skills excluded · PvE-only CC/protection excluded · Max-rank skills only". Looking at `/api/meta/route.ts`: Black Spirit IS excluded from `avgPvpDamage`/`medianPvpDamage` (line 59: `if (!s.isBlackSpirit && ...)`) but is NOT excluded from `pvpCcSkillCount`, `superArmorCount`, `forwardGuardCount`, `iFrameCount` (lines 70-85 — counts ALL skills including BS). Footer overstates the exclusion.
+
+Findings — UX/UI Issues:
+1. **`src/app/page.tsx` — Tab switcher code is duplicated 3× (Data/Meta/Docs tabs).** Lines 64-74 (meta view), 86-96 (docs view), 107-138 (data view) all contain near-identical JSX. *Fix: Extract a `<TabSwitcher view={view} onChange={setView} />` component (DRY).*
+2. **`src/components/skills/class-bar.tsx` lines 130-165 — S/A spec buttons use `<span role="button" tabIndex={0}>` but have NO `onKeyDown` handler.** Keyboard-focusable but not keyboard-activatable (Enter/Space does nothing). Accessibility violation. *Fix: Add `onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSpecClick(...) } }}`.*
+3. **`src/components/skills/class-bar.tsx` — No "Asc" (Ascension) button on ClassChip.** Lines 130-165 render only S (Succession) and A (Awakening) buttons. For 6 ascension-only classes (Scholar, Wukong, Shai, Archer, Seraph, Deadeye), clicking S returns 75 skills (their main skills, mislabeled as "succession") and clicking A returns 0 (since `isAwakening=false` filter excludes their ascension skills). *Fix: Detect ascension-only classes (slug in `[wukong, scholar, shai, archer, seraph, deadeye]` — same hardcoded list as in `/api/meta/route.ts` line 230) and replace S/A buttons with a single "Asc" button for those classes.*
+4. **`src/app/page.tsx` tab buttons lack ARIA tab semantics.** Lines 65-73, 87-95, 108-137 use plain `<button>` elements with no `role="tab"`, `aria-selected`, or `aria-controls`. The tablist pattern is incomplete. *Fix: Wrap in `<div role="tablist">`, give each `<button role="tab" aria-selected={view === 'data'}>`.*
+5. **`src/components/skills/header.tsx` line 234 — "Updated Ns ago" indicator hidden on mobile.** `<div className="hidden items-center md:flex">` — mobile users have no visible "last refreshed" indicator. The header is also missing the search bar on very small screens (the `min-w-[220px]` search input overflows).
+6. **`src/components/skills/filter-sidebar.tsx` — Damage Range section uses only RangeInputs (no slider).** Lines 577-594. Inconsistent with Level/Cooldown/Animation which all have Slider + RangeInputs. Damage slider would be useful for the 0-171K range.
+7. **`src/components/skills/filter-sidebar.tsx` — All 7 sections always visible.** No collapsible sections (IMPROVEMENT_PLAN.md item 2.3, ROADMAP P3.5 — both list this as not started). Sidebar is 800+ px tall on desktop.
+8. **No keyboard navigation anywhere in `src/components`.** Verified by grep — zero `onKeyDown`/`keydown` handlers in skills components. IMPROVEMENT_PLAN.md item 2.5 and ROADMAP P3.4 both list this as not started. `/` should focus search, `Esc` should close drawer, arrows should navigate skills.
+9. **`src/components/skills/sync-footer.tsx` lines 270-548 — Footer has 4 dropdown triggers + dialog with no keyboard escape handling beyond shadcn defaults.** The Upload dialog uses `<Dialog>` from shadcn (which handles Esc correctly), but the Lurker + Fast Sync dropdowns are `<DropdownMenu>` (also handles Esc). OK on this front, but the dialog's hidden file input (`<input type="file" className="hidden">` line 310) has no accessible label.
+10. **`src/components/skills/skill-card.tsx` line 152 — `<motion.button>` uses framer-motion `whileHover={{ y: -3 }}` but no `whileFocus` equivalent.** Keyboard focus doesn't trigger the hover effect, so sighted keyboard users can't tell which card is focused (only the browser's default focus ring shows, but it's overridden by motion styles). *Fix: Add `whileFocus={{ y: -3 }}` or a CSS `:focus-visible` ring.*
+11. **`src/components/skills/meta-page.tsx` — No way to navigate from a Meta spec card to the underlying skills.** Clicking a spec card does nothing. Users who want to see Warrior Awakening's 15 PvP-CC skills have to manually navigate to the Data tab, click Warrior, click A, set "PvP CC only" filter. *Fix: Make spec cards clickable → opens Data tab with class+spec+relevant filter pre-applied.*
+12. **`src/components/skills/meta-page.tsx` line 282 — `useQuery({ staleTime: 60_000 })` but no `placeholderData` or skeleton-state distinction.** When user changes sort, the cards disappear and show 12 skeleton placeholders until refetch completes. Should use `placeholderData: (prev) => prev` like `skill-grid.tsx` does.
+13. **`src/components/skills/docs-page.tsx` lines 295-312 — Overview stats are hardcoded ("7,231", "3,500+", "31", "56").** Will go stale as lurker enriches more skills. *Fix: Fetch from `/api/stats` and `/api/meta`.*
+14. **`src/components/skills/docs-page.tsx` — Hardcoded VERSIONS array (lines 15-257).** Will drift from CHANGELOG.md. *Fix: Parse CHANGELOG.md at build time, or maintain only CHANGELOG.md and have docs-page read from it.*
+15. **`src/components/skills/sync-footer.tsx` line 271-273 — `RefreshCw` spinner only shows during `isFetching`.** If fetch fails, no error indicator. The Stats pill row in header.tsx DOES show a "stats offline" badge (line 324-331), but the sync-footer doesn't.
+16. **`src/components/skills/skill-detail-drawer.tsx` — Video preview autoplays on drawer open (line 967: `autoPlay loop muted`).** No way to disable autoplay. Bandwidth-heavy on mobile and disruptive. *Fix: Add a poster image + play button, only load video on click.*
+
+Findings — Branding Issues:
+1. **Brand name "BDO Meta" is consistent.** Verified across `layout.tsx` (title, OG, Twitter), `header.tsx` line 224, `meta-page.tsx` line 335, `docs-page.tsx` line 279, `sync-footer.tsx` (implicit via bdocodex attribution), `CHANGELOG.md`, `SESSION_HANDOFF.md`. Old name "BDO Skills Codex" only appears in historical docs (worklog, chat-history) and one legitimate reference in `docs-page.tsx` line 79 explaining the rename.
+2. **BDO dark + gold theme is consistent.** All pages use `bg-bdo-ink` (`#0a0908`), `bdo-leather`/`bdo-leather-dark`, gold accents (`#c8aa44`, `#f0d060`), serif font (EB Garamond) for titles. The 13 `.bdo-*` utility classes in `globals.css` are used consistently.
+3. **Spec colors are inconsistent in ONE place.** The task brief says spec colors are "red=awakening, blue=succession, yellow=ascension" — and `SPEC_COLORS` in `src/lib/skills.ts` lines 346-350 matches this (`awakening: '#ef4444'` red, `succession: '#3b82f6'` blue, `ascension: '#eab308'` yellow). The Meta page (`meta-page.tsx` lines 34-38) uses `SPEC_COLORS` correctly. BUT:
+   - `class-bar.tsx` line 141: Succession button uses `bg-blue-500/30 text-blue-200` ✓
+   - `class-bar.tsx` line 158: Awakening button uses `bg-red-500/30 text-red-200` ✓
+   - `skill-detail-drawer.tsx` line 478-481: `isAwakening` badge uses `border-amber-500/40 bg-amber-500/10 text-amber-300` ✗ (should be red, is amber/gold)
+   - `skill-detail-drawer.tsx` line 483-487: `isSuccession` badge uses `border-emerald-700/50 bg-emerald-900/20 text-emerald-300` ✗ (should be blue, is green)
+   - `SKILL_TYPE_META.absolute` in `skills.ts` line 444 uses `'#ef4444'` (red, hardcoded) instead of `SPEC_COLORS.awakening` (also red, but hardcoded — duplicates the constant). Minor.
+4. **Logo/icon.** `header.tsx` line 220 uses `<Swords className="size-5 text-amber-400" />` (lucide swords icon) as the brand mark. `public/logo.svg` exists but is NOT used anywhere in the UI (verified: zero references in src/components). Inconsistent — should use logo.svg in the header.
+5. **Fonts load correctly.** `layout.tsx` lines 7-21 load Geist, Geist_Mono, EB_Garamond via `next/font/google` and apply as CSS variables. `globals.css` line 11 maps `--font-serif: var(--font-bdo-serif)`. `.bdo-title` and `.bdo-heading` use `font-serif`. Verified working.
+
+Findings — Data Quality Issues:
+1. **All 31 classes have skills** (0 classes with 0 skills). Good.
+2. **All 4 NEW_CLASS placeholders properly filtered** from `/api/classes`, `/api/meta`, and `/api/skills`. Good.
+3. **First 5 skills in API response have no null critical fields** (iconUrl, className, classId all populated). Good.
+4. **`/api/meta` hardcoded ascension class list** (`/api/meta/route.ts` line 230: `['wukong', 'scholar', 'shai', 'archer', 'seraph', 'deadeye']`). Brittle — if PA adds another ascension class, this list won't be updated. Should be derived from DB (`isAscension` flag on `BdoClass` table, or detect via "0 succession + 0 awakening skills" heuristic).
+5. **Multi-class skills misattributed** (IMPROVEMENT_PLAN.md item 1.3 — known issue, 31 skills like "Musa, Dosa" or "Wizard, Witch" have `classId` set to first class only). Not fixed.
+6. **"Flow:" and "Core:" skills not typed** (IMPROVEMENT_PLAN.md item 1.4 — 269 "Flow:" + 160 "Core:" skills exist but have no flag). Not fixed.
+7. **`/api/ranges` cooldown max drifted from 240s to 450s.** Comment on line 33 says "All non-Black-Spirit skills are ≤240s" but the actual data has cooldowns up to 450s now. Either the comment is stale or new skills were added with longer cooldowns.
+8. **Lurker enrichment is functionally stalled.** 4,019/7,231 (55.6%) enriched, 3,212 pending. Lurker process alive (PID 1657) but processing ~1 skill/min. At current rate, completion would take ~53 hours. Need to investigate why lurker is in extended backoff (no challenges solved, no failed endpoint cooldowns in state file).
+
+Meta Metrics Brainstorm (10+ ideas, ranked by value × feasibility):
+1. **Protected Skills Coverage** — % of skills per class×spec that have Super Armor, Forward Guard, or I-Frame. Shows how "safe" a class is to play. *Value: High (key PvP metric). Feasibility: Easy (already counted in meta, just need %).*
+2. **CC Chain Potential** — Count of skills per class with 2+ PvP CC counters (the cap that makes target immune). Shows burst-CC classes. *Value: High. Feasibility: Easy.*
+3. **Damage Per Second (DPS) Estimate** — `totalPvE / (animationDurationMs / 1000)`. Already have both fields. *Value: High (most-asked player question). Feasibility: Easy.*
+4. **Mobility Index** — Count of movement skills (Evasion, dash, teleport, jump skills — filter by name keywords). Higher = more mobile. *Value: High (PvP positioning). Feasibility: Medium (need name-pattern detection).*
+5. **Cooldown Efficiency** — `totalPvE / cooldownSec` (damage per cooldown second). Shows burst-vs-sustain classes. *Value: Medium. Feasibility: Easy.*
+6. **Addon Popularity Leaderboard** — Top 10 most-picked addons per class (from Garmoth data). Already collected, just not exposed. *Value: High (real player behavior). Feasibility: Easy (data exists, just needs UI).*
+7. **Skill-Point Efficiency** — `totalPvE / skillPoints` (damage per SP invested). Helps players prioritize which skills to max first. *Value: Medium. Feasibility: Easy.*
+8. **Awakening vs Succession Comparison Card** — Side-by-side diff of the same class's two specs (damage delta, CC delta, protection delta, mobility delta). *Value: High (helps players choose spec). Feasibility: Medium (need new UI component).*
+9. **Tier List Generator** — Auto-rank classes into S/A/B/C/D tiers by each meta metric (damage tier, CC tier, protection tier, mobility tier). *Value: High (most-shareable format). Feasibility: Medium.*
+10. **Skill Density Heatmap** — Bar chart of skill count per level (1-62). Shows where each class's power spikes are. *Value: Medium. Feasibility: Easy.*
+11. **Foundry Combo Integration** — Show 1-4 example PvE/PvP combos per class (data already in `/tmp/foundry/*.txt` from Task 23, just needs to be imported into DB). *Value: High (actionable gameplay info). Feasibility: Medium (parse notation, store, render).*
+12. **Animation Length Distribution** — Histogram of animation durations per class. Shows which classes have many fast skills vs slow windups. *Value: Medium. Feasibility: Easy.*
+13. **PvP vs PvE Damage Ratio** — `totalPvP / totalPvE` per skill. Shows which skills are PvP-niche (high ratio) vs PvE-only (low ratio). *Value: Medium. Feasibility: Easy.*
+14. **Black Spirit Rage Skill Quality** — For each class, compare the BS rage skill's damage vs the class's average damage. Shows which classes have "worth using" rage skills. *Value: Medium. Feasibility: Easy.*
+15. **Hard-CC vs Soft-CC Breakdown** — Per class, count of hard CCs (Stun, Knockdown, Float, Bound, Freeze, Grapple — counter=1) vs soft CCs (Stiffness, Knockback — counter=0.7). Shows whether a class's CCs are reliable. *Value: Medium. Feasibility: Easy.*
+
+Updated Roadmap (next 10 prioritized tasks):
+1. **Restore "Include Black Spirit (20m)" cooldown button** in `filter-sidebar.tsx` — forgotten task, easy 30-min fix, API already supports it.
+2. **Add "Asc" button to ClassChip for ascension-only classes** in `class-bar.tsx` — currently those classes' S/A buttons are misleading. 1-hour fix.
+3. **Expose Garmoth addon data in skill-detail-drawer** — add `addons` to `serializeSkill()` and an "Addons" section to the drawer. Forgotten task. 2 hours.
+4. **Fix spec color consistency** in `skill-detail-drawer.tsx` flag badges — Awakening should be red, Succession should be blue (currently amber + green). 15-min fix.
+5. **Investigate + restart lurker** — enrichment stalled at 55.6%. Check why lurker is in extended backoff. May need to restart with `curl -X POST /api/sync/trigger -d '{"script":"lurker","phase":"daemon"}'`. 30 min.
+6. **Add DPS estimate + Protected Coverage %** to Meta spec cards — two new high-value metrics, data already available. 1 hour.
+7. **Make Meta spec cards clickable** → navigate to Data tab with class+spec pre-selected. Major UX win. 1 hour.
+8. **Add keyboard navigation** (`/` focuses search, `Esc` closes drawer, arrows navigate skills) — accessibility win, ROADMAP P3.4. 1 hour.
+9. **Extract TabSwitcher component** from `page.tsx` — DRY refactor, plus add proper ARIA tab semantics. 30 min.
+10. **Add `addons` keyboard handler + `onKeyDown` to S/A spec buttons** in `class-bar.tsx` — accessibility fix for keyboard users. 15 min.
+
+Stage Summary:
+- **Forgotten tasks**: 7 found — most critical are (1) missing Black Spirit cooldown button, (2) invisible addon data, (3) stale ROADMAP, (4) incomplete API caching, (5) worklog gaps for tasks 18/20-22/24.
+- **UX/UI issues**: 16 found — most critical are (a) ClassChip missing Asc button, (b) S/A buttons not keyboard-activatable, (c) tab switcher duplicated 3× with no ARIA, (d) meta cards not clickable, (e) no keyboard navigation anywhere.
+- **Branding**: Mostly consistent. Main issue is spec colors in detail drawer flag badges (Awakening=amber should be red, Succession=green should be blue). Also `logo.svg` exists but isn't used in the header.
+- **Data quality**: Good overall. 7,231 skills, 31 classes, all NEW_CLASS placeholders filtered. Hardcoded ascension class list in `/api/meta/route.ts` is brittle. Lurker functionally stalled at 55.6% enrichment.
+- **Meta metrics**: 15 ideas brainstormed. Top 3 by value×feasibility: DPS Estimate, Addon Popularity Leaderboard, Protected Skills Coverage %.
+- **Updated roadmap**: 10 prioritized next tasks. Top 3: restore Black Spirit button, add Asc button, expose addon data in UI.
+- No code changes were made — this was a read-only audit. All findings are documented above with file paths and line numbers for the next implementation task.
