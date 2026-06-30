@@ -27,6 +27,13 @@ interface ClassStats {
   classId: number
   className: string
   slug: string
+  combatType: string | null
+  successionGroup: string | null
+  awakeningGroup: string | null
+  ascensionGroup: string | null
+  successionSaDr: number
+  awakeningSaDr: number
+  ascensionSaDr: number
   awakening: SpecStats
   succession: SpecStats
   ascension: SpecStats
@@ -166,9 +173,10 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
           <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
         </div>
 
-        {/* Protected coverage */}
-        <div className="grid grid-cols-1 gap-1">
-          <StatBox label="Protected Skills" value={`${stats.protectedCoverage}%`} color="#60a5fa" />
+        {/* Total protected skills + SA DR */}
+        <div className="grid grid-cols-2 gap-1">
+          <StatBox label="Protected" value={String(stats.superArmorCount + stats.forwardGuardCount + stats.iFrameCount)} color="#60a5fa" />
+          <StatBox label="SA DR" value={`${cls[specName === 'awakening' ? 'awakeningSaDr' : specName === 'succession' ? 'successionSaDr' : 'ascensionSaDr']}%`} color="#fbbf24" />
         </div>
 
         {/* Top PvP damage skill */}
@@ -215,36 +223,27 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
           </div>
         </div>
 
-        {/* Expanded view — big class image + detailed stats */}
+        {/* Expanded view — detailed stats using full card space */}
         {isExpanded && (
-          <div className="mt-2 grid grid-cols-1 gap-4 border-t border-amber-900/30 pt-3 lg:grid-cols-2">
-            {/* Big class portrait */}
-            <div className="relative overflow-hidden rounded-sm border-2" style={{ borderColor: specColor, minHeight: 200 }}>
-              <img
-                src={bgPortraitUrl}
-                alt={`${cls.className} ${specMeta.label}`}
-                className="h-full w-full object-cover"
-                onError={(e) => { const img = e.target as HTMLImageElement; if (img.src !== mainPortraitUrl) img.src = mainPortraitUrl }}
-              />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,9,8,0.9), transparent 60%)' }} />
-              <div className="absolute bottom-2 left-2">
-                <div className="bdo-title text-2xl font-bold text-amber-50 drop-shadow-lg">{cls.className}</div>
-                <div className="text-sm font-semibold" style={{ color: specColor }}>{specMeta.label}</div>
-              </div>
+          <div className="mt-2 grid grid-cols-1 gap-3 border-t border-amber-900/30 pt-3 sm:grid-cols-2">
+            {/* Detailed stats */}
+            <div className="grid grid-cols-2 gap-2">
+              <DetailedStat label="Total Skills" value={String(stats.skillCount)} />
+              <DetailedStat label="Protected Skills %" value={`${stats.protectedCoverage}%`} />
+              <DetailedStat label="Avg PvP Damage" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} />
+              <DetailedStat label="Median PvP Damage" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} />
+              <DetailedStat label="PvP CC Skills" value={String(stats.pvpCcSkillCount)} />
+              <DetailedStat label="Top PvP Skill" value={stats.topPvpDamageSkill?.name || '—'} />
+              <DetailedStat label="Combat Type" value={cls.combatType || '—'} />
+              <DetailedStat label="Class Group" value={
+                specName === 'awakening' ? (cls.awakeningGroup || '—') :
+                specName === 'succession' ? (cls.successionGroup || '—') :
+                (cls.ascensionGroup || '—')
+              } />
             </div>
 
-            {/* Detailed stats */}
-            <div className="flex flex-col gap-3">
-              <div className="grid grid-cols-2 gap-2">
-                <DetailedStat label="Total Skills" value={String(stats.skillCount)} />
-                <DetailedStat label="Protected Skills" value={`${stats.protectedCoverage}%`} />
-                <DetailedStat label="Avg PvP Damage" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} />
-                <DetailedStat label="Median PvP Damage" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} />
-                <DetailedStat label="PvP CC Skills" value={String(stats.pvpCcSkillCount)} />
-                <DetailedStat label="Top PvP Skill" value={stats.topPvpDamageSkill?.name || '—'} />
-              </div>
-
-              {/* Protection breakdown */}
+            {/* Protection breakdown + SA DR */}
+            <div className="flex flex-col gap-2">
               <div>
                 <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-amber-200/40">Protection Breakdown</div>
                 <div className="flex gap-2">
@@ -263,6 +262,22 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
                     <span className="text-xs font-bold text-purple-300">{stats.iFrameCount}</span>
                     <span className="text-[9px] text-amber-200/40">I-Frame</span>
                   </div>
+                </div>
+              </div>
+
+              {/* SA Damage Reduction */}
+              <div>
+                <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-amber-200/40">Super Armor Damage Reduction</div>
+                <div className="rounded-sm border border-amber-700/30 bg-amber-900/10 px-2 py-1.5">
+                  <span className="font-mono text-lg font-bold text-amber-300">
+                    {specName === 'awakening' ? cls.awakeningSaDr : specName === 'succession' ? cls.successionSaDr : cls.ascensionSaDr}%
+                  </span>
+                  <span className="ml-2 text-[10px] text-amber-200/40">
+                    {(() => {
+                      const dr = specName === 'awakening' ? cls.awakeningSaDr : specName === 'succession' ? cls.successionSaDr : cls.ascensionSaDr
+                      return dr > 10 ? 'Special (above 10% default)' : 'Default (10%)'
+                    })()}
+                  </span>
                 </div>
               </div>
 
@@ -410,6 +425,11 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
   const [sortKey, setSortKey] = React.useState<SortKey>('className')
   const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('asc')
   const [expandedCard, setExpandedCard] = React.useState<string | null>(null)
+  const [ratioMode, setRatioMode] = React.useState(false)
+  const [ratioClassA, setRatioClassA] = React.useState<string | null>(null)
+  const [ratioSpecA, setRatioSpecA] = React.useState<'awakening' | 'succession' | 'ascension'>('awakening')
+  const [ratioClassB, setRatioClassB] = React.useState<string | null>(null)
+  const [ratioSpecB, setRatioSpecB] = React.useState<'awakening' | 'succession' | 'ascension'>('awakening')
 
   const metaQuery = useQuery({
     queryKey: ['meta'],
@@ -470,8 +490,20 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
             {specCards.length} spec cards · {classes.length} classes
           </span>
 
-          {/* View toggle */}
+          {/* View toggle + Ratio toggle */}
           <div className="ml-auto flex items-center gap-2">
+            <button
+              onClick={() => { setRatioMode(!ratioMode); setRatioClassA(null); setRatioClassB(null) }}
+              className={cn(
+                'flex items-center gap-1 rounded-sm border px-2.5 py-1.5 text-xs font-semibold transition-all',
+                ratioMode
+                  ? 'border-amber-400/60 bg-amber-500/15 text-amber-200'
+                  : 'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200',
+              )}
+              title="Click 2 class cards to compare class group advantages"
+            >
+              ⚔ Ratios
+            </button>
             <div className="flex rounded-sm border border-amber-800/50 overflow-hidden">
               <button
                 onClick={() => setViewMode('cards')}
@@ -487,6 +519,46 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
               </button>
             </div>
           </div>
+
+        {/* Ratio mode banner */}
+        {ratioMode && (
+          <div className="border-b border-amber-900/30 bg-bdo-leather-dark/50 px-4 py-2 lg:px-6">
+            {ratioClassA && ratioClassB ? (
+              (() => {
+                const clsA = classes.find(c => c.className === ratioClassA)
+                const clsB = classes.find(c => c.className === ratioClassB)
+                if (!clsA || !clsB) return null
+                const groupA = ratioSpecA === 'awakening' ? clsA.awakeningGroup : ratioSpecA === 'succession' ? clsA.successionGroup : clsA.ascensionGroup
+                const groupB = ratioSpecB === 'awakening' ? clsB.awakeningGroup : ratioSpecB === 'succession' ? clsB.successionGroup : clsB.ascensionGroup
+                let advantage = 'No group advantage'
+                let advantageColor = '#a1a1aa'
+                if (groupA === 'Vanguard' && groupB === 'Pulverizer') { advantage = `${clsA.className} (+5%)`; advantageColor = '#34d399' }
+                else if (groupA === 'Skirmisher' && groupB === 'Vanguard') { advantage = `${clsA.className} (+5%)`; advantageColor = '#34d399' }
+                else if (groupA === 'Pulverizer' && groupB === 'Skirmisher') { advantage = `${clsA.className} (+5%)`; advantageColor = '#34d399' }
+                else if (groupB === 'Vanguard' && groupA === 'Pulverizer') { advantage = `${clsB.className} (+5%)`; advantageColor = '#f87171' }
+                else if (groupB === 'Skirmisher' && groupA === 'Vanguard') { advantage = `${clsB.className} (+5%)`; advantageColor = '#f87171' }
+                else if (groupB === 'Pulverizer' && groupA === 'Skirmisher') { advantage = `${clsB.className} (+5%)`; advantageColor = '#f87171' }
+                return (
+                  <div className="flex flex-wrap items-center gap-3 text-sm">
+                    <span className="font-bold text-amber-200">{ratioClassA}</span>
+                    <span className="text-amber-300/50">({groupA || '?'})</span>
+                    <span className="text-amber-400">vs</span>
+                    <span className="font-bold text-amber-200">{ratioClassB}</span>
+                    <span className="text-amber-300/50">({groupB || '?'})</span>
+                    <span className="ml-4 rounded-sm border px-2 py-0.5 text-xs font-bold" style={{ borderColor: `${advantageColor}44`, color: advantageColor, backgroundColor: `${advantageColor}11` }}>
+                      {advantage}
+                    </span>
+                    <button onClick={() => { setRatioClassA(null); setRatioClassB(null) }} className="ml-auto rounded-sm border border-amber-800/50 px-2 py-0.5 text-xs text-amber-300/70 hover:text-amber-200">Reset</button>
+                  </div>
+                )
+              })()
+            ) : (
+              <div className="text-xs text-amber-200/50">
+                Click 2 class cards to compare class group ratios. {ratioClassA ? `Selected: ${ratioClassA} (${ratioSpecA}) — click another class...` : 'Click first class...'}
+              </div>
+            )}
+          </div>
+        )}
 
           {/* Sort buttons */}
           <div className="flex flex-wrap items-center gap-1.5">
@@ -537,7 +609,24 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
                   onClick={() => onCardClick?.(cls.classId, spec)}
                   onDataClick={() => onCardClick?.(cls.classId, spec)}
                   isExpanded={expandedCard === cardKey}
-                  onExpand={() => setExpandedCard(expandedCard === cardKey ? null : cardKey)}
+                  onExpand={() => {
+                    if (ratioMode) {
+                      // In ratio mode, clicking selects for ratio comparison
+                      if (!ratioClassA) {
+                        setRatioClassA(cls.className)
+                        setRatioSpecA(spec)
+                      } else if (!ratioClassB && cls.className !== ratioClassA) {
+                        setRatioClassB(cls.className)
+                        setRatioSpecB(spec)
+                      } else {
+                        setRatioClassA(cls.className)
+                        setRatioSpecA(spec)
+                        setRatioClassB(null)
+                      }
+                    } else {
+                      setExpandedCard(expandedCard === cardKey ? null : cardKey)
+                    }
+                  }}
                 />
               )
             })}

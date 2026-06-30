@@ -32,6 +32,13 @@ interface ClassStats {
   classId: number
   className: string
   slug: string
+  combatType: string | null
+  successionGroup: string | null
+  awakeningGroup: string | null
+  ascensionGroup: string | null
+  successionSaDr: number
+  awakeningSaDr: number
+  ascensionSaDr: number
   awakening: SpecStats
   succession: SpecStats
   ascension: SpecStats
@@ -300,10 +307,21 @@ export async function GET() {
     const effectiveAwakeningSkills = isAscensionClass ? [] : awakeningSkills
     const effectiveSuccessionSkills = isAscensionClass ? [] : successionSkills
 
+    // Parse PA Wiki data from awakeningWeapon field (stored as JSON)
+    let wikiData: any = {}
+    try { wikiData = cls.awakeningWeapon ? JSON.parse(cls.awakeningWeapon) : {} } catch {}
+
     results.push({
       classId: cls.id,
       className: cls.name,
       slug: cls.slug,
+      combatType: cls.mainWeapon || null,
+      successionGroup: wikiData.successionGroup || null,
+      awakeningGroup: wikiData.awakeningGroup || null,
+      ascensionGroup: wikiData.ascensionGroup || null,
+      successionSaDr: wikiData.successionSaDr ?? 10,
+      awakeningSaDr: wikiData.awakeningSaDr ?? 10,
+      ascensionSaDr: wikiData.ascensionSaDr ?? 10,
       awakening: computeSpecStats(effectiveAwakeningSkills),
       succession: computeSpecStats(effectiveSuccessionSkills),
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
