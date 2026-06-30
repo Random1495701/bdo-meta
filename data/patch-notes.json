@@ -1,0 +1,684 @@
+[
+  {
+    "date": "June 25, 2026",
+    "url": "https://blackdesert.pearlabyss.com/Asia/en-US/News/Notice/Detail?_boardNo=13348",
+    "classChanges": [
+      {
+        "className": "Berserker",
+        "spec": "Awakening",
+        "intro": "Berserker",
+        "changes": [
+          {
+            "skillName": "Blasting",
+            "changeType": "added_effect",
+            "description": "Added Forward Guard during the skill. Changed Stiffness on attack 1 hits to apply in PvE only. When Core: Blasting is learned, Stiffness on attack 1 hits applies in PvP as well. Changed the character to rotate with the camera only up to the attack motion during the skill."
+          },
+          {
+            "skillName": "Flow: Ancient Wave",
+            "changeType": "cooldown_down",
+            "before": "Decreased the cooldown: 13 sec",
+            "after": "7 sec. The Skill Add-on tier has been changed accordingly: 3",
+            "description": "Decreased the cooldown: 13 sec → 7 sec. The Skill Add-on tier has been changed accordingly: 3 → 2."
+          },
+          {
+            "skillName": "Ground Lifting",
+            "changeType": "animation_change",
+            "description": "Changed the animation when returning to the idle stance after certain skills to appear more natural."
+          },
+          {
+            "skillName": "Flow: Slugfest",
+            "changeType": "combo_change",
+            "description": "Added a combo into Flow: Split Shot after the skill."
+          },
+          {
+            "skillName": "Flow: Earth Dividing",
+            "changeType": "damage_up",
+            "description": "Improved the skill to combo better into Blasting. Changed the damage to apply as independent damage based on the level of Devastation. Accordingly, Devastation's damage has been increased, and a damage description has been added to Flow: Earth Dividing."
+          },
+          {
+            "skillName": "Skill\\tBefore\\tAfter",
+            "changeType": "other",
+            "description": "Flow: Slugfest\\tAttack damage 2070% x9 Last attack damage 2796% x2 57.8% damage in PvP only\\tAttack damage 2668% x9 Last attack damage 3603% x2 44.85% damage in PvP only Devastation\\tAttack damage 6256% x2, max 3 hits 31% damage in PvP only\\tAttack damage 7243% x2, max 3 hits 26.78% damage in PvP only Titan Blow\\tAttacks 1 and 2 damage 3985% x2 Last attack damage 6234% x2 54.44% attacks 1 and 2 damage in PvP only 43.51% last attack damage in PvP only\\tAttacks 1 and 2 damage 4304% x2 Last attack damage 6733% x2 50.41% attacks 1 and 2 damage in PvP only 40.29% last attack damage in PvP only Flow: Ancient Wave\\tAttack damage 8976% x3 33.31% damage in PvP only\\tAttack damage 9784% x3 30.56% damage in PvP only Black Spirit: Devastation\\tAttack damage 5106% x2, max 4 hits 38.1% damage in PvP only\\tAttack damage 5700% x2, max 4 hits 34.13% damage in PvP only"
+          }
+        ]
+      },
+      {
+        "className": "Maehwa",
+        "spec": "Awakening",
+        "intro": "Maehwa",
+        "changes": [
+          {
+            "skillName": "Petal Drill",
+            "changeType": "cooldown_down",
+            "before": "Removed the extra attack and moved its animation to Tenacious Edge. Decreased the cooldown: 7 sec",
+            "after": "5 sec. The Skill Add-on tier has been changed accordingly: 2",
+            "description": "Removed the extra attack and moved its animation to Tenacious Edge. Decreased the cooldown: 7 sec → 5 sec. The Skill Add-on tier has been changed accordingly: 2 → 1."
+          },
+          {
+            "skillName": "Tenacious Edge",
+            "changeType": "cooldown_up",
+            "before": "Added Super Armor. Changed Stiffness on hits to apply in PvE only. When Core: Tenacious Edge is learned, Stiffness on hits applies in PvP as well. Increased the cooldown: 3 sec",
+            "after": "5 sec (based on Level IV).",
+            "description": "Added Super Armor. Changed Stiffness on hits to apply in PvE only. When Core: Tenacious Edge is learned, Stiffness on hits applies in PvP as well. Increased the cooldown: 3 sec → 5 sec (based on Level IV)."
+          },
+          {
+            "skillName": "Changed the timing at which \"Nullified during cooldown\" is applied:",
+            "changeType": "combo_change",
+            "before": "Before: After 6 stabbing motions After: After 3 stabbing motions Changed the combo timing into Coldsnap to after performing all attacks. Removed Recover HP per hit. Moved Petal Drill's extra attack to Tenacious Edge's low stab. LMB to low stab after Petal Drill, Flow: Frostflower, Flow: Moonlight Dash, or Flow: Tip of an Iceberg. Adjusted the attack area of the low stab to match its visual effects. Changed the Critical Hit Rate to not apply during cooldown. Changed Recover WP based on skill level: 12/13/14/15",
+            "after": "10/20/30/40. Fixed the issue where WP did not recover per hit.",
+            "description": "Before: After 6 stabbing motions After: After 3 stabbing motions Changed the combo timing into Coldsnap to after performing all attacks. Removed Recover HP per hit. Moved Petal Drill's extra attack to Tenacious Edge's low stab. LMB to low stab after Petal Drill, Flow: Frostflower, Flow: Moonlight Dash, or Flow: Tip of an Iceberg. Adjusted the attack area of the low stab to match its visual effects. Changed the Critical Hit Rate to not apply during cooldown. Changed Recover WP based on skill level: 12/13/14/15 → 10/20/30/40. Fixed the issue where WP did not recover per hit."
+          },
+          {
+            "skillName": "Tenacious Edge IV",
+            "changeType": "other",
+            "description": "\\tAttack damage 1669% x3, max 2 hits 45.54% damage in PvP only\\tAttack damage 6052% x1, max 3 hits 31.53% damage in PvP only Petal Drill III\\tAttack damage 5412% x2 33.51% damage in PvP only\\tAttack damage 6278% x2 28.89% damage in PvP only Frost Pillars III\\tAttack damage 6152% x2 39.11% damage in PvP only\\tAttack damage 7505% x2 32.06% damage in PvP only"
+          }
+        ]
+      },
+      {
+        "className": "Hashashin",
+        "spec": null,
+        "intro": "We have expanded the number of skills that grant an AP Increase buff for Hashashin Succession, allowing him to maintain this buff more consistently during skill combos.\nAdditionally, although Prime: Aal's Breath was designed to make up a large portion of his combo's damage, it had a long cooldown, and Hashashin could not easily make full use of the Sand Twisters' damage.\nTo address this, we have reworked the mechanics of Aal's Breath and shifted a portion of its damage to Hashashin's Shamshir skills, increasing their damage output.\nMain Weapon, Succession\nAbsolute: Aal's Breath, Prime: Aal's B",
+        "changes": [
+          {
+            "skillName": "Common\\t",
+            "changeType": "other",
+            "description": "Creates Sand Twisters when using the skill. They no longer move toward nearby enemies immediately upon being created (the random movement of the Sand Twisters remains). Sand Twisters move to the targeted location when using Hourglass of Death, Purge, or Arid Assault. Sand Twisters that meet another Sand Twister get larger, dealing up to the damage listed below based on its level. When reaching level 3, it attacks nearby enemies on the spot up to the maximum number of hits then disappears."
+          },
+          {
+            "skillName": "Lowest Level\\t",
+            "changeType": "other",
+            "description": "Attack damage 800% x1, max 12 hits"
+          },
+          {
+            "skillName": "Highest Level\\t",
+            "changeType": "other",
+            "description": "Attack damage 1840% x1, max 12 hits"
+          },
+          {
+            "skillName": "PvP Damage\\t",
+            "changeType": "other",
+            "description": "59.67%"
+          },
+          {
+            "skillName": "Aal's Command",
+            "changeType": "other",
+            "description": "Added All AP +20 for 10 sec when using the skill. This effect is identical to the effect of Absolute: Hourglass of Death, Absolute: Haladie Throw, and Crown Kick."
+          },
+          {
+            "skillName": "Skill\\tBefore\\tAfter",
+            "changeType": "other",
+            "description": "Absolute: Hourglass of Death\\tAttack damage 5951% x2 49.98% damage in PvP only\\tAttack damage 6955% x2 42.77% damage in PvP only Absolute: Rupture\\tAttack damage 3360% x2 Explosion attack damage 3473% x2 50.34% normal attack damage in PvP only 65.37% explosion damage in PvP only\\tAttack damage 3768% x2 Explosion attack damage 3894% x2 44.89% normal attack damage in PvP only 58.3% explosion damage in PvP only Aal's Command\\tAttack 1 damage 2750% x1, max 2 hits Attack 2 damage 2750% x2 Last attack damage 6,188% x2 38.19% damage in PvP only\\tAttack 1 damage 2896% x1, max 2 hits Attack 2 damage 2896% x2 Last attack damage 6516% x2 36.27% damage in PvP only Prophecy Blade\\tAttack damage 4181% x3 Explosion attack damage 5103% x2 47.74% damage in PvP only\\tAttack damage 4779% x3 Explosion attack damage 5833% x2 41.76% damage in PvP only Dominion Slash\\tAttack damage 4957% x2 Explosion attack damage 5411% x2 47.74% damage in PvP only\\tAttack damage 5909% x2 Explosion attack damage 6450% x2 40.06% damage in PvP only Prime: Aal's Dominion\\tAttack damage 6312% x2 28.64% damage in PvP only\\tAttack damage 7218% x2 25.04% damage in PvP only Prime: Purge\\tAttack damage 7568% x2 20.99% damage in PvP only\\tAttack damage 8576% x2 18.53% damage in PvP only Prime: Ridge Reaver\\tAttack damage 8547% x2 34.44% damage in PvP only\\tAttack damage 9502% x2 30.98% damage in PvP only Prime: Chosen Blade\\tAttack damage 4030% x7 49.23% damage in PvP only\\tAttack damage 4927% x7 40.27% damage in PvP only Prime: Quicksand\\tAttack damage 3196% x11 40.81% damage in PvP only\\tAttack damage 4320% x11 30.20% damage in PvP only Prime: Descent\\tAttack 1 damage 8750% x2 Attack 2 damage 8750% x2 36.51% damage in PvP only\\tAttack 1 damage 10565% x2 Attack 2 damage 10565% x2 30.24% damage in PvP only Prime: Piercing Tornado\\tAttack damage 3272% x1, max 4 hits 40.34% damage in PvP only\\tAttack damage 4174% x1, max 4 hits 31.63% damage in PvP only"
+          }
+        ]
+      },
+      {
+        "className": "Nova",
+        "spec": "Awakening",
+        "intro": "For Nova",
+        "changes": [
+          {
+            "skillName": "Slicing Ring",
+            "changeType": "cooldown_down",
+            "before": "Decreased the cooldown: 10 sec",
+            "after": "8 sec. Moved the \"Star's Breath Recovery +10% when using the skill\" effect to Fuse Gravity. The amount of Star's Breath recovered using Fuse Gravity has been adjusted accordingly: 15%",
+            "description": "Decreased the cooldown: 10 sec → 8 sec. Moved the \"Star's Breath Recovery +10% when using the skill\" effect to Fuse Gravity. The amount of Star's Breath recovered using Fuse Gravity has been adjusted accordingly: 15% → 25%."
+          },
+          {
+            "skillName": "Starfall",
+            "changeType": "note",
+            "before": "Changed the cooldown depending on the skill level: 10/10/10 sec",
+            "after": "10/9/8 sec.",
+            "description": "Changed the cooldown depending on the skill level: 10/10/10 sec → 10/9/8 sec."
+          },
+          {
+            "skillName": "Star's Ring",
+            "changeType": "note",
+            "description": "Changed so that when stars fuse, they trigger a more powerful pulling effect over a wide area and then disappear without leaving any stars behind."
+          },
+          {
+            "skillName": "Royal Fencing: Fleche, Accel: Royal Fencing: Fleche",
+            "changeType": "other",
+            "description": "Added Recover 30 SP per hit."
+          },
+          {
+            "skillName": "Twisted Orbit, Accel: Twisted Orbit",
+            "changeType": "other",
+            "description": "Increased the time the character can rotate with the camera when using the skill forward."
+          },
+          {
+            "skillName": "Skill\\tBefore\\tAfter",
+            "changeType": "other",
+            "description": "Brutal Ring\\tRecover 1.7% Star's Breath per hit\\tRecover 1.6% Star's Breath per hit Royal Fencing: Fleche\\tRecover 1.6% Star's Breath per hit\\tRecover 2.0% Star's Breath per hit Starfall\\tRecover 2.1% Star's Breath per hit\\tRecover 4.0% Star's Breath per hit Twisted Orbit\\tRecover 0.8% Star's Breath per hit\\tRecover 1.0% Star's Breath per hit"
+          },
+          {
+            "skillName": "Skill\\tBefore\\tAfter",
+            "changeType": "other",
+            "description": "Royal Fencing: Fleche\\tAttack 1 damage 4309% x1, max 2 hits Attack 2 damage 4309% x1, max 4 hits Attack 3 damage 4309% x1 38.84% damage in PvP only\\tAttack 1 damage 4654% x1, max 2 hits Attack 2 damage 4654% x1, max 4 hits Attack 3 damage 4654% x1 35.96% damage in PvP only Accel: Royal Fencing: Fleche\\t3638% x1, max 9 hits 33.64% damage in PvP only\\t3929% x1, max 9 hits 31.15% damage in PvP only Accel: Frozen Ring\\t6273% x4 32.37% damage in PvP only\\t6881% x4 29.51% damage in PvP only"
+          }
+        ]
+      },
+      {
+        "className": "Woosa",
+        "spec": null,
+        "intro": "Main Weapon, Succession\nAdjusted the damage for the following skills:\nSkill\\tBefore\\tAfter\nPrime: Wingbeat\\tAttack 1 damage 6129% x2\nAttack 2 damage 12257% x2\n24.56% attack 1 damage in PvP only\n34.39% attack 2 damage in PvP only\\tAttack 1 damage 5424% x2\nAttack 2 damage 10847% x2\n27.75% attack 1 damage in PvP only\n38.86% attack 2 damage in PvP only\nPrime: Sagoonja: Plum III\\tAttack damage 5975% x3\n31.65% damage in PvP only\\tAttack damage 5497% x3\n34.4% damage in PvP only\nPrime: Sagoonja: Orchid IV\\tAttack damage 6240% x3\n28.37% damage in PvP only\\tAttack damage 5616% x3\n31.52% damage in PvP on",
+        "changes": [
+          {
+            "skillName": "Skill\\tBefore\\tAfter",
+            "changeType": "other",
+            "description": "Prime: Wingbeat\\tAttack 1 damage 6129% x2 Attack 2 damage 12257% x2 24.56% attack 1 damage in PvP only 34.39% attack 2 damage in PvP only\\tAttack 1 damage 5424% x2 Attack 2 damage 10847% x2 27.75% attack 1 damage in PvP only 38.86% attack 2 damage in PvP only Prime: Sagoonja: Plum III\\tAttack damage 5975% x3 31.65% damage in PvP only\\tAttack damage 5497% x3 34.4% damage in PvP only Prime: Sagoonja: Orchid IV\\tAttack damage 6240% x3 28.37% damage in PvP only\\tAttack damage 5616% x3 31.52% damage in PvP only Prime: Sagoonja: Chrysanth\\tAttack damage 12614% x1, max 3 hits 21.23% damage in PvP only\\tAttack damage 10848% x1, max 3 hits 24.69% damage in PvP only Prime: Sagoonja: Bamboo\\tAttack damage 4595% x3 41.79% damage in PvP only Bamboo-zled's damage 3939%\\tAttack damage 4090% x3 46.95% damage in PvP only Bamboo-zled's damage 3506% Prime: Kaleidoscope Swirl\\tAttack 1 damage 4989% x1, max 2 hits Spin attack damage 4989% x3 31.49% damage in PvP only\\tAttack 1 damage 4440% x1, max 2 hits Spin attack damage 4440% x3 35.38% damage in PvP only"
+          }
+        ]
+      },
+      {
+        "className": "Maegu",
+        "spec": null,
+        "intro": "Main Weapon, Succession\nAdjusted the damage for the following skills:\nSkill\\tBefore\\tAfter\nPrime: Foxspirit: Tag\n\\tAttack damage 7169% x2\n35.46% damage in PvP only\\tAttack damage 6603% x2\n38.5% damage in PvP only\nPrime: Petal Play\\tAttack damage 13665% x2\n25.83% damage in PvP only\\tAttack damage 11615% x2\n30.39% damage in PvP only\nPrime: Foxflare\\tAttack damage 15081% x2\n23.57% damage in PvP only\\tAttack damage 12065% x2\n29.46% damage in PvP only\nPrime: Spirit Swirl\\tAttack 1 damage 9912% x1, max 6 hits\nAttack 2 damage 8112% x2\n20.18% damage in PvP only\\tAttack 1 damage 7434% x1, max 6 hits\nAt",
+        "changes": [
+          {
+            "skillName": "Prime: Foxspirit: Tag",
+            "changeType": "other",
+            "description": "\\tAttack damage 7169% x2 35.46% damage in PvP only\\tAttack damage 6603% x2 38.5% damage in PvP only Prime: Petal Play\\tAttack damage 13665% x2 25.83% damage in PvP only\\tAttack damage 11615% x2 30.39% damage in PvP only Prime: Foxflare\\tAttack damage 15081% x2 23.57% damage in PvP only\\tAttack damage 12065% x2 29.46% damage in PvP only Prime: Spirit Swirl\\tAttack 1 damage 9912% x1, max 6 hits Attack 2 damage 8112% x2 20.18% damage in PvP only\\tAttack 1 damage 7434% x1, max 6 hits Attack 2 damage 6084% x2 26.91% damage in PvP only Prime: Flower Shroud\\tAttack 1 damage 3618% x1, max 3 hits Attack 2 damage 7234% x2 14.59% damage in PvP only\\tAttack 1 damage 3256% x1, max 3 hits Attack 2 damage 6511% x2 16.21% damage in PvP only Prime: Bristling Sparks\\tAttack 1 damage 9223% x1 Attack 2 damage 9223% x1, max 4 hits Attack 3 damage 10914% x2 17.1% damage in PvP only\\tAttack 1 damage 7378% x1 Attack 2 damage 7378% x1, max 4 hits Attack 3 damage 8731% x2 21.38% damage in PvP only Prime: Spirited Away\\tAttack 1 damage 7046% x1, max 5 hits Attack 2 damage 5872% x2 12.74% damage in PvP only\\tAttack 1 damage 5778% x1, max 5 hits Attack 2 damage 4815% x2 15.54% damage in PvP only Prime: Lurking Claws\\tAttack 1 damage 2540% x2 Attack 2 damage 2540% x2 Attack 3 damage 5076% x2 33.19% damage in PvP only\\tAttack 1 damage 2159% x2 Attack 2 damage 2159% x2 Attack 3 damage 4315% x2 39.05% damage in PvP only Prime: Heavenward Dance\\tAttack 1 damage 5002% x1, max 5 hits Attack 2 damage 7504% x2 26.25% damage in PvP only\\tAttack 1 damage 4002% x1, max 5 hits Attack 2 damage 6003% x2 32.81% damage in PvP only Prime: Nukduri Dance\\tAttack damage 9213% x3 29.22% damage in PvP only\\tAttack damage 7370% x3 36.53% damage in PvP only"
+          },
+          {
+            "skillName": "Prime: Cloudveil",
+            "changeType": "other",
+            "description": "\\tAttack 1 damage 7351% x1 Attack 2 damage 7351% x2 Attack 3 damage 7351% x1 Attack 4 damage 7351% x2 29.15% damage in PvP only\\tAttack 1 damage 6616% x1 Attack 2 damage 6616% x2 Attack 3 damage 6616% x1 Attack 4 damage 6616% x2 32.39% damage in PvP only Prime: Flow: Blinding Slash\\tAttack 1 damage 7956% x1 Attack 2 damage 7956% x2 27.44% damage in PvP only\\tAttack 1 damage 7160% x1 Attack 2 damage 7160% x2 30.49% damage in PvP only Prime: Flow: Rising Slash III\\tAttack damage 8645% x1 26.99% damage in PvP only\\tAttack damage 7348% x1 31.76% damage in PvP only Prime: Flow: Twin Slash III\\tAttack 1 damage 7009% x1 Attack 2 damage 7009% x2 31.09% damage in PvP only\\tAttack 1 damage 6448% x1 Attack 2 damage 6448% x2 33.79% damage in PvP only Prime: Fog Cleave III\\tAttack 1 damage 6619% x1 Attack 2 damage 6619% x2 Attack 3 damage 8437% x1 23.39% attacks 1 and 2 damage in PvP only 54.78% attack 3 damage in PvP only\\tAttack 1 damage 5957% x1 Attack 2 damage 5957% x2 Attack 3 damage 7593% x1 25.99% attacks 1 and 2 damage in PvP only 60.87% attack 3 damage in PvP only Prime: Cloudspire\\tAttack 1 damage 3582% x1 Attack 2 damage 3582% x2 27.05% damage in PvP only\\tAttack 1 damage 3224% x1 Attack 2 damage 3224% x2 30.05% damage in PvP only Prime: Spring Frost\\tAttack 1 damage 4366% x1, max 3 hits Attack 2 damage 12684% x2 33.07% attack 1 damage in PvP only 24.42% attack 2 damage in PvP only\\tAttack 1 damage 3711% x1, max 3 hits Attack 2 damage 10781% x2 38.91% attack 1 damage in PvP only 28.73% attack 2 damage in PvP only Prime: Autumnal Blitz\\tAttack 1 damage 2360% x1, max 7 hits Attack 2 damage 11997% x2 26.27% attack 1 damage in PvP only 35.28% attack 2 damage in PvP only\\tAttack 1 damage 2188% x1, max 7 hits Attack 2 damage 11124% x2 28.33% attack 1 damage in PvP only 38.05% attack 2 damage in PvP only Prime: Winter Squall IV\\tAttack 1 damage 3194% x1, max 4 hits Attack 2 damage 9472% x2 34.35% attack 1 damage in PvP only 31.25% attack 2 damage in PvP only\\tAttack 1 damage 2962% x1, max 4 hits Attack 2 damage 8783% x2 37.03% attack 1 damage in PvP only 33.71% attack 2 damage in PvP only Prime: Taeguk IV\\tAttack 1 damage 4331% x1, max 3 hits Attack 2 damage 11540% x2 35.04% attack 1 damage in PvP only 35.83% attack 2 damage in PvP only\\tAttack 1 damage 4208% x1, max 3 hits Attack 2 damage 11210% x2 37.79% attack 1 damage in PvP only 38.64% attack 2 damage in PvP only Morning Fog\\tAttack damage 10108% x1, max 3 hits 19.44% damage in PvP only\\tAttack damage 9097% x1, max 3 hits 21.6% damage in PvP only Prime: Four Seasons\\tAttack 1 damage 3059% x1, max 5 hits Attack 2 damage 13282% x2 31.48% attack 1 damage in PvP only 27.45% attack 2 damage in PvP only\\tAttack 1 damage 2600% x1, max 5 hits Attack 2 damage 11289% x2 37.04% attack 1 damage in PvP only 32.29% attack 2 damage in PvP only"
+          }
+        ]
+      },
+      {
+        "className": "Deadeye",
+        "spec": "Ascension",
+        "intro": "",
+        "changes": [
+          {
+            "skillName": "Absolute: Run 'N Gun",
+            "changeType": "other",
+            "description": "\\t[Regular Ammo] 4059% x1, max 8 hits 32.6% damage in PvP only [Marni Rounds] 3653% x1, max 8 hits 32.6% damage in PvP only\\t[Regular Ammo] 3734% x1, max 8 hits 35.44% damage in PvP only [Marni Rounds] 3361% x1, max 8 hits 35.44% damage in PvP only"
+          },
+          {
+            "skillName": "Absolute: Bulletstorm\\t[Regular Ammo]",
+            "changeType": "other",
+            "description": "5842% x1, max 12 hits 21.89% damage in PvP only [Marni Rounds] 5305% x1, max 12 hits 21.71% damage in PvP only\\t[Regular Ammo] 5258% x1, max 12 hits 24.32% damage in PvP only [Marni Rounds] 4775% x1, max 12 hits 24.12% damage in PvP only"
+          },
+          {
+            "skillName": "Absolute: Star-Spangled Barrage\\t[Regular Ammo]",
+            "changeType": "note",
+            "description": "Attack 1 damage 15012% x1 Attack 2 damage 15012% x2 26.48% damage in PvP only ※ Marni Rounds remain unchanged.\\t[Regular Ammo] Attack 1 damage 13511% x1 Attack 2 damage 13511% x2 29.42% damage in PvP only ※ Marni Rounds remain unchanged."
+          },
+          {
+            "skillName": "Perfect Storm\\t[Regular Ammo]",
+            "changeType": "other",
+            "description": "6316% x1, max 12 hits 22.76% damage in PvP only [Marni Rounds] 5502% x1, max 12 hits 22.76% damage in PvP only\\t[Regular Ammo] 5684% x1, max 12 hits 25.29% damage in PvP only [Marni Rounds] 4952% x1, max 12 hits 25.29% damage in PvP only"
+          },
+          {
+            "skillName": "Class Changes",
+            "changeType": "damage_down",
+            "before": "[Sorceress] Dream of Doom - Improved the issue where the skill would not trigger while casted when using Night Crow by consuming Shards of Darkness with insufficient Stamina. [Tamer] Lightning Burn - Fixed the issue where the attack's hit detection did not match its visual effects. [Maehwa] Red: Carver - Fixed the issue where All Damage Reduction -20 was applied when using the skill while on cooldown. [Maehwa] Kerispear Training - Fixed the issue where the skill could not be comboed into Chase after a certain point during the first attack. [Maehwa] Petal Swirl - Fixed the issue where holding the key inputs triggered different follow-up behaviors depending on whether Core: Petal Swirl was learned. [Maehwa] Red: Carver - Fixed the issue where damage was not reduced when using the skill during cooldown. [Corsair] Spare No Quarter! II - Fixed the issue where the PvP damage ratio was different from other levels of the skill. [Nova] Royal Fencing: Fleche - Fixed the issue where SP was not consumed when using the skill during cooldown. [Sage] Fixed the issue where pressing C while out of combat to switch from main weapon to awakening weapon would play the animation but return to the main weapon afterwards. [Woosa] Absolute: Kaleidoscope Swirl - Fixed the issue where the skill's PvP damage was higher than that of Prime: Kaleidoscope Swirl. Changed the PvP damage of Absolute: Kaleidoscope Swirl: 53.13%",
+            "after": "37.1%. [Woosa] Tigerfly - Fixed the issue where pressing W + SHIFT after using the skill with the Swallowtail Fan triggered Chain: Flitting Step first. [Dusa] Wind Shear - Fixed the issue where the Knockback effect was not displayed during the skill demo. [Dusa] Morning Fog - Fixed the issue where the animation looked awkward when comboing the skill after Flow: Oblique Cleave, Flow: Cloud Drift, Stratus Shift, or Deep Haze. [Hashashin] Prime: Aal's Breath - Fixed the issue where the skill's described damage did not match its actual damage.",
+            "description": "[Sorceress] Dream of Doom - Improved the issue where the skill would not trigger while casted when using Night Crow by consuming Shards of Darkness with insufficient Stamina. [Tamer] Lightning Burn - Fixed the issue where the attack's hit detection did not match its visual effects. [Maehwa] Red: Carver - Fixed the issue where All Damage Reduction -20 was applied when using the skill while on cooldown. [Maehwa] Kerispear Training - Fixed the issue where the skill could not be comboed into Chase after a certain point during the first attack. [Maehwa] Petal Swirl - Fixed the issue where holding the key inputs triggered different follow-up behaviors depending on whether Core: Petal Swirl was learned. [Maehwa] Red: Carver - Fixed the issue where damage was not reduced when using the skill during cooldown. [Corsair] Spare No Quarter! II - Fixed the issue where the PvP damage ratio was different from other levels of the skill. [Nova] Royal Fencing: Fleche - Fixed the issue where SP was not consumed when using the skill during cooldown. [Sage] Fixed the issue where pressing C while out of combat to switch from main weapon to awakening weapon would play the animation but return to the main weapon afterwards. [Woosa] Absolute: Kaleidoscope Swirl - Fixed the issue where the skill's PvP damage was higher than that of Prime: Kaleidoscope Swirl. Changed the PvP damage of Absolute: Kaleidoscope Swirl: 53.13% → 37.1%. [Woosa] Tigerfly - Fixed the issue where pressing W + SHIFT after using the skill with the Swallowtail Fan triggered Chain: Flitting Step first. [Dusa] Wind Shear - Fixed the issue where the Knockback effect was not displayed during the skill demo. [Dusa] Morning Fog - Fixed the issue where the animation looked awkward when comboing the skill after Flow: Oblique Cleave, Flow: Cloud Drift, Stratus Shift, or Deep Haze. [Hashashin] Prime: Aal's Breath - Fixed the issue where the skill's described damage did not match its actual damage."
+          },
+          {
+            "skillName": "End of the Arena of Solare Regular Season",
+            "changeType": "other",
+            "description": "The 8th regular season of the Arena of Solare is coming to an end. First, we would like to express our deepest gratitude to all the Adventurers who proved their valor in the Arena of Solare. Following the end of this regular season, we have prepared a special, limited-time event mode, the Solare Season Finale: Party Rumble, where you can play ranked matches as a party of 3. We hope this event mode allows you to casually enjoy the Arena of Solare with your guild members, friends, and anyone else you have been wanting to play with. More details will be provided via an event notice. We hope you look forward to the upcoming event mode as well. The Arena of Solare regular season has ended, and rewards have been distributed based on the final rank at the end of the season."
+          },
+          {
+            "skillName": "Item\\tQuantity",
+            "changeType": "other",
+            "description": "Gold Bar 10,000G\\t7 Cron Stone\\t2000 Seal of Solare\\t500 Choose Your 10 Immortal Perfume Box\\t1 Trace of Thunderbolt\\t30 [2026 Season I] Solare Incarnate Certificate\\t1"
+          },
+          {
+            "skillName": "Item\\tQuantity",
+            "changeType": "other",
+            "description": "Gold Bar 10,000G\\t5 Cron Stone\\t1000 Seal of Solare\\t500 Choose Your 10 Immortal Perfume Box\\t1 Trace of Thunderbolt\\t15 [2026 Season I] Radiant Spear Certificate\\t1"
+          },
+          {
+            "skillName": "Item\\tQuantity",
+            "changeType": "other",
+            "description": "Gold Bar 10,000G\\t4 Cron Stone\\t500 Seal of Solare\\t500 Choose Your 10 Immortal Perfume Box\\t1 Trace of Thunderbolt\\t10 [2026 Season I] Twilight Spear Certificate\\t1"
+          },
+          {
+            "skillName": "Item\\tQuantity",
+            "changeType": "other",
+            "description": "Gold Bar 10,000G\\t3 Seal of Solare\\t500 Choose Your 5 Immortal Perfume Box\\t1 [2026 Season I] Shining Spear Certificate\\t1"
+          },
+          {
+            "skillName": "Item\\tQuantity",
+            "changeType": "other",
+            "description": "Gold Bar 10,000G\\t2 Seal of Solare\\t500 Choose Your 5 Immortal Perfume Box\\t1 [2026 Season I] Dawn Spear Certificate\\t1"
+          },
+          {
+            "skillName": "Item\\tQuantity",
+            "changeType": "other",
+            "description": "Gold Bar 10,000G\\t1 Seal of Solare\\t500 [2026 Season I] Skilled Soldier Certificate\\t1"
+          },
+          {
+            "skillName": "Item\\tQuantity",
+            "changeType": "other",
+            "description": "Gold Bar 1,000G\\t5 Seal of Solare\\t250 [2026 Season I] Apprentice Soldier Certificate\\t1 ※ Open the Choose Your Immortal Perfume Box to choose one of the following items: - Immortal: Perfume of Deep Sea, Immortal: Perfume of Charm, Immortal: Perfume of Courage, Immortal: Perfume of Khalk, Immortal: Perfume of Insight ※ Arena of Solare Titles Solare Incarnate\\tRadiant Spear\\tTwilight Spear\\tShining Spear\\tDawn Spear\\tSkilled Soldier\\tApprentice Soldier \\t\\t\\t\\t\\t\\t"
+          },
+          {
+            "skillName": "Arena of Solare - Rank Rewards",
+            "changeType": "other",
+            "description": "Distributed Arena of Solare final rank rewards. TOP 100 - Solare Knight Outfit\\t TOP 100 - \"Solare Knight\" Title Title can be used until the end of the next Arena of Solare regular season. \\t"
+          },
+          {
+            "skillName": "Glorious Solare Box",
+            "changeType": "note",
+            "description": "Cron Stone x1,000 Corrupt Oil of Immortality x20 Perfume of Courage x30 Perfume of Khalk x30 \\t [Party] Harmony Draught - Human x30 Perfume of Deep Sea x30 Perfume of Charm x30 Perfume of Insight x30 Item Collection Increase Scroll x30 ※ The Hall of Fame reward for the top-ranked in each class will be announced after this week's maintenance. We'll gather your preferred costume details, and they'll be added to the game soon. Changed the Tag Rotation classes to Sage and Hashashin. Copy items to Sage or Hashashin for just 1 Silver during the period below. June 25, 2026 (Thu) after maintenance - July 16, 2026 (Thu) before maintenance"
+          },
+          {
+            "skillName": "Star of Nostos Visual Effect Improvement",
+            "changeType": "note",
+            "description": "Many Adventurers have crafted or are working toward crafting the recently added treasure, Star of Nostos. To make this achievement feel even more rewarding, we have added a special effect to Campsites equipped with Star of Nostos. Improved the visual effects for when Star of Nostos is equipped to a Campsite. Effects appear when the Campsite is summoned, dismissed, or on standby with the Star of Nostos equipped. Improved the descriptions of certain items. Descriptions have been added to items that had insufficient details. Terminology has been standardized across item descriptions."
+          },
+          {
+            "skillName": "Items with Descriptions Improved",
+            "changeType": "other",
+            "description": "Explorer's Compass Parts\\tAncient Relic Crystal Shard\\tForbidden Book\\tManshaum Voodoo Doll Black Spirit's Claw Piece\\tEmpty Bottle\\tTransparent Empty Bottle\\tHardened Empty Bottle Shining Empty Bottle\\tCooking Utensil\\tIntermediate Cooking Utensil\\tAdvanced Cooking Utensil Balenos Traditional Cooking Utensil\\tSerendia Traditional Cooking Utensil\\tCalpheon Traditional Cooking Utensil\\tSupreme Cooking Utensil Morning Light Traditional Cooking Utensil\\tAlchemy Tool\\tIntermediate Alchemy Tool\\tAdvanced Alchemy Tool Balenos Traditional Alchemy Tool\\tSerendia Traditional Alchemy Tool\\tCalpheon Traditional Alchemy Tool\\tSupreme Alchemy Tool Morning Light Traditional Alchemy Tool\\tShard of the Furious Night\\tShard of the Tearful Night\\tShard of the Drained Night"
+          },
+          {
+            "skillName": "Example - Improved Item descriptions for Cup Crafting Materials",
+            "changeType": "other",
+            "description": "Shard of the Furious Night\\tShard of the Tearful Night\\tShard of the Drained Night\\tHeart of the Arid Forest \\t\\t\\t Fixed the issue where certain items were incorrectly categorized when using the Categories view in the Inventory (I)."
+          },
+          {
+            "skillName": "Edania Boss Reward Improvement",
+            "changeType": "note",
+            "description": "The [Weekly] For the Throne quests in Edania have been highly popular among Adventurers, as they reward Pieces of Edana, a material used to enhance Edana Defense Gear. However, aside from Pieces of Edana, the other rewards felt somewhat lacking considering the strength of the bosses. To make taking on For the Throne feel more rewarding, we have improved the rewards. Changed the completion rewards for the [Weekly] For the Throne quests as follows:"
+          },
+          {
+            "skillName": "Edania: Azureach Chest",
+            "changeType": "other",
+            "description": "\\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x1 Primordial Fragment x40 Caphras Essence x30 Perfume of Envy x1 Perfume of Tenacity x1 Gold Bar 1,000G x1 Gold Bar 100G x5"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Gem of the Primordial x1 \\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x1 Primordial Fragment x40 Caphras Essence x30 Perfume of Envy x1 Perfume of Tenacity x1 Caphras Stone x50 Gold Bar 1,000G x2 Gold Bar 100G x5"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Gem of the Primordial x1"
+          },
+          {
+            "skillName": "Edania: Emeraltides Chest",
+            "changeType": "other",
+            "description": "\\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x2 Crystallized Energy of Endtimes x20 Caphras Essence x40 Perfume of Envy x3 Perfume of Tenacity x3 Gold Bar Box x1 Gold Bar 1,000G x3"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Silent Crystal of Origin x1 Distorted Crystal of Origin x1 \\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x2 Crystallized Energy of Endtimes x20 Caphras Essence x40 Perfume of Envy x3 Perfume of Tenacity x3 Caphras Stone x75 Gold Bar Box x3 Gold Bar 1,000G x5 Gold Bar 100G x5"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Silent Crystal of Origin x1 Distorted Crystal of Origin x1"
+          },
+          {
+            "skillName": "Edania: Amberwilds Chest",
+            "changeType": "other",
+            "description": "\\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x3 Crystallized Energy of Endtimes x25 Caphras Essence x40 Perfume of Envy x3 Perfume of Tenacity x3 Gold Bar Box x1 Gold Bar 1,000G x4"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Silent Crystal of Origin x1 Distorted Crystal of Origin x1 \\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x3 Crystallized Energy of Endtimes x25 Caphras Essence x40 Perfume of Envy x3 Perfume of Tenacity x3 Caphras Stone x100 Gold Bar Box x3 Gold Bar 1,000G x8"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Silent Crystal of Origin x1 Distorted Crystal of Origin x1"
+          },
+          {
+            "skillName": "Edania: Ebonshade Chest",
+            "changeType": "other",
+            "description": "\\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x4 Herald's Crystal x5 Crystallized Energy of Endtimes x30 Caphras Essence x50 Perfume of Envy x5 Perfume of Tenacity x5 Gold Bar Box x1 Gold Bar 1,000G x5"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Silent Crystal of Origin x1 Distorted Crystal of Origin x1 Flawless Herald's Crystal x1 \\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x4 Herald's Crystal x5 Crystallized Energy of Endtimes x30 Caphras Essence x50 Perfume of Envy x5 Perfume of Tenacity x5 Caphras Stone x125 Gold Bar Box x3 Gold Bar 1,000G x8"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Silent Crystal of Origin x1 Distorted Crystal of Origin x1 Flawless Herald's Crystal x1"
+          },
+          {
+            "skillName": "Edania: Crimsonroot Chest",
+            "changeType": "other",
+            "description": "\\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x5 Herald's Crystal x7 Crystallized Energy of Endtimes x35 Caphras Essence x50 Perfume of Envy x5 Perfume of Tenacity x5 Gold Bar Box x1 Gold Bar 1,000G x5"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Silent Crystal of Origin x1 Distorted Crystal of Origin x1 Flawless Herald's Crystal x1 \\t"
+          },
+          {
+            "skillName": "Guaranteed",
+            "changeType": "other",
+            "description": "Piece of Edana x5 Herald's Crystal x7 Crystallized Energy of Endtimes x35 Caphras Essence x50 Perfume of Envy x5 Perfume of Tenacity x5 Caphras Stone x150 Gold Bar Box x3 Gold Bar 1,000G x10"
+          },
+          {
+            "skillName": "Probability",
+            "changeType": "other",
+            "description": "Silent Crystal of Origin x1 Distorted Crystal of Origin x1 Flawless Herald's Crystal x1 ※ To ensure the same rewards are obtained regardless of the clear time, Adventurers who obtained the previous rewards during the following period have been sent the added rewards to their Heidel Storage. - June 25, 2026 (Thu) 00:00 - June 25, 2026 (Thu) before maintenance"
+          },
+          {
+            "skillName": "Edana Rising Token Improvement",
+            "changeType": "note",
+            "description": "The Edana Rising Tokens obtained from the [Weekly] For the Throne quests are used to challenge the Edana ruling each region of Edania. Since these tokens may not be useful to Adventurers who do not wish to challenge the Edana, they were made sellable. However, because the tokens expire as part of the content's progression system, some Adventurers were unable to sell them before they expired. To address this, we have improved the [Weekly] For the Throne quests so that Adventurers can now choose between an Edana Rising Token or Gold Bars as a reward. For those who receive an Edana Rising Token but later decide to sell it, its sell price will remain unchanged. Changed certain quest rewards for [Weekly] For the Throne to selectable rewards. You can now choose to receive either the corresponding Edana Rising Token or Gold Bar 100G x3."
+          },
+          {
+            "skillName": "Certain Content and Monster Zone Drop Improvements",
+            "changeType": "cc_change",
+            "before": "With this update, we are improving the contents of the Yolunakea: Scalding Chest, as the rewards felt somewhat lacking compared to the time required to complete Atoraxxion: Yolunakea. Additionally, as fewer Adventurers visit the monster zones that drop Manshaum Voodoo Dolls, the trade volume of this item has decreased on the market. To address this, we have added Manshaum Voodoo Dolls as drops in higher-level monster zones in Kamasylvia and increased their drop rates in certain zones. Furthermore, the drop rate of Sturdy Forest Tread from Narc Brishka, the boss summoned with a Manshaum Voodoo Doll, has been doubled. We hope this helps alleviate the shortage. Increased the quantity of Maha's Fragments obtainable from Yolunakea: Scalding Chest. Before: x10 After: x40 ※ To ensure the same rewards are obtained regardless of the clear time, Adventurers who obtained the previous rewards during the following period have been sent Maha's Fragment x30 to their Heidel Storage. - June 25, 2026 (Thu) 00:00 - June 25, 2026 (Thu) before maintenance Added the Manshaum Voodoo Doll to the drop tables of certain monsters in the following monster zones: Ash Forest, Ash Forest [Dehkia's Lantern I & II], Gyfin Rhasia Temple (Upper), Gyfin Rhasia Temple (Upper) [Dehkia's Lantern], and Gyfin Rhasia Temple (Underground). Information about the Manshaum Voodoo Doll has been added to the Monster Zone Info UI for Gyfin Rhasia Temple and Ash Forest. \"How to Obtain\" information has been added to the Manshaum Voodoo Doll description. Increased the drop rate of the Manshaum Voodoo Doll by 16.5% at the Dehkia Mirumok Ruins. Doubled the drop rate of Sturdy Forest Tread from Narc Brishka summoned using 5 Manshaum Narc's Stones. The Final Gladios: Heart of Atomagia Difficulty Adjustment The Final Gladios is recommended for Adventurers with at least 330 Displayed AP. After reviewing the progress of Adventurers with 330 AP, we determined that many were having difficulty progressing through the quest and added elements to assist them. Improved the Final Gladios so that defeating Illezra's Dark Shadow applies a DP Decrease debuff to the Heart of Atomagia. The Dark Shadow is summoned when the Heart of Atomagia's HP is at 90%, 70%, 50%, and 30%. Defeating the Dark Shadow applies a DP Decrease debuff to the Heart of Atomagia for 50 sec. Applied the following changes to fix the issue where Zephyros Shadow Knights occasionally failed to appear in the Zephyros Castle Monster Zone. When Beelzebub appears, Zephyros Shadow Knights in combat are no longer killed instantly and receive a significant DP decrease instead. Zephyros Shadow Knights affected by this DP Decrease will not spawn Zephyros Shadow Priests upon death. During the mechanic that kills nearby monsters after defeating Beelzebub, the number of monsters that spawn at once has been increased by approximately 10%. Added guaranteed Essence of Dawn Box to the rewards for Calamity 9-10 Apex Changui and Bamboo Legion Lieutenant in Black Shrine - Donghae (Solo). Calamity 9: Guaranteed Essence of Dawn Box x1 Calamity 10: Guaranteed Essence of Dawn Box x2 Added the Pirate Island to the Monster Zone Info UI. Changed the Cox Female Warriors' CC to standardize CC types applied by monsters in this Monster Zone: Bound",
+            "after": "Knockback.",
+            "description": "With this update, we are improving the contents of the Yolunakea: Scalding Chest, as the rewards felt somewhat lacking compared to the time required to complete Atoraxxion: Yolunakea. Additionally, as fewer Adventurers visit the monster zones that drop Manshaum Voodoo Dolls, the trade volume of this item has decreased on the market. To address this, we have added Manshaum Voodoo Dolls as drops in higher-level monster zones in Kamasylvia and increased their drop rates in certain zones. Furthermore, the drop rate of Sturdy Forest Tread from Narc Brishka, the boss summoned with a Manshaum Voodoo Doll, has been doubled. We hope this helps alleviate the shortage. Increased the quantity of Maha's Fragments obtainable from Yolunakea: Scalding Chest. Before: x10 After: x40 ※ To ensure the same rewards are obtained regardless of the clear time, Adventurers who obtained the previous rewards during the following period have been sent Maha's Fragment x30 to their Heidel Storage. - June 25, 2026 (Thu) 00:00 - June 25, 2026 (Thu) before maintenance Added the Manshaum Voodoo Doll to the drop tables of certain monsters in the following monster zones: Ash Forest, Ash Forest [Dehkia's Lantern I & II], Gyfin Rhasia Temple (Upper), Gyfin Rhasia Temple (Upper) [Dehkia's Lantern], and Gyfin Rhasia Temple (Underground). Information about the Manshaum Voodoo Doll has been added to the Monster Zone Info UI for Gyfin Rhasia Temple and Ash Forest. \"How to Obtain\" information has been added to the Manshaum Voodoo Doll description. Increased the drop rate of the Manshaum Voodoo Doll by 16.5% at the Dehkia Mirumok Ruins. Doubled the drop rate of Sturdy Forest Tread from Narc Brishka summoned using 5 Manshaum Narc's Stones. The Final Gladios: Heart of Atomagia Difficulty Adjustment The Final Gladios is recommended for Adventurers with at least 330 Displayed AP. After reviewing the progress of Adventurers with 330 AP, we determined that many were having difficulty progressing through the quest and added elements to assist them. Improved the Final Gladios so that defeating Illezra's Dark Shadow applies a DP Decrease debuff to the Heart of Atomagia. The Dark Shadow is summoned when the Heart of Atomagia's HP is at 90%, 70%, 50%, and 30%. Defeating the Dark Shadow applies a DP Decrease debuff to the Heart of Atomagia for 50 sec. Applied the following changes to fix the issue where Zephyros Shadow Knights occasionally failed to appear in the Zephyros Castle Monster Zone. When Beelzebub appears, Zephyros Shadow Knights in combat are no longer killed instantly and receive a significant DP decrease instead. Zephyros Shadow Knights affected by this DP Decrease will not spawn Zephyros Shadow Priests upon death. During the mechanic that kills nearby monsters after defeating Beelzebub, the number of monsters that spawn at once has been increased by approximately 10%. Added guaranteed Essence of Dawn Box to the rewards for Calamity 9-10 Apex Changui and Bamboo Legion Lieutenant in Black Shrine - Donghae (Solo). Calamity 9: Guaranteed Essence of Dawn Box x1 Calamity 10: Guaranteed Essence of Dawn Box x2 Added the Pirate Island to the Monster Zone Info UI. Changed the Cox Female Warriors' CC to standardize CC types applied by monsters in this Monster Zone: Bound → Knockback."
+          },
+          {
+            "skillName": "Old Balenos Main Quests Removal",
+            "changeType": "note",
+            "before": "As part of our ongoing cleanup of pre-revamp main quests, all old Balenos main quests except [Balenos] Breaker of Chains has been removed. Please note that characters who were progressing through the old Balenos main quests will now be able to progress the [Balenos] Breaker of Chains questline. Removed all old Balenos Main Quests except the currently available \"[Balenos] Breaker of Chains\" main questline. Accordingly, characters currently in progress with the old Balenos main quests can now start from the first quest of [Balenos] Breaker of Chains, regardless of their previous progress. [Donkey] Krogdalo's Horse Gear Crafting Difficulty Adjustments [Donkey] Krogdalo's Horse Gear can be crafted with materials obtained through quests in Papua Crinea and Grándiha. However, compared to the difficulty of these quests, the amount of materials rewarded upon completion was relatively low, requiring a very long time to gather everything. With this update, we have lowered the difficulty of these quests or increased the rewards, allowing you to craft [Donkey] Krogdalo's Horse Gear much more easily. Changed certain objectives and rewards for quests in Papua Crinea and Grándiha. The quest titles and quest content have been changed accordingly. [Daily] I Need Mackerel Pike",
+            "after": "[Daily] I Need Some Fish [Daily] More Barter Trades Than Papus",
+            "description": "As part of our ongoing cleanup of pre-revamp main quests, all old Balenos main quests except [Balenos] Breaker of Chains has been removed. Please note that characters who were progressing through the old Balenos main quests will now be able to progress the [Balenos] Breaker of Chains questline. Removed all old Balenos Main Quests except the currently available \"[Balenos] Breaker of Chains\" main questline. Accordingly, characters currently in progress with the old Balenos main quests can now start from the first quest of [Balenos] Breaker of Chains, regardless of their previous progress. [Donkey] Krogdalo's Horse Gear Crafting Difficulty Adjustments [Donkey] Krogdalo's Horse Gear can be crafted with materials obtained through quests in Papua Crinea and Grándiha. However, compared to the difficulty of these quests, the amount of materials rewarded upon completion was relatively low, requiring a very long time to gather everything. With this update, we have lowered the difficulty of these quests or increased the rewards, allowing you to craft [Donkey] Krogdalo's Horse Gear much more easily. Changed certain objectives and rewards for quests in Papua Crinea and Grándiha. The quest titles and quest content have been changed accordingly. [Daily] I Need Mackerel Pike → [Daily] I Need Some Fish [Daily] More Barter Trades Than Papus → [Daily] Faster Deliveries Than Papus [Daily] More Barter Trades Than Otters → [Daily] Faster Deliveries Than Otters ※ If you have already accepted the previous quest, you can progress the updated quest. ※ If you have already completed the previous quest objectives, its completion status will remain, and you will receive the updated rewards."
+          },
+          {
+            "skillName": "Quest\\tObjectives & Rewards (Before)\\tObjectives & Rewards (After)",
+            "changeType": "other",
+            "description": "[Daily] I Need Some Fish\\tObjective Hand over Mackerel Pike x3"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "100 Contribution Point EXP Energy Recovery +2 Peridot Leaf x5 Lamute Gang's Benns Coin x1\\tObjective Catch green grade fish x1"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "100 Contribution Point EXP Energy Recovery +2 Peridot Leaf x5 Lamute Gang's Benns Coin x3 [Daily] Lamute Gang's Health Care\\tObjective"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "100 Contribution Point EXP Peridot Leaf x5 Lamute Gang's Benns Coin x1\\tObjective"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "100 Contribution Point EXP Peridot Leaf x5 Lamute Gang's Benns Coin x3 [Daily] Faster Deliveries Than Papus [Daily] Faster Deliveries Than Otters\\tObjective Barter 4 times"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x1 Papu/Crio Amity +5 Papu/Crio Amity -5\\tObjective"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x3 Papu/Crio Amity +5 Papu/Crio Amity -5 [Daily] Protect Our Fish, Queek! [Daily] Get Otter's Fish, Pa!\\tObjective Hand over Cero x3"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x1 Papu/Crio Amity +5 Papu/Crio Amity -5\\tObjective Catch green grade fish x1"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x3 Papu/Crio Amity +5 Papu/Crio Amity -5 [Daily] Otter Soldier's Patrol [Daily] Fruit Soldier Patrol\\tObjectives Check the Otter Soldier at Queekity Thumpity Moon Village / Fruit Soldier in front of Garania"
+          },
+          {
+            "skillName": "Check the Otter Soldier on Twin Island / Fruit Soldier at Panipani Village",
+            "changeType": "other",
+            "description": "Check the Otter Soldier on the eastern shore / Fruit Soldier at the entrance of the Garden of Birth Check the Otter Soldier at Imprison Everyone! Queek! Jail / Fruit Soldier on the western shore Check the Otter Soldier in front of Commander Pikeo / Fruit Soldier at the Fruit Soldier Academy"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x1 Papu/Crio Amity +5 Papu/Crio Amity -5\\tObjectives Check the Otter Soldier at Queekity Thumpity Moon Village / Fruit Soldier in front of Garania"
+          },
+          {
+            "skillName": "Check the Otter Soldier on Twin Island / Fruit Soldier at Panipani Village",
+            "changeType": "other",
+            "description": "Check the Otter Soldier on the eastern shore / Fruit Soldier at the entrance of the Garden of Birth Check the Otter Soldier at Imprison Everyone! Queek! Jail / Fruit Soldier on the western shore Check the Otter Soldier in front of Commander Pikeo / Fruit Soldier at the Fruit Soldier Academy"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x3 Papu/Crio Amity +5 Papu/Crio Amity -5 [Daily] Coral Is an Easy Find, Queek! [Daily] You Can at Least Dig Up Coral!\\tObjective Give Coral Piece x7 to Berdao/Lena Arbin"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x1 Papu/Crio Amity +5 Papu/Crio Amity -5\\tObjective Give Coral Piece x7 to Berdao/Lena Arbin"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x3 Papu/Crio Amity +5 Papu/Crio Amity -5 [Daily] Deal With Them for Me, Queek! [Daily] Get Rid of the Enemies in the Rear, Pa-pa!\\tObjectives"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x1 Papu/Crio Amity +5 Papu/Crio Amity -5\\tObjectives"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "200 Contribution Point EXP Rainbow Fish Bone Coin / Rainbow Petal Coin x3 Papu/Crio Amity +5 Papu/Crio Amity -5 [Daily] Intelligent Stoneback Crab\\tObjective"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "other",
+            "description": "Rainbow Fish Bone Coin x2 Papu/Crio Amity +5 Papu/Crio Amity -5\\tObjective"
+          },
+          {
+            "skillName": "Rewards",
+            "changeType": "note",
+            "description": "Rainbow Fish Bone Coin x6 Papu/Crio Amity +5 Papu/Crio Amity -5 Improved the descriptions of the following items related to Papua Crinea quests."
+          },
+          {
+            "skillName": "Added the following text to the bottom of My Information (P) - Journal:",
+            "changeType": "note",
+            "description": "Only the current character's actions are recorded. Added a button to open the Fish Guide in the Fishing UI. Added Awakening Weapon Box to the main rewards for the Field Bosses Dastard Bheg, Red Nose, and Dim Tree Spirit in Boss Info UI. Changed ecology knowledge tracking so its tracking color is displayed with priority over subjugation quests on the minimap."
+          },
+          {
+            "skillName": "Central Market Item Category Improvements",
+            "changeType": "other",
+            "description": "The Central Market is a system that is crucial for your adventures. However, some item categories contained a mix of various items, making it difficult to find what you were looking for. With this update, we have reorganized and subdivided these categories to group items by their intended use. This should make price comparisons using filters easier and improve the overall convenience of the Central Market. Reorganized the item categories in the Central Market as follows. Subcategories under the Material category have been expanded from 8 to 11. Example of Grain category: Wheat Flour, Barley, etc."
+          },
+          {
+            "skillName": "Before\\tAfter",
+            "changeType": "other",
+            "description": "1. Ore/Gem 2. Plants 3. Seed/Fruit 4. Leather 5. Blood 6. Meat 7. Seafood 8. Misc.\\t1. Ore/Gem 2. Plants 3. Seed 4. Fruit 5. Vegetable 6. Grain 7. Seafood 8. Meat 9. Hide 10. Blood 11. Misc. Subcategories under the Consumables category have been expanded from 8 to 9. Example of Special Food category: Bountiful Feast, Assorted Kimchi, etc."
+          },
+          {
+            "skillName": "Before\\tAfter",
+            "changeType": "other",
+            "description": "1. Offensive Elixir 2. Defensive Elixir 3. Functional Elixir 4. Food 5. Potion 6. Siege Items 7. Item Parts 8. Other Consumables\\t1. Offensive Elixir 2. Defensive Elixir 3. Functional Elixir 4. Food 5. Unique Food 6. Potion 7. Siege Items 8. Item Parts 9. Other Consumables"
+          },
+          {
+            "skillName": "WEB",
+            "changeType": "note",
+            "description": "Changed the login process for linked accounts to redirect to the unlinking guide page upon logging in, following the end of Facebook OpenID support."
+          },
+          {
+            "skillName": "Go to [Facebook OpenID Login Support Ends Soon]",
+            "changeType": "note",
+            "description": "Improved the UI of the OpenID unlinking guide page. Improved the Download - Soundtracks page on the official website so the next track plays when the current track ends. Changed the \"Continue\" prompt shown when stopping a game update in the Pearl Abyss Game Launcher to \"Start Patch.\" Improved the in-game Pearl Shop (F3) so that when adding an item with no selected option to the Cart, a notification appears and the option selection UI opens."
+          },
+          {
+            "skillName": "IMeningkatkan Mansha → Mansha yang Bertambah Banyak",
+            "changeType": "other",
+            "before": "Permintaan Kasula Penaklukan Penyamun Berkeliaran",
+            "after": "Permintaan Penaklukan Penyamun Berkeliaran dari Kasula Permohonan Penumpasan Suku Surai Guccio",
+            "description": "Permintaan Kasula Penaklukan Penyamun Berkeliaran → Permintaan Penaklukan Penyamun Berkeliaran dari Kasula Permohonan Penumpasan Suku Surai Guccio → Permintaan Penaklukkan Suku Surai dari Guccio"
+          },
+          {
+            "skillName": "Permintaan Penaklukan Helm Bolero → Permintaan Penaklukan Helm dari Bolero",
+            "changeType": "other",
+            "before": "Permintaan Penaklukan Penambang Tambang Besi Terbengkalai",
+            "after": "Permintaan Penaklukan Tambang Besi Terbengkalai dari Penambang",
+            "description": "Permintaan Penaklukan Penambang Tambang Besi Terbengkalai → Permintaan Penaklukan Tambang Besi Terbengkalai dari Penambang"
+          },
+          {
+            "skillName": "CHANGES & FIXES",
+            "changeType": "cc_change",
+            "description": "Fixed the issue where entering the Final Gladios with an outfit that has an exclusive idle animation would play the outfit's animation before switching to combat stance. Fixed the issue where grass and trees were floating in the air in certain areas of Velandir. Fixed the issue where some of Duoksini's voice lines did not match the on-screen dialogue in Black Shrine - Donghae (Solo). Fixed the issue where Duoksini would teleport unnaturally after certain attacks in Black Shrine - Donghae (Solo). Fixed the issue where the \"[Daily] Intelligent Stoneback Crab\" quest could be completed without being transformed. Fixed the issue where the progress bar was visible when upgrading to an Enhanced Flame Tower or Big Hwacha during Node and Conquest Wars. Improved the Arena of Solare History UI to display active penalties when an Adventurer receives an AFK penalty in ranked matches. Improved the default sub-weapon granted upon character creation so it can be changed with a Sub-weapon Exchange Coupon. Fixed the issue where [Event] Desert Light could not be obtained from rewards for ranks below the top 20 in server contribution when defeating the World Boss Garmoth. Items that were not obtained were sent to your Mail (B) during the June 25, 2026 (Thu) maintenance. Improved the visual effects during the battle against Maleficent Centilutos in Atoraxxion: Sycrakea - Syca's Cradle to make the Power Sources that appear with Berurah more distinct. Fixed the issue where the [Dark Devotee] title, obtainable by defeating Cathawen in Atoraxxion - Orzekea, could not be acquired. Fixed the issue where the device that teleports you to Syca's Garden after defeating the boss in Atoraxxion - Sycrakea would occasionally fail to activate. Changed the \"To Yolu's Cradle\" button, which combines the dagger at the Sol Magia in Atoraxxion: Yolunakea, to appear at the very top of the list. Fixed the awkward placement of bushes near Oze Pass. Fixed the issue where the damage of the Vype Stoner Cannon was applied abnormally. Fixed the issue where Skill Add-ons appeared unchanged when switching Skill Presets in the Skill (K) UI. Fixed the issue where an incorrect message popup appeared when registering an item identical to a sold item without an active Value Pack. [Gamepad Mode] Fixed the issue where the Carrack-related tree was displayed when using the Ship Upgrade Tree key while viewing Guild Galley upgrade information. [Gamepad Mode] Fixed the issue where selecting a stacked item in the Sell Storage Items UI and entering the quantity would immediately open the sell window. [Gamepad Mode] Fixed the issue where items with truncated names added to the Sell Storage Items list could not be canceled. Fixed the issue where navigating to a boss from the Boss Info UI, defeating that boss, and reopening the Boss Info UI would set the navigation path to a different boss. Fixed the issue where Trace of Thunderbolt was not obtained upon opening Boss Slayer's Haul - Deposed Crown Prince (Hard). Adventurers who obtained Boss Slayer's Haul - Deposed Crown Prince (Hard) between the June 18, 2026 (Thu) maintenance and the June 25, 2026 (Thu) maintenance will receive Trace of Thunderbolt separately via the July 2 (Thu) maintenance. Fixed the issue where [Guild] Elephants and Galleys could be registered beyond the registration limit of 3. Guild mounts registered beyond the limit have been retrieved, and any equipped guild mount gear has been sent to Guild Storage. Fixed the issue where the knowledge of Slate on the Floor in Yolunakea could not be obtained properly. Fixed the issue where the Artisan Goblin Worker Contract tooltip displayed \"Mountain of Eternal Winter\" instead of Eilton. Fixed the issue where the quest acceptance conditions in the descriptions of Papu's Barter Supplies and Otter's Barter Supplies differed from the actual conditions. Fixed the issue where Fountain of Divine Melodies and Heaven's Tower were categorized as crafting materials, even though they are used for quest progression."
+          },
+          {
+            "skillName": "Fixed the issue where the categories of the following items were incorrect:",
+            "changeType": "animation_change",
+            "description": "Ancient Slate Fragment, Torn Note Fragment, Torn Scroll Fragment, Mirror of Equilibrium, Refined Essence of Emotions, Ocean Horizon Key, Gold Key, Silver Key, Bronze Key Fixed the issue where the following items, despite having their category changed to Junk, could not be sold with the Sell All Junk Items button at shops:"
+          },
+          {
+            "skillName": "Rock Elephant Tusk",
+            "changeType": "note",
+            "description": "Changed the following items so they can be sold using the Sell All Junk Items function:"
+          },
+          {
+            "skillName": "Offin's Root Shard, Desert Tyrant's Mane, Ancient Creature's Fragment",
+            "changeType": "other",
+            "description": "Fixed the issue where Dusa could not open the [Event] Treasurable Memories Classic Box with the message \"There is no item\"."
+          },
+          {
+            "skillName": "See More Latest News",
+            "changeType": "other",
+            "description": "June 25, 2026 (Thu) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 25, 2026, 10:00 (UTC+8) June 18, 2026 (Thu) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 18, 2026, 10:00 (UTC+8) [Black Desert+] June 15 (Mon) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 15, 2026, 09:43 (UTC+8)"
+          },
+          {
+            "skillName": "See Other News",
+            "changeType": "other",
+            "description": "June 25, 2026 (Thu) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 25, 2026, 10:00 (UTC+8) June 18, 2026 (Thu) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 18, 2026, 10:00 (UTC+8) [Black Desert+] June 15 (Mon) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 15, 2026, 09:43 (UTC+8) June 12 (Fri) security module update information"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 12, 2026, 09:44 (UTC+8) June 11, 2026 (Thu) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 11, 2026, 10:00 (UTC+8) [Hotfix] June 4, 2026 (Thu) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 4, 2026, 17:00 (UTC+8) June 4, 2026 (Thu) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "Jun 4, 2026, 10:00 (UTC+8) May 29 (Fri) security module update information"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "May 29, 2026, 09:36 (UTC+8) May 28, 2026 (Thu) Update Details"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "May 28, 2026, 10:00 (UTC+8) May 22 (Fri) security module update information"
+          },
+          {
+            "skillName": "Updates",
+            "changeType": "other",
+            "description": "May 22, 2026, 09:46 (UTC+8)"
+          },
+          {
+            "skillName": "English",
+            "changeType": "other",
+            "description": "Pearl Abyss Terms of Service Black Desert Terms of Service Privacy Policy Operational Policy Event Rules Fan Content Guidelines Support Cookie Policy This game contains sexual themes and violence content. Please be responsible when playing this game. Certain content and services for the game can be found separately."
+          },
+          {
+            "skillName": "Black Desert - Asia (TH/SEA)",
+            "changeType": "other",
+            "description": "© Pearl Abyss Corp. All Rights Reserved. 請確認服務地區。 登入網站 : 黑色沙漠 (亞洲(TH/SEA)) 您所登入的網站最適合亞洲(TH/SEA)服務。 為了享受更好的遊戲體驗，推薦您使用台/港/澳服務。 移動至台/港/澳服務 停留在此"
+          }
+        ]
+      }
+    ]
+  }
+]

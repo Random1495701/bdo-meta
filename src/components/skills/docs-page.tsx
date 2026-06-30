@@ -254,6 +254,32 @@ const VERSIONS: VersionEntry[] = [
     ],
     fixes: [],
   },
+  {
+    version: 'v3.0.0',
+    date: '2025-06-30',
+    title: 'Tier Builder + Structured Patch Notes',
+    features: [
+      'Tier Builder: all specs (Awakening/Succession/Ascension) merged into a single ranked list — no more separate spec tabs',
+      'User-controlled scoring weights: 13 parameters across damage, CC, protection, and defense categories, each with a 0–100 weight slider',
+      '6 presets: Balanced, Damage, CC/Control, Defense, Burst (DPS), Bruiser — or set weights manually',
+      'Live composite score: normalized 0→1 per parameter, weighted by user input, updates instantly as you drag sliders',
+      'Two views: Ranked (expandable rows with parameter breakdowns) and Table (sortable by any column)',
+      'Weights persisted to localStorage — your scoring profile survives page reloads',
+      'No assumed tiers: a data tool for users to infer rankings themselves, not an auto-generated tier list',
+      'Structured patch notes: PA patch notes parsed into per-skill changes with change type classification (damage up/down, cooldown up/down, added/removed effect, CC change, combo change, animation change)',
+      'Skill linking: parsed skill names matched against the database — linked skills show a link icon and navigate to the skill detail',
+      'Up/down arrows: buff/nerf direction shown with color-coded arrows (green = buff, red = nerf)',
+      'Before → After values: numeric changes (cooldown, damage) shown as before → after with arrow',
+      'Latest patch only: only the most recent balance patch is shown, preventing consecutive-patch interference with change tracking',
+      'Patch archive: all scraped patches saved to data/patch-archive.json for future features (browse by class, last-changed timestamps, change magnitude)',
+      'Class filter chips: filter the patch view to a single class',
+      'Summary stats: total changes, buffs, nerfs, and linked skill count at a glance',
+    ],
+    fixes: [
+      'DB restore: database was empty (0 skills) after session reset — restored 4,111 skills + 31 classes from JSON export',
+      'Rebuilt TabSwitcher, Tier List, and Patches pages that were lost in filesystem reversion',
+    ],
+  },
 ]
 
 const FEATURE_ICONS: Record<string, React.ReactNode> = {

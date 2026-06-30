@@ -1355,3 +1355,30 @@ Stage Summary:
 - **Meta metrics**: 15 ideas brainstormed. Top 3 by value×feasibility: DPS Estimate, Addon Popularity Leaderboard, Protected Skills Coverage %.
 - **Updated roadmap**: 10 prioritized next tasks. Top 3: restore Black Spirit button, add Asc button, expose addon data in UI.
 - No code changes were made — this was a read-only audit. All findings are documented above with file paths and line numbers for the next implementation task.
+
+---
+Task ID: 24
+Agent: main-orchestrator
+Task: Recover from session reset (empty DB + lost files), rebuild Tier Builder + Patch Notes, restore app
+
+Work Log:
+- Discovered DB was empty (0 skills, 88K file) after session reset. Dev server was running but returning data for 0 skills.
+- Found JSON export at db/skills-export.json (9MB, 4111 skills). Created scripts/restore-db.ts to seed 31 classes + import 4111 skills. Ran successfully: 4111 skills, 31 classes, 0 errors.
+- Discovered filesystem had reverted to v2.5.0 era: tab-switcher.tsx, tier-list-page.tsx, patches-page.tsx, skill-compare-drawer.tsx, /api/patches route, data/ directory, and scrape-patch-notes.ts were ALL missing. page.tsx was the old 3-tab version (Data/Meta/Docs only).
+- Verified APIs return data: /api/stats (4111 skills), /api/skills (2321 max-rank), /api/meta (31 classes), /api/classes (31 classes).
+- Created TabSwitcher component (5 tabs: Data, Meta, Tiers, Patches, Docs).
+- Created TierListPage (Tier Builder): all specs merged into single ranked list, 13 user-controlled weight parameters (damage/cc/protection/defense categories), 6 presets, localStorage persistence, Ranked + Table views, live normalized scoring. No assumed tiers — data tool for users.
+- Created /api/patches route: reads data/patch-notes.json (latest patch only), links skill names to DB skill IDs via exact/base/fuzzy name matching, returns archive metadata.
+- Created scripts/scrape-patch-notes.ts: structured parser that classifies changes (damage_up/down, cooldown_up/down, added/removed_effect, cc_change, combo_change, animation_change, note), extracts before→after values, detects spec (Awakening/Succession/Ascension), saves latest patch to patch-notes.json + appends all to patch-archive.json.
+- Created PatchesPage: structured UI with class filter chips, summary stats (classes/changes/buffs/nerfs/linked), per-class cards with expandable skill change rows, up/down arrows, before→after value display, skill links to DB, archive info note.
+- Fixed scraper: listing page innerText doesn't contain href attributes — switched to DOM query for a[href*="boardNo"] to extract board IDs. Also fixed latest-patch selection to pick the most recent patch WITH class changes (skip general notices).
+- Ran scraper: found 27 patch links, fetched 5, parsed 121 skill changes across 7 classes in latest patch (June 25, 2026). 17/121 changes linked to DB skills. 5 patches archived.
+- Updated page.tsx to use TabSwitcher + wire Tiers and Patches views. Updated docs-page.tsx with v3.0.0 version entry.
+- Verified via agent-browser: all 5 tabs render, Tier Builder shows 56 spec entries with live scores (Damage preset: Deadeye Ascension=100.0 top), Patches page shows June 25 2026 patch with 7 classes/121 changes/17 linked, Data page loads 4111 skills, Meta page renders.
+
+Stage Summary:
+- **DB restored**: 4111 skills + 31 classes from JSON export (was 0/0 after reset)
+- **Tier Builder** (v3.0.0): merged all specs into single list, 13 user-weighted parameters, 6 presets, live scoring, Ranked+Table views, localStorage persistence. No assumed tiers — pure data tool.
+- **Patch Notes** (v3.0.0): structured parsing with 11 change types, skill linking to DB (exact+base+fuzzy match), up/down arrows, before→after values, latest patch only, 5 patches archived for future features.
+- **Files created**: tab-switcher.tsx, tier-list-page.tsx, patches-page.tsx, /api/patches/route.ts, scripts/scrape-patch-notes.ts, scripts/restore-db.ts, data/patch-notes.json, data/patch-archive.json
+- **Lint**: clean. **Dev server**: running, all 200s, no errors.
