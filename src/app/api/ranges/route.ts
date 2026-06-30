@@ -55,7 +55,7 @@ export async function GET() {
   dmgVals.sort((a, b) => a - b)
   const dmgMax = dmgVals.length > 0 ? Math.ceil(percentile(dmgVals, 99) / 1000) * 1000 : 100000
 
-  return NextResponse.json({
+  const result = {
     requiredLevel: {
       min: levelAgg._min.requiredLevel ?? 0,
       max: levelAgg._max.requiredLevel ?? 62,
