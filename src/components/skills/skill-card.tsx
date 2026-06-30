@@ -152,6 +152,8 @@ export const SkillCard = React.memo(function SkillCard({
   return (
     <motion.button
       type="button"
+      data-skill-card
+      tabIndex={0}
       onClick={() => selectSkill(skill.skillId)}
       whileHover={{ y: -3 }}
       transition={{ type: 'spring', stiffness: 350, damping: 25 }}

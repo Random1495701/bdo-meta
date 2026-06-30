@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Swords, Zap, Shield, ShieldHalf, Grab, Gauge,
   RotateCcw, SlidersHorizontal, Table2, LayoutList, Crown,
-  TrendingUp, Info, ChevronDown, Search,
+  TrendingUp, Info, ChevronDown, Search, Medal, Award, Skull,
 } from 'lucide-react'
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { cn } from '@/lib/utils'
@@ -249,7 +249,7 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 export function TierListPage() {
   const metaQuery = useQuery({ queryKey: ['meta'], queryFn: fetchMeta, staleTime: 60_000 })
   const [weights, setWeights] = React.useState<Weights>(loadWeights)
-  const [viewMode, setViewMode] = React.useState<'ranked' | 'table' | 'portraits'>('ranked')
+  const [viewMode, setViewMode] = React.useState<'ranked' | 'table' | 'portraits' | 'tiers'>('ranked')
   const [sortBy, setSortBy] = React.useState<ParamKey | 'score'>('score')
   const [sortDir, setSortDir] = React.useState<'desc' | 'asc'>('desc')
   const [mobileWeightsOpen, setMobileWeightsOpen] = React.useState(false)
@@ -392,6 +392,13 @@ export function TierListPage() {
               >
                 <Crown className="size-3.5" /> Portraits
               </button>
+              <button
+                onClick={() => setViewMode('tiers')}
+                className={cn('flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold transition-all',
+                  viewMode === 'tiers' ? 'bg-amber-500/20 text-amber-200' : 'bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}
+              >
+                <Crown className="size-3.5" /> Tiers
+              </button>
             </div>
 
             <Button
@@ -496,6 +503,8 @@ export function TierListPage() {
                 weights={weights}
                 maxScore={maxScore}
               />
+            ) : viewMode === 'tiers' ? (
+              <AutoTierView sorted={sorted} weights={weights} maxScore={maxScore} />
             ) : (
               <TableView
                 sorted={sorted}
@@ -1163,3 +1172,143 @@ function PortraitCard({
   )
 }
 
+// ═════════════════════════════════════════════════════════════════════
+// AUTO TIER VIEW — percentile-based S/A/B/C/D tiers
+// ═════════════════════════════════════════════════════════════════════
+
+const TIER_META: Record<string, { color: string; label: string; icon: React.ReactNode }> = {
+  S: { color: '#fbbf24', label: 'Top',    icon: <Crown className="size-4" /> },
+  A: { color: '#34d399', label: 'Strong', icon: <Medal className="size-4" /> },
+  B: { color: '#60a5fa', label: 'Viable', icon: <Award className="size-4" /> },
+  C: { color: '#a78bfa', label: 'Niche',  icon: <Shield className="size-4" /> },
+  D: { color: '#f87171', label: 'Weak',   icon: <Skull className="size-4" /> },
+}
+
+function AutoTierView({
+  sorted, weights,
+}: {
+  sorted: { entry: TierEntry; score: number; contributions: Record<ParamKey, number> }[]
+  weights: Weights
+  maxScore: number
+}) {
+  const total = sorted.length
+  const tiered = React.useMemo(() => {
+    const result: Record<string, typeof sorted> = { S: [], A: [], B: [], C: [], D: [] }
+    sorted.forEach((item, idx) => {
+      const pct = (idx / total) * 100
+      if (pct < 10) result.S.push(item)
+      else if (pct < 30) result.A.push(item)
+      else if (pct < 60) result.B.push(item)
+      else if (pct < 85) result.C.push(item)
+      else result.D.push(item)
+    })
+    return result
+  }, [sorted, total])
+
+  const topParams = SCORE_PARAMS.filter(p => weights[p.key] > 0).sort((a, b) => weights[b.key] - weights[a.key]).slice(0, 4)
+
+  return (
+    <div className="space-y-4">
+      <div className="rounded-sm border border-amber-800/30 bg-bdo-leather-dark/20 p-3">
+        <p className="text-[10px] leading-relaxed text-amber-300/50">
+          Auto-generated S/A/B/C/D tiers based on your current weights.
+          Tiers are percentile-based: <span className="text-amber-300">S (top 10%)</span>,
+          <span className="text-emerald-300"> A (top 30%)</span>,
+          <span className="text-blue-300"> B (top 60%)</span>,
+          <span className="text-purple-300"> C (top 85%)</span>,
+          <span className="text-red-300"> D (bottom 15%)</span>.
+          Change your weights in the sidebar to see tiers shift.
+        </p>
+      </div>
+
+      <div className="space-y-3">
+        {['S', 'A', 'B', 'C', 'D'].map(tier => {
+          const meta = TIER_META[tier]
+          const items = tiered[tier]
+          if (items.length === 0) return null
+          return (
+            <motion.div
+              key={tier}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex gap-3"
+            >
+              <div
+                className="flex w-20 shrink-0 flex-col items-center justify-center rounded-sm border-2"
+                style={{ borderColor: meta.color, backgroundColor: `${meta.color}11` }}
+              >
+                <div className="text-3xl font-black" style={{ color: meta.color }}>{tier}</div>
+                <div className="text-[9px] font-semibold uppercase tracking-wider" style={{ color: `${meta.color}99` }}>{meta.label}</div>
+                <div className="mt-0.5 text-[9px] text-amber-300/30">{items.length} specs</div>
+              </div>
+
+              <div className="flex flex-1 flex-wrap items-center gap-2 rounded-sm border border-amber-900/20 bg-bdo-leather-dark/10 p-2">
+                {items.map(({ entry, score }) => {
+                  const color = classColor(entry.className)
+                  const iconUrl = classIconUrl(entry.slug)
+                  const specColor = SPEC_COLORS[entry.spec]
+                  return (
+                    <motion.div
+                      key={`${entry.classId}-${entry.spec}`}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="group relative flex items-center gap-2 rounded-sm border px-3 py-2 transition-all hover:scale-105"
+                      style={{ borderColor: `${meta.color}44`, backgroundColor: `${meta.color}08` }}
+                      title={`${entry.className} ${entry.spec} — Score: ${score}`}
+                    >
+                      {iconUrl && (
+                        <div className="size-7 shrink-0 overflow-hidden rounded-sm border" style={{ borderColor: `${color}55` }}>
+                          <img src={iconUrl} alt={entry.className} className="h-full w-full object-cover" loading="lazy" />
+                        </div>
+                      )}
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-1">
+                          <span className="text-sm font-bold" style={{ color }}>{entry.className}</span>
+                          <span
+                            className="rounded-sm px-1 py-0.5 text-[8px] font-bold uppercase"
+                            style={{ color: specColor, backgroundColor: `${specColor}15` }}
+                          >
+                            {entry.spec.slice(0, 4)}
+                          </span>
+                        </div>
+                        {topParams.length > 0 && (
+                          <div className="mt-0.5 flex items-end gap-0.5" style={{ height: 12 }}>
+                            {topParams.map(p => {
+                              const raw = getParamValue(entry, p.key)
+                              const { min, max } = getRanges(p.key, sorted)
+                              const norm = max > min ? (raw - min) / (max - min) : 0
+                              return (
+                                <div
+                                  key={p.key}
+                                  className="w-1 rounded-t-sm"
+                                  title={`${p.label}: ${formatParamValue(p.key, raw)}`}
+                                  style={{ height: `${Math.max(norm * 100, 10)}%`, backgroundColor: CATEGORY_META[p.category].color, opacity: 0.5 + norm * 0.5 }}
+                                />
+                              )
+                            })}
+                          </div>
+                        )}
+                      </div>
+                      <span className="ml-1 font-mono text-[10px] font-bold tabular-nums" style={{ color: meta.color }}>{score.toFixed(1)}</span>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </motion.div>
+          )
+        })}
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-4 border-t border-amber-900/30 pt-3">
+        {Object.entries(TIER_META).map(([tier, meta]) => (
+          <div key={tier} className="flex items-center gap-1.5 text-[10px]">
+            <span className="flex size-6 items-center justify-center rounded-sm border font-black" style={{ borderColor: meta.color, color: meta.color }}>
+              {tier}
+            </span>
+            <span className="text-amber-300/50">{meta.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

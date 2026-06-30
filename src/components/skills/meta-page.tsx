@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Zap, ArrowUpDown, Table2, LayoutGrid, ChevronDown, ExternalLink } from 'lucide-react'
+import { Zap, ArrowUpDown, Table2, LayoutGrid, ChevronDown, ExternalLink, Swords } from 'lucide-react'
 
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { formatDamage as fmtDmg } from '@/lib/damage'
@@ -559,7 +559,7 @@ function MetaTable({ classes, sortKey, sortDir, onSort, onRowClick }: {
 }
 
 export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec: 'awakening' | 'succession' | 'ascension') => void }) {
-  const [viewMode, setViewMode] = React.useState<'cards' | 'table'>('cards')
+  const [viewMode, setViewMode] = React.useState<'cards' | 'table' | 'matchups'>('cards')
   const [sortKey, setSortKey] = React.useState<SortKey>('avgPvpDamage')
   const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('desc')
   // Only one spec card can be expanded at a time. Key format: `${classId}-${spec}`.
@@ -642,6 +642,12 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
               >
                 <Table2 className="size-3.5" /> Table
               </button>
+              <button
+                onClick={() => setViewMode('matchups')}
+                className={cn('flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold transition-all', viewMode === 'matchups' ? 'bg-amber-500/20 text-amber-200' : 'bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}
+              >
+                <Swords className="size-3.5" /> Matchups
+              </button>
             </div>
           </div>
 
@@ -698,6 +704,8 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
               )
             })}
           </div>
+        ) : viewMode === 'matchups' ? (
+          <MatchupMatrix classes={classes} />
         ) : (
           <MetaTable classes={classes} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} onRowClick={onCardClick} />
         )}
@@ -710,3 +718,192 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
     </div>
   )
 }
+
+// ─── Matchup Matrix ─────────────────────────────────────────────────
+// Shows class group counter relationships (Vanguard > Crusher > Skirmisher > Vanguard).
+// +5% damage advantage when attacking the counter group.
+
+const GROUP_COLORS: Record<string, string> = {
+  Vanguard: '#ef4444',
+  Crusher: '#f97316',
+  Skirmisher: '#3b82f6',
+}
+
+const GROUP_ICONS: Record<string, string> = {
+  Vanguard: '🛡',
+  Crusher: '⚔',
+  Skirmisher: '🏹',
+}
+
+function MatchupMatrix({ classes }: { classes: ClassStats[] }) {
+  const [selectedSpec, setSelectedSpec] = React.useState<'awakening' | 'succession' | 'ascension'>('awakening')
+
+  // Get unique classes with their group for the selected spec
+  const classGroups = React.useMemo(() => {
+    const seen = new Map<string, { className: string; slug: string; group: string | null; combatType: string | null }>()
+    for (const cls of classes) {
+      const group = selectedSpec === 'awakening' ? cls.awakeningGroup
+        : selectedSpec === 'succession' ? cls.successionGroup
+        : cls.ascensionGroup
+      if (group && !seen.has(cls.className)) {
+        seen.set(cls.className, { className: cls.className, slug: cls.slug, group, combatType: cls.combatType })
+      }
+    }
+    return Array.from(seen.values()).sort((a, b) => a.group!.localeCompare(b.group!) || a.className.localeCompare(b.className))
+  }, [classes, selectedSpec])
+
+  // Group counts
+  const groupCounts = React.useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const c of classGroups) {
+      if (c.group) counts[c.group] = (counts[c.group] || 0) + 1
+    }
+    return counts
+  }, [classGroups])
+
+  // Get counter relationship
+  const getCounter = (group: string): string => {
+    if (group === 'Vanguard') return 'Crusher'
+    if (group === 'Crusher') return 'Skirmisher'
+    if (group === 'Skirmisher') return 'Vanguard'
+    return ''
+  }
+
+  return (
+    <div className="space-y-4">
+      {/* Info header */}
+      <div className="rounded-sm border-2 border-amber-800/40 bg-bdo-leather-dark/30 p-4">
+        <h2 className="bdo-title mb-2 text-lg font-bold text-amber-300">Class Group Matchups</h2>
+        <p className="text-xs leading-relaxed text-amber-100/60">
+          BDO classes are divided into 3 groups that follow a rock-paper-scissors counter system.
+          Attacking a counter group grants <span className="font-bold text-emerald-400">+5% damage</span>.
+        </p>
+        {/* Counter cycle */}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {['Vanguard', 'Crusher', 'Skirmisher'].map((group, i) => {
+            const color = GROUP_COLORS[group]
+            return (
+              <React.Fragment key={group}>
+                <div
+                  className="flex items-center gap-1.5 rounded-sm border px-3 py-1.5"
+                  style={{ borderColor: `${color}66`, backgroundColor: `${color}15` }}
+                >
+                  <span className="text-base">{GROUP_ICONS[group]}</span>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold" style={{ color }}>{group}</span>
+                    <span className="text-[9px] text-amber-300/40">{groupCounts[group] || 0} classes</span>
+                  </div>
+                </div>
+                {i < 2 && <span className="text-amber-400/40">→ counters →</span>}
+              </React.Fragment>
+            )
+          })}
+          <span className="text-amber-400/40">→ counters →</span>
+          <span className="text-xs text-amber-300/40">(cycle)</span>
+        </div>
+      </div>
+
+      {/* Spec selector */}
+      <div className="flex items-center gap-2">
+        <span className="text-[10px] uppercase tracking-wider text-amber-300/40">Spec:</span>
+        {(['awakening', 'succession', 'ascension'] as const).map(s => (
+          <button
+            key={s}
+            onClick={() => setSelectedSpec(s)}
+            className={cn(
+              'rounded-sm border px-2.5 py-1 text-[10px] font-semibold capitalize transition-all',
+              selectedSpec === s ? 'text-amber-200' : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
+            )}
+            style={selectedSpec === s ? { borderColor: SPEC_COLORS[s], backgroundColor: `${SPEC_COLORS[s]}15`, color: SPEC_COLORS[s] } : undefined}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+
+      {/* Matchup grid */}
+      <div className="overflow-x-auto rounded-sm border border-amber-800/30">
+        <table className="w-full border-collapse text-[10px]">
+          <thead>
+            <tr className="border-b border-amber-800/40 bg-bdo-leather-dark/50">
+              <th className="sticky left-0 z-10 bg-bdo-leather-dark/50 px-2 py-2 text-left font-semibold uppercase tracking-wider text-amber-300/50">
+                Attacker ↓ / Defender →
+              </th>
+              {classGroups.map(c => (
+                <th key={c.className} className="px-1 py-1 text-center" title={`${c.className} (${c.group})`}>
+                  <div className="flex flex-col items-center gap-0.5">
+                    <div className="size-5 overflow-hidden rounded-sm border" style={{ borderColor: `${classColor(c.className)}44` }}>
+                      {classIconUrl(c.slug) && <img src={classIconUrl(c.slug)} alt={c.className} className="h-full w-full object-cover" loading="lazy" />}
+                    </div>
+                    <span className="text-[8px]" style={{ color: GROUP_COLORS[c.group || ''] || '#a1a1aa' }}>
+                      {(GROUP_ICONS[c.group || ''] || '')}
+                    </span>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {classGroups.map(attacker => {
+              const attackerColor = classColor(attacker.className)
+              return (
+                <tr key={attacker.className} className="border-b border-amber-900/15 hover:bg-amber-500/5">
+                  <td className="sticky left-0 z-10 bg-bdo-ink/80 px-2 py-1">
+                    <div className="flex items-center gap-1.5">
+                      <div className="size-4 shrink-0 overflow-hidden rounded-sm border" style={{ borderColor: `${attackerColor}55` }}>
+                        {classIconUrl(attacker.slug) && <img src={classIconUrl(attacker.slug)!} alt="" className="h-full w-full object-cover" loading="lazy" />}
+                      </div>
+                      <span className="truncate text-[10px] font-semibold" style={{ color: attackerColor }}>{attacker.className}</span>
+                      <span className="text-[8px]" style={{ color: GROUP_COLORS[attacker.group || ''] }}>
+                        {GROUP_ICONS[attacker.group || '']}
+                      </span>
+                    </div>
+                  </td>
+                  {classGroups.map(defender => {
+                    if (attacker.className === defender.className) {
+                      return <td key={defender.className} className="bg-amber-900/10 px-1 py-1 text-center text-amber-700/30">—</td>
+                    }
+                    const hasAdvantage = getCounter(attacker.group || '') === defender.group
+                    const hasDisadvantage = getCounter(defender.group || '') === attacker.group
+                    return (
+                      <td key={defender.className} className="px-1 py-1 text-center">
+                        <div
+                          className={cn(
+                            'mx-auto flex size-7 items-center justify-center rounded-sm border text-[9px] font-bold',
+                            hasAdvantage && 'border-emerald-500/50 bg-emerald-900/20 text-emerald-300',
+                            hasDisadvantage && 'border-red-500/50 bg-red-900/20 text-red-300',
+                            !hasAdvantage && !hasDisadvantage && 'border-amber-900/20 text-amber-300/30',
+                          )}
+                          title={hasAdvantage ? `${attacker.className} counters ${defender.className} (+5% damage)` : hasDisadvantage ? `${defender.className} counters ${attacker.className} (-5% damage taken)` : 'No counter relationship'}
+                        >
+                          {hasAdvantage ? '+5%' : hasDisadvantage ? '−5%' : '='}
+                        </div>
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Legend */}
+      <div className="flex flex-wrap gap-4 text-[10px]">
+        <div className="flex items-center gap-1.5">
+          <div className="size-4 rounded-sm border border-emerald-500/50 bg-emerald-900/20" />
+          <span className="text-emerald-300/70">+5% damage (counter advantage)</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="size-4 rounded-sm border border-red-500/50 bg-red-900/20" />
+          <span className="text-red-300/70">−5% damage taken (disadvantage)</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="size-4 rounded-sm border border-amber-900/20" />
+          <span className="text-amber-300/50">No counter (same group or neutral)</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
