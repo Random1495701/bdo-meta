@@ -2189,3 +2189,26 @@ Stage Summary:
 - **Backup**: scripts/backup.ts (export + git commit + optional push).
 - **Remaining lower-priority**: class matchup ratios UI, auto tier table, lurker turbo mode, keyboard arrow nav, documentation gaps (v3.2-v3.9). These are documented in RESTORATION_PLAN.md and AUDIT-2 report.
 - **Lint**: clean. **Dev server**: running, 0 errors. **Git**: 3 commits, local vault current.
+
+---
+Task ID: 29
+Agent: main-orchestrator
+Task: Remaining fixes — class matchups, auto tiers, arrow nav, lurker turbo, docs
+
+Work Log:
+- Reported GitHub access status: NO access (token revoked in prior session). All commits local only. User needs to provide new token to push.
+- Class matchup matrix: added "Matchups" view mode to Meta page. Shows rock-paper-scissors group counters (Vanguard > Crusher > Skirmisher > Vanguard, +5% damage). Full class×class grid with color-coded cells (green +5%, red -5%, neutral =), spec selector, group legend. Uses PA Wiki group data from DB.
+- Auto S/A/B/C/D tier table: added "Tiers" view mode to Tier Builder. Percentile-based auto-ranking (S top 10%, A top 30%, B top 60%, C top 85%, D bottom 15%). Updates live as weights change. Shows class chips with mini param bars per tier.
+- Arrow key navigation: Arrow keys move focus between skill cards in Data grid. Enter opens focused skill. Added data-skill-card attribute + tabIndex to SkillCard. Handles ArrowRight/Left/Down/Up with 4-column grid assumption.
+- Documentation: updated docs-page.tsx with v3.2.0 version entry covering all 15 features + 4 fixes from this and previous task.
+- Verified via agent-browser: Matchups view shows "Class Group Matchups" with Vanguard/Crusher/Skirmisher cycle. Auto Tiers view shows "Auto-generated" percentile tiers. Arrow keys focus skill cards (data-skill-card=true on activeElement).
+- Lurker turbo mode: NOT yet implemented (deferred — current lurker runs at ~24/min which is functional, turbo would need sync-lurker.ts rewrite).
+
+Stage Summary:
+- **Class matchups**: Meta page "Matchups" view — full matrix with +5%/-5% counter advantages.
+- **Auto tiers**: Tier Builder "Tiers" view — percentile-based S/A/B/C/D, live-updating.
+- **Arrow nav**: Data grid keyboard navigation (arrows + Enter).
+- **Docs**: v3.2.0 version entry added.
+- **Git**: 1 commit (09df614). Local only — no GitHub push (token revoked).
+- **Remaining**: Lurker turbo mode (low priority), CHANGELOG.md gap (v3.2-v3.9 docs entries).
+- **Lint**: clean. **Dev server**: running, 0 errors.
