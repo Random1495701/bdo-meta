@@ -221,16 +221,23 @@ export async function GET() {
       }
     }
 
-    // Ascension spec: for Scholar and Archer, ascension skills are unclassified
-    // Lv56+ skills that aren't awakening/succession/absolute/BS/passive.
-    // For other classes, ascension = same as awakening (they don't have ascension).
+    // Ascension spec: for ascension-only classes (Wukong, Scholar, Shai, Archer,
+    // Seraph, Deadeye), the "awakening" skills are actually ascension skills.
+    // These classes have no succession — their "awakening" IS their ascension.
+    // For normal classes, ascension = empty (they don't have ascension).
     const ascensionSkills: typeof classSkills = []
     const ascAdded = new Set<number>()
-    const isAscensionClass = cls.slug === 'scholar' || cls.slug === 'archer'
+    const isAscensionClass = ['wukong', 'scholar', 'shai', 'archer', 'seraph', 'deadeye'].includes(cls.slug)
 
     if (isAscensionClass) {
-      // For Scholar/Archer: ascension skills are the "unclassified" Lv56+ main skills
-      // (they use the main weapon but have a new skill tree)
+      // For ascension-only classes: their "awakening" skills are ascension skills
+      // Also include Main (Lv56+), Absolute, BS, Passive
+      for (const s of maxRankSkills) {
+        if (s.isAwakening && !ascAdded.has(s.skillId)) {
+          ascensionSkills.push(s); ascAdded.add(s.skillId)
+        }
+      }
+      // Include unclassified Lv56+ main skills (new ascension skill tree)
       for (const s of maxRankSkills) {
         const isOther = s.isAwakening || s.isSuccession || s.isAbsolute || s.isBlackSpirit || s.isPassive
         if (!isOther && s.requiredLevel >= 56 && !ascAdded.has(s.skillId)) {
@@ -245,12 +252,17 @@ export async function GET() {
       }
     }
 
+    // For ascension-only classes, awakening spec should be empty (their "awakening"
+    // IS ascension, not a separate awakening spec)
+    const effectiveAwakeningSkills = isAscensionClass ? [] : awakeningSkills
+    const effectiveSuccessionSkills = isAscensionClass ? [] : successionSkills
+
     results.push({
       classId: cls.id,
       className: cls.name,
       slug: cls.slug,
-      awakening: computeSpecStats(awakeningSkills),
-      succession: computeSpecStats(successionSkills),
+      awakening: computeSpecStats(effectiveAwakeningSkills),
+      succession: computeSpecStats(effectiveSuccessionSkills),
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
         pvpCcSkillCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0,

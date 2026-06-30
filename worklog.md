@@ -1200,3 +1200,50 @@ Stage Summary:
   3. Decide whether to import Foundry's example combos — OPTIONAL, would be a "Combos" UI tab; format is human-readable input notation, not parseable skill IDs
   4. All raw research artifacts saved in /tmp/asc*.json (7 search result files) and /tmp/foundry/{warrior,ranger,sorceress,berserker,wizard}.{html,txt} (5 class guides, raw + cleaned)
 
+
+---
+Task ID: 25
+Agent: download-class-portraits-and-skill-icons
+Task: Download class portraits + skill icons (self-host to avoid bdocodex bot-challenge issues)
+
+Work Log:
+- Read worklog.md (last 3 sections: Task 15 PvP CC filter, Task 16 cooldown slider + PAZ docs, Task 17 spec filtering, Task 19 final commit, Task 23 Ascension research). Confirmed project context: BDO skill metadata site with self-hosted class icons already at `public/icons/classes/{slug}.webp` (59x59). Lurker PID 1657 still running. Task: download larger class portraits + ~3,000 skill icons from bdocodex, then update `iconUrl()` helpers to use local paths.
+- Queried DB: 2,889 unique `iconPath` values across 7,231 skills with icons. Multiple skill IDs share one iconPath (e.g., 40 skills share `pkm_skill_0001.webp`), so downloading by iconPath basename (not skillId) avoids duplicates. Saved the unique-iconPaths list to `/tmp/icon-dl/icons.json`.
+- Confirmed `src/lib/skills.ts` has no `iconUrl` function — only `classIconUrl(slug)` for class icons. The skill-icon URL builder is duplicated as a local function in two API routes: `src/app/api/skills/route.ts` and `src/app/api/skills/[id]/route.ts`. Both currently build a `https://bdocodex.com/{iconPath}` URL.
+
+Step 1 — Larger class portraits:
+- Opened `https://bdocodex.com/us/skillbuilder/` via agent-browser (solves JS challenge). Found 32 class images at `https://bdocodex.com/images/skillcalc/class_{id}.webp`, but `naturalWidth` is 60 and the source WebP header says **59×59** (verified by fetching raw bytes and parsing the VP8X chunk: bytes 24-26 = `3b 00 00` = 59). The current `public/icons/classes/{slug}.webp` files are ALSO 59×59 — so bdocodex doesn't have anything bigger.
+- Probed alternative URLs: `class_big_0.webp`, `class_0_big.webp`, `images/classes/0.webp`, `images/class_0.webp`, `big_class_0.webp`, `portrait_0.webp`. All return HTTP 200 with content-type `image/png` and size 1891 bytes — but the bytes (`89 50 4E 47 0D 0A 1A 0A ...`) decode to a **1×1 transparent PNG placeholder**, not a real portrait. bdocodex returns 200 for any non-existent image path (silent 404).
+- Tried bdocodex class-guide page variants: `/us/character/0/`, `/us/class/0/`, `/us/classes/0/`, `/us/skillbuilder/class/0/`, `/us/skillbuilder/warrior/`, `/us/guide/warrior/`, `/us/database/skills/?class=0`. None have a hero/portrait image — only the same 59×59 thumbnails (or no class images at all). Main `/us/` page only has site logo + ads.
+- **Conclusion**: bdocodex does NOT host larger class portraits. Existing 59×59 icons are the only option. Did NOT create `{slug}-portrait.webp` duplicates (would just waste disk; same source size). 31 existing class icons untouched.
+
+Step 2 — Skill icons:
+- Wrote `/home/z/icon-dl/download.py`: Python script that drives `agent-browser eval --stdin` to fetch batches of 25 icon URLs in parallel (5 concurrent fetches inside one JS `Promise.all`), base64-encodes the bytes, returns JSON, then Python decodes and writes each `{basename}.webp` to `public/icons/skills/`. Script auto-skips already-downloaded files (resumable).
+- First test: 75 icons in 3.8s (19.5 icons/s, 0 errors). Then ran full 2,889-icon download in foreground after pre-opening the bdocodex skillbuilder page (so session cookie is set). All 1,889 remaining icons downloaded in 108s (17.5 icons/s) — 0 errors. Backgrounded runs via `nohup` died silently after ~11 batches (likely a stdin/stdio issue with nohup'd subprocess piping to agent-browser); foreground run completed cleanly.
+- **Result**: 2,889/2,889 skill icons downloaded (100% coverage), 12 MB total. Each icon ~3-4 KB, 43×43 to 60×60 webp with alpha. Verified random 10/10 sample present on disk.
+
+Step 3 — Update iconUrl() helpers:
+- Both `src/app/api/skills/route.ts` and `src/app/api/skills/[id]/route.ts` had identical `iconUrl(iconPath)` helpers that returned `https://bdocodex.com/{iconPath}`. Updated both to derive the basename from `iconPath` and return `/icons/skills/{basename}.webp` (local path). Kept the `(iconPath, _skillId?)` signature for forward-compat with the task spec's `skillId` parameter, but the local filename is derived from `iconPath` (canonical bdocodex identifier), not `skillId` — because multiple skill IDs share one icon.
+- Did NOT use `existsSync()` (task spec suggested it) because: (a) file-system reads at request time are slow and not portable to serverless, (b) all 2,889 icons are already downloaded so the check is unnecessary, (c) if a future icon is missing the Next.js server returns 404 and the UI already falls back via `<img onError>` (verified in `skill-table.tsx`, `skill-card.tsx`, `skill-list-row.tsx`, `skill-detail-drawer.tsx`).
+- Did NOT change `src/lib/skills.ts` (no `iconUrl` there) or `src/app/api/export/route.ts` (uses `iconPath` directly, not `iconUrl` — no change needed).
+
+Step 4 — Verification:
+- `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/icons/skills/pnyw_skill_8130.webp` → **200** (1,414 bytes)
+- `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/icons/skills/pmyf_skill_7714.webp` → **200** (1,430 bytes)
+- `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/icons/skills/nonexistent.webp` → **404** (graceful fallback)
+- `curl -s http://localhost:3000/api/skills?pageSize=2` → `items[0].iconUrl = "/icons/skills/pnyw_skill_8130.webp"` (local path, not bdocodex)
+- `curl -s http://localhost:3000/api/skills/7717` (skill with prereq) → main icon `/icons/skills/pmyf_skill_7717.webp`, prereq icon `/icons/skills/pmyf_skill_7729.webp` (both local)
+- TypeScript: `npx tsc --noEmit` shows zero errors in the two files I modified (pre-existing errors in `examples/websocket/`, `scripts/audit-*.ts`, `scripts/dump-tip.ts` are unrelated to my changes).
+- Lurker PID 1657 still running (`Ssl` state, 1:53:00 elapsed). Dev server HTTP 200.
+
+Stage Summary:
+- **Class portraits**: NOT downloaded — bdocodex doesn't host larger versions. Verified all class image URLs (`/images/skillcalc/class_{id}.webp`) are 59×59 source (same as current `public/icons/classes/{slug}.webp`). Probed 7 alternative URL patterns; all either 404 or return a 1×1 transparent PNG placeholder. bdocodex class-guide pages (`/us/character/0/`, `/us/class/0/`, etc.) have no hero images. Existing 31 class icons left as-is.
+- **Skill icons**: 2,889/2,889 unique iconPaths downloaded (100% DB coverage) to `public/icons/skills/{basename}.webp`. 12 MB total. Single 108-second foreground run via `agent-browser eval --stdin` driving batched `Promise.all` fetches (25 icons per batch, 5 concurrent). Zero errors. Resumable script at `/home/z/icon-dl/download.py`.
+- **iconUrl() updated**: Both `/api/skills/route.ts` and `/api/skills/[id]/route.ts` now return local `/icons/skills/{basename}.webp` paths instead of `https://bdocodex.com/{iconPath}`. End-user browsers no longer need to round-trip to bdocodex (which would serve them a bot-challenge page when their IP is rate-limited). Function signature kept as `(iconPath, _skillId?)` for forward-compat. No `existsSync` (serverless-unfriendly, unnecessary at 100% coverage, UI already handles 404 via `<img onError>`).
+- **Tests**: All curl tests pass (HTTP 200 for existing icons, 404 for missing). API returns local paths for both main skill icons and prerequisite skill icons. Lurker untouched. Dev server untouched. No new TypeScript errors.
+- **Issues**: (1) `nohup`'d Python script died silently after ~11 batches in two background runs — switched to foreground run which completed cleanly. Likely a stdio-pipe issue with `agent-browser eval --stdin` under nohup; not investigated further since foreground worked. (2) bdocodex doesn't have larger class portraits despite the task hint — the existing 59×59 icons are the maximum size available from any bdocodex URL.
+
+Next actions for orchestrator:
+- (Optional) For larger class portraits, consider scraping the official BDO site (`https://www.naeu.playblackdesert.com/`) or garmoth.com — out of scope here, would need a separate research+scrape task.
+- (Optional) Re-run `/home/z/icon-dl/download.py` after future bdocodex sync runs that add new skills — it auto-skips already-downloaded icons and only fetches new ones.
+- The download script lives at `/home/z/icon-dl/download.py` (outside the repo). If preserved, future sync runs can re-invoke it. If not, the logic is straightforward to recreate from this worklog.

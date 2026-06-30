@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { calculateDamage } from '@/lib/damage'
+import { getCached, setCached } from '@/lib/cache'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,6 +17,10 @@ function percentile(sorted: number[], pct: number): number {
 }
 
 export async function GET() {
+  // Check cache first (ranges change rarely)
+  const cached = getCached('ranges')
+  if (cached) return NextResponse.json(cached)
+
   const [levelAgg, cdSkills, animSkills, spAgg, dmgSkills] = await Promise.all([
     db.skill.aggregate({ _min: { requiredLevel: true }, _max: { requiredLevel: true } }),
     db.skill.findMany({ where: { cooldownSec: { not: null } }, select: { cooldownSec: true }, orderBy: { cooldownSec: 'asc' } }),
@@ -74,5 +79,7 @@ export async function GET() {
       max: dmgMax, // 99th percentile
       absoluteMax: maxDmg, // for reference
     },
-  })
+  }
+  setCached('ranges', result, 10 * 60 * 1000) // cache for 10 min
+  return NextResponse.json(result)
 }

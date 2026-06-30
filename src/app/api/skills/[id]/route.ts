@@ -5,10 +5,24 @@ import { calculateCCCounters, getRealCCs, getNonCCEffects, formatCCCounters } fr
 
 export const dynamic = 'force-dynamic'
 
-function iconUrl(iconPath: string | null): string | null {
+// Resolve a skill iconPath to a self-hosted URL under /icons/skills/.
+// All DB iconPaths look like `items/new_icon/04_pc_skill/01_pc_skill/28_pmyf_skill/pmyf_skill_7714.webp`
+// — we save each unique icon to `public/icons/skills/{basename}.webp` (one file per
+// unique icon, shared across skill IDs/ranks that use the same art). Self-hosting
+// avoids bdocodex's bot-challenge page being served to end-user browsers when
+// their IP is rate-limited. If the local file is missing, the browser gets a 404
+// and the UI already falls back to a placeholder via <img onError>.
+function iconUrl(iconPath: string | null, _skillId?: number): string | null {
   if (!iconPath) return null
-  if (iconPath.startsWith('http')) return iconPath
-  return `https://bdocodex.com/${iconPath.replace(/^\//, '')}`
+  if (iconPath.startsWith('http')) {
+    // Already absolute (rare) — return as-is.
+    return iconPath
+  }
+  const basename = iconPath.split('/').pop()?.replace(/\.\w+$/, '')
+  if (basename) {
+    return `/icons/skills/${basename}.webp`
+  }
+  return null
 }
 
 function splitCsv(s: string | null): string[] | null {
