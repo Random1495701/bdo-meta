@@ -4,7 +4,9 @@ import type { SkillFilters, SkillType, SkillSort } from './skills'
 interface SkillStore {
   filters: SkillFilters
   selectedSkillId: number | null
+  compareSkillId: number | null
   detailOpen: boolean
+  compareOpen: boolean
   filtersOpen: boolean
   viewMode: 'grid' | 'list' | 'table'
   setQ: (q: string) => void
@@ -35,6 +37,8 @@ interface SkillStore {
   resetFilters: () => void
   selectSkill: (id: number | null) => void
   setDetailOpen: (open: boolean) => void
+  setCompareSkill: (id: number | null) => void
+  setCompareOpen: (open: boolean) => void
   setFiltersOpen: (open: boolean) => void
 }
 
@@ -54,7 +58,9 @@ const DEFAULT_FILTERS: SkillFilters = {
 export const useSkillStore = create<SkillStore>((set) => ({
   filters: { ...DEFAULT_FILTERS },
   selectedSkillId: null,
+  compareSkillId: null,
   detailOpen: false,
+  compareOpen: false,
   filtersOpen: false,
   viewMode: 'grid',
   setQ: (q) => set((s) => ({ filters: { ...s.filters, q, page: 1 } })),
@@ -113,5 +119,7 @@ export const useSkillStore = create<SkillStore>((set) => ({
   resetFilters: () => set({ filters: { ...DEFAULT_FILTERS } }),
   selectSkill: (id) => set({ selectedSkillId: id, detailOpen: id != null }),
   setDetailOpen: (open) => set({ detailOpen: open }),
+  setCompareSkill: (id) => set({ compareSkillId: id }),
+  setCompareOpen: (open) => set({ compareOpen: open }),
   setFiltersOpen: (open) => set({ filtersOpen: open }),
 }))

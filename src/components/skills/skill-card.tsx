@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { Clock, Film, Gauge, Keyboard, Skull, Swords, Zap } from 'lucide-react'
+import { Clock, Film, Gauge, Keyboard, Skull, Swords, Zap, GitCompare } from 'lucide-react'
 
 import {
   classColor,
@@ -152,6 +152,8 @@ export const SkillCard = React.memo(function SkillCard({
   skill: Skill
 }) {
   const selectSkill = useSkillStore((s) => s.selectSkill)
+  const setCompareSkill = useSkillStore((s) => s.setCompareSkill)
+  const setCompareOpen = useSkillStore((s) => s.setCompareOpen)
   const type = skillTypeLabel(skill)
   const typeMeta = type ? SKILL_TYPE_META[type] : null
   const color = classColor(skill.className)
@@ -250,6 +252,19 @@ export const SkillCard = React.memo(function SkillCard({
             <Keyboard className="size-2.5" /> Q-Slot
           </span>
         )}
+        {/* Compare button */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            setCompareSkill(skill.skillId)
+            setCompareOpen(true)
+          }}
+          className="ml-auto flex items-center gap-0.5 rounded-sm border border-amber-800/40 bg-bdo-leather-dark px-1.5 py-0.5 text-[10px] text-amber-300/50 transition-all hover:border-amber-500/50 hover:text-amber-200"
+          title="Compare this skill"
+        >
+          <GitCompare className="size-2.5" /> Compare
+        </button>
       </div>
 
       {/* Command (if present) */}
