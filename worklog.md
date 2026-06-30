@@ -1149,3 +1149,54 @@ Stage Summary:
 - **DB snapshot**: Fresh export at db/skills-export.json (1,605 enriched skills)
 - **Git**: All changes committed locally. GitHub push requires new token (old one revoked).
 - **Vault**: All documentation, chat history, worklog, changelog, and DB export are in git. The project can be fully restored from git clone + db/skills-export.json import.
+
+---
+Task ID: 23
+Agent: research-ascension-foundry
+Task: Research BDO Ascension classes + extract Foundry guide data on locked skills & combos
+
+Work Log:
+- Read worklog.md (last 3 sections: Task 15 PvP CC filter, Task 16 cooldown slider + PAZ docs, Task 17 spec filtering, Task 19 final commit). Confirmed project context: BDO skill metadata site with Succession/Awakening spec filter already implemented (S/A buttons per class chip). Task was to research whether a 3rd spec ("Ascension") exists and extract Foundry "locked skills" data.
+- Ran 7 z-ai web_search queries (asc1-asc7.json saved in /tmp). Hit one 429 rate-limit (parallel burst); retried serially with 4-8s delays. All 7 queries returned 6 results each.
+- Fetched BDO Mobile official Ascension FAQ via curl: https://www.world.blackdesertm.com/Ocean/News/Detail?boardNo=271 (55 KB HTML → cleaned text). Captured full FAQ content.
+- Fetched 5 Foundry class guides via curl in parallel: warrior, ranger, sorceress, berserker, wizard (350-387 KB each). All HTTP 200. Also tried scholar-class-guide and dosa-class-guide — both returned Foundry 404 page (these class guides don't exist on Foundry).
+- Stripped HTML to clean text (29-35 KB per guide) and grepped for "lock", "unavailable", "cannot use", "excluded", "combo", "Awakening", "Succession".
+
+Findings — Ascension:
+- **BDO Mobile Ascension** (Feb 2020): Distinct system. Reach level 60 + Southwest Calpheon pass. Same weapons as base class but stronger skills. Class name changes (Warrior→Gladiator, Ranger→Huntress, Witch→Archmage, Giant→Titan, Valkyrie→Paladin, Sorceress→Raven). Different from Awakening (which uses a NEW weapon set). Mobile devs: "Ascension develops upon current character; Awakening transforms into new class." Mobile characters could switch Ascension↔Awakening later when Awakening released.
+- **BDO PC Ascension** (current): Only available on certain classes. Sportskeeda article confirms: "Unlike other classes, [Scholar] doesn't have the standard Succession and Awakening specs. However, it offers an Ascension path like the Archer." So on PC, Scholar and Archer have ONLY Ascension (no Awakening/Succession choice). Reddit confirms: "On Garmoth all Ascension classes are labelled as Awakening" — meaning third-party sites like garmoth.com treat Ascension as just Awakening for build calculators.
+- **Level requirement on PC**: Same as Awakening/Succession — level 56 (Foundry: "Succession and Awakening can be unlocked after level 56").
+- **Mutually exclusive**: Yes. Each character picks ONE spec (Awakening OR Succession OR Ascension). Switchable at any time via Black Spirit (not permanent).
+- **Skill data**: Ascended characters get a SEPARATE skill tree (not the awakening weapon skills, not the Prime/Succession enhanced main skills). New kit using main weapon.
+- **NOT all classes have it**: Only Scholar, Archer (and possibly future classes). Most of the 26+ classes still use Awakening/Succession.
+
+Findings — Foundry "Locked Skills":
+- **What "locked" means**: A PLAYER UI CHOICE, not a spec restriction. Players click the lock icon on a skill in the skill window (K) so the skill won't fire accidentally during combos. Foundry recommends per-spec lists of skills to manually lock for PvP quality-of-life. NOT enforced by the game.
+- **Hard restrictions (game-enforced, not "locked")**: Succession spec CANNOT use Awakening skills. Awakening spec CANNOT use Succession skills. Our existing spec filter already handles this correctly via the `spec` field.
+- **Foundry structure**: Each class guide has sections in this order: Introduction → Awakening VS Succession → Skill Builds → Protected Skills → Locked Skills → Hotbar Skills → Core Skills → Rabam (Skill Enhancement) → Skill Add-ons → Weapons → Armor → Accessories → Crystals → Artifacts/Lightstones → Combos (sometimes embedded mid-page) → Useful Links.
+- **Some classes split locked list by spec, some don't**: Warrior & Wizard have separate Awakening-locked and Succession-locked lists. Ranger, Sorceress, Berserker have a single unified list (no spec split).
+
+Sample data extracted (full data in /tmp/foundry/*.txt):
+- **Warrior Awakening locked**: Evasion, Absolute: Kick, Shield Push, Shield Strike, Charging Slash, Flow: Knee Kick, Frenzied Strikes (hotbar/only lock in PVP), Pulverize (optional)
+- **Warrior Succession locked**: Evasion, Kick, Charging Slash, Deep Ground Slash, Shield Counter, Shield Push, Hilt Smash, Furious Blow
+- **Ranger locked**: Evasion, Moving Shot, Pinpoint, Dagger of Protection
+- **Sorceress locked**: Evasion, Bloody Contract, Shadow Kick, Rushing Crow
+- **Berserker locked**: Evasion, Weakling Hunt, Falling Rock, Tackling Rock, Flow: Earth Dividing, Lava Piercer (optional), Fierce Strike (optional), Titan Syndrome (optional – hotbar alternative)
+- **Wizard Awakening locked**: Summon: Keeper Arne, Summon: Keeper Marg, Dagger Stab, Magic Arrow, Concentrated Magic Arrow
+- **Wizard Succession locked**: Dagger Stab, Prime: Freeze (put on hotbar), Magic Arrow
+- **Wizard Awakening PVE combo**: [SHIFT]+[F] > [S]+[LMB]+[RMB] > [S]+[Q] > (QS: Multiple Magic Arrows) > [W]+[F] > [RMB] > [SHIFT]+[LMB] > [SHIFT]+[X] > [F] > (QS: Multiple Magic Arrows) > [W]+[F] > [RMB]+[SHIFT]+[LMB]
+- **Wizard Succession PVE combo**: (QS: Magic Lighthouse) > [S]+[C] > [LMB]+[RMB] > [W]+[C] > [S]+[Q] > [SHIFT]+[X] > [SHIFT]+[LMB] > [SHIFT]+[C] > [S]+[F] > [RMB] > [SHIFT]+[LMB]+[RMB] / [S]+[LMB]+[RMB]
+- **Ranger Awakening PVP combo (grab start)**: [E] > [Q] > [SPACE] > [W]+[RMB] > [S]+[LMB] > (QS: Regeneration) > [SHIFT]+[RMB] > [F] > [SPACE] > [SHIFT]+[Q]+[A/D]+[LMB]
+- **Ranger Awakening mobility combo**: [W]+[RMB] > [LMB] > [RMB] > [W]+[F] > [SHIFT]+[E] > [SHIFT]+[SPACE] > [A/D]+[RMB] (x2) > [A/D]+[SHIFT] (x2) > [SHIFT]+[RMB] > Repeat
+
+Stage Summary:
+- **Ascension is a real 3rd spec on PC** but only for Scholar & Archer (so far). Most classes still use Awakening/Succession. Sportskeeda + Reddit + BDO Mobile FAQ all confirm. Ascension uses main weapon (like Succession) but with a brand-new skill tree (like Awakening). Mutually exclusive with Awakening/Succession. Switchable via Black Spirit.
+- **Recommended system change**: Add `'ascension'` as a 3rd value to the `spec` filter. Show a 3rd "Asc" button on ClassChip — but ONLY for classes that have Ascension (Scholar, Archer). For DB: tag Ascension skill IDs with a new flag (e.g., `is_ascension=1` or skill_type='ascension') during data import. Spec-aware dedup logic needs a 3rd branch: `spec=ascension` includes ascension skills + main + blackspirit + passive, excludes awakening & succession. Existing `spec=succession` and `spec=awakening` paths unchanged.
+- **Foundry "Locked Skills" are NOT a data field we need**: They are player UI preferences (clicking lock icon in skill window K), not game-enforced restrictions. Foundry recommends which skills to manually lock for PvP combo quality-of-life, split by spec when the class differs meaningfully between specs. The actual game-enforced spec restrictions (Succession can't use Awakening, etc.) are already handled by our existing spec filter.
+- **Combos data**: Foundry lists 1-4 example combos per class (PvE/PvP, Awakening/Succession). Format is BDO input notation: `[SHIFT]+[F] > [S]+[LMB]+[RMB] > (Quickslot: Skill Name)`. Could be useful as a future "Combos" tab in the UI but is not currently in our data model. Saved all 5 cleaned guides in /tmp/foundry/*.txt for reference.
+- **Next actions for orchestrator**:
+  1. Decide whether to add Ascension as a 3rd spec — recommended YES, but only ~2 classes need it (low priority; can wait until Scholar/Archer skill data is actually imported from bdocodex)
+  2. Decide whether to import Foundry's recommended locked-skills lists as a "PvP QoL" data field per class+spec — OPTIONAL, low value, would require manual curation since Foundry doesn't expose structured data
+  3. Decide whether to import Foundry's example combos — OPTIONAL, would be a "Combos" UI tab; format is human-readable input notation, not parseable skill IDs
+  4. All raw research artifacts saved in /tmp/asc*.json (7 search result files) and /tmp/foundry/{warrior,ranger,sorceress,berserker,wizard}.{html,txt} (5 class guides, raw + cleaned)
+

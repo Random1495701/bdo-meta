@@ -29,6 +29,7 @@ interface ClassStats {
   slug: string
   awakening: SpecStats
   succession: SpecStats
+  ascension: SpecStats
 }
 
 const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|IX|VIII|VII|VI|IV|V|III|II|I)$/
@@ -220,12 +221,40 @@ export async function GET() {
       }
     }
 
+    // Ascension spec: for Scholar and Archer, ascension skills are unclassified
+    // Lv56+ skills that aren't awakening/succession/absolute/BS/passive.
+    // For other classes, ascension = same as awakening (they don't have ascension).
+    const ascensionSkills: typeof classSkills = []
+    const ascAdded = new Set<number>()
+    const isAscensionClass = cls.slug === 'scholar' || cls.slug === 'archer'
+
+    if (isAscensionClass) {
+      // For Scholar/Archer: ascension skills are the "unclassified" Lv56+ main skills
+      // (they use the main weapon but have a new skill tree)
+      for (const s of maxRankSkills) {
+        const isOther = s.isAwakening || s.isSuccession || s.isAbsolute || s.isBlackSpirit || s.isPassive
+        if (!isOther && s.requiredLevel >= 56 && !ascAdded.has(s.skillId)) {
+          ascensionSkills.push(s); ascAdded.add(s.skillId)
+        }
+      }
+      // Also include BS + Passive
+      for (const s of maxRankSkills) {
+        if ((s.isBlackSpirit || s.isPassive) && !ascAdded.has(s.skillId)) {
+          ascensionSkills.push(s); ascAdded.add(s.skillId)
+        }
+      }
+    }
+
     results.push({
       classId: cls.id,
       className: cls.name,
       slug: cls.slug,
       awakening: computeSpecStats(awakeningSkills),
       succession: computeSpecStats(successionSkills),
+      ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
+        skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
+        pvpCcSkillCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0,
+      },
     })
   }
 

@@ -181,8 +181,8 @@ export interface SkillFilters {
   types?: SkillType[] // multi-select (empty = all)
   protections?: string[] // multi-select (empty = all)
   cc?: string[]
-  spec?: 'all' | 'succession' | 'awakening' // single spec (legacy)
-  specs?: ('succession' | 'awakening')[] // multi-spec (empty = all)
+  spec?: 'all' | 'succession' | 'awakening' | 'ascension' // single spec (legacy)
+  specs?: ('succession' | 'awakening' | 'ascension')[] // multi-spec (empty = all)
   minLvl?: number
   maxLvl?: number
   minCd?: number

@@ -146,13 +146,13 @@ export async function GET(req: NextRequest) {
   const hasPrereqs = sp.get('hasPrereqs')
   const maxRank = sp.get('maxRank') !== 'false'
   const filterEvasion = sp.get('filterEvasion') !== 'false'
-  // Multi-spec: comma-separated "succession,awakening"
+  // Multi-spec: comma-separated "succession,awakening,ascension"
   const specsParam = sp.get('specs')
-  const specs: ('succession' | 'awakening')[] = specsParam
-    ? (specsParam.split(',').map((s) => s.trim()).filter((s) => s === 'succession' || s === 'awakening') as ('succession' | 'awakening')[])
+  const specs: ('succession' | 'awakening' | 'ascension')[] = specsParam
+    ? (specsParam.split(',').map((s) => s.trim()).filter((s) => s === 'succession' || s === 'awakening' || s === 'ascension') as ('succession' | 'awakening' | 'ascension')[])
     : []
   // Legacy single-spec param
-  const legacySpec = sp.get('spec') as 'succession' | 'awakening' | null
+  const legacySpec = sp.get('spec') as 'succession' | 'awakening' | 'ascension' | null
   if (legacySpec && !specs.length) specs.push(legacySpec)
 
   const sort = sp.get('sort') || 'skillId'
@@ -240,15 +240,17 @@ export async function GET(req: NextRequest) {
   // The spec-aware deduplication happens post-query in the max-rank path.
   const hasSuccessionSpec = specs.includes('succession')
   const hasAwakeningSpec = specs.includes('awakening')
+  const hasAscensionSpec = specs.includes('ascension')
 
-  if (hasSuccessionSpec && !hasAwakeningSpec) {
-    // Succession only: exclude awakening skills
+  if (hasSuccessionSpec && !hasAwakeningSpec && !hasAscensionSpec) {
+    // Succession only: exclude awakening and ascension skills
     AND.push({ isAwakening: false })
-  } else if (hasAwakeningSpec && !hasSuccessionSpec) {
+  } else if (hasAwakeningSpec && !hasSuccessionSpec && !hasAscensionSpec) {
     // Awakening only: exclude succession skills
     AND.push({ isSuccession: false })
   }
-  // If both specs or neither, no type exclusion at DB level
+  // Ascension only or any combo: no DB-level exclusion (handled in dedup)
+  // If both/all specs or neither, no type exclusion at DB level
 
   // Multi-select protection filter
   if (protectionParam && protectionParam !== 'all') {

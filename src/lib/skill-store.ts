@@ -25,8 +25,8 @@ interface SkillStore {
   toggleHasAnim: () => void
   toggleQuickslot: () => void
   toggleHasPrereqs: () => void
-  setSpec: (spec: 'all' | 'succession' | 'awakening') => void
-  toggleSpec: (spec: 'succession' | 'awakening') => void
+  setSpec: (spec: 'all' | 'succession' | 'awakening' | 'ascension') => void
+  toggleSpec: (spec: 'succession' | 'awakening' | 'ascension') => void
   setSort: (s: SkillSort) => void
   toggleOrder: () => void
   setPage: (p: number) => void
