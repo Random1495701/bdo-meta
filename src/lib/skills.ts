@@ -108,6 +108,8 @@ export interface BdoClass {
   awakened: boolean
   mainWeapon: string | null
   awakeningWeapon: string | null
+  combatType: string | null
+  isAscension: boolean
   skillCount: number
 }
 

@@ -20,6 +20,15 @@ model BdoClass {
   // Awakening / Succession weapon types
   awakeningWeapon String?
   mainWeapon      String?
+  // PA Wiki data — combat type, class group, SA damage reduction per spec
+  combatType        String? // "Melee" | "Ranged" | "Magic"
+  successionGroup   String? // "Vanguard" | "Crusher" | "Skirmisher"
+  awakeningGroup    String?
+  ascensionGroup    String?
+  successionSaDr    Float?  // SA damage reduction % (10-25)
+  awakeningSaDr     Float?
+  ascensionSaDr     Float?
+  isAscension       Boolean @default(false) // ascension-only class (no awakening/succession)
   skills   Skill[]
 
   @@map("bdo_classes")

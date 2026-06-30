@@ -14,9 +14,13 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
+  ccChainPotential: number
+  grabCount: number
   superArmorCount: number
   forwardGuardCount: number
   iFrameCount: number
+  coreSaCount: number
+  coreFgCount: number
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number
   protectedCoverage: number
@@ -26,12 +30,20 @@ interface ClassStats {
   classId: number
   className: string
   slug: string
+  combatType: string | null
+  successionGroup: string | null
+  awakeningGroup: string | null
+  ascensionGroup: string | null
+  successionSaDr: number
+  awakeningSaDr: number
+  ascensionSaDr: number
+  isAscension: boolean
   awakening: SpecStats
   succession: SpecStats
   ascension: SpecStats
 }
 
-type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'protectedCoverage'
+type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'ccChainPotential' | 'grabCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'protectedCoverage'
 
 // Spec display metadata — Red=Awakening, Blue=Succession, Yellow=Ascension
 const SPEC_META: Record<string, { label: string; color: string; shortLabel: string }> = {
@@ -162,10 +174,37 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
           <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
         </div>
 
-        {/* New metrics: DPS estimate + Protected coverage */}
-        <div className="grid grid-cols-2 gap-1">
-          <StatBox label="DPS Est." value={stats.dpsEstimate > 0 ? fmtDmg(stats.dpsEstimate) : '—'} color="#34d399" />
-          <StatBox label="Prot %" value={`${stats.protectedCoverage}%`} color="#60a5fa" />
+        {/* New metrics: CC chain, grab, DPS, protected */}
+        <div className="grid grid-cols-4 gap-1">
+          <StatBox label="CC Chain" value={String(stats.ccChainPotential)} color="#eab308" highlighted={sortKey === 'ccChainPotential'} />
+          <StatBox label="Grab" value={String(stats.grabCount)} color="#f97316" highlighted={sortKey === 'grabCount'} />
+          <StatBox label="DPS" value={stats.dpsEstimate > 0 ? fmtDmg(stats.dpsEstimate) : '—'} color="#34d399" highlighted={sortKey === 'dpsEstimate'} />
+          <StatBox label="Prot%" value={`${stats.protectedCoverage}%`} color="#60a5fa" highlighted={sortKey === 'protectedCoverage'} />
+        </div>
+
+        {/* PA Wiki data: combat type, group, SA DR */}
+        <div className="flex flex-wrap gap-1">
+          {cls.combatType && (
+            <span className="rounded-sm border border-amber-700/40 bg-amber-900/20 px-1.5 py-0.5 text-[8px] font-semibold text-amber-300/60" title="Combat type">
+              {cls.combatType}
+            </span>
+          )}
+          {(() => {
+            const group = specName === 'awakening' ? cls.awakeningGroup : specName === 'succession' ? cls.successionGroup : cls.ascensionGroup
+            return group ? (
+              <span className="rounded-sm border border-cyan-700/40 bg-cyan-900/20 px-1.5 py-0.5 text-[8px] font-semibold text-cyan-300/60" title="Class group (rock-paper-scissors: Vanguard > Crusher > Skirmisher > Vanguard)">
+                {group}
+              </span>
+            ) : null
+          })()}
+          {(() => {
+            const saDr = specName === 'awakening' ? cls.awakeningSaDr : specName === 'succession' ? cls.successionSaDr : cls.ascensionSaDr
+            return saDr > 0 ? (
+              <span className="rounded-sm border border-emerald-700/40 bg-emerald-900/20 px-1.5 py-0.5 text-[8px] font-semibold text-emerald-300/60" title="Super Armor damage reduction">
+                SA DR {saDr}%
+              </span>
+            ) : null
+          })()}
         </div>
 
         {/* Top PvP damage skill */}
@@ -241,6 +280,8 @@ function MetaTable({ classes, sortKey, sortDir, onSort, onRowClick }: {
     { key: 'medianPvpDamage', label: 'Med PvP' },
     { key: 'dpsEstimate', label: 'DPS' },
     { key: 'pvpCcSkillCount', label: 'CC' },
+    { key: 'ccChainPotential', label: 'CC Chain' },
+    { key: 'grabCount', label: 'Grab' },
     { key: 'superArmorCount', label: '💪 SA' },
     { key: 'forwardGuardCount', label: '🛡 FG' },
     { key: 'iFrameCount', label: '✦ IF' },
@@ -301,6 +342,8 @@ function MetaTable({ classes, sortKey, sortDir, onSort, onRowClick }: {
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.medianPvpDamage > 0 ? fmtDmg(row.stats.medianPvpDamage) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-emerald-300">{row.stats.dpsEstimate > 0 ? fmtDmg(row.stats.dpsEstimate) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-red-300">{row.stats.pvpCcSkillCount}</td>
+                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-yellow-300">{row.stats.ccChainPotential}</td>
+                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-orange-300">{row.stats.grabCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-amber-300">{row.stats.superArmorCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-blue-300">{row.stats.forwardGuardCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-purple-300">{row.stats.iFrameCount}</td>
@@ -363,6 +406,8 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
     { key: 'medianPvpDamage', label: 'Med PvP', icon: null },
     { key: 'dpsEstimate', label: 'DPS', icon: null },
     { key: 'pvpCcSkillCount', label: 'CC Skills', icon: <Zap className="size-3" /> },
+    { key: 'ccChainPotential', label: 'CC Chain', icon: <Zap className="size-3" /> },
+    { key: 'grabCount', label: 'Grab', icon: null },
     { key: 'superArmorCount', label: 'SA', icon: <span>💪</span> },
     { key: 'forwardGuardCount', label: 'FG', icon: <span>🛡</span> },
     { key: 'iFrameCount', label: 'IF', icon: <span>✦</span> },

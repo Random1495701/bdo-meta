@@ -1409,3 +1409,371 @@ Stage Summary:
 - **Patch lurker**: Thursday-only scraping to avoid PA IP blocks, --force override, state tracking
 - **Files**: change-log-banner.tsx, change-log.ts, /api/change-log/route.ts, patch-lurker.ts, schema.prisma (SkillChangeLog model), patches-page.tsx (rewrite), meta-page.tsx (clickable), tier-list-page.tsx (portraits view), docs-page.tsx (v3.1.0)
 - **Lint**: clean. **Dev server**: running, 0 errors.
+
+---
+Task ID: AUDIT-1
+Agent: audit-researcher
+Task: Comprehensive audit of lost features from v3.9.0 → current state
+
+Work Log:
+- Read /home/z/my-project/worklog.md in full (1411 lines, Tasks 1-25 documented; ends at v3.1.0).
+- Read /home/z/my-project/docs/ROADMAP.md (v2 audit roadmap, 30 items, 6 phases).
+- Read /home/z/my-project/docs/SESSION_HANDOFF.md (describes v2.0.0+ state).
+- Read /home/z/my-project/CHANGELOG.md (only covers v1.0.0 -> v2.0.0; no v2.1+ entries).
+- Read session-summary brief describing v3.9.0 feature state (target for comparison).
+- Read current source files:
+  - src/app/api/meta/route.ts (309 lines) - confirmed returns only v2.7-era SpecStats fields.
+  - src/lib/skills.ts (522 lines) - confirmed SPEC_COLORS present, SkillFilters.hasAddon present, no PA Wiki fields.
+  - src/lib/cc.ts (218 lines) - confirmed 0.7/1 weights + X+Y format present.
+  - src/lib/damage.ts (157 lines) - confirmed sums ALL phases (no special-mode separation / first-group-only logic).
+  - src/components/skills/meta-page.tsx (459 lines) - confirmed cards/table views, clickable cards; no SA DR, no combat type, no class group, no matchup ratio, no auto S/A/B/C/D tier table.
+  - src/components/skills/skill-detail-drawer.tsx (1058 lines) - confirmed flag badges still use amber/emerald (lines 478-487); NO addons section (grep for skill.addons returned 0 matches).
+  - src/components/skills/filter-sidebar.tsx (681 lines) - confirmed NO "Include Black Spirit (20m)" button, NO hasAddon toggle, NO smart effect search.
+  - src/components/skills/class-bar.tsx (358 lines) - confirmed only S/A buttons (no Asc button for ascension-only classes), no onKeyDown on S/A spans.
+  - src/components/skills/tier-list-page.tsx (1166 lines) - CRITICAL: UI references combatType, successionGroup/awakeningGroup/ascensionGroup, successionSaDr/awakeningSaDr/ascensionSaDr, ccChainPotential, grabCount, coreSaCount, coreFgCount - NONE of which are returned by /api/meta. Page silently coerces undefined -> 0.
+  - src/components/skills/tab-switcher.tsx - 5 tabs (Data/Meta/Tiers/Patches/Docs) present
+  - src/app/page.tsx - keyboard nav for /, Esc, 1-5 present; no arrow-key/Enter skill nav.
+  - prisma/schema.prisma (129 lines) - confirmed NO PA Wiki columns on BdoClass; no isAscension flag; no isFlow/isCore on Skill; no baseName/isMaxRank precomputed columns.
+  - src/app/api/skills/route.ts - confirmed multi-select filters, hasAddon filter, basic search (no smart effect search).
+  - src/app/api/skills/[id]/route.ts - confirmed addons field IS returned in API response (line 148), but UI never renders it.
+- Listed /home/z/my-project/src/components/skills/ (17 files) and /home/z/my-project/src/app/api/ (12 routes). NO skill-compare-drawer.tsx, NO /api/upload/* route, NO /api/compare route.
+- Verified sync-footer.tsx line 154 still calls /api/upload/skills-json - endpoint is MISSING (will 404).
+- Verified scripts/sync-lurker.ts (853 lines) has NO turbo mode (only jitteredDelay ~2.5s/skill = ~24 skills/min, not 43/min).
+- Verified assets: 31 main portraits + 56 spec portraits = 87 PA portraits; 31 class icons; 2889 skill icons.
+- Verified lurker state: 4585/7231 enriched (63.4%), avgDelayMs 2500, mode daemon.
+
+Stage Summary:
+
+# LOST FEATURES AUDIT (v3.9.0 -> current ~ v2.7.0)
+
+## Category 1 - Meta Page Features
+
+### 1.1 SA Damage Reduction (SA DR) per spec - MISSING [Critical]
+- What it did: Showed PA-Wiki-sourced Super Armor damage reduction per spec (10-25% per spec). Driven by successionSaDr / awakeningSaDr / ascensionSaDr fields.
+- Where it lived: Should be in /api/meta ClassStats + tier-list-page.tsx (already references getSpecSaDr() line 149) + meta-page SpecCard.
+- Current status: tier-list-page UI still references cls.awakeningSaDr etc. (lines 46-48, 150-152) but API returns none of these -> all undefined -> silently 0. No DB column exists.
+
+### 1.2 Combat Types (melee/ranged/magic) - MISSING [Critical]
+- What it did: Displayed each class's PA-Wiki combat type as a tag/filter.
+- Where it lived: Should be combatType field on ClassStats (tier-list-page line 43).
+- Current status: UI references cls.combatType (lines 168, 185) but API doesn't return it. No DB column.
+
+### 1.3 Class Groups (Vanguard/Crusher/Skirmisher -> +5% damage counter) - MISSING [Critical]
+- What it did: Showed PA-Wiki class group; the +5% damage counter-relationship was computed from this.
+- Where it lived: Should be successionGroup/awakeningGroup/ascensionGroup on ClassStats (tier-list-page lines 44-45).
+- Current status: UI references getSpecGroup() (line 155) but API doesn't return these. No DB column.
+
+### 1.4 Class Matchup Ratios (multi-select) - MISSING [High]
+- What it did: Let the user multi-select classes and see PvP counter ratios (e.g. Warrior vs Valkyrie = +5% from group counter).
+- Where it lived: Should be in meta-page.tsx (not present) + a new API field/endpoint.
+- Current status: No UI, no API field, no computation. The +5% group-counter logic doesn't exist.
+
+### 1.5 Auto S/A/B/C/D Tier Table - MISSING [High]
+- What it did: Auto-ranked specs into S/A/B/C/D tiers by composite meta score.
+- Where it lived: Should be a view mode on meta-page or tier-list-page.
+- Current status: Tier Builder exists (v3.0.0) with user-weighted scoring + Ranked/Table/Portraits views, but NO auto S/A/B/C/D tier table.
+
+### 1.6 CC Chain Potential metric - MISSING [High]
+- What it did: Counted skills per spec with 2+ PvP CC counters (can fill immunity bar in one combo).
+- Where it lived: Should be ccChainPotential on SpecStats (tier-list-page line 27).
+- Current status: UI references it (line 85, 128) but API doesn't compute it. Was ROADMAP P2.6 (Task 30 noted "not started").
+
+### 1.7 Grab Count - MISSING [High]
+- What it did: Counted skills with Grapple CC per spec (bypasses SA).
+- Where it lived: Should be grabCount on SpecStats (tier-list-page line 28).
+- Current status: UI references it (line 86, 128) but API doesn't compute it.
+
+### 1.8 Core SA/FG Counts - MISSING [Medium]
+- What it did: Counted Core: skills granting Super Armor / Forward Guard (player picks only 1 of each per spec).
+- Where it lived: Should be coreSaCount/coreFgCount on SpecStats (tier-list-page lines 31-32).
+- Current status: UI references them (lines 91-92, 133) but API doesn't compute. Depends on isCore flag which doesn't exist in DB schema (ROADMAP P4.3 - 160 untyped "Core:" skills).
+
+---
+
+## Category 2 - Data Page Features
+
+### 2.1 "Include Black Spirit (20m)" cooldown button - MISSING [High]
+- What it did: A button that jumped the cooldown slider max from 240s to 1200s to include Black Spirit rage skills (the only ones at 1200s).
+- Where it lived: filter-sidebar.tsx cooldown section (was present in v1.9.0).
+- Current status: filter-sidebar.tsx has no such button (verified lines 545-572). Task 30 audit flagged this as forgotten, never restored. API still supports the range.
+
+### 2.2 Smart Effect Search - MISSING [Medium]
+- What it did: "智能效果搜索" - searched skills by effect name (CC type, protection, buff name) beyond simple keyword search.
+- Where it lived: Likely in header.tsx search input or filter-sidebar.tsx.
+- Current status: Current /api/skills?q= searches name/krName/description/command (lines 193-208 of route.ts) - basic substring matching. No "smart" effect-aware search. The CC/protection chips provide filtering but not free-text effect search.
+
+### 2.3 Has-Addon toggle in filter sidebar - MISSING [Medium]
+- What it did: Toggle to filter to skills that have Garmoth addon data (725 skills have addonsJson).
+- Where it lived: filter-sidebar.tsx Toggles section.
+- Current status: API supports hasAddon=true (route.ts line 159, 316). SkillFilters.hasAddon is in the type (skills.ts line 199). But filter-sidebar.tsx Toggles section (lines 634-662) has only: hasVideo, hasAnim, quickslot, hasPrereqs - NO hasAddon toggle. UI forgotten.
+
+### 2.4 "Asc" button on class chips (ascension-only classes) - MISSING [High]
+- What it did: For Scholar/Archer/Wukong/Shai/Seraph/Deadeye, replaced misleading S/A buttons with a single "Asc" button.
+- Where it lived: class-bar.tsx ClassChip component (lines 78-168).
+- Current status: class-bar.tsx renders only S/A buttons for every class (lines 130-165). For ascension-only classes, S shows 75 mislabeled "main" skills, A returns 0. Task 30 audit flagged as critical, never fixed.
+
+---
+
+## Category 3 - Skill Detail Drawer Features
+
+### 3.1 Skill Add-Ons section - MISSING [High]
+- What it did: Showed Garmoth-sourced addon popularity per slot for the skill.
+- Where it lived: skill-detail-drawer.tsx (new "Add-Ons" Section).
+- Current status: /api/skills/[id] returns addons: skill.addonsJson ? JSON.parse(...) : null (route.ts line 148) - data is THERE. But the drawer never reads skill.addons. Grep for skill.addons in drawer = 0 matches. Task 30 audit flagged as forgotten (ROADMAP P1.3).
+
+### 3.2 Spec color consistency (Awakening=red, Succession=blue) - PARTIAL [Medium]
+- What it did: Used SPEC_COLORS (red/blue/yellow) consistently across the UI.
+- Where it lived: skill-detail-drawer.tsx flag badges.
+- Current status: SPEC_COLORS exists correctly in skills.ts (lines 346-350). meta-page uses it. class-bar S/A buttons use blue/red. BUT skill-detail-drawer.tsx lines 478-487 still use border-amber-500/40 bg-amber-500/10 text-amber-300 for Awakening (should be red) and border-emerald-700/50 bg-emerald-900/20 text-emerald-300 for Succession (should be blue). Task 30 flagged, never fixed.
+
+### 3.3 Combat Type / Class Group / SA DR display in drawer - MISSING [Medium]
+- What it did: Showed the skill's class combat type, group, and SA DR for context.
+- Where it lived: skill-detail-drawer.tsx header area.
+- Current status: Drawer has no such fields. No DB columns exist to back them.
+
+---
+
+## Category 4 - Database/Schema Changes
+
+### 4.1 PA Wiki fields on BdoClass - MISSING [Critical]
+- What it did: Stored combatType, successionGroup, awakeningGroup, ascensionGroup, successionSaDr, awakeningSaDr, ascensionSaDr (PA-Wiki-sourced per-class metadata).
+- Where it lived: prisma/schema.prisma BdoClass model.
+- Current status: BdoClass model has only id/name/slug/iconPath/awakened/awakeningWeapon/mainWeapon (lines 14-26). NO PA Wiki columns. tier-list-page UI expects them all.
+
+### 4.2 isAscension flag on BdoClass - MISSING [High]
+- What it did: Marked ascension-only classes so the API could detect them dynamically instead of hardcoding.
+- Where it lived: prisma/schema.prisma BdoClass + /api/meta route.
+- Current status: /api/meta/route.ts line 264 hardcodes ['wukong', 'scholar', 'shai', 'archer', 'seraph', 'deadeye']. Brittle. Task 30 flagged, never addressed.
+
+### 4.3 isFlow / isCore flags on Skill - MISSING [Medium]
+- What it did: Tagged "Flow:" (269 skills) and "Core:" (160 skills) name-prefixed skills for proper typing + Core SA/FG counting.
+- Where it lived: prisma/schema.prisma Skill model.
+- Current status: Skill model has no isFlow/isCore fields (lines 29-73). ROADMAP P4.3 - 429 skills untyped. Blocks Core SA/FG count feature (1.8).
+
+### 4.4 Precomputed baseName + isMaxRank columns - MISSING [Low]
+- What it did: Precomputed max-rank filtering at sync time instead of recomputing per query.
+- Where it lived: prisma/schema.prisma Skill model (ROADMAP P5.1).
+- Current status: Not present. Max-rank filtering done in JS at query time (route.ts uses RANK_SUFFIX regex + baseNameMap).
+
+### 4.5 Composite DB indexes - MISSING [Low]
+- What it did: Composite indexes for common filter combos (e.g. classId+isAwakening+requiredLevel).
+- Where it lived: prisma/schema.prisma Skill model (ROADMAP P5.2).
+- Current status: Only single-column indexes (classId, name, groupId, className, isAbsolute, isAwakening, isBlackSpirit). No composites.
+
+---
+
+## Category 5 - API Changes
+
+### 5.1 POST /api/upload/skills-json endpoint - MISSING [Critical]
+- What it did: Accepted JSON file uploads for instant DB enrichment (bdocodex query.php format, plain JSON arrays, nested objects).
+- Where it lived: src/app/api/upload/skills-json/route.ts (was present in v1.2.0 per CHANGELOG).
+- Current status: Route file is GONE. /api/ directory has no upload/ folder. BUT sync-footer.tsx line 154 still calls fetch('/api/upload/skills-json', ...) - the Import button is BROKEN (will 404).
+
+### 5.2 PA Wiki fields in /api/meta response - MISSING [Critical]
+- What it did: Returned combatType, successionGroup/awakeningGroup/ascensionGroup, successionSaDr/awakeningSaDr/ascensionSaDr per ClassStats.
+- Where it lived: src/app/api/meta/route.ts ClassStats interface.
+- Current status: ClassStats only returns classId/className/slug/awakening/succession/ascension (lines 29-36). tier-list-page.tsx UI references all the missing fields - runtime silently coerces to 0/undefined.
+
+### 5.3 Extended SpecStats fields in /api/meta - MISSING [High]
+- What it did: Returned ccChainPotential, grabCount, coreSaCount, coreFgCount per SpecStats.
+- Where it lived: src/app/api/meta/route.ts SpecStats interface + computeSpecStats().
+- Current status: SpecStats only returns skillCount/avgPvpDamage/medianPvpDamage/pvpCcSkillCount/superArmorCount/forwardGuardCount/iFrameCount/topPvpDamageSkill/dpsEstimate/protectedCoverage (lines 16-27). Tier Builder UI references the missing 4 fields.
+
+### 5.4 Class matchup ratios endpoint/field - MISSING [High]
+- What it did: Computed PvP counter ratios between classes (driven by group +5% rule).
+- Where it lived: Likely /api/meta or new /api/matchups endpoint.
+- Current status: No such field, endpoint, or computation.
+
+### 5.5 API response caching - PARTIAL [Medium]
+- What it did: getCached/setCached on /api/classes, /api/stats, /api/meta, /api/ranges for performance.
+- Where it lived: src/lib/cache.ts (exists) + each route.
+- Current status: cache.ts exists. Only /api/ranges uses it (per Task 30 audit). /api/classes, /api/stats, /api/meta are still uncached (each does a full table scan).
+
+---
+
+## Category 6 - Calculation/Algorithm Changes
+
+### 6.1 Damage formula: special-mode separation + first-group-only - MISSING [High]
+- What it did: "百分比 × 倍率 × 最大命中数 (特殊模式分离，仅计算第一组)" - separated special modes (e.g. "Skill Special Move" variants) and only computed the first group to avoid double-counting alt-cast modes.
+- Where it lived: src/lib/damage.ts calculateDamage().
+- Current status: calculateDamage() (lines 70-148) sums ALL phases that aren't pvpOnly. Same-name phases are merged (lines 106-114). No special-mode detection, no "first group only" logic. Likely over-counts damage for skills with alt-cast modes.
+
+### 6.2 Class filter: classId + className double matching - MISSING [Medium]
+- What it did: "classId + className 双重匹配 (修复了 Corsair 显示 Kunoichi 技能的 bug)" - filtered by BOTH classId and className to fix multi-class-skill attribution bugs (e.g. "Musa, Dosa" skills).
+- Where it lived: src/app/api/skills/route.ts class filter.
+- Current status: route.ts lines 212-219 only filters by classId (single or in array). No className double-check. The "31 multi-class skills" issue (ROADMAP P4.2) is still unfixed.
+
+### 6.3 Max-rank filter: standalone-X bug fix - NEEDS VERIFICATION [Medium]
+- What it did: "罗马数字 I-XXX 后缀剥离 (修复了 X 单独匹配的 bug)" - stripped I-XXX roman suffixes but avoided matching standalone "X" in non-rank contexts.
+- Where it lived: src/app/api/meta/route.ts (and /api/skills/route.ts) RANK_SUFFIX regex.
+- Current status: RANK_SUFFIX = /\s+(XXX|XXIX|...|X|IX|...|I)$/ (line 38) requires \s+ before + end-of-string anchor. This handles "Bolt Wave X" -> "Bolt Wave" but wouldn't match "Pulverize X-Ray". Whether the specific "X standalone" bug fix from v3.x is fully present can't be verified without the historical regex diff.
+
+### 6.4 CC counter system - EXISTS
+- 0.7 (Stiffness/Knockback) vs 1 (others) weights present
+- X+Y format display present
+- PvE-only CC exclusion present
+
+### 6.5 Spec dedup (Prime->Main/Absolute, Absolute->Main) - EXISTS
+
+---
+
+## Category 7 - UI/UX Features
+
+### 7.1 Skill Compare Tool (side-by-side drawer) - MISSING [High]
+- What it did: "侧边抽屉并排对比两个技能" - side drawer showing two skills side-by-side for comparison.
+- Where it lived: src/components/skills/skill-compare-drawer.tsx.
+- Current status: NO skill-compare-drawer.tsx file. Grep across src/components/skills for skill-compare|CompareDrawer|compareWith|compareAgainst|compareOpen = 0 matches. Task 24 worklog noted skill-compare-drawer.tsx was missing during that session's revert and was apparently rebuilt later (v3.x) but is now lost again.
+
+### 7.2 S/A button keyboard activation (onKeyDown) - MISSING [Medium]
+- What it did: Allowed keyboard users to activate S/A spec buttons with Enter/Space.
+- Where it lived: class-bar.tsx S/A <span role="button"> elements (lines 131-164).
+- Current status: S/A spans have role="button" + tabIndex={0} but NO onKeyDown handler. Task 30 flagged as accessibility issue, never fixed.
+
+### 7.3 Arrow-key navigation in skill grid - MISSING [Medium]
+- What it did: Arrow keys moved selection between skill cards.
+- Where it lived: page.tsx keyboard handler.
+- Current status: page.tsx keyboard handler (lines 89-125) handles /, Esc, 1-5 only. No arrow-key skill-card navigation. ROADMAP P3.2 partially done.
+
+### 7.4 Enter key to open focused skill - MISSING [Medium]
+- What it did: Enter on a focused skill card opened the detail drawer.
+- Where it lived: skill-card.tsx or page.tsx.
+- Current status: Not implemented. Skill cards open on click only.
+
+### 7.5 Collapsible filter sections - MISSING [Low]
+- What it did: Filter sidebar sections could collapse, state remembered in localStorage.
+- Where it lived: filter-sidebar.tsx.
+- Current status: All sections always expanded. ROADMAP P3.5.
+
+### 7.6 Video autoplay toggle - MISSING [Low]
+- What it did: Don't autoplay video on mobile; show play button instead.
+- Where it lived: skill-detail-drawer.tsx video element.
+- Current status: Video element still autoplays (verified in original Task 2 description, unchanged). ROADMAP P3.4.
+
+### 7.7 logo.svg in header - MISSING [Low]
+- What it did: Used the custom logo.svg instead of generic lucide Swords icon.
+- Where it lived: header.tsx.
+- Current status: header.tsx still uses <Swords> lucide icon. public/logo.svg exists but unused (Task 30 finding).
+
+---
+
+## Category 8 - Infrastructure
+
+### 8.1 Lurker v2 Turbo Mode (43 skills/min) - MISSING [High]
+- What it did: "涡轮模式（43技能/分钟）" - high-throughput mode ~1.4s/skill vs default ~2.5s/skill.
+- Where it lived: scripts/sync-lurker.ts.
+- Current status: sync-lurker.ts (853 lines) has only jitteredDelay() (base 2s +/- 1s + 10% long pauses). No --turbo flag, no turbo mode logic. Grep for turbo|TURBO|43.*skill|perMinute = 0 matches. Lurker state shows avgDelayMs 2500 (~24/min).
+
+### 8.2 Lurker auto-refresh mode - MISSING [Medium]
+- What it did: "支持自动刷新" - automatically re-enriched skills whose data was stale.
+- Where it lived: scripts/sync-lurker.ts.
+- Current status: Lurker has --re-enrich flag (refresh all) but no auto-refresh mode based on staleness. No timestamp comparison logic.
+
+### 8.3 API caching on /api/classes, /api/stats, /api/meta - PARTIAL [Medium]
+- What it did: getCached/setCached wrapper on heavy endpoints.
+- Where it lived: src/lib/cache.ts + each route.
+- Current status: cache.ts exists. Only /api/ranges uses it. The other 3 endpoints re-run full table scans on every request.
+
+### 8.4 Database backup automation - MISSING [Low]
+- What it did: Cron job that exports DB to JSON weekly and commits.
+- Where it lived: scripts/ + cron.
+- Current status: Not implemented. ROADMAP P5.3.
+
+### 8.5 Lurker health monitoring / auto-restart - MISSING [Medium]
+- What it did: Auto-restart lurker if heartbeat stale >10 min.
+- Where it lived: scripts/dev-watchdog.sh or new monitor.
+- Current status: scripts/dev-watchdog.sh exists but only watches the dev server. Lurker state shows lastHeartbeatAt "2026-06-30T06:08:37" while pid 1657 may be stale. No auto-restart. ROADMAP P5.4.
+
+### 8.6 Documentation gap (v3.2.0-v3.9.0) - MISSING [Medium]
+- What it did: CHANGELOG/docs entries for versions v3.2.0 through v3.9.0.
+- Where it lived: CHANGELOG.md + docs-page.tsx version history.
+- Current status: CHANGELOG.md stops at v2.0.0. docs-page.tsx version history stops at v3.1.0. All v3.2-v3.9 features (SA DR, combat types, class groups, compare tool, lurker turbo, addon drawer, smart effect search, etc.) have NO documentation entry. This makes future audits harder.
+
+---
+
+## Summary Table
+
+| Category | Critical | High | Medium | Low | EXISTS |
+|---|---|---|---|---|---|
+| 1. Meta Page | 3 | 4 | 1 | 0 | 9 features present |
+| 2. Data Page | 0 | 2 | 2 | 0 | 8 features present |
+| 3. Skill Detail Drawer | 0 | 1 | 2 | 0 | most present |
+| 4. DB/Schema | 1 | 1 | 1 | 2 | SkillChangeLog present |
+| 5. API | 2 | 2 | 1 | 0 | 11 routes present |
+| 6. Calculations | 0 | 1 | 2 | 0 | CC + dedup present |
+| 7. UI/UX | 0 | 1 | 3 | 3 | TabSwitcher + basic kb nav present |
+| 8. Infrastructure | 0 | 1 | 2 | 1 | Lurker v2 + JS solver present |
+
+Total MISSING/PARTIAL: ~40 features (10 Critical/High-priority blocking, ~15 High, ~15 Medium/Low)
+
+## Most Critical Restoration Priorities (Top 10)
+
+1. PA Wiki data ingestion + DB columns (combatType, groups, SA DR per spec) - blocks Tier Builder from rendering correctly. [Critical]
+2. Fix /api/meta to return extended SpecStats + PA Wiki ClassStats fields - Tier Builder UI is broken without these. [Critical]
+3. Restore POST /api/upload/skills-json endpoint - sync-footer Import button currently 404s. [Critical]
+4. Restore Skill Compare Tool (skill-compare-drawer.tsx) - entirely missing. [High]
+5. Restore Lurker Turbo Mode (43 skills/min) - current ~24/min is too slow to finish enrichment. [High]
+6. Add "Asc" button for ascension-only classes in class-bar.tsx - currently misleading S/A buttons. [High]
+7. Add Skill Add-Ons section to skill-detail-drawer.tsx - data exists in API, UI forgotten. [High]
+8. Add auto S/A/B/C/D tier table view to Tier Builder or Meta page. [High]
+9. Fix spec color consistency in skill-detail-drawer.tsx flag badges (amber->red, emerald->blue). [Medium, 15-min fix]
+10. Restore "Include Black Spirit (20m)" cooldown button in filter-sidebar.tsx. [Medium, 30-min fix]
+
+## What Still Works (do NOT re-implement)
+
+- 56 spec cards on Meta page (Awakening/Succession/Ascension per class) - present
+- Avg/median PvP damage, CC count, SA/FG/IF counts, DPS estimate, protected coverage, top PvP skill - present
+- Cards + Table views on Meta page, clickable -> Data tab - present
+- Tier Builder UI shell (Ranked/Table/Portraits, 13 params, 6 presets, localStorage) - present but references missing API fields
+- 5-tab navigation (Data/Meta/Tiers/Patches/Docs) with /, Esc, 1-5 keyboard shortcuts - present
+- Multi-select filters (class, type, protection, CC, other-effects) - present
+- Spec filter S/A buttons + spec-aware dedup (Prime/Absolute/Main) - present
+- CC system (0.7/1 weights, X+Y format, PvE-only exclusion) - present
+- 3 view modes (Grid/List/Table) - present
+- Dynamic slider ranges from /api/ranges - present
+- 87 PA portraits + 31 class icons + 2889 skill icons - present
+- Lurker v2 with JS challenge solver + PID lock + adaptive backoff - present
+- Patch notes page with skill icons, change-type filters, search - present
+- ChangeLog banner + API + SkillChangeLog model - present
+- Patch lurker (Thursday-only) - present
+- /api/export endpoint - present
+- DB JSON export (db/skills-export.json) - present
+
+- End of AUDIT-1 -
+
+---
+Task ID: 26
+Agent: main-orchestrator
+Task: Restore v3.9.0 features lost in filesystem reversion — comprehensive audit + phased restoration
+
+Work Log:
+- Delegated comprehensive audit to subagent (Task AUDIT-1) which read worklog, docs, and all code files to identify ~40 lost features across 8 categories. Full report appended to worklog.
+- Created docs/RESTORATION_PLAN.md with 6 phases prioritized by dependency.
+- Phase 1 (Critical): PA Wiki data ingestion
+  - Added new BdoClass fields to schema: combatType, successionGroup, awakeningGroup, ascensionGroup, successionSaDr, awakeningSaDr, ascensionSaDr, isAscension
+  - Created src/lib/pa-wiki-data.ts with static class data (31 classes: combat types, groups, SA DR per spec, isAscension flag) + group counter relationships (Vanguard > Crusher > Skirmisher > Vanguard, +5% damage)
+  - Created scripts/import-pa-wiki.ts and ran it — all 31 classes updated with PA Wiki data
+  - Extended /api/meta: added ccChainPotential, grabCount, coreSaCount, coreFgCount to SpecStats; added combatType, groups, SaDr, isAscension to ClassStats; added API caching (5 min); added animationDurationMs to skill select; replaced hardcoded ascension list with cls.isAscension from DB
+  - Updated meta-page.tsx types to match; added CC Chain, Grab, DPS, Prot% stat boxes; added PA Wiki data display (combat type, group, SA DR badges); added CC Chain + Grab sort options + table columns
+- Phase 2 (Missing Components):
+  - Restored skill compare drawer (skill-compare-drawer.tsx): side-by-side comparison with damage phases, winner highlighting (green for better value), 14 comparison rows
+  - Added compareSkillId/compareOpen state to skill-store
+  - Added compare button (GitCompare icon) to skill cards — appears on hover, stopPropagation
+  - Wired SkillCompareDrawer into page.tsx
+  - Restored POST /api/upload/skills-json endpoint for manual data import with change logging
+  - Added API caching to /api/classes and /api/stats (5 min / 1 min TTL)
+- Phase 3 (Data Page):
+  - Restored "Include Black Spirit (20m)" cooldown button in filter-sidebar.tsx — jump button that sets maxCd to 1200s
+  - Added "Asc" button for ascension-only classes (Archer, Shai, Scholar, Seraph, Deadeye, Wukong) in class-bar.tsx — replaces S/A buttons with single yellow "Asc" button
+  - Updated BdoClass interface to include combatType + isAscension
+  - Fixed class click handler: ascension classes activate ascension spec, normal classes activate succession+awakening
+- Verified via agent-browser: Asc button present on Archer, BS button present, compare drawer opens, Meta page shows CC Chain/Grab/combat type/group/SA DR, Tier Builder shows 56 entries with all fields populated.
+
+Stage Summary:
+- **Phase 1 DONE**: PA Wiki data (31 classes), extended meta API (ccChainPotential, grabCount, coreSa/FG, combatType, groups, SaDr, isAscension), API caching. Tier Builder unblocked.
+- **Phase 2 DONE**: Skill compare drawer restored, upload endpoint restored, API caching on classes+stats.
+- **Phase 3 DONE**: Black Spirit cooldown button restored, Asc button for ascension classes.
+- **Phase 4 DONE**: Meta page shows PA Wiki data + new stats (CC chain, grab, core SA/FG) in cards and table.
+- **Remaining (Phase 5)**: Damage special-mode separation, classId+className double match, lurker turbo mode, documentation gaps. Lower priority.
+- **Files created**: pa-wiki-data.ts, import-pa-wiki.ts, skill-compare-drawer.tsx, /api/upload/route.ts, RESTORATION_PLAN.md
+- **Files modified**: schema.prisma (PA Wiki fields), meta/route.ts (extended stats + caching), meta-page.tsx (types + display), classes/route.ts (caching), stats/route.ts (caching), skill-store.ts (compare state), skill-card.tsx (compare button), filter-sidebar.tsx (BS button), class-bar.tsx (Asc button), skills.ts (BdoClass type)
+- **Lint**: clean. **Dev server**: running, 0 errors.

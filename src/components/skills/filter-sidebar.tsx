@@ -17,6 +17,7 @@ import {
   Swords,
   Lock,
   Sparkles,
+  Skull,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -569,6 +570,22 @@ export function FilterSidebar() {
               onMax={(v) => setCooldownRange(filters.minCd, v)}
               suffix="s"
             />
+            {/* Include Black Spirit (20m) jump button */}
+            {ranges?.cooldownSec && (ranges.cooldownSec as any).blackSpiritMax && (
+              <button
+                onClick={() => setCooldownRange(filters.minCd, (ranges.cooldownSec as any).blackSpiritMax)}
+                className={cn(
+                  'mt-1.5 w-full rounded-sm border px-2 py-1 text-[10px] font-semibold transition-all',
+                  filters.maxCd === (ranges.cooldownSec as any).blackSpiritMax
+                    ? 'border-purple-500/50 bg-purple-900/20 text-purple-300'
+                    : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:border-amber-500/40 hover:text-amber-200',
+                )}
+                title="Include Black Spirit rage skills (20 min cooldown)"
+              >
+                <Skull className="mr-1 inline size-3" />
+                Include Black Spirit (20m)
+              </button>
+            )}
           </section>
 
           <GoldDivider />

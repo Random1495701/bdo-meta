@@ -9,6 +9,7 @@ import { FilterSidebar } from '@/components/skills/filter-sidebar'
 import { SkillGrid } from '@/components/skills/skill-grid'
 import { Pagination } from '@/components/skills/pagination'
 import { SkillDetailDrawer } from '@/components/skills/skill-detail-drawer'
+import { SkillCompareDrawer } from '@/components/skills/skill-compare-drawer'
 import { SyncFooter } from '@/components/skills/sync-footer'
 import { MetaPage } from '@/components/skills/meta-page'
 import { DocsPage } from '@/components/skills/docs-page'
@@ -204,6 +205,7 @@ export default function Home() {
       {/* Overlays */}
       <MobileFiltersSheet />
       <SkillDetailDrawer />
+      <SkillCompareDrawer />
     </div>
   )
 }
