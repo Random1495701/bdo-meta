@@ -204,14 +204,106 @@ export async function GET(req: NextRequest) {
         OR: [{ skillId: asNum }, { name: { contains: q } }, { krName: { contains: q } }],
       })
     } else {
-      AND.push({
-        OR: [
-          { name: { contains: q } },
-          { krName: { contains: q } },
-          { description: { contains: q } },
-          { command: { contains: q } },
-        ],
-      })
+      // Smart effect search: check if query matches known CC/protection keywords
+      // e.g. "super armor knockdown" → skills with Super Armor AND Knockdown
+      const qLower = q.toLowerCase()
+      const EFFECT_KEYWORDS: Record<string, string[]> = {
+        'super armor': ['Super Armor'],
+        'superarmor': ['Super Armor'],
+        'sa': ['Super Armor'],
+        'forward guard': ['Forward Guard'],
+        'forwardguard': ['Forward Guard'],
+        'fg': ['Forward Guard'],
+        'iframe': ['I-Frame', 'Invincible'],
+        'i-frame': ['I-Frame', 'Invincible'],
+        'if': ['I-Frame', 'Invincible'],
+        'invincible': ['Invincible'],
+        'stun': ['Stun'],
+        'knockdown': ['Knockdown'],
+        'kd': ['Knockdown'],
+        'knockback': ['Knockback'],
+        'kb': ['Knockback'],
+        'float': ['Float'],
+        'bound': ['Bound'],
+        'grapple': ['Grapple'],
+        'grab': ['Grapple'],
+        'stiffness': ['Stiffness'],
+        'stiff': ['Stiffness'],
+        'freeze': ['Freeze'],
+        'frostbite': ['Frostbite'],
+        'chill': ['Chill'],
+        'burn': ['Burn'],
+        'poison': ['Poison'],
+        'bleeding': ['Bleeding'],
+        'shock': ['Shock'],
+        'blind': ['Blind'],
+        'down smash': ['Down Smash'],
+        'air smash': ['Air Smash'],
+        'smash': ['Down Smash', 'Air Smash', 'Smash'],
+        'push': ['Push the target'],
+        'pull': ['Pull the target'],
+        'spin': ['Spin the target'],
+      }
+
+      // Check if query contains any effect keywords
+      // Sort keywords by length (longest first) so "super armor" matches before "sa"
+      const sortedKeywords = Object.entries(EFFECT_KEYWORDS).sort((a, b) => b[0].length - a[0].length)
+      const matchedEffects: { field: 'ccTypes' | 'protectionTypes'; value: string }[] = []
+      let remainingQuery = qLower
+      for (const [keyword, dbValues] of sortedKeywords) {
+        // Use word boundary for short keywords (2-3 chars) to avoid false matches
+        const isShort = keyword.length <= 3
+        const matches = isShort
+          ? new RegExp(`\\b${keyword}\\b`, 'i').test(remainingQuery)
+          : remainingQuery.includes(keyword)
+        if (matches) {
+          for (const v of dbValues) {
+            const field = ['Super Armor', 'Forward Guard', 'I-Frame', 'Invincible', 'Crouching'].includes(v) ? 'protectionTypes' : 'ccTypes'
+            matchedEffects.push({ field, value: v })
+          }
+          remainingQuery = remainingQuery.replace(new RegExp(isShort ? `\\b${keyword}\\b` : keyword, 'gi'), '').trim()
+        }
+      }
+
+      if (matchedEffects.length > 0) {
+        // Build effect-based search: ALL matched keywords must be present,
+        // but multiple dbValues from the SAME keyword use OR (e.g., 'I-Frame' OR 'Invincible')
+        // Group by field
+        const byField = new Map<string, string[]>()
+        for (const effect of matchedEffects) {
+          if (!byField.has(effect.field)) byField.set(effect.field, [])
+          byField.get(effect.field)!.push(effect.value)
+        }
+        for (const [field, values] of byField) {
+          // Deduplicate values
+          const unique = [...new Set(values)]
+          if (unique.length === 1) {
+            AND.push({ [field]: { contains: unique[0] } })
+          } else {
+            // Multiple values for same field = OR (e.g., I-Frame OR Invincible)
+            AND.push({ OR: unique.map(v => ({ [field]: { contains: v } })) })
+          }
+        }
+        // If there's remaining text after removing keywords, also search name/description
+        if (remainingQuery.length > 1) {
+          AND.push({
+            OR: [
+              { name: { contains: remainingQuery } },
+              { description: { contains: remainingQuery } },
+            ],
+          })
+        }
+      } else {
+        // No effect keywords — standard text search
+        AND.push({
+          OR: [
+            { name: { contains: q } },
+            { krName: { contains: q } },
+            { description: { contains: q } },
+            { command: { contains: q } },
+          ],
+        })
+      }
     }
   }
 
