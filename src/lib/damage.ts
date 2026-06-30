@@ -1,19 +1,18 @@
 // BDO Skill Damage Calculator
 // Parses damage rows from bdocodex tooltip data and computes total damage values.
 //
-// Damage rows come in two formats:
-// 1. [damage] kind: "Attack N damage" with value "X% xY"  (structured)
-// 2. [note] kind:  "Phase attack damage X% xY, max Z hits"  (unstructured)
+// Damage format: "X% x N" where X = damage percentage, N = damage multiplier
+// - "6588% x1" → 6588 * 1 = 6588
+// - "10550% x2" → 10550 * 2 = 21100
+// - "871% x1, max 5 hits" → 871 * 1 = 871 (max 5 is TARGETS, not a multiplier)
 //
-// Format explanation:
-// "8246% x1" means: 8246% damage, 1 hit → total = 8246 * 1 = 8246
-// "938% x3" means: 938% damage per hit, 3 hits → total = 938 * 3 = 2814
-// "1325% x1, max 3 hits" means: 1325% damage, 1 hit, can hit up to 3 targets
-//   → total damage per target = 1325 * 1 = 1325 (max targets is NOT a damage multiplier)
+// Special modes: Some skills (Deadeye Marni mode, Witch/tamer variants, etc.) have
+// multiple sets of damage rows in the same tooltip. Each set starts with "Attack 1".
+// We only count the FIRST set (normal mode) to avoid overcalculation.
 //
-// We parse both, group by phase, and compute:
-// - Per-phase damage: percent * hits (the "x N" is the hit count, NOT a multiplier)
-// - Total PvE damage: sum of all phases (per target)
+// We compute:
+// - Per-phase damage: percent * multiplier
+// - Total PvE damage: sum of all phases (first set only)
 // - Total PvP damage: total PvE * (pvpDamagePercent / 100) if pvpDamagePercent exists
 
 export interface DamageRow {
@@ -27,9 +26,9 @@ export interface DamageRow {
 export interface PhaseDamage {
   phase: string
   percent: number
-  hits: number
+  multiplier: number  // the "x N" value
   maxTargets?: number // max targets the skill can hit (NOT a damage multiplier)
-  totalPerHit: number  // percent * hits
+  totalPerHit: number  // percent * multiplier
   totalMax: number     // same as totalPerHit (max targets doesn't multiply damage)
   pvpOnly: boolean
   pveOnly: boolean
@@ -41,19 +40,20 @@ export interface DamageCalculation {
   totalPvP: number | null
   pvpDamagePercent: number | null
   hasDamage: boolean
+  hasSpecialMode: boolean // true if skill had duplicate damage sets
 }
 
 // Parse a damage value string like "8246% x1" or "938% x3, max 5 hits"
-function parseDamageValue(value: string): { percent: number; hits: number; maxTargets?: number } | null {
-  // Match "X% xY" pattern
+function parseDamageValue(value: string): { percent: number; multiplier: number; maxTargets?: number } | null {
+  // Match "X% x N" pattern — N is the damage multiplier
   const dmgMatch = value.match(/([\d,]+(?:\.\d+)?)%\s*x\s*(\d+)/i)
   if (!dmgMatch) return null
   const percent = parseFloat(dmgMatch[1].replace(/,/g, ''))
-  const hits = parseInt(dmgMatch[2], 10)
+  const multiplier = parseInt(dmgMatch[2], 10)
   // Check for "max Z hits" — this is the max TARGET count, not a damage multiplier
   const maxMatch = value.match(/max\s+(\d+)\s+hits/i)
   const maxTargets = maxMatch ? parseInt(maxMatch[1], 10) : undefined
-  return { percent, hits, maxTargets }
+  return { percent, multiplier, maxTargets }
 }
 
 // Extract phase name from a damage row label
@@ -68,22 +68,20 @@ export function calculateDamage(
   pvpDamagePercent: number | null,
 ): DamageCalculation {
   if (!damageRows || damageRows.length === 0) {
-    return { phases: [], totalPvE: 0, totalPvP: null, pvpDamagePercent, hasDamage: false }
+    return { phases: [], totalPvE: 0, totalPvP: null, pvpDamagePercent, hasDamage: false, hasSpecialMode: false }
   }
 
-  const phases: PhaseDamage[] = []
-  const phaseMap = new Map<string, PhaseDamage>()
+  // Collect all damage rows (both [damage] kind and [note] kind with damage info)
+  const parsedRows: { phaseLabel: string; percent: number; multiplier: number; maxTargets?: number; pvpOnly: boolean; pveOnly: boolean }[] = []
 
   for (const row of damageRows) {
-    let parsed: { percent: number; hits: number; maxTargets?: number } | null = null
+    let parsed: { percent: number; multiplier: number; maxTargets?: number } | null = null
     let phaseLabel = ''
 
     if (row.kind === 'damage' && row.value) {
-      // [damage] kind: value is "X% xY"
       parsed = parseDamageValue(row.value)
       phaseLabel = extractPhase(row.label)
     } else if (row.kind === 'note' && row.label) {
-      // [note] kind: label contains damage info like "Standing attack damage 938% x1, max 3 hits"
       const dmgMatch = row.label.match(/([\d,]+(?:\.\d+)?)%\s*x\s*(\d+)/i)
       if (dmgMatch && row.label.toLowerCase().includes('damage')) {
         parsed = parseDamageValue(row.label)
@@ -94,33 +92,63 @@ export function calculateDamage(
 
     if (!parsed) continue
 
-    // CORRECT: damage = percent * hits (the "x N" IS the hit count)
-    // maxTargets is the max number of targets the skill can hit — NOT a damage multiplier
-    const totalPerHit = parsed.percent * parsed.hits
-    const totalMax = totalPerHit // max targets doesn't change per-target damage
+    parsedRows.push({
+      phaseLabel,
+      percent: parsed.percent,
+      multiplier: parsed.multiplier,
+      maxTargets: parsed.maxTargets,
+      pvpOnly: row.pvpOnly || false,
+      pveOnly: row.pveOnly || false,
+    })
+  }
 
-    // Merge with existing phase if same name (some skills have multiple rows for same phase)
-    const existing = phaseMap.get(phaseLabel)
+  // Detect special modes: if we see "Attack 1" more than once, the skill has
+  // multiple modes (normal + special). We only count the FIRST set.
+  let hasSpecialMode = false
+  let firstSetRows = parsedRows
+
+  const attack1Indices: number[] = []
+  for (let i = 0; i < parsedRows.length; i++) {
+    if (parsedRows[i].phaseLabel.toLowerCase().includes('attack 1')) {
+      attack1Indices.push(i)
+    }
+  }
+
+  if (attack1Indices.length > 1) {
+    hasSpecialMode = true
+    // Only keep rows from the first "Attack 1" up to (but not including) the second "Attack 1"
+    firstSetRows = parsedRows.slice(0, attack1Indices[1])
+  }
+
+  // Build phases from the first set only
+  const phases: PhaseDamage[] = []
+  const phaseMap = new Map<string, PhaseDamage>()
+
+  for (const row of firstSetRows) {
+    const totalPerHit = row.percent * row.multiplier
+    const totalMax = totalPerHit
+
+    const existing = phaseMap.get(row.phaseLabel)
     if (existing) {
-      existing.percent += parsed.percent
-      existing.hits += parsed.hits
+      existing.percent += row.percent
+      existing.multiplier += row.multiplier
       existing.totalPerHit += totalPerHit
       existing.totalMax += totalMax
-      if (parsed.maxTargets) {
-        existing.maxTargets = (existing.maxTargets || 1) * parsed.maxTargets
+      if (row.maxTargets) {
+        existing.maxTargets = (existing.maxTargets || 1) * row.maxTargets
       }
     } else {
       const phase: PhaseDamage = {
-        phase: phaseLabel,
-        percent: parsed.percent,
-        hits: parsed.hits,
-        maxTargets: parsed.maxTargets,
+        phase: row.phaseLabel,
+        percent: row.percent,
+        multiplier: row.multiplier,
+        maxTargets: row.maxTargets,
         totalPerHit,
         totalMax,
-        pvpOnly: row.pvpOnly || false,
-        pveOnly: row.pveOnly || false,
+        pvpOnly: row.pvpOnly,
+        pveOnly: row.pveOnly,
       }
-      phaseMap.set(phaseLabel, phase)
+      phaseMap.set(row.phaseLabel, phase)
       phases.push(phase)
     }
   }
@@ -140,6 +168,7 @@ export function calculateDamage(
     totalPvP,
     pvpDamagePercent,
     hasDamage: phases.length > 0,
+    hasSpecialMode,
   }
 }
 
