@@ -334,10 +334,15 @@ export async function GET(req: NextRequest) {
       }
     } else if (classIds.length > 1) {
       // Multi-class: match by classId OR className
+      const selectedClasses = await db.bdoClass.findMany({
+        where: { id: { in: classIds } },
+        select: { name: true },
+      })
+      const classNameList = selectedClasses.map((c) => c.name)
       AND.push({
         OR: [
           { classId: { in: classIds } },
-          { className: { in: classNames } },
+          { className: { in: classNameList } },
         ],
       })
     }

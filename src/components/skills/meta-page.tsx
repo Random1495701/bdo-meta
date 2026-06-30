@@ -2,8 +2,8 @@
 
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { motion } from 'framer-motion'
-import { Zap, ArrowUpDown, Table2, LayoutGrid, Database, X, ChevronDown } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Zap, ArrowUpDown, Table2, LayoutGrid, Database, X, ChevronDown, ExternalLink, Swords } from 'lucide-react'
 
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { formatDamage as fmtDmg } from '@/lib/damage'
@@ -911,6 +911,19 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
       <div className="border-t border-amber-900/30 bg-bdo-ink px-4 py-2 text-center text-[10px] text-amber-300/30">
         {specCards.length} spec cards · Each class×spec = separate card · Black Spirit rage skills excluded · PvE-only CC/protection excluded · Max-rank skills only
       </div>
+    </div>
+  )
+}
+
+function ExpandedStatBox({ label, value, color }: { label: string; value: string; color: string }) {
+  return (
+    <div
+      className="flex flex-col gap-0.5 rounded-sm border px-2 py-1.5"
+      style={{ borderColor: `${color}55`, backgroundColor: `${color}12` }}
+      title={label}
+    >
+      <span className="text-[8px] font-semibold uppercase tracking-wider" style={{ color: `${color}cc` }}>{label}</span>
+      <span className="font-mono text-base font-bold tabular-nums" style={{ color }}>{value}</span>
     </div>
   )
 }

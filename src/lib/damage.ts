@@ -160,7 +160,6 @@ export function calculateDamage(
     if (parsedRows[i].phaseLabel.toLowerCase().includes('attack 1')) {
       attack1Indices.push(i)
     }
-    phases.push(phase)
   }
 
   const hasSpecialMode = attack1Indices.length > 1
