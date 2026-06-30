@@ -69,6 +69,7 @@ export interface Skill {
   description: string | null
   damageRows: DamageRow[] | null
   damage?: DamageCalculation
+  damagePerCooldown?: number | null
   ccTypes: string[] | null
   ccCounters?: number
   ccCounterDisplay?: string
@@ -222,6 +223,7 @@ export type SkillSort =
   | 'sp'
   | 'damage'
   | 'pvpDamage'
+  | 'dmgPerCd'
   | 'ccCounters'
   | 'type'
 

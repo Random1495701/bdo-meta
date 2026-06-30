@@ -116,6 +116,9 @@ export async function GET(
     description: skill.description,
     damageRows,
     damage,
+    damagePerCooldown: (damage.totalPvE > 0 && skill.cooldownSec && skill.cooldownSec > 0)
+      ? Math.round(damage.totalPvE / skill.cooldownSec)
+      : null,
     ccTypes,
     ccCounters,
     ccCounterDisplay,

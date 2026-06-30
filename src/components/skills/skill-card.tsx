@@ -111,6 +111,7 @@ function DamageRow({ skill }: { skill: Skill }) {
   }
   const pve = formatDamage(dmg.totalPvE)
   const pvp = dmg.totalPvP != null ? formatDamage(dmg.totalPvP) : null
+  const dpc = skill.damagePerCooldown
   return (
     <div
       className="flex items-center gap-2.5 rounded-sm border border-amber-700/40 bg-gradient-to-r from-amber-950/40 to-bdo-leather-dark px-2.5 py-1.5"
@@ -130,6 +131,15 @@ function DamageRow({ skill }: { skill: Skill }) {
         >
           <Skull className="size-3.5 text-pink-400/80" />
           {pvp}
+        </div>
+      )}
+      {dpc != null && dpc > 0 && (
+        <div
+          className="ml-auto flex items-center gap-1 text-[10px] font-bold tabular-nums text-emerald-400"
+          title={`Damage per cooldown second: ${dpc.toLocaleString()}%`}
+        >
+          <Gauge className="size-3 text-emerald-400/80" />
+          {formatDamage(dpc)}/s
         </div>
       )}
     </div>

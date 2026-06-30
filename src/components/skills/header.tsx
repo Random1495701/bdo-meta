@@ -39,6 +39,7 @@ const SORT_OPTIONS: { value: SkillSort; label: string }[] = [
   { value: 'type', label: 'Skill Type' },
   { value: 'damage', label: 'Damage (PvE)' },
   { value: 'pvpDamage', label: 'Damage (PvP)' },
+  { value: 'dmgPerCd', label: 'Dmg / Cooldown' },
   { value: 'ccCounters', label: 'CC Counters' },
 ]
 

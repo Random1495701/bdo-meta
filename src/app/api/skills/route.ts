@@ -107,6 +107,9 @@ function serializeSkill(s: any) {
     description: s.description,
     damageRows,
     damage,
+    damagePerCooldown: (damage.totalPvE > 0 && s.cooldownSec && s.cooldownSec > 0)
+      ? Math.round(damage.totalPvE / s.cooldownSec)
+      : null,
     ccTypes,
     ccCounters,
     ccCounterDisplay,
@@ -360,6 +363,13 @@ export async function GET(req: NextRequest) {
   }
   const orderBy = sortMap[sort] || sortMap.skillId
 
+  // For computed sorts (damage, pvpDamage, ccCounters, dmgPerCd, type),
+  // we can't use DB orderBy — the final findMany just uses skillId ordering
+  // and we sort filteredIds manually above.
+  const effectiveOrderBy = ['damage', 'pvpDamage', 'ccCounters', 'dmgPerCd', 'type'].includes(sort)
+    ? { skillId: 'asc' as const }
+    : orderBy
+
   // --- Max-rank filtering ---
   if (maxRank) {
     // Include all sort-relevant fields up-front so we can sort filteredIds
@@ -485,7 +495,7 @@ export async function GET(req: NextRequest) {
     // Apply damage range filter post-query (since damage is computed, not stored).
     // Also pre-compute PvP damage and CC counters when sorting by those columns.
     let filteredIds = specFilteredIds
-    const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage'
+    const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage' || sort === 'dmgPerCd'
     const needsCC = sort === 'ccCounters' || pvpOnlyFilter
     let dmgPvEMap: Map<number, number> | null = null
     let dmgPvPMap: Map<number, number> | null = null
@@ -498,6 +508,7 @@ export async function GET(req: NextRequest) {
           damageRowsJson: true,
           pvpDamagePercent: true,
           ccTypes: true,
+          cooldownSec: true,
         },
       })
       dmgPvEMap = new Map<number, number>()
@@ -570,6 +581,21 @@ export async function GET(req: NextRequest) {
         const cb_ = ccMap!.get(b) ?? 0
         return dir * (ca - cb_)
       })
+    } else if (sort === 'dmgPerCd') {
+      // Damage per cooldown: totalPvE / cooldownSec (higher = more efficient)
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const da = dmgPvEMap!.get(a) ?? 0
+        const db_ = dmgPvEMap!.get(b) ?? 0
+        // Need cooldown data — fetch from the skills array we already have
+        const sa = skills.find(s => s.skillId === a)
+        const sb = skills.find(s => s.skillId === b)
+        const cda = sa?.cooldownSec ?? 0
+        const cdb = sb?.cooldownSec ?? 0
+        // DPC = damage / cooldown (if cooldown is 0 or null, treat as instant = high efficiency)
+        const dpcA = cda > 0 ? da / cda : da
+        const dpcB = cdb > 0 ? db_ / cdb : db_
+        return dir * (dpcA - dpcB)
+      })
     } else if (sort === 'name') {
       filteredIds = [...filteredIds].sort((a, b) => {
         const ra = rowById.get(a)!
@@ -630,7 +656,7 @@ export async function GET(req: NextRequest) {
 
     const items = await db.skill.findMany({
       where: { skillId: { in: pageIds } },
-      orderBy,
+      orderBy: effectiveOrderBy,
     })
 
     const idOrder = new Map(pageIds.map((id, i) => [id, i]))
@@ -650,7 +676,7 @@ export async function GET(req: NextRequest) {
   // Non-maxRank path
   const [total, items] = await Promise.all([
     db.skill.count({ where }),
-    db.skill.findMany({ where, orderBy, skip: (page - 1) * pageSize, take: pageSize }),
+    db.skill.findMany({ where, orderBy: effectiveOrderBy, skip: (page - 1) * pageSize, take: pageSize }),
   ])
 
   return NextResponse.json({
