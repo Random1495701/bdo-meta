@@ -341,38 +341,50 @@ export async function triggerLurker(
 
 // --- Display helpers ---
 
+// Spec colors — used everywhere across the UI
+// Red = Awakening, Blue = Succession, Yellow = Ascension
+export const SPEC_COLORS = {
+  awakening: '#ef4444',   // Red
+  succession: '#3b82f6',  // Blue
+  ascension: '#eab308',   // Yellow
+} as const
+
 export const CLASS_COLORS: Record<string, string> = {
+  // Class colors are now derived from their primary spec.
+  // Classes with both Awakening + Succession use a neutral amber.
+  // Ascension-only classes use yellow.
   Warrior: '#c9a25c',
-  Ranger: '#7fbf3e',
-  Sorceress: '#a253d6',
-  Berserker: '#d6533a',
-  Tamer: '#d6a53a',
-  Valkyrie: '#e6c84c',
-  Wizard: '#5c9cd6',
-  Witch: '#5c9cd6',
-  Musa: '#d6533a',
-  Maehwa: '#d6533a',
-  Lahn: '#e36fa8',
-  Striker: '#e6a04c',
-  Mystic: '#e6a04c',
-  Kunoichi: '#a253d6',
-  Ninja: '#7fa8bf',
-  'Dark Knight': '#7a3ad6',
-  Archer: '#5cbf8f',
-  Shai: '#e6c84c',
-  Guardian: '#5cbfd6',
-  Hashashin: '#d6b54c',
-  Nova: '#6fbfe6',
-  Sage: '#5cd6a5',
-  Corsair: '#d6a53a',
-  Drakania: '#7ad6bf',
-  Woosa: '#e6a5d6',
-  Maegu: '#e6a5d6',
-  Scholar: '#bfa5e6',
-  Dosa: '#a5e6bf',
-  Seraph: '#e6d6a5',
-  Deadeye: '#bf5c5c',
-  Wukong: '#d6853a',
+  Ranger: '#c9a25c',
+  Sorceress: '#c9a25c',
+  Berserker: '#c9a25c',
+  Tamer: '#c9a25c',
+  Valkyrie: '#c9a25c',
+  Wizard: '#c9a25c',
+  Witch: '#c9a25c',
+  Musa: '#c9a25c',
+  Maehwa: '#c9a25c',
+  Lahn: '#c9a25c',
+  Striker: '#c9a25c',
+  Mystic: '#c9a25c',
+  Kunoichi: '#c9a25c',
+  Ninja: '#c9a25c',
+  'Dark Knight': '#c9a25c',
+  Guardian: '#c9a25c',
+  Hashashin: '#c9a25c',
+  Nova: '#c9a25c',
+  Sage: '#c9a25c',
+  Corsair: '#c9a25c',
+  Drakania: '#c9a25c',
+  Woosa: '#c9a25c',
+  Maegu: '#c9a25c',
+  Dosa: '#c9a25c',
+  // Ascension-only classes — yellow
+  Archer: '#eab308',
+  Shai: '#eab308',
+  Scholar: '#eab308',
+  Seraph: '#eab308',
+  Deadeye: '#eab308',
+  Wukong: '#eab308',
 }
 
 export function classColor(name: string | null): string {
@@ -419,12 +431,12 @@ export const SKILL_TYPE_META: Record<
   },
   awakening: {
     label: 'Awakening',
-    color: '#f59e0b',
+    color: SPEC_COLORS.awakening,
     description: 'Awakening weapon skills (Level 56+)',
   },
   succession: {
     label: 'Succession',
-    color: '#10b981',
+    color: SPEC_COLORS.succession,
     description: 'Succession skills (Level 56+)',
   },
   absolute: {

@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { Zap, ArrowUpDown, Table2, LayoutGrid } from 'lucide-react'
 
-import { classColor, classIconUrl, formatDamage } from '@/lib/skills'
+import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { formatDamage as fmtDmg } from '@/lib/damage'
 import { cn } from '@/lib/utils'
 
@@ -30,11 +30,11 @@ interface ClassStats {
 
 type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount'
 
-// Spec display metadata
+// Spec display metadata — Red=Awakening, Blue=Succession, Yellow=Ascension
 const SPEC_META: Record<string, { label: string; color: string; shortLabel: string }> = {
-  awakening: { label: 'Awakening', color: '#fbbf24', shortLabel: 'AWK' },
-  succession: { label: 'Succession', color: '#34d399', shortLabel: 'SUCC' },
-  ascension: { label: 'Ascension', color: '#a78bfa', shortLabel: 'ASC' },
+  awakening: { label: 'Awakening', color: SPEC_COLORS.awakening, shortLabel: 'AWK' },
+  succession: { label: 'Succession', color: SPEC_COLORS.succession, shortLabel: 'SUCC' },
+  ascension: { label: 'Ascension', color: SPEC_COLORS.ascension, shortLabel: 'ASC' },
 }
 
 async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
@@ -44,21 +44,23 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 }
 
 // A single spec card — one per class×spec combination
+// Portrait is the card background, with a dark gradient overlay for readability.
+// Framed class icon in top-right corner with spec-colored border.
 function SpecCard({ cls, specName, stats, sortKey }: {
   cls: ClassStats
   specName: 'awakening' | 'succession' | 'ascension'
   stats: SpecStats
   sortKey: SortKey
 }) {
-  const color = classColor(cls.className)
   const iconUrl = classIconUrl(cls.slug)
-  // Use spec-specific portrait if available, fall back to main portrait, then class icon
+  // Use spec-specific portrait as background
   const specPortraitUrl = `/icons/portraits/specs/${cls.slug}-${specName}.jpg`
   const mainPortraitUrl = `/icons/portraits/${cls.slug}.jpg`
-  const portraitUrl = specName === 'awakening' || specName === 'succession'
+  const bgPortraitUrl = specName === 'awakening' || specName === 'succession'
     ? specPortraitUrl
     : mainPortraitUrl
   const specMeta = SPEC_META[specName]
+  const specColor = specMeta.color
 
   // Skip empty specs (0 skills = not available for this class)
   if (stats.skillCount === 0) return null
@@ -67,73 +69,93 @@ function SpecCard({ cls, specName, stats, sortKey }: {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bdo-frame group relative flex flex-col gap-3 rounded-sm border-2 p-4"
+      className="group relative flex flex-col gap-2 overflow-hidden rounded-sm border-2"
       style={{
-        borderColor: `${specMeta.color}44`,
-        background: 'linear-gradient(135deg, #1a1612 0%, #0a0908 100%)',
-        boxShadow: `inset 0 0 0 1px ${specMeta.color}15, 0 2px 8px rgba(0,0,0,0.5)`,
+        borderColor: `${specColor}88`,
+        boxShadow: `0 4px 12px rgba(0,0,0,0.6), inset 0 0 0 1px ${specColor}33`,
+        minHeight: 200,
       }}
     >
-      {/* Header: portrait + class icon + name + spec badge */}
-      <div className="flex items-center gap-3">
-        {/* Spec-specific portrait */}
-        <div
-          className="relative shrink-0 overflow-hidden rounded-sm border-2"
-          style={{
-            width: 64,
-            height: 64,
-            borderColor: `${color}88`,
-            boxShadow: `inset 0 0 0 1px ${color}33`,
+      {/* Background portrait */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={bgPortraitUrl}
+          alt=""
+          className="h-full w-full object-cover"
+          loading="lazy"
+          onError={(e) => {
+            const img = e.target as HTMLImageElement
+            if (img.src !== mainPortraitUrl) img.src = mainPortraitUrl
+            else img.style.display = 'none'
           }}
-        >
-          <img
-            src={portraitUrl}
-            alt={`${cls.className} ${specMeta.label}`}
-            className="h-full w-full object-cover"
-            loading="lazy"
-            onError={(e) => {
-              const img = e.target as HTMLImageElement
-              // Try main portrait first, then class icon
-              if (img.src !== mainPortraitUrl) {
-                img.src = mainPortraitUrl
-              } else if (iconUrl) {
-                img.src = iconUrl
-              }
-            }}
-          />
-          {/* Spec color overlay */}
-          <div
-            className="absolute inset-0"
-            style={{ background: `linear-gradient(to top, ${specMeta.color}40 0%, transparent 50%)` }}
-          />
-        </div>
-
-        <div className="flex flex-col gap-0.5">
-          <h3 className="bdo-title text-base font-bold leading-tight" style={{ color }}>
-            {cls.className}
-          </h3>
-          <span
-            className="rounded-sm px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider"
-            style={{
-              color: specMeta.color,
-              backgroundColor: `${specMeta.color}1a`,
-              border: `1px solid ${specMeta.color}44`,
-            }}
-          >
-            {specMeta.label}
-          </span>
-          <span className="text-[10px] text-amber-200/40">{stats.skillCount} skills</span>
-        </div>
+        />
+        {/* Dark gradient overlay for readability — stronger at bottom */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to bottom,
+              rgba(10,9,8,0.85) 0%,
+              rgba(10,9,8,0.6) 30%,
+              rgba(10,9,8,0.85) 70%,
+              rgba(10,9,8,0.95) 100%)`,
+          }}
+        />
+        {/* Spec color tint at top */}
+        <div
+          className="absolute inset-x-0 top-0 h-1"
+          style={{ background: `linear-gradient(to bottom, ${specColor}66, transparent)` }}
+        />
       </div>
 
-      {/* Stats grid */}
-      <div className="grid grid-cols-3 gap-1.5">
-        <StatBox label="Avg PvP" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'avgPvpDamage'} />
-        <StatBox label="Med PvP" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'medianPvpDamage'} />
-        <StatBox label="CC" value={String(stats.pvpCcSkillCount)} color="#f87171" highlighted={sortKey === 'pvpCcSkillCount'} />
-        <StatBox label="💪 SA" value={String(stats.superArmorCount)} color="#fbbf24" highlighted={sortKey === 'superArmorCount'} />
-        <StatBox label="🛡 FG" value={String(stats.forwardGuardCount)} color="#60a5fa" highlighted={sortKey === 'forwardGuardCount'} />
-        <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
+      {/* Content layer */}
+      <div className="relative z-10 flex flex-col gap-2 p-3">
+        {/* Header: class name + spec badge + framed icon */}
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex flex-col gap-0.5">
+            <h3 className="bdo-title text-base font-bold leading-tight text-amber-50 drop-shadow-lg">
+              {cls.className}
+            </h3>
+            <span
+              className="w-fit rounded-sm px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider backdrop-blur-sm"
+              style={{
+                color: specColor,
+                backgroundColor: `${specColor}22`,
+                border: `1px solid ${specColor}66`,
+              }}
+            >
+              {specMeta.label}
+            </span>
+          </div>
+
+          {/* Framed class icon — spec-colored border */}
+          {iconUrl && (
+            <div
+              className="shrink-0 overflow-hidden rounded-sm border-2"
+              style={{
+                width: 36,
+                height: 36,
+                borderColor: specColor,
+                boxShadow: `0 0 8px ${specColor}44, inset 0 0 0 1px ${specColor}33`,
+                background: 'rgba(10,9,8,0.8)',
+              }}
+            >
+              <img src={iconUrl} alt={cls.className} className="h-full w-full object-cover" loading="lazy" />
+            </div>
+          )}
+        </div>
+
+        {/* Stats grid */}
+        <div className="grid grid-cols-3 gap-1">
+          <StatBox label="Avg PvP" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'avgPvpDamage'} />
+          <StatBox label="Med PvP" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'medianPvpDamage'} />
+          <StatBox label="CC" value={String(stats.pvpCcSkillCount)} color="#f87171" highlighted={sortKey === 'pvpCcSkillCount'} />
+          <StatBox label="💪 SA" value={String(stats.superArmorCount)} color="#fbbf24" highlighted={sortKey === 'superArmorCount'} />
+          <StatBox label="🛡 FG" value={String(stats.forwardGuardCount)} color="#60a5fa" highlighted={sortKey === 'forwardGuardCount'} />
+          <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
+        </div>
+
+        {/* Skill count footer */}
+        <div className="text-[10px] text-amber-200/40">{stats.skillCount} skills</div>
       </div>
     </motion.div>
   )

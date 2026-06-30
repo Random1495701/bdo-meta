@@ -138,8 +138,8 @@ function ClassChip({
           className={cn(
             'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
             specs.includes('succession') && active
-              ? 'bg-emerald-500/30 text-emerald-200 ring-1 ring-emerald-400/60'
-              : 'bg-zinc-800/80 text-zinc-500 hover:bg-emerald-900/30 hover:text-emerald-300',
+              ? 'bg-blue-500/30 text-blue-200 ring-1 ring-blue-400/60'
+              : 'bg-zinc-800/80 text-zinc-500 hover:bg-blue-900/30 hover:text-blue-300',
           )}
           title="Succession spec — click to toggle"
         >
@@ -155,8 +155,8 @@ function ClassChip({
           className={cn(
             'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
             specs.includes('awakening') && active
-              ? 'bg-amber-500/30 text-amber-200 ring-1 ring-amber-400/60'
-              : 'bg-zinc-800/80 text-zinc-500 hover:bg-amber-900/30 hover:text-amber-300',
+              ? 'bg-red-500/30 text-red-200 ring-1 ring-red-400/60'
+              : 'bg-zinc-800/80 text-zinc-500 hover:bg-red-900/30 hover:text-red-300',
           )}
           title="Awakening spec — click to toggle"
         >
