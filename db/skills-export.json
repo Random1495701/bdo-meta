@@ -1,7 +1,7 @@
 {
-  "exportedAt": "2026-06-29T23:48:58.563Z",
+  "exportedAt": "2026-06-30T00:11:21.040Z",
   "source": "bdo-meta-restore",
-  "total": 1616,
+  "total": 1691,
   "skills": [
     {
       "skillId": 1,
@@ -8857,6 +8857,109 @@
       "syncedAt": "2026-06-29T23:48:14.312Z"
     },
     {
+      "skillId": 282,
+      "groupId": null,
+      "name": "Seizing Fear XVII",
+      "krName": "엄습하는 공포 XVII",
+      "className": "Berserker",
+      "classId": 12,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/04_pgm_skill/pgm_skill_0267.webp",
+      "requiredLevel": 51,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Passive",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "The power of the beast within toughens your body and sharpens your senses.",
+      "damageRows": [
+        {
+          "label": "All Accuracy +1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:57.253Z"
+    },
+    {
+      "skillId": 293,
+      "groupId": 510,
+      "name": "Counter I",
+      "krName": "반격 태세 I",
+      "className": "Warrior",
+      "classId": 0,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/01_phm_skill/phm_skill_0293.webp",
+      "requiredLevel": 1,
+      "maxLevel": 3,
+      "skillPoints": 0,
+      "command": "↓ +  LMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Step backwards and take up a Counter stance.Can instantly perform skills not mentioned in the description.",
+      "damageRows": [
+        {
+          "label": "Counter damage 628% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "5 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Float"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/1_phm_skill/phm_293.webm",
+      "animationDurationMs": 7667,
+      "syncedAt": "2026-06-30T00:10:34.921Z"
+    },
+    {
       "skillId": 299,
       "groupId": null,
       "name": "Weakling Hunt III",
@@ -9016,6 +9119,92 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/4_pgm_skill/pgm_302.webm",
       "animationDurationMs": 8917,
       "syncedAt": "2026-06-29T23:48:14.315Z"
+    },
+    {
+      "skillId": 305,
+      "groupId": 511,
+      "name": "Shield Charge I",
+      "krName": "방패 진공 I",
+      "className": "Warrior",
+      "classId": 0,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/01_phm_skill/phm_skill_0305.webp",
+      "requiredLevel": 10,
+      "maxLevel": 2,
+      "skillPoints": 0,
+      "command": "↑ +  RMB",
+      "cooldown": "3s",
+      "cooldownSec": 3,
+      "description": "Dash for a short distance towards the enemy while maintaining Guard.",
+      "damageRows": [
+        {
+          "label": "Attack damage 962% x1, max 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "3 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 30 WP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "74.48%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 74.48,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        1019
+      ],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/1_phm_skill/phm_305.webm",
+      "animationDurationMs": 2792,
+      "syncedAt": "2026-06-30T00:11:16.882Z"
     },
     {
       "skillId": 313,
@@ -9926,6 +10115,95 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/6_pkm_skill/pkm_397.webm",
       "animationDurationMs": 7250,
       "syncedAt": "2026-06-29T23:48:14.335Z"
+    },
+    {
+      "skillId": 398,
+      "groupId": null,
+      "name": "Cyclone Slash II",
+      "krName": "선풍참 II",
+      "className": "Musa, Dosa",
+      "classId": 20,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/06_pkm_skill/pkm_skill_0397.webp",
+      "requiredLevel": 38,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Hold  LMB  +  RMB",
+      "cooldown": "10s",
+      "cooldownSec": 10,
+      "description": "Create a cyclone with your blade that rushes forward.",
+      "damageRows": [
+        {
+          "label": "Attack damage 683% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Extra attack damage 1017% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Carver: Typhoon&#39s damage 850%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Extra attack Critical Hit Rate +10%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "5 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Increased extra attack area",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Knockback",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack on extra attack hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Knockback",
+        "Float"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": true,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/6_pkm_skill/pkm_398.webm",
+      "animationDurationMs": 7250,
+      "syncedAt": "2026-06-30T00:11:00.926Z"
     },
     {
       "skillId": 399,
@@ -14029,6 +14307,80 @@
       "syncedAt": "2026-06-29T23:48:14.423Z"
     },
     {
+      "skillId": 880,
+      "groupId": null,
+      "name": "Staff Attack IV",
+      "krName": "지팡이 공격 IV",
+      "className": "Wizard, Witch",
+      "classId": 31,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/08_pwm_skill/pwm_skill_0877.webp",
+      "requiredLevel": 32,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "LMB",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Use your staff imbued with your magic to deal damage to your foes.",
+      "damageRows": [
+        {
+          "label": "Attack damage 1077% x1, max 3 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward attack damage 1077% x1, max 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Last attack damage 1077% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 20 MP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "92.02%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": 92.02,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/8_pwm_skill/pwm_877.webm",
+      "animationDurationMs": 5667,
+      "syncedAt": "2026-06-30T00:09:43.941Z"
+    },
+    {
       "skillId": 882,
       "groupId": null,
       "name": "Staff Attack VI",
@@ -14589,6 +14941,183 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/8_pwm_skill/pwm_911.webm",
       "animationDurationMs": 3375,
       "syncedAt": "2026-06-29T23:48:14.435Z"
+    },
+    {
+      "skillId": 912,
+      "groupId": 5530,
+      "name": "Earth's Response I",
+      "krName": "지면의 응답 I",
+      "className": "Wizard, Witch",
+      "classId": 31,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/08_pwm_skill/pwm_skill_0912.webp",
+      "requiredLevel": 1,
+      "maxLevel": 3,
+      "skillPoints": 0,
+      "command": "← +  LMB",
+      "cooldown": "4s",
+      "cooldownSec": 4,
+      "description": "While swiftly dodging left and right, strike the ground hard to attack the enemy ahead with protruding rocks.",
+      "damageRows": [
+        {
+          "label": "Attack damage 397% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "3 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        }
+      ],
+      "ccTypes": [
+        "Float"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/8_pwm_skill/pwm_912.webm",
+      "animationDurationMs": 4334,
+      "syncedAt": "2026-06-30T00:06:38.754Z"
+    },
+    {
+      "skillId": 926,
+      "groupId": null,
+      "name": "Wind Slash IV",
+      "krName": "바람 베기 IV",
+      "className": "Kunoichi",
+      "classId": 25,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/13_pnw_skill/pnw_skill_0923.webp",
+      "requiredLevel": 32,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "LMB",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Perform a basic attack with blazingly-fast techniques.",
+      "damageRows": [
+        {
+          "label": "Standing attack 1 damage 1354% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Standing attack 2 damage 1354% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward attack damage 1354% x1, max 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Laceration attack damage 1354% x2 after standing attack 1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Standing and forward attack 3 damage 1354% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Standing and forward last attack damage 1354% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Jump attack damage 1354% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +15%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "3 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 26 WP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Recover +30 WP on jump attack hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Push the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack on forward attack hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "54.67%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Push the target",
+        "Stiffness"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 54.67,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/13_pnw_skill/pnw_923.webm",
+      "animationDurationMs": 6875,
+      "syncedAt": "2026-06-30T00:07:42.062Z"
     },
     {
       "skillId": 929,
@@ -15869,6 +16398,49 @@
       "syncedAt": "2026-06-29T23:48:14.459Z"
     },
     {
+      "skillId": 1001,
+      "groupId": 1503,
+      "name": "Spirit Healing I",
+      "krName": "정령의 정신치유 I",
+      "className": "Ranger",
+      "classId": 4,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/03_pew_skill/pew_skill_1001.webp",
+      "requiredLevel": 3,
+      "maxLevel": 20,
+      "skillPoints": 3,
+      "command": "Passive",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Move with agility and gain mighty power with the help of a spirit.",
+      "damageRows": [
+        {
+          "label": "All AP +1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Max Stamina +10",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": true,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:37.122Z"
+    },
+    {
       "skillId": 1002,
       "groupId": 1501,
       "name": "Bow Skill I",
@@ -16925,6 +17497,94 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/3_pew_skill/pew_1092.webm",
       "animationDurationMs": 5420,
       "syncedAt": "2026-06-29T23:48:14.478Z"
+    },
+    {
+      "skillId": 1098,
+      "groupId": null,
+      "name": "Will of the Wind V",
+      "krName": "바람의 의지 V",
+      "className": "Ranger",
+      "classId": 4,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/03_pew_skill/pew_skill_1007.webp",
+      "requiredLevel": 41,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  Q",
+      "cooldown": "8s",
+      "cooldownSec": 8,
+      "description": "Rapidly fire multiple arrows in a row.",
+      "damageRows": [
+        {
+          "label": "Attack damage 1995% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Applies Evasive Shot&#39s damage x1 during moving attacks",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Increased attack area",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "All Damage Reduction -20 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Knockdown",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Knockdown"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/3_pew_skill/pew_1098.webm",
+      "animationDurationMs": 4084,
+      "syncedAt": "2026-06-30T00:10:21.255Z"
     },
     {
       "skillId": 1102,
@@ -18049,6 +18709,103 @@
       "syncedAt": "2026-06-29T23:48:14.497Z"
     },
     {
+      "skillId": 1175,
+      "groupId": null,
+      "name": "Raging Thunder II",
+      "krName": "몰아치는 벼락 II",
+      "className": "Berserker",
+      "classId": 12,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/04_pgm_skill/pgm_skill_1044.webp",
+      "requiredLevel": 23,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "LMB  +  RMB",
+      "cooldown": "14s",
+      "cooldownSec": 14,
+      "description": "Overwhelm your enemies by swinging your axes in a raging storm.",
+      "damageRows": [
+        {
+          "label": "Attack damage 629% x1, max 19 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Last attack damage 629% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All Damage Reduction -5 for 10 sec on last attack hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Spin the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Knockback",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Knockback",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "58.42%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Spin the target",
+        "Knockback"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 58.42,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/4_pgm_skill/pgm_1175.webm",
+      "animationDurationMs": 8000,
+      "syncedAt": "2026-06-30T00:06:31.048Z"
+    },
+    {
       "skillId": 1178,
       "groupId": null,
       "name": "Raging Thunder V",
@@ -18609,6 +19366,74 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/2_phw_skill/phw_1202.webm",
       "animationDurationMs": 5834,
       "syncedAt": "2026-06-29T23:48:14.506Z"
+    },
+    {
+      "skillId": 1203,
+      "groupId": null,
+      "name": "Claws of Darkness III",
+      "krName": "어둠의 연격 III",
+      "className": "Sorceress",
+      "classId": 8,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/02_phw_skill/phw_skill_1056.webp",
+      "requiredLevel": 34,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↑ +  LMB",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Perform combo attacks with the power of darkness gathered in both hands.",
+      "damageRows": [
+        {
+          "label": "Attack damage 860% 2, max 3 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "8 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Increased attack area",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Create Fragment of Darkness x2 per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "59.06%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": 59.06,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/2_phw_skill/phw_1203.webm",
+      "animationDurationMs": 5500,
+      "syncedAt": "2026-06-30T00:09:00.961Z"
     },
     {
       "skillId": 1204,
@@ -19325,6 +20150,104 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/5_pbw_skill/pbw_1233.webm",
       "animationDurationMs": 10084,
       "syncedAt": "2026-06-29T23:48:14.518Z"
+    },
+    {
+      "skillId": 1235,
+      "groupId": null,
+      "name": "Throat-Burn II",
+      "krName": "숨통 태우기 II",
+      "className": "Tamer",
+      "classId": 16,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/05_pbw_skill/pbw_skill_1235.webp",
+      "requiredLevel": 23,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  RMB",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Release the strength of Heuklang, tossing enemies into the air, then exploding its energy to send them flying.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "1128% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "1128% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +20%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 80 HP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack on attack 1 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack on attack 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "86.1%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Float"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 86.1,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/5_pbw_skill/pbw_1071.webm",
+      "animationDurationMs": 4959,
+      "syncedAt": "2026-06-30T00:09:21.533Z"
     },
     {
       "skillId": 1236,
@@ -24220,6 +25143,49 @@
       "syncedAt": "2026-06-29T23:48:14.621Z"
     },
     {
+      "skillId": 1669,
+      "groupId": null,
+      "name": "Target Chase II",
+      "krName": "표적 추격 II",
+      "className": "Kunoichi, Ninja",
+      "classId": 26,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/13_pnw_skill/pnw_skill_1668.webp",
+      "requiredLevel": 29,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Can be used with your sura katana or sah chakram ↓ +  Q",
+      "cooldown": "25s",
+      "cooldownSec": 25,
+      "description": "Chase the enemy more faster and more relentlessly.",
+      "damageRows": [
+        {
+          "label": "Consumes no Stamina and Sprint speed +20% for 17 sec.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Unavailable out of combat.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/13_pnw_skill/pnw_1669.webm",
+      "animationDurationMs": 12667,
+      "syncedAt": "2026-06-30T00:08:26.079Z"
+    },
+    {
       "skillId": 1670,
       "groupId": null,
       "name": "Target Chase III",
@@ -27930,6 +28896,107 @@
       "syncedAt": "2026-06-29T23:48:14.684Z"
     },
     {
+      "skillId": 1912,
+      "groupId": null,
+      "name": "Skybound Stab III",
+      "krName": "비천 III",
+      "className": "Tamer",
+      "classId": 16,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/05_pbw_skill/pbw_skill_1910.webp",
+      "requiredLevel": 60,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "F",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Brandish your celestial bo staff up and down quickly to damage enemies.",
+      "damageRows": [
+        {
+          "label": "Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Upward strike attack damage 4165% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50% (PvE only)  (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 23 MP per hit (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "All Damage Reduction -25 for 10 sec on hits (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack on upward strike attack hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "37.62%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Smash",
+        "Float"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 37.62,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/5_pbw_skill/pbw_1910.webm",
+      "animationDurationMs": 4542,
+      "syncedAt": "2026-06-30T00:10:43.874Z"
+    },
+    {
       "skillId": 1926,
       "groupId": null,
       "name": "Legendary Beast Dance IV",
@@ -29775,6 +30842,91 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/6_pkm_skill/pkm_2004.webm",
       "animationDurationMs": 6167,
       "syncedAt": "2026-06-29T23:48:14.708Z"
+    },
+    {
+      "skillId": 2015,
+      "groupId": 3068,
+      "name": "Projection I",
+      "krName": "파극쇄 I",
+      "className": "Musa",
+      "classId": 20,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/06_pkm_skill/pkm_skill_2015.webp",
+      "requiredLevel": 56,
+      "maxLevel": 3,
+      "skillPoints": 9,
+      "command": "SHIFT +  RMB",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Realize the crescent blade's energy and project it forward to inflict damage.",
+      "damageRows": [
+        {
+          "label": "Attack damage 1050% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Extra attack damage 3171% x1, max 3 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "60.65%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "33.12% extra attack damage in PvP only",
+          "pvpOnly": true,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Float",
+        "Stiffness"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 60.65,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": true,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        1986
+      ],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/6_pkm_skill/pkm_2015.webm",
+      "animationDurationMs": 6625,
+      "syncedAt": "2026-06-30T00:07:17.216Z"
     },
     {
       "skillId": 2022,
@@ -32118,6 +33270,94 @@
       "syncedAt": "2026-06-29T23:48:14.743Z"
     },
     {
+      "skillId": 2155,
+      "groupId": null,
+      "name": "Half Moon Slash II",
+      "krName": "반월베기 II",
+      "className": "Kunoichi",
+      "classId": 25,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/13_pnw_skill/pnw_skill_2154.webp",
+      "requiredLevel": 57,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "→ or  ← +  LMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Swiftly move toward the enemy's side and slash mercilessly.",
+      "damageRows": [
+        {
+          "label": "Attack damage 1842% x1, max 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +30%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 70 WP per hit (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack Speed +10% for 10 sec when using the skill (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "No collision while moving (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "75.5%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 75.5,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/13_pnw_skill/pnw_2154.webm",
+      "animationDurationMs": 9750,
+      "syncedAt": "2026-06-30T00:09:24.555Z"
+    },
+    {
       "skillId": 2156,
       "groupId": null,
       "name": "Half Moon Slash III",
@@ -32504,6 +33744,191 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/8_pwm_skill/pwm_2169.webm",
       "animationDurationMs": 10709,
       "syncedAt": "2026-06-29T23:48:14.750Z"
+    },
+    {
+      "skillId": 2182,
+      "groupId": null,
+      "name": "Equilibrium Break IV",
+      "krName": "균형 붕괴 IV",
+      "className": "Witch",
+      "classId": 31,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/08_pwm_skill/pwm_skill_2179.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  LMB",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Trigger an earthquake ahead to break down the enemy's formation.",
+      "damageRows": [
+        {
+          "label": "Attack damage 7714% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Magic Damage Reduction -20 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "28.6%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "The skill effect is empowered into  while Gorr or Tett is summoned.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack 1 damage",
+          "value": "7714% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "7714% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Magic Damage Reduction -20 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "28.6%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Attack damage 2652% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "46.01%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness",
+        "Bound"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 46.01,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/8_pwm_skill/pwm_2179.webm",
+      "animationDurationMs": 7625,
+      "syncedAt": "2026-06-30T00:07:56.966Z"
     },
     {
       "skillId": 2184,
@@ -33759,6 +35184,152 @@
       "syncedAt": "2026-06-29T23:48:14.766Z"
     },
     {
+      "skillId": 2234,
+      "groupId": null,
+      "name": "Cataclysm III",
+      "krName": "대재앙 III",
+      "className": "Wizard",
+      "classId": 28,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/08_pwm_skill/pwm_skill_2232.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  F",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Outraged, the Wizard discharges a flame surge to incur a storm.",
+      "damageRows": [
+        {
+          "label": "Attack damage 6300% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +30%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Casting Speed +20% for 10 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Recover 105 MP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "45%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "is empowered into  while Marg or Arne is summoned.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack damage 2380% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "47.57%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Attack damage 2380% x3",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "47.57%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Bound"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 47.57,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/8_pwm_skill/pwm_2232.webm",
+      "animationDurationMs": 5542,
+      "syncedAt": "2026-06-30T00:07:11.917Z"
+    },
+    {
       "skillId": 2235,
       "groupId": null,
       "name": "Cataclysm IV",
@@ -34753,6 +36324,90 @@
       "syncedAt": "2026-06-29T23:48:14.778Z"
     },
     {
+      "skillId": 2265,
+      "groupId": null,
+      "name": "Ravage Rake III",
+      "krName": "할퀴는 광기 III",
+      "className": "Dark Knight",
+      "classId": 27,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/15_pdew_skill/pdew_skill_2263.webp",
+      "requiredLevel": 20,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "LMB  +  RMB",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Deliver a wide slash with your kriegsmesser to all enemies in front.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "653% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "980% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +30%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 16 MP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Spin the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "87.13%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Spin the target"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 87.13,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/15_pdew_skill/pdew_2265.webm",
+      "animationDurationMs": 5167,
+      "syncedAt": "2026-06-30T00:07:38.282Z"
+    },
+    {
       "skillId": 2278,
       "groupId": null,
       "name": "Darkness Burst II",
@@ -34816,6 +36471,86 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/15_pdew_skill/pdew_2277.webm",
       "animationDurationMs": 5334,
       "syncedAt": "2026-06-29T23:48:14.780Z"
+    },
+    {
+      "skillId": 2285,
+      "groupId": null,
+      "name": "Kriegsmesser Training II",
+      "krName": "태도 수련 II",
+      "className": "Dark Knight",
+      "classId": 27,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/15_pdew_skill/pdew_skill_2284.webp",
+      "requiredLevel": 16,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "LMB",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "A basic slash attack with your kriegsmesser.",
+      "damageRows": [
+        {
+          "label": "Attack damage 663% x1, max 3 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward attack damage 663% x1, max 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Last attack damage 663% x1 on standing and forward attacks",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Jump attack damage 663% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "5 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 36 MP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack on forward attack hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "89.18%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": 89.18,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/15_pdew_skill/pdew_2284.webm",
+      "animationDurationMs": 6667,
+      "syncedAt": "2026-06-30T00:10:53.527Z"
     },
     {
       "skillId": 2286,
@@ -35790,6 +37525,89 @@
       "syncedAt": "2026-06-29T23:48:14.798Z"
     },
     {
+      "skillId": 2361,
+      "groupId": null,
+      "name": "Ravage Rake IV",
+      "krName": "할퀴는 광기 IV",
+      "className": "Dark Knight",
+      "classId": 27,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/15_pdew_skill/pdew_skill_2263.webp",
+      "requiredLevel": 34,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "LMB  +  RMB",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Deliver a wide slash with your kriegsmesser to all enemies in front.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "769% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attacks 2 and 3 damage 1154% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +45%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 17 MP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Spin the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "87.13%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Spin the target"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 87.13,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/15_pdew_skill/pdew_2361.webm",
+      "animationDurationMs": 5167,
+      "syncedAt": "2026-06-30T00:08:16.770Z"
+    },
+    {
       "skillId": 2367,
       "groupId": null,
       "name": "Obsidian Ashes II",
@@ -36153,6 +37971,94 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/15_pdew_skill/pdew_2395.webm",
       "animationDurationMs": 6834,
       "syncedAt": "2026-06-29T23:48:14.805Z"
+    },
+    {
+      "skillId": 2398,
+      "groupId": null,
+      "name": "Spirit Blaze IV",
+      "krName": "정령 산화 IV",
+      "className": "Dark Knight",
+      "classId": 27,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/15_pdew_skill/pdew_skill_2395.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↓ +  RMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Slash your enemies with your kriegsmesser, then spread your magic to inflict damage ahead.",
+      "damageRows": [
+        {
+          "label": "Attack damage 2629% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Extra attack damage 2629% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "29.6%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Float"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 29.6,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/15_pdew_skill/pdew_2395.webm",
+      "animationDurationMs": 6834,
+      "syncedAt": "2026-06-30T00:11:10.384Z"
     },
     {
       "skillId": 2400,
@@ -40694,6 +42600,93 @@
       "syncedAt": "2026-06-29T23:48:14.881Z"
     },
     {
+      "skillId": 2693,
+      "groupId": null,
+      "name": "Elbow Edge III",
+      "krName": "빗장 치기 III",
+      "className": "Mystic",
+      "classId": 23,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/16_pcw_skill/pcw_skill_2691.webp",
+      "requiredLevel": 39,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  LMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Stun the enemy with two swift and heavy elbow strikes which immobilize the enemy.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "1248% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "1248% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +30%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "All Damage Reduction -20 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Push the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness",
+        "Push the target"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/16_pcw_skill/pcw_2691.webm",
+      "animationDurationMs": 4000,
+      "syncedAt": "2026-06-30T00:09:29.080Z"
+    },
+    {
       "skillId": 2699,
       "groupId": null,
       "name": "Flow: Tornado Kick III",
@@ -40924,6 +42917,84 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/16_pcw_skill/pcw_2706.webm",
       "animationDurationMs": 3917,
       "syncedAt": "2026-06-29T23:48:14.884Z"
+    },
+    {
+      "skillId": 2711,
+      "groupId": null,
+      "name": "Flow: Fatal Smash II",
+      "krName": "흐름 : 기와 깨기 II",
+      "className": "Mystic",
+      "classId": 23,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/16_pcw_skill/pcw_skill_2710.webp",
+      "requiredLevel": 24,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "RMB",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Sends off the enemy flying after a heavy strike in midair.",
+      "damageRows": [
+        {
+          "label": "All damage applies Twisted Collision&#39s damage x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "5 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All Damage Reduction -8 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": true,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "No collision while landing",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Down Smash"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/16_pcw_skill/pcw_2710.webm",
+      "animationDurationMs": 6459,
+      "syncedAt": "2026-06-29T23:49:01.757Z"
     },
     {
       "skillId": 2715,
@@ -48883,6 +50954,103 @@
       "syncedAt": "2026-06-29T23:48:15.017Z"
     },
     {
+      "skillId": 3209,
+      "groupId": 4079,
+      "name": "Absolute: Sharp Light",
+      "krName": "진 : 날카로운 빛",
+      "className": "Valkyrie",
+      "classId": 24,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/07_pvw_skill/pvw_skill_3209.webp",
+      "requiredLevel": 59,
+      "maxLevel": 4,
+      "skillPoints": 12,
+      "command": "SHIFT +  LMB",
+      "cooldown": "9s",
+      "cooldownSec": 9,
+      "description": "Preceding Skill: [Sharp Light IV]",
+      "damageRows": [
+        {
+          "label": "Attack damage 1148% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 90 SP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Push the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Knockdown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Counter Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "70.16%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Push the target",
+        "Knockdown"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 70.16,
+      "isQuickSlot": false,
+      "isAbsolute": true,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        1493
+      ],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/7_pvw_skill/pvw_1493.webm",
+      "animationDurationMs": 5834,
+      "syncedAt": "2026-06-30T00:10:02.537Z"
+    },
+    {
       "skillId": 3211,
       "groupId": 4081,
       "name": "Absolute: Flying Kick",
@@ -49123,6 +51291,102 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/7_pvw_skill/pvw_761.webm",
       "animationDurationMs": 5084,
       "syncedAt": "2026-06-29T23:48:15.021Z"
+    },
+    {
+      "skillId": 3218,
+      "groupId": 4087,
+      "name": "Absolute: Celestial Spear",
+      "krName": "진 : 천상의 창",
+      "className": "Valkyrie",
+      "classId": 24,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/07_pvw_skill/pvw_skill_3218.webp",
+      "requiredLevel": 59,
+      "maxLevel": 3,
+      "skillPoints": 16,
+      "command": "↓ +  E",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Preceding Skill: [Celestial Spear IV]",
+      "damageRows": [
+        {
+          "label": "Attack damage 1026% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Increased Casting Speed",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +80% for 5 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Movement Speed -15% for 5 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "64.25%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Can be used by canceling other skills.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Reduces casting delay If you cancel a skill.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Bound"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 64.25,
+      "isQuickSlot": false,
+      "isAbsolute": true,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        768
+      ],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/7_pvw_skill/pvw_768.webm",
+      "animationDurationMs": 5625,
+      "syncedAt": "2026-06-30T00:09:12.776Z"
     },
     {
       "skillId": 3223,
@@ -49564,6 +51828,43 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.030Z"
+    },
+    {
+      "skillId": 3239,
+      "groupId": null,
+      "name": "Zephyr VI",
+      "krName": "곧게 뻗은 잎새 VI",
+      "className": "Lahn",
+      "classId": 11,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/17_psw_skill/psw_skill_3234.webp",
+      "requiredLevel": 18,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Passive",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "You feel lighter and can perform more accurate attacks.",
+      "damageRows": [
+        {
+          "label": "Attack Speed +0.5%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:22.537Z"
     },
     {
       "skillId": 3240,
@@ -50063,6 +52364,109 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/17_psw_skill/psw_3271.webm",
       "animationDurationMs": 5375,
       "syncedAt": "2026-06-29T23:48:15.038Z"
+    },
+    {
+      "skillId": 3277,
+      "groupId": null,
+      "name": "Furor II",
+      "krName": "광란 II",
+      "className": "Lahn",
+      "classId": 11,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/17_psw_skill/psw_skill_3276.webp",
+      "requiredLevel": 58,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  LMB",
+      "cooldown": "9s",
+      "cooldownSec": 9,
+      "description": "Deliver furious attacks to the opponent in front with the power of darkness.",
+      "damageRows": [
+        {
+          "label": "Attack damage 2645% x2, max 3 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +25% (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 150 HP per hit (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Recover 30 WP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "32.93%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Bound",
+        "Down Smash"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 32.93,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/17_psw_skill/psw_3276.webm",
+      "animationDurationMs": 5667,
+      "syncedAt": "2026-06-30T00:10:16.810Z"
     },
     {
       "skillId": 3278,
@@ -52654,6 +55058,76 @@
       "syncedAt": "2026-06-29T23:48:15.084Z"
     },
     {
+      "skillId": 3446,
+      "groupId": null,
+      "name": "Covering Fire V",
+      "krName": "정령의 비호 V",
+      "className": "Archer",
+      "classId": 29,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/09_pem_skill/pem_skill_3442.webp",
+      "requiredLevel": 48,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "→ or  ← +  F",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Quickly slide to the side, firing multiple arrows.",
+      "damageRows": [
+        {
+          "label": "Attack damage 3421% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "42.21%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 42.21,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/9_pem_skill/pem_3446.webm",
+      "animationDurationMs": 6584,
+      "syncedAt": "2026-06-30T00:06:41.797Z"
+    },
+    {
       "skillId": 3447,
       "groupId": 8545,
       "name": "Steady Breath",
@@ -54207,6 +56681,128 @@
       "syncedAt": "2026-06-29T23:48:15.102Z"
     },
     {
+      "skillId": 3582,
+      "groupId": null,
+      "name": "Black Spirit: Sanctitas de Enslar II",
+      "krName": "흑정령 : 엔슬라의 신성 II",
+      "className": "Valkyrie",
+      "classId": 24,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/07_pvw_skill/pvw_skill_1975.webp",
+      "requiredLevel": 1,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Auto-activated when using Sanctitas de Enslar and consumes Black Spirit&#39;s RageUnavailable during Verdict: Lancia IustitiaeBlack Spirit&#39;s Rage -100%",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Black Spirit's Rage",
+      "damageRows": [
+        {
+          "label": "Marked attack damage 1638% x4",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Last attack damage 9012% x4",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100% (PvE only)",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All AP +30 for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Casting Speed +25% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +30% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Invincible",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stun",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Knockdown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "71.28%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Injures target with 50% of the damage of a hit.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Dismount target on hits.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stun",
+        "Knockdown"
+      ],
+      "protectionTypes": [
+        "Super Armor",
+        "I-Frame"
+      ],
+      "pvpDamagePercent": 71.28,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": true,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:10:28.224Z"
+    },
+    {
       "skillId": 3589,
       "groupId": null,
       "name": "Black Spirit: Verdict: Lancia Iustitiae",
@@ -55293,6 +57889,139 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.113Z"
+    },
+    {
+      "skillId": 3630,
+      "groupId": null,
+      "name": "Black Spirit: Absolute: Dragon Bite",
+      "krName": "흑정령 : 진 : 역극",
+      "className": "Musa, Dosa",
+      "classId": 20,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/06_pkm_skill/pkm_skill_3163.webp",
+      "requiredLevel": 1,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Auto-activated when using Dragon Bite and consumes Black Spirit&#39;s RageBlack Spirit&#39;s Rage -100%",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Black Spirit's Rage",
+      "damageRows": [
+        {
+          "label": "Attack damage 1650% x2, max 9 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100% (PvE only)",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50% (PvP only)",
+          "pvpOnly": true,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All AP +30 for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack Speed +25% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +30% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Invincible",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stun",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Counter Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Speed Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "51.32%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Injures target with 50% of the damage of a hit.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Dismount target on hits.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stun"
+      ],
+      "protectionTypes": [
+        "I-Frame",
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 51.32,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": true,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:06:49.160Z"
     },
     {
       "skillId": 3634,
@@ -59026,6 +61755,114 @@
       "syncedAt": "2026-06-29T23:48:15.153Z"
     },
     {
+      "skillId": 3780,
+      "groupId": null,
+      "name": "Black Spirit: Absolute: Wolf's Hunger",
+      "krName": "흑정령 : 진 : 아랑포식",
+      "className": "Striker",
+      "classId": 19,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/16_pcm_skill/pcm_skill_3050.webp",
+      "requiredLevel": 1,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Auto-activated when using Wolf&#39;s Hunger and consumes Black Spirit&#39;s RageBlack Spirit&#39;s Rage -100%",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Black Spirit's Rage",
+      "damageRows": [
+        {
+          "label": "Attack damage 7548% x4",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All AP +30 for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack Speed +25% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +30% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stun",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Injures target with 50% of the damage of a hit.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Dismount target on hits.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "41.28%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Stun"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 41.28,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": true,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:09:35.480Z"
+    },
+    {
       "skillId": 3783,
       "groupId": null,
       "name": "Black Spirit: Rage Hammer III",
@@ -60789,6 +63626,102 @@
       "syncedAt": "2026-06-29T23:48:15.177Z"
     },
     {
+      "skillId": 3872,
+      "groupId": null,
+      "name": "Kwik-Two III",
+      "krName": "빠르게 둘 III",
+      "className": "Shai",
+      "classId": 17,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/14_plw_skill/plw_skill_3870.webp",
+      "requiredLevel": 28,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↓ +  RMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Quickly evade backward and throw the florang. Especially handy in dangerous situations.",
+      "damageRows": [
+        {
+          "label": "Attack damage 2548% x1, max 9 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "5 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All Evasion +36 for 10 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Movement Speed -5% for 5 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "All Damage Reduction -15 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Push the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Pull in the target on returning weapon hits (PvE only)",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "65%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Push the target"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 65,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/14_plw_skill/plw_3870.webm",
+      "animationDurationMs": 10417,
+      "syncedAt": "2026-06-30T00:07:05.138Z"
+    },
+    {
       "skillId": 3874,
       "groupId": null,
       "name": "Kwik-Two V",
@@ -61230,6 +64163,88 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/9_pem_skill/pem_3905.webm",
       "animationDurationMs": 9167,
       "syncedAt": "2026-06-29T23:48:15.184Z"
+    },
+    {
+      "skillId": 3919,
+      "groupId": null,
+      "name": "Spear of Sylvia IV",
+      "krName": "실비아의 창 IV",
+      "className": "Archer",
+      "classId": 29,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/09_pem_skill/pem_skill_3916.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  Q",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Your greatbow's arrow is also known as the \"Spear of Sylvia.\" The moment it leaves your greatbow, the arrow locks in on the enemy's position to release a decisive form of power.",
+      "damageRows": [
+        {
+          "label": "Attack damage 9171% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All Evasion -12 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Stun",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "27.34%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Applies explosive melee attack to nearby enemies.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stun"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 27.34,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/9_pem_skill/pem_3916.webm",
+      "animationDurationMs": 6917,
+      "syncedAt": "2026-06-30T00:06:56.947Z"
     },
     {
       "skillId": 3922,
@@ -63710,6 +66725,179 @@
       "syncedAt": "2026-06-29T23:48:15.221Z"
     },
     {
+      "skillId": 4088,
+      "groupId": null,
+      "name": "Prime: Ground Slash IV",
+      "krName": "강 : 지면 가르기 IV",
+      "className": "Warrior",
+      "classId": 0,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/01_phm_skill/phm_skill_4080.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↓ +  E",
+      "cooldown": "3s",
+      "cooldownSec": 3,
+      "description": "Quickly performs a double upper slash.",
+      "damageRows": [
+        {
+          "label": "Attack damage 3125% x2, max 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Energy attack damage 3125% x1, max 2 hits  (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All Damage Reduction -25 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "42.42%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 42.42,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/1_phm_skill/phm_4080.webm",
+      "animationDurationMs": 5417,
+      "syncedAt": "2026-06-30T00:10:31.115Z"
+    },
+    {
+      "skillId": 4090,
+      "groupId": null,
+      "name": "Prime: Ground Smash III",
+      "krName": "강 : 지면 강타 III",
+      "className": "Warrior",
+      "classId": 0,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/01_phm_skill/phm_skill_4067.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  F",
+      "cooldown": "10s",
+      "cooldownSec": 10,
+      "description": "Gather all your might to powerfully smash the ground.",
+      "damageRows": [
+        {
+          "label": "Attack damage 5367% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Movement Speed -20% for 5 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "29.05%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Bound",
+        "Down Smash"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 29.05,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/1_phm_skill/phm_4067.webm",
+      "animationDurationMs": 7750,
+      "syncedAt": "2026-06-30T00:09:17.006Z"
+    },
+    {
       "skillId": 4110,
       "groupId": null,
       "name": "Prime: Spirit's Blessing II",
@@ -64035,6 +67223,140 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/1_phm_skill/phm_4124.webm",
       "animationDurationMs": 3917,
       "syncedAt": "2026-06-29T23:48:15.226Z"
+    },
+    {
+      "skillId": 4129,
+      "groupId": null,
+      "name": "Black Spirit: Prime: Spinning Slash I",
+      "krName": "흑정령 : 강 : 회전 가르기 I",
+      "className": "Warrior",
+      "classId": 0,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/01_phm_skill/phm_skill_4064.webp",
+      "requiredLevel": 1,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Auto-activated when using Spinning Slash and consumes Black Spirit&#39;s RageBlack Spirit&#39;s Rage -100%",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Black Spirit's Rage.",
+      "damageRows": [
+        {
+          "label": "Attack damage 6954% x4",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Extra attack damage 2782% 1, max 3 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Critical Hit Rate +100% for 3 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "All AP +30 for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack Speed +25% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +30% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Knockdown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Push the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "27.45%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Injures target with 50% of the damage of a hit.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Dismount target on hits.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Knockdown",
+        "Push the target",
+        "Down Smash"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 27.45,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": true,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:09.408Z"
     },
     {
       "skillId": 4134,
@@ -66076,6 +69398,145 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/5_pbw_skill/pbw_4491.webm",
       "animationDurationMs": 7084,
       "syncedAt": "2026-06-29T23:48:15.261Z"
+    },
+    {
+      "skillId": 4497,
+      "groupId": null,
+      "name": "Prime: Void Lightning III",
+      "krName": "강 : 공간 벼락 III",
+      "className": "Tamer",
+      "classId": 16,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/05_pbw_skill/pbw_skill_4495.webp",
+      "requiredLevel": 58,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Hold  Q",
+      "cooldown": "13s",
+      "cooldownSec": 13,
+      "description": "Use the strength of mighty Heuklang to create a thundering sphere around you.",
+      "damageRows": [
+        {
+          "label": "Attack damage 3646% x1, max 8 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Extra attack damage 4274% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50% (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Extra attack Critical Hit Rate +100% (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 80 HP per hit (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack Speed -10% for 5 sec on hits (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Casting Speed -10% for 5 sec on hits (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Pull in the target on hits (PvE only)",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "note"
+        },
+        {
+          "label": "Taunts distant monsters when using the skill.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "33.21%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Heuklang level&#39s attack damage x1, max 8 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Damage reduced in PvP.",
+          "pvpOnly": true,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 33.21,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/5_pbw_skill/pbw_4495.webm",
+      "animationDurationMs": 10500,
+      "syncedAt": "2026-06-30T00:06:53.157Z"
     },
     {
       "skillId": 4498,
@@ -68131,6 +71592,169 @@
       "syncedAt": "2026-06-29T23:48:15.290Z"
     },
     {
+      "skillId": 4650,
+      "groupId": null,
+      "name": "Prime: Shadow Stomp IV",
+      "krName": "강 : 그림자 밟기 IV",
+      "className": "Kunoichi",
+      "classId": 25,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/13_pnw_skill/pnw_skill_4647.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↓ +  E",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Ninjutsu: Ghost",
+      "damageRows": [
+        {
+          "label": "Attack damage 8740% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "30%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Float"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 30,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/13_pnw_skill/pnw_4647.webm",
+      "animationDurationMs": 8667,
+      "syncedAt": "2026-06-30T00:10:40.046Z"
+    },
+    {
+      "skillId": 4658,
+      "groupId": null,
+      "name": "Prime: Flash Slash IV",
+      "krName": "강 : 일섬 IV",
+      "className": "Kunoichi",
+      "classId": 25,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/13_pnw_skill/pnw_skill_4655.webp",
+      "requiredLevel": 60,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  E",
+      "cooldown": "12s",
+      "cooldownSec": 12,
+      "description": "Slash your enemies in the blink of an eye.",
+      "damageRows": [
+        {
+          "label": "Attack damage 6268% x2, max 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Invincible",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "24%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Stamina is not recovered while moving.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": [
+        "Super Armor",
+        "I-Frame"
+      ],
+      "pvpDamagePercent": 24,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/13_pnw_skill/pnw_4655.webm",
+      "animationDurationMs": 8417,
+      "syncedAt": "2026-06-30T00:07:52.805Z"
+    },
+    {
       "skillId": 4666,
       "groupId": null,
       "name": "Black Spirit: Prime: Shadow Clone II",
@@ -68270,6 +71894,147 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.291Z"
+    },
+    {
+      "skillId": 4668,
+      "groupId": null,
+      "name": "Black Spirit: Prime: Shadow Clone IV",
+      "krName": "흑정령 : 강 : 그림자 분파 IV",
+      "className": "Kunoichi",
+      "classId": 25,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/13_pnw_skill/pnw_skill_4651.webp",
+      "requiredLevel": 1,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Auto-activated when using Shadow Clone and consumes Black Spirit&#39;s RageBlack Spirit&#39;s Rage -200%",
+      "cooldown": "20m",
+      "cooldownSec": 1200,
+      "description": "Black Spirit's Rage",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "18642% x4",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "18642% x4",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Last attack damage 30475% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All AP +55 for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack Speed +25% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50% for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Max HP +2000 for 60 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stun",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "10.71%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Not affected by effects which increase/decrease Attack and/or Casting Speeds.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Injures target with 100% of the damage of a hit.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Dismount target on hits.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stun",
+        "Down Smash"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 10.71,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": true,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:14.744Z"
     },
     {
       "skillId": 4669,
@@ -72845,6 +76610,121 @@
       "syncedAt": "2026-06-29T23:48:15.368Z"
     },
     {
+      "skillId": 4901,
+      "groupId": null,
+      "name": "Prime: Spring Breeze III",
+      "krName": "강 : 봄바람 III",
+      "className": "Lahn",
+      "classId": 11,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/17_psw_skill/psw_skill_4899.webp",
+      "requiredLevel": 58,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↑ +  F",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Dash toward the opponent with the possibility to also inflict damage or fly up.",
+      "damageRows": [
+        {
+          "label": "Standing slash attack damage 2818% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Kick attack damage 2818% x1, max 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Striding slash attack damage 2818% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Jump Height Increase",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "No collision while moving (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "78.79%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Reduced movement distance during cooldown.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": [
+        "Forward Guard",
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 78.79,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/17_psw_skill/psw_4901.webm",
+      "animationDurationMs": 6267,
+      "syncedAt": "2026-06-30T00:11:05.296Z"
+    },
+    {
       "skillId": 4905,
       "groupId": null,
       "name": "Prime: Cymbidium IV",
@@ -73030,6 +76910,96 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/17_psw_skill/psw_4906.webm",
       "animationDurationMs": 6717,
       "syncedAt": "2026-06-29T23:48:15.371Z"
+    },
+    {
+      "skillId": 4909,
+      "groupId": null,
+      "name": "Prime: Blooming Nether Flower IV",
+      "krName": "강 : 피어나는 지화 IV",
+      "className": "Lahn",
+      "classId": 11,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/17_psw_skill/psw_skill_4906.webp",
+      "requiredLevel": 60,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "LMB  +  RMB",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Spin towards the opponent and use the centrifugal force of your crescent pendulum to inflict greater damage to nearby enemies.",
+      "damageRows": [
+        {
+          "label": "Attack damage 4419% x1, max 8 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Airborne spin attack damage 5535% x1, max 9 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50% (PvE only)",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +25% (PvP only)",
+          "pvpOnly": true,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Knockdown",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "26.7%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Knockdown"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 26.7,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/17_psw_skill/psw_4906.webm",
+      "animationDurationMs": 6717,
+      "syncedAt": "2026-06-30T00:08:53.263Z"
     },
     {
       "skillId": 4910,
@@ -73836,6 +77806,51 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.385Z"
+    },
+    {
+      "skillId": 4930,
+      "groupId": null,
+      "name": "Succession: Flow: Nimbus Stride",
+      "krName": "전승 : 흐름 : 운무림",
+      "className": "Lahn",
+      "classId": 11,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/17_psw_skill/psw_skill_2961.webp",
+      "requiredLevel": 1,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Hold  SHIFT",
+      "cooldown": "30s",
+      "cooldownSec": 30,
+      "description": "Preceding Skill:",
+      "damageRows": [
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Immune to fall damage for 10 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:06:22.733Z"
     },
     {
       "skillId": 4942,
@@ -75060,6 +79075,94 @@
       "syncedAt": "2026-06-29T23:48:15.407Z"
     },
     {
+      "skillId": 4983,
+      "groupId": 5636,
+      "name": "Freezing Gaze",
+      "krName": "얼어붙은 눈빛",
+      "className": "Wizard",
+      "classId": 28,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/08_pwm_skill/pwm_skill_4937.webp",
+      "requiredLevel": 57,
+      "maxLevel": 6,
+      "skillPoints": 5,
+      "command": "PassiveIce Element",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Preceding Skill:",
+      "damageRows": [
+        {
+          "label": "Magic AP +1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "All Evasion +8",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Learning this skill will let you cast Ice Element skills faster.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "- Tier 1: Prime: Freezing",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "- Tier 2: Prime: Frigid Fog, Prime: Aqua Jail Explosion",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "- Tier 3: Prime: Blizzard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Upon learning Prime: Elemental Flow, the Quickened Spell effect will be applied as follows.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "- Tier 1: -2 sec",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "- Tier 2: -5 sec",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": true,
+      "prerequisiteIds": [
+        4933,
+        898
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:46.999Z"
+    },
+    {
       "skillId": 4985,
       "groupId": 5638,
       "name": "Magnificent Steps",
@@ -76086,6 +80189,43 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.427Z"
+    },
+    {
+      "skillId": 5029,
+      "groupId": null,
+      "name": "Bone Freezing Wind XIV",
+      "krName": "살갗을 에는 바람 XIV",
+      "className": "Guardian",
+      "classId": 5,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/11_pgw_skill/pgw_skill_5016.webp",
+      "requiredLevel": 42,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Passive",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "As unyielding as Everfrost's winds, your axe swings with unwavering resolve.",
+      "damageRows": [
+        {
+          "label": "All AP +1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:33.144Z"
     },
     {
       "skillId": 5031,
@@ -77933,6 +82073,113 @@
       "syncedAt": "2026-06-29T23:48:15.461Z"
     },
     {
+      "skillId": 5117,
+      "groupId": 9547,
+      "name": "Absolute: Boulder Crush",
+      "krName": "진 : 거암 가르기",
+      "className": "Guardian",
+      "classId": 5,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/11_pgw_skill/pgw_skill_5117.webp",
+      "requiredLevel": 56,
+      "maxLevel": 4,
+      "skillPoints": 13,
+      "command": "↓ +  LMB",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Hold your battle axe by the base and swing it consecutively with force powerful enough to shatter anything in the front.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "1935% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "1935% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 3 damage",
+          "value": "1935% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 50 HP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "77.3%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Bound"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 77.3,
+      "isQuickSlot": false,
+      "isAbsolute": true,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        5116
+      ],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/11_pgw_skill/pgw_5114.webm",
+      "animationDurationMs": 9084,
+      "syncedAt": "2026-06-30T00:11:13.605Z"
+    },
+    {
       "skillId": 5127,
       "groupId": 9534,
       "name": "Black Blood Slaughter I",
@@ -78687,6 +82934,83 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/11_pgw_skill/pgw_5154.webm",
       "animationDurationMs": 6334,
       "syncedAt": "2026-06-29T23:48:15.474Z"
+    },
+    {
+      "skillId": 5159,
+      "groupId": null,
+      "name": "Scornful Slash II",
+      "krName": "가벼운 능멸 II",
+      "className": "Guardian",
+      "classId": 5,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/11_pgw_skill/pgw_skill_5158.webp",
+      "requiredLevel": 58,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↓ +  RMB",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Strike enemies up into the air with your jordun, leaving a trail of fire.",
+      "damageRows": [
+        {
+          "label": "Attack 1 fire trail damage 5122% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Attack 2 fire trail damage 5122% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +20%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Burn",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "51.08%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Burn",
+        "Float"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 51.08,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/11_pgw_skill/pgw_5158.webm",
+      "animationDurationMs": 7667,
+      "syncedAt": "2026-06-30T00:09:58.802Z"
     },
     {
       "skillId": 5170,
@@ -80591,6 +84915,105 @@
       "syncedAt": "2026-06-29T23:48:15.503Z"
     },
     {
+      "skillId": 5310,
+      "groupId": null,
+      "name": "Prime: Residual Lightning: Combo III",
+      "krName": "강 : 잔류 번개 : 연계 III",
+      "className": "Wizard",
+      "classId": 28,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/08_pwm_skill/pwm_skill_4952.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "RMB",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Widely spread remaining lightning energies to deal constant damage",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "2653% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "2835% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 3 damage",
+          "value": "2835% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 28 MP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Shock",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "39.41%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Shock"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 39.41,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/8_pwm_skill/pwm_4952.webm",
+      "animationDurationMs": 10500,
+      "syncedAt": "2026-06-30T00:09:55.278Z"
+    },
+    {
       "skillId": 5314,
       "groupId": null,
       "name": "Prime: Earth Arrow III",
@@ -82052,6 +86475,117 @@
       "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/16_pcw_skill/pcw_5385.webm",
       "animationDurationMs": 6625,
       "syncedAt": "2026-06-29T23:48:15.531Z"
+    },
+    {
+      "skillId": 5388,
+      "groupId": 7608,
+      "name": "Prime: Soul Basher I",
+      "krName": "강 : 칠진각 I",
+      "className": "Mystic",
+      "classId": 23,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/16_pcw_skill/pcw_skill_5388.webp",
+      "requiredLevel": 56,
+      "maxLevel": 3,
+      "skillPoints": 15,
+      "command": "F",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Preceding Skill:",
+      "damageRows": [
+        {
+          "label": "Attack damage 1474% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Continuous attack damage 1474% x3",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Last attack damage 2354% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50% (PvE only)",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Movement Speed -10% for 5 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Push the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Air Attack on last attack hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Recovers additional Martial Spirits per attack when comboing more than a certain number of times.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "44.59%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Push the target"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 44.59,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        5373,
+        2658
+      ],
+      "videoUrl": "https://bdocodex.com/ui_movie/movie_pc_skill/16_pcw_skill/pcw_5388.webm",
+      "animationDurationMs": 7209,
+      "syncedAt": "2026-06-30T00:10:48.817Z"
     },
     {
       "skillId": 5391,
@@ -84445,6 +88979,64 @@
       "syncedAt": "2026-06-29T23:48:15.567Z"
     },
     {
+      "skillId": 5479,
+      "groupId": 10003,
+      "name": "Sand Warp",
+      "krName": "사보",
+      "className": "Hashashin",
+      "classId": 1,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/18_pam_skill/pam_skill_5479.webp",
+      "requiredLevel": 20,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Direction +  SHIFT",
+      "cooldown": "1.5s",
+      "cooldownSec": 1.5,
+      "description": "Create a warp and vanish into it.",
+      "damageRows": [
+        {
+          "label": "All Evasion +36 for 10 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Invincible",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "protection"
+        },
+        {
+          "label": "No collision while moving",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Super Armor",
+        "I-Frame"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:10:25.778Z"
+    },
+    {
       "skillId": 5493,
       "groupId": 10009,
       "name": "Absolute: Hourglass of Death",
@@ -84974,6 +89566,76 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.576Z"
+    },
+    {
+      "skillId": 5513,
+      "groupId": null,
+      "name": "Haladie Throw II",
+      "krName": "금계 투척 II",
+      "className": "Hashashin",
+      "classId": 1,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/18_pam_skill/pam_skill_5512.webp",
+      "requiredLevel": 15,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↓ +  RMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Anything hit by the spinning haladie is destroyed. Can be used continuously.",
+      "damageRows": [
+        {
+          "label": "Haladie attack damage 942% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +20%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "5 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All AP +10 for 10 sec on hits (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "59.67%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 59.67,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:36.014Z"
     },
     {
       "skillId": 5517,
@@ -90145,6 +94807,127 @@
       "syncedAt": "2026-06-29T23:48:15.657Z"
     },
     {
+      "skillId": 5773,
+      "groupId": null,
+      "name": "Command: Frozen Earth IV",
+      "krName": "명령 : 얼어붙는 대지 IV",
+      "className": "Nova",
+      "classId": 9,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/21_ppw_skill/ppw_skill_5770.webp",
+      "requiredLevel": 42,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "",
+      "cooldown": "18s",
+      "cooldownSec": 18,
+      "description": "Unleash ice energy, then gather it into your morning star and slam the ground. The ice energy flowing from the morning star freezes the ground around you.",
+      "damageRows": [
+        {
+          "label": "Attack damage 1995% x4",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +25%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Pull in the target on hits (PvE only)",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "note"
+        },
+        {
+          "label": "Spin the target",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Attack Speed -10% for 5 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Casting Speed -10% for 5 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "75.14%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Command: Passed Pawn damage x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Applies maximum number of targets to Command: Passed Pawn",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Applies as many Thornwood Guard&#39s effects as there are summoned guards.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Spin the target",
+        "Bound"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 75.14,
+      "isQuickSlot": true,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:09:38.573Z"
+    },
+    {
       "skillId": 5780,
       "groupId": 10523,
       "name": "Absolute: Command: Blooming Icy Thorns",
@@ -92592,6 +97375,98 @@
       "syncedAt": "2026-06-29T23:48:15.700Z"
     },
     {
+      "skillId": 5922,
+      "groupId": 10604,
+      "name": "Twisted Orbit",
+      "krName": "엇갈린 궤도",
+      "className": "Nova",
+      "classId": 9,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/21_ppw_skill/ppw_skill_5922.webp",
+      "requiredLevel": 56,
+      "maxLevel": 1,
+      "skillPoints": 10,
+      "command": "LMB",
+      "cooldown": "3s",
+      "cooldownSec": 3,
+      "description": "Preceding Skill: [Break Orbit]",
+      "damageRows": [
+        {
+          "label": "Attack damage 6595% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 1.0% Star&#39s Breath per hit (Nullified in Accel)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "61.85%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Attacks reset the cooldowns of Break Orbit, Accel: Break Orbit, and Twisted Orbit.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 61.85,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": true,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        5878
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:30.791Z"
+    },
+    {
       "skillId": 5926,
       "groupId": null,
       "name": "Black Spirit: Royal Fencing: Remise",
@@ -94209,6 +99084,62 @@
       "syncedAt": "2026-06-29T23:48:15.725Z"
     },
     {
+      "skillId": 6001,
+      "groupId": 2632,
+      "name": "Core: Skybound Stab",
+      "krName": "본 : 비천",
+      "className": "Tamer",
+      "classId": 16,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/05_pbw_skill/pbw_skill_1910.webp",
+      "requiredLevel": 60,
+      "maxLevel": 1,
+      "skillPoints": 20,
+      "command": "Passive",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Preceding Skill:",
+      "damageRows": [
+        {
+          "label": "Bound",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Not applied to Black Spirit skills.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Bound"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": true,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        1912,
+        1898
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:09:41.550Z"
+    },
+    {
       "skillId": 6002,
       "groupId": 2633,
       "name": "Core: Echo Pierce",
@@ -94465,6 +99396,53 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.731Z"
+    },
+    {
+      "skillId": 6022,
+      "groupId": 8120,
+      "name": "Core: Eradication",
+      "krName": "본 : 불귀",
+      "className": "Lahn",
+      "classId": 11,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/17_psw_skill/psw_skill_3294_re.webp",
+      "requiredLevel": 60,
+      "maxLevel": 1,
+      "skillPoints": 20,
+      "command": "Passive",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Preceding Skill:",
+      "damageRows": [
+        {
+          "label": "Adds the following effect(s) to Eradication III after learning this skill:",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": true,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        3294
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:50.446Z"
     },
     {
       "skillId": 6024,
@@ -94959,6 +99937,54 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:42.712Z"
+    },
+    {
+      "skillId": 6065,
+      "groupId": 5078,
+      "name": "Core: Murderous Intent",
+      "krName": "본 : 번뜩이는 살의",
+      "className": "Ninja",
+      "classId": 26,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/13_pnw_skill/pnw_skill_2097.webp",
+      "requiredLevel": 60,
+      "maxLevel": 1,
+      "skillPoints": 20,
+      "command": "Passive",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Preceding Skill:",
+      "damageRows": [
+        {
+          "label": "Adds the following effect(s) to Murderous Intent III after learning this skill:",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": true,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        2099,
+        2077
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:50.108Z"
     },
     {
       "skillId": 6066,
@@ -96763,6 +101789,84 @@
       "syncedAt": "2026-06-29T23:48:15.775Z"
     },
     {
+      "skillId": 6178,
+      "groupId": 11513,
+      "name": "Ator's Thorn I",
+      "krName": "아토르의 가시 I",
+      "className": "Sage",
+      "classId": 2,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/23_ppm_skill/ppm_skill_6178.webp",
+      "requiredLevel": 1,
+      "maxLevel": 4,
+      "skillPoints": 0,
+      "command": "RMB",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Summon forth Ator's Thorn and throw it mightily towards all enemies in front.",
+      "damageRows": [
+        {
+          "label": "Attack damage 342% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "5 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Knockback",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "81.64%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Knockback",
+        "Air Smash",
+        "Down Smash"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 81.64,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:23.628Z"
+    },
+    {
       "skillId": 6180,
       "groupId": null,
       "name": "Ator's Thorn III",
@@ -98404,6 +103508,184 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.802Z"
+    },
+    {
+      "skillId": 6271,
+      "groupId": 11548,
+      "name": "Prime: Rift Chain",
+      "krName": "강 : 균열의 연결고리",
+      "className": "Sage",
+      "classId": 2,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/23_ppm_skill/ppm_skill_6271.webp",
+      "requiredLevel": 56,
+      "maxLevel": 4,
+      "skillPoints": 20,
+      "command": "SHIFT + Direction",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Preceding Skill: [Ator's Fury], [Rift Chain II]",
+      "damageRows": [
+        {
+          "label": "Invincible",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Invincible",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Increased execution speed",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "No character collision at the start of the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "No character collision while concealed",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Collision check when character reappears",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Invincible",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "protection"
+        },
+        {
+          "label": "Moving while concealed will continue to consume stamina.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Able to use the skill Rift Chain during the following skills:",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Spatial Collapse, Flow: Finishing Touch, Realm of Anguish, Flow: Illusion Detonation after Illusion Expansion, Ator&#39s Mark, Atomagia, Ator&#39s Energy, Gravity Rift, Void Gateways, Energized Thorn, Piercing Thorn",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "I-Frame",
+        "Super Armor"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        6263,
+        6189
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:06:35.613Z"
+    },
+    {
+      "skillId": 6273,
+      "groupId": 11550,
+      "name": "Electrify",
+      "krName": "뇌화",
+      "className": "Sage",
+      "classId": 2,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/23_ppm_skill/ppm_skill_6273.webp",
+      "requiredLevel": 1,
+      "maxLevel": 5,
+      "skillPoints": 0,
+      "command": "Q",
+      "cooldown": "3m",
+      "cooldownSec": 180,
+      "description": "Harness the power of lightning, greatly enhancing your strength, and allowing you to discharge electrical currents for a short duration.",
+      "damageRows": [
+        {
+          "label": "All AP +30 for 30 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "All Accuracy +60 for 30 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50% for 30 sec when using the skill",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": true,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:10.167Z"
     },
     {
       "skillId": 6276,
@@ -101968,6 +107250,98 @@
       "syncedAt": "2026-06-29T23:48:40.385Z"
     },
     {
+      "skillId": 6591,
+      "groupId": 12049,
+      "name": "Absolute: Ocean's Pearl",
+      "krName": "진 : 너울구슬",
+      "className": "Corsair",
+      "classId": 10,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/24_pfw_skill/pfw_skill_6591.webp",
+      "requiredLevel": 58,
+      "maxLevel": 3,
+      "skillPoints": 12,
+      "command": "SHIFT +  RMB",
+      "cooldown": "8s",
+      "cooldownSec": 8,
+      "description": "Throw a spherical manifestation of the tides, then slash it with your serenaca to detonate it mid-air.",
+      "damageRows": [
+        {
+          "label": "Attack damage 2934% x1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Explosion attack damage 2934% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "69.95%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Float"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 69.95,
+      "isQuickSlot": false,
+      "isAbsolute": true,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        6590
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:06:44.756Z"
+    },
+    {
       "skillId": 6597,
       "groupId": 12051,
       "name": "Sword Song I",
@@ -102249,6 +107623,52 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.859Z"
+    },
+    {
+      "skillId": 6619,
+      "groupId": 12053,
+      "name": "Prime: Ocean's Embrace I",
+      "krName": "강 : 낭만의 물결 I",
+      "className": "Corsair",
+      "classId": 10,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/24_pfw_skill/pfw_skill_6619.webp",
+      "requiredLevel": 56,
+      "maxLevel": 5,
+      "skillPoints": 10,
+      "command": "Passive",
+      "cooldown": null,
+      "cooldownSec": null,
+      "description": "Preceding Skill: [Succession: Song of the Waves], [Sword Song XVIII]",
+      "damageRows": [
+        {
+          "label": "All AP +1",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Max HP +50",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": null,
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": true,
+      "prerequisiteIds": [
+        6614,
+        6618
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:10:57.993Z"
     },
     {
       "skillId": 6620,
@@ -103638,6 +109058,101 @@
       "syncedAt": "2026-06-29T23:48:15.879Z"
     },
     {
+      "skillId": 6704,
+      "groupId": 12090,
+      "name": "Pirate's Life For Me",
+      "krName": "해적의 미덕",
+      "className": "Corsair",
+      "classId": 10,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/24_pfw_skill/pfw_skill_6704.webp",
+      "requiredLevel": 1,
+      "maxLevel": 4,
+      "skillPoints": 0,
+      "command": "F",
+      "cooldown": "4s",
+      "cooldownSec": 4,
+      "description": "Stab the enemy with the harpoon, then fire, showing them what the pirate's life is all about.",
+      "damageRows": [
+        {
+          "label": "Attack damage 3881% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Extra attack damage 5821% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100% (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "All AP +20 for 10 sec when using the skill (Nullified during cooldown)",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Stun",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "38.11%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Damage reduced during cooldown",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Stun",
+        "Down Smash"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 38.11,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": true,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:39.454Z"
+    },
+    {
       "skillId": 6705,
       "groupId": 12091,
       "name": "Family's Honor",
@@ -104750,6 +110265,51 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.892Z"
+    },
+    {
+      "skillId": 6766,
+      "groupId": 9043,
+      "name": "Yippee!",
+      "krName": "야~호!",
+      "className": "Shai",
+      "classId": 17,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/14_plw_skill/plw_skill_6766.webp",
+      "requiredLevel": 30,
+      "maxLevel": 3,
+      "skillPoints": 30,
+      "command": "↑ +  RMB",
+      "cooldown": "15s",
+      "cooldownSec": 15,
+      "description": "Ride your florang to move about for a certain period of time! Let's go!",
+      "damageRows": [
+        {
+          "label": "Consumes Stamina during the skill.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:10:06.695Z"
     },
     {
       "skillId": 6769,
@@ -107339,6 +112899,131 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.931Z"
+    },
+    {
+      "skillId": 6907,
+      "groupId": null,
+      "name": "Prime: Markthanan's Flourish III",
+      "krName": "강 : 마크타난의 손짓 III",
+      "className": "Drakania",
+      "classId": 7,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/25_pqw_skill/pqw_skill_6905.webp",
+      "requiredLevel": 59,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  LMB",
+      "cooldown": "9s",
+      "cooldownSec": 9,
+      "description": "Strike your enemies upwards with ions gathered in your slayer, then strike downward. Attack with max ion output by spreading Markthanan's wings when you have stockpiled enough ions in your shard.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "1800% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "5401% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 1 damage",
+          "value": "5282% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "7292% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Target&#39s MP/WP/SP -25 after certain periods of time while charging ions",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack on attack 1 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Releases 3 ions to activate at max ion output if at least 3 ions stockpiled in your shard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Increased attack area at max ion output",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "35.33%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Float",
+        "Down Smash"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 35.33,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": true,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:45.042Z"
     },
     {
       "skillId": 6914,
@@ -110475,6 +116160,82 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:15.979Z"
+    },
+    {
+      "skillId": 7181,
+      "groupId": null,
+      "name": "Petal Play III",
+      "krName": "꽃놀이패 III",
+      "className": "Maegu",
+      "classId": 15,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/27_pkow_skill/pkow_skill_7179.webp",
+      "requiredLevel": 35,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  LMB",
+      "cooldown": "8s",
+      "cooldownSec": 8,
+      "description": "Gradually amplify your Do power until all enemies in front are swept away.",
+      "damageRows": [
+        {
+          "label": "Attack damage 1935% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "43.24%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Damage -20% per each additional target hit from target 2 onward. (Max damage -20%.) (PvP only)",
+          "pvpOnly": true,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Float"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 43.24,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:30.163Z"
     },
     {
       "skillId": 7194,
@@ -116184,6 +121945,192 @@
       "syncedAt": "2026-06-29T23:48:16.068Z"
     },
     {
+      "skillId": 7571,
+      "groupId": null,
+      "name": "Flutter Kick II",
+      "krName": "곁차기 II",
+      "className": "Woosa",
+      "classId": 30,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/28_pmyf_skill/pmyf_skill_7570.webp",
+      "requiredLevel": 18,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↑ +  RMB",
+      "cooldown": "6s",
+      "cooldownSec": 6,
+      "description": "Conjure the winds with your fan to push back enemies and send them flying up into the air with a sideways kick.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "752% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "752% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +30%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "5 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Air Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "53.13%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Float",
+        "Air Smash"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 53.13,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:21.356Z"
+    },
+    {
+      "skillId": 7572,
+      "groupId": null,
+      "name": "Flutter Kick III",
+      "krName": "곁차기 III",
+      "className": "Woosa",
+      "classId": 30,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/28_pmyf_skill/pmyf_skill_7570.webp",
+      "requiredLevel": 36,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↑ +  RMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Conjure the winds with your fan to push back enemies and send them flying up into the air with a sideways kick.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "1032% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "1032% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +30%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Air Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "53.13%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Float",
+        "Air Smash"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 53.13,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:07.331Z"
+    },
+    {
       "skillId": 7574,
       "groupId": 13532,
       "name": "Fan Kick I",
@@ -119579,6 +125526,82 @@
       "syncedAt": "2026-06-29T23:48:16.120Z"
     },
     {
+      "skillId": 8075,
+      "groupId": null,
+      "name": "Hammer Throw II",
+      "krName": "망치 던지기 II",
+      "className": "Scholar",
+      "classId": 6,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/29_pnyw_skill/pnyw_skill_8074.webp",
+      "requiredLevel": 36,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↓ +  F",
+      "cooldown": "11s",
+      "cooldownSec": 11,
+      "description": "Activate the gravity cores in your hammers before you throw them. The brief point where both hammers collide generate a twist in elastic force.",
+      "damageRows": [
+        {
+          "label": "Attack damage 2181% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Taunt surrounding foes.",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "46.19%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": null,
+      "pvpDamagePercent": 46.19,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:33.605Z"
+    },
+    {
       "skillId": 8115,
       "groupId": null,
       "name": "Action Reaction XV",
@@ -119986,6 +126009,104 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:16.127Z"
+    },
+    {
+      "skillId": 8153,
+      "groupId": null,
+      "name": "Hammer Smash III",
+      "krName": "한계 돌파 III",
+      "className": "Scholar",
+      "classId": 6,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/29_pnyw_skill/pnyw_skill_8151.webp",
+      "requiredLevel": 58,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "SHIFT +  LMB",
+      "cooldown": "11s",
+      "cooldownSec": 11,
+      "description": "Smash foes with your sledgehammer, activate its fused core to increase its weigh to the max, then heavily smash down.",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "5712% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "10077% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "All Damage Reduction -25 for 10 sec on hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Knockdown",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "27.9% attack 1 damage in PvP only",
+          "pvpOnly": true,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "20.82% attack 2 damage in PvP only",
+          "pvpOnly": true,
+          "pveOnly": false,
+          "kind": "note"
+        }
+      ],
+      "ccTypes": [
+        "Knockdown"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": null,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:08:13.292Z"
     },
     {
       "skillId": 8157,
@@ -120825,6 +126946,118 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:16.140Z"
+    },
+    {
+      "skillId": 8183,
+      "groupId": null,
+      "name": "Flow: Golden Wave IV",
+      "krName": "흐름 : 황금 파도 IV",
+      "className": "Scholar",
+      "classId": 6,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/29_pnyw_skill/pnyw_skill_8180.webp",
+      "requiredLevel": 58,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "Hold  ↓ +  RMB",
+      "cooldown": "9s",
+      "cooldownSec": 9,
+      "description": "Preceding Skill: [Particle Acceleration]",
+      "damageRows": [
+        {
+          "label": "Attack 1 damage",
+          "value": "5337% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Attack 2 damage",
+          "value": "5337% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "damage"
+        },
+        {
+          "label": "Critical Hit Rate +100%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "7 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Recover 158 HP per hit",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Float",
+          "pvpOnly": false,
+          "pveOnly": true,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Attack on attack 1 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Attack on attack 2 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Down Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Air Smash",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "25.24%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Float",
+        "Down Smash",
+        "Air Smash"
+      ],
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 25.24,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:06:46.918Z"
     },
     {
       "skillId": 8187,
@@ -126193,6 +132426,185 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:16.214Z"
+    },
+    {
+      "skillId": 8935,
+      "groupId": null,
+      "name": "Ol' Switcheroo II",
+      "krName": "미소 짓는 기만 II",
+      "className": "Deadeye",
+      "classId": 34,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/32_pwge_skill/pwge_skill_8934.webp",
+      "requiredLevel": 22,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↓ +  LMB",
+      "cooldown": "7s",
+      "cooldownSec": 7,
+      "description": "Weapon: Revolvers",
+      "damageRows": [
+        {
+          "label": "Attack damage 1400% x1, max 4 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Flow: Pocket Ace&#39s damage 3289%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "51.22%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 51.22,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:10:14.146Z"
+    },
+    {
+      "skillId": 8937,
+      "groupId": 14418,
+      "name": "Absolute: Ol' Switcheroo",
+      "krName": "진 : 미소 짓는 기만",
+      "className": "Deadeye",
+      "classId": 34,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/32_pwge_skill/pwge_skill_8937.webp",
+      "requiredLevel": 57,
+      "maxLevel": 3,
+      "skillPoints": 12,
+      "command": "↓ +  LMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "Weapon: Revolvers",
+      "damageRows": [
+        {
+          "label": "Attack damage 3886% x1, max 4 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Flow: Pocket Ace&#39s damage 9137%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "51.22%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        },
+        {
+          "label": "Attack damage 3537% x1, max 4 hits",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Flow: Pocket Ace&#39s damage 13704%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +50%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Forward Guard",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "51.22%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": null,
+      "protectionTypes": [
+        "Forward Guard"
+      ],
+      "pvpDamagePercent": 51.22,
+      "isQuickSlot": false,
+      "isAbsolute": true,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [
+        8936
+      ],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:20.481Z"
     },
     {
       "skillId": 8939,
@@ -132538,6 +138950,84 @@
       "syncedAt": "2026-06-29T23:48:16.300Z"
     },
     {
+      "skillId": 9732,
+      "groupId": 15037,
+      "name": "Impelling Thrust I",
+      "krName": "파고들어 찌르기 I",
+      "className": "Seraph",
+      "classId": 32,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/33_pdkl_skill/pdkl_skill_9732.webp",
+      "requiredLevel": 7,
+      "maxLevel": 3,
+      "skillPoints": 0,
+      "command": "↑ +  LMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "With Sacred Power in your legs, pierce forth with explosive speed.",
+      "damageRows": [
+        {
+          "label": "Attack damage 842% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +20%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "38%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 38,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:09:33.178Z"
+    },
+    {
       "skillId": 9733,
       "groupId": null,
       "name": "Impelling Thrust II",
@@ -132614,6 +139104,84 @@
       "videoUrl": null,
       "animationDurationMs": null,
       "syncedAt": "2026-06-29T23:48:16.301Z"
+    },
+    {
+      "skillId": 9734,
+      "groupId": null,
+      "name": "Impelling Thrust III",
+      "krName": "파고들어 찌르기 III",
+      "className": "Seraph",
+      "classId": 32,
+      "iconPath": "items/new_icon/04_pc_skill/01_pc_skill/33_pdkl_skill/pdkl_skill_9732.webp",
+      "requiredLevel": 44,
+      "maxLevel": 1,
+      "skillPoints": 0,
+      "command": "↑ +  LMB",
+      "cooldown": "5s",
+      "cooldownSec": 5,
+      "description": "With Sacred Power in your legs, pierce forth with explosive speed.",
+      "damageRows": [
+        {
+          "label": "Attack damage 2997% x2",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Critical Hit Rate +20%",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "Maximum",
+          "value": "10 targets",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "target"
+        },
+        {
+          "label": "Super Armor",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "protection"
+        },
+        {
+          "label": "Stiffness",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "cc"
+        },
+        {
+          "label": "Down Attack",
+          "pvpOnly": false,
+          "pveOnly": false,
+          "kind": "note"
+        },
+        {
+          "label": "PvP Damage",
+          "value": "38%",
+          "pvpOnly": true,
+          "kind": "pvp"
+        }
+      ],
+      "ccTypes": [
+        "Stiffness"
+      ],
+      "protectionTypes": [
+        "Super Armor"
+      ],
+      "pvpDamagePercent": 38,
+      "isQuickSlot": false,
+      "isAbsolute": false,
+      "isAwakening": false,
+      "isSuccession": false,
+      "isBlackSpirit": false,
+      "isPassive": false,
+      "prerequisiteIds": [],
+      "videoUrl": null,
+      "animationDurationMs": null,
+      "syncedAt": "2026-06-30T00:07:47.436Z"
     },
     {
       "skillId": 9745,

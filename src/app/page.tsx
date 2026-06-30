@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { SlidersHorizontal } from 'lucide-react'
+import { SlidersHorizontal, Database, BarChart3 } from 'lucide-react'
 
 import { Header } from '@/components/skills/header'
 import { ClassBar } from '@/components/skills/class-bar'
@@ -10,6 +10,7 @@ import { SkillGrid } from '@/components/skills/skill-grid'
 import { Pagination } from '@/components/skills/pagination'
 import { SkillDetailDrawer } from '@/components/skills/skill-detail-drawer'
 import { SyncFooter } from '@/components/skills/sync-footer'
+import { MetaPage } from '@/components/skills/meta-page'
 
 import {
   Sheet,
@@ -18,6 +19,7 @@ import {
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { useSkillStore } from '@/lib/skill-store'
+import { cn } from '@/lib/utils'
 
 function MobileFiltersSheet() {
   const open = useSkillStore((s) => s.filtersOpen)
@@ -52,8 +54,67 @@ function MobileFilterTrigger() {
 }
 
 export default function Home() {
+  const [view, setView] = React.useState<'data' | 'meta'>('data')
+
+  if (view === 'meta') {
+    return (
+      <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        {/* Tab switcher */}
+        <div className="sticky top-0 z-40 flex items-center gap-2 border-b border-amber-900/50 bg-bdo-ink/95 px-4 py-2 backdrop-blur lg:px-6">
+          <button
+            onClick={() => setView('data')}
+            className={cn(
+              'flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all',
+              'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200',
+            )}
+          >
+            <Database className="size-3.5" />
+            Data
+          </button>
+          <button
+            onClick={() => setView('meta')}
+            className={cn(
+              'flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all',
+              'border-amber-400/60 bg-amber-500/15 text-amber-200',
+            )}
+          >
+            <BarChart3 className="size-3.5" />
+            Meta
+          </button>
+        </div>
+
+        <MetaPage />
+        <SyncFooter />
+      </div>
+    )
+  }
+
   return (
     <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+      {/* Tab switcher */}
+      <div className="sticky top-0 z-40 flex items-center gap-2 border-b border-amber-900/50 bg-bdo-ink/95 px-4 py-2 backdrop-blur lg:px-6">
+        <button
+          onClick={() => setView('data')}
+          className={cn(
+            'flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all',
+            'border-amber-400/60 bg-amber-500/15 text-amber-200',
+          )}
+        >
+          <Database className="size-3.5" />
+          Data
+        </button>
+        <button
+          onClick={() => setView('meta')}
+          className={cn(
+            'flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all',
+            'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200',
+          )}
+        >
+          <BarChart3 className="size-3.5" />
+          Meta
+        </button>
+      </div>
+
       <Header />
       <ClassBar />
 
