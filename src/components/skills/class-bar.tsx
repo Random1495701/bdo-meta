@@ -91,7 +91,8 @@ function ClassChip({
   onSpecClick: (spec: 'succession' | 'awakening' | 'ascension') => void
 }) {
   const color = classColor(cls.name)
-  const isAsc = cls.isAscension
+  // Ascension-only classes: show "Asc" button instead of S/A
+  const isAscOnly = ['scholar', 'archer', 'shai', 'seraph', 'deadeye', 'wukong'].includes(cls.slug)
   return (
     <button
       type="button"
@@ -127,22 +128,16 @@ function ClassChip({
       >
         {cls.name}
       </span>
-      {/* Spec buttons: Asc for ascension-only classes, S/A for others */}
+      {/* Spec buttons — S/A for normal classes, Asc for ascension-only */}
       <div className="flex gap-0.5" onClick={(e) => e.stopPropagation()}>
-        {isAsc ? (
+        {isAscOnly ? (
+          // Ascension-only: single "Asc" button
           <span
             role="button"
             tabIndex={0}
             onClick={(e) => {
               e.stopPropagation()
               onSpecClick('ascension')
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                e.stopPropagation()
-                onSpecClick('ascension')
-              }
             }}
             className={cn(
               'flex h-4 w-8 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
@@ -155,6 +150,7 @@ function ClassChip({
             Asc
           </span>
         ) : (
+          // Normal classes: S + A buttons
           <>
             <span
               role="button"
@@ -162,13 +158,6 @@ function ClassChip({
               onClick={(e) => {
                 e.stopPropagation()
                 onSpecClick('succession')
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  onSpecClick('succession')
-                }
               }}
               className={cn(
                 'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
@@ -186,13 +175,6 @@ function ClassChip({
               onClick={(e) => {
                 e.stopPropagation()
                 onSpecClick('awakening')
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  onSpecClick('awakening')
-                }
               }}
               className={cn(
                 'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
@@ -366,6 +348,7 @@ export function ClassBar() {
               ))
             : classes
                 .filter((c) => !c.name.startsWith('NEW_CLASS'))
+                .sort((a, b) => a.name.localeCompare(b.name))
                 .map((c) => (
                   <ClassChip
                     key={c.id}
@@ -375,12 +358,12 @@ export function ClassBar() {
                     specs={specs}
                     onClick={() => {
                       // Clicking the class icon selects it + activates appropriate specs
+                      const isAscOnly = ['scholar', 'archer', 'shai', 'seraph', 'deadeye', 'wukong'].includes(c.slug)
                       if (!classIds.includes(c.id)) {
                         clearClasses()
                         toggleClass(c.id)
-                        // For ascension-only classes, activate ascension spec
-                        // For normal classes, activate both succession + awakening
-                        if (c.isAscension) {
+                        // Activate specs: ascension-only gets ascension, others get S+A
+                        if (isAscOnly) {
                           if (!specs.includes('ascension')) toggleSpec('ascension')
                         } else {
                           if (!specs.includes('succession')) toggleSpec('succession')

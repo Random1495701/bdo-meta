@@ -16,7 +16,6 @@ import { DocsPage } from '@/components/skills/docs-page'
 import { TierListPage } from '@/components/skills/tier-list-page'
 import { PatchesPage } from '@/components/skills/patches-page'
 import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
-import { ChangeLogBanner } from '@/components/skills/change-log-banner'
 
 import {
   Sheet,
@@ -72,24 +71,10 @@ export default function Home() {
     setView('data')
   }, [])
 
-  // Listen for skill-open events from the Patches page (linked skill clicks)
-  React.useEffect(() => {
-    const handler = (e: Event) => {
-      const skillId = (e as CustomEvent<number>).detail
-      if (typeof skillId === 'number') {
-        const store = useSkillStore.getState()
-        store.selectSkill(skillId)
-        store.setDetailOpen(true)
-        setView('data')
-      }
-    }
-    window.addEventListener('bdo-open-skill', handler as EventListener)
-    return () => window.removeEventListener('bdo-open-skill', handler as EventListener)
-  }, [])
-
-  // Keyboard navigation: / = focus search, Esc = close drawer, 1-5 = switch tabs
+  // Keyboard navigation: / = focus search, Esc = close drawer, 1/2/3 = switch tabs
   React.useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
+      // Don't intercept if typing in an input/textarea
       const target = e.target as HTMLElement
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
         if (e.key === 'Escape' && target.tagName === 'INPUT') {
@@ -102,32 +87,6 @@ export default function Home() {
         e.preventDefault()
         const searchInput = document.querySelector('input[placeholder*="Search"]') as HTMLInputElement
         searchInput?.focus()
-      } else if (view === 'data' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter')) {
-        // Arrow key navigation in skill grid
-        e.preventDefault()
-        const store = useSkillStore.getState()
-        const cards = Array.from(document.querySelectorAll('[data-skill-card]')) as HTMLElement[]
-        if (cards.length === 0) return
-
-        let currentIdx = cards.findIndex(c => c === document.activeElement || c.contains(document.activeElement))
-        if (currentIdx === -1) currentIdx = -1 // start before first card
-
-        let nextIdx = currentIdx
-        if (e.key === 'ArrowRight') nextIdx = Math.min(currentIdx + 1, cards.length - 1)
-        else if (e.key === 'ArrowLeft') nextIdx = Math.max(currentIdx - 1, 0)
-        else if (e.key === 'ArrowDown') nextIdx = Math.min(currentIdx + 4, cards.length - 1) // assume ~4 cols
-        else if (e.key === 'ArrowUp') nextIdx = Math.max(currentIdx - 4, 0)
-        else if (e.key === 'Enter') {
-          if (currentIdx >= 0 && currentIdx < cards.length) {
-            cards[currentIdx].click()
-          }
-          return
-        }
-
-        if (nextIdx >= 0 && nextIdx < cards.length) {
-          cards[nextIdx].focus()
-          cards[nextIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' })
-        }
       } else if (e.key === 'Escape') {
         const store = useSkillStore.getState()
         if (store.detailOpen) {
@@ -155,7 +114,6 @@ export default function Home() {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
-        <ChangeLogBanner />
         <MetaPage onCardClick={handleMetaCardClick} />
         <SyncFooter />
       </div>
@@ -166,7 +124,6 @@ export default function Home() {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
-        <ChangeLogBanner />
         <DocsPage />
         <SyncFooter />
       </div>
@@ -177,7 +134,6 @@ export default function Home() {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
-        <ChangeLogBanner />
         <TierListPage />
         <SyncFooter />
       </div>
@@ -188,7 +144,6 @@ export default function Home() {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
-        <ChangeLogBanner />
         <PatchesPage />
         <SyncFooter />
       </div>
@@ -198,7 +153,6 @@ export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
       <TabSwitcher view={view} onChange={setView} />
-      <ChangeLogBanner />
 
       <Header />
       <ClassBar />

@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { Clock, Film, Gauge, GitCompare, Keyboard, Skull, Swords, Zap } from 'lucide-react'
+import { Clock, Film, Gauge, Keyboard, Skull, Swords, Zap, GitCompare } from 'lucide-react'
 
 import {
   classColor,
@@ -111,6 +111,7 @@ function DamageRow({ skill }: { skill: Skill }) {
   }
   const pve = formatDamage(dmg.totalPvE)
   const pvp = dmg.totalPvP != null ? formatDamage(dmg.totalPvP) : null
+  const dpc = skill.damagePerCooldown
   return (
     <div
       className="flex items-center gap-2.5 rounded-sm border border-amber-700/40 bg-gradient-to-r from-amber-950/40 to-bdo-leather-dark px-2.5 py-1.5"
@@ -132,6 +133,15 @@ function DamageRow({ skill }: { skill: Skill }) {
           {pvp}
         </div>
       )}
+      {dpc != null && dpc > 0 && (
+        <div
+          className="ml-auto flex items-center gap-1 text-[10px] font-bold tabular-nums text-emerald-400"
+          title={`Damage per cooldown second: ${dpc.toLocaleString()}%`}
+        >
+          <Gauge className="size-3 text-emerald-400/80" />
+          {formatDamage(dpc)}/s
+        </div>
+      )}
     </div>
   )
 }
@@ -143,6 +153,7 @@ export const SkillCard = React.memo(function SkillCard({
 }) {
   const selectSkill = useSkillStore((s) => s.selectSkill)
   const setCompareSkill = useSkillStore((s) => s.setCompareSkill)
+  const setCompareOpen = useSkillStore((s) => s.setCompareOpen)
   const type = skillTypeLabel(skill)
   const typeMeta = type ? SKILL_TYPE_META[type] : null
   const color = classColor(skill.className)
@@ -254,6 +265,19 @@ export const SkillCard = React.memo(function SkillCard({
             <Keyboard className="size-2.5" /> Q-Slot
           </span>
         )}
+        {/* Compare button */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            setCompareSkill(skill.skillId)
+            setCompareOpen(true)
+          }}
+          className="ml-auto flex items-center gap-0.5 rounded-sm border border-amber-800/40 bg-bdo-leather-dark px-1.5 py-0.5 text-[10px] text-amber-300/50 transition-all hover:border-amber-500/50 hover:text-amber-200"
+          title="Compare this skill"
+        >
+          <GitCompare className="size-2.5" /> Compare
+        </button>
       </div>
 
       {/* Command (if present) */}

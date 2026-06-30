@@ -53,6 +53,7 @@ import {
 } from '@/lib/skills'
 import { formatDamage } from '@/lib/damage'
 import { useSkillStore } from '@/lib/skill-store'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
 
 // ---------- helpers ----------
@@ -350,7 +351,7 @@ export function SkillDetailDrawer() {
   const setOpen = useSkillStore((s) => s.setDetailOpen)
   const selectSkill = useSkillStore((s) => s.selectSkill)
   const skillId = useSkillStore((s) => s.selectedSkillId)
-  const [videoAutoplay, setVideoAutoplay] = React.useState(true)
+  const isMobile = useIsMobile()
 
   // Refetch the open skill every 15s so the lurker's enrichment shows up
   // live without needing to close/reopen the drawer.
@@ -476,15 +477,15 @@ export function SkillDetailDrawer() {
                     </div>
                   </header>
 
-                  {/* Flag badges */}
+                  {/* Flag badges — spec colors: red=awakening, blue=succession, yellow=ascension */}
                   <div className="flex flex-wrap items-center gap-1.5">
                     {skill.isAwakening && (
-                      <Badge style={{ borderColor: `${SPEC_COLORS.awakening}66`, backgroundColor: `${SPEC_COLORS.awakening}1a`, color: SPEC_COLORS.awakening }}>
+                      <Badge className="border-red-500/40 bg-red-500/10 text-red-300">
                         <Sparkles className="size-3" /> Awakening
                       </Badge>
                     )}
                     {skill.isSuccession && (
-                      <Badge style={{ borderColor: `${SPEC_COLORS.succession}66`, backgroundColor: `${SPEC_COLORS.succession}1a`, color: SPEC_COLORS.succession }}>
+                      <Badge className="border-blue-500/40 bg-blue-500/10 text-blue-300">
                         <Sword className="size-3" /> Succession
                       </Badge>
                     )}
@@ -494,7 +495,7 @@ export function SkillDetailDrawer() {
                       </Badge>
                     )}
                     {skill.isBlackSpirit && (
-                      <Badge className="border-amber-700/50 bg-amber-900/20 text-amber-200">
+                      <Badge className="border-violet-700/50 bg-violet-900/20 text-violet-300">
                         Black Spirit
                       </Badge>
                     )}
@@ -1020,7 +1021,7 @@ export function SkillDetailDrawer() {
                       >
                         <video
                           src={skill.videoUrl}
-                          autoPlay={videoAutoplay}
+                          autoPlay={!isMobile}
                           loop
                           muted
                           playsInline

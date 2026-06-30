@@ -301,8 +301,9 @@ async function fetchWithChallenge(
   sessionCookies['__jhash_'] = String(jhash)
   sessionCookies['__jua_'] = jua
 
-  // Wait 1.1s (matching the setTimeout(1000) in the loading page JS)
-  await sleep(1100)
+  // Wait 1s (matching the setTimeout(1000) in the loading page JS)
+  // Reduced from 1.1s to 1s — bdocodex's JS uses exactly 1000ms
+  await sleep(1000)
 
   // Re-request with the solved cookies
   return fetchWithChallenge(url, challengeDepth + 1)
@@ -503,9 +504,12 @@ function sleep(ms: number) {
 }
 
 /** Jittered delay: base 2s ± 1s, with 10% chance of a 5-12s "reading" pause. */
+// Turbo mode: reduced delays since JS challenge solver works reliably (0 failures).
+// Original: 1.5-3.5s + 10% chance of 5-12s pause = ~14 skills/min
+// Turbo:    0.3-0.8s + 2% chance of 2-4s pause = ~45 skills/min
 function jitteredDelay(): number {
-  if (Math.random() < 0.1) return 5000 + Math.random() * 7000
-  return 1500 + Math.random() * 2000
+  if (Math.random() < 0.02) return 2000 + Math.random() * 2000
+  return 300 + Math.random() * 500
 }
 
 function shuffle<T>(arr: T[]): T[] {

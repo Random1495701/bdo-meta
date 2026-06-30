@@ -545,7 +545,7 @@ export function FilterSidebar() {
 
           <GoldDivider />
 
-          {/* Cooldown */}
+          {/* Cooldown — slider + Black Spirit jump button */}
           <section>
             <SectionTitle icon={<Clock className="size-3.5" />}>
               Cooldown (sec)
@@ -572,21 +572,33 @@ export function FilterSidebar() {
               onMax={(v) => setCooldownRange(filters.minCd, v)}
               suffix="s"
             />
-            {/* Include Black Spirit (20m) jump button */}
-            {ranges?.cooldownSec && (ranges.cooldownSec as any).blackSpiritMax && (
-              <button
-                onClick={() => setCooldownRange(filters.minCd, (ranges.cooldownSec as any).blackSpiritMax)}
-                className={cn(
-                  'mt-1.5 w-full rounded-sm border px-2 py-1 text-[10px] font-semibold transition-all',
-                  filters.maxCd === (ranges.cooldownSec as any).blackSpiritMax
-                    ? 'border-purple-500/50 bg-purple-900/20 text-purple-300'
-                    : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:border-amber-500/40 hover:text-amber-200',
+            {ranges?.cooldownSec.blackSpiritMax && (
+              <div className="mt-2 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCooldownRange(filters.minCd, ranges.cooldownSec.blackSpiritMax)
+                  }
+                  className={`flex items-center gap-1 rounded-sm border px-2 py-1 text-[11px] font-semibold transition-all ${
+                    filters.maxCd === ranges.cooldownSec.blackSpiritMax
+                      ? 'border-violet-400/60 bg-violet-500/15 text-violet-200'
+                      : 'border-violet-900/50 bg-bdo-leather-dark text-violet-300/70 hover:border-violet-600/60 hover:text-violet-200'
+                  }`}
+                  title="Black Spirit rage skills have 20m cooldown. Click to include them."
+                >
+                  <Sparkles className="size-3" />
+                  Include Black Spirit (20m)
+                </button>
+                {filters.maxCd === ranges.cooldownSec.blackSpiritMax && (
+                  <button
+                    type="button"
+                    onClick={() => setCooldownRange(filters.minCd, undefined)}
+                    className="rounded-sm border border-amber-800/50 bg-bdo-leather-dark px-2 py-1 text-[11px] text-amber-300/70 hover:text-amber-200"
+                  >
+                    Reset
+                  </button>
                 )}
-                title="Include Black Spirit rage skills (20 min cooldown)"
-              >
-                <Skull className="mr-1 inline size-3" />
-                Include Black Spirit (20m)
-              </button>
+              </div>
             )}
           </section>
 

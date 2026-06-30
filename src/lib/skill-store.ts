@@ -124,7 +124,7 @@ export const useSkillStore = create<SkillStore>()(
   resetFilters: () => set({ filters: { ...DEFAULT_FILTERS } }),
   selectSkill: (id) => set({ selectedSkillId: id, detailOpen: id != null }),
   setDetailOpen: (open) => set({ detailOpen: open }),
-  setCompareSkill: (id) => set({ compareSkillId: id, compareOpen: id != null }),
+  setCompareSkill: (id) => set({ compareSkillId: id }),
   setCompareOpen: (open) => set({ compareOpen: open }),
   setFiltersOpen: (open) => set({ filtersOpen: open }),
     }),

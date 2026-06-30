@@ -1,187 +1,131 @@
-# BDO Meta — Roadmap v2
+# BDO Meta — Roadmap v4 (Phased)
 
-> **Updated 2025-06-30 after comprehensive project audit (Task 30)**
-> Replaces the previous `docs/ROADMAP.md`
+> **Updated 2025-06-30. Phased into chunks suitable for single-session execution.**
 
-## Current State (v2.6.0)
+## Current State (v3.0.0)
 
-- **7,231 skills**, **4,019 enriched** (55%), **1,813 with video**, **1,753 with animation**
-- 56 spec cards across 31 classes × 3 specs
-- 87 official Pearl Abyss portraits
-- 2,889 self-hosted skill icons
-- 800 skills with Garmoth addon data
-- 17 version tags (v1.0.0 → v2.6.0)
-
-## Audit Findings (Task 30)
-
-### Forgotten Tasks (7 found)
-1. **Black Spirit cooldown button missing** from filter sidebar (was in v1.9.0, lost in refactor)
-2. **Garmoth addon data invisible in UI** — 725 skills have addonsJson but detail drawer doesn't show it
-3. **API caching only on /api/ranges** (promised for 4 endpoints)
-4. **Spec colors inconsistent in detail drawer** — uses old amber/green instead of red/blue
-5. **No "Asc" button on class chips** for ascension-only classes
-6. **Worklog gaps** — Tasks 18, 20, 21, 22, 24 missing from worklog
-7. **ROADMAP.md stale** — lists completed items as "not started"
-
-### UX/UI Issues (16 found — top 5)
-1. Tab switcher JSX duplicated 3× — needs extraction to component
-2. S/A buttons missing onKeyDown for keyboard activation
-3. Meta spec cards not clickable — no drill-down to Data tab
-4. Video autoplays on drawer open — bandwidth-heavy on mobile
-5. No keyboard navigation (/, Esc, arrows, Enter)
+- **7,231 skills**, **7,189 enriched** (99.4%!) — lurker nearly complete
+- 56 spec cards with PA Wiki data (combat type, class group, SA DR)
+- Class vs class ratio feature (click 2 classes)
+- 3-tab UI: Data | Meta | Docs
+- 21 version tags on GitHub
 
 ---
 
-## Phase 1: Fix Forgotten Tasks (Priority: Critical)
+## Phase A: Data Completion & Accuracy (1 session each)
 
-### 1.1 Restore Black Spirit Cooldown Button
-**Effort**: 30 min | **Status**: Not started
-Add "Include Black Spirit (20m)" button back to filter sidebar cooldown section.
+### A1: Finish Lurker + Animation Duration Fix
+- [ ] Wait for lurker to hit 100% (~100 skills remaining)
+- [ ] Implement video parsing plan (ffmpeg scene detection) OR
+- [ ] Document PAZ extraction workflow for user to provide frame-accurate durations
+- [ ] Re-enable DPS estimate once durations are accurate
+**Deliverable**: 100% enriched DB with accurate animation durations
 
-### 1.2 Fix Spec Colors in Detail Drawer
-**Effort**: 15 min | **Status**: Not started
-Update skill-detail-drawer.tsx flag badges to use SPEC_COLORS (red/blue/yellow) instead of hardcoded amber/green.
+### A2: Validation Lurker (Patch Note Checker)
+- [ ] Build `scripts/patch-checker.ts` that uses agent-browser to:
+  1. Visit `naeu.playblackdesert.com` news/notice pages weekly
+  2. Parse patch notes for class/skill changes
+  3. Compare flagged values against DB
+  4. Log mismatches to a `PatchDiscrepancy` table (don't auto-change)
+- [ ] Add UI banner showing pending discrepancies for review
+- [ ] Add batch review/change interface in Data page
+**Deliverable**: Automated patch monitoring with manual review queue
 
-### 1.3 Expose Garmoth Addon Data in Detail Drawer
-**Effort**: 2 hours | **Status**: Not started
-Add "Skill Add-Ons" section to detail drawer showing addon popularity per slot from addonsJson.
-
-### 1.4 Add "Asc" Button to Class Chips
-**Effort**: 1 hour | **Status**: Not started
-For ascension-only classes (Scholar, Archer, Wukong, Shai, Seraph, Deadeye), show an "Asc" button instead of S/A.
-
-### 1.5 Apply API Caching to All Endpoints
-**Effort**: 30 min | **Status**: Not started
-Add getCached/setCached to /api/classes, /api/stats, /api/meta.
-
----
-
-## Phase 2: Meta Page Enhancements (Priority: High)
-
-### 2.1 Top PvP Damage Skill ✓ DONE
-Added to Meta API + cards + table. Shows the highest PvP damage skill per spec.
-
-### 2.2 DPS Estimate ✓ DONE
-Added: avgPvpDamage / avgAnimationDuration. Shows damage-per-second estimate per spec.
-
-### 2.3 Protected Coverage % ✓ DONE
-Added: % of skills with any protection (SA/FG/IF) per spec.
-
-### 2.4 Make Meta Cards Clickable
-**Effort**: 1 hour | **Status**: Not started
-Click a spec card → switches to Data tab with class + spec pre-filtered.
-
-### 2.5 Awakening vs Succession Comparison
-**Effort**: 3 hours | **Status**: Not started
-Side-by-side diff view per class showing which spec wins on each stat.
-
-### 2.6 CC Chain Potential
-**Effort**: 30 min | **Status**: Not started
-Count skills with 2+ PvP CC counters (can fill the immunity bar in one combo).
-
-### 2.7 Addon Popularity Leaderboard
-**Effort**: 2 hours | **Status**: Not started
-Top 10 most popular addons per class from Garmoth data.
-
-### 2.8 Tier List Generator
-**Effort**: 2 hours | **Status**: Not started
-Auto-generate S/A/B/C/D tier lists based on Meta stats.
+### A3: Multi-Class Skills + Flow/Core Typing
+- [ ] Fix 31 multi-class skills (duplicate or fix class filter)
+- [ ] Type 429 "Flow:"/"Core:" skills (add isFlow/isCore flags)
+- [ ] Update filters to include Flow/Core
+**Deliverable**: Complete skill classification
 
 ---
 
-## Phase 3: Data Page Enhancements (Priority: Medium)
+## Phase B: Meta Enhancements (1 session each)
 
-### 3.1 Skill Build Calculator
-**Effort**: 6 hours | **Status**: Not started
-Select class + spec, allocate SP, see total, save/share builds.
+### B1: Combo Extraction
+- [ ] Use agent-browser to scrape all 31 Foundry class guide pages
+- [ ] Extract PvP and PvE combo sections (may need AI parsing for embedded text)
+- [ ] Store as `combosJson` field in BdoClass table
+- [ ] Display in expanded meta cards (replace placeholder)
+- [ ] Show separate PvP and PvE combo sections
+**Deliverable**: Real combo data for all classes in Meta cards
 
-### 3.2 Keyboard Navigation
-**Effort**: 1 hour | **Status**: Not started
-`/` focuses search, `Esc` closes drawer, arrows navigate, `Enter` opens skill.
+### B2: Tier List Generator
+- [ ] Auto-generate S/A/B/C/D tier lists from Meta stats
+- [ ] Weighted composite score (damage + CC + protection + SA DR)
+- [ ] Separate tier lists for Awakening/Succession/Ascension
+- [ ] Visual tier list display with class portraits
+**Deliverable**: Auto-generated tier lists per spec
 
-### 3.3 Extract Tab Switcher Component
-**Effort**: 30 min | **Status**: Not started
-DRY the 3× duplicated tab switcher, add ARIA tab semantics.
-
-### 3.4 Video Autoplay Toggle
-**Effort**: 15 min | **Status**: Not started
-Don't autoplay video on mobile; add play button instead.
-
-### 3.5 Collapsible Filter Sections
-**Effort**: 1 hour | **Status**: Not started
-Make filter sections collapsible, remember state in localStorage.
-
----
-
-## Phase 4: Data Quality (Priority: Medium)
-
-### 4.1 Investigate Lurker Stall
-**Effort**: 30 min | **Status**: Not started
-Lurker at 55% with ~1 skill/min throughput. Check if bdocodex is throttling.
-
-### 4.2 Multi-Class Skills
-**Effort**: 30 min | **Status**: Not started
-31 skills with "Musa, Dosa" etc. className — duplicate or fix class filter.
-
-### 4.3 Flow/Core Skill Typing
-**Effort**: 30 min | **Status**: Not started
-429 "Flow:" and "Core:" skills untyped — add isFlow/isCore flags.
-
-### 4.4 Video Parsing Implementation
-**Effort**: 6 hours | **Status**: Plan written, not executed
-Use ffmpeg scene detection for accurate animation durations.
+### B3: Awakening vs Succession Comparison
+- [ ] Side-by-side diff view per class
+- [ ] Highlight which spec wins on each stat
+- [ ] Show in expanded card or as a separate comparison page
+**Deliverable**: Direct spec comparison tool
 
 ---
 
-## Phase 5: Infrastructure (Priority: Low)
+## Phase C: UI/UX Polish (1 session for all)
 
-### 5.1 Max-Rank Performance
-**Effort**: 2 hours | **Status**: Not started
-Add baseName + isMaxRank columns to DB (precomputed on sync).
-
-### 5.2 Database Indexing
-**Effort**: 15 min | **Status**: Not started
-Add composite indexes for common filter combinations.
-
-### 5.3 Automated DB Backup
-**Effort**: 30 min | **Status**: Not started
-Cron job that exports DB to JSON weekly and commits.
-
-### 5.4 Lurker Health Monitoring
-**Effort**: 1 hour | **Status**: Not started
-Auto-restart lurker if heartbeat is stale >10 min.
+### C1: Icon Transparency + UI Fixes
+- [ ] Batch process class icons to make backgrounds transparent (sharp/imagemagick)
+- [ ] Fix video autoplay on mobile (add play button)
+- [ ] Add onKeyDown to S/A/Asc buttons for keyboard activation
+- [ ] Extract TabSwitcher ARIA improvements
+- [ ] Collapsible filter sections with localStorage
+**Deliverable**: Polished UI with transparent icons
 
 ---
 
-## Phase 6: Polish (Priority: Low)
+## Phase D: Advanced Features (1 session each)
 
-### 6.1 Mobile Touch Optimization
-### 6.2 Dark/Light Theme Toggle
-### 6.3 Internationalization (KR/DE/FR/ES)
-### 6.4 Export/Import Builds
+### D1: Skill Comparison Tool
+- [ ] "Compare" button on skill cards
+- [ ] Side-by-side drawer showing 2 skills with diff highlighting
+**Deliverable**: Skill vs skill comparison
+
+### D2: Search by Effect
+- [ ] Unified search across CC, protection, damage, description
+- [ ] Smart query parsing (e.g., "super armor knockdown" → skills with both)
+**Deliverable**: Effect-based skill search
+
+### D3: Export/Import Builds
+- [ ] Allow users to import skill builds from bdocodex URLs
+- [ ] Share builds via URL parameters
+**Deliverable**: Build sharing system
 
 ---
 
-## Summary
+## Phase E: Infrastructure (1 session for all)
 
-| Phase | Items | Effort | Priority |
-|-------|-------|--------|----------|
-| P1 — Fix Forgotten Tasks | 5 | ~4h | Critical |
-| P2 — Meta Enhancements | 8 | ~10h | High |
-| P3 — Data Page Features | 5 | ~9h | Medium |
-| P4 — Data Quality | 4 | ~7h | Medium |
-| P5 — Infrastructure | 4 | ~4h | Low |
-| P6 — Polish | 4 | ~7h | Low |
-| **Total** | **30** | **~41h** | |
+### E1: Performance + Monitoring
+- [ ] Add baseName + isMaxRank columns (precomputed, eliminates JS grouping)
+- [ ] Composite DB indexes for common filter combos
+- [ ] Lurker health monitoring (auto-restart if heartbeat stale)
+- [ ] Automated weekly DB backup to JSON
+**Deliverable**: Faster queries + self-healing lurker
 
-### Top 10 Next Tasks (Prioritized)
-1. **P1.2**: Fix spec colors in detail drawer (15 min)
-2. **P1.1**: Restore Black Spirit cooldown button (30 min)
-3. **P1.5**: API caching for all endpoints (30 min)
-4. **P1.4**: Add "Asc" button for ascension-only classes (1 hour)
-5. **P2.4**: Make Meta cards clickable → Data tab (1 hour)
-6. **P2.6**: CC chain potential metric (30 min)
-7. **P3.3**: Extract Tab Switcher component (30 min)
-8. **P1.3**: Expose Garmoth addon data in drawer (2 hours)
-9. **P4.1**: Investigate lurker stall (30 min)
-10. **P3.2**: Keyboard navigation (1 hour)
+---
+
+## Forgotten Tasks (from audit)
+
+| # | Task | Status | Phase |
+|---|------|--------|-------|
+| 1 | API caching for /api/stats (3 of 4 done) | Not started | E1 |
+| 2 | Worklog gaps (Tasks 18, 20, 21, 22, 24) | Not started | — |
+| 3 | Cooldown range comment stale (says 240s, actual 450s) | Not started | A3 |
+| 4 | Meta disclaimer says "BS excluded" but only from damage | Not started | A3 |
+| 5 | Hardcoded ascension class list in meta API (should be DB-derived) | Not started | A3 |
+
+---
+
+## Execution Order (Recommended)
+
+1. **A1** — Finish lurker + fix durations (critical for data accuracy)
+2. **A3** — Fix multi-class + Flow/Core (quick data quality wins)
+3. **B1** — Combo extraction (high player value)
+4. **C1** — UI polish (transparent icons + mobile fixes)
+5. **B2** — Tier list generator (visual impact)
+6. **A2** — Validation lurker (patch monitoring)
+7. **B3** — Spec comparison tool
+8. **D1-D3** — Advanced features (as time permits)
+9. **E1** — Infrastructure (when performance becomes an issue)

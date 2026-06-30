@@ -32,7 +32,6 @@ export async function GET() {
       skillCount: countMap.get(c.id) ?? 0,
     })),
   }
-
-  setCached('classes', result, 5 * 60 * 1000)
+  setCached('classes', result, 10 * 60 * 1000)
   return NextResponse.json(result)
 }

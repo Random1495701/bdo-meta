@@ -28,8 +28,8 @@ interface SpecStats {
   superArmorCount: number
   forwardGuardCount: number
   iFrameCount: number
-  coreSaCount: number // Core: skills with Super Armor
-  coreFgCount: number // Core: skills with Forward Guard
+  coreSaCount: number // Core: skills with Super Armor (player picks only 1)
+  coreFgCount: number // Core: skills with Forward Guard (player picks only 1)
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number // avg PvP damage / avg animation duration
   protectedCoverage: number // % of skills with any protection
@@ -46,13 +46,12 @@ interface ClassStats {
   successionSaDr: number
   awakeningSaDr: number
   ascensionSaDr: number
-  isAscension: boolean
   awakening: SpecStats
   succession: SpecStats
   ascension: SpecStats
 }
 
-const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|IX|VIII|VII|VI|IV|V|III|II|I)$/
+const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|X|IX|VIII|VII|VI|IV|V|III|II|I)$/
 const RANK_MAP: Record<string, number> = {
   I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10,
   XI: 11, XII: 12, XIII: 13, XIV: 14, XV: 15, XVI: 16, XVII: 17, XVIII: 18,
@@ -86,7 +85,6 @@ function computeSpecStats(skills: any[]): SpecStats {
     const damageRows: DamageRow[] | null = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
     const damage = calculateDamage(damageRows, s.pvpDamagePercent)
 
-    // Damage stats: exclude Black Spirit skills (rage) and skills without PvP damage
     if (!s.isBlackSpirit && damage.totalPvP != null && damage.totalPvP > 0) {
       pvpDamages.push(damage.totalPvP)
       if (damage.totalPvP > topPvpDamage) {
@@ -99,7 +97,6 @@ function computeSpecStats(skills: any[]): SpecStats {
       animDurations.push(s.animationDurationMs)
     }
 
-    // CC stats: count skills that have at least 1 PvP CC (not PvE-only)
     const pveOnlyCCs = new Set<string>()
     if (damageRows) {
       for (const r of damageRows) {
@@ -112,7 +109,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     if (pvpCCs.length >= 2) ccChainPotential++
     if (pvpCCs.includes('Grapple')) grabCount++
 
-    // Protection stats: ignore PvE-only, separate Core: skills
+    // Protection stats
     const pveOnlyProts = new Set<string>()
     if (damageRows) {
       for (const r of damageRows) {
@@ -122,7 +119,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     const protections = s.protectionTypes ? s.protectionTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpProts = protections.filter((p: string) => !pveOnlyProts.has(p))
     const isCoreSkill = s.name?.startsWith('Core:')
-
+    
     if (pvpProts.length > 0) protectedCount++
     if (pvpProts.includes('Super Armor')) {
       if (isCoreSkill) coreSaCount++
@@ -178,7 +175,7 @@ export async function GET() {
   const cached = getCached('meta')
   if (cached) return NextResponse.json(cached)
 
-  const classes = await db.bdoClass.findMany({ orderBy: { id: 'asc' } })
+  const classes = await db.bdoClass.findMany({ orderBy: { name: 'asc' } })
 
   const allSkills = await db.skill.findMany({
     where: {
@@ -326,25 +323,26 @@ export async function GET() {
     const effectiveAwakeningSkills = isAscensionClass ? [] : awakeningSkills
     const effectiveSuccessionSkills = isAscensionClass ? [] : successionSkills
 
+    // Parse PA Wiki data from awakeningWeapon field (stored as JSON)
+    let wikiData: any = {}
+    try { wikiData = cls.awakeningWeapon ? JSON.parse(cls.awakeningWeapon) : {} } catch {}
+
     results.push({
       classId: cls.id,
       className: cls.name,
       slug: cls.slug,
-      combatType: cls.combatType || null,
-      successionGroup: cls.successionGroup || null,
-      awakeningGroup: cls.awakeningGroup || null,
-      ascensionGroup: cls.ascensionGroup || null,
-      successionSaDr: cls.successionSaDr ?? 10,
-      awakeningSaDr: cls.awakeningSaDr ?? 10,
-      ascensionSaDr: cls.ascensionSaDr ?? 10,
-      isAscension: isAscensionClass,
+      combatType: cls.mainWeapon || null,
+      successionGroup: wikiData.successionGroup || null,
+      awakeningGroup: wikiData.awakeningGroup || null,
+      ascensionGroup: wikiData.ascensionGroup || null,
+      successionSaDr: wikiData.successionSaDr ?? 10,
+      awakeningSaDr: wikiData.awakeningSaDr ?? 10,
+      ascensionSaDr: wikiData.ascensionSaDr ?? 10,
       awakening: computeSpecStats(effectiveAwakeningSkills),
       succession: computeSpecStats(effectiveSuccessionSkills),
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
-        pvpCcSkillCount: 0, ccChainPotential: 0, grabCount: 0,
-        superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0,
-        coreSaCount: 0, coreFgCount: 0,
+        pvpCcSkillCount: 0, ccChainPotential: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
         topPvpDamageSkill: null, dpsEstimate: 0, protectedCoverage: 0,
       },
     })

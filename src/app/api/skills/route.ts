@@ -53,7 +53,7 @@ const RANK_MAP: Record<string, number> = {
   XXVI: 26, XXVII: 27, XXVIII: 28, XXIX: 29, XXX: 30,
 }
 // Regex ordered longest-first to ensure correct matching (XXX before XX before X)
-const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|IX|VIII|VII|VI|IV|V|III|II|I)$/
+const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|X|IX|VIII|VII|VI|IV|V|III|II|I)$/
 
 function getBaseName(name: string): string {
   return name.replace(RANK_SUFFIX, '')
@@ -107,6 +107,9 @@ function serializeSkill(s: any) {
     description: s.description,
     damageRows,
     damage,
+    damagePerCooldown: (damage.totalPvE > 0 && s.cooldownSec && s.cooldownSec > 0)
+      ? Math.round(damage.totalPvE / s.cooldownSec)
+      : null,
     ccTypes,
     ccCounters,
     ccCounterDisplay,
@@ -179,6 +182,10 @@ export async function GET(req: NextRequest) {
   // Exclude NEW_CLASS placeholders always
   AND.push({ className: { not: { startsWith: 'NEW_CLASS' } } })
 
+  // Exclude "(Not in use)" skills — leftovers from old patches
+  AND.push({ name: { not: { contains: '(Not in use)' } } })
+  AND.push({ name: { not: { contains: '(Not in Use)' } } })
+
   // Filter out evasion skills by default
   if (filterEvasion) {
     AND.push({
@@ -197,37 +204,134 @@ export async function GET(req: NextRequest) {
         OR: [{ skillId: asNum }, { name: { contains: q } }, { krName: { contains: q } }],
       })
     } else {
-      AND.push({
-        OR: [
-          { name: { contains: q } },
-          { krName: { contains: q } },
-          { description: { contains: q } },
-          { command: { contains: q } },
-        ],
-      })
+      // Smart effect search: check if query matches known CC/protection keywords
+      // e.g. "super armor knockdown" → skills with Super Armor AND Knockdown
+      const qLower = q.toLowerCase()
+      const EFFECT_KEYWORDS: Record<string, string[]> = {
+        'super armor': ['Super Armor'],
+        'superarmor': ['Super Armor'],
+        'sa': ['Super Armor'],
+        'forward guard': ['Forward Guard'],
+        'forwardguard': ['Forward Guard'],
+        'fg': ['Forward Guard'],
+        'iframe': ['I-Frame', 'Invincible'],
+        'i-frame': ['I-Frame', 'Invincible'],
+        'if': ['I-Frame', 'Invincible'],
+        'invincible': ['Invincible'],
+        'stun': ['Stun'],
+        'knockdown': ['Knockdown'],
+        'kd': ['Knockdown'],
+        'knockback': ['Knockback'],
+        'kb': ['Knockback'],
+        'float': ['Float'],
+        'bound': ['Bound'],
+        'grapple': ['Grapple'],
+        'grab': ['Grapple'],
+        'stiffness': ['Stiffness'],
+        'stiff': ['Stiffness'],
+        'freeze': ['Freeze'],
+        'frostbite': ['Frostbite'],
+        'chill': ['Chill'],
+        'burn': ['Burn'],
+        'poison': ['Poison'],
+        'bleeding': ['Bleeding'],
+        'shock': ['Shock'],
+        'blind': ['Blind'],
+        'down smash': ['Down Smash'],
+        'air smash': ['Air Smash'],
+        'smash': ['Down Smash', 'Air Smash', 'Smash'],
+        'push': ['Push the target'],
+        'pull': ['Pull the target'],
+        'spin': ['Spin the target'],
+      }
+
+      // Check if query contains any effect keywords
+      // Sort keywords by length (longest first) so "super armor" matches before "sa"
+      const sortedKeywords = Object.entries(EFFECT_KEYWORDS).sort((a, b) => b[0].length - a[0].length)
+      const matchedEffects: { field: 'ccTypes' | 'protectionTypes'; value: string }[] = []
+      let remainingQuery = qLower
+      for (const [keyword, dbValues] of sortedKeywords) {
+        // Use word boundary for short keywords (2-3 chars) to avoid false matches
+        const isShort = keyword.length <= 3
+        const matches = isShort
+          ? new RegExp(`\\b${keyword}\\b`, 'i').test(remainingQuery)
+          : remainingQuery.includes(keyword)
+        if (matches) {
+          for (const v of dbValues) {
+            const field = ['Super Armor', 'Forward Guard', 'I-Frame', 'Invincible', 'Crouching'].includes(v) ? 'protectionTypes' : 'ccTypes'
+            matchedEffects.push({ field, value: v })
+          }
+          remainingQuery = remainingQuery.replace(new RegExp(isShort ? `\\b${keyword}\\b` : keyword, 'gi'), '').trim()
+        }
+      }
+
+      if (matchedEffects.length > 0) {
+        // Build effect-based search: ALL matched keywords must be present,
+        // but multiple dbValues from the SAME keyword use OR (e.g., 'I-Frame' OR 'Invincible')
+        // Group by field
+        const byField = new Map<string, string[]>()
+        for (const effect of matchedEffects) {
+          if (!byField.has(effect.field)) byField.set(effect.field, [])
+          byField.get(effect.field)!.push(effect.value)
+        }
+        for (const [field, values] of byField) {
+          // Deduplicate values
+          const unique = [...new Set(values)]
+          if (unique.length === 1) {
+            AND.push({ [field]: { contains: unique[0] } })
+          } else {
+            // Multiple values for same field = OR (e.g., I-Frame OR Invincible)
+            AND.push({ OR: unique.map(v => ({ [field]: { contains: v } })) })
+          }
+        }
+        // If there's remaining text after removing keywords, also search name/description
+        if (remainingQuery.length > 1) {
+          AND.push({
+            OR: [
+              { name: { contains: remainingQuery } },
+              { description: { contains: remainingQuery } },
+            ],
+          })
+        }
+      } else {
+        // No effect keywords — standard text search
+        AND.push({
+          OR: [
+            { name: { contains: q } },
+            { krName: { contains: q } },
+            { description: { contains: q } },
+            { command: { contains: q } },
+          ],
+        })
+      }
     }
   }
 
   // Multi-select class filter
-  // Use classId + className double matching to fix multi-class skill attribution
-  // (e.g., 31 skills with "Musa, Dosa" className that have wrong classId)
+  // When filtering by classId, also exclude multi-class skills that don't belong
+  // to the selected class (some shared skills have classId set to one class but
+  // className lists a different class, e.g. Kunoichi/Ninja skills with classId=10/Corsair)
   if (classParam && classParam !== 'all') {
     const classIds = classParam.split(',').map((c) => parseInt(c.trim(), 10)).filter((c) => !Number.isNaN(c))
-    // Look up class names for the selected class IDs
-    const selectedClasses = await db.bdoClass.findMany({
-      where: { id: { in: classIds } },
-      select: { id: true, name: true },
-    })
-    const classNames = selectedClasses.map((c) => c.name)
-
-    if (classIds.length === 1 && classNames.length === 1) {
-      // Single class: match by classId OR className (fixes multi-class skills)
-      AND.push({
-        OR: [
-          { classId: classIds[0] },
-          { className: classNames[0] },
-        ],
-      })
+    if (classIds.length === 1) {
+      // Single class: filter by classId AND exclude skills whose className
+      // contains a comma (multi-class) unless the class name matches
+      const cls = await db.bdoClass.findFirst({ where: { id: classIds[0] } })
+      if (cls) {
+        AND.push({
+          AND: [
+            { classId: classIds[0] },
+            {
+              OR: [
+                { className: cls.name },           // Exact match (most skills)
+                { className: { contains: cls.name } }, // Multi-class skill that includes this class
+              ],
+            },
+          ],
+        })
+      } else {
+        AND.push({ classId: classIds[0] })
+      }
     } else if (classIds.length > 1) {
       // Multi-class: match by classId OR className
       AND.push({
@@ -357,6 +461,13 @@ export async function GET(req: NextRequest) {
   }
   const orderBy = sortMap[sort] || sortMap.skillId
 
+  // For computed sorts (damage, pvpDamage, ccCounters, dmgPerCd, type),
+  // we can't use DB orderBy — the final findMany just uses skillId ordering
+  // and we sort filteredIds manually above.
+  const effectiveOrderBy = ['damage', 'pvpDamage', 'ccCounters', 'dmgPerCd', 'type'].includes(sort)
+    ? { skillId: 'asc' as const }
+    : orderBy
+
   // --- Max-rank filtering ---
   if (maxRank) {
     // Include all sort-relevant fields up-front so we can sort filteredIds
@@ -482,7 +593,7 @@ export async function GET(req: NextRequest) {
     // Apply damage range filter post-query (since damage is computed, not stored).
     // Also pre-compute PvP damage and CC counters when sorting by those columns.
     let filteredIds = specFilteredIds
-    const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage'
+    const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage' || sort === 'dmgPerCd'
     const needsCC = sort === 'ccCounters' || pvpOnlyFilter
     let dmgPvEMap: Map<number, number> | null = null
     let dmgPvPMap: Map<number, number> | null = null
@@ -495,6 +606,7 @@ export async function GET(req: NextRequest) {
           damageRowsJson: true,
           pvpDamagePercent: true,
           ccTypes: true,
+          cooldownSec: true,
         },
       })
       dmgPvEMap = new Map<number, number>()
@@ -567,6 +679,21 @@ export async function GET(req: NextRequest) {
         const cb_ = ccMap!.get(b) ?? 0
         return dir * (ca - cb_)
       })
+    } else if (sort === 'dmgPerCd') {
+      // Damage per cooldown: totalPvE / cooldownSec (higher = more efficient)
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const da = dmgPvEMap!.get(a) ?? 0
+        const db_ = dmgPvEMap!.get(b) ?? 0
+        // Need cooldown data — fetch from the skills array we already have
+        const sa = skills.find(s => s.skillId === a)
+        const sb = skills.find(s => s.skillId === b)
+        const cda = sa?.cooldownSec ?? 0
+        const cdb = sb?.cooldownSec ?? 0
+        // DPC = damage / cooldown (if cooldown is 0 or null, treat as instant = high efficiency)
+        const dpcA = cda > 0 ? da / cda : da
+        const dpcB = cdb > 0 ? db_ / cdb : db_
+        return dir * (dpcA - dpcB)
+      })
     } else if (sort === 'name') {
       filteredIds = [...filteredIds].sort((a, b) => {
         const ra = rowById.get(a)!
@@ -627,7 +754,7 @@ export async function GET(req: NextRequest) {
 
     const items = await db.skill.findMany({
       where: { skillId: { in: pageIds } },
-      orderBy,
+      orderBy: effectiveOrderBy,
     })
 
     const idOrder = new Map(pageIds.map((id, i) => [id, i]))
@@ -647,7 +774,7 @@ export async function GET(req: NextRequest) {
   // Non-maxRank path
   const [total, items] = await Promise.all([
     db.skill.count({ where }),
-    db.skill.findMany({ where, orderBy, skip: (page - 1) * pageSize, take: pageSize }),
+    db.skill.findMany({ where, orderBy: effectiveOrderBy, skip: (page - 1) * pageSize, take: pageSize }),
   ])
 
   return NextResponse.json({
