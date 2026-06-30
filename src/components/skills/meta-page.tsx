@@ -49,11 +49,12 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 // A single spec card — one per class×spec combination
 // Portrait is the card background, with a dark gradient overlay for readability.
 // Framed class icon in top-right corner with spec-colored border.
-function SpecCard({ cls, specName, stats, sortKey }: {
+function SpecCard({ cls, specName, stats, sortKey, onClick }: {
   cls: ClassStats
   specName: 'awakening' | 'succession' | 'ascension'
   stats: SpecStats
   sortKey: SortKey
+  onClick: () => void
 }) {
   const iconUrl = classIconUrl(cls.slug)
   // Use spec-specific portrait as background
@@ -69,15 +70,19 @@ function SpecCard({ cls, specName, stats, sortKey }: {
   if (stats.skillCount === 0) return null
 
   return (
-    <motion.div
+    <motion.button
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group relative flex flex-col gap-2 overflow-hidden rounded-sm border-2"
+      whileHover={{ scale: 1.02, y: -2 }}
+      whileTap={{ scale: 0.99 }}
+      onClick={onClick}
+      className="group relative flex cursor-pointer flex-col gap-2 overflow-hidden rounded-sm border-2 text-left transition-shadow hover:shadow-lg"
       style={{
         borderColor: `${specColor}88`,
         boxShadow: `0 4px 12px rgba(0,0,0,0.6), inset 0 0 0 1px ${specColor}33`,
         minHeight: 200,
       }}
+      title={`${cls.className} ${specMeta.label} — click to view skills in Data tab`}
     >
       {/* Background portrait */}
       <div className="absolute inset-0 z-0">
@@ -183,7 +188,7 @@ function SpecCard({ cls, specName, stats, sortKey }: {
         {/* Skill count footer */}
         <div className="text-[10px] text-amber-200/40">{stats.skillCount} skills</div>
       </div>
-    </motion.div>
+    </motion.button>
   )
 }
 
@@ -203,11 +208,12 @@ function StatBox({ label, value, color, highlighted }: { label: string; value: s
   )
 }
 
-function MetaTable({ classes, sortKey, sortDir, onSort }: {
+function MetaTable({ classes, sortKey, sortDir, onSort, onRowClick }: {
   classes: ClassStats[]
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
   onSort: (key: SortKey) => void
+  onRowClick?: (classId: number, spec: 'awakening' | 'succession' | 'ascension') => void
 }) {
   // Flatten into spec rows
   const rows: { cls: ClassStats; spec: 'awakening' | 'succession' | 'ascension'; stats: SpecStats }[] = []
@@ -275,7 +281,11 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
             const mainPortraitUrl = `/icons/portraits/${row.cls.slug}.jpg`
             const specMeta = SPEC_META[row.spec]
             return (
-              <tr key={`${row.cls.classId}-${row.spec}`} className="border-b border-amber-900/20 hover:bg-amber-500/5">
+              <tr
+                key={`${row.cls.classId}-${row.spec}`}
+                onClick={() => onRowClick?.(row.cls.classId, row.spec)}
+                className={cn('border-b border-amber-900/20 hover:bg-amber-500/5', onRowClick && 'cursor-pointer')}
+              >
                 <td className="px-2 py-1.5">
                   <div className="flex items-center gap-2">
                     <div className="size-8 shrink-0 overflow-hidden rounded-sm border" style={{ borderColor: `${color}55` }}>
@@ -304,7 +314,7 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
   )
 }
 
-export function MetaPage() {
+export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec: 'awakening' | 'succession' | 'ascension') => void }) {
   const [viewMode, setViewMode] = React.useState<'cards' | 'table'>('cards')
   const [sortKey, setSortKey] = React.useState<SortKey>('avgPvpDamage')
   const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('desc')
@@ -425,11 +435,18 @@ export function MetaPage() {
         ) : viewMode === 'cards' ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {specCards.map(({ cls, spec, stats }) => (
-              <SpecCard key={`${cls.classId}-${spec}`} cls={cls} specName={spec} stats={stats} sortKey={sortKey} />
+              <SpecCard
+                key={`${cls.classId}-${spec}`}
+                cls={cls}
+                specName={spec}
+                stats={stats}
+                sortKey={sortKey}
+                onClick={() => onCardClick?.(cls.classId, spec)}
+              />
             ))}
           </div>
         ) : (
-          <MetaTable classes={classes} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+          <MetaTable classes={classes} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} onRowClick={onCardClick} />
         )}
       </div>
 

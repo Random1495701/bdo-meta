@@ -1,10 +1,11 @@
 'use client'
 
 import * as React from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Newspaper, ExternalLink, ArrowUp, ArrowDown, Plus, Minus,
   Zap, Clock, Swords, Link2, ScrollText, Sparkles, Info, Archive,
+  ChevronDown, Search, Filter,
 } from 'lucide-react'
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { cn } from '@/lib/utils'
@@ -22,6 +23,8 @@ interface SkillChange {
   skillName: string
   matchedSkillId: number | null
   matchedSkillClassName: string | null
+  matchedClassSlug: string | null
+  matchedIconUrl: string | null
   changeType: ChangeType
   before?: string
   after?: string
@@ -43,19 +46,24 @@ interface PatchNote {
 
 // ─── Change type metadata ───────────────────────────────────────────
 
-const CHANGE_META: Record<ChangeType, { label: string; icon: React.ReactNode; color: string; direction?: 'up' | 'down' | 'neutral' }> = {
-  damage_up:      { label: 'Damage ↑',   icon: <Swords className="size-3.5" />,  color: '#22c55e', direction: 'up' },
-  damage_down:    { label: 'Damage ↓',   icon: <Swords className="size-3.5" />,  color: '#ef4444', direction: 'down' },
-  cooldown_up:    { label: 'Cooldown ↑', icon: <Clock className="size-3.5" />,   color: '#ef4444', direction: 'up' },
-  cooldown_down:  { label: 'Cooldown ↓', icon: <Clock className="size-3.5" />,   color: '#22c55e', direction: 'down' },
-  added_effect:   { label: 'Added',      icon: <Plus className="size-3.5" />,    color: '#22c55e', direction: 'neutral' },
-  removed_effect: { label: 'Removed',    icon: <Minus className="size-3.5" />,   color: '#ef4444', direction: 'neutral' },
-  cc_change:      { label: 'CC Change',  icon: <Zap className="size-3.5" />,     color: '#eab308', direction: 'neutral' },
-  combo_change:   { label: 'Combo',      icon: <Sparkles className="size-3.5" />, color: '#3b82f6', direction: 'neutral' },
-  animation_change: { label: 'Animation', icon: <ScrollText className="size-3.5" />, color: '#a78bfa', direction: 'neutral' },
-  note:           { label: 'Changed',    icon: <Info className="size-3.5" />,    color: '#a1a1aa', direction: 'neutral' },
-  other:          { label: 'Other',      icon: <Info className="size-3.5" />,    color: '#a1a1aa', direction: 'neutral' },
+const CHANGE_META: Record<ChangeType, { label: string; icon: React.ReactNode; color: string; direction: 'up' | 'down' | 'neutral' }> = {
+  damage_up:        { label: 'Damage ↑',   icon: <Swords className="size-3.5" />,    color: '#22c55e', direction: 'up' },
+  damage_down:      { label: 'Damage ↓',   icon: <Swords className="size-3.5" />,    color: '#ef4444', direction: 'down' },
+  cooldown_up:      { label: 'Cooldown ↑', icon: <Clock className="size-3.5" />,     color: '#ef4444', direction: 'up' },
+  cooldown_down:    { label: 'Cooldown ↓', icon: <Clock className="size-3.5" />,     color: '#22c55e', direction: 'down' },
+  added_effect:     { label: 'Added',      icon: <Plus className="size-3.5" />,      color: '#22c55e', direction: 'neutral' },
+  removed_effect:   { label: 'Removed',    icon: <Minus className="size-3.5" />,     color: '#ef4444', direction: 'neutral' },
+  cc_change:        { label: 'CC Change',  icon: <Zap className="size-3.5" />,       color: '#eab308', direction: 'neutral' },
+  combo_change:     { label: 'Combo',      icon: <Sparkles className="size-3.5" />,  color: '#3b82f6', direction: 'neutral' },
+  animation_change: { label: 'Animation',  icon: <ScrollText className="size-3.5" />,color: '#a78bfa', direction: 'neutral' },
+  note:             { label: 'Changed',    icon: <Info className="size-3.5" />,      color: '#a1a1aa', direction: 'neutral' },
+  other:            { label: 'Other',      icon: <Info className="size-3.5" />,      color: '#a1a1aa', direction: 'neutral' },
 }
+
+const CHANGE_TYPE_ORDER: ChangeType[] = [
+  'damage_up', 'damage_down', 'cooldown_down', 'cooldown_up',
+  'added_effect', 'removed_effect', 'cc_change', 'combo_change', 'animation_change', 'note', 'other',
+]
 
 // ─── Component ───────────────────────────────────────────────────────
 
@@ -65,22 +73,21 @@ export function PatchesPage() {
   const [loading, setLoading] = React.useState(true)
   const [hasData, setHasData] = React.useState(false)
   const [filterClass, setFilterClass] = React.useState<string | null>(null)
+  const [filterType, setFilterType] = React.useState<ChangeType | null>(null)
+  const [search, setSearch] = React.useState('')
 
   React.useEffect(() => {
     fetch('/api/patches')
       .then(res => res.json())
       .then(data => {
         setHasData(data.hasData)
-        if (data.patches && data.patches.length > 0) {
-          setPatch(data.patches[0])
-        }
+        if (data.patches && data.patches.length > 0) setPatch(data.patches[0])
         if (data.archiveInfo) setArchiveInfo(data.archiveInfo)
         setLoading(false)
       })
       .catch(() => setLoading(false))
   }, [])
 
-  // Collect all class names that have changes
   const changedClasses = React.useMemo(() => {
     if (!patch) return []
     return patch.classChanges.map(cc => cc.className).filter(Boolean)
@@ -88,17 +95,35 @@ export function PatchesPage() {
 
   const filteredClassChanges = React.useMemo(() => {
     if (!patch) return []
-    if (!filterClass) return patch.classChanges
-    return patch.classChanges.filter(cc => cc.className === filterClass)
-  }, [patch, filterClass])
+    let result = patch.classChanges
+    if (filterClass) result = result.filter(cc => cc.className === filterClass)
+    if (filterType) {
+      result = result.map(cc => ({
+        ...cc,
+        changes: cc.changes.filter(ch => ch.changeType === filterType),
+      })).filter(cc => cc.changes.length > 0)
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase()
+      result = result.map(cc => ({
+        ...cc,
+        changes: cc.changes.filter(ch =>
+          ch.skillName.toLowerCase().includes(q) ||
+          ch.description.toLowerCase().includes(q) ||
+          (ch.matchedSkillClassName || '').toLowerCase().includes(q)),
+      })).filter(cc => cc.changes.length > 0)
+    }
+    return result
+  }, [patch, filterClass, filterType, search])
 
-  // Count changes by type for summary
   const changeSummary = React.useMemo(() => {
-    if (!patch) return { total: 0, buffs: 0, nerfs: 0, linked: 0 }
+    if (!patch) return { total: 0, buffs: 0, nerfs: 0, linked: 0, byType: {} as Record<string, number> }
     let total = 0, buffs = 0, nerfs = 0, linked = 0
+    const byType: Record<string, number> = {}
     for (const cc of patch.classChanges) {
       for (const ch of cc.changes) {
         total++
+        byType[ch.changeType] = (byType[ch.changeType] || 0) + 1
         const meta = CHANGE_META[ch.changeType]
         if (meta.direction === 'up' && (ch.changeType === 'damage_up' || ch.changeType === 'cooldown_down')) buffs++
         if (meta.direction === 'down' && (ch.changeType === 'damage_down' || ch.changeType === 'cooldown_up')) nerfs++
@@ -107,7 +132,7 @@ export function PatchesPage() {
         if (ch.matchedSkillId) linked++
       }
     }
-    return { total, buffs, nerfs, linked }
+    return { total, buffs, nerfs, linked, byType }
   }, [patch])
 
   return (
@@ -124,7 +149,10 @@ export function PatchesPage() {
           </div>
           {patch && (
             <div className="ml-auto flex items-center gap-3">
-              <span className="hidden text-sm font-semibold text-amber-200 sm:inline">{patch.date}</span>
+              <div className="hidden text-right sm:block">
+                <div className="text-sm font-semibold text-amber-200">{patch.date}</div>
+                <div className="text-[9px] text-amber-300/40">{patch.classChanges.length} classes · {changeSummary.total} changes</div>
+              </div>
               <a
                 href={patch.url}
                 target="_blank"
@@ -139,7 +167,7 @@ export function PatchesPage() {
 
         {/* Summary stats */}
         {patch && (
-          <div className="mt-3 flex flex-wrap gap-3">
+          <div className="mt-3 flex flex-wrap gap-2">
             <SummaryChip label="Classes" value={changedClasses.length} color="#fbbf24" />
             <SummaryChip label="Changes" value={changeSummary.total} color="#a1a1aa" />
             <SummaryChip label="Buffs" value={changeSummary.buffs} color="#22c55e" icon={<ArrowUp className="size-3" />} />
@@ -152,9 +180,9 @@ export function PatchesPage() {
       {/* Content */}
       <div className="flex-1 px-4 py-6 lg:px-6">
         {loading ? (
-          <div className="mx-auto max-w-4xl space-y-4">
+          <div className="mx-auto max-w-5xl space-y-4">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-32 animate-pulse rounded-sm border-2 border-amber-900/30 bg-bdo-leather-dark" />
+              <div key={i} className="h-40 animate-pulse rounded-sm border-2 border-amber-900/30 bg-bdo-leather-dark" />
             ))}
           </div>
         ) : !hasData || !patch ? (
@@ -168,47 +196,97 @@ export function PatchesPage() {
           </div>
         ) : (
           <div className="mx-auto max-w-5xl">
-            {/* Class filter chips */}
-            {changedClasses.length > 1 && (
-              <div className="mb-4 flex flex-wrap items-center gap-1.5">
+            {/* Filter bar */}
+            <div className="mb-4 space-y-2">
+              {/* Search + class filter */}
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="relative min-w-[180px] flex-1">
+                  <Search className="absolute left-2 top-1/2 size-3.5 -translate-y-1/2 text-amber-300/40" />
+                  <input
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    placeholder="Search skill or description..."
+                    className="w-full rounded-sm border border-amber-800/40 bg-bdo-leather-dark/50 py-1.5 pl-7 pr-3 text-xs text-amber-100 placeholder:text-amber-300/30 focus:border-amber-500/50 focus:outline-none"
+                  />
+                </div>
+                <div className="flex items-center gap-1 text-[10px] text-amber-300/40">
+                  <Filter className="size-3" /> Type:
+                </div>
                 <button
-                  onClick={() => setFilterClass(null)}
+                  onClick={() => setFilterType(null)}
                   className={cn(
-                    'rounded-sm border px-2.5 py-1 text-[10px] font-semibold transition-all',
-                    !filterClass
-                      ? 'border-amber-400/60 bg-amber-500/15 text-amber-200'
-                      : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
+                    'rounded-sm border px-2 py-1 text-[10px] font-semibold transition-all',
+                    !filterType ? 'border-amber-400/60 bg-amber-500/15 text-amber-200' : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
                   )}
                 >
-                  All ({changedClasses.length})
+                  All
                 </button>
-                {changedClasses.map(cls => {
-                  const color = classColor(cls)
+                {CHANGE_TYPE_ORDER.filter(t => (changeSummary.byType[t] || 0) > 0).map(type => {
+                  const meta = CHANGE_META[type]
+                  const count = changeSummary.byType[type] || 0
                   return (
                     <button
-                      key={cls}
-                      onClick={() => setFilterClass(cls)}
+                      key={type}
+                      onClick={() => setFilterType(filterType === type ? null : type)}
                       className={cn(
-                        'rounded-sm border px-2.5 py-1 text-[10px] font-semibold transition-all',
-                        filterClass === cls
-                          ? 'bg-amber-500/15 text-amber-200'
-                          : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
+                        'flex items-center gap-1 rounded-sm border px-2 py-1 text-[10px] font-semibold transition-all',
+                        filterType === type ? 'text-amber-200' : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
                       )}
-                      style={filterClass === cls ? { borderColor: color, color } : undefined}
+                      style={filterType === type ? { borderColor: meta.color, backgroundColor: `${meta.color}15`, color: meta.color } : undefined}
                     >
-                      {cls}
+                      {meta.icon}
+                      {meta.label}
+                      <span className="ml-0.5 font-mono opacity-60">{count}</span>
                     </button>
                   )
                 })}
               </div>
-            )}
 
-            {/* Class change blocks */}
-            <div className="space-y-4">
-              {filteredClassChanges.map((cc, idx) => (
-                <ClassChangeCard key={`${cc.className}-${idx}`} cc={cc} />
-              ))}
+              {/* Class chips */}
+              {changedClasses.length > 1 && (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <button
+                    onClick={() => setFilterClass(null)}
+                    className={cn(
+                      'rounded-sm border px-2.5 py-1 text-[10px] font-semibold transition-all',
+                      !filterClass ? 'border-amber-400/60 bg-amber-500/15 text-amber-200' : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
+                    )}
+                  >
+                    All ({changedClasses.length})
+                  </button>
+                  {changedClasses.map(cls => {
+                    const color = classColor(cls)
+                    return (
+                      <button
+                        key={cls}
+                        onClick={() => setFilterClass(filterClass === cls ? null : cls)}
+                        className={cn(
+                          'rounded-sm border px-2.5 py-1 text-[10px] font-semibold transition-all',
+                          filterClass === cls ? 'text-amber-200' : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
+                        )}
+                        style={filterClass === cls ? { borderColor: color, color } : undefined}
+                      >
+                        {cls}
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
             </div>
+
+            {/* Class change cards */}
+            {filteredClassChanges.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-amber-300/40">
+                <Filter className="mb-3 size-8 opacity-40" />
+                <p className="text-sm">No changes match your filters.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredClassChanges.map((cc, idx) => (
+                  <ClassChangeCard key={`${cc.className}-${idx}`} cc={cc} />
+                ))}
+              </div>
+            )}
 
             {/* Archive note */}
             {archiveInfo && archiveInfo.totalPatches > 1 && (
@@ -247,30 +325,40 @@ function SummaryChip({ label, value, color, icon }: { label: string; value: numb
 function ClassChangeCard({ cc }: { cc: ClassChangeBlock }) {
   const [expanded, setExpanded] = React.useState(true)
   const color = classColor(cc.className)
-  const iconUrl = classIconUrl(cc.className.toLowerCase().replace(/[^a-z]/g, ''))
+  const slug = cc.className.toLowerCase().replace(/[^a-z]/g, '')
+  const iconUrl = classIconUrl(slug)
   const specColor = cc.spec ? (SPEC_COLORS[cc.spec.toLowerCase() as keyof typeof SPEC_COLORS] || '#c9a25c') : '#c9a25c'
 
-  const buffs = cc.changes.filter(c => CHANGE_META[c.changeType].direction === 'up' || c.changeType === 'added_effect' || c.changeType === 'cooldown_down' || c.changeType === 'damage_up').length
-  const nerfs = cc.changes.filter(c => CHANGE_META[c.changeType].direction === 'down' || c.changeType === 'removed_effect' || c.changeType === 'cooldown_up' || c.changeType === 'damage_down').length
+  const buffs = cc.changes.filter(c => ['damage_up', 'cooldown_down', 'added_effect'].includes(c.changeType)).length
+  const nerfs = cc.changes.filter(c => ['damage_down', 'cooldown_up', 'removed_effect'].includes(c.changeType)).length
+  const linked = cc.changes.filter(c => c.matchedSkillId).length
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="overflow-hidden rounded-sm border-2 border-amber-800/40"
+      className="overflow-hidden rounded-sm border-2"
+      style={{ borderColor: `${color}44` }}
     >
-      {/* Class header */}
+      {/* Class header — with class icon + spec color stripe */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center gap-3 border-b border-amber-900/30 bg-bdo-leather-dark/50 px-4 py-3 transition-colors hover:bg-bdo-leather-dark"
+        className="relative flex w-full items-center gap-3 px-4 py-3 transition-colors hover:bg-amber-500/5"
+        style={{ background: `linear-gradient(90deg, ${color}11 0%, transparent 60%)` }}
       >
+        {/* Spec color stripe */}
+        {cc.spec && (
+          <div className="absolute left-0 top-0 h-full w-1" style={{ backgroundColor: specColor }} />
+        )}
+
         {iconUrl && (
-          <div className="size-9 shrink-0 overflow-hidden rounded-sm border" style={{ borderColor: `${color}55` }}>
+          <div className="size-10 shrink-0 overflow-hidden rounded-sm border-2" style={{ borderColor: `${color}66` }}>
             <img src={iconUrl} alt={cc.className} className="h-full w-full object-cover" loading="lazy" />
           </div>
         )}
+
         <div className="flex flex-col items-start">
-          <span className="text-sm font-bold" style={{ color }}>{cc.className}</span>
+          <span className="text-base font-bold" style={{ color }}>{cc.className}</span>
           <div className="flex items-center gap-2">
             {cc.spec && (
               <span
@@ -282,81 +370,95 @@ function ClassChangeCard({ cc }: { cc: ClassChangeBlock }) {
             )}
             <span className="text-[9px] text-amber-300/40">
               {cc.changes.length} changes
-              {buffs > 0 && <span className="ml-1 text-emerald-400/60">↑{buffs}</span>}
-              {nerfs > 0 && <span className="ml-1 text-red-400/60">↓{nerfs}</span>}
+              {buffs > 0 && <span className="ml-1 font-semibold text-emerald-400/70">↑{buffs}</span>}
+              {nerfs > 0 && <span className="ml-1 font-semibold text-red-400/70">↓{nerfs}</span>}
+              {linked > 0 && <span className="ml-1 text-blue-400/50">⟡{linked}</span>}
             </span>
           </div>
         </div>
+
+        <ChevronDown className={cn('ml-auto size-4 text-amber-300/40 transition-transform', expanded && 'rotate-180')} />
       </button>
 
       {/* Changes */}
-      {expanded && (
-        <div className="bg-bdo-ink/30">
-          {/* Intro */}
-          {cc.intro && (
-            <div className="border-b border-amber-900/20 px-4 py-3">
-              <p className="text-xs leading-relaxed text-amber-100/60">{cc.intro}</p>
-            </div>
-          )}
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden bg-bdo-ink/40"
+          >
+            {/* Intro */}
+            {cc.intro && (
+              <div className="border-b border-amber-900/20 px-4 py-3">
+                <p className="text-xs leading-relaxed text-amber-100/50">{cc.intro}</p>
+              </div>
+            )}
 
-          {/* Skill changes */}
-          <div className="divide-y divide-amber-900/15">
-            {cc.changes.map((change, i) => (
-              <SkillChangeRow key={i} change={change} />
-            ))}
-          </div>
-        </div>
-      )}
+            {/* Skill changes */}
+            <div className="divide-y divide-amber-900/15">
+              {cc.changes.map((change, i) => (
+                <SkillChangeRow key={i} change={change} classColor={color} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
 
 // ─── Skill change row ───────────────────────────────────────────────
 
-function SkillChangeRow({ change }: { change: SkillChange }) {
+function SkillChangeRow({ change, classColor: clsColor }: { change: SkillChange; classColor: string }) {
   const meta = CHANGE_META[change.changeType] || CHANGE_META.other
   const isLinked = change.matchedSkillId != null
 
   return (
     <div className="flex items-start gap-3 px-4 py-2.5 transition-colors hover:bg-amber-500/5">
-      {/* Direction arrow */}
-      <div
-        className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-sm border"
-        style={{ borderColor: `${meta.color}44`, backgroundColor: `${meta.color}11`, color: meta.color }}
-      >
-        {meta.direction === 'up' && <ArrowUp className="size-3.5" />}
-        {meta.direction === 'down' && <ArrowDown className="size-3.5" />}
-        {meta.direction === 'neutral' && meta.icon}
+      {/* Skill icon (from DB match) or direction arrow */}
+      <div className="flex shrink-0 items-start gap-2">
+        {isLinked && change.matchedIconUrl ? (
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('bdo-open-skill', { detail: change.matchedSkillId }))}
+            className="size-9 shrink-0 overflow-hidden rounded-sm border-2 transition-transform hover:scale-105"
+            style={{ borderColor: `${meta.color}66` }}
+            title={`Open ${change.skillName} in Data tab`}
+          >
+            <img src={change.matchedIconUrl} alt={change.skillName} className="h-full w-full object-cover" loading="lazy" />
+          </button>
+        ) : (
+          <div
+            className="flex size-9 shrink-0 items-center justify-center rounded-sm border-2"
+            style={{ borderColor: `${meta.color}44`, backgroundColor: `${meta.color}11`, color: meta.color }}
+          >
+            {meta.icon}
+          </div>
+        )}
       </div>
 
       <div className="min-w-0 flex-1">
         {/* Skill name + type badge */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
           {isLinked ? (
-            <a
-              href={`#skill-${change.matchedSkillId}`}
-              onClick={(e) => {
-                // Navigate to Data tab with this skill — dispatch a custom event
-                e.preventDefault()
-                window.dispatchEvent(new CustomEvent('bdo-open-skill', { detail: change.matchedSkillId }))
-              }}
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('bdo-open-skill', { detail: change.matchedSkillId }))}
               className="flex items-center gap-1 text-sm font-semibold text-amber-200 underline-offset-2 hover:underline"
             >
               {change.skillName}
-              <Link2 className="size-3 text-amber-400/50" />
-            </a>
+              <Link2 className="size-3 text-blue-400/50" />
+            </button>
           ) : (
             <span className="text-sm font-semibold text-amber-200/70">{change.skillName}</span>
           )}
           <span
-            className="rounded-sm px-1.5 py-0.5 text-[8px] font-bold uppercase"
+            className="flex items-center gap-0.5 rounded-sm px-1.5 py-0.5 text-[8px] font-bold uppercase"
             style={{ color: meta.color, backgroundColor: `${meta.color}15` }}
           >
+            {meta.icon}
             {meta.label}
           </span>
-          {change.matchedSkillClassName && change.matchedSkillClassName !== change.skillName && (
-            <span className="text-[8px] text-amber-300/30">→ {change.matchedSkillClassName}</span>
-          )}
         </div>
 
         {/* Before → After */}
@@ -367,9 +469,11 @@ function SkillChangeRow({ change }: { change: SkillChange }) {
                 {change.before}
               </span>
             )}
-            {change.before && change.after && <ArrowRight />}
+            {change.before && change.after && (
+              <span className="text-amber-400/50">→</span>
+            )}
             {change.after && (
-              <span className="rounded-sm border border-emerald-800/30 bg-emerald-900/10 px-2 py-0.5 font-mono text-emerald-300/70">
+              <span className="rounded-sm border border-emerald-800/30 bg-emerald-900/10 px-2 py-0.5 font-mono text-emerald-300/80">
                 {change.after}
               </span>
             )}
@@ -383,8 +487,4 @@ function SkillChangeRow({ change }: { change: SkillChange }) {
       </div>
     </div>
   )
-}
-
-function ArrowRight() {
-  return <span className="text-amber-400/40">→</span>
 }

@@ -255,6 +255,25 @@ const VERSIONS: VersionEntry[] = [
     fixes: [],
   },
   {
+    version: 'v3.1.0',
+    date: '2025-06-30',
+    title: 'Change Tracking + Portrait Tiers + Patch Lurker',
+    features: [
+      'DB change tracking system: new SkillChangeLog model logs every modification to skill data (field-level, with old/new values, source, and patch date)',
+      'Live change log banner on every page: shows 24h/7d/unique-skills stats, expandable to full log with source filters (Lurker, Patch, Manual, Import, Garmoth)',
+      'Change log API: GET /api/change-log with filtering by source, field, skillId + stats (last24h, last7d, uniqueSkillsChanged, bySource breakdown)',
+      'Portrait visualization mode for Tier Builder: podium-style top 3 with gold/silver/bronze medals, grid of remaining entries, character portraits as backgrounds, mini parameter bars on hover',
+      'Patch notes UI overhaul: skill icons from DB now shown for linked skills (17/121 linked), change type filter chips with counts, search box, class gradient headers with spec color stripes',
+      'Meta cards clickable again: clicking a spec card navigates to Data tab with class+spec pre-filtered (also works for table rows)',
+      'Patch lurker: weekly checker that only scrapes on Thursday (patch day) or later, skips Mon-Wed to avoid PA IP blocks, tracks state in data/patch-lurker-state.json, --force flag for manual runs',
+      'Patches API enhanced: returns matchedIconUrl and matchedClassSlug for each skill change',
+    ],
+    fixes: [
+      'Meta page cards were not clickable after filesystem reversion — restored onClick handlers with class+spec navigation',
+      'Patch notes showed correct skill data but no skill icons — API now returns iconPath/iconUrl for matched skills',
+    ],
+  },
+  {
     version: 'v3.0.0',
     date: '2025-06-30',
     title: 'Tier Builder + Structured Patch Notes',

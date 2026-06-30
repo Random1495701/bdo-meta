@@ -85,6 +85,30 @@ model SyncLog {
   @@map("sync_logs")
 }
 
+// Tracks individual skill field changes — every time a skill's data is modified
+// (by the lurker, patch application, or manual edit), a log entry is created.
+// This makes it easy to validate if incorrect changes were made or something
+// didn't get pulled when a new patch came.
+model SkillChangeLog {
+  id          String   @id @default(cuid())
+  skillId     Int      // the bdocodex skill_id that changed
+  skillName   String   // snapshot of the skill name at time of change
+  className   String?  // snapshot of the class name
+  field       String   // which field changed: "damageRowsJson" | "ccTypes" | "cooldownSec" | "pvpDamagePercent" | etc.
+  changeType  String   // "create" | "update" | "delete" | "patch_apply"
+  oldValue    String?  // previous value (JSON-encoded for complex fields)
+  newValue    String?  // new value (JSON-encoded for complex fields)
+  source      String   // "lurker" | "patch_apply" | "manual" | "import" | "garmoth"
+  patchDate   String?  // if change came from a patch, which patch date
+  createdAt   DateTime @default(now())
+
+  @@index([skillId])
+  @@index([field])
+  @@index([changeType])
+  @@index([createdAt])
+  @@map("skill_change_logs")
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique

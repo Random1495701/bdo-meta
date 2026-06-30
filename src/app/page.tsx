@@ -15,6 +15,7 @@ import { DocsPage } from '@/components/skills/docs-page'
 import { TierListPage } from '@/components/skills/tier-list-page'
 import { PatchesPage } from '@/components/skills/patches-page'
 import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
+import { ChangeLogBanner } from '@/components/skills/change-log-banner'
 
 import {
   Sheet,
@@ -58,6 +59,17 @@ function MobileFilterTrigger() {
 
 export default function Home() {
   const [view, setView] = React.useState<ViewMode>('data')
+
+  // Handle Meta card click → switch to Data tab with class+spec pre-filtered
+  const handleMetaCardClick = React.useCallback((classId: number, spec: 'awakening' | 'succession' | 'ascension') => {
+    const store = useSkillStore.getState()
+    store.clearClasses()
+    store.toggleClass(classId)
+    // Clear existing specs and set the clicked spec
+    store.filters.specs?.forEach((s) => store.toggleSpec(s))
+    store.toggleSpec(spec)
+    setView('data')
+  }, [])
 
   // Listen for skill-open events from the Patches page (linked skill clicks)
   React.useEffect(() => {
@@ -116,7 +128,8 @@ export default function Home() {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
-        <MetaPage />
+        <ChangeLogBanner />
+        <MetaPage onCardClick={handleMetaCardClick} />
         <SyncFooter />
       </div>
     )
@@ -126,6 +139,7 @@ export default function Home() {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
+        <ChangeLogBanner />
         <DocsPage />
         <SyncFooter />
       </div>
@@ -136,6 +150,7 @@ export default function Home() {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
+        <ChangeLogBanner />
         <TierListPage />
         <SyncFooter />
       </div>
@@ -146,6 +161,7 @@ export default function Home() {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
+        <ChangeLogBanner />
         <PatchesPage />
         <SyncFooter />
       </div>
@@ -155,6 +171,7 @@ export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
       <TabSwitcher view={view} onChange={setView} />
+      <ChangeLogBanner />
 
       <Header />
       <ClassBar />

@@ -12,6 +12,8 @@ interface SkillChange {
   skillName: string
   matchedSkillId: number | null
   matchedSkillClassName: string | null
+  matchedClassSlug: string | null
+  matchedIconUrl: string | null
   changeType: 'damage_up' | 'damage_down' | 'cooldown_up' | 'cooldown_down' | 'added_effect' | 'removed_effect' | 'cc_change' | 'combo_change' | 'animation_change' | 'note' | 'other'
   before?: string
   after?: string
@@ -29,6 +31,13 @@ interface PatchNote {
   date: string
   url: string
   classChanges: ClassChangeBlock[]
+}
+
+function iconUrl(iconPath: string | null): string | null {
+  if (!iconPath) return null
+  if (iconPath.startsWith('http')) return iconPath
+  const basename = iconPath.split('/').pop()?.replace(/\.\w+$/, '')
+  return basename ? `/icons/skills/${basename}.webp` : null
 }
 
 export async function GET() {
@@ -49,26 +58,31 @@ export async function GET() {
     // Link skill names to DB skills
     const allSkills = await db.skill.findMany({
       where: { className: { not: { startsWith: 'NEW_CLASS' } } },
-      select: { skillId: true, name: true, className: true },
+      select: { skillId: true, name: true, className: true, iconPath: true },
     })
 
-    // Build lookup maps
-    const exactNameMap = new Map<string, { skillId: number; className: string | null }>()
-    const baseNameMap = new Map<string, { skillId: number; className: string | null }>()
+    // Build class slug lookup
+    const classes = await db.bdoClass.findMany({ select: { id: true, name: true, slug: true } })
+    const classNameToSlug = new Map<string, string>()
+    for (const c of classes) classNameToSlug.set(c.name.toLowerCase(), c.slug)
+
+    interface MatchInfo { skillId: number; className: string | null; iconPath: string | null }
+    const exactNameMap = new Map<string, MatchInfo>()
+    const baseNameMap = new Map<string, MatchInfo>()
     for (const s of allSkills) {
       const lower = s.name.toLowerCase()
-      exactNameMap.set(lower, { skillId: s.skillId, className: s.className })
+      exactNameMap.set(lower, { skillId: s.skillId, className: s.className, iconPath: s.iconPath })
       const base = s.name
         .replace(/^(Prime:\s*|Succession:\s*|Absolute:\s*|Core:\s*|Flow:\s*)/i, '')
         .replace(/\s+(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)$/i, '')
         .trim()
         .toLowerCase()
       if (base && !baseNameMap.has(base)) {
-        baseNameMap.set(base, { skillId: s.skillId, className: s.className })
+        baseNameMap.set(base, { skillId: s.skillId, className: s.className, iconPath: s.iconPath })
       }
     }
 
-    // Enrich changes with matched skill IDs
+    // Enrich changes with matched skill IDs + icons
     for (const cc of latest.classChanges) {
       for (const change of cc.changes) {
         const cleanName = change.skillName
@@ -80,7 +94,7 @@ export async function GET() {
 
         const exact = exactNameMap.get(fullLower)
         const base = baseNameMap.get(cleanName)
-        let match = exact || base || null
+        let match: MatchInfo | null = exact || base || null
 
         // Fuzzy fallback
         if (!match && cleanName.length > 3) {
@@ -98,6 +112,8 @@ export async function GET() {
 
         change.matchedSkillId = match?.skillId ?? null
         change.matchedSkillClassName = match?.className ?? null
+        change.matchedClassSlug = match?.className ? (classNameToSlug.get(match.className.toLowerCase()) || null) : null
+        change.matchedIconUrl = match ? iconUrl(match.iconPath) : null
       }
     }
 

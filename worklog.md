@@ -1382,3 +1382,30 @@ Stage Summary:
 - **Patch Notes** (v3.0.0): structured parsing with 11 change types, skill linking to DB (exact+base+fuzzy match), up/down arrows, before→after values, latest patch only, 5 patches archived for future features.
 - **Files created**: tab-switcher.tsx, tier-list-page.tsx, patches-page.tsx, /api/patches/route.ts, scripts/scrape-patch-notes.ts, scripts/restore-db.ts, data/patch-notes.json, data/patch-archive.json
 - **Lint**: clean. **Dev server**: running, all 200s, no errors.
+
+---
+Task ID: 25
+Agent: main-orchestrator
+Task: Improve Patches UI (skill icons), fix Meta card clicks, add Portrait tier view, add DB change tracking, tune patch lurker to Thursday-only
+
+Work Log:
+- Patches API: added matchedIconUrl + matchedClassSlug fields to each skill change by joining matched skill's iconPath and className→slug lookup. 17/121 changes now have icons.
+- Patches UI: rewrote with skill icons (clickable, open skill in Data tab), change type filter chips with counts, search box, class gradient headers with spec color stripes, AnimatePresence expand/collapse.
+- Meta page: SpecCard converted from motion.div to motion.button with onClick + whileHover/whileTap. MetaPage accepts onCardClick prop, passes to SpecCard + MetaTable (rows clickable too). page.tsx wires handleMetaCardClick → clears classes, toggles class, sets spec, switches to Data tab.
+- Tier Builder: added "Portraits" as 3rd view mode. PortraitsView shows podium top-3 (gold/silver/bronze medals, 1st place taller) + grid of remaining entries. Each PortraitCard has character portrait background, rank medal badge, score badge, score bar, mini parameter bars on hover. Uses spec portraits with fallback to main portrait.
+- DB change tracking: new SkillChangeLog Prisma model (skillId, skillName, className, field, changeType, oldValue, newValue, source, patchDate, createdAt) with indexes. Pushed schema, regenerated Prisma client, restarted dev server to pick up new client.
+- Change log helper (src/lib/change-log.ts): logSkillFieldChange, logSkillChanges, logPatchApplication functions that compare old vs new and only log actual changes.
+- Change log API (GET /api/change-log): returns entries + stats (last24h, last7d, uniqueSkillsChanged, bySource). Supports filtering by source, field, skillId.
+- Change log banner (src/components/skills/change-log-banner.tsx): compact bar on every page showing 24h/7d/unique stats + latest entry preview. Expandable to full log with source filters, auto-polls every 10s (expanded) / 30s (collapsed). Added to all 5 views in page.tsx after TabSwitcher.
+- Seeded 31 initial log entries (one per class) marking the DB restore as "import" source.
+- Patch lurker (scripts/patch-lurker.ts): weekly checker that only scrapes on Thursday (patch day) or later in the week. Skips Mon-Wed entirely to avoid PA IP blocks. Tracks state in data/patch-lurker-state.json. --force flag for manual runs. Verified: normal mode on Tuesday correctly skips; force mode scrapes and detects patches.
+- Verified via agent-browser: change log banner shows 31 entries + stats, patches page shows 17 skill icons, meta card click navigates to Data tab with Valkyrie Succession filtered (70 skills), tier portraits view shows 56 portraits with podium layout.
+
+Stage Summary:
+- **Patches UI v2**: skill icons (17/121 linked), change type filters, search, class gradient headers
+- **Meta cards clickable**: spec cards + table rows navigate to Data tab with class+spec pre-filtered
+- **Portrait tier view**: podium top-3 with medals + grid, character portraits, mini param bars
+- **DB change tracking**: SkillChangeLog model + API + live banner on every page (polls every 10-30s)
+- **Patch lurker**: Thursday-only scraping to avoid PA IP blocks, --force override, state tracking
+- **Files**: change-log-banner.tsx, change-log.ts, /api/change-log/route.ts, patch-lurker.ts, schema.prisma (SkillChangeLog model), patches-page.tsx (rewrite), meta-page.tsx (clickable), tier-list-page.tsx (portraits view), docs-page.tsx (v3.1.0)
+- **Lint**: clean. **Dev server**: running, 0 errors.

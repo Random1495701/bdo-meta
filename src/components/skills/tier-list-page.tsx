@@ -249,7 +249,7 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 export function TierListPage() {
   const metaQuery = useQuery({ queryKey: ['meta'], queryFn: fetchMeta, staleTime: 60_000 })
   const [weights, setWeights] = React.useState<Weights>(loadWeights)
-  const [viewMode, setViewMode] = React.useState<'ranked' | 'table'>('ranked')
+  const [viewMode, setViewMode] = React.useState<'ranked' | 'table' | 'portraits'>('ranked')
   const [sortBy, setSortBy] = React.useState<ParamKey | 'score'>('score')
   const [sortDir, setSortDir] = React.useState<'desc' | 'asc'>('desc')
   const [mobileWeightsOpen, setMobileWeightsOpen] = React.useState(false)
@@ -385,6 +385,13 @@ export function TierListPage() {
               >
                 <Table2 className="size-3.5" /> Table
               </button>
+              <button
+                onClick={() => setViewMode('portraits')}
+                className={cn('flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold transition-all',
+                  viewMode === 'portraits' ? 'bg-amber-500/20 text-amber-200' : 'bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}
+              >
+                <Crown className="size-3.5" /> Portraits
+              </button>
             </div>
 
             <Button
@@ -482,6 +489,12 @@ export function TierListPage() {
                 maxScore={maxScore}
                 sortBy={sortBy}
                 toggleSort={toggleSort}
+              />
+            ) : viewMode === 'portraits' ? (
+              <PortraitsView
+                sorted={sorted}
+                weights={weights}
+                maxScore={maxScore}
               />
             ) : (
               <TableView
@@ -916,3 +929,237 @@ function TableView({
     </div>
   )
 }
+
+// ═════════════════════════════════════════════════════════════════════
+// PORTRAITS VIEW — fun visual ranking with character portraits
+// ═════════════════════════════════════════════════════════════════════
+
+function PortraitsView({
+  sorted, weights, maxScore,
+}: {
+  sorted: { entry: TierEntry; score: number; contributions: Record<ParamKey, number> }[]
+  weights: Weights
+  maxScore: number
+}) {
+  const [hovered, setHovered] = React.useState<number | null>(null)
+
+  // Precompute ranges for all params (for mini bars)
+  const ranges = React.useMemo(() => {
+    const r: Record<ParamKey, { min: number; max: number }> = {} as any
+    for (const p of SCORE_PARAMS) {
+      let min = Infinity, max = -Infinity
+      for (const s of sorted) {
+        const v = getParamValue(s.entry, p.key)
+        if (v < min) min = v
+        if (v > max) max = v
+      }
+      r[p.key] = { min, max: max === min ? min + 1 : max }
+    }
+    return r
+  }, [sorted])
+
+  // Group into medal tiers for a podium-like feel
+  const top3 = sorted.slice(0, 3)
+  const rest = sorted.slice(3)
+
+  return (
+    <div className="space-y-6">
+      {/* Podium — top 3 */}
+      {top3.length >= 3 && (
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
+          {/* 2nd place */}
+          <PortraitCard item={top3[1]} rank={2} weights={weights} maxScore={maxScore} onHover={setHovered} isHovered={hovered === 1} ranges={ranges} />
+          {/* 1st place — taller */}
+          <PortraitCard item={top3[0]} rank={1} weights={weights} maxScore={maxScore} onHover={setHovered} isHovered={hovered === 0} isFirst ranges={ranges} />
+          {/* 3rd place */}
+          <PortraitCard item={top3[2]} rank={3} weights={weights} maxScore={maxScore} onHover={setHovered} isHovered={hovered === 2} ranges={ranges} />
+        </div>
+      )}
+
+      {/* Rest — grid */}
+      {rest.length > 0 && (
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          {rest.map((item, idx) => (
+            <PortraitCard
+              key={`${item.entry.classId}-${item.entry.spec}`}
+              item={item}
+              rank={idx + 4}
+              weights={weights}
+              maxScore={maxScore}
+              onHover={setHovered}
+              isHovered={hovered === idx + 3}
+              compact
+              ranges={ranges}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function PortraitCard({
+  item, rank, weights, maxScore, onHover, isHovered, isFirst, compact, ranges,
+}: {
+  item: { entry: TierEntry; score: number; contributions: Record<ParamKey, number> }
+  rank: number
+  weights: Weights
+  maxScore: number
+  onHover: (idx: number | null) => void
+  isHovered: boolean
+  isFirst?: boolean
+  compact?: boolean
+  ranges: Record<ParamKey, { min: number; max: number }>
+}) {
+  const { entry, score } = item
+  const color = classColor(entry.className)
+  const specColor = SPEC_COLORS[entry.spec]
+  const scorePct = maxScore > 0 ? (score / maxScore) * 100 : 0
+
+  // Portrait URLs
+  const specPortraitUrl = `/icons/portraits/specs/${entry.slug}-${entry.spec}.jpg`
+  const mainPortraitUrl = `/icons/portraits/${entry.slug}.jpg`
+
+  // Medal colors
+  const medalColors: Record<number, string> = {
+    1: '#fbbf24', // gold
+    2: '#cbd5e1', // silver
+    3: '#d97706', // bronze
+  }
+  const medalColor = medalColors[rank] || specColor
+
+  // Top weighted params for mini bars
+  const topParams = SCORE_PARAMS
+    .filter(p => weights[p.key] > 0)
+    .sort((a, b) => weights[b.key] - weights[a.key])
+    .slice(0, compact ? 3 : 5)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: Math.min(rank * 0.03, 0.5) }}
+      onMouseEnter={() => onHover(rank - 1)}
+      onMouseLeave={() => onHover(null)}
+      whileHover={{ scale: 1.04, y: -4, zIndex: 10 }}
+      className={cn(
+        'group relative overflow-hidden rounded-sm border-2 transition-all',
+        isFirst && 'sm:-mt-6',
+        isHovered && 'shadow-2xl',
+      )}
+      style={{
+        borderColor: medalColor,
+        boxShadow: `0 4px 16px rgba(0,0,0,0.7), inset 0 0 0 1px ${medalColor}33`,
+      }}
+    >
+      {/* Rank medal badge */}
+      <div
+        className="absolute left-1.5 top-1.5 z-20 flex size-7 items-center justify-center rounded-full border-2 font-mono text-xs font-black"
+        style={{ borderColor: medalColor, backgroundColor: 'rgba(10,9,8,0.9)', color: medalColor }}
+      >
+        {rank}
+      </div>
+
+      {/* Score badge */}
+      <div
+        className="absolute right-1.5 top-1.5 z-20 rounded-sm border px-1.5 py-0.5 font-mono text-[10px] font-bold backdrop-blur-sm"
+        style={{ borderColor: `${medalColor}66`, backgroundColor: 'rgba(10,9,8,0.8)', color: medalColor }}
+      >
+        {score.toFixed(1)}
+      </div>
+
+      {/* Portrait */}
+      <div className={cn('relative overflow-hidden', compact ? 'aspect-[3/4]' : isFirst ? 'aspect-[3/4.5]' : 'aspect-[3/4.2]')}>
+        <img
+          src={specPortraitUrl}
+          alt={`${entry.className} ${entry.spec}`}
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+          onError={(e) => {
+            const img = e.target as HTMLImageElement
+            if (img.src !== mainPortraitUrl) img.src = mainPortraitUrl
+          }}
+        />
+        {/* Gradient overlay for text readability */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to bottom,
+              rgba(10,9,8,0.3) 0%,
+              transparent 30%,
+              rgba(10,9,8,0.85) 75%,
+              rgba(10,9,8,0.97) 100%)`,
+          }}
+        />
+        {/* Spec color tint at top */}
+        <div
+          className="absolute inset-x-0 top-0 h-1"
+          style={{ background: `linear-gradient(to bottom, ${specColor}aa, transparent)` }}
+        />
+        {/* Hover glow */}
+        {isHovered && (
+          <div
+            className="absolute inset-0"
+            style={{ background: `radial-gradient(circle at 50% 30%, ${medalColor}22, transparent 60%)` }}
+          />
+        )}
+      </div>
+
+      {/* Info overlay at bottom */}
+      <div className="absolute inset-x-0 bottom-0 z-10 p-2">
+        <div className="flex items-center gap-1">
+          <span className="truncate text-sm font-black drop-shadow-lg" style={{ color }}>
+            {entry.className}
+          </span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span
+            className="rounded-sm px-1 py-0.5 text-[7px] font-bold uppercase leading-none"
+            style={{ color: specColor, backgroundColor: `${specColor}22`, border: `1px solid ${specColor}66` }}
+          >
+            {entry.spec.slice(0, 4)}
+          </span>
+          {!compact && entry.combatType && (
+            <span className="truncate text-[8px] text-amber-300/40">{entry.combatType}</span>
+          )}
+        </div>
+
+        {/* Score bar */}
+        <div className="mt-1 h-1 overflow-hidden rounded-full bg-amber-900/40">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${scorePct}%` }}
+            transition={{ duration: 0.5, delay: rank * 0.03 }}
+            className="h-full rounded-full"
+            style={{ backgroundColor: medalColor }}
+          />
+        </div>
+
+        {/* Mini param bars (only on non-compact or hover) */}
+        {topParams.length > 0 && (!compact || isHovered) && (
+          <div className="mt-1.5 flex items-end gap-0.5" style={{ height: compact ? 16 : 24 }}>
+            {topParams.map(p => {
+              const raw = getParamValue(entry, p.key)
+              const { min, max } = ranges[p.key]
+              const norm = max > min ? (raw - min) / (max - min) : 0
+              return (
+                <div
+                  key={p.key}
+                  className="flex-1 rounded-t-sm"
+                  title={`${p.label}: ${formatParamValue(p.key, raw)}`}
+                  style={{
+                    height: `${Math.max(norm * 100, 4)}%`,
+                    backgroundColor: CATEGORY_META[p.category].color,
+                    opacity: 0.6 + norm * 0.4,
+                    minHeight: 2,
+                  }}
+                />
+              )
+            })}
+          </div>
+        )}
+      </div>
+    </motion.div>
+  )
+}
+
