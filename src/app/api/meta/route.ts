@@ -20,9 +20,12 @@ interface SpecStats {
   medianPvpDamage: number
   pvpCcSkillCount: number
   ccChainPotential: number // skills with 2+ PvP CC counters
+  grabCount: number // skills with Grapple CC
   superArmorCount: number
   forwardGuardCount: number
   iFrameCount: number
+  coreSaCount: number // Core: skills with Super Armor (player picks only 1)
+  coreFgCount: number // Core: skills with Forward Guard (player picks only 1)
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number // avg PvP damage / avg animation duration
   protectedCoverage: number // % of skills with any protection
@@ -60,34 +63,36 @@ function computeSpecStats(skills: any[]): SpecStats {
   const pvpDamages: number[] = []
   let pvpCcSkillCount = 0
   let ccChainPotential = 0
+  let grabCount = 0
   let superArmorCount = 0
   let forwardGuardCount = 0
   let iFrameCount = 0
+  let coreSaCount = 0
+  let coreFgCount = 0
   let topPvpDamage = 0
   let topPvpDamageSkill: { skillId: number; name: string; damage: number } | null = null
   let protectedCount = 0
   const animDurations: number[] = []
 
   for (const s of skills) {
+    // Skip "(Not in use)" skills — leftovers from old patches
+    if (s.name?.includes('(Not in use)') || s.name?.includes('(Not in Use)')) continue
+
     const damageRows: DamageRow[] | null = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
     const damage = calculateDamage(damageRows, s.pvpDamagePercent)
 
-    // Damage stats: exclude Black Spirit skills (rage) and skills without PvP damage
     if (!s.isBlackSpirit && damage.totalPvP != null && damage.totalPvP > 0) {
       pvpDamages.push(damage.totalPvP)
-      // Track top PvP damage skill
       if (damage.totalPvP > topPvpDamage) {
         topPvpDamage = damage.totalPvP
         topPvpDamageSkill = { skillId: s.skillId, name: s.name, damage: damage.totalPvP }
       }
     }
 
-    // Animation duration for DPS estimate
     if (s.animationDurationMs && s.animationDurationMs > 0) {
       animDurations.push(s.animationDurationMs)
     }
 
-    // CC stats: count skills that have at least 1 PvP CC (not PvE-only)
     const pveOnlyCCs = new Set<string>()
     if (damageRows) {
       for (const r of damageRows) {
@@ -97,10 +102,10 @@ function computeSpecStats(skills: any[]): SpecStats {
     const ccTypes = s.ccTypes ? s.ccTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpCCs = ccTypes.filter((cc: string) => !pveOnlyCCs.has(cc) && isRealCC(cc))
     if (pvpCCs.length > 0) pvpCcSkillCount++
-    // CC chain potential: skills with 2+ PvP CC counters (can fill immunity bar in one combo)
     if (pvpCCs.length >= 2) ccChainPotential++
+    if (pvpCCs.includes('Grapple')) grabCount++
 
-    // Protection stats: ignore PvE-only
+    // Protection stats
     const pveOnlyProts = new Set<string>()
     if (damageRows) {
       for (const r of damageRows) {
@@ -109,9 +114,17 @@ function computeSpecStats(skills: any[]): SpecStats {
     }
     const protections = s.protectionTypes ? s.protectionTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpProts = protections.filter((p: string) => !pveOnlyProts.has(p))
+    const isCoreSkill = s.name?.startsWith('Core:')
+    
     if (pvpProts.length > 0) protectedCount++
-    if (pvpProts.includes('Super Armor')) superArmorCount++
-    if (pvpProts.includes('Forward Guard')) forwardGuardCount++
+    if (pvpProts.includes('Super Armor')) {
+      if (isCoreSkill) coreSaCount++
+      else superArmorCount++
+    }
+    if (pvpProts.includes('Forward Guard')) {
+      if (isCoreSkill) coreFgCount++
+      else forwardGuardCount++
+    }
     if (pvpProts.includes('I-Frame') || pvpProts.includes('Invincible')) iFrameCount++
   }
 
@@ -144,9 +157,12 @@ function computeSpecStats(skills: any[]): SpecStats {
     medianPvpDamage,
     pvpCcSkillCount,
     ccChainPotential,
+    grabCount,
     superArmorCount,
     forwardGuardCount,
     iFrameCount,
+    coreSaCount,
+    coreFgCount,
     topPvpDamageSkill,
     dpsEstimate,
     protectedCoverage,
@@ -326,7 +342,7 @@ export async function GET() {
       succession: computeSpecStats(effectiveSuccessionSkills),
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
-        pvpCcSkillCount: 0, ccChainPotential: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0,
+        pvpCcSkillCount: 0, ccChainPotential: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
         topPvpDamageSkill: null, dpsEstimate: 0, protectedCoverage: 0,
       },
     })

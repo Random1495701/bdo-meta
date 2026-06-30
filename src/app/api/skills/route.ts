@@ -179,6 +179,10 @@ export async function GET(req: NextRequest) {
   // Exclude NEW_CLASS placeholders always
   AND.push({ className: { not: { startsWith: 'NEW_CLASS' } } })
 
+  // Exclude "(Not in use)" skills — leftovers from old patches
+  AND.push({ name: { not: { contains: '(Not in use)' } } })
+  AND.push({ name: { not: { contains: '(Not in Use)' } } })
+
   // Filter out evasion skills by default
   if (filterEvasion) {
     AND.push({
@@ -209,10 +213,30 @@ export async function GET(req: NextRequest) {
   }
 
   // Multi-select class filter
+  // When filtering by classId, also exclude multi-class skills that don't belong
+  // to the selected class (some shared skills have classId set to one class but
+  // className lists a different class, e.g. Kunoichi/Ninja skills with classId=10/Corsair)
   if (classParam && classParam !== 'all') {
     const classIds = classParam.split(',').map((c) => parseInt(c.trim(), 10)).filter((c) => !Number.isNaN(c))
     if (classIds.length === 1) {
-      AND.push({ classId: classIds[0] })
+      // Single class: filter by classId AND exclude skills whose className
+      // contains a comma (multi-class) unless the class name matches
+      const cls = await db.bdoClass.findFirst({ where: { id: classIds[0] } })
+      if (cls) {
+        AND.push({
+          AND: [
+            { classId: classIds[0] },
+            {
+              OR: [
+                { className: cls.name },           // Exact match (most skills)
+                { className: { contains: cls.name } }, // Multi-class skill that includes this class
+              ],
+            },
+          ],
+        })
+      } else {
+        AND.push({ classId: classIds[0] })
+      }
     } else if (classIds.length > 1) {
       AND.push({ classId: { in: classIds } })
     }
