@@ -51,7 +51,7 @@ import {
 } from '@/lib/skills'
 import { formatDamage } from '@/lib/damage'
 import { useSkillStore } from '@/lib/skill-store'
-import { useMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
 
 // ---------- helpers ----------
@@ -349,7 +349,7 @@ export function SkillDetailDrawer() {
   const setOpen = useSkillStore((s) => s.setDetailOpen)
   const selectSkill = useSkillStore((s) => s.selectSkill)
   const skillId = useSkillStore((s) => s.selectedSkillId)
-  const isMobile = useMobile()
+  const isMobile = useIsMobile()
 
   // Refetch the open skill every 15s so the lurker's enrichment shows up
   // live without needing to close/reopen the drawer.
