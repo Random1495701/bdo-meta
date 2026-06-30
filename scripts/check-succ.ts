@@ -1,13 +1,13 @@
 import { db } from '../src/lib/db'
 async function main() {
-  const succFlagged = await db.skill.count({ where: { isSuccession: true } })
-  const primeName = await db.skill.count({ where: { name: { startsWith: 'Prime:' } } })
-  const primeAndSucc = await db.skill.count({ where: { name: { startsWith: 'Prime:' }, isSuccession: true } })
-  const primeNotSucc = await db.skill.count({ where: { name: { startsWith: 'Prime:' }, isSuccession: false } })
-  console.log(`isSuccession=true: ${succFlagged}`)
-  console.log(`name startsWith 'Prime:': ${primeName}`)
-  console.log(`Prime: AND isSuccession=true: ${primeAndSucc}`)
-  console.log(`Prime: AND isSuccession=false: ${primeNotSucc}`)
+  const classes = await db.bdoClass.findMany()
+  for (const cls of classes) {
+    if (cls.name.startsWith('NEW_CLASS')) continue
+    const succ = await db.skill.count({ where: { classId: cls.id, isSuccession: true } })
+    if (succ === 0) {
+      console.log(`  ${cls.name} (${cls.slug}): NO succession skills`)
+    }
+  }
   await db.$disconnect()
 }
 main().catch(console.error)

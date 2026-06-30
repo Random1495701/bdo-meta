@@ -52,7 +52,12 @@ function SpecCard({ cls, specName, stats, sortKey }: {
 }) {
   const color = classColor(cls.className)
   const iconUrl = classIconUrl(cls.slug)
-  const portraitUrl = `/icons/portraits/${cls.slug}.png`
+  // Use spec-specific portrait if available, fall back to main portrait, then class icon
+  const specPortraitUrl = `/icons/portraits/specs/${cls.slug}-${specName}.jpg`
+  const mainPortraitUrl = `/icons/portraits/${cls.slug}.jpg`
+  const portraitUrl = specName === 'awakening' || specName === 'succession'
+    ? specPortraitUrl
+    : mainPortraitUrl
   const specMeta = SPEC_META[specName]
 
   // Skip empty specs (0 skills = not available for this class)
@@ -71,7 +76,7 @@ function SpecCard({ cls, specName, stats, sortKey }: {
     >
       {/* Header: portrait + class icon + name + spec badge */}
       <div className="flex items-center gap-3">
-        {/* Class portrait (larger) */}
+        {/* Spec-specific portrait */}
         <div
           className="relative shrink-0 overflow-hidden rounded-sm border-2"
           style={{
@@ -83,12 +88,17 @@ function SpecCard({ cls, specName, stats, sortKey }: {
         >
           <img
             src={portraitUrl}
-            alt={cls.className}
+            alt={`${cls.className} ${specMeta.label}`}
             className="h-full w-full object-cover"
             loading="lazy"
             onError={(e) => {
-              // Fallback to class icon if portrait fails
-              (e.target as HTMLImageElement).src = iconUrl || ''
+              const img = e.target as HTMLImageElement
+              // Try main portrait first, then class icon
+              if (img.src !== mainPortraitUrl) {
+                img.src = mainPortraitUrl
+              } else if (iconUrl) {
+                img.src = iconUrl
+              }
             }}
           />
           {/* Spec color overlay */}
@@ -211,14 +221,15 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
         <tbody>
           {rows.map((row, i) => {
             const color = classColor(row.cls.className)
-            const portraitUrl = `/icons/portraits/${row.cls.slug}.png`
+            const specPortraitUrl = `/icons/portraits/specs/${row.cls.slug}-${row.spec}.jpg`
+            const mainPortraitUrl = `/icons/portraits/${row.cls.slug}.jpg`
             const specMeta = SPEC_META[row.spec]
             return (
               <tr key={`${row.cls.classId}-${row.spec}`} className="border-b border-amber-900/20 hover:bg-amber-500/5">
                 <td className="px-2 py-1.5">
                   <div className="flex items-center gap-2">
                     <div className="size-8 shrink-0 overflow-hidden rounded-sm border" style={{ borderColor: `${color}55` }}>
-                      <img src={portraitUrl} alt="" className="h-full w-full object-cover" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                      <img src={specPortraitUrl} alt="" className="h-full w-full object-cover" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).src = mainPortraitUrl }} />
                     </div>
                     <div className="flex flex-col">
                       <span className="font-semibold" style={{ color }}>{row.cls.className}</span>
