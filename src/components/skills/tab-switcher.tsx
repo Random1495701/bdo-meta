@@ -1,16 +1,17 @@
 'use client'
 
 import * as React from 'react'
-import { Database, BarChart3, BookOpen, Crown } from 'lucide-react'
+import { Database, BarChart3, BookOpen, Crown, Newspaper } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-export type ViewMode = 'data' | 'meta' | 'tierlist' | 'docs'
+export type ViewMode = 'data' | 'meta' | 'tierlist' | 'patches' | 'docs'
 
 export function TabSwitcher({ view, onChange }: { view: ViewMode; onChange: (v: ViewMode) => void }) {
   const tabs: { id: ViewMode; label: string; icon: React.ReactNode }[] = [
     { id: 'data', label: 'Data', icon: <Database className="size-3.5" /> },
     { id: 'meta', label: 'Meta', icon: <BarChart3 className="size-3.5" /> },
     { id: 'tierlist', label: 'Tiers', icon: <Crown className="size-3.5" /> },
+    { id: 'patches', label: 'Patches', icon: <Newspaper className="size-3.5" /> },
     { id: 'docs', label: 'Docs', icon: <BookOpen className="size-3.5" /> },
   ]
 
