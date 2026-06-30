@@ -473,15 +473,15 @@ export function SkillDetailDrawer() {
                     </div>
                   </header>
 
-                  {/* Flag badges */}
+                  {/* Flag badges — spec colors: red=awakening, blue=succession, yellow=ascension */}
                   <div className="flex flex-wrap items-center gap-1.5">
                     {skill.isAwakening && (
-                      <Badge className="border-amber-500/40 bg-amber-500/10 text-amber-300">
+                      <Badge className="border-red-500/40 bg-red-500/10 text-red-300">
                         <Sparkles className="size-3" /> Awakening
                       </Badge>
                     )}
                     {skill.isSuccession && (
-                      <Badge className="border-emerald-700/50 bg-emerald-900/20 text-emerald-300">
+                      <Badge className="border-blue-500/40 bg-blue-500/10 text-blue-300">
                         <Sword className="size-3" /> Succession
                       </Badge>
                     )}
@@ -491,7 +491,7 @@ export function SkillDetailDrawer() {
                       </Badge>
                     )}
                     {skill.isBlackSpirit && (
-                      <Badge className="border-amber-700/50 bg-amber-900/20 text-amber-200">
+                      <Badge className="border-violet-700/50 bg-violet-900/20 text-violet-300">
                         Black Spirit
                       </Badge>
                     )}

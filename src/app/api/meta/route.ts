@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { calculateDamage, type DamageRow } from '@/lib/damage'
 import { isRealCC } from '@/lib/cc'
+import { getCached, setCached } from '@/lib/cache'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,6 +19,7 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
+  ccChainPotential: number // skills with 2+ PvP CC counters
   superArmorCount: number
   forwardGuardCount: number
   iFrameCount: number
@@ -50,6 +52,7 @@ function getBaseName(name: string): string {
 function computeSpecStats(skills: any[]): SpecStats {
   const pvpDamages: number[] = []
   let pvpCcSkillCount = 0
+  let ccChainPotential = 0
   let superArmorCount = 0
   let forwardGuardCount = 0
   let iFrameCount = 0
@@ -87,6 +90,8 @@ function computeSpecStats(skills: any[]): SpecStats {
     const ccTypes = s.ccTypes ? s.ccTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpCCs = ccTypes.filter((cc: string) => !pveOnlyCCs.has(cc) && isRealCC(cc))
     if (pvpCCs.length > 0) pvpCcSkillCount++
+    // CC chain potential: skills with 2+ PvP CC counters (can fill immunity bar in one combo)
+    if (pvpCCs.length >= 2) ccChainPotential++
 
     // Protection stats: ignore PvE-only
     const pveOnlyProts = new Set<string>()
@@ -131,6 +136,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     avgPvpDamage,
     medianPvpDamage,
     pvpCcSkillCount,
+    ccChainPotential,
     superArmorCount,
     forwardGuardCount,
     iFrameCount,
@@ -141,6 +147,9 @@ function computeSpecStats(skills: any[]): SpecStats {
 }
 
 export async function GET() {
+  const cached = getCached('meta')
+  if (cached) return NextResponse.json(cached)
+
   const classes = await db.bdoClass.findMany({ orderBy: { id: 'asc' } })
 
   const allSkills = await db.skill.findMany({
@@ -299,11 +308,13 @@ export async function GET() {
       succession: computeSpecStats(effectiveSuccessionSkills),
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
-        pvpCcSkillCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0,
+        pvpCcSkillCount: 0, ccChainPotential: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0,
         topPvpDamageSkill: null, dpsEstimate: 0, protectedCoverage: 0,
       },
     })
   }
 
-  return NextResponse.json({ classes: results })
+  const result = { classes: results }
+  setCached('meta', result, 5 * 60 * 1000) // cache for 5 min
+  return NextResponse.json(result)
 }

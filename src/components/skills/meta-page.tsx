@@ -14,6 +14,7 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
+  ccChainPotential: number
   superArmorCount: number
   forwardGuardCount: number
   iFrameCount: number
@@ -31,7 +32,7 @@ interface ClassStats {
   ascension: SpecStats
 }
 
-type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'protectedCoverage'
+type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'ccChainPotential' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'protectedCoverage'
 
 // Spec display metadata — Red=Awakening, Blue=Succession, Yellow=Ascension
 const SPEC_META: Record<string, { label: string; color: string; shortLabel: string }> = {
@@ -49,11 +50,13 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 // A single spec card — one per class×spec combination
 // Portrait is the card background, with a dark gradient overlay for readability.
 // Framed class icon in top-right corner with spec-colored border.
-function SpecCard({ cls, specName, stats, sortKey }: {
+// Card is clickable → navigates to Data tab with class+spec pre-filtered.
+function SpecCard({ cls, specName, stats, sortKey, onClick }: {
   cls: ClassStats
   specName: 'awakening' | 'succession' | 'ascension'
   stats: SpecStats
   sortKey: SortKey
+  onClick: () => void
 }) {
   const iconUrl = classIconUrl(cls.slug)
   // Use spec-specific portrait as background
@@ -72,7 +75,8 @@ function SpecCard({ cls, specName, stats, sortKey }: {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group relative flex flex-col gap-2 overflow-hidden rounded-sm border-2"
+      onClick={onClick}
+      className="group relative flex cursor-pointer flex-col gap-2 overflow-hidden rounded-sm border-2 transition-transform hover:scale-[1.02]"
       style={{
         borderColor: `${specColor}88`,
         boxShadow: `0 4px 12px rgba(0,0,0,0.6), inset 0 0 0 1px ${specColor}33`,
@@ -152,6 +156,7 @@ function SpecCard({ cls, specName, stats, sortKey }: {
           <StatBox label="Avg PvP" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'avgPvpDamage'} />
           <StatBox label="Med PvP" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'medianPvpDamage'} />
           <StatBox label="CC" value={String(stats.pvpCcSkillCount)} color="#f87171" highlighted={sortKey === 'pvpCcSkillCount'} />
+          <StatBox label="Chain" value={String(stats.ccChainPotential)} color="#fb923c" highlighted={sortKey === 'ccChainPotential'} />
           <StatBox label="💪 SA" value={String(stats.superArmorCount)} color="#fbbf24" highlighted={sortKey === 'superArmorCount'} />
           <StatBox label="🛡 FG" value={String(stats.forwardGuardCount)} color="#60a5fa" highlighted={sortKey === 'forwardGuardCount'} />
           <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
@@ -304,7 +309,7 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
   )
 }
 
-export function MetaPage() {
+export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec: 'awakening' | 'succession' | 'ascension') => void }) {
   const [viewMode, setViewMode] = React.useState<'cards' | 'table'>('cards')
   const [sortKey, setSortKey] = React.useState<SortKey>('avgPvpDamage')
   const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('desc')
@@ -353,6 +358,7 @@ export function MetaPage() {
     { key: 'medianPvpDamage', label: 'Med PvP', icon: null },
     { key: 'dpsEstimate', label: 'DPS', icon: null },
     { key: 'pvpCcSkillCount', label: 'CC Skills', icon: <Zap className="size-3" /> },
+    { key: 'ccChainPotential', label: 'Chain', icon: null },
     { key: 'superArmorCount', label: 'SA', icon: <span>💪</span> },
     { key: 'forwardGuardCount', label: 'FG', icon: <span>🛡</span> },
     { key: 'iFrameCount', label: 'IF', icon: <span>✦</span> },
@@ -425,7 +431,14 @@ export function MetaPage() {
         ) : viewMode === 'cards' ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {specCards.map(({ cls, spec, stats }) => (
-              <SpecCard key={`${cls.classId}-${spec}`} cls={cls} specName={spec} stats={stats} sortKey={sortKey} />
+              <SpecCard
+                key={`${cls.classId}-${spec}`}
+                cls={cls}
+                specName={spec}
+                stats={stats}
+                sortKey={sortKey}
+                onClick={() => onCardClick?.(cls.classId, spec)}
+              />
             ))}
           </div>
         ) : (

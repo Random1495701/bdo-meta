@@ -86,11 +86,13 @@ function ClassChip({
   cls: BdoClass
   active: boolean
   count: number
-  specs: ('succession' | 'awakening')[]
+  specs: ('succession' | 'awakening' | 'ascension')[]
   onClick: () => void
-  onSpecClick: (spec: 'succession' | 'awakening') => void
+  onSpecClick: (spec: 'succession' | 'awakening' | 'ascension') => void
 }) {
   const color = classColor(cls.name)
+  // Ascension-only classes: show "Asc" button instead of S/A
+  const isAscOnly = ['scholar', 'archer', 'shai', 'seraph', 'deadeye', 'wukong'].includes(cls.slug)
   return (
     <button
       type="button"
@@ -126,42 +128,66 @@ function ClassChip({
       >
         {cls.name}
       </span>
-      {/* S/A spec buttons — replace the skill count badge */}
+      {/* Spec buttons — S/A for normal classes, Asc for ascension-only */}
       <div className="flex gap-0.5" onClick={(e) => e.stopPropagation()}>
-        <span
-          role="button"
-          tabIndex={0}
-          onClick={(e) => {
-            e.stopPropagation()
-            onSpecClick('succession')
-          }}
-          className={cn(
-            'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
-            specs.includes('succession') && active
-              ? 'bg-blue-500/30 text-blue-200 ring-1 ring-blue-400/60'
-              : 'bg-zinc-800/80 text-zinc-500 hover:bg-blue-900/30 hover:text-blue-300',
-          )}
-          title="Succession spec — click to toggle"
-        >
-          S
-        </span>
-        <span
-          role="button"
-          tabIndex={0}
-          onClick={(e) => {
-            e.stopPropagation()
-            onSpecClick('awakening')
-          }}
-          className={cn(
-            'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
-            specs.includes('awakening') && active
-              ? 'bg-red-500/30 text-red-200 ring-1 ring-red-400/60'
-              : 'bg-zinc-800/80 text-zinc-500 hover:bg-red-900/30 hover:text-red-300',
-          )}
-          title="Awakening spec — click to toggle"
-        >
-          A
-        </span>
+        {isAscOnly ? (
+          // Ascension-only: single "Asc" button
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={(e) => {
+              e.stopPropagation()
+              onSpecClick('ascension')
+            }}
+            className={cn(
+              'flex h-4 w-8 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
+              specs.includes('ascension') && active
+                ? 'bg-yellow-500/30 text-yellow-200 ring-1 ring-yellow-400/60'
+                : 'bg-zinc-800/80 text-zinc-500 hover:bg-yellow-900/30 hover:text-yellow-300',
+            )}
+            title="Ascension spec — click to toggle"
+          >
+            Asc
+          </span>
+        ) : (
+          // Normal classes: S + A buttons
+          <>
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={(e) => {
+                e.stopPropagation()
+                onSpecClick('succession')
+              }}
+              className={cn(
+                'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
+                specs.includes('succession') && active
+                  ? 'bg-blue-500/30 text-blue-200 ring-1 ring-blue-400/60'
+                  : 'bg-zinc-800/80 text-zinc-500 hover:bg-blue-900/30 hover:text-blue-300',
+              )}
+              title="Succession spec — click to toggle"
+            >
+              S
+            </span>
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={(e) => {
+                e.stopPropagation()
+                onSpecClick('awakening')
+              }}
+              className={cn(
+                'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
+                specs.includes('awakening') && active
+                  ? 'bg-red-500/30 text-red-200 ring-1 ring-red-400/60'
+                  : 'bg-zinc-800/80 text-zinc-500 hover:bg-red-900/30 hover:text-red-300',
+              )}
+              title="Awakening spec — click to toggle"
+            >
+              A
+            </span>
+          </>
+        )}
       </div>
     </button>
   )
@@ -330,13 +356,18 @@ export function ClassBar() {
                     active={classIds.includes(c.id)}
                     specs={specs}
                     onClick={() => {
-                      // Clicking the class icon selects it + activates both specs
+                      // Clicking the class icon selects it + activates appropriate specs
+                      const isAscOnly = ['scholar', 'archer', 'shai', 'seraph', 'deadeye', 'wukong'].includes(c.slug)
                       if (!classIds.includes(c.id)) {
                         clearClasses()
                         toggleClass(c.id)
-                        // Activate both specs by default
-                        if (!specs.includes('succession')) toggleSpec('succession')
-                        if (!specs.includes('awakening')) toggleSpec('awakening')
+                        // Activate specs: ascension-only gets ascension, others get S+A
+                        if (isAscOnly) {
+                          if (!specs.includes('ascension')) toggleSpec('ascension')
+                        } else {
+                          if (!specs.includes('succession')) toggleSpec('succession')
+                          if (!specs.includes('awakening')) toggleSpec('awakening')
+                        }
                       } else {
                         toggleClass(c.id)
                       }

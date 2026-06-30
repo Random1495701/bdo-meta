@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { SlidersHorizontal, Database, BarChart3, BookOpen } from 'lucide-react'
+import { SlidersHorizontal } from 'lucide-react'
 
 import { Header } from '@/components/skills/header'
 import { ClassBar } from '@/components/skills/class-bar'
@@ -12,6 +12,7 @@ import { SkillDetailDrawer } from '@/components/skills/skill-detail-drawer'
 import { SyncFooter } from '@/components/skills/sync-footer'
 import { MetaPage } from '@/components/skills/meta-page'
 import { DocsPage } from '@/components/skills/docs-page'
+import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
 
 import {
   Sheet,
@@ -20,7 +21,6 @@ import {
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { useSkillStore } from '@/lib/skill-store'
-import { cn } from '@/lib/utils'
 
 function MobileFiltersSheet() {
   const open = useSkillStore((s) => s.filtersOpen)
@@ -55,25 +55,59 @@ function MobileFilterTrigger() {
 }
 
 export default function Home() {
-  const [view, setView] = React.useState<'data' | 'meta' | 'docs'>('data')
+  const [view, setView] = React.useState<ViewMode>('data')
+
+  // Handle Meta card click → switch to Data tab with class+spec pre-filtered
+  const handleMetaCardClick = React.useCallback((classId: number, spec: 'awakening' | 'succession' | 'ascension') => {
+    const store = useSkillStore.getState()
+    store.clearClasses()
+    store.toggleClass(classId)
+    // Clear existing specs and set the clicked spec
+    store.filters.specs?.forEach((s) => store.toggleSpec(s))
+    store.toggleSpec(spec)
+    setView('data')
+  }, [])
+
+  // Keyboard navigation: / = focus search, Esc = close drawer, 1/2/3 = switch tabs
+  React.useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      // Don't intercept if typing in an input/textarea
+      const target = e.target as HTMLElement
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+        if (e.key === 'Escape' && target.tagName === 'INPUT') {
+          (target as HTMLInputElement).blur()
+        }
+        return
+      }
+
+      if (e.key === '/' && view === 'data') {
+        e.preventDefault()
+        const searchInput = document.querySelector('input[placeholder*="Search"]') as HTMLInputElement
+        searchInput?.focus()
+      } else if (e.key === 'Escape') {
+        const store = useSkillStore.getState()
+        if (store.detailOpen) {
+          store.setDetailOpen(false)
+        } else if (store.filtersOpen) {
+          store.setFiltersOpen(false)
+        }
+      } else if (e.key === '1') {
+        setView('data')
+      } else if (e.key === '2') {
+        setView('meta')
+      } else if (e.key === '3') {
+        setView('docs')
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [view])
 
   if (view === 'meta') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
-        {/* Tab switcher */}
-        <div className="sticky top-0 z-40 flex items-center gap-2 border-b border-amber-900/50 bg-bdo-ink/95 px-4 py-2 backdrop-blur lg:px-6">
-          <button onClick={() => setView('data')} className={cn('flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all', 'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}>
-            <Database className="size-3.5" /> Data
-          </button>
-          <button onClick={() => setView('meta')} className={cn('flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all', 'border-amber-400/60 bg-amber-500/15 text-amber-200')}>
-            <BarChart3 className="size-3.5" /> Meta
-          </button>
-          <button onClick={() => setView('docs')} className={cn('flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all', 'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}>
-            <BookOpen className="size-3.5" /> Docs
-          </button>
-        </div>
-
-        <MetaPage />
+        <TabSwitcher view={view} onChange={setView} />
+        <MetaPage onCardClick={handleMetaCardClick} />
         <SyncFooter />
       </div>
     )
@@ -82,19 +116,7 @@ export default function Home() {
   if (view === 'docs') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
-        {/* Tab switcher */}
-        <div className="sticky top-0 z-40 flex items-center gap-2 border-b border-amber-900/50 bg-bdo-ink/95 px-4 py-2 backdrop-blur lg:px-6">
-          <button onClick={() => setView('data')} className={cn('flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all', 'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}>
-            <Database className="size-3.5" /> Data
-          </button>
-          <button onClick={() => setView('meta')} className={cn('flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all', 'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}>
-            <BarChart3 className="size-3.5" /> Meta
-          </button>
-          <button onClick={() => setView('docs')} className={cn('flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all', 'border-amber-400/60 bg-amber-500/15 text-amber-200')}>
-            <BookOpen className="size-3.5" /> Docs
-          </button>
-        </div>
-
+        <TabSwitcher view={view} onChange={setView} />
         <DocsPage />
         <SyncFooter />
       </div>
@@ -103,39 +125,7 @@ export default function Home() {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
-      {/* Tab switcher */}
-      <div className="sticky top-0 z-40 flex items-center gap-2 border-b border-amber-900/50 bg-bdo-ink/95 px-4 py-2 backdrop-blur lg:px-6">
-        <button
-          onClick={() => setView('data')}
-          className={cn(
-            'flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all',
-            'border-amber-400/60 bg-amber-500/15 text-amber-200',
-          )}
-        >
-          <Database className="size-3.5" />
-          Data
-        </button>
-        <button
-          onClick={() => setView('meta')}
-          className={cn(
-            'flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all',
-            'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200',
-          )}
-        >
-          <BarChart3 className="size-3.5" />
-          Meta
-        </button>
-        <button
-          onClick={() => setView('docs')}
-          className={cn(
-            'flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition-all',
-            'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200',
-          )}
-        >
-          <BookOpen className="size-3.5" />
-          Docs
-        </button>
-      </div>
+      <TabSwitcher view={view} onChange={setView} />
 
       <Header />
       <ClassBar />
