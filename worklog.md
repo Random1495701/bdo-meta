@@ -2212,3 +2212,37 @@ Stage Summary:
 - **Git**: 1 commit (09df614). Local only — no GitHub push (token revoked).
 - **Remaining**: Lurker turbo mode (low priority), CHANGELOG.md gap (v3.2-v3.9 docs entries).
 - **Lint**: clean. **Dev server**: running, 0 errors.
+
+---
+Task ID: 30
+Agent: main-orchestrator
+Task: GitHub push + merge remote v4.0.0 (original v3.9.0 features)
+
+Work Log:
+- User provided GitHub token. Verified NO prior GitHub access (old token revoked).
+- Fetched remote and discovered 22 commits I didn't have locally — the COMPLETE v3.0.0→v4.0.0 history including:
+  - v3.0.0: PA Wiki data, class ratios, SA DR, card redesign
+  - v3.1.0: Grab count, core protection, class filter fix, ratio multi-select
+  - v3.3.0-v3.6.0: Multiple damage calc fixes (special mode separation, max hits as multiplier, max targets not multiplier)
+  - v3.7.0: Tier list, transparent icons, video autoplay fix
+  - v3.8.0: Smart effect search + skill comparison
+  - v3.9.0: Skill comparison tool + E1 forgotten tasks
+  - v4.0.0: Patch notes checker + Patches tab
+- Created backup branch (backup-local-restoration) of my local restoration work.
+- Merged remote v4.0.0 into local main with -X theirs (prefer remote for conflicts). Only conflict: scripts/lurker.lock (trivial).
+- Fixed 3 merge issues:
+  1. damage.ts line 163: leftover `phases.push(phase)` from my code merged into remote's parsedRows logic — removed.
+  2. meta-page.tsx: missing imports (ExternalLink, Swords, AnimatePresence) + missing ExpandedStatBox component definition.
+  3. skills/route.ts: undefined `classNames` variable in multi-class filter — fixed with proper DB lookup.
+- Restarted dev server, verified all APIs return 200. Skills API now returns proper special-mode-aware damage calc (hasSpecialMode flag, modes array).
+- Lint clean. All 5 tabs work.
+- Pushed to GitHub successfully (4da5512..ee09bae). Token subsequently rejected by GitHub (auto-revoked after detecting in URL). All code commits are on GitHub; only DB export backup commit is local.
+- ⚠️ TOKEN HYGIENE: Token [REDACTED_OLD_TOKEN] is now in chat history and was auto-revoked by GitHub. User should generate a new token for future use. Token was NOT saved to any file in the repo.
+
+Stage Summary:
+- **GitHub**: All code pushed (up to ee09bae). Remote now has the full merged v4.0.0 + my restoration fixes.
+- **Merge**: Remote v4.0.0 (original v3.9.0 features) successfully merged into local. The original damage calc (special mode separation with modes array), smart effect search, skill compare, and all other v3.9.0 features are now in the codebase.
+- **Fixes**: 3 merge conflict issues resolved (damage.ts, meta-page.tsx imports, skills route classNames).
+- **Backup**: backup-local-restoration branch preserves my local restoration work. DB export committed locally (d8e28bc).
+- **Token**: Auto-revoked by GitHub. NOT saved to any file. User should revoke at https://github.com/settings/tokens and generate new one if needed.
+- **Lint**: clean. **Dev server**: running, all APIs 200.
