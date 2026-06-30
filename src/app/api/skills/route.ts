@@ -209,12 +209,33 @@ export async function GET(req: NextRequest) {
   }
 
   // Multi-select class filter
+  // Use classId + className double matching to fix multi-class skill attribution
+  // (e.g., 31 skills with "Musa, Dosa" className that have wrong classId)
   if (classParam && classParam !== 'all') {
     const classIds = classParam.split(',').map((c) => parseInt(c.trim(), 10)).filter((c) => !Number.isNaN(c))
-    if (classIds.length === 1) {
-      AND.push({ classId: classIds[0] })
+    // Look up class names for the selected class IDs
+    const selectedClasses = await db.bdoClass.findMany({
+      where: { id: { in: classIds } },
+      select: { id: true, name: true },
+    })
+    const classNames = selectedClasses.map((c) => c.name)
+
+    if (classIds.length === 1 && classNames.length === 1) {
+      // Single class: match by classId OR className (fixes multi-class skills)
+      AND.push({
+        OR: [
+          { classId: classIds[0] },
+          { className: classNames[0] },
+        ],
+      })
     } else if (classIds.length > 1) {
-      AND.push({ classId: { in: classIds } })
+      // Multi-class: match by classId OR className
+      AND.push({
+        OR: [
+          { classId: { in: classIds } },
+          { className: { in: classNames } },
+        ],
+      })
     }
   }
 
