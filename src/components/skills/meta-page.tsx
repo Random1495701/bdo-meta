@@ -545,34 +545,14 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
             </div>
           </div>
 
-        {/* Ratio mode banner — multi-select */}
+        {/* Ratio mode banner — multi-select with pairwise display */}
         {ratioMode && (
           <div className="border-b border-amber-900/30 bg-bdo-leather-dark/50 px-4 py-2 lg:px-6">
             {ratioSelections.size > 0 ? (
-              <div className="flex flex-wrap items-center gap-2 text-sm">
-                <span className="text-[10px] uppercase tracking-wider text-amber-300/40">Selected ({ratioSelections.size}):</span>
-                {Array.from(ratioSelections).map((key) => {
-                  const [classId, spec] = key.split('-')
-                  const cls = classes.find(c => c.classId === parseInt(classId))
-                  if (!cls) return null
-                  const group = spec === 'awakening' ? cls.awakeningGroup : spec === 'succession' ? cls.successionGroup : cls.ascensionGroup
-                  const specColor = SPEC_META[spec]?.color || '#fff'
-                  return (
-                    <span key={key} className="flex items-center gap-1 rounded-sm border px-2 py-0.5 text-xs" style={{ borderColor: `${specColor}44`, backgroundColor: `${specColor}11` }}>
-                      <span className="font-bold text-amber-200">{cls.className}</span>
-                      <span style={{ color: specColor }}>{SPEC_META[spec]?.label}</span>
-                      <span className="text-amber-300/50">({group || '?'})</span>
-                      <button onClick={() => {
-                        const next = new Set(ratioSelections)
-                        next.delete(key)
-                        setRatioSelections(next)
-                      }} className="ml-1 text-amber-300/40 hover:text-red-400">✕</button>
-                    </span>
-                  )
-                })}
-                {/* Show pairwise advantages */}
+              <div className="flex flex-col gap-2">
+                {/* Pairwise ratios: "Class A (Group) vs Class B (Group) → Advantage" */}
                 {ratioSelections.size >= 2 && (
-                  <div className="ml-4 flex flex-wrap gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     {(() => {
                       const keys = Array.from(ratioSelections)
                       const pairs: React.ReactNode[] = []
@@ -585,18 +565,28 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
                           if (!clsA || !clsB) continue
                           const groupA = specA === 'awakening' ? clsA.awakeningGroup : specA === 'succession' ? clsA.successionGroup : clsA.ascensionGroup
                           const groupB = specB === 'awakening' ? clsB.awakeningGroup : specB === 'succession' ? clsB.successionGroup : clsB.ascensionGroup
-                          let adv = 'No advantage'
+                          const specColorA = SPEC_META[specA]?.color || '#fff'
+                          const specColorB = SPEC_META[specB]?.color || '#fff'
+                          let adv = 'Neutral'
                           let advColor = '#a1a1aa'
-                          if (groupA === 'Vanguard' && groupB === 'Pulverizer') { adv = `${clsA.className} → ${clsB.className} (+5%)`; advColor = '#34d399' }
-                          else if (groupA === 'Skirmisher' && groupB === 'Vanguard') { adv = `${clsA.className} → ${clsB.className} (+5%)`; advColor = '#34d399' }
-                          else if (groupA === 'Pulverizer' && groupB === 'Skirmisher') { adv = `${clsA.className} → ${clsB.className} (+5%)`; advColor = '#34d399' }
-                          else if (groupB === 'Vanguard' && groupA === 'Pulverizer') { adv = `${clsB.className} → ${clsA.className} (+5%)`; advColor = '#f87171' }
-                          else if (groupB === 'Skirmisher' && groupA === 'Vanguard') { adv = `${clsB.className} → ${clsA.className} (+5%)`; advColor = '#f87171' }
-                          else if (groupB === 'Pulverizer' && groupA === 'Skirmisher') { adv = `${clsB.className} → ${clsA.className} (+5%)`; advColor = '#f87171' }
+                          if (groupA === 'Vanguard' && groupB === 'Pulverizer') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
+                          else if (groupA === 'Skirmisher' && groupB === 'Vanguard') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
+                          else if (groupA === 'Pulverizer' && groupB === 'Skirmisher') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
+                          else if (groupB === 'Vanguard' && groupA === 'Pulverizer') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
+                          else if (groupB === 'Skirmisher' && groupA === 'Vanguard') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
+                          else if (groupB === 'Pulverizer' && groupA === 'Skirmisher') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
                           pairs.push(
-                            <span key={`${keys[i]}-${keys[j]}`} className="rounded-sm border px-2 py-0.5 text-[10px] font-bold" style={{ borderColor: `${advColor}44`, color: advColor, backgroundColor: `${advColor}11` }}>
-                              {adv}
-                            </span>
+                            <div key={`${keys[i]}-${keys[j]}`} className="flex items-center gap-1.5 rounded-sm border border-amber-800/30 bg-bdo-ink/40 px-2 py-1 text-xs">
+                              <span className="font-bold" style={{ color: specColorA }}>{clsA.className}</span>
+                              <span className="text-amber-300/40">({groupA || '?'})</span>
+                              <span className="text-amber-400">vs</span>
+                              <span className="font-bold" style={{ color: specColorB }}>{clsB.className}</span>
+                              <span className="text-amber-300/40">({groupB || '?'})</span>
+                              <span className="text-amber-400">→</span>
+                              <span className="rounded-sm px-1.5 py-0.5 text-[10px] font-bold" style={{ color: advColor, backgroundColor: `${advColor}15` }}>
+                                {adv}
+                              </span>
+                            </div>
                           )
                         }
                       }
@@ -604,7 +594,30 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
                     })()}
                   </div>
                 )}
-                <button onClick={() => setRatioSelections(new Set())} className="ml-auto rounded-sm border border-amber-800/50 px-2 py-0.5 text-xs text-amber-300/70 hover:text-amber-200">Clear</button>
+                {/* Selected classes with remove buttons */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[10px] uppercase tracking-wider text-amber-300/40">Selected ({ratioSelections.size}):</span>
+                  {Array.from(ratioSelections).map((key) => {
+                    const [classId, spec] = key.split('-')
+                    const cls = classes.find(c => c.classId === parseInt(classId))
+                    if (!cls) return null
+                    const group = spec === 'awakening' ? cls.awakeningGroup : spec === 'succession' ? cls.successionGroup : cls.ascensionGroup
+                    const specColor = SPEC_META[spec]?.color || '#fff'
+                    return (
+                      <span key={key} className="flex items-center gap-1 rounded-sm border px-2 py-0.5 text-xs" style={{ borderColor: `${specColor}44`, backgroundColor: `${specColor}11` }}>
+                        <span className="font-bold text-amber-200">{cls.className}</span>
+                        <span style={{ color: specColor }}>{SPEC_META[spec]?.label}</span>
+                        <span className="text-amber-300/50">({group || '?'})</span>
+                        <button onClick={() => {
+                          const next = new Set(ratioSelections)
+                          next.delete(key)
+                          setRatioSelections(next)
+                        }} className="ml-1 text-amber-300/40 hover:text-red-400">✕</button>
+                      </span>
+                    )
+                  })}
+                  <button onClick={() => setRatioSelections(new Set())} className="ml-auto rounded-sm border border-amber-800/50 px-2 py-0.5 text-xs text-amber-300/70 hover:text-amber-200">Clear</button>
+                </div>
               </div>
             ) : (
               <div className="text-xs text-amber-200/50">Click class cards to compare group advantages. Multi-select supported.</div>
