@@ -2154,3 +2154,38 @@ Stage Summary:
 - Mobile-friendly: expanded panel uses responsive grids (sm:grid-cols-4 for combat breakdown, sm:grid-cols-3 lg:grid-cols-5 for bar chart) that stack vertically on mobile.
 - `bun run lint` and `bunx tsc --noEmit` both clean for meta-page.tsx.
 - Files modified: `src/components/skills/meta-page.tsx` (1 file, ~210 lines added).
+
+---
+Task ID: 28
+Agent: main-orchestrator
+Task: Deep audit (AUDIT-2) + restore damage special-mode, sort persistence, meta expand, addons, spec colors, hasAddon, video toggle, isFlow/isCore, upload path fix, classId+className match, backup automation
+
+Work Log:
+- Delegated AUDIT-2 (deep audit of all 9 chat history files + worklog + docs) to subagent. Found 27 MISSING/PARTIAL features (2 Critical, 6 High, 11 Medium, 8 Low). Full report appended to worklog.
+- CRITICAL FIX: /api/upload/skills-json path — file was at /api/upload/route.ts but sync-footer calls /api/upload/skills-json. Moved file to correct path. Import button no longer 404s.
+- CRITICAL FIX: Damage special-mode separation — rewrote src/lib/damage.ts calculateDamage(). When a phase name repeats (e.g., "Attack 1" appears again after "Attack 2"), a new damage group/mode has started (Deadeye regular vs Marni ammo). Now STOPS processing at the first repeat — only the first group is counted. Added hasMultipleModes flag to DamageCalculation. Verified: "Absolute: Wrath of Nature" correctly flagged as having multiple modes.
+- HIGH FIX: Sort persistence — added zustand persist middleware to skill-store. Filters (sort, order, classIds, specs, q, etc.) + viewMode now persist to localStorage under 'bdo-meta-skill-store'. Transient state (drawers, sheets) excluded via partialize.
+- HIGH FIX: Meta page expanded card — delegated to subagent (Task 27-META-EXPAND). SpecCard now has expand/collapse: clicking the card header expands inline showing CC Chain, Grab, Core SA/FG, Top Skill, PA Wiki data, vs Class Average bar chart, and "View Skills in Data Tab" button. Only one card expanded at a time.
+- HIGH FIX: Skill Add-Ons section in detail drawer — added new section showing Garmoth addon popularity per slot. Data was already in API (skill.addons) but UI never displayed it. Added Gem icon import.
+- MEDIUM FIX: Spec color consistency — Awakening badge changed from amber to SPEC_COLORS.awakening (red), Succession badge changed from emerald to SPEC_COLORS.succession (blue).
+- MEDIUM FIX: hasAddon toggle — added to filter sidebar + skill store. API already supports hasAddon param.
+- MEDIUM FIX: Video autoplay toggle — added ON/OFF button above video in detail drawer. autoPlay prop now conditional.
+- MEDIUM FIX: S/A/Asc button onKeyDown — added keyboard activation (Enter + Space) to all spec buttons in class-bar.
+- MEDIUM FIX: isFlow/isCore flags — added to schema, pushed, flagged 144 Flow: skills + 90 Core: skills. coreSaCount/coreFgCount in meta API now accurate.
+- MEDIUM FIX: classId + className double matching — skills API now filters by classId OR className, fixing multi-class skill attribution (31 skills like "Musa, Dosa").
+- Backup automation: created scripts/backup.ts — exports DB to JSON, commits to git, optionally pushes to GitHub with --push or GH_TOKEN env var. Ran successfully: 4111 skills exported, committed.
+- Git: 3 commits made (c264b56, 9cf5f92, + this task). GitHub push not possible (token revoked) — local vault is current.
+
+Stage Summary:
+- **AUDIT-2**: 27 missing features found across 8 categories. Full report in worklog.
+- **Damage calc**: special-mode separation implemented (first-group-only). hasMultipleModes flag added.
+- **Sort persistence**: zustand persist middleware — filters + viewMode survive reloads.
+- **Meta expand**: inline card expansion with detailed stats + vs-class-average bar chart.
+- **Detail drawer**: addons section, spec colors fixed, video autoplay toggle.
+- **Filter sidebar**: hasAddon toggle, BS cooldown button.
+- **Class bar**: Asc button, S/A onKeyDown.
+- **Schema**: isFlow/isCore flags (144+90 skills flagged).
+- **API**: classId+className double match, upload path fixed.
+- **Backup**: scripts/backup.ts (export + git commit + optional push).
+- **Remaining lower-priority**: class matchup ratios UI, auto tier table, lurker turbo mode, keyboard arrow nav, documentation gaps (v3.2-v3.9). These are documented in RESTORATION_PLAN.md and AUDIT-2 report.
+- **Lint**: clean. **Dev server**: running, 0 errors. **Git**: 3 commits, local vault current.
