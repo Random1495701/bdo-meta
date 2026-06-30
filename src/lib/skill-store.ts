@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import type { SkillFilters, SkillType, SkillSort } from './skills'
 
 interface SkillStore {
@@ -27,6 +28,7 @@ interface SkillStore {
   toggleHasAnim: () => void
   toggleQuickslot: () => void
   toggleHasPrereqs: () => void
+  toggleHasAddon: () => void
   setSpec: (spec: 'all' | 'succession' | 'awakening' | 'ascension') => void
   toggleSpec: (spec: 'succession' | 'awakening' | 'ascension') => void
   setSort: (s: SkillSort) => void
@@ -55,7 +57,9 @@ const DEFAULT_FILTERS: SkillFilters = {
   pageSize: 24,
 }
 
-export const useSkillStore = create<SkillStore>((set) => ({
+export const useSkillStore = create<SkillStore>()(
+  persist(
+    (set) => ({
   filters: { ...DEFAULT_FILTERS },
   selectedSkillId: null,
   compareSkillId: null,
@@ -101,6 +105,7 @@ export const useSkillStore = create<SkillStore>((set) => ({
   toggleHasAnim: () => set((s) => ({ filters: { ...s.filters, hasAnim: !s.filters.hasAnim ? true : undefined, page: 1 } })),
   toggleQuickslot: () => set((s) => ({ filters: { ...s.filters, quickslot: !s.filters.quickslot ? true : undefined, page: 1 } })),
   toggleHasPrereqs: () => set((s) => ({ filters: { ...s.filters, hasPrereqs: !s.filters.hasPrereqs ? true : undefined, page: 1 } })),
+  toggleHasAddon: () => set((s) => ({ filters: { ...s.filters, hasAddon: !s.filters.hasAddon ? true : undefined, page: 1 } })),
   setSpec: (spec) => set((s) => {
     // Legacy single-spec setter — maps to specs array
     if (spec === 'all') return { filters: { ...s.filters, specs: [], types: [], page: 1 } }
@@ -122,4 +127,14 @@ export const useSkillStore = create<SkillStore>((set) => ({
   setCompareSkill: (id) => set({ compareSkillId: id, compareOpen: id != null }),
   setCompareOpen: (open) => set({ compareOpen: open }),
   setFiltersOpen: (open) => set({ filtersOpen: open }),
-}))
+    }),
+    {
+      name: 'bdo-meta-skill-store',
+      // Only persist filters + viewMode (not transient UI state like drawers/sheets)
+      partialize: (state) => ({
+        filters: state.filters,
+        viewMode: state.viewMode,
+      }),
+    },
+  ),
+)

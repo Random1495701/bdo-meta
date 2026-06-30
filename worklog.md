@@ -1777,3 +1777,380 @@ Stage Summary:
 - **Files created**: pa-wiki-data.ts, import-pa-wiki.ts, skill-compare-drawer.tsx, /api/upload/route.ts, RESTORATION_PLAN.md
 - **Files modified**: schema.prisma (PA Wiki fields), meta/route.ts (extended stats + caching), meta-page.tsx (types + display), classes/route.ts (caching), stats/route.ts (caching), skill-store.ts (compare state), skill-card.tsx (compare button), filter-sidebar.tsx (BS button), class-bar.tsx (Asc button), skills.ts (BdoClass type)
 - **Lint**: clean. **Dev server**: running, 0 errors.
+
+---
+Task ID: AUDIT-2
+Agent: audit-deep
+Task: Deep audit of chat history + worklog for all missing features
+
+Work Log:
+- Read worklog.md last 3 sections (Task 25 lines 1387-1411, Task AUDIT-1 lines 1414-1741, Task 26 lines 1744-1779) for context.
+- Read all 9 chat history files in docs/chat-history/ (sessions 1-9, covering Tasks 1-18).
+- Read docs/IMPROVEMENT_PLAN.md (165 lines), docs/PROJECT.md (226 lines), docs/RESTORATION_PLAN.md (157 lines), docs/ROADMAP.md.
+- Read current code files in full:
+  - src/lib/damage.ts (157 lines) — confirmed calculateDamage() sums ALL non-pvpOnly phases (line 134 reduce). No special-mode detection, no first-group-only logic.
+  - src/lib/skill-store.ts (125 lines) — confirmed Zustand store with NO `persist` middleware. Sort, order, viewMode, filters all lost on reload.
+  - src/components/skills/header.tsx (337 lines) — confirmed Select sort dropdown with 10 options + asc/desc toggle. No localStorage save of sort.
+  - src/components/skills/skill-table.tsx (609 lines) — confirmed column picker (DropdownMenuCheckboxItem) + SortHeader (clickable sortable columns). Column visibility persisted to localStorage (`bdo-meta-table-columns`). 7 of 13 columns sortable.
+  - src/components/skills/skill-grid.tsx (246 lines) — confirmed dispatcher between grid/list/table views.
+  - src/components/skills/meta-page.tsx (504 lines) — confirmed SpecCard is motion.button with onClick that navigates away to Data tab via onCardClick. NO expand-card-inline behavior. View modes are only 'cards'/'table'.
+  - src/components/skills/skill-detail-drawer.tsx (1058 lines) — confirmed: NO addons section (grep for addon/AddOn/Addon = 0 matches); video element at line 965 still has `autoPlay loop muted playsInline` (no toggle); flag badges at lines 478-507 use `border-amber-500` for Awakening and `border-emerald-700` for Succession (should be SPEC_COLORS red/blue).
+  - src/components/skills/class-bar.tsx (386 lines) — confirmed S/A/Asc buttons use `<span role="button" tabIndex={0}>` with NO `onKeyDown` handler (lines 132-186).
+  - src/app/page.tsx (211 lines) — confirmed keyboard handler (lines 91-126) handles only `/`, `Esc`, `1-5`. No arrow-key nav, no Enter-to-open.
+  - src/app/api/skills/route.ts (641 lines) — confirmed class filter only matches classId (lines 215-218, no className LIKE). Max-rank filter done in JS (lines 340-380) using getBaseName/RANK_SUFFIX regex; no DB precomputed columns.
+  - src/app/api/skills/[id]/route.ts (154 lines) — confirmed addons returned in API response (line 148: `addons: skill.addonsJson ? JSON.parse(skill.addonsJson) : null`) but UI never reads it.
+  - src/app/api/upload/route.ts (96 lines) — CONFIRMED BUG: file is at `/api/upload/route.ts` (serves `/api/upload`) but sync-footer.tsx line 154 calls `/api/upload/skills-json`. Route is at WRONG PATH. Will 404.
+  - src/components/skills/filter-sidebar.tsx (698 lines) — confirmed NO `hasAddon` toggle (grep = 0 matches); NO Collapsible component usage; BS cooldown button IS present (line 573-586, restored by Task 26).
+  - prisma/schema.prisma (137 lines) — confirmed: BdoClass has PA Wiki fields + isAscension (Task 26 added). Skill has NO isFlow, NO isCore, NO baseName, NO isMaxRank. Only single-column indexes.
+- Grep verified across src/components/skills for `expanded|onExpand|isExpanded` — found expand-card patterns ONLY in tier-list-page.tsx, change-log-banner.tsx, patches-page.tsx. NONE in meta-page.tsx.
+- Grep verified scripts/sync-lurker.ts (853 lines) for `turbo|TURBO|--turbo` = 0 matches. No turbo mode.
+- Grep verified API caching: getCached/setCached present on /api/classes, /api/stats, /api/ranges, /api/meta (Task 26 applied).
+- Grep verified logo.svg exists in public/ but header.tsx still uses `<Swords>` lucide icon (line 220).
+- Searched worklog + docs + chat-history for all required keywords. Cross-referenced with current code state to determine MISSING vs PARTIAL vs EXISTS for each feature.
+
+Stage Summary:
+
+# DEEP AUDIT — Missing Features (post-Task-26 state)
+
+## 1. Damage Calculation (special modes, Marni ammo, first-group-only)
+
+### 1.1 Damage special-mode separation + first-group-only — MISSING [Critical] ⚠ USER-FLAGGED
+- **What it did**: Per the user's complaint and AUDIT-1 §6.1: "百分比 × 倍率 × 最大命中数 (特殊模式分离，仅计算第一组)" — for skills with multiple damage modes (e.g. Deadeye regular ammo vs Marni ammo, or "Skill Special Move" alt-cast variants), only the FIRST damage group should be counted, not all phases summed. The current behavior inflates damage for any skill with alt-cast modes.
+- **Where mentioned**: User message in this task ("the separation of special modes listed for skills (ie deadeye regular/marni ammo) is not taken into account"); worklog.md lines 1596-1599 (AUDIT-1 §6.1); docs/RESTORATION_PLAN.md §5.1 (lines 112-116).
+- **Current status**: MISSING. `src/lib/damage.ts` `calculateDamage()` (lines 70-148) iterates all `damageRows`, parses each into a phase, MERGES same-name phases (lines 106-114), then SUMS all non-pvpOnly phases (`totalPvE = pvePhases.reduce((sum, p) => sum + p.totalMax, 0)` line 134). No mode-detection logic, no first-group-only filter.
+- **Priority**: Critical (user-stated incorrect, affects every skill comparison).
+- **Restoration difficulty**: Medium (1-3h). Need to detect mode boundaries in `damageRows` (likely via specific labels like "Special Move", "Marni Ammo", "Cartridge" etc., or via row gaps/kind transitions) and only sum the first group.
+
+---
+
+## 2. Sorting & QoL (column picker, persistence, keyboard nav)
+
+### 2.1 Sort field + direction persistence to localStorage — MISSING [High] ⚠ USER-FLAGGED
+- **What it did**: Remembered the user's sort column and asc/desc choice across page reloads.
+- **Where mentioned**: User message ("qol changes all around the app like sorting preferences and capabilities have been lost"); implied by Task AUDIT-1 and ROADMAP.
+- **Current status**: MISSING. `src/lib/skill-store.ts` uses plain `create<SkillStore>()` (line 58) with NO `persist` middleware. `filters.sort`, `filters.order`, `viewMode`, `filters.q`, `filters.classIds`, etc. all reset to defaults on every page reload. Verified — no `localStorage` writes anywhere in the store.
+- **Priority**: High (user-mentioned).
+- **Restoration difficulty**: Easy (<30min). Add `zustand/middleware` `persist` wrapper to the store, persist a subset of keys (filters, viewMode, selectedSkillId). 15-30 min.
+
+### 2.2 Column picker (toggle visible columns) — EXISTS ✓
+- **What it did**: Dropdown with checkboxes to toggle which columns show in the table view.
+- **Where mentioned**: worklog.md line 854, 862; CHANGELOG.md v1.6.0.
+- **Current status**: EXISTS. `src/components/skills/skill-table.tsx` lines 321-353 has `<DropdownMenu>` with `<DropdownMenuCheckboxItem>` for each column. Persists to `localStorage` via `STORAGE_KEY = 'bdo-meta-table-columns'` (lines 100-125).
+- **Priority**: N/A.
+- **Restoration difficulty**: N/A.
+
+### 2.3 Sortable column headers — EXISTS ✓
+- **What it did**: Click any column header to sort by that column; click again to toggle asc/desc.
+- **Where mentioned**: worklog.md line 722, 854, 862.
+- **Current status**: EXISTS. `src/components/skills/skill-table.tsx` has `SortHeader` component (lines 571-609). 7 of 13 columns are sortable (Name, Class, Type, Level, Cooldown, PvE, PvP, Anim, CC counters).
+- **Priority**: N/A.
+
+### 2.4 Sort dropdown in header (Grid/List views) — EXISTS ✓
+- **What it did**: Select dropdown with sort options + asc/desc toggle button.
+- **Where mentioned**: CHANGELOG v1.0.0.
+- **Current status**: EXISTS. `src/components/skills/header.tsx` lines 32-43 (`SORT_OPTIONS` array, 10 options) + `<Select>` (lines 249-267) + asc/desc toggle Button (lines 269-279).
+- **Priority**: N/A.
+
+### 2.5 Smart Effect Search — MISSING [Medium]
+- **What it did**: "智能效果搜索" — search skills by effect name across CC types, protection types, damage rows, and description simultaneously (not just name/desc/command).
+- **Where mentioned**: worklog.md line 1500-1503 (AUDIT-1 §2.2); docs/RESTORATION_PLAN.md §3.3.
+- **Current status**: MISSING. `/api/skills?q=` only searches name/krName/description/command (route.ts lines 193-208, basic substring match). No effect-aware search.
+- **Priority**: Medium.
+- **Restoration difficulty**: Easy (<30min). Extend API `q` filter to OR-match against `ccTypes`, `protectionTypes`, `damageRowsJson`.
+
+### 2.6 Has-Addon toggle in filter sidebar — MISSING [Medium]
+- **What it did**: Toggle to filter to skills that have Garmoth addon data (725 skills have `addonsJson` populated).
+- **Where mentioned**: worklog.md line 1505-1508 (AUDIT-1 §2.3); docs/RESTORATION_PLAN.md §3.4.
+- **Current status**: MISSING. API supports `hasAddon=true` (route.ts line 159, 316). `SkillFilters.hasAddon` is in the type. But `filter-sidebar.tsx` Toggles section has only `hasVideo`, `hasAnim`, `quickslot`, `hasPrereqs` — NO hasAddon toggle.
+- **Priority**: Medium.
+- **Restoration difficulty**: Easy (<30min). Add a toggle in the Toggles section wired to `toggleHasAddon` (which already exists in skill-store.ts line 27 — wait, actually it doesn't exist; need to add it. The store has toggleHasVideo/toggleHasAnim/toggleQuickslot/toggleHasPrereqs but NO toggleHasAddon).
+
+### 2.7 Arrow-key navigation in skill grid — MISSING [Medium]
+- **What it did**: Arrow keys moved selection between skill cards.
+- **Where mentioned**: worklog.md line 1632-1635 (AUDIT-1 §7.3); docs/ROADMAP.md §3.2; docs/IMPROVEMENT_PLAN.md §2.5.
+- **Current status**: MISSING. `src/app/page.tsx` keyboard handler (lines 91-126) handles only `/`, `Esc`, `1-5`. No arrow-key handling for skill-card navigation.
+- **Priority**: Medium.
+- **Restoration difficulty**: Medium (1-3h). Need to track focused index, wire arrow keys, scroll into view, apply focus ring.
+
+### 2.8 Enter key to open focused skill — MISSING [Medium]
+- **What it did**: Enter on a focused skill card opened the detail drawer.
+- **Where mentioned**: worklog.md line 1637-1640 (AUDIT-1 §7.4); docs/ROADMAP.md §3.2.
+- **Current status**: MISSING. Skill cards open on click only.
+- **Priority**: Medium.
+- **Restoration difficulty**: Medium (1-3h). Same scope as 2.7 (need focus state first).
+
+### 2.9 S/A/Asc button onKeyDown activation — MISSING [Medium]
+- **What it did**: Keyboard users could activate S/A/Asc spec buttons with Enter/Space.
+- **Where mentioned**: worklog.md line 1627-1630 (AUDIT-1 §7.2); docs/ROADMAP.md line 28.
+- **Current status**: MISSING. `src/components/skills/class-bar.tsx` lines 132-186: S/A/Asc `<span role="button" tabIndex={0}>` elements have `onClick` but NO `onKeyDown` handler. Verified.
+- **Priority**: Medium (accessibility).
+- **Restoration difficulty**: Easy (<30min, 15 min per AUDIT-1). Add `onKeyDown` checking for Enter/Space.
+
+### 2.10 Collapsible filter sections — MISSING [Low]
+- **What it did**: Filter sidebar sections could collapse, state remembered in localStorage.
+- **Where mentioned**: worklog.md line 1642-1645 (AUDIT-1 §7.5); docs/ROADMAP.md §3.5; docs/IMPROVEMENT_PLAN.md §2.3.
+- **Current status**: MISSING. `src/components/skills/filter-sidebar.tsx` — grep for `Collapsible|collapsed|localStorage` = 0 matches. All sections always expanded.
+- **Priority**: Low.
+- **Restoration difficulty**: Easy (1h). Wrap each section in shadcn `<Collapsible>`, store state in localStorage.
+
+### 2.11 logo.svg in header — MISSING [Low]
+- **What it did**: Used the custom `logo.svg` instead of generic Lucide `Swords` icon.
+- **Where mentioned**: worklog.md line 1652-1655 (AUDIT-1 §7.7).
+- **Current status**: MISSING. `src/components/skills/header.tsx` line 220 still uses `<Swords className="size-5 text-amber-400" />`. `public/logo.svg` exists.
+- **Priority**: Low.
+- **Restoration difficulty**: Easy (<30min). Replace `<Swords>` with `<img src="/logo.svg" />` or inline SVG.
+
+### 2.12 Mobile class bar touch swipe — MISSING [Low]
+- **What it did**: Touch event handlers for swipe-to-scroll on mobile.
+- **Where mentioned**: docs/IMPROVEMENT_PLAN.md §2.2.
+- **Current status**: MISSING. class-bar.tsx has wheel + drag handlers (lines 203-246) but no `onTouchStart/Move/End`.
+- **Priority**: Low.
+- **Restoration difficulty**: Easy (<30min).
+
+---
+
+## 3. Meta Page (expanded card, inline details)
+
+### 3.1 Expanded card (click card to expand inline showing more details) — MISSING [High] ⚠ USER-FLAGGED
+- **What it did**: Click a meta page spec card → card expands inline (in place) showing additional details, instead of (or in addition to) navigating to the Data tab.
+- **Where mentioned**: User message ("the expanded card in the meta menu"). Note: Tier Builder has an analogous expand-row pattern (`src/components/skills/tier-list-page.tsx` lines 673-790 — click a ranked row to expand a parameter-breakdown panel). The Meta page should have similar inline expand.
+- **Current status**: MISSING. `src/components/skills/meta-page.tsx` `SpecCard` (lines 64-232) is a `motion.button` with `onClick={onClick}` that calls `onCardClick?.(cls.classId, spec)` → `page.tsx` `handleMetaCardClick` (lines 65-73) clears classes, toggles the class, sets the spec, switches view to 'data'. So the ONLY click behavior is navigation away — there is NO inline expand. The card always shows the same fixed stat boxes (10 stats + PA Wiki badges + top skill + skill count).
+- **Priority**: High (user-mentioned).
+- **Restoration difficulty**: Medium (1-3h). Add `expanded` state to SpecCard, replace `motion.button` with a card containing a clickable header (for expand) + a clickable body or button (for navigate). Add expanded panel with more details: full stat breakdown, top-3 damage skills, protection distribution, etc.
+
+### 3.2 Class Matchup Ratios (multi-select) — MISSING [High]
+- **What it did**: Multi-select classes → show PvP counter ratios (+5% damage per group counter: Vanguard > Crusher > Skirmisher > Vanguard rock-paper-scissors).
+- **Where mentioned**: worklog.md line 1466-1469 (AUDIT-1 §1.4); docs/RESTORATION_PLAN.md §4.1.
+- **Current status**: MISSING. PA Wiki group data IS in the DB (Task 26 added `successionGroup`/`awakeningGroup`/`ascensionGroup` to BdoClass). The +5% group-counter logic exists in `src/lib/pa-wiki-data.ts` per Task 26 worklog. But no UI consumes it for matchup display.
+- **Priority**: High.
+- **Restoration difficulty**: Medium (1-3h). New UI section, multi-select class chips, matrix display.
+
+### 3.3 Auto S/A/B/C/D Tier Table — MISSING [High]
+- **What it did**: Auto-ranked specs into S/A/B/C/D tiers by composite meta score (percentile-based: S top 10%, A top 30%, B top 60%, C top 85%, D rest).
+- **Where mentioned**: worklog.md line 1471-1474 (AUDIT-1 §1.5); docs/RESTORATION_PLAN.md §4.2; docs/ROADMAP.md §2.8.
+- **Current status**: MISSING. Tier Builder exists (v3.0.0) with user-weighted scoring + Ranked/Table/Portraits views, but NO auto S/A/B/C/D tier table.
+- **Priority**: High.
+- **Restoration difficulty**: Medium (1-3h). Add new view mode or section that bins specs by percentile of composite score.
+
+### 3.4 Awakening vs Succession Comparison view — MISSING [Medium]
+- **What it did**: Side-by-side diff per class showing which spec wins on each stat.
+- **Where mentioned**: docs/ROADMAP.md §2.5.
+- **Current status**: MISSING. No comparison view (other than the Tier Builder which ranks but doesn't diff).
+- **Priority**: Medium.
+- **Restoration difficulty**: Medium (1-3h).
+
+### 3.5 Addon Popularity Leaderboard — MISSING [Medium]
+- **What it did**: Top 10 most-picked addons per class from Garmoth data.
+- **Where mentioned**: docs/ROADMAP.md §2.7; worklog.md line 1327.
+- **Current status**: MISSING. Garmoth addon data IS collected (725 skills with `addonsJson`), but no leaderboard aggregation or UI.
+- **Priority**: Medium.
+- **Restoration difficulty**: Medium (1-3h).
+
+---
+
+## 4. Skill Detail Drawer (addons, spec colors, video toggle)
+
+### 4.1 Skill Add-Ons section — MISSING [High]
+- **What it did**: Showed Garmoth-sourced addon popularity per slot (slot 0, slot 1) for the skill, with addon name, effect, and vote count.
+- **Where mentioned**: worklog.md line 1519-1522 (AUDIT-1 §3.1); docs/RESTORATION_PLAN.md §2.3; docs/ROADMAP.md §1.3; IMPROVEMENT_PLAN.md §2.1.
+- **Current status**: MISSING. `/api/skills/[id]` returns `addons: skill.addonsJson ? JSON.parse(skill.addonsJson) : null` (route.ts line 148) — DATA IS THERE. But `src/components/skills/skill-detail-drawer.tsx` (1058 lines) — grep for `addon|AddOn|Addon` = 0 matches. UI never reads `skill.addons`.
+- **Priority**: High.
+- **Restoration difficulty**: Easy (<30min per ROADMAP; ~1h realistic). Add a new `<Section>` that maps over `skill.addons` (format depends on addonsJson schema — likely `{slot: {addonId: votes}}` per Garmoth).
+
+### 4.2 Spec color consistency (Awakening=red, Succession=blue, Ascension=yellow) — PARTIAL [Medium]
+- **What it did**: Used `SPEC_COLORS` (red/blue/yellow) consistently across the UI for spec flag badges.
+- **Where mentioned**: worklog.md line 1524-1527 (AUDIT-1 §3.2); docs/RESTORATION_PLAN.md §2.4; docs/ROADMAP.md §1.2 line 21-22.
+- **Current status**: PARTIAL. `SPEC_COLORS` exists in `src/lib/skills.ts` (lines 346-350 per AUDIT-1) and is used correctly in `meta-page.tsx` + `class-bar.tsx` (S=blue, A=red, Asc=yellow). BUT `skill-detail-drawer.tsx` flag badges (lines 478-507) still use:
+  - Awakening → `border-amber-500/40 bg-amber-500/10 text-amber-300` (should be red)
+  - Succession → `border-emerald-700/50 bg-emerald-900/20 text-emerald-300` (should be blue)
+  - Absolute → `border-red-700/50 ...` (red is actually Awakening's color, but Absolute isn't a spec — this is fine to leave or remove)
+  - No `Ascension` badge (because ascension is a class-level attribute, not skill-level)
+- **Priority**: Medium.
+- **Restoration difficulty**: Easy (15-min fix per ROADMAP). Import SPEC_COLORS, replace hardcoded amber/emerald with `SPEC_COLORS.awakening` / `SPEC_COLORS.succession`.
+
+### 4.3 Combat Type / Class Group / SA DR display in drawer — MISSING [Medium]
+- **What it did**: Showed the skill's class combat type, group, and SA DR for context in the drawer header.
+- **Where mentioned**: worklog.md line 1529-1532 (AUDIT-1 §3.3).
+- **Current status**: MISSING. Drawer has no such fields. PA Wiki data IS in the DB (Task 26) but the drawer doesn't display it.
+- **Priority**: Medium.
+- **Restoration difficulty**: Easy (<30min). Add a small badge row in the drawer header that reads the class's combatType/group/SaDr.
+
+### 4.4 Video autoplay toggle — MISSING [Low]
+- **What it did**: Don't autoplay video on mobile; show play button instead.
+- **Where mentioned**: worklog.md line 1647-1650 (AUDIT-1 §7.6); docs/ROADMAP.md §3.4; docs/IMPROVEMENT_PLAN.md §2.5 implied.
+- **Current status**: MISSING. `src/components/skills/skill-detail-drawer.tsx` lines 965-973: `<video src={skill.videoUrl} autoPlay loop muted playsInline controls ... />`. No toggle, no poster/play-button fallback.
+- **Priority**: Low.
+- **Restoration difficulty**: Easy (15-30 min). Add state `const [playVideo, setPlayVideo] = React.useState(false)`. Conditionally render either `<video autoPlay>` or `<button onClick><img poster/></button>`. Persist preference to localStorage.
+
+---
+
+## 5. Database/Performance (baseName, isMaxRank, indexes, flow/core flags)
+
+### 5.1 isFlow / isCore flags on Skill — MISSING [Medium]
+- **What it did**: Tagged "Flow:" (269 skills, combo continuations) and "Core:" (160 skills, core abilities) name-prefixed skills for proper typing + Core SA/FG counting. The `coreSaCount`/`coreFgCount` metrics added to `/api/meta` by Task 26 are BROKEN without these flags — they likely return 0 for every spec because no skill has an `isCore` flag.
+- **Where mentioned**: worklog.md line 1548-1551 (AUDIT-1 §4.3); docs/ROADMAP.md §4.3; docs/IMPROVEMENT_PLAN.md §1.4.
+- **Current status**: MISSING. `prisma/schema.prisma` Skill model (lines 38-82) has no `isFlow` or `isCore` fields. ROADMAP P4.3 — 429 skills untyped.
+- **Priority**: Medium (blocks `coreSaCount`/`coreFgCount` accuracy).
+- **Restoration difficulty**: Easy (<30min). Add 2 Boolean columns to schema, run a backfill script that scans skill names for `^Flow: ` and `^Core: ` prefixes, sets flags.
+
+### 5.2 Precomputed baseName + isMaxRank columns — MISSING [Low]
+- **What it did**: Precomputed max-rank filtering at sync time instead of recomputing per query in JS.
+- **Where mentioned**: worklog.md line 1553-1556 (AUDIT-1 §4.4); docs/ROADMAP.md §5.1; docs/IMPROVEMENT_PLAN.md §3.1.
+- **Current status**: MISSING. `prisma/schema.prisma` Skill model has no `baseName` or `isMaxRank` columns. Max-rank filtering done in JS at query time (`route.ts` lines 340-380: fetches ALL matching skills, builds `baseNameMap`, picks highest rank per baseName). For "All Classes" no filters, this means loading 7,231 skill IDs every page request.
+- **Priority**: Low.
+- **Restoration difficulty**: Medium (1-3h). Schema change + migration + update sync scripts to populate on insert + update `/api/skills` to query `WHERE isMaxRank = true` directly.
+
+### 5.3 Composite DB indexes — MISSING [Low]
+- **What it did**: Composite indexes for common filter combos (e.g. `classId + isAwakening + requiredLevel`).
+- **Where mentioned**: worklog.md line 1558-1561 (AUDIT-1 §4.5); docs/ROADMAP.md §5.2; docs/IMPROVEMENT_PLAN.md §3.3.
+- **Current status**: MISSING. `prisma/schema.prisma` Skill model has only single-column indexes (classId, name, groupId, className, isAbsolute, isAwakening, isBlackSpirit). No composites.
+- **Priority**: Low.
+- **Restoration difficulty**: Easy (<30min). Add `@@index([classId, isAwakening])`, `@@index([classId, isSuccession])`, etc.
+
+### 5.4 Class Filter: classId + className double matching — MISSING [Medium]
+- **What it did**: "classId + className 双重匹配" — filtered by BOTH classId and className to fix multi-class-skill attribution bugs (e.g. "Musa, Dosa" skills, "Wizard, Witch" skills — 31 known).
+- **Where mentioned**: worklog.md line 1601-1604 (AUDIT-1 §6.2); docs/RESTORATION_PLAN.md §5.2; docs/ROADMAP.md §4.2; docs/IMPROVEMENT_PLAN.md §1.3.
+- **Current status**: MISSING. `src/app/api/skills/route.ts` lines 212-219: only filters by `classId` (single value or `{ in: classIds }` array). No `className LIKE '%ClassName%'` fallback. The "31 multi-class skills" issue is unfixed.
+- **Priority**: Medium.
+- **Restoration difficulty**: Easy (<30min). Add an OR clause: `OR: [{ classId: ... }, { className: { contains: className } }]`.
+
+---
+
+## 6. Lurker (turbo, auto-restart, monitoring)
+
+### 6.1 Lurker v2 Turbo Mode (43 skills/min) — MISSING [High]
+- **What it did**: "涡轮模式（43技能/分钟）" — high-throughput mode ~1.4s/skill vs default ~2.5s/skill.
+- **Where mentioned**: worklog.md line 1661-1664 (AUDIT-1 §8.1); docs/RESTORATION_PLAN.md §5.3; docs/SESSION_HANDOFF.md implied.
+- **Current status**: MISSING. `scripts/sync-lurker.ts` (853 lines) has only `jitteredDelay()` (base 2s ± 1s + 10% long pauses). Grep for `turbo|TURBO|--turbo|43.*skill|perMinute` = 0 matches. Lurker state shows `avgDelayMs 2500` (~24/min).
+- **Priority**: High (current ~24/min is too slow to finish 7231-skill enrichment).
+- **Restoration difficulty**: Medium (1-3h). Add `--turbo` CLI flag, alternate delay profile (e.g. 0.8s ± 0.4s), possibly concurrent requests with limited parallelism.
+
+### 6.2 Lurker auto-refresh mode (re-enrich stale skills) — MISSING [Medium]
+- **What it did**: "支持自动刷新" — automatically re-enriched skills whose data was stale (timestamp comparison).
+- **Where mentioned**: worklog.md line 1666-1669 (AUDIT-1 §8.2).
+- **Current status**: MISSING. Lurker has `--re-enrich` flag (refresh all) but no staleness-based auto-refresh logic.
+- **Priority**: Medium.
+- **Restoration difficulty**: Medium (1-3h). Add `syncedAt` timestamp check, threshold (e.g. >30 days), re-enrich only stale skills.
+
+### 6.3 Lurker health monitoring / auto-restart — MISSING [Medium]
+- **What it did**: Auto-restart lurker if heartbeat stale >10 min.
+- **Where mentioned**: worklog.md line 1681-1684 (AUDIT-1 §8.5); docs/ROADMAP.md §5.4; docs/IMPROVEMENT_PLAN.md §5.2.
+- **Current status**: MISSING. `scripts/dev-watchdog.sh` exists but only watches the dev server. Lurker state shows `lastHeartbeatAt "2026-06-30T06:08:37"` while PID 1657 may be stale. No auto-restart.
+- **Priority**: Medium.
+- **Restoration difficulty**: Medium (1-3h). New monitor script (cron every 5 min), check heartbeat age, restart lurker if stale.
+
+---
+
+## 7. Infrastructure (backup, cron, github sync)
+
+### 7.1 POST /api/upload/skills-json endpoint — STILL BROKEN [Critical]
+- **What it did**: Accepted JSON file uploads for instant DB enrichment (bdocodex query.php format, plain JSON arrays, nested objects). Used by sync-footer.tsx Import button.
+- **Where mentioned**: worklog.md line 1567-1570 (AUDIT-1 §5.1); docs/RESTORATION_PLAN.md §2.2.
+- **Current status**: **STILL BROKEN** despite Task 26 claiming restoration. Task 26 created `src/app/api/upload/route.ts` (which serves `/api/upload`), but `sync-footer.tsx` line 154 still calls `fetch('/api/upload/skills-json', ...)`. The file is at the WRONG PATH. In Next.js App Router, `/api/upload/route.ts` handles `/api/upload`, NOT `/api/upload/skills-json`. The Import button still 404s.
+- **Priority**: Critical (user-visible broken feature).
+- **Restoration difficulty**: Easy (<30min). Move file from `src/app/api/upload/route.ts` to `src/app/api/upload/skills-json/route.ts` (create the `skills-json/` directory and move the file in). OR update sync-footer.tsx line 154 to call `/api/upload` instead. The first option is safer (preserves the documented API path).
+
+### 7.2 Database backup automation (cron) — MISSING [Low]
+- **What it did**: Cron job that exports DB to JSON weekly and commits.
+- **Where mentioned**: worklog.md line 1676-1679 (AUDIT-1 §8.4); docs/ROADMAP.md §5.3; docs/IMPROVEMENT_PLAN.md §5.1.
+- **Current status**: MISSING. Manual git commits only. `/api/export` endpoint exists. No cron job.
+- **Priority**: Low.
+- **Restoration difficulty**: Easy (<30min). Write a small shell script that curls `/api/export?enriched=false` → writes to `db/skills-export.json` → `git commit -am "weekly backup"` → `git push`. Add to crontab weekly.
+
+### 7.3 Documentation gap (v3.2.0-v3.9.0) — MISSING [Medium]
+- **What it did**: CHANGELOG/docs entries for versions v3.2.0 through v3.9.0.
+- **Where mentioned**: worklog.md line 1686-1689 (AUDIT-1 §8.6); docs/RESTORATION_PLAN.md §6.2.
+- **Current status**: MISSING. `CHANGELOG.md` stops at v2.0.0. `docs-page.tsx` version history stops at v3.1.0. All v3.2-v3.9 features (PA Wiki data, compare tool, lurker turbo, addon drawer, smart effect search, etc.) have NO documentation entry.
+- **Priority**: Medium (makes future audits harder).
+- **Restoration difficulty**: Medium (1-3h). Write CHANGELOG entries for each missing version, update docs-page.tsx version history array.
+
+### 7.4 GitHub sync automation — MISSING [Low]
+- **What it did**: Automated push to GitHub on commits.
+- **Where mentioned**: docs/chat-history/session-2025-06-29-github-paz.md line 14; docs/SESSION_HANDOFF.md lines 137-156.
+- **Current status**: MISSING. Manual push only. Token was revoked after Session 8. Repo exists at https://github.com/Random1495701/bdo-meta but remote URL is clean HTTPS (no token). No automated push.
+- **Priority**: Low.
+- **Restoration difficulty**: Easy (<30min). User generates new GitHub token, sets as git remote URL with token, then any commit-and-push works. Or set up a post-commit hook.
+
+---
+
+## Summary Table — Current State (post-Task-26)
+
+| Category | Critical | High | Medium | Low | EXISTS |
+|---|---|---|---|---|---|
+| 1. Damage Calculation | 1 (special modes) | 0 | 0 | 0 | CC system, dedup |
+| 2. Sorting & QoL | 0 | 1 (sort persistence) | 4 (smart search, hasAddon, arrows, Enter) | 3 (collapsible, logo, touch) | column picker, sortable headers, sort dropdown |
+| 3. Meta Page | 0 | 3 (expanded card, matchups, tier table) | 2 (spec compare, addon leaderboard) | 0 | 56 spec cards, PA Wiki display, clickable nav |
+| 4. Skill Detail Drawer | 0 | 1 (addons section) | 2 (spec colors, PA Wiki display) | 1 (video autoplay toggle) | description, command, damage rows, CC, protection, prereqs, related ranks |
+| 5. Database/Performance | 0 | 0 | 2 (isFlow/isCore, classId+className) | 3 (baseName/isMaxRank, composites, lurker state) | PA Wiki fields, SkillChangeLog |
+| 6. Lurker | 0 | 1 (turbo mode) | 2 (auto-refresh, monitoring) | 0 | v2 JS solver, PID lock, endpoint rotation, jittered delays |
+| 7. Infrastructure | 1 (upload path broken) | 0 | 1 (docs gap) | 2 (backup cron, GitHub auto) | /api/export, /api/change-log, dev-watchdog |
+
+**Total MISSING/PARTIAL: 27 features** (2 Critical user-flagged, 6 High, 11 Medium, 8 Low)
+
+## What Task 26 Successfully Restored (do NOT re-implement)
+- PA Wiki data ingestion (combatType, groups, SaDr per spec, isAscension) on BdoClass — DONE
+- /api/meta extended SpecStats (ccChainPotential, grabCount, coreSaCount, coreFgCount) + ClassStats (combatType, groups, SaDr, isAscension) — DONE
+- API caching on /api/classes, /api/stats, /api/meta, /api/ranges — DONE
+- Skill Compare Drawer (`skill-compare-drawer.tsx`) — DONE
+- "Include Black Spirit (20m)" cooldown button in filter-sidebar — DONE
+- "Asc" button for ascension-only classes in class-bar — DONE
+- Meta page displays PA Wiki data + CC chain/grab/DPS/protected stats in cards + table — DONE
+
+## Top 7 Restoration Priorities (next session)
+
+1. **Damage special-mode separation** (§1.1) — Critical, user-flagged incorrect, affects every comparison. Medium effort.
+2. **POST /api/upload/skills-json path fix** (§7.1) — Critical, user-visible 404 on Import button. Easy fix (move file to correct path).
+3. **Sort persistence to localStorage** (§2.1) — High, user-flagged QoL loss. Easy fix (add zustand persist middleware).
+4. **Meta page expanded card** (§3.1) — High, user-flagged. Medium effort.
+5. **Skill Add-Ons section in drawer** (§4.1) — High, data already in API. Easy fix.
+6. **Spec color consistency in drawer** (§4.2) — Medium, 15-min fix per ROADMAP.
+7. **Lurker Turbo Mode** (§6.1) — High, current 24/min too slow. Medium effort.
+
+## Recommended Batch (single 2-3h session could clear):
+- §7.1 (move file) + §4.2 (spec colors) + §2.1 (zustand persist) + §2.11 (logo.svg) + §2.6 (hasAddon toggle) — all Easy fixes, ~1h total
+- §4.1 (addons section) + §4.4 (video toggle) — Easy, ~1.5h
+- §1.1 (damage special-mode) — Medium, ~2-3h alone
+
+- End of AUDIT-2 -
+
+---
+Task ID: 27-META-EXPAND
+Agent: meta-expand-dev
+Task: Add expanded card feature to Meta page
+
+Work Log:
+- Read /home/z/my-project/worklog.md (last 3 sections) to understand AUDIT-2 §3.1 context: Meta page SpecCard was a `motion.button` whose only onClick navigated to Data tab; no inline expand existed. Tier-list-page.tsx RankedView (lines 650-790) had the closest analogous expand-row pattern.
+- Read `src/components/skills/meta-page.tsx` fully (505 lines pre-edit) and `src/components/skills/tier-list-page.tsx` lines 650-790 (the RankedView expand pattern with `expanded: number | null` state, `<button>` header, `<AnimatePresence>`-wrapped `motion.div` for the panel, `ChevronDown` rotation indicator).
+- Confirmed SPEC_COLORS in `src/lib/skills.ts` (awakening=#ef4444, succession=#3b82f6, ascension=#eab308). Confirmed `cn` util import path.
+- Modified `src/components/skills/meta-page.tsx`:
+  - Imports: added `AnimatePresence` to framer-motion import; added `ChevronDown, ExternalLink` to lucide-react import.
+  - SpecCard signature: added `isExpanded: boolean` + `onExpand: () => void` props.
+  - SpecCard body: changed `motion.button` → `motion.div` (now contains nested buttons). Removed the now-invalid `cursor-pointer`, `whileTap`, top-level `onClick`, and the navigation `title` from the card root.
+  - Card root className: now conditionally adds `col-span-full lg:col-span-2 xl:col-span-3` when expanded (per task spec).
+  - Card root whileHover: set to `undefined` when expanded (avoids jiggling an expanded card); unchanged `{scale:1.02,y:-2}` when collapsed — preserves existing compact hover behavior.
+  - Header (class name + spec badge + framed icon) wrapped in a `<button type="button" onClick={onExpand} aria-expanded={isExpanded}>` — toggles inline expand. Added a `ChevronDown` icon next to the class name that rotates 180° when expanded.
+  - Compact stats grid, second-row stats grid, PA Wiki badge row, top-skill row, and skill-count footer all UNCHANGED — compact view is identical to before.
+  - New `<AnimatePresence initial={false}>` block after the content layer, wrapping a `motion.div` with `initial={{height:0,opacity:0}} animate={{height:'auto',opacity:1}} exit={{height:0,opacity:0}}` transition (200ms easeOut). Uses `bg-bdo-ink/96` (`rgba(10,9,8,0.96)`), spec-color top border, full BDO dark theme + amber accents.
+  - Expanded panel contents:
+    1. "Combat Breakdown" section: 4 new `ExpandedStatBox`es for CC Chain Potential, Grab Count, Core SA, Core FG (NEW info not in compact view).
+    2. "Top PvP Damage Skill" section: skill name + damage value (larger text than compact view).
+    3. "PA Wiki Data" section: combat type, class group, SA DR badges with explicit labels (more detailed than compact view's bare badges).
+    4. "vs Class Average" mini bar chart: 10 stat rows (Avg PvP, Med PvP, DPS, CC, SA, FG, IF, CC Chain, Grab, Prot %), each showing two stacked horizontal bars (spec color = this spec, amber-300/30 = class avg) + a colored %diff indicator (green if >+5%, red if <-5%, grey otherwise). Class average computed at render time from the 3 specs on the cls object (filtering skillCount>0).
+    5. "View Skills in Data Tab →" full-width button (spec-colored, with ExternalLink icon) calling the existing `onClick` (which calls `onCardClick(classId, spec)` from page.tsx → navigates to Data tab). Preserves the original navigation path.
+  - Added new `ExpandedStatBox` helper component (bigger version of `StatBox` for the expanded panel, label+large-mono-value layout).
+  - MetaPage component:
+    - Added `const [expandedKey, setExpandedKey] = React.useState<string | null>(null)` with comment explaining key format = `${classId}-${spec}`.
+    - In the cards `.map`, compute `cardKey = `${cls.classId}-${spec}``, pass `isExpanded={expandedKey === cardKey}` and `onExpand={() => setExpandedKey(prev => prev === cardKey ? null : cardKey)}` to SpecCard. The `onClick` (which calls onCardClick) is preserved unchanged on the "View Skills" button.
+    - Toggle behavior: clicking the same card's header again collapses it (expandedKey → null); clicking a different card's header collapses the first and expands the new one (single-expanded invariant).
+- Ran `bun run lint` → exit 0, no eslint errors.
+- Ran `bunx tsc --noEmit` → no errors in meta-page.tsx (verified with grep). All reported errors are pre-existing in unrelated files (examples/websocket, scripts/audit-*, skill-compare-drawer, sync-footer, etc.).
+
+Stage Summary:
+- Meta page SpecCard now supports inline expand: click header (class name + icon + spec badge) → card expands inline to show extra details (CC Chain / Grab / Core SA / Core FG stat boxes, top PvP damage skill with larger text, PA Wiki combat type / group / SA DR badges with labels, 10-row mini bar chart comparing this spec vs class average with %diff indicator, and a "View Skills in Data Tab →" button that triggers the existing onCardClick navigation).
+- Only one card can be expanded at a time (expandedKey state in MetaPage). Clicking the expanded card's header again collapses it. Clicking another card's header swaps the expansion.
+- Expanded card uses `col-span-full lg:col-span-2 xl:col-span-3` for wider readability while remaining in-grid.
+- Compact view layout is byte-for-byte identical to before (only difference: header is now a `<button>` and has a ChevronDown indicator). No stats removed; hover behavior preserved when collapsed.
+- Animation: AnimatePresence with height/opacity transition (200ms easeOut) for smooth expand/collapse, matching the tier-list-page RankedView pattern.
+- Mobile-friendly: expanded panel uses responsive grids (sm:grid-cols-4 for combat breakdown, sm:grid-cols-3 lg:grid-cols-5 for bar chart) that stack vertically on mobile.
+- `bun run lint` and `bunx tsc --noEmit` both clean for meta-page.tsx.
+- Files modified: `src/components/skills/meta-page.tsx` (1 file, ~210 lines added).

@@ -2,8 +2,8 @@
 
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { motion } from 'framer-motion'
-import { Zap, ArrowUpDown, Table2, LayoutGrid } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Zap, ArrowUpDown, Table2, LayoutGrid, ChevronDown, ExternalLink } from 'lucide-react'
 
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { formatDamage as fmtDmg } from '@/lib/damage'
@@ -61,12 +61,16 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 // A single spec card — one per class×spec combination
 // Portrait is the card background, with a dark gradient overlay for readability.
 // Framed class icon in top-right corner with spec-colored border.
-function SpecCard({ cls, specName, stats, sortKey, onClick }: {
+// Clicking the header toggles inline expansion (extra details + bar chart vs class avg).
+// A separate "View Skills →" button in the expanded panel calls onClick (navigate to Data tab).
+function SpecCard({ cls, specName, stats, sortKey, onClick, isExpanded, onExpand }: {
   cls: ClassStats
   specName: 'awakening' | 'succession' | 'ascension'
   stats: SpecStats
   sortKey: SortKey
   onClick: () => void
+  isExpanded: boolean
+  onExpand: () => void
 }) {
   const iconUrl = classIconUrl(cls.slug)
   // Use spec-specific portrait as background
@@ -81,20 +85,46 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
   // Skip empty specs (0 skills = not available for this class)
   if (stats.skillCount === 0) return null
 
+  // Class-average comparison data for the mini bar chart
+  const allSpecs = [cls.awakening, cls.succession, cls.ascension].filter(s => s.skillCount > 0)
+  const avgOf = (key: keyof SpecStats) => allSpecs.length > 0
+    ? allSpecs.reduce((sum, s) => sum + (s[key] as number), 0) / allSpecs.length
+    : 0
+  const group = specName === 'awakening' ? cls.awakeningGroup
+    : specName === 'succession' ? cls.successionGroup
+    : cls.ascensionGroup
+  const saDr = specName === 'awakening' ? cls.awakeningSaDr
+    : specName === 'succession' ? cls.successionSaDr
+    : cls.ascensionSaDr
+
+  const barStats: { label: string; value: number; avg: number; color: string }[] = [
+    { label: 'Avg PvP', value: stats.avgPvpDamage, avg: avgOf('avgPvpDamage'), color: '#f472b6' },
+    { label: 'Med PvP', value: stats.medianPvpDamage, avg: avgOf('medianPvpDamage'), color: '#f9a8d4' },
+    { label: 'DPS', value: stats.dpsEstimate, avg: avgOf('dpsEstimate'), color: '#34d399' },
+    { label: 'CC', value: stats.pvpCcSkillCount, avg: avgOf('pvpCcSkillCount'), color: '#f87171' },
+    { label: 'SA', value: stats.superArmorCount, avg: avgOf('superArmorCount'), color: '#fbbf24' },
+    { label: 'FG', value: stats.forwardGuardCount, avg: avgOf('forwardGuardCount'), color: '#60a5fa' },
+    { label: 'IF', value: stats.iFrameCount, avg: avgOf('iFrameCount'), color: '#a78bfa' },
+    { label: 'CC Chain', value: stats.ccChainPotential, avg: avgOf('ccChainPotential'), color: '#eab308' },
+    { label: 'Grab', value: stats.grabCount, avg: avgOf('grabCount'), color: '#f97316' },
+    { label: 'Prot %', value: stats.protectedCoverage, avg: avgOf('protectedCoverage'), color: '#22d3ee' },
+  ]
+  const maxValue = Math.max(...barStats.map(s => Math.max(s.value, s.avg)), 1)
+
   return (
-    <motion.button
+    <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.02, y: -2 }}
-      whileTap={{ scale: 0.99 }}
-      onClick={onClick}
-      className="group relative flex cursor-pointer flex-col gap-2 overflow-hidden rounded-sm border-2 text-left transition-shadow hover:shadow-lg"
+      whileHover={isExpanded ? undefined : { scale: 1.02, y: -2 }}
+      className={cn(
+        'group relative flex flex-col gap-2 overflow-hidden rounded-sm border-2 text-left transition-shadow hover:shadow-lg',
+        isExpanded && 'col-span-full lg:col-span-2 xl:col-span-3',
+      )}
       style={{
         borderColor: `${specColor}88`,
         boxShadow: `0 4px 12px rgba(0,0,0,0.6), inset 0 0 0 1px ${specColor}33`,
         minHeight: 200,
       }}
-      title={`${cls.className} ${specMeta.label} — click to view skills in Data tab`}
     >
       {/* Background portrait */}
       <div className="absolute inset-0 z-0">
@@ -129,12 +159,23 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
 
       {/* Content layer */}
       <div className="relative z-10 flex flex-col gap-2 p-3">
-        {/* Header: class name + spec badge + framed icon */}
-        <div className="flex items-start justify-between gap-2">
+        {/* Header: clickable button — toggles inline expand */}
+        <button
+          type="button"
+          onClick={onExpand}
+          aria-expanded={isExpanded}
+          className="flex items-start justify-between gap-2 text-left"
+          title={`${cls.className} ${specMeta.label} — click to ${isExpanded ? 'collapse' : 'expand'} details`}
+        >
           <div className="flex flex-col gap-0.5">
-            <h3 className="bdo-title text-base font-bold leading-tight text-amber-50 drop-shadow-lg">
-              {cls.className}
-            </h3>
+            <div className="flex items-center gap-1">
+              <h3 className="bdo-title text-base font-bold leading-tight text-amber-50 drop-shadow-lg">
+                {cls.className}
+              </h3>
+              <ChevronDown
+                className={cn('size-3.5 text-amber-300/60 transition-transform', isExpanded && 'rotate-180')}
+              />
+            </div>
             <span
               className="w-fit rounded-sm px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider backdrop-blur-sm"
               style={{
@@ -162,7 +203,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
               <img src={iconUrl} alt={cls.className} className="h-full w-full object-cover" loading="lazy" />
             </div>
           )}
-        </div>
+        </button>
 
         {/* Stats grid */}
         <div className="grid grid-cols-3 gap-1">
@@ -190,7 +231,6 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
             </span>
           )}
           {(() => {
-            const group = specName === 'awakening' ? cls.awakeningGroup : specName === 'succession' ? cls.successionGroup : cls.ascensionGroup
             return group ? (
               <span className="rounded-sm border border-cyan-700/40 bg-cyan-900/20 px-1.5 py-0.5 text-[8px] font-semibold text-cyan-300/60" title="Class group (rock-paper-scissors: Vanguard > Crusher > Skirmisher > Vanguard)">
                 {group}
@@ -198,7 +238,6 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
             ) : null
           })()}
           {(() => {
-            const saDr = specName === 'awakening' ? cls.awakeningSaDr : specName === 'succession' ? cls.successionSaDr : cls.ascensionSaDr
             return saDr > 0 ? (
               <span className="rounded-sm border border-emerald-700/40 bg-emerald-900/20 px-1.5 py-0.5 text-[8px] font-semibold text-emerald-300/60" title="Super Armor damage reduction">
                 SA DR {saDr}%
@@ -227,7 +266,169 @@ function SpecCard({ cls, specName, stats, sortKey, onClick }: {
         {/* Skill count footer */}
         <div className="text-[10px] text-amber-200/40">{stats.skillCount} skills</div>
       </div>
-    </motion.button>
+
+      {/* Expanded panel — extra details + comparison bar chart + View Skills button */}
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="relative z-10 overflow-hidden border-t-2"
+            style={{ borderColor: `${specColor}55` }}
+          >
+            <div
+              className="flex flex-col gap-3 p-4"
+              style={{ backgroundColor: 'rgba(10,9,8,0.96)' }}
+            >
+              {/* Combat breakdown — CC chain, Grab, Core SA/FG */}
+              <div>
+                <div className="mb-1.5 text-[9px] font-bold uppercase tracking-wider text-amber-400/70">
+                  Combat Breakdown
+                </div>
+                <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+                  <ExpandedStatBox label="CC Chain Potential" value={String(stats.ccChainPotential)} color="#eab308" />
+                  <ExpandedStatBox label="Grab Count" value={String(stats.grabCount)} color="#f97316" />
+                  <ExpandedStatBox label="Core SA" value={String(stats.coreSaCount)} color="#fbbf24" />
+                  <ExpandedStatBox label="Core FG" value={String(stats.coreFgCount)} color="#60a5fa" />
+                </div>
+              </div>
+
+              {/* Top PvP damage skill */}
+              {stats.topPvpDamageSkill && (
+                <div>
+                  <div className="mb-1.5 text-[9px] font-bold uppercase tracking-wider text-amber-400/70">
+                    Top PvP Damage Skill
+                  </div>
+                  <div
+                    className="flex items-center gap-2 rounded-sm border px-3 py-2"
+                    style={{ borderColor: '#f472b655', backgroundColor: '#f472b60f' }}
+                  >
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-pink-300/70">Skill</span>
+                    <span className="flex-1 truncate text-sm font-medium text-pink-100">
+                      {stats.topPvpDamageSkill.name}
+                    </span>
+                    <span className="shrink-0 font-mono text-sm font-bold tabular-nums text-pink-300">
+                      {fmtDmg(stats.topPvpDamageSkill.damage)}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* PA Wiki: combat type, group, SA DR */}
+              <div>
+                <div className="mb-1.5 text-[9px] font-bold uppercase tracking-wider text-amber-400/70">
+                  PA Wiki Data
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span
+                    className="rounded-sm border border-amber-700/50 bg-amber-900/25 px-2 py-1 text-[10px] font-semibold text-amber-200"
+                    title="Combat type"
+                  >
+                    Combat: <span className="font-bold text-amber-100">{cls.combatType || '—'}</span>
+                  </span>
+                  <span
+                    className="rounded-sm border border-cyan-700/50 bg-cyan-900/25 px-2 py-1 text-[10px] font-semibold text-cyan-200"
+                    title="Class group (rock-paper-scissors: Vanguard > Crusher > Skirmisher > Vanguard)"
+                  >
+                    Group: <span className="font-bold text-cyan-100">{group || '—'}</span>
+                  </span>
+                  <span
+                    className="rounded-sm border border-emerald-700/50 bg-emerald-900/25 px-2 py-1 text-[10px] font-semibold text-emerald-200"
+                    title="Super Armor damage reduction"
+                  >
+                    SA DR: <span className="font-bold text-emerald-100">{saDr > 0 ? `${saDr}%` : '—'}</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Mini bar chart — this spec vs class average */}
+              <div>
+                <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-amber-400/70">
+                    vs Class Average
+                  </div>
+                  <div className="flex items-center gap-3 text-[8px] text-amber-300/50">
+                    <span className="flex items-center gap-1">
+                      <span className="inline-block size-2 rounded-sm" style={{ backgroundColor: specColor }} />
+                      This spec
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <span className="inline-block size-2 rounded-sm bg-amber-300/30" />
+                      Class avg
+                    </span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-5">
+                  {barStats.map(s => {
+                    const valuePct = (s.value / maxValue) * 100
+                    const avgPct = (s.avg / maxValue) * 100
+                    const diff = s.avg > 0 ? ((s.value - s.avg) / s.avg) * 100 : (s.value > 0 ? 100 : 0)
+                    const diffColor = diff > 5 ? '#34d399' : diff < -5 ? '#f87171' : '#a8a29e'
+                    return (
+                      <div key={s.label} className="flex flex-col gap-0.5">
+                        <div className="flex items-baseline justify-between gap-1 text-[9px]">
+                          <span className="truncate text-amber-200/70">{s.label}</span>
+                          <span className="font-mono font-bold tabular-nums" style={{ color: s.color }}>
+                            {fmtDmg(s.value)}
+                          </span>
+                        </div>
+                        <div className="relative h-2 overflow-hidden rounded-sm bg-amber-900/20">
+                          <div
+                            className="absolute left-0 top-0 h-full rounded-sm transition-all"
+                            style={{ width: `${Math.max(valuePct, 2)}%`, backgroundColor: s.color }}
+                          />
+                        </div>
+                        <div className="relative h-1.5 overflow-hidden rounded-sm bg-amber-900/10">
+                          <div
+                            className="absolute left-0 top-0 h-full rounded-sm bg-amber-300/30"
+                            style={{ width: `${Math.max(avgPct, 2)}%` }}
+                          />
+                        </div>
+                        <div className="text-[8px] font-mono tabular-nums" style={{ color: diffColor }}>
+                          {s.avg > 0 ? `${diff >= 0 ? '+' : ''}${diff.toFixed(0)}%` : 'no avg'}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* View Skills button — calls onClick (navigate to Data tab) */}
+              <button
+                type="button"
+                onClick={onClick}
+                className="flex w-full items-center justify-center gap-1.5 rounded-sm border px-4 py-2 text-sm font-bold transition-all hover:scale-[1.01]"
+                style={{
+                  borderColor: `${specColor}88`,
+                  backgroundColor: `${specColor}1a`,
+                  color: specColor,
+                }}
+                title={`Open ${cls.className} ${specMeta.label} in the Data tab`}
+              >
+                <ExternalLink className="size-3.5" />
+                View Skills in Data Tab
+                <span aria-hidden>→</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  )
+}
+
+function ExpandedStatBox({ label, value, color }: { label: string; value: string; color: string }) {
+  return (
+    <div
+      className="flex flex-col gap-0.5 rounded-sm border px-2 py-1.5"
+      style={{ borderColor: `${color}55`, backgroundColor: `${color}12` }}
+      title={label}
+    >
+      <span className="text-[8px] font-semibold uppercase tracking-wider" style={{ color: `${color}cc` }}>{label}</span>
+      <span className="font-mono text-base font-bold tabular-nums" style={{ color }}>{value}</span>
+    </div>
   )
 }
 
@@ -361,6 +562,8 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
   const [viewMode, setViewMode] = React.useState<'cards' | 'table'>('cards')
   const [sortKey, setSortKey] = React.useState<SortKey>('avgPvpDamage')
   const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('desc')
+  // Only one spec card can be expanded at a time. Key format: `${classId}-${spec}`.
+  const [expandedKey, setExpandedKey] = React.useState<string | null>(null)
 
   const metaQuery = useQuery({
     queryKey: ['meta'],
@@ -479,16 +682,21 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
           </div>
         ) : viewMode === 'cards' ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {specCards.map(({ cls, spec, stats }) => (
-              <SpecCard
-                key={`${cls.classId}-${spec}`}
-                cls={cls}
-                specName={spec}
-                stats={stats}
-                sortKey={sortKey}
-                onClick={() => onCardClick?.(cls.classId, spec)}
-              />
-            ))}
+            {specCards.map(({ cls, spec, stats }) => {
+              const cardKey = `${cls.classId}-${spec}`
+              return (
+                <SpecCard
+                  key={cardKey}
+                  cls={cls}
+                  specName={spec}
+                  stats={stats}
+                  sortKey={sortKey}
+                  onClick={() => onCardClick?.(cls.classId, spec)}
+                  isExpanded={expandedKey === cardKey}
+                  onExpand={() => setExpandedKey(prev => prev === cardKey ? null : cardKey)}
+                />
+              )
+            })}
           </div>
         ) : (
           <MetaTable classes={classes} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} onRowClick={onCardClick} />

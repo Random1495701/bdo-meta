@@ -62,6 +62,8 @@ model Skill {
   isSuccession        Boolean  @default(false)
   isBlackSpirit       Boolean  @default(false)
   isPassive           Boolean  @default(false)
+  isFlow              Boolean  @default(false) // "Flow:" skills (combo continuations)
+  isCore              Boolean  @default(false) // "Core:" skills (core abilities, player picks 1)
   prerequisiteIds     String?  // comma-separated skill IDs
   videoUrl            String?  // bdocodex preview video URL
   animationDurationMs Int?     // video duration in ms = animation duration proxy

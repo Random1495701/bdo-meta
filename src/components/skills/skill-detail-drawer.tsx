@@ -19,6 +19,7 @@ import {
   Lock,
   Swords,
   AlertTriangle,
+  Gem,
 } from 'lucide-react'
 
 import {
@@ -44,6 +45,7 @@ import {
   CC_TYPES,
   NON_CC_EFFECTS,
   SKILL_TYPE_META,
+  SPEC_COLORS,
   skillTypeLabel,
   type DamageRow,
   type PhaseDamage,
@@ -348,6 +350,7 @@ export function SkillDetailDrawer() {
   const setOpen = useSkillStore((s) => s.setDetailOpen)
   const selectSkill = useSkillStore((s) => s.selectSkill)
   const skillId = useSkillStore((s) => s.selectedSkillId)
+  const [videoAutoplay, setVideoAutoplay] = React.useState(true)
 
   // Refetch the open skill every 15s so the lurker's enrichment shows up
   // live without needing to close/reopen the drawer.
@@ -476,12 +479,12 @@ export function SkillDetailDrawer() {
                   {/* Flag badges */}
                   <div className="flex flex-wrap items-center gap-1.5">
                     {skill.isAwakening && (
-                      <Badge className="border-amber-500/40 bg-amber-500/10 text-amber-300">
+                      <Badge style={{ borderColor: `${SPEC_COLORS.awakening}66`, backgroundColor: `${SPEC_COLORS.awakening}1a`, color: SPEC_COLORS.awakening }}>
                         <Sparkles className="size-3" /> Awakening
                       </Badge>
                     )}
                     {skill.isSuccession && (
-                      <Badge className="border-emerald-700/50 bg-emerald-900/20 text-emerald-300">
+                      <Badge style={{ borderColor: `${SPEC_COLORS.succession}66`, backgroundColor: `${SPEC_COLORS.succession}1a`, color: SPEC_COLORS.succession }}>
                         <Sword className="size-3" /> Succession
                       </Badge>
                     )}
@@ -956,15 +959,68 @@ export function SkillDetailDrawer() {
                     </Section>
                   )}
 
+                  {/* Skill Add-Ons (Garmoth data) */}
+                  {skill.addons && (
+                    <Section title="Skill Add-Ons" icon={<Gem className="size-3" />}>
+                      <p className="mb-2 text-[10px] text-amber-300/40">
+                        Addon popularity from Garmoth API — what real players pick for this skill.
+                      </p>
+                      <div className="space-y-2">
+                        {Array.isArray(skill.addons) && skill.addons.map((addon: any, i: number) => (
+                          <div key={i} className="rounded-sm border border-amber-800/30 bg-bdo-leather-dark/30 p-2">
+                            <div className="mb-1 flex items-center gap-2">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300/60">
+                                Slot {addon.slot ?? i}
+                              </span>
+                              {addon.type && (
+                                <span className="rounded-sm border border-cyan-700/40 bg-cyan-900/20 px-1.5 py-0.5 text-[9px] text-cyan-300/60">
+                                  {addon.type}
+                                </span>
+                              )}
+                            </div>
+                            {addon.effect && (
+                              <p className="text-xs text-amber-100/70">{addon.effect}</p>
+                            )}
+                            {addon.popularity && typeof addon.popularity === 'object' && (
+                              <div className="mt-1.5 flex flex-wrap gap-1">
+                                {Object.entries(addon.popularity).slice(0, 5).map(([addonId, count]: [string, any]) => (
+                                  <span key={addonId} className="rounded-sm border border-amber-900/30 bg-bdo-ink/50 px-1.5 py-0.5 text-[9px] font-mono text-amber-300/50">
+                                    #{addonId}: {count} votes
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                        {Array.isArray(skill.addons) && skill.addons.length === 0 && (
+                          <p className="text-xs text-amber-300/40">No addon data available for this skill.</p>
+                        )}
+                      </div>
+                    </Section>
+                  )}
+
                   {/* Video preview */}
                   {skill.videoUrl && (
                     <Section title="Video Preview" icon={<Film className="size-3" />}>
+                      <div className="mb-2 flex items-center gap-2">
+                        <button
+                          onClick={() => setVideoAutoplay(!videoAutoplay)}
+                          className={cn(
+                            'flex items-center gap-1.5 rounded-sm border px-2 py-1 text-[10px] font-semibold transition-all',
+                            videoAutoplay
+                              ? 'border-amber-500/50 bg-amber-500/10 text-amber-300'
+                              : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
+                          )}
+                        >
+                          {videoAutoplay ? 'Auto-play: ON' : 'Auto-play: OFF'}
+                        </button>
+                      </div>
                       <div className="overflow-hidden rounded-sm border-2 border-amber-800/60 bg-black"
                         style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.2)' }}
                       >
                         <video
                           src={skill.videoUrl}
-                          autoPlay
+                          autoPlay={videoAutoplay}
                           loop
                           muted
                           playsInline

@@ -137,6 +137,13 @@ function ClassChip({
               e.stopPropagation()
               onSpecClick('ascension')
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                e.stopPropagation()
+                onSpecClick('ascension')
+              }
+            }}
             className={cn(
               'flex h-4 w-8 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
               specs.includes('ascension') && active
@@ -156,6 +163,13 @@ function ClassChip({
                 e.stopPropagation()
                 onSpecClick('succession')
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  onSpecClick('succession')
+                }
+              }}
               className={cn(
                 'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
                 specs.includes('succession') && active
@@ -172,6 +186,13 @@ function ClassChip({
               onClick={(e) => {
                 e.stopPropagation()
                 onSpecClick('awakening')
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  onSpecClick('awakening')
+                }
               }}
               className={cn(
                 'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
