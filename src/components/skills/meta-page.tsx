@@ -17,6 +17,9 @@ interface SpecStats {
   superArmorCount: number
   forwardGuardCount: number
   iFrameCount: number
+  topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
+  dpsEstimate: number
+  protectedCoverage: number
 }
 
 interface ClassStats {
@@ -28,7 +31,7 @@ interface ClassStats {
   ascension: SpecStats
 }
 
-type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount'
+type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'protectedCoverage'
 
 // Spec display metadata — Red=Awakening, Blue=Succession, Yellow=Ascension
 const SPEC_META: Record<string, { label: string; color: string; shortLabel: string }> = {
@@ -154,6 +157,29 @@ function SpecCard({ cls, specName, stats, sortKey }: {
           <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
         </div>
 
+        {/* New metrics: DPS estimate + Protected coverage */}
+        <div className="grid grid-cols-2 gap-1">
+          <StatBox label="DPS Est." value={stats.dpsEstimate > 0 ? fmtDmg(stats.dpsEstimate) : '—'} color="#34d399" />
+          <StatBox label="Prot %" value={`${stats.protectedCoverage}%`} color="#60a5fa" />
+        </div>
+
+        {/* Top PvP damage skill */}
+        {stats.topPvpDamageSkill && (
+          <div
+            className="flex items-center gap-1.5 rounded-sm border px-2 py-1"
+            style={{ borderColor: '#f472b644', backgroundColor: '#f472b60a' }}
+            title={`Top PvP damage skill: ${stats.topPvpDamageSkill.name} (${fmtDmg(stats.topPvpDamageSkill.damage)} PvP damage)`}
+          >
+            <span className="text-[8px] font-semibold uppercase tracking-wider text-pink-300/60">Top Skill</span>
+            <span className="truncate text-[10px] font-medium text-pink-200">
+              {stats.topPvpDamageSkill.name}
+            </span>
+            <span className="ml-auto shrink-0 font-mono text-[10px] font-bold tabular-nums text-pink-300">
+              {fmtDmg(stats.topPvpDamageSkill.damage)}
+            </span>
+          </div>
+        )}
+
         {/* Skill count footer */}
         <div className="text-[10px] text-amber-200/40">{stats.skillCount} skills</div>
       </div>
@@ -207,10 +233,12 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
     { key: 'className', label: 'Class' },
     { key: 'avgPvpDamage', label: 'Avg PvP' },
     { key: 'medianPvpDamage', label: 'Med PvP' },
+    { key: 'dpsEstimate', label: 'DPS' },
     { key: 'pvpCcSkillCount', label: 'CC' },
     { key: 'superArmorCount', label: '💪 SA' },
     { key: 'forwardGuardCount', label: '🛡 FG' },
     { key: 'iFrameCount', label: '✦ IF' },
+    { key: 'protectedCoverage', label: 'Prot %' },
   ]
 
   const renderSortHeader = (key: SortKey, label: string) => (
@@ -261,10 +289,12 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
                 </td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.avgPvpDamage > 0 ? fmtDmg(row.stats.avgPvpDamage) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.medianPvpDamage > 0 ? fmtDmg(row.stats.medianPvpDamage) : '—'}</td>
+                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-emerald-300">{row.stats.dpsEstimate > 0 ? fmtDmg(row.stats.dpsEstimate) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-red-300">{row.stats.pvpCcSkillCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-amber-300">{row.stats.superArmorCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-blue-300">{row.stats.forwardGuardCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-purple-300">{row.stats.iFrameCount}</td>
+                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-blue-300">{row.stats.protectedCoverage}%</td>
               </tr>
             )
           })}
@@ -321,10 +351,12 @@ export function MetaPage() {
     { key: 'className', label: 'Class', icon: null },
     { key: 'avgPvpDamage', label: 'Avg PvP', icon: null },
     { key: 'medianPvpDamage', label: 'Med PvP', icon: null },
+    { key: 'dpsEstimate', label: 'DPS', icon: null },
     { key: 'pvpCcSkillCount', label: 'CC Skills', icon: <Zap className="size-3" /> },
     { key: 'superArmorCount', label: 'SA', icon: <span>💪</span> },
     { key: 'forwardGuardCount', label: 'FG', icon: <span>🛡</span> },
     { key: 'iFrameCount', label: 'IF', icon: <span>✦</span> },
+    { key: 'protectedCoverage', label: 'Prot %', icon: null },
   ]
 
   return (

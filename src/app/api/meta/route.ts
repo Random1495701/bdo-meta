@@ -21,6 +21,9 @@ interface SpecStats {
   superArmorCount: number
   forwardGuardCount: number
   iFrameCount: number
+  topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
+  dpsEstimate: number // avg PvP damage / avg animation duration
+  protectedCoverage: number // % of skills with any protection
 }
 
 interface ClassStats {
@@ -50,6 +53,10 @@ function computeSpecStats(skills: any[]): SpecStats {
   let superArmorCount = 0
   let forwardGuardCount = 0
   let iFrameCount = 0
+  let topPvpDamage = 0
+  let topPvpDamageSkill: { skillId: number; name: string; damage: number } | null = null
+  let protectedCount = 0
+  const animDurations: number[] = []
 
   for (const s of skills) {
     const damageRows: DamageRow[] | null = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
@@ -58,6 +65,16 @@ function computeSpecStats(skills: any[]): SpecStats {
     // Damage stats: exclude Black Spirit skills (rage) and skills without PvP damage
     if (!s.isBlackSpirit && damage.totalPvP != null && damage.totalPvP > 0) {
       pvpDamages.push(damage.totalPvP)
+      // Track top PvP damage skill
+      if (damage.totalPvP > topPvpDamage) {
+        topPvpDamage = damage.totalPvP
+        topPvpDamageSkill = { skillId: s.skillId, name: s.name, damage: damage.totalPvP }
+      }
+    }
+
+    // Animation duration for DPS estimate
+    if (s.animationDurationMs && s.animationDurationMs > 0) {
+      animDurations.push(s.animationDurationMs)
     }
 
     // CC stats: count skills that have at least 1 PvP CC (not PvE-only)
@@ -80,6 +97,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     }
     const protections = s.protectionTypes ? s.protectionTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpProts = protections.filter((p: string) => !pveOnlyProts.has(p))
+    if (pvpProts.length > 0) protectedCount++
     if (pvpProts.includes('Super Armor')) superArmorCount++
     if (pvpProts.includes('Forward Guard')) forwardGuardCount++
     if (pvpProts.includes('I-Frame') || pvpProts.includes('Invincible')) iFrameCount++
@@ -95,6 +113,19 @@ function computeSpecStats(skills: any[]): SpecStats {
       : sorted[Math.floor(sorted.length / 2)])
     : 0
 
+  // DPS estimate: avg PvP damage / avg animation duration (in seconds)
+  const avgAnimSec = animDurations.length > 0
+    ? (animDurations.reduce((a, b) => a + b, 0) / animDurations.length) / 1000
+    : 1
+  const dpsEstimate = avgPvpDamage > 0 && avgAnimSec > 0
+    ? Math.round(avgPvpDamage / avgAnimSec)
+    : 0
+
+  // Protected coverage: % of skills with any protection
+  const protectedCoverage = skills.length > 0
+    ? Math.round((protectedCount / skills.length) * 100)
+    : 0
+
   return {
     skillCount: skills.length,
     avgPvpDamage,
@@ -103,6 +134,9 @@ function computeSpecStats(skills: any[]): SpecStats {
     superArmorCount,
     forwardGuardCount,
     iFrameCount,
+    topPvpDamageSkill,
+    dpsEstimate,
+    protectedCoverage,
   }
 }
 
@@ -266,6 +300,7 @@ export async function GET() {
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
         pvpCcSkillCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0,
+        topPvpDamageSkill: null, dpsEstimate: 0, protectedCoverage: 0,
       },
     })
   }
