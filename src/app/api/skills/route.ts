@@ -53,7 +53,7 @@ const RANK_MAP: Record<string, number> = {
   XXVI: 26, XXVII: 27, XXVIII: 28, XXIX: 29, XXX: 30,
 }
 // Regex ordered longest-first to ensure correct matching (XXX before XX before X)
-const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|IX|VIII|VII|VI|IV|V|III|II|I)$/
+const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|X|IX|VIII|VII|VI|IV|V|III|II|I)$/
 
 function getBaseName(name: string): string {
   return name.replace(RANK_SUFFIX, '')
