@@ -105,11 +105,21 @@ function computeSpecStats(skills: any[]): SpecStats {
     }
     const ccTypes = s.ccTypes ? s.ccTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpCCs = ccTypes.filter((cc: string) => !pveOnlyCCs.has(cc) && isRealCC(cc))
+
+    // FALSE GRAB FILTER: Some skills have "Grapple" in ccTypes but it's actually
+    // from "All CC Resistance (except Grapple), including from Back Attacks" text
+    // which is a RESISTANCE buff, not a grab CC. Check damageRows for this.
+    const isFalseGrab = damageRows?.some((r: DamageRow) =>
+      r.label?.includes('except Grapple') || r.label?.includes('except Grappling')
+    ) || false
+
+    const hasRealGrab = pvpCCs.includes('Grapple') && !isFalseGrab
+
     // CC stats: exclude Black Spirit rage skills (they're not part of normal PvP rotation)
     if (!s.isBlackSpirit) {
       if (pvpCCs.length > 0) pvpCcSkillCount++
       if (pvpCCs.length >= 2) ccChainPotential++
-      if (pvpCCs.includes('Grapple')) grabCount++
+      if (hasRealGrab) grabCount++
     }
 
     // Protection stats
