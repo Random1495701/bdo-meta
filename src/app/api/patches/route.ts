@@ -85,6 +85,7 @@ export async function GET() {
     // Enrich changes with matched skill IDs + icons
     for (const cc of latest.classChanges) {
       for (const change of cc.changes) {
+        if (!change.skillName || typeof change.skillName !== 'string') continue
         const cleanName = change.skillName
           .replace(/^(Prime:\s*|Succession:\s*|Absolute:\s*|Core:\s*|Flow:\s*)/i, '')
           .replace(/\s+(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)$/i, '')
