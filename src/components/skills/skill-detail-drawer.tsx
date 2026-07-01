@@ -352,7 +352,7 @@ export function SkillDetailDrawer() {
   const selectSkill = useSkillStore((s) => s.selectSkill)
   const skillId = useSkillStore((s) => s.selectedSkillId)
   const isMobile = useIsMobile()
-  const [videoAutoplay, setVideoAutoplay] = React.useState(true)
+  const [videoAutoplay, setVideoAutoplay] = React.useState(false)
 
   // Refetch the open skill every 15s so the lurker's enrichment shows up
   // live without needing to close/reopen the drawer.
@@ -989,21 +989,33 @@ export function SkillDetailDrawer() {
                               : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
                           )}
                         >
-                          {videoAutoplay ? 'Auto-play: ON' : 'Auto-play: OFF'}
+                          {videoAutoplay ? '▶ Auto-play: ON' : '⏸ Auto-play: OFF (click to load)'}
                         </button>
                       </div>
                       <div className="overflow-hidden rounded-sm border-2 border-amber-800/60 bg-black"
                         style={{ boxShadow: 'inset 0 0 0 1px rgba(240,208,96,0.2)' }}
                       >
-                        <video
-                          src={skill.videoUrl}
-                          autoPlay={!isMobile}
-                          loop
-                          muted
-                          playsInline
-                          controls
-                          className="h-auto max-h-[360px] w-full bg-black object-contain"
-                        />
+                        {videoAutoplay ? (
+                          <video
+                            src={skill.videoUrl}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            controls
+                            className="h-auto max-h-[360px] w-full bg-black object-contain"
+                          />
+                        ) : (
+                          <div className="flex h-[200px] items-center justify-center">
+                            <button
+                              onClick={() => setVideoAutoplay(true)}
+                              className="flex flex-col items-center gap-2 text-amber-300/50 transition-colors hover:text-amber-200"
+                            >
+                              <Film className="size-8" />
+                              <span className="text-xs">Click to load video</span>
+                            </button>
+                          </div>
+                        )}
                       </div>
                       {skill.animationDurationMs != null && (
                         <p className="mt-2 flex items-center gap-1.5 text-xs text-amber-300">

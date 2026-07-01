@@ -21,6 +21,7 @@ import {
   FileJson,
   HardDriveDownload,
   Info,
+  Square,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -264,6 +265,30 @@ export function SyncFooter() {
               </>
             )}
           </div>
+        )}
+
+        {/* Stop lurker button */}
+        {lurkerRunning && (
+          <button
+            onClick={async () => {
+              try {
+                const res = await fetch('/api/sync/trigger', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ script: 'lurker', phase: 'stop' }),
+                })
+                const data = await res.json()
+                toast.success(data.message || 'Lurker stop signal sent')
+              } catch (err) {
+                toast.error('Failed to stop lurker')
+              }
+            }}
+            className="flex items-center gap-1 rounded-sm border border-red-700/60 bg-red-900/20 px-2 py-1 text-[10px] font-semibold text-red-300 transition-all hover:bg-red-800/30"
+            title="Stop the lurker process (kills PID)"
+          >
+            <Square className="size-3" />
+            Stop Lurker
+          </button>
         )}
 
         {/* Right: sync triggers */}

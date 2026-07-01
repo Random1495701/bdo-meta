@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { spawn } from 'node:child_process'
 import { db } from '@/lib/db'
 import { readFileSync, existsSync } from 'node:fs'
+import { execSync } from 'node:child_process'
 
 export const dynamic = 'force-dynamic'
 
@@ -36,6 +37,28 @@ export async function POST(req: NextRequest) {
 
   if (script === 'lurker') {
     const phase = body.phase || 'daemon'
+
+    // Stop the lurker by killing its PID
+    if (phase === 'stop') {
+      try {
+        const lockContent = readFileSync('scripts/lurker.lock', 'utf-8').trim()
+        const pid = parseInt(lockContent, 10)
+        if (pid && !Number.isNaN(pid)) {
+          process.kill(pid, 'SIGTERM')
+          return NextResponse.json({ ok: true, message: `Lurker stopped (PID ${pid})` })
+        }
+      } catch (e) {
+        // Lock file might not exist
+      }
+      // Also try killing by process name
+      try {
+        execSync('pkill -f "sync-lurker"', { stdio: 'pipe' })
+        return NextResponse.json({ ok: true, message: 'Lurker stop signal sent' })
+      } catch {
+        return NextResponse.json({ ok: false, message: 'No lurker process found' })
+      }
+    }
+
     if (phase === 'daemon') {
       // Run until all skills enriched (no batch limit)
     } else if (phase === 'batch') {

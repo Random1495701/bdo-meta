@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Swords, Pin, X, ArrowUp, ArrowDown, Minus } from 'lucide-react'
+import { Swords, Pin, X, ArrowUp, ArrowDown, Minus, ChevronUp, ChevronDown } from 'lucide-react'
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { cn } from '@/lib/utils'
 
@@ -184,17 +184,17 @@ export function MatchupsPage() {
           <div className="mx-auto max-w-6xl space-y-4">
             {/* Arena of Solare 3v3 Selector */}
             <div className="rounded-sm border-2 border-amber-800/40 bg-bdo-leather-dark/30 p-4">
-              <div className="mb-3 flex items-center gap-2">
+              <div
+                className="flex cursor-pointer items-center gap-2"
+                onClick={() => { setArenaMode(!arenaMode); if (arenaMode) { setTeamA([]); setTeamB([]) } }}
+              >
                 <Swords className="size-4 text-amber-400" />
                 <h2 className="bdo-title text-sm font-bold text-amber-300">Arena of Solare (3v3)</h2>
                 <button
-                  onClick={() => { setArenaMode(!arenaMode); setTeamA([]); setTeamB([]) }}
-                  className={cn(
-                    'ml-auto rounded-sm border px-2 py-0.5 text-[10px] font-semibold transition-all',
-                    arenaMode ? 'border-amber-400/60 bg-amber-500/15 text-amber-200' : 'border-amber-800/40 text-amber-300/50 hover:text-amber-200',
-                  )}
+                  onClick={(e) => { e.stopPropagation(); setArenaMode(!arenaMode); if (arenaMode) { setTeamA([]); setTeamB([]) } }}
+                  className="ml-auto flex items-center gap-1 text-[10px] text-amber-300/50 hover:text-amber-200"
                 >
-                  {arenaMode ? 'Hide' : 'Show'}
+                  {arenaMode ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
                 </button>
               </div>
               {arenaMode && (

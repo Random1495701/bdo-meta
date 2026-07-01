@@ -211,17 +211,8 @@ export function Header() {
         {/* Top row: title + actions */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex min-w-0 items-center gap-2.5">
-            <div
-              className="flex size-10 items-center justify-center rounded-sm border-2"
-              style={{
-                borderColor: 'rgba(156,126,46,0.7)',
-                background:
-                  'radial-gradient(circle at center, #2a2218 0%, #0a0908 70%)',
-                boxShadow:
-                  'inset 0 0 0 1px rgba(240,208,96,0.3), 0 0 12px rgba(200,170,68,0.2)',
-              }}
-            >
-              <img src="/logo.svg" alt="BDO Meta" className="size-5" />
+            <div className="flex size-8 items-center justify-center">
+              <img src="/logo.svg" alt="BDO Meta" className="size-6" />
             </div>
             <div className="min-w-0">
               <h1 className="bdo-title truncate text-xl tracking-wide">
