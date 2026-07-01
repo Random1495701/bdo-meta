@@ -74,37 +74,64 @@ export function MatchupsPage() {
 
   const classes = metaQuery.data?.classes ?? []
 
-  // Build merged class entries (combine all specs into one row per class)
-  const mergedClasses = React.useMemo(() => {
-    return classes.map(cls => {
-      // Use the primary group (awakening for normal classes, ascension for ascension-only)
-      const group = cls.isAscension ? cls.ascensionGroup : cls.awakeningGroup
-      const saDr = cls.isAscension ? cls.ascensionSaDr : cls.awakeningSaDr
-      // Merge stats: take the best spec (most skills)
-      const specs = [cls.awakening, cls.succession, cls.ascension].filter(s => s.skillCount > 0)
-      const bestSpec = specs.sort((a, b) => b.skillCount - a.skillCount)[0] || cls.awakening
-      return {
-        ...cls,
-        group,
-        saDr,
-        mergedStats: bestSpec,
+  // Build spec-separated entries — each class×spec is a separate entry
+  // because groups and SA DR differ per spec (per PA Wiki wikiNo=225)
+  const specEntries = React.useMemo(() => {
+    const entries: Array<{
+      classId: number; className: string; slug: string; combatType: string | null
+      spec: 'awakening' | 'succession' | 'ascension'
+      group: string | null; saDr: number; stats: SpecStats
+      isAscension: boolean
+    }> = []
+    for (const cls of classes) {
+      if (cls.isAscension) {
+        // Ascension-only class — single entry
+        if (cls.ascension.skillCount > 0) {
+          entries.push({
+            classId: cls.classId, className: cls.className, slug: cls.slug,
+            combatType: cls.combatType, spec: 'ascension',
+            group: cls.ascensionGroup, saDr: cls.ascensionSaDr,
+            stats: cls.ascension, isAscension: true,
+          })
+        }
+      } else {
+        // Normal class — separate entries for Succession and Awakening
+        if (cls.succession.skillCount > 0) {
+          entries.push({
+            classId: cls.classId, className: cls.className, slug: cls.slug,
+            combatType: cls.combatType, spec: 'succession',
+            group: cls.successionGroup, saDr: cls.successionSaDr,
+            stats: cls.succession, isAscension: false,
+          })
+        }
+        if (cls.awakening.skillCount > 0) {
+          entries.push({
+            classId: cls.classId, className: cls.className, slug: cls.slug,
+            combatType: cls.combatType, spec: 'awakening',
+            group: cls.awakeningGroup, saDr: cls.awakeningSaDr,
+            stats: cls.awakening, isAscension: false,
+          })
+        }
       }
-    }).sort((a, b) => {
-      // Sort by group first, then alphabetically
+    }
+    // Sort by group, then class name, then spec
+    return entries.sort((a, b) => {
       const groupCompare = (a.group || 'zzz').localeCompare(b.group || 'zzz')
       if (groupCompare !== 0) return groupCompare
-      return a.className.localeCompare(b.className)
+      const nameCompare = a.className.localeCompare(b.className)
+      if (nameCompare !== 0) return nameCompare
+      return a.spec.localeCompare(b.spec)
     })
   }, [classes])
 
   // Group counts
   const groupCounts = React.useMemo(() => {
     const counts: Record<string, number> = {}
-    for (const c of mergedClasses) {
+    for (const c of specEntries) {
       if (c.group) counts[c.group] = (counts[c.group] || 0) + 1
     }
     return counts
-  }, [mergedClasses])
+  }, [specEntries])
 
   const toggleClass = (className: string) => {
     setSelectedClasses(prev => {
@@ -117,10 +144,10 @@ export function MatchupsPage() {
 
   // Pinned (selected) classes appear at top
   const sortedClasses = React.useMemo(() => {
-    const pinned = mergedClasses.filter(c => selectedClasses.has(c.className))
-    const unpinned = mergedClasses.filter(c => !selectedClasses.has(c.className))
+    const pinned = specEntries.filter(c => selectedClasses.has(c.className))
+    const unpinned = specEntries.filter(c => !selectedClasses.has(c.className))
     return [...pinned, ...unpinned]
-  }, [mergedClasses, selectedClasses])
+  }, [specEntries, selectedClasses])
 
   // Get counter relationship
   const getCounter = (group: string): string => COUNTER_CYCLE[group] || ''
@@ -209,7 +236,7 @@ export function MatchupsPage() {
                       <div className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-300/60">Team A ({teamA.length}/3)</div>
                       <div className="flex flex-wrap gap-1">
                         {teamA.map(name => {
-                          const cls = mergedClasses.find(c => c.className === name)
+                          const cls = specEntries.find(c => c.className === name)
                           const color = classColor(name)
                           return (
                             <div key={name} className="flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-[10px]" style={{ borderColor: `${color}44`, backgroundColor: `${color}11` }}>
@@ -226,7 +253,7 @@ export function MatchupsPage() {
                       <div className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-red-300/60">Team B ({teamB.length}/3)</div>
                       <div className="flex flex-wrap gap-1">
                         {teamB.map(name => {
-                          const cls = mergedClasses.find(c => c.className === name)
+                          const cls = specEntries.find(c => c.className === name)
                           const color = classColor(name)
                           return (
                             <div key={name} className="flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-[10px]" style={{ borderColor: `${color}44`, backgroundColor: `${color}11` }}>
@@ -244,8 +271,8 @@ export function MatchupsPage() {
                   {teamA.length > 0 && teamB.length > 0 && (
                     <div className="rounded-sm border border-amber-800/30 bg-bdo-ink/40 p-2 text-[10px]">
                       {teamA.map(a => teamB.map(b => {
-                        const clsA = mergedClasses.find(c => c.className === a)!
-                        const clsB = mergedClasses.find(c => c.className === b)!
+                        const clsA = specEntries.find(c => c.className === a)!
+                        const clsB = specEntries.find(c => c.className === b)!
                         const adv = getAdvantage(clsA.group || '', clsB.group || '')
                         return (
                           <div key={`${a}-${b}`} className="flex items-center gap-1.5 py-0.5">
@@ -265,7 +292,7 @@ export function MatchupsPage() {
 
                   {/* Class chips for arena selection */}
                   <div className="flex flex-wrap gap-1">
-                    {mergedClasses.map(cls => {
+                    {specEntries.map(cls => {
                       const color = classColor(cls.className)
                       const iconUrl = classIconUrl(cls.slug)
                       const inA = teamA.includes(cls.className)
@@ -320,8 +347,8 @@ export function MatchupsPage() {
                 </div>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                   {selectedList.map((a, i) => selectedList.slice(i + 1).map((b) => {
-                    const clsA = mergedClasses.find(c => c.className === a)!
-                    const clsB = mergedClasses.find(c => c.className === b)!
+                    const clsA = specEntries.find(c => c.className === a)!
+                    const clsB = specEntries.find(c => c.className === b)!
                     const adv = getAdvantage(clsA.group || '', clsB.group || '')
                     const color = GROUP_COLORS[clsA.group || ''] || '#a1a1aa'
                     const colorB = GROUP_COLORS[clsB.group || ''] || '#a1a1aa'
@@ -369,6 +396,7 @@ export function MatchupsPage() {
                           <th className="sticky left-0 z-10 bg-bdo-leather-dark/50 px-2 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">
                             Class
                           </th>
+                          <th className="px-2 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">Spec</th>
                           <th className="px-2 py-2 text-left text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">Combat Type</th>
                           <th className="px-2 py-2 text-right text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">SA DR</th>
                           <th className="px-2 py-2 text-right text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">CC</th>
@@ -403,11 +431,22 @@ export function MatchupsPage() {
                                   <span className="font-semibold" style={{ color: clsColor }}>{cls.className}</span>
                                 </div>
                               </td>
+                              <td className="px-2 py-1.5">
+                                <span
+                                  className="rounded-sm px-1.5 py-0.5 text-[8px] font-bold uppercase"
+                                  style={{
+                                    color: SPEC_COLORS[cls.spec as keyof typeof SPEC_COLORS],
+                                    backgroundColor: `${SPEC_COLORS[cls.spec as keyof typeof SPEC_COLORS]}15`,
+                                  }}
+                                >
+                                  {cls.spec === 'awakening' ? 'AWK' : cls.spec === 'succession' ? 'SUCC' : 'ASC'}
+                                </span>
+                              </td>
                               <td className="px-2 py-1.5 text-[10px] text-amber-300/50">{cls.combatType || '—'}</td>
                               <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-amber-300">{cls.saDr}%</td>
-                              <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-red-300">{cls.mergedStats.pvpCcSkillCount}</td>
-                              <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-orange-300">{cls.mergedStats.grabCount}</td>
-                              <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-cyan-300">{cls.mergedStats.avgDpc}</td>
+                              <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-red-300">{cls.stats.pvpCcSkillCount}</td>
+                              <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-orange-300">{cls.stats.grabCount}</td>
+                              <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-cyan-300">{cls.stats.avgDpc}</td>
                               {/* vs each group */}
                               {['Vanguard', 'Pulverizer', 'Skirmisher'].map(vsGroup => {
                                 const adv = getAdvantage(cls.group || '', vsGroup)
