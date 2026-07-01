@@ -208,7 +208,7 @@ export async function GET() {
       damageRowsJson: true, pvpDamagePercent: true, ccTypes: true, protectionTypes: true,
       isAwakening: true, isSuccession: true, isAbsolute: true, isBlackSpirit: true, isPassive: true,
       requiredLevel: true, animationDurationMs: true, description: true, cooldownSec: true,
-      isMaxRank: true,
+      isMaxRank: true, prerequisiteIds: true,
     },
   })
 
@@ -248,6 +248,19 @@ export async function GET() {
     const awkAdded = new Set<number>()
     const succAdded = new Set<number>()
 
+    // Build set of skill IDs that are prerequisites for awakening skills.
+    // These main skills are REPLACED by the awakening skill in awakening spec
+    // (e.g., Guardian's Neck Impaler is replaced by Chokeslam for awakening).
+    const replacedByAwakening = new Set<number>()
+    for (const s of maxRankSkills) {
+      if (s.isAwakening && s.prerequisiteIds) {
+        const prereqIds = s.prerequisiteIds.split(',').map((x: string) => parseInt(x.trim(), 10)).filter((x: number) => !isNaN(x))
+        for (const pid of prereqIds) {
+          replacedByAwakening.add(pid)
+        }
+      }
+    }
+
     for (const [, info] of specMap) {
       // Succession spec
       if (info.hasSuccession) {
@@ -282,7 +295,10 @@ export async function GET() {
       } else if (!info.hasSuccession) {
         for (const id of info.skillIds) {
           const s = skillById.get(id)
-          if (s && !s.isAwakening && !s.isAbsolute && !s.isBlackSpirit && !s.isPassive && !awkAdded.has(id)) {
+          // Skip awakening, absolute, BS, passive — handled elsewhere
+          // Skip main skills that are replaced by awakening skills (prerequisite chain)
+          if (s && !s.isAwakening && !s.isAbsolute && !s.isBlackSpirit && !s.isPassive
+              && !replacedByAwakening.has(id) && !awkAdded.has(id)) {
             awakeningSkills.push(s); awkAdded.add(id)
           }
         }
