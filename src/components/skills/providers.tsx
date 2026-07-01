@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useSkillStore } from '@/lib/skill-store'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [client] = React.useState(
@@ -16,6 +17,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
         },
       }),
   )
+
+  // Manually hydrate the persisted store after mount to avoid SSR hydration mismatch.
+  // skipHydration: true in the persist config prevents auto-hydration during render.
+  React.useEffect(() => {
+    useSkillStore.persist.rehydrate()
+  }, [])
 
   return <QueryClientProvider client={client}>{children}</QueryClientProvider>
 }

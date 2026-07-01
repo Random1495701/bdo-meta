@@ -296,23 +296,12 @@ export async function GET() {
     const isAscensionClass = cls.isAscension === true
 
     if (isAscensionClass) {
-      // For ascension-only classes: their "awakening" skills are ascension skills
-      // Also include Main (Lv56+), Absolute, BS, Passive
+      // For ascension-only classes: ALL skills are part of the ascension spec.
+      // These classes don't have the awakening/succession split — they use
+      // everything: awakening skills (ascension tree), main skills (all levels),
+      // absolute, BS, and passive.
       for (const s of maxRankSkills) {
-        if (s.isAwakening && !ascAdded.has(s.skillId)) {
-          ascensionSkills.push(s); ascAdded.add(s.skillId)
-        }
-      }
-      // Include unclassified Lv56+ main skills (new ascension skill tree)
-      for (const s of maxRankSkills) {
-        const isOther = s.isAwakening || s.isSuccession || s.isAbsolute || s.isBlackSpirit || s.isPassive
-        if (!isOther && s.requiredLevel >= 56 && !ascAdded.has(s.skillId)) {
-          ascensionSkills.push(s); ascAdded.add(s.skillId)
-        }
-      }
-      // Also include BS + Passive
-      for (const s of maxRankSkills) {
-        if ((s.isBlackSpirit || s.isPassive) && !ascAdded.has(s.skillId)) {
+        if (!ascAdded.has(s.skillId)) {
           ascensionSkills.push(s); ascAdded.add(s.skillId)
         }
       }
@@ -323,21 +312,18 @@ export async function GET() {
     const effectiveAwakeningSkills = isAscensionClass ? [] : awakeningSkills
     const effectiveSuccessionSkills = isAscensionClass ? [] : successionSkills
 
-    // Parse PA Wiki data from awakeningWeapon field (stored as JSON)
-    let wikiData: any = {}
-    try { wikiData = cls.awakeningWeapon ? JSON.parse(cls.awakeningWeapon) : {} } catch {}
-
+    // PA Wiki data is stored directly in DB columns (combatType, successionGroup, etc.)
     results.push({
       classId: cls.id,
       className: cls.name,
       slug: cls.slug,
-      combatType: cls.mainWeapon || null,
-      successionGroup: wikiData.successionGroup || null,
-      awakeningGroup: wikiData.awakeningGroup || null,
-      ascensionGroup: wikiData.ascensionGroup || null,
-      successionSaDr: wikiData.successionSaDr ?? 10,
-      awakeningSaDr: wikiData.awakeningSaDr ?? 10,
-      ascensionSaDr: wikiData.ascensionSaDr ?? 10,
+      combatType: cls.combatType || null,
+      successionGroup: cls.successionGroup || null,
+      awakeningGroup: cls.awakeningGroup || null,
+      ascensionGroup: cls.ascensionGroup || null,
+      successionSaDr: cls.successionSaDr ?? 10,
+      awakeningSaDr: cls.awakeningSaDr ?? 10,
+      ascensionSaDr: cls.ascensionSaDr ?? 10,
       awakening: computeSpecStats(effectiveAwakeningSkills),
       succession: computeSpecStats(effectiveSuccessionSkills),
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {

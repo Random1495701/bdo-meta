@@ -638,7 +638,7 @@ function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelectio
 }
 
 export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec: 'awakening' | 'succession' | 'ascension') => void }) {
-  const [viewMode, setViewMode] = React.useState<'cards' | 'table'>('cards')
+  const [viewMode, setViewMode] = React.useState<'cards' | 'table' | 'matchups'>('cards')
   const [sortKey, setSortKey] = React.useState<SortKey>('className')
   const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('asc')
   const [expandedCard, setExpandedCard] = React.useState<string | null>(null)
@@ -767,12 +767,13 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
                           const specColorB = SPEC_META[specB]?.color || '#fff'
                           let adv = 'Neutral'
                           let advColor = '#a1a1aa'
-                          if (groupA === 'Vanguard' && groupB === 'Pulverizer') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
+                          // Counter cycle: Vanguard > Crusher > Skirmisher > Vanguard
+                          if (groupA === 'Vanguard' && groupB === 'Crusher') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
                           else if (groupA === 'Skirmisher' && groupB === 'Vanguard') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
-                          else if (groupA === 'Pulverizer' && groupB === 'Skirmisher') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
-                          else if (groupB === 'Vanguard' && groupA === 'Pulverizer') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
+                          else if (groupA === 'Crusher' && groupB === 'Skirmisher') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
+                          else if (groupB === 'Vanguard' && groupA === 'Crusher') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
                           else if (groupB === 'Skirmisher' && groupA === 'Vanguard') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
-                          else if (groupB === 'Pulverizer' && groupA === 'Skirmisher') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
+                          else if (groupB === 'Crusher' && groupA === 'Skirmisher') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
                           pairs.push(
                             <div key={`${keys[i]}-${keys[j]}`} className="flex items-center gap-1.5 rounded-sm border border-amber-800/30 bg-bdo-ink/40 px-2 py-1 text-xs">
                               <span className="font-bold" style={{ color: specColorA }}>{clsA.className}</span>

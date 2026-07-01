@@ -135,6 +135,9 @@ export const useSkillStore = create<SkillStore>()(
         filters: state.filters,
         viewMode: state.viewMode,
       }),
+      // Skip hydration during SSR — prevents React hydration mismatch errors.
+      // The store hydrates from localStorage on the client side automatically.
+      skipHydration: true,
     },
   ),
 )
