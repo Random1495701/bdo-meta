@@ -180,3 +180,43 @@ The nested button issue (Bug 1) affects EVERY skill card on EVERY page. The hydr
 - API `/api/skills/4582` returns valid data (no API crash)
 - API `/api/skills?class=8&specs=succession&q=Black+Wave` returns 1 result correctly
 - The crash is 100% frontend — the drawer never opens because the card click doesn't fire properly due to the corrupted React tree from the hydration error
+
+---
+
+## Update: Crash Fixes Applied (2025-07-01, NOT COMMITTED)
+
+### Fixes Applied (in working directory, not committed per user request)
+
+1. **skill-card.tsx**: Changed `<motion.button>` to `<motion.div>` with `role="button"` + `tabIndex` + `onKeyDown`. Fixes nested button hydration error (PRIMARY CRASH CAUSE).
+
+2. **skill-detail-drawer.tsx**: Added `const [videoAutoplay, setVideoAutoplay] = React.useState(true)`. Fixes `ReferenceError: videoAutoplay is not defined` when opening any skill.
+
+3. **skill-store.ts**: Removed zustand `persist` middleware entirely. It was causing state reversion (Sorc selection reverting to Warrior) and hydration race conditions.
+
+4. **providers.tsx**: Removed `mounted` flag and `rehydrate()` call (no longer needed without persist). Simplified to just ErrorBoundary + QueryClientProvider.
+
+### Verification
+- Sorc Succession > Prime: Black Wave III → **NO CRASH** ✅
+- Drawer opens correctly ✅
+- No console errors ✅
+- No hydration errors ✅
+- State persists correctly during session (not across reloads, since persist was removed)
+
+### PA Wiki Confirmation
+User confirmed: https://www.naeu.playblackdesert.com/ is the correct PA Wiki website.
+Specific page: https://www.naeu.playblackdesert.com/en-us/Wiki?wikiNo=225 (class ratios)
+Must use web agent (agent-browser) for access due to bot protection.
+
+### Grab Logic (User's Explanation)
+- For Succession: main/absolute grabs become Prime:/Succession: versions (same skill name with prefix added)
+- For Awakening: the grab skill that gets replaced is usually a prerequisite for the new awakening skill
+- Some classes have false grabs from "All CC Resistance (except Grapple), including from Back Attacks" text — this is NOT a grab
+- Some classes have grabs not being counted
+
+### Still Pending
+- Commit crash fixes to git (user wants to test old versions first)
+- Fix grab logic per user's explanation
+- Scrape PA Wiki wikiNo=225 for class ratio data
+- Matchups redesign (merge specs, move to top page, pin classes)
+- Tiers portrait redesign
+- Patch note system multiple choice (user hasn't chosen A/B/C/D yet)
