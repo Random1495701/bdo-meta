@@ -267,9 +267,8 @@ export function SyncFooter() {
           </div>
         )}
 
-        {/* Stop lurker button */}
-        {lurkerRunning && (
-          <button
+        {/* Stop lurker button — always visible */}
+        <button
             onClick={async () => {
               try {
                 const res = await fetch('/api/sync/trigger', {
@@ -283,13 +282,17 @@ export function SyncFooter() {
                 toast.error('Failed to stop lurker')
               }
             }}
-            className="flex items-center gap-1 rounded-sm border border-red-700/60 bg-red-900/20 px-2 py-1 text-[10px] font-semibold text-red-300 transition-all hover:bg-red-800/30"
-            title="Stop the lurker process (kills PID)"
+            className={cn(
+              'flex items-center gap-1 rounded-sm border px-2 py-1 text-[10px] font-semibold transition-all',
+              lurkerRunning
+                ? 'border-red-700/60 bg-red-900/20 text-red-300 hover:bg-red-800/30'
+                : 'border-amber-900/40 bg-bdo-leather-dark/50 text-amber-300/30 hover:text-amber-300/50',
+            )}
+            title={lurkerRunning ? 'Stop the lurker process (kills PID)' : 'No lurker running'}
           >
             <Square className="size-3" />
             Stop Lurker
           </button>
-        )}
 
         {/* Right: sync triggers */}
         <div className="ml-auto flex items-center gap-2">

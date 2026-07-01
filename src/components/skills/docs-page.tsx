@@ -259,7 +259,7 @@ const VERSIONS: VersionEntry[] = [
     date: '2025-06-30',
     title: 'Deep Restoration — Matchups, Auto Tiers, Arrow Nav, Damage Fix',
     features: [
-      'Class matchup matrix: new "Matchups" view on Meta page showing rock-paper-scissors group counters (Vanguard > Crusher > Skirmisher > Vanguard, +5% damage). Full class×class grid with color-coded advantage/disadvantage cells, spec selector.',
+      'Class matchup matrix: new "Matchups" view on Meta page showing rock-paper-scissors group counters (Vanguard > Pulverizer > Skirmisher > Vanguard, +5% damage). Full class×class grid with color-coded advantage/disadvantage cells, spec selector.',
       'Auto S/A/B/C/D tier table: new "Tiers" view mode in Tier Builder — percentile-based auto-ranking (S top 10%, A top 30%, B top 60%, C top 85%, D bottom 15%). Updates live as you change weights. Shows class chips with mini param bars per tier.',
       'Arrow key navigation: Arrow keys move focus between skill cards in the Data grid. Enter opens the focused skill. Cards are keyboard-focusable with proper tabIndex.',
       'Damage special-mode separation: skills with multiple damage modes (e.g. Deadeye regular vs Marni ammo) now only count the FIRST damage group, preventing inflated numbers. hasMultipleModes flag added to damage calculation.',

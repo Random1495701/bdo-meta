@@ -407,7 +407,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
                   </span>
                   <span
                     className="rounded-sm border border-cyan-700/50 bg-cyan-900/25 px-2 py-1 text-[10px] font-semibold text-cyan-200"
-                    title="Class group (rock-paper-scissors: Vanguard > Crusher > Skirmisher > Vanguard)"
+                    title="Class group (rock-paper-scissors: Vanguard > Pulverizer > Skirmisher > Vanguard)"
                   >
                     Group: <span className="font-bold text-cyan-100">{group || '—'}</span>
                   </span>
@@ -767,13 +767,13 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
                           const specColorB = SPEC_META[specB]?.color || '#fff'
                           let adv = 'Neutral'
                           let advColor = '#a1a1aa'
-                          // Counter cycle: Vanguard > Crusher > Skirmisher > Vanguard
-                          if (groupA === 'Vanguard' && groupB === 'Crusher') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
+                          // Counter cycle: Vanguard > Pulverizer > Skirmisher > Vanguard
+                          if (groupA === 'Vanguard' && groupB === 'Pulverizer') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
                           else if (groupA === 'Skirmisher' && groupB === 'Vanguard') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
-                          else if (groupA === 'Crusher' && groupB === 'Skirmisher') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
-                          else if (groupB === 'Vanguard' && groupA === 'Crusher') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
+                          else if (groupA === 'Pulverizer' && groupB === 'Skirmisher') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
+                          else if (groupB === 'Vanguard' && groupA === 'Pulverizer') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
                           else if (groupB === 'Skirmisher' && groupA === 'Vanguard') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
-                          else if (groupB === 'Crusher' && groupA === 'Skirmisher') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
+                          else if (groupB === 'Pulverizer' && groupA === 'Skirmisher') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
                           pairs.push(
                             <div key={`${keys[i]}-${keys[j]}`} className="flex items-center gap-1.5 rounded-sm border border-amber-800/30 bg-bdo-ink/40 px-2 py-1 text-xs">
                               <span className="font-bold" style={{ color: specColorA }}>{clsA.className}</span>
@@ -931,18 +931,18 @@ function ExpandedStatBox({ label, value, color }: { label: string; value: string
 }
 
 // ─── Matchup Matrix ─────────────────────────────────────────────────
-// Shows class group counter relationships (Vanguard > Crusher > Skirmisher > Vanguard).
+// Shows class group counter relationships (Vanguard > Pulverizer > Skirmisher > Vanguard).
 // +5% damage advantage when attacking the counter group.
 
 const GROUP_COLORS: Record<string, string> = {
   Vanguard: '#ef4444',
-  Crusher: '#f97316',
+  Pulverizer: '#f97316',
   Skirmisher: '#3b82f6',
 }
 
 const GROUP_ICONS: Record<string, string> = {
   Vanguard: '🛡',
-  Crusher: '⚔',
+  Pulverizer: '⚔',
   Skirmisher: '🏹',
 }
 
@@ -974,8 +974,8 @@ function MatchupMatrix({ classes }: { classes: ClassStats[] }) {
 
   // Get counter relationship
   const getCounter = (group: string): string => {
-    if (group === 'Vanguard') return 'Crusher'
-    if (group === 'Crusher') return 'Skirmisher'
+    if (group === 'Vanguard') return 'Pulverizer'
+    if (group === 'Pulverizer') return 'Skirmisher'
     if (group === 'Skirmisher') return 'Vanguard'
     return ''
   }
@@ -991,7 +991,7 @@ function MatchupMatrix({ classes }: { classes: ClassStats[] }) {
         </p>
         {/* Counter cycle */}
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          {['Vanguard', 'Crusher', 'Skirmisher'].map((group, i) => {
+          {['Vanguard', 'Pulverizer', 'Skirmisher'].map((group, i) => {
             const color = GROUP_COLORS[group]
             return (
               <React.Fragment key={group}>

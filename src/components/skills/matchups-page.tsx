@@ -43,19 +43,19 @@ interface ClassStats {
 
 const GROUP_COLORS: Record<string, string> = {
   Vanguard: '#ef4444',
-  Crusher: '#f97316',
+  Pulverizer: '#f97316',
   Skirmisher: '#3b82f6',
 }
 
 const GROUP_ICONS: Record<string, string> = {
   Vanguard: '🛡',
-  Crusher: '⚔',
+  Pulverizer: '⚔',
   Skirmisher: '🏹',
 }
 
 const COUNTER_CYCLE: Record<string, string> = {
-  Vanguard: 'Crusher',
-  Crusher: 'Skirmisher',
+  Vanguard: 'Pulverizer',
+  Pulverizer: 'Skirmisher',
   Skirmisher: 'Vanguard',
 }
 
@@ -150,7 +150,7 @@ export function MatchupsPage() {
 
         {/* Counter cycle legend */}
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          {['Vanguard', 'Crusher', 'Skirmisher'].map((group, i) => {
+          {['Vanguard', 'Pulverizer', 'Skirmisher'].map((group, i) => {
             const color = GROUP_COLORS[group]
             return (
               <React.Fragment key={group}>
@@ -345,7 +345,7 @@ export function MatchupsPage() {
             )}
 
             {/* Matchup table — merged specs, grouped by bracket */}
-            {['Vanguard', 'Crusher', 'Skirmisher'].map(group => {
+            {['Vanguard', 'Pulverizer', 'Skirmisher'].map(group => {
               const groupClasses = sortedClasses.filter(c => c.group === group)
               if (groupClasses.length === 0) return null
               const color = GROUP_COLORS[group]
@@ -375,7 +375,7 @@ export function MatchupsPage() {
                           <th className="px-2 py-2 text-right text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">Grab</th>
                           <th className="px-2 py-2 text-right text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">DPC</th>
                           <th className="px-2 py-2 text-right text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">vs Vanguard</th>
-                          <th className="px-2 py-2 text-right text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">vs Crusher</th>
+                          <th className="px-2 py-2 text-right text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">vs Pulverizer</th>
                           <th className="px-2 py-2 text-right text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">vs Skirmisher</th>
                           <th className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-amber-300/50">Pin</th>
                         </tr>
@@ -409,7 +409,7 @@ export function MatchupsPage() {
                               <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-orange-300">{cls.mergedStats.grabCount}</td>
                               <td className="px-2 py-1.5 text-right font-mono text-xs tabular-nums text-cyan-300">{cls.mergedStats.avgDpc}</td>
                               {/* vs each group */}
-                              {['Vanguard', 'Crusher', 'Skirmisher'].map(vsGroup => {
+                              {['Vanguard', 'Pulverizer', 'Skirmisher'].map(vsGroup => {
                                 const adv = getAdvantage(cls.group || '', vsGroup)
                                 return (
                                   <td key={vsGroup} className="px-2 py-1.5 text-center">
