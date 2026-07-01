@@ -115,3 +115,68 @@
 - C) Full auto-apply system (~8h+)
 - D) A + B
 - User has NOT chosen yet
+
+---
+
+## Update: Crash Analysis (2025-07-01)
+
+### User Report
+"I filter for succession sorceress. I click Prime: Black Wave III, the app crashes. It does the same on so so many places."
+
+### Analysis Results
+
+I reproduced the issue extensively. There are **THREE distinct bugs** causing crashes:
+
+#### Bug 1: Hydration Error — Nested `<button>` inside `<button>` (CRITICAL)
+**Error**: `In HTML, <button> cannot be a descendant of <button>. This will cause a hydration error.`
+
+**Root cause**: In `src/components/skills/skill-card.tsx`, the entire card is a `<motion.button>` (line 153), but I added a "Compare" button (line 219) INSIDE it. HTML doesn't allow `<button>` nested inside `<button>`. This causes:
+- React hydration errors on every page load
+- The hydration error throws an exception that React catches, leaving the app in a broken state
+- Subsequent interactions (like clicking a card to open the detail drawer) fail because the component tree is corrupted
+
+**File**: `src/components/skills/skill-card.tsx` lines 153-229
+- Line 153: `<motion.button>` (the card container)
+- Line 219: `<button>` (the compare button, nested inside)
+
+**Impact**: This is the PRIMARY cause of "random crashes." Every skill card has this nested button issue. When React tries to hydrate the server-rendered HTML, it hits this invalid DOM structure and throws. The error boundary catches it, but the app is left in an inconsistent state where clicks don't register properly.
+
+#### Bug 2: Zustand `persist` Middleware State Corruption (HIGH)
+**Error**: Filter state reverts to `classIds: [0], specs: ["awakening"]` (Warrior Awakening) after clicking Sorceress + Succession.
+
+**Root cause**: The `persist` middleware with `skipHydration: true` + manual `rehydrate()` in Providers creates a race condition:
+1. Server renders with default state (Warrior, Awakening)
+2. Client mounts, React hydrates with server state
+3. `useEffect` fires, calls `rehydrate()` which loads from localStorage
+4. Store updates to Sorceress Succession
+5. But the URL/fetch cache still has the old Warrior data
+6. React Query refetches, but the `placeholderData` (keepPreviousData) shows stale Warrior cards
+7. User sees Warrior cards even though Sorc is selected
+
+**File**: `src/lib/skill-store.ts` (persist config), `src/components/skills/providers.tsx` (rehydrate)
+
+**Impact**: User clicks Sorceress → S → search "Black Wave" → sees Warrior cards instead. The card they want to click never appears.
+
+#### Bug 3: The Compare Button Itself (MEDIUM)
+**Error**: `button <button>` in console — the compare button's `stopPropagation` doesn't fully prevent the parent card's `onClick` from firing, causing the detail drawer AND compare drawer to both try to open simultaneously.
+
+**File**: `src/components/skills/skill-card.tsx` line 219
+
+### Why "So Many Places" Crash
+The nested button issue (Bug 1) affects EVERY skill card on EVERY page. The hydration error corrupts the React tree on initial load, making subsequent clicks unpredictable. Combined with the state corruption (Bug 2), the app is in a fragile state where any interaction can trigger the crash.
+
+### Recommended Fix Order (for next session)
+1. **Fix Bug 1 first** — Change the card from `<motion.button>` to `<motion.div>` with an onClick, OR move the compare button outside the card button
+2. **Fix Bug 2** — Remove `skipHydration` and use a different hydration strategy (e.g., `useHydration` hook or render-only-after-mount)
+3. **Fix Bug 3** — Ensure compare button's `stopPropagation` works correctly
+
+### Files Involved
+- `src/components/skills/skill-card.tsx` — nested button (PRIMARY CAUSE)
+- `src/lib/skill-store.ts` — persist hydration race condition
+- `src/components/skills/providers.tsx` — manual rehydrate timing
+- `src/components/skills/skill-detail-drawer.tsx` — may have additional crash points once the above are fixed
+
+### Verification
+- API `/api/skills/4582` returns valid data (no API crash)
+- API `/api/skills?class=8&specs=succession&q=Black+Wave` returns 1 result correctly
+- The crash is 100% frontend — the drawer never opens because the card click doesn't fire properly due to the corrupted React tree from the hydration error
