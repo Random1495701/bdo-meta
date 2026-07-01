@@ -52,16 +52,10 @@ function ClassIcon({
 
   return (
     <div
-      className="relative shrink-0 overflow-hidden rounded-sm border-2"
+      className="relative shrink-0 overflow-hidden rounded-sm"
       style={{
         width: size,
         height: size,
-        borderColor: active ? 'rgba(240,208,96,0.85)' : 'rgba(156,126,46,0.55)',
-        background:
-          'linear-gradient(135deg, #1a1612 0%, #0a0908 100%)',
-        boxShadow: active
-          ? 'inset 0 0 0 1px rgba(240,208,96,0.4), 0 0 10px rgba(200,170,68,0.4)'
-          : 'inset 0 0 0 1px rgba(240,208,96,0.15), inset 0 0 6px rgba(0,0,0,0.6)',
       }}
     >
       <img

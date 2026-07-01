@@ -14,7 +14,6 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
-  ccChainPotential: number
   grabCount: number
   superArmorCount: number
   forwardGuardCount: number
@@ -23,6 +22,7 @@ interface SpecStats {
   coreFgCount: number
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number
+  avgDpc: number
   protectedCoverage: number
 }
 
@@ -42,7 +42,7 @@ interface ClassStats {
   ascension: SpecStats
 }
 
-type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'ccChainPotential' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'protectedCoverage'
+type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'avgDpc' | 'protectedCoverage'
 
 // Spec display metadata — Red=Awakening, Blue=Succession, Yellow=Ascension
 const SPEC_META: Record<string, { label: string; color: string; shortLabel: string }> = {
@@ -102,7 +102,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
     { label: 'SA', value: stats.superArmorCount, avg: avgOf('superArmorCount'), color: '#fbbf24' },
     { label: 'FG', value: stats.forwardGuardCount, avg: avgOf('forwardGuardCount'), color: '#60a5fa' },
     { label: 'IF', value: stats.iFrameCount, avg: avgOf('iFrameCount'), color: '#a78bfa' },
-    { label: 'CC Chain', value: stats.ccChainPotential, avg: avgOf('ccChainPotential'), color: '#eab308' },
+    { label: 'DPC', value: stats.avgDpc, avg: avgOf('avgDpc'), color: '#22d3ee' },
     { label: 'Grab', value: stats.grabCount, avg: avgOf('grabCount'), color: '#f97316' },
     { label: 'Prot %', value: stats.protectedCoverage, avg: avgOf('protectedCoverage'), color: '#22d3ee' },
   ]
@@ -365,7 +365,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
                   Combat Breakdown
                 </div>
                 <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
-                  <ExpandedStatBox label="CC Chain Potential" value={String(stats.ccChainPotential)} color="#eab308" />
+                  <ExpandedStatBox label="Avg DPC" value={String(stats.avgDpc)} color="#22d3ee" />
                   <ExpandedStatBox label="Grab Count" value={String(stats.grabCount)} color="#f97316" />
                   <ExpandedStatBox label="Core SA" value={String(stats.coreSaCount)} color="#fbbf24" />
                   <ExpandedStatBox label="Core FG" value={String(stats.coreFgCount)} color="#60a5fa" />
@@ -555,7 +555,7 @@ function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelectio
     { key: 'avgPvpDamage', label: 'Avg PvP' },
     { key: 'medianPvpDamage', label: 'Med PvP' },
     { key: 'pvpCcSkillCount', label: 'CC*', hint: 'Black Spirit rage skills are not counted in CC stats' },
-    { key: 'ccChainPotential', label: 'CC Chain' },
+    { key: 'avgDpc', label: 'DPC' },
     { key: 'grabCount', label: 'Grab' },
     { key: 'superArmorCount', label: '💪 SA' },
     { key: 'forwardGuardCount', label: '🛡 FG' },
@@ -622,7 +622,7 @@ function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelectio
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.avgPvpDamage > 0 ? fmtDmg(row.stats.avgPvpDamage) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.medianPvpDamage > 0 ? fmtDmg(row.stats.medianPvpDamage) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-red-300">{row.stats.pvpCcSkillCount}</td>
-                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-yellow-300">{row.stats.ccChainPotential}</td>
+                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-cyan-300">{row.stats.avgDpc}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-orange-300">{row.stats.grabCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-amber-300">{row.stats.superArmorCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-blue-300">{row.stats.forwardGuardCount}</td>
@@ -689,7 +689,7 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
     { key: 'avgPvpDamage', label: 'Avg PvP', icon: null },
     { key: 'medianPvpDamage', label: 'Med PvP', icon: null },
     { key: 'pvpCcSkillCount', label: 'CC Skills', icon: <Zap className="size-3" /> },
-    { key: 'ccChainPotential', label: 'CC Chain', icon: <Zap className="size-3" /> },
+    { key: 'avgDpc', label: 'DPC', icon: null },
     { key: 'grabCount', label: 'Grab', icon: null },
     { key: 'superArmorCount', label: 'SA', icon: <span>💪</span> },
     { key: 'forwardGuardCount', label: 'FG', icon: <span>🛡</span> },

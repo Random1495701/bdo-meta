@@ -23,7 +23,6 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
-  ccChainPotential: number
   grabCount: number
   superArmorCount: number
   forwardGuardCount: number
@@ -61,7 +60,7 @@ type SpecName = 'awakening' | 'succession' | 'ascension'
 
 type ParamKey =
   | 'avgPvpDamage' | 'medianPvpDamage' | 'dpsEstimate'
-  | 'pvpCcSkillCount' | 'ccChainPotential' | 'grabCount'
+  | 'pvpCcSkillCount' | 'grabCount'
   | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount'
   | 'coreSaCount' | 'coreFgCount' | 'protectedCoverage'
   | 'saDr'
@@ -82,7 +81,6 @@ const SCORE_PARAMS: ScoreParam[] = [
   { key: 'dpsEstimate', label: 'DPS Estimate', short: 'DPS', category: 'damage', icon: <Gauge className="size-3.5" />, description: 'Average PvP damage ÷ average animation duration. Rewards fast, hard-hitting skills.' },
   // CC
   { key: 'pvpCcSkillCount', label: 'PvP CC Skills', short: 'CC Skills', category: 'cc', icon: <Zap className="size-3.5" />, description: 'Number of skills that apply at least one PvP CC.' },
-  { key: 'ccChainPotential', label: 'CC Chain (2+ CC)', short: 'CC Chain', category: 'cc', icon: <Zap className="size-3.5" />, description: 'Skills that apply 2+ PvP CCs in one cast — high combo/chain potential.' },
   { key: 'grabCount', label: 'Grabs', short: 'Grab', category: 'cc', icon: <Grab className="size-3.5" />, description: 'Skills with Grapple CC — bypasses Super Armor.' },
   // Protection
   { key: 'superArmorCount', label: 'Super Armor', short: 'SA', category: 'protection', icon: <Shield className="size-3.5" />, description: 'Skills with Super Armor (immune to CC, take reduced damage).' },
@@ -125,7 +123,7 @@ const PRESETS: Record<string, { label: string; weights: Weights; description: st
   control: {
     label: 'CC / Control',
     description: 'Prioritize crowd control and grabs.',
-    weights: { ...ZERO_WEIGHTS, pvpCcSkillCount: 100, ccChainPotential: 80, grabCount: 90 },
+    weights: { ...ZERO_WEIGHTS, pvpCcSkillCount: 100, grabCount: 90 },
   },
   defense: {
     label: 'Defense',
@@ -135,7 +133,7 @@ const PRESETS: Record<string, { label: string; weights: Weights; description: st
   burst: {
     label: 'Burst (DPS)',
     description: 'Fast, hard-hitting skills with some CC.',
-    weights: { ...ZERO_WEIGHTS, dpsEstimate: 100, avgPvpDamage: 70, pvpCcSkillCount: 40, ccChainPotential: 30 },
+    weights: { ...ZERO_WEIGHTS, dpsEstimate: 100, avgPvpDamage: 70, pvpCcSkillCount: 40 },
   },
   bruiser: {
     label: 'Bruiser',

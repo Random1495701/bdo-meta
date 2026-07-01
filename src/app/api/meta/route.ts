@@ -23,7 +23,6 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
-  ccChainPotential: number // skills with 2+ PvP CC counters
   grabCount: number // skills with Grapple CC
   superArmorCount: number
   forwardGuardCount: number
@@ -32,6 +31,7 @@ interface SpecStats {
   coreFgCount: number // Core: skills with Forward Guard (player picks only 1)
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number // avg PvP damage / avg animation duration
+  avgDpc: number // avg damage per cooldown second
   protectedCoverage: number // % of skills with any protection
 }
 
@@ -77,6 +77,8 @@ function computeSpecStats(skills: any[]): SpecStats {
   let topPvpDamageSkill: { skillId: number; name: string; damage: number } | null = null
   let protectedCount = 0
   const animDurations: number[] = []
+  let totalDpc = 0
+  let dpcCount = 0
 
   for (const s of skills) {
     // Skip "(Not in use)" skills — leftovers from old patches
@@ -90,6 +92,11 @@ function computeSpecStats(skills: any[]): SpecStats {
       if (damage.totalPvP > topPvpDamage) {
         topPvpDamage = damage.totalPvP
         topPvpDamageSkill = { skillId: s.skillId, name: s.name, damage: damage.totalPvP }
+      }
+      // Damage per cooldown: totalPvP / cooldownSec (higher = more efficient)
+      if (s.cooldownSec && s.cooldownSec > 0) {
+        totalDpc += damage.totalPvP / s.cooldownSec
+        dpcCount++
       }
     }
 
@@ -106,19 +113,19 @@ function computeSpecStats(skills: any[]): SpecStats {
     const ccTypes = s.ccTypes ? s.ccTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpCCs = ccTypes.filter((cc: string) => !pveOnlyCCs.has(cc) && isRealCC(cc))
 
-    // FALSE GRAB FILTER: Some skills have "Grapple" in ccTypes but it's actually
-    // from "All CC Resistance (except Grapple), including from Back Attacks" text
-    // which is a RESISTANCE buff, not a grab CC. Check damageRows for this.
-    const isFalseGrab = damageRows?.some((r: DamageRow) =>
-      r.label?.includes('except Grapple') || r.label?.includes('except Grappling')
-    ) || false
+    // FALSE GRAB FILTER: Some skills have "Grapple" in ccTypes but it's from
+    // "All CC Resistance (except Grapple), including from Back Attacks" text
+    // which is a RESISTANCE buff, not a grab CC. Check damageRows AND description.
+    const isFalseGrab = (damageRows?.some((r: DamageRow) =>
+      r.label?.toLowerCase().includes('except grapple') ||
+      r.label?.toLowerCase().includes('except grapling')
+    ) || false) || (s.description?.toLowerCase().includes('except grapple') || false)
 
     const hasRealGrab = pvpCCs.includes('Grapple') && !isFalseGrab
 
     // CC stats: exclude Black Spirit rage skills (they're not part of normal PvP rotation)
     if (!s.isBlackSpirit) {
       if (pvpCCs.length > 0) pvpCcSkillCount++
-      if (pvpCCs.length >= 2) ccChainPotential++
       if (hasRealGrab) grabCount++
     }
 
@@ -166,12 +173,13 @@ function computeSpecStats(skills: any[]): SpecStats {
     ? Math.round((protectedCount / skills.length) * 100)
     : 0
 
+  const avgDpc = dpcCount > 0 ? Math.round(totalDpc / dpcCount) : 0
+
   return {
     skillCount: skills.length,
     avgPvpDamage,
     medianPvpDamage,
     pvpCcSkillCount,
-    ccChainPotential,
     grabCount,
     superArmorCount,
     forwardGuardCount,
@@ -180,6 +188,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     coreFgCount,
     topPvpDamageSkill,
     dpsEstimate,
+    avgDpc,
     protectedCoverage,
   }
 }
@@ -198,7 +207,7 @@ export async function GET() {
       skillId: true, name: true, className: true, classId: true,
       damageRowsJson: true, pvpDamagePercent: true, ccTypes: true, protectionTypes: true,
       isAwakening: true, isSuccession: true, isAbsolute: true, isBlackSpirit: true, isPassive: true,
-      requiredLevel: true, animationDurationMs: true,
+      requiredLevel: true, animationDurationMs: true, description: true, cooldownSec: true,
     },
   })
 
@@ -341,8 +350,8 @@ export async function GET() {
       succession: computeSpecStats(effectiveSuccessionSkills),
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
-        pvpCcSkillCount: 0, ccChainPotential: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
-        topPvpDamageSkill: null, dpsEstimate: 0, protectedCoverage: 0,
+        pvpCcSkillCount: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
+        topPvpDamageSkill: null, dpsEstimate: 0, avgDpc: 0, protectedCoverage: 0,
       },
     })
   }

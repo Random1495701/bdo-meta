@@ -63,7 +63,7 @@ export const useSkillStore = create<SkillStore>((set) => ({
   detailOpen: false,
   compareOpen: false,
   filtersOpen: false,
-  viewMode: 'grid',
+  viewMode: 'table',
   setQ: (q) => set((s) => ({ filters: { ...s.filters, q, page: 1 } })),
   toggleClass: (classId) =>
     set((s) => {

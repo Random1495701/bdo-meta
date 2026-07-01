@@ -976,46 +976,6 @@ export function SkillDetailDrawer() {
                     </Section>
                   )}
 
-                  {/* Skill Add-Ons (Garmoth data) */}
-                  {skill.addons && (
-                    <Section title="Skill Add-Ons" icon={<Gem className="size-3" />}>
-                      <p className="mb-2 text-[10px] text-amber-300/40">
-                        Addon popularity from Garmoth API — what real players pick for this skill.
-                      </p>
-                      <div className="space-y-2">
-                        {Array.isArray(skill.addons) && skill.addons.map((addon: any, i: number) => (
-                          <div key={i} className="rounded-sm border border-amber-800/30 bg-bdo-leather-dark/30 p-2">
-                            <div className="mb-1 flex items-center gap-2">
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300/60">
-                                Slot {addon.slot ?? i}
-                              </span>
-                              {addon.type && (
-                                <span className="rounded-sm border border-cyan-700/40 bg-cyan-900/20 px-1.5 py-0.5 text-[9px] text-cyan-300/60">
-                                  {addon.type}
-                                </span>
-                              )}
-                            </div>
-                            {addon.effect && (
-                              <p className="text-xs text-amber-100/70">{addon.effect}</p>
-                            )}
-                            {addon.popularity && typeof addon.popularity === 'object' && (
-                              <div className="mt-1.5 flex flex-wrap gap-1">
-                                {Object.entries(addon.popularity).slice(0, 5).map(([addonId, count]: [string, any]) => (
-                                  <span key={addonId} className="rounded-sm border border-amber-900/30 bg-bdo-ink/50 px-1.5 py-0.5 text-[9px] font-mono text-amber-300/50">
-                                    #{addonId}: {count} votes
-                                  </span>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                        {Array.isArray(skill.addons) && skill.addons.length === 0 && (
-                          <p className="text-xs text-amber-300/40">No addon data available for this skill.</p>
-                        )}
-                      </div>
-                    </Section>
-                  )}
-
                   {/* Video preview */}
                   {skill.videoUrl && (
                     <Section title="Video Preview" icon={<Film className="size-3" />}>
