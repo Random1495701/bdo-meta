@@ -105,9 +105,12 @@ function computeSpecStats(skills: any[]): SpecStats {
     }
     const ccTypes = s.ccTypes ? s.ccTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpCCs = ccTypes.filter((cc: string) => !pveOnlyCCs.has(cc) && isRealCC(cc))
-    if (pvpCCs.length > 0) pvpCcSkillCount++
-    if (pvpCCs.length >= 2) ccChainPotential++
-    if (pvpCCs.includes('Grapple')) grabCount++
+    // CC stats: exclude Black Spirit rage skills (they're not part of normal PvP rotation)
+    if (!s.isBlackSpirit) {
+      if (pvpCCs.length > 0) pvpCcSkillCount++
+      if (pvpCCs.length >= 2) ccChainPotential++
+      if (pvpCCs.includes('Grapple')) grabCount++
+    }
 
     // Protection stats
     const pveOnlyProts = new Set<string>()

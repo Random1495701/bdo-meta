@@ -218,7 +218,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
         <div className="grid grid-cols-3 gap-1">
           <StatBox label="Avg PvP" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'avgPvpDamage'} />
           <StatBox label="Med PvP" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} color="#f472b6" highlighted={sortKey === 'medianPvpDamage'} />
-          <StatBox label="CC" value={String(stats.pvpCcSkillCount)} color="#f87171" highlighted={sortKey === 'pvpCcSkillCount'} />
+          <StatBox label="CC*" value={String(stats.pvpCcSkillCount)} color="#f87171" highlighted={sortKey === 'pvpCcSkillCount'} />
           <StatBox label="💪 SA" value={`${stats.superArmorCount}${stats.coreSaCount > 0 ? ` (+${stats.coreSaCount}c)` : ''}`} color="#fbbf24" highlighted={sortKey === 'superArmorCount'} />
           <StatBox label="🛡 FG" value={`${stats.forwardGuardCount}${stats.coreFgCount > 0 ? ` (+${stats.coreFgCount}c)` : ''}`} color="#60a5fa" highlighted={sortKey === 'forwardGuardCount'} />
           <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
@@ -550,11 +550,11 @@ function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelectio
     return ((a.stats[sortKey] as number) - (b.stats[sortKey] as number)) * dir
   })
 
-  const sortOptions: { key: SortKey; label: string }[] = [
+  const sortOptions: { key: SortKey; label: string; hint?: string }[] = [
     { key: 'className', label: 'Class' },
     { key: 'avgPvpDamage', label: 'Avg PvP' },
     { key: 'medianPvpDamage', label: 'Med PvP' },
-    { key: 'pvpCcSkillCount', label: 'CC' },
+    { key: 'pvpCcSkillCount', label: 'CC*', hint: 'Black Spirit rage skills are not counted in CC stats' },
     { key: 'ccChainPotential', label: 'CC Chain' },
     { key: 'grabCount', label: 'Grab' },
     { key: 'superArmorCount', label: '💪 SA' },
@@ -831,6 +831,7 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
               <button
                 key={opt.key}
                 onClick={() => handleSort(opt.key)}
+                title={opt.hint || undefined}
                 className={cn(
                   'flex items-center gap-1 rounded-sm border px-2 py-1 text-[11px] font-semibold transition-all',
                   sortKey === opt.key
