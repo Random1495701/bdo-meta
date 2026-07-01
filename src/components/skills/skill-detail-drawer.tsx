@@ -518,7 +518,7 @@ export function SkillDetailDrawer() {
                     {skill.damage && skill.damage.hasDamage ? (
                       <StatCard
                         icon={<Swords className="size-3" />}
-                        label="PvE Damage"
+                        label={skill.damage.hasSpecialMode ? "PvE Damage (Mode 1)" : "PvE Damage"}
                         value={formatDamage(skill.damage.totalPvE)}
                         accent="amber"
                       />
@@ -528,6 +528,21 @@ export function SkillDetailDrawer() {
                         label="PvE Damage"
                         value="—"
                       />
+                    )}
+                    {/* Special mode indicator */}
+                    {skill.damage && skill.damage.hasSpecialMode && skill.damage.modes && skill.damage.modes.length > 1 && (
+                      <div className="col-span-2 flex items-center gap-2 rounded-sm border border-purple-700/40 bg-purple-900/10 px-2 py-1 text-[10px]">
+                        <AlertTriangle className="size-3 text-purple-400" />
+                        <span className="text-purple-300/70">
+                          This skill has {skill.damage.modes.length} damage modes (e.g., regular vs Marni ammo).
+                          Showing Mode 1 only.
+                        </span>
+                        {skill.damage.modes.map((m: any, i: number) => (
+                          <span key={i} className="rounded-sm border border-purple-700/30 bg-purple-900/20 px-1.5 py-0.5 font-mono text-[9px] text-purple-300/50">
+                            {m.modeName}: {formatDamage(m.totalPvE)}
+                          </span>
+                        ))}
+                      </div>
                     )}
                     {skill.damage && skill.damage.totalPvP != null ? (
                       <StatCard

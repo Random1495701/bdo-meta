@@ -218,7 +218,7 @@ export function Header() {
                   'inset 0 0 0 1px rgba(240,208,96,0.3), 0 0 12px rgba(200,170,68,0.2)',
               }}
             >
-              <Swords className="size-5 text-amber-400" />
+              <img src="/logo.svg" alt="BDO Meta" className="size-5" />
             </div>
             <div className="min-w-0">
               <h1 className="bdo-title truncate text-xl tracking-wide">
