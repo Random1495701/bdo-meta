@@ -284,3 +284,41 @@ User confirmed: https://www.naeu.playblackdesert.com/en-us/Wiki?wikiNo=225 is th
 - Find missing skill ranks (Chokeslam II, etc.)
 - Combo Extraction
 - Documentation gaps
+
+---
+
+## Session Update: PA Wiki Fix + Roadmap + Formula Research (2025-07-01)
+
+### PA Wiki Data Fixed (Critical)
+- Fetched official data from https://www.naeu.playblackdesert.com/en-us/Wiki?wikiNo=225 via agent-browser
+- **Key finding**: Official name is "Pulverizer" not "Crusher" — we had it wrong
+- **Key finding**: Groups are spec-dependent! Warrior Succ=Vanguard, Warrior Awk=Skirmisher (we had both as Vanguard)
+- Fixed all 31 classes with correct spec-to-group mapping and SA DR values
+- Updated all code references from "Crusher" to "Pulverizer"
+- Fixed group counter cycle: Vanguard > Pulverizer > Skirmisher > Vanguard
+
+### Damage Formula Research
+- Reddit blocked (network security)
+- bdo-tools.net formula (credited to @gpw):
+  1. AP = Total AP
+  2. Base Damage = AP + Species AP - Enemy DR
+  3. DR Rate = Damage × (1 - DR%)
+  4. Critical Hit = Damage × Crit Multiplier (assume 100% crit, 2.25x)
+  5. Final Multipliers = Damage × PvP% × Skill Damage% × Hit Count
+  6. Class Group = ×1.05 if counter advantage
+  7. SA DR = × (1 - SA DR%)
+- Garmoth uses same formula (same author @gpw)
+- All 3 sources use the same formula — validated
+
+### Stop Button
+- Always visible now (dimmed when lurker not running, red when running)
+- Lurker was already dead (PID 2885 dead, lock cleaned)
+
+### Missing Skills Investigation
+- DB has 4,111 skills but ~5,900 skill IDs are missing (bdocodex has ~10,000+)
+- Cause: Original sync used skill calculator API which doesn't return all ranks/variants
+- Fix: Use bdocodex sitemap to discover all skill IDs, then targeted sync
+
+### Roadmap Created
+- docs/ROADMAP_2026-07-01.md with 15 items across P0-P3 priorities
+- P0.1 (Missing Skills) is the critical blocker for grab logic, max-rank, and Q-block
