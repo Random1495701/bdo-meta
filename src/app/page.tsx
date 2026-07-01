@@ -87,6 +87,29 @@ export default function Home() {
         e.preventDefault()
         const searchInput = document.querySelector('input[placeholder*="Search"]') as HTMLInputElement
         searchInput?.focus()
+      } else if (view === 'data' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter')) {
+        // Arrow key navigation in skill grid
+        e.preventDefault()
+        const cards = Array.from(document.querySelectorAll('[data-skill-card]')) as HTMLElement[]
+        if (cards.length === 0) return
+
+        let currentIdx = cards.findIndex(c => c === document.activeElement || c.contains(document.activeElement))
+        if (currentIdx === -1) currentIdx = -1
+
+        let nextIdx = currentIdx
+        if (e.key === 'ArrowRight') nextIdx = Math.min(currentIdx + 1, cards.length - 1)
+        else if (e.key === 'ArrowLeft') nextIdx = Math.max(currentIdx - 1, 0)
+        else if (e.key === 'ArrowDown') nextIdx = Math.min(currentIdx + 4, cards.length - 1)
+        else if (e.key === 'ArrowUp') nextIdx = Math.max(currentIdx - 4, 0)
+        else if (e.key === 'Enter') {
+          if (currentIdx >= 0 && currentIdx < cards.length) cards[currentIdx].click()
+          return
+        }
+
+        if (nextIdx >= 0 && nextIdx < cards.length) {
+          cards[nextIdx].focus()
+          cards[nextIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+        }
       } else if (e.key === 'Escape') {
         const store = useSkillStore.getState()
         if (store.detailOpen) {
