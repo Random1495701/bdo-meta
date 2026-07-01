@@ -15,6 +15,7 @@ import { MetaPage } from '@/components/skills/meta-page'
 import { DocsPage } from '@/components/skills/docs-page'
 import { TierListPage } from '@/components/skills/tier-list-page'
 import { PatchesPage } from '@/components/skills/patches-page'
+import { MatchupsPage } from '@/components/skills/matchups-page'
 import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
 
 import {
@@ -122,10 +123,12 @@ export default function Home() {
       } else if (e.key === '2') {
         setView('meta')
       } else if (e.key === '3') {
-        setView('tierlist')
+        setView('matchups')
       } else if (e.key === '4') {
-        setView('patches')
+        setView('tierlist')
       } else if (e.key === '5') {
+        setView('patches')
+      } else if (e.key === '6') {
         setView('docs')
       }
     }
@@ -138,6 +141,16 @@ export default function Home() {
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
         <MetaPage onCardClick={handleMetaCardClick} />
+        <SyncFooter />
+      </div>
+    )
+  }
+
+  if (view === 'matchups') {
+    return (
+      <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <TabSwitcher view={view} onChange={setView} />
+        <MatchupsPage />
         <SyncFooter />
       </div>
     )
