@@ -260,8 +260,8 @@ function PhaseDamageRow({ phase }: { phase: PhaseDamage }) {
       <div className="flex items-baseline gap-1 font-mono text-xs tabular-nums">
         <span className={cn('font-semibold', color)}>{percent}%</span>
         <span className="text-amber-700/70">×</span>
-        <span className="text-amber-200/80">{phase.hits}</span>
-        {phase.maxHits != null && (
+        <span className="text-amber-200/80">{phase.multiplier}</span>
+        {phase.maxHits != null && phase.maxHits > 1 && (
           <>
             <span className="text-amber-700/70">max</span>
             <span className="text-amber-200/80">{phase.maxHits}</span>
@@ -694,8 +694,8 @@ export function SkillDetailDrawer() {
                       {skill.damage && skill.damage.phases.length > 0 && (
                         <div className="mb-3 space-y-1.5">
                           <div className="mb-1 flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-amber-200/50">
-                            <span>Per-phase Breakdown</span>
-                            <span>percent × hits = total</span>
+                            <span>{skill.damage.hasSpecialMode ? 'Per-phase Breakdown (Mode 1 only)' : 'Per-phase Breakdown'}</span>
+                            <span>percent × multiplier × maxHits = total</span>
                           </div>
                           {skill.damage.phases.map((p, i) => (
                             <PhaseDamageRow key={`${p.phase}-${i}`} phase={p} />
