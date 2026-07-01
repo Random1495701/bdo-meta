@@ -253,3 +253,34 @@ User confirmed: https://www.naeu.playblackdesert.com/en-us/Wiki?wikiNo=225 is th
 - Combo Extraction (Foundry guides) — low priority
 - Documentation gaps (CHANGELOG + docs-page) — low priority
 - Tier portrait redesign — medium priority
+
+---
+
+## Session Update: v5.0.1 — Video/Logo/Arena fixes + Grapple investigation (2025-07-01)
+
+### Fixes Applied
+1. **Video autoplay OFF by default** — Video no longer loads bdocodex URLs automatically. Shows "Click to load video" placeholder instead. Prevents bdocodex from seeing our video requests.
+2. **Lurker stop button** — Added red "Stop Lurker" button in sync footer (appears when lurker is running). Kills the lurker PID via API.
+3. **Arena expand fix** — Click anywhere on the Arena of Solare header to expand/collapse. Arrow up/down icon replaces Show/Hide button.
+4. **Logo frame removed** — No more border/shadow/gradient around the logo. Just the raw SVG.
+5. **Square icon fix** — `Stop` doesn't exist in lucide-react, used `Square` instead.
+
+### Grapple Investigation
+- Current DB has 33 real grapple skills across 17 classes
+- Hashashin: 0 grabs in DB or bdocodex (user says has grab — may be a community-known grab not labeled as "Grapple" CC on bdocodex)
+- Scholar: 0 grabs in DB or bdocodex (same issue)
+- Guardian: 1 grab (Chokeslam I) — user says "more than one" — may need Chokeslam II which is missing from DB
+- Q-block classes confirmed: Valkyrie, Warrior, Nova, Wizard, Witch, Seraph
+- Additional Q-block skills found on bdocodex but not in DB: Vindicta (Valk), Greatsword Defense (Warrior), Absolute: Frenzied Dash (Warrior), Icy Fog (Nova)
+
+### Damage Calculator
+- User provided formula sources: Reddit post, bdo-tools.net, garmoth.com
+- User wants: total AP (including species), total DR, toggles for crit/back/down/air, class type toggles (for ratio %), SA reduction %, advanced mode (pick classes for specific SA %)
+- Current calculator has basic formula — needs rewrite per user spec
+
+### Still Pending
+- Rewrite Damage Calculator per user spec
+- Investigate Hashashin/Scholar grab mystery
+- Find missing skill ranks (Chokeslam II, etc.)
+- Combo Extraction
+- Documentation gaps
