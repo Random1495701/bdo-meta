@@ -1,11 +1,11 @@
 'use client'
 
 import * as React from 'react'
-import { Database, BarChart3, BookOpen, Crown, Newspaper, ChevronDown, GitBranch, Swords } from 'lucide-react'
+import { Database, BarChart3, BookOpen, Crown, Newspaper, ChevronDown, GitBranch, Swords, Calculator } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { APP_VERSION, GIT_TAGS } from '@/lib/version'
 
-export type ViewMode = 'data' | 'meta' | 'matchups' | 'tierlist' | 'patches' | 'docs'
+export type ViewMode = 'data' | 'meta' | 'matchups' | 'tierlist' | 'patches' | 'docs' | 'dmgcalc'
 
 export function TabSwitcher({ view, onChange }: { view: ViewMode; onChange: (v: ViewMode) => void }) {
   const [switching, setSwitching] = React.useState(false)
@@ -18,6 +18,7 @@ export function TabSwitcher({ view, onChange }: { view: ViewMode; onChange: (v: 
     { id: 'matchups', label: 'Matchups', icon: <Swords className="size-3.5" /> },
     { id: 'tierlist', label: 'Tiers', icon: <Crown className="size-3.5" /> },
     { id: 'patches', label: 'Patches', icon: <Newspaper className="size-3.5" /> },
+    { id: 'dmgcalc', label: 'Dmg Calc', icon: <Calculator className="size-3.5" /> },
     { id: 'docs', label: 'Docs', icon: <BookOpen className="size-3.5" /> },
   ]
 

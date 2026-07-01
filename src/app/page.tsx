@@ -16,6 +16,7 @@ import { DocsPage } from '@/components/skills/docs-page'
 import { TierListPage } from '@/components/skills/tier-list-page'
 import { PatchesPage } from '@/components/skills/patches-page'
 import { MatchupsPage } from '@/components/skills/matchups-page'
+import { DamageCalculatorPage } from '@/components/skills/damage-calculator-page'
 import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
 
 import {
@@ -129,6 +130,8 @@ export default function Home() {
       } else if (e.key === '5') {
         setView('patches')
       } else if (e.key === '6') {
+        setView('dmgcalc')
+      } else if (e.key === '7') {
         setView('docs')
       }
     }
@@ -181,6 +184,16 @@ export default function Home() {
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
         <PatchesPage />
+        <SyncFooter />
+      </div>
+    )
+  }
+
+  if (view === 'dmgcalc') {
+    return (
+      <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <TabSwitcher view={view} onChange={setView} />
+        <DamageCalculatorPage />
         <SyncFooter />
       </div>
     )

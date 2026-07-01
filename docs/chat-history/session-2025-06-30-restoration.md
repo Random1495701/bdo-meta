@@ -220,3 +220,36 @@ Must use web agent (agent-browser) for access due to bot protection.
 - Matchups redesign (merge specs, move to top page, pin classes)
 - Tiers portrait redesign
 - Patch note system multiple choice (user hasn't chosen A/B/C/D yet)
+
+---
+
+## Session Update: v5.0.0 — Damage Calculator + Q-Block + Grapple Fix (2025-07-01)
+
+### What Was Done
+
+1. **Grapple parsing fix (root cause found and fixed)**:
+   - The bdocodex tooltip parser incorrectly extracted "All CC Resistance (except Grapple), including from Back Attacks" as a `cc: Grapple` row
+   - This text is a RESISTANCE BUFF (adds Super Armor), not a grab CC
+   - Fixed 17 skills: changed damageRows from `cc: Grapple` to `protection: All CC Resistance (except Grapple), including from Back Attacks`
+   - Added `Super Armor` to protectionTypes for these skills (Q-block = SA + FG)
+   - Removed `Grapple` from ccTypes for 6 newly identified skills (Valkyrie Guard, Warrior Guard, Valk Shield Chase I/II, Valk Succession: Ultimate Righteous Charge, Nova Command: Passed Pawn I)
+   - Classes with Q-block: Valkyrie, Warrior, Nova, Wizard, Witch, Seraph
+
+2. **Damage Calculator page** (new tool):
+   - Input: Total AP, Enemy DR, DR Coefficient, Species AP, 6 damage scalar toggles (Crit, Down, Air, Back, Speed, Counter)
+   - Skill search with auto-add to calculation list
+   - Results table with per-skill PvP damage, per-scalar columns, expandable formula breakdown
+   - Formula: `[(AP × Skill% × PvP%) - (DR × Coef)] × Scalars`
+   - Note: Formula needs validation from bigandshiny's documentation — user asked to locate it
+
+3. **Version tracking**: v5.0.0 tagged, v4.3.1 stable tagged
+4. **GitHub**: Force-pushed after session reset restored code from remote
+
+### PA Wiki Confirmation
+User confirmed: https://www.naeu.playblackdesert.com/en-us/Wiki?wikiNo=225 is the correct PA Wiki page
+
+### Still Pending
+- BDO PvP damage formula validation (user needs to locate bigandshiny's documentation)
+- Combo Extraction (Foundry guides) — low priority
+- Documentation gaps (CHANGELOG + docs-page) — low priority
+- Tier portrait redesign — medium priority

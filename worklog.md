@@ -2543,3 +2543,51 @@ Stage Summary:
 4. DB has 4111 skills (down from 7231 mentioned in older docs). All 4111 are enriched (100%), but addon data is completely missing.
 5. CHANGELOG.md hasn't been updated since v2.0.0 (June 29). 17 versions of changes undocumented in canonical changelog.
 6. docs-page.tsx version history has gaps (v2.6-v2.9, v3.3-v3.9, v4.0+).
+
+---
+Task ID: 31-DMGCALC
+Agent: dmg-calc-dev
+Task: Build Damage Calculator page tool
+
+Work Log:
+- Read /home/z/my-project/worklog.md (last 3 sections: AUDIT-2 feature matrix, Task 27-META-EXPAND, Task 28 main-orchestrator deep audit) to understand project context — confirmed the codebase has full BDO dark theme (bdo-ink, bdo-leather-dark, bdo-title, bdo-btn, bdo-input, bdo-icon-frame, bdo-chip-on, bdo-stat-box), uses useQuery from @tanstack/react-query for fetching, framer-motion for animation, and that the /api/skills endpoint returns items with damage.totalPvE / damage.hasSpecialMode / pvpDamagePercent fields.
+- Read existing tab-switcher.tsx to understand the ViewMode union type ('data' | 'meta' | 'matchups' | 'tierlist' | 'patches' | 'docs') and the tabs array structure, so I could append a new 'dmgcalc' entry without breaking the version dropdown layout.
+- Read src/app/page.tsx to understand the conditional render-per-view pattern (each view returns a full-page wrapper with TabSwitcher + page component + SyncFooter) and the keyboard navigation handler (digits 1-6 to switch tabs — extended to 1-7 to accommodate the new Dmg Calc tab).
+- Read src/lib/skills.ts (classColor, classIconUrl, SPEC_COLORS exports) and src/lib/damage.ts (formatDamage, DamageCalculation interface) — confirmed formatDamage takes a raw integer and returns "K%/M%/N%" formatted string, and that calculateDamage already pre-computes damage.totalPvE as the sum of percent × multiplier × maxHits for the first mode.
+- Created src/components/skills/damage-calculator-page.tsx (~855 lines):
+  - SCALAR_CONFIGS array defines the 6 damage scalars (crit/down/air/back/speed/counter) with label, multiplier (1.5/1.5/1.3/1.5/1.2/1.5), color (amber/red/cyan/purple/emerald/pink), and tooltip description.
+  - calculatePvpDamage() implements the formula from the task spec exactly: rawDamage = (totalAp × skillMultiplier × pvpMod) - (dr × drCoefficient); base = max(1, round(rawDamage)); per-scalar damage values for each of the 6 scalars (rawDamage × cfg.multiplier); stacked scalarMult (multiplicative); withScalars = max(1, round(rawDamage × scalarMult)); breakdown string.
+  - NumberField helper component for label + numeric input with hint slot (used for the DR Coefficient info tooltip).
+  - SkillIcon helper component — gold-bevel bdo-icon-frame with first-letter fallback (same pattern as skill-list-row.tsx) so broken/missing iconUrls still render something readable.
+  - SortButton helper for sortable column headers (chevron-up/down when active, ArrowUpDown icon when inactive).
+  - Main DamageCalculatorPage component:
+    - Inputs section: Total AP (default 300), Enemy DR (default 350), DR Coefficient (default 5, with Info icon tooltip explaining it's a configurable multiplier, clamped to ≥ 0), Species AP (default 0). All in a 4-column responsive grid (2 cols on mobile).
+    - Damage Scalars section: 6 toggle buttons in a 6/3/2-column grid; active state uses bdo-chip-on style (gold glow) with the scalar's accent color; counter badge shows number of active scalars.
+    - Add Skills section: debounced (300ms) search input calling /api/skills?q=...&maxRank=true&filterEvasion=true&pageSize=10 via useQuery; results list (max-h-96 overflow-y-auto) shows skill icon, name, special-mode badge (SPM), class color label, PvE total formatted with formatDamage, PvP %; clicking a result adds it to the selected list (disables if already added); X button clears search.
+    - Results section: empty state with Calculator icon and prompt; desktop sortable table (skill icon+name+class / Skill Dmg % / PvP % / PvP Dmg / 6 per-scalar columns / expand+remove buttons); mobile card list with 2-col stat boxes + 3-col scalar grid + collapsible breakdown. Expandable per-skill breakdown shows the full formula calculation with all intermediate values (Total AP, Skill Mult, PvP Mod, Base Dmg, Scalar Mult). Sortable by Skill name / PvP % / PvP Damage with asc/desc toggle.
+    - Formula Display section: shows the formula `PvP Damage = [ (AP × Skill% × PvP%) - (DR × Coef) ] × Scalars`, followed by a 3-column legend explaining each variable (AP, Skill%, PvP%, DR, Coef, Scalars), followed by an amber-bordered validation note: "Formula is approximate and based on community research. Needs validation." mentioning bigandshiny's documentation and listing additional modifiers (additional damage, special attack, HP-based modifiers, species damage) not modeled.
+    - Top-of-page amber validation banner reiterating the same warning.
+- Updated src/components/skills/tab-switcher.tsx:
+  - Added Calculator icon to the lucide-react import.
+  - Extended ViewMode union: 'data' | 'meta' | 'matchups' | 'tierlist' | 'patches' | 'docs' | 'dmgcalc'.
+  - Inserted new tab between 'patches' and 'docs': { id: 'dmgcalc', label: 'Dmg Calc', icon: <Calculator className="size-3.5" /> }.
+- Updated src/app/page.tsx:
+  - Imported DamageCalculatorPage.
+  - Added 'dmgcalc' branch in the keyboard navigation handler (key '6' = dmgcalc, key '7' = docs, shifted from previously '6' = docs).
+  - Added new conditional render block `if (view === 'dmgcalc') { return <wrapper><TabSwitcher /><DamageCalculatorPage /><SyncFooter /></wrapper> }` between 'patches' and the default 'data' fallback.
+- Ran `bun run lint` — clean (no errors, no warnings).
+- Ran `bunx tsc --noEmit` — only pre-existing errors in scripts/, examples/, skills/image-edit/, and src/app/api/skills/route.ts:713 (all unrelated to my changes); zero errors in damage-calculator-page.tsx, tab-switcher.tsx, or src/app/page.tsx.
+- Verified dev server (PID 5443) still responding with HTTP 200 on localhost:3000 after edits.
+- Files modified:
+  1. src/components/skills/damage-calculator-page.tsx (NEW, 855 lines)
+  2. src/components/skills/tab-switcher.tsx (+2 lines: Calculator import, dmgcalc tab)
+  3. src/app/page.tsx (+10 lines: DamageCalculatorPage import, dmgcalc keyboard nav, dmgcalc view branch)
+
+Stage Summary:
+- New "Dmg Calc" tab wired into the main navigation (7th tab, between Patches and Docs). Clicking it renders the DamageCalculatorPage, which provides:
+  1. Input panel: Total AP (300), Enemy DR (350), DR Coefficient (5, configurable, with tooltip), Species AP (0) + 6 toggleable damage scalars (Crit/Down/Air/Back/Speed/Counter) with their multipliers (1.5/1.5/1.3/1.5/1.2/1.5).
+  2. Skill search with debounced (300ms) useQuery against /api/skills — results show icon, name, class, special-mode badge, PvE total, PvP %, and add-to-list button.
+  3. Results table (desktop sortable, mobile card list) — per-skill: icon+name+class, Skill Dmg %, PvP %, calculated PvP Damage, all 6 per-scalar damage values, expand button to show formula breakdown string, remove button. Sortable by name/PvP %/PvP damage.
+  4. Formula display with legend + amber validation note: "Formula is approximate and based on community research. Needs validation." mentioning bigandshiny's BDO documentation.
+- Calculation function implements the spec exactly: `[(AP × Skill% × PvP%) - (DR × Coef)] × Scalars` with min 1 damage floor, multiplicative scalar stacking, and per-scalar damage columns showing what each scalar alone would yield.
+- Lint clean. TypeScript clean for all 3 modified files. Dev server still serving HTTP 200.
