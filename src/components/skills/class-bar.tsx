@@ -52,16 +52,10 @@ function ClassIcon({
 
   return (
     <div
-      className="relative shrink-0 overflow-hidden rounded-sm border-2"
+      className="relative shrink-0 overflow-hidden rounded-sm"
       style={{
         width: size,
         height: size,
-        borderColor: active ? 'rgba(240,208,96,0.85)' : 'rgba(156,126,46,0.55)',
-        background:
-          'linear-gradient(135deg, #1a1612 0%, #0a0908 100%)',
-        boxShadow: active
-          ? 'inset 0 0 0 1px rgba(240,208,96,0.4), 0 0 10px rgba(200,170,68,0.4)'
-          : 'inset 0 0 0 1px rgba(240,208,96,0.15), inset 0 0 6px rgba(0,0,0,0.6)',
       }}
     >
       <img
@@ -78,31 +72,40 @@ function ClassIcon({
 function ClassChip({
   cls,
   active,
+  excluded,
   count,
   specs,
   onClick,
   onSpecClick,
+  onExcludeClick,
 }: {
   cls: BdoClass
   active: boolean
+  excluded: boolean
   count: number
   specs: ('succession' | 'awakening' | 'ascension')[]
   onClick: () => void
   onSpecClick: (spec: 'succession' | 'awakening' | 'ascension') => void
+  onExcludeClick?: () => void
 }) {
   const color = classColor(cls.name)
-  // Ascension-only classes: show "Asc" button instead of S/A
-  const isAscOnly = ['scholar', 'archer', 'shai', 'seraph', 'deadeye', 'wukong'].includes(cls.slug)
+  const isAsc = cls.isAscension
   return (
     <button
       type="button"
       onClick={onClick}
-      title={`${cls.name} — ${count} skills${active ? ' (click to deselect)' : ' (click to select)'}`}
+      onDoubleClick={(e) => {
+        e.stopPropagation()
+        onExcludeClick?.()
+      }}
+      title={`${cls.name} — ${count} skills${active ? ' (click to deselect)' : ' (click to select)'} · double-click to exclude`}
       className={cn(
         'group flex shrink-0 flex-col items-center gap-1 rounded-sm border px-2 py-1.5 transition-all',
-        active
-          ? 'border-amber-400/80 bg-amber-500/10'
-          : 'border-amber-900/40 bg-bdo-leather-dark hover:border-amber-600/60 hover:bg-amber-900/10',
+        excluded
+          ? 'border-red-700/60 bg-red-900/20 opacity-60'
+          : active
+            ? 'border-amber-400/80 bg-amber-500/10'
+            : 'border-amber-900/40 bg-bdo-leather-dark hover:border-amber-600/60 hover:bg-amber-900/10',
       )}
       style={
         active
@@ -128,16 +131,22 @@ function ClassChip({
       >
         {cls.name}
       </span>
-      {/* Spec buttons — S/A for normal classes, Asc for ascension-only */}
+      {/* Spec buttons: Asc for ascension-only classes, S/A for others */}
       <div className="flex gap-0.5" onClick={(e) => e.stopPropagation()}>
-        {isAscOnly ? (
-          // Ascension-only: single "Asc" button
+        {isAsc ? (
           <span
             role="button"
             tabIndex={0}
             onClick={(e) => {
               e.stopPropagation()
               onSpecClick('ascension')
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                e.stopPropagation()
+                onSpecClick('ascension')
+              }
             }}
             className={cn(
               'flex h-4 w-8 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
@@ -150,7 +159,6 @@ function ClassChip({
             Asc
           </span>
         ) : (
-          // Normal classes: S + A buttons
           <>
             <span
               role="button"
@@ -158,6 +166,13 @@ function ClassChip({
               onClick={(e) => {
                 e.stopPropagation()
                 onSpecClick('succession')
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  onSpecClick('succession')
+                }
               }}
               className={cn(
                 'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
@@ -175,6 +190,13 @@ function ClassChip({
               onClick={(e) => {
                 e.stopPropagation()
                 onSpecClick('awakening')
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  onSpecClick('awakening')
+                }
               }}
               className={cn(
                 'flex h-4 w-4 items-center justify-center rounded-sm text-[9px] font-bold transition-all',
@@ -195,7 +217,9 @@ function ClassChip({
 
 export function ClassBar() {
   const classIds = useSkillStore((s) => s.filters.classIds) ?? []
+  const excludedClassIds = useSkillStore((s) => s.filters.excludedClassIds) ?? []
   const toggleClass = useSkillStore((s) => s.toggleClass)
+  const toggleExcludeClass = useSkillStore((s) => s.toggleExcludeClass)
   const clearClasses = useSkillStore((s) => s.clearClasses)
   const specs = useSkillStore((s) => s.filters.specs) ?? []
   const toggleSpec = useSkillStore((s) => s.toggleSpec)
@@ -348,22 +372,23 @@ export function ClassBar() {
               ))
             : classes
                 .filter((c) => !c.name.startsWith('NEW_CLASS'))
-                .sort((a, b) => a.name.localeCompare(b.name))
                 .map((c) => (
                   <ClassChip
                     key={c.id}
                     cls={c}
                     count={countMap.get(c.id) ?? c.skillCount ?? 0}
                     active={classIds.includes(c.id)}
+                    excluded={excludedClassIds.includes(c.id)}
                     specs={specs}
+                    onExcludeClick={() => toggleExcludeClass(c.id)}
                     onClick={() => {
                       // Clicking the class icon selects it + activates appropriate specs
-                      const isAscOnly = ['scholar', 'archer', 'shai', 'seraph', 'deadeye', 'wukong'].includes(c.slug)
                       if (!classIds.includes(c.id)) {
                         clearClasses()
                         toggleClass(c.id)
-                        // Activate specs: ascension-only gets ascension, others get S+A
-                        if (isAscOnly) {
+                        // For ascension-only classes, activate ascension spec
+                        // For normal classes, activate both succession + awakening
+                        if (c.isAscension) {
                           if (!specs.includes('ascension')) toggleSpec('ascension')
                         } else {
                           if (!specs.includes('succession')) toggleSpec('succession')

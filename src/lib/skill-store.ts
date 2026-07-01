@@ -1,6 +1,30 @@
 import { create } from 'zustand'
 import type { SkillFilters, SkillType, SkillSort } from './skills'
 
+// Manual localStorage persistence for sort/view preferences.
+// We don't use zustand persist middleware because it causes hydration mismatches.
+// Instead, we load from localStorage on first client render and save on change.
+
+const SORT_STORAGE_KEY = 'bdo-meta-sort-prefs'
+
+function loadSortPrefs(): { sort?: SkillSort; order?: 'asc' | 'desc'; viewMode?: 'grid' | 'list' | 'table' } {
+  if (typeof window === 'undefined') return {}
+  try {
+    const raw = localStorage.getItem(SORT_STORAGE_KEY)
+    if (raw) return JSON.parse(raw)
+  } catch {}
+  return {}
+}
+
+function saveSortPrefs(prefs: { sort: SkillSort; order: 'asc' | 'desc'; viewMode: 'grid' | 'list' | 'table' }) {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(prefs))
+  } catch {}
+}
+
+const savedPrefs = loadSortPrefs()
+
 interface SkillStore {
   filters: SkillFilters
   selectedSkillId: number | null
@@ -11,6 +35,8 @@ interface SkillStore {
   viewMode: 'grid' | 'list' | 'table'
   setQ: (q: string) => void
   toggleClass: (classId: number) => void
+  toggleExcludeClass: (classId: number) => void
+  clearExcludedClasses: () => void
   clearClasses: () => void
   toggleType: (t: SkillType) => void
   clearTypes: () => void
@@ -27,6 +53,7 @@ interface SkillStore {
   toggleHasAnim: () => void
   toggleQuickslot: () => void
   toggleHasPrereqs: () => void
+  toggleHasAddon: () => void
   setSpec: (spec: 'all' | 'succession' | 'awakening' | 'ascension') => void
   toggleSpec: (spec: 'succession' | 'awakening' | 'ascension') => void
   setSort: (s: SkillSort) => void
@@ -49,8 +76,8 @@ const DEFAULT_FILTERS: SkillFilters = {
   protections: [],
   cc: [],
   specs: [],
-  sort: 'skillId',
-  order: 'asc',
+  sort: savedPrefs.sort || 'skillId',
+  order: savedPrefs.order || 'asc',
   page: 1,
   pageSize: 24,
 }
@@ -62,7 +89,7 @@ export const useSkillStore = create<SkillStore>((set) => ({
   detailOpen: false,
   compareOpen: false,
   filtersOpen: false,
-  viewMode: 'grid',
+  viewMode: savedPrefs.viewMode || 'table',
   setQ: (q) => set((s) => ({ filters: { ...s.filters, q, page: 1 } })),
   toggleClass: (classId) =>
     set((s) => {
@@ -71,6 +98,13 @@ export const useSkillStore = create<SkillStore>((set) => ({
       return { filters: { ...s.filters, classIds: next, page: 1 } }
     }),
   clearClasses: () => set((s) => ({ filters: { ...s.filters, classIds: [], page: 1 } })),
+  toggleExcludeClass: (classId) =>
+    set((s) => {
+      const cur = s.filters.excludedClassIds || []
+      const next = cur.includes(classId) ? cur.filter((x) => x !== classId) : [...cur, classId]
+      return { filters: { ...s.filters, excludedClassIds: next, page: 1 } }
+    }),
+  clearExcludedClasses: () => set((s) => ({ filters: { ...s.filters, excludedClassIds: [], page: 1 } })),
   toggleType: (t) =>
     set((s) => {
       const cur = s.filters.types || []
@@ -101,6 +135,7 @@ export const useSkillStore = create<SkillStore>((set) => ({
   toggleHasAnim: () => set((s) => ({ filters: { ...s.filters, hasAnim: !s.filters.hasAnim ? true : undefined, page: 1 } })),
   toggleQuickslot: () => set((s) => ({ filters: { ...s.filters, quickslot: !s.filters.quickslot ? true : undefined, page: 1 } })),
   toggleHasPrereqs: () => set((s) => ({ filters: { ...s.filters, hasPrereqs: !s.filters.hasPrereqs ? true : undefined, page: 1 } })),
+  toggleHasAddon: () => set((s) => ({ filters: { ...s.filters, hasAddon: !s.filters.hasAddon ? true : undefined, page: 1 } })),
   setSpec: (spec) => set((s) => {
     // Legacy single-spec setter — maps to specs array
     if (spec === 'all') return { filters: { ...s.filters, specs: [], types: [], page: 1 } }
@@ -111,11 +146,22 @@ export const useSkillStore = create<SkillStore>((set) => ({
     const next = cur.includes(spec) ? cur.filter((x) => x !== spec) : [...cur, spec]
     return { filters: { ...s.filters, specs: next, types: [], page: 1 } }
   }),
-  setSort: (sort) => set((s) => ({ filters: { ...s.filters, sort, page: 1 } })),
-  toggleOrder: () => set((s) => ({ filters: { ...s.filters, order: s.filters.order === 'asc' ? 'desc' : 'asc', page: 1 } })),
+  setSort: (sort) => set((s) => {
+    saveSortPrefs({ sort, order: s.filters.order, viewMode: s.viewMode })
+    return { filters: { ...s.filters, sort, page: 1 } }
+  }),
+  toggleOrder: () => set((s) => {
+    const order = s.filters.order === 'asc' ? 'desc' : 'asc'
+    saveSortPrefs({ sort: s.filters.sort, order, viewMode: s.viewMode })
+    return { filters: { ...s.filters, order, page: 1 } }
+  }),
   setPage: (p) => set((s) => ({ filters: { ...s.filters, page: p } })),
   setPageSize: (n) => set((s) => ({ filters: { ...s.filters, pageSize: n, page: 1 } })),
-  setViewMode: (m) => set({ viewMode: m }),
+  setViewMode: (m) => {
+    const state = useSkillStore.getState()
+    saveSortPrefs({ sort: state.filters.sort, order: state.filters.order, viewMode: m })
+    set({ viewMode: m })
+  },
   resetFilters: () => set({ filters: { ...DEFAULT_FILTERS } }),
   selectSkill: (id) => set({ selectedSkillId: id, detailOpen: id != null }),
   setDetailOpen: (open) => set({ detailOpen: open }),

@@ -9,7 +9,7 @@ export async function GET() {
   if (cached) return NextResponse.json(cached)
 
   // Return all bdocodex classes plus per-class skill counts.
-  const classes = await db.bdoClass.findMany({ orderBy: { id: 'asc' } })
+  const classes = await db.bdoClass.findMany({ orderBy: { name: 'asc' } })
   const counts = await db.skill.groupBy({
     by: ['classId'],
     _count: { skillId: true },
@@ -27,6 +27,8 @@ export async function GET() {
       awakened: c.awakened,
       mainWeapon: c.mainWeapon,
       awakeningWeapon: c.awakeningWeapon,
+      combatType: c.combatType,
+      isAscension: c.isAscension,
       skillCount: countMap.get(c.id) ?? 0,
     })),
   }

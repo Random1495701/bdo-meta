@@ -1,29 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 30 30" style="enable-background:new 0 0 30 30;" xml:space="preserve">
-<defs>
-  <style type="text/css">
-    .st194{fill:#2D2D2D;stroke:#FFFFFF;stroke-width:0.6317;stroke-miterlimit:10;}
-    .st23{fill:#FFFFFF;}
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;">
+  <defs>
+    <style>
+      .ring-outer { animation: spin-cw 20s linear infinite; transform-origin: 24px 24px; }
+      .ring-inner { animation: spin-ccw 14s linear infinite; transform-origin: 24px 24px; }
+      .ring-mid { animation: spin-cw 10s linear infinite; transform-origin: 24px 24px; }
+      .pulse { animation: pulse-glow 4s ease-in-out infinite; transform-origin: 24px 24px; }
+      @keyframes spin-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes spin-ccw { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+      @keyframes pulse-glow { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+      @media (prefers-reduced-motion: reduce) {
+        .ring-outer, .ring-inner, .ring-mid, .pulse { animation: none; }
+      }
+    </style>
+    <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c8aa44" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0a0908" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0d060"/>
+      <stop offset="50%" stop-color="#c8aa44"/>
+      <stop offset="100%" stop-color="#9c7e2e"/>
+    </linearGradient>
+  </defs>
 
-    .z-breathe {
-      animation: breathe 2.5s ease-in-out infinite;
-    }
+  <!-- Background glow -->
+  <circle cx="24" cy="24" r="22" fill="url(#bg-glow)"/>
 
-    @keyframes breathe {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
-    }
-  </style>
-</defs>
-
-<g>
-  <path class="st194" d="M24.51,28.51H5.49c-2.21,0-4-1.79-4-4V5.49c0-2.21,1.79-4,4-4h19.03c2.21,0,4,1.79,4,4v19.03
-    C28.51,26.72,26.72,28.51,24.51,28.51z"/>
-  <g class="z-breathe">
-    <path class="st23" d="M15.47,7.1l-1.3,1.85c-0.2,0.29-0.54,0.47-0.9,0.47h-7.1V7.09C6.16,7.1,15.47,7.1,15.47,7.1z"/>
-    <polygon class="st23" points="24.3,7.1 13.14,22.91 5.7,22.91 16.86,7.1"/>
-    <path class="st23" d="M14.53,22.91l1.31-1.86c0.2-0.29,0.54-0.47,0.9-0.47h7.09v2.33H14.53z"/>
+  <!-- Outer ring with runic ticks (slowest rotation) -->
+  <g class="ring-outer">
+    <circle cx="24" cy="24" r="22" fill="none" stroke="url(#gold-grad)" stroke-width="0.5" opacity="0.5"/>
+    <!-- 12 ornate ticks -->
+    <g fill="url(#gold-grad)" opacity="0.6">
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5"/>
+      <rect x="23.5" y="44" width="1" height="3" rx="0.5"/>
+      <rect x="1" y="23.5" width="3" height="1" rx="0.5"/>
+      <rect x="44" y="23.5" width="3" height="1" rx="0.5"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(30 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(60 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(120 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(150 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(210 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(240 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(300 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(330 24 24)"/>
+    </g>
   </g>
-</g>
+
+  <!-- Mid ring with BDO-style ornamental arcs -->
+  <g class="ring-mid">
+    <circle cx="24" cy="24" r="17" fill="none" stroke="url(#gold-grad)" stroke-width="0.4" opacity="0.4"/>
+    <!-- 4 ornamental arcs -->
+    <g fill="none" stroke="url(#gold-grad)" stroke-width="0.6" opacity="0.5">
+      <path d="M24 7 A17 17 0 0 1 41 24" />
+      <path d="M24 41 A17 17 0 0 1 7 24" />
+    </g>
+    <!-- Decorative diamonds at cardinal points -->
+    <g fill="url(#gold-grad)" opacity="0.5">
+      <path d="M24 6 L25.5 8 L24 10 L22.5 8 Z"/>
+      <path d="M24 38 L25.5 40 L24 42 L22.5 40 Z"/>
+      <path d="M6 24 L8 22.5 L10 24 L8 25.5 Z"/>
+      <path d="M38 24 L40 22.5 L42 24 L40 25.5 Z"/>
+    </g>
+  </g>
+
+  <!-- Inner counter-rotating ring with occult star -->
+  <g class="ring-inner">
+    <circle cx="24" cy="24" r="13" fill="none" stroke="#9c7e2e" stroke-width="0.3" opacity="0.4"/>
+    <!-- 8-pointed occult star (two overlaid squares) -->
+    <g opacity="0.3" fill="url(#gold-grad)">
+      <rect x="14" y="14" width="20" height="20" rx="1" transform="rotate(0 24 24)"/>
+      <rect x="14" y="14" width="20" height="20" rx="1" transform="rotate(45 24 24)"/>
+    </g>
+    <!-- Star outline -->
+    <g fill="none" stroke="url(#gold-grad)" stroke-width="0.4" opacity="0.5">
+      <path d="M24 11 L26 22 L37 24 L26 26 L24 37 L22 26 L11 24 L22 22 Z"/>
+    </g>
+  </g>
+
+  <!-- Center sigil (pulsing) -->
+  <g class="pulse">
+    <!-- Hexagram (Star of Solomon) -->
+    <g fill="none" stroke="url(#gold-grad)" stroke-width="0.5" opacity="0.7">
+      <path d="M24 14 L31 26 L17 26 Z"/>
+      <path d="M24 34 L17 22 L31 22 Z"/>
+    </g>
+    <!-- Center circle -->
+    <circle cx="24" cy="24" r="4" fill="none" stroke="#f0d060" stroke-width="0.4" opacity="0.6"/>
+    <!-- Center dot -->
+    <circle cx="24" cy="24" r="1.5" fill="#f0d060" opacity="0.8"/>
+  </g>
 </svg>

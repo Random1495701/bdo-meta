@@ -17,6 +17,7 @@ import {
   Swords,
   Lock,
   Sparkles,
+  Skull,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -266,6 +267,7 @@ export function FilterSidebar() {
   const toggleHasAnim = useSkillStore((s) => s.toggleHasAnim)
   const toggleQuickslot = useSkillStore((s) => s.toggleQuickslot)
   const toggleHasPrereqs = useSkillStore((s) => s.toggleHasPrereqs)
+  const toggleHasAddon = useSkillStore((s) => s.toggleHasAddon)
   const resetFilters = useSkillStore((s) => s.resetFilters)
 
   // Fetch dynamic slider ranges from the API so the max values match the
@@ -300,6 +302,7 @@ export function FilterSidebar() {
     if (filters.hasAnim) n++
     if (filters.quickslot) n++
     if (filters.hasPrereqs) n++
+    if (filters.hasAddon) n++
     return n
   }, [filters])
 
@@ -686,6 +689,13 @@ export function FilterSidebar() {
               hint="Skill requires another skill to be learned first"
               checked={!!filters.hasPrereqs}
               onToggle={toggleHasPrereqs}
+            />
+            <ToggleRow
+              icon={<Gem className="size-4" />}
+              label="Has add-on data"
+              hint="Skills with Garmoth addon popularity data (725 skills)"
+              checked={!!filters.hasAddon}
+              onToggle={toggleHasAddon}
             />
           </section>
 

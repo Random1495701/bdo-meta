@@ -20,6 +20,15 @@ model BdoClass {
   // Awakening / Succession weapon types
   awakeningWeapon String?
   mainWeapon      String?
+  // PA Wiki data — combat type, class group, SA damage reduction per spec
+  combatType        String? // "Melee" | "Ranged" | "Magic"
+  successionGroup   String? // "Vanguard" | "Crusher" | "Skirmisher"
+  awakeningGroup    String?
+  ascensionGroup    String?
+  successionSaDr    Float?  // SA damage reduction % (10-25)
+  awakeningSaDr     Float?
+  ascensionSaDr     Float?
+  isAscension       Boolean @default(false) // ascension-only class (no awakening/succession)
   skills   Skill[]
 
   @@map("bdo_classes")
@@ -53,6 +62,8 @@ model Skill {
   isSuccession        Boolean  @default(false)
   isBlackSpirit       Boolean  @default(false)
   isPassive           Boolean  @default(false)
+  isFlow              Boolean  @default(false) // "Flow:" skills (combo continuations)
+  isCore              Boolean  @default(false) // "Core:" skills (core abilities, player picks 1)
   prerequisiteIds     String?  // comma-separated skill IDs
   videoUrl            String?  // bdocodex preview video URL
   animationDurationMs Int?     // video duration in ms = animation duration proxy
@@ -83,6 +94,30 @@ model SyncLog {
   createdAt DateTime @default(now())
 
   @@map("sync_logs")
+}
+
+// Tracks individual skill field changes — every time a skill's data is modified
+// (by the lurker, patch application, or manual edit), a log entry is created.
+// This makes it easy to validate if incorrect changes were made or something
+// didn't get pulled when a new patch came.
+model SkillChangeLog {
+  id          String   @id @default(cuid())
+  skillId     Int      // the bdocodex skill_id that changed
+  skillName   String   // snapshot of the skill name at time of change
+  className   String?  // snapshot of the class name
+  field       String   // which field changed: "damageRowsJson" | "ccTypes" | "cooldownSec" | "pvpDamagePercent" | etc.
+  changeType  String   // "create" | "update" | "delete" | "patch_apply"
+  oldValue    String?  // previous value (JSON-encoded for complex fields)
+  newValue    String?  // new value (JSON-encoded for complex fields)
+  source      String   // "lurker" | "patch_apply" | "manual" | "import" | "garmoth"
+  patchDate   String?  // if change came from a patch, which patch date
+  createdAt   DateTime @default(now())
+
+  @@index([skillId])
+  @@index([field])
+  @@index([changeType])
+  @@index([createdAt])
+  @@map("skill_change_logs")
 }
 
 model User {

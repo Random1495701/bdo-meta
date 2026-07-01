@@ -15,6 +15,7 @@ import { MetaPage } from '@/components/skills/meta-page'
 import { DocsPage } from '@/components/skills/docs-page'
 import { TierListPage } from '@/components/skills/tier-list-page'
 import { PatchesPage } from '@/components/skills/patches-page'
+import { MatchupsPage } from '@/components/skills/matchups-page'
 import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
 
 import {
@@ -87,6 +88,29 @@ export default function Home() {
         e.preventDefault()
         const searchInput = document.querySelector('input[placeholder*="Search"]') as HTMLInputElement
         searchInput?.focus()
+      } else if (view === 'data' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter')) {
+        // Arrow key navigation in skill grid
+        e.preventDefault()
+        const cards = Array.from(document.querySelectorAll('[data-skill-card]')) as HTMLElement[]
+        if (cards.length === 0) return
+
+        let currentIdx = cards.findIndex(c => c === document.activeElement || c.contains(document.activeElement))
+        if (currentIdx === -1) currentIdx = -1
+
+        let nextIdx = currentIdx
+        if (e.key === 'ArrowRight') nextIdx = Math.min(currentIdx + 1, cards.length - 1)
+        else if (e.key === 'ArrowLeft') nextIdx = Math.max(currentIdx - 1, 0)
+        else if (e.key === 'ArrowDown') nextIdx = Math.min(currentIdx + 4, cards.length - 1)
+        else if (e.key === 'ArrowUp') nextIdx = Math.max(currentIdx - 4, 0)
+        else if (e.key === 'Enter') {
+          if (currentIdx >= 0 && currentIdx < cards.length) cards[currentIdx].click()
+          return
+        }
+
+        if (nextIdx >= 0 && nextIdx < cards.length) {
+          cards[nextIdx].focus()
+          cards[nextIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+        }
       } else if (e.key === 'Escape') {
         const store = useSkillStore.getState()
         if (store.detailOpen) {
@@ -99,10 +123,12 @@ export default function Home() {
       } else if (e.key === '2') {
         setView('meta')
       } else if (e.key === '3') {
-        setView('tierlist')
+        setView('matchups')
       } else if (e.key === '4') {
-        setView('patches')
+        setView('tierlist')
       } else if (e.key === '5') {
+        setView('patches')
+      } else if (e.key === '6') {
         setView('docs')
       }
     }
@@ -115,6 +141,16 @@ export default function Home() {
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
         <MetaPage onCardClick={handleMetaCardClick} />
+        <SyncFooter />
+      </div>
+    )
+  }
+
+  if (view === 'matchups') {
+    return (
+      <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <TabSwitcher view={view} onChange={setView} />
+        <MatchupsPage />
         <SyncFooter />
       </div>
     )

@@ -12,14 +12,17 @@ export const dynamic = 'force-dynamic'
 // - median PvP damage (same)
 // - number of PvP CC skills (count skills with CC, not CC count; ignore PvE-only)
 // - number of Super Armors, Forward Guards, I-Frames (separately, ignore PvE only)
-// - computed separately for Awakening and Succession specs
+// - CC chain potential (skills with 2+ PvP CCs)
+// - grab count (skills with Grapple CC)
+// - core SA/FG counts (Core: skills)
+// - PA Wiki data: combat type, class group, SA damage reduction per spec
+// - computed separately for Awakening, Succession, and Ascension specs
 
 interface SpecStats {
   skillCount: number
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
-  ccChainPotential: number // skills with 2+ PvP CC counters
   grabCount: number // skills with Grapple CC
   superArmorCount: number
   forwardGuardCount: number
@@ -28,6 +31,7 @@ interface SpecStats {
   coreFgCount: number // Core: skills with Forward Guard (player picks only 1)
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number // avg PvP damage / avg animation duration
+  avgDpc: number // avg damage per cooldown second
   protectedCoverage: number // % of skills with any protection
 }
 
@@ -73,6 +77,8 @@ function computeSpecStats(skills: any[]): SpecStats {
   let topPvpDamageSkill: { skillId: number; name: string; damage: number } | null = null
   let protectedCount = 0
   const animDurations: number[] = []
+  let totalDpc = 0
+  let dpcCount = 0
 
   for (const s of skills) {
     // Skip "(Not in use)" skills — leftovers from old patches
@@ -86,6 +92,11 @@ function computeSpecStats(skills: any[]): SpecStats {
       if (damage.totalPvP > topPvpDamage) {
         topPvpDamage = damage.totalPvP
         topPvpDamageSkill = { skillId: s.skillId, name: s.name, damage: damage.totalPvP }
+      }
+      // Damage per cooldown: totalPvP / cooldownSec (higher = more efficient)
+      if (s.cooldownSec && s.cooldownSec > 0) {
+        totalDpc += damage.totalPvP / s.cooldownSec
+        dpcCount++
       }
     }
 
@@ -101,9 +112,22 @@ function computeSpecStats(skills: any[]): SpecStats {
     }
     const ccTypes = s.ccTypes ? s.ccTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpCCs = ccTypes.filter((cc: string) => !pveOnlyCCs.has(cc) && isRealCC(cc))
-    if (pvpCCs.length > 0) pvpCcSkillCount++
-    if (pvpCCs.length >= 2) ccChainPotential++
-    if (pvpCCs.includes('Grapple')) grabCount++
+
+    // FALSE GRAB FILTER: Some skills have "Grapple" in ccTypes but it's from
+    // "All CC Resistance (except Grapple), including from Back Attacks" text
+    // which is a RESISTANCE buff, not a grab CC. Check damageRows AND description.
+    const isFalseGrab = (damageRows?.some((r: DamageRow) =>
+      r.label?.toLowerCase().includes('except grapple') ||
+      r.label?.toLowerCase().includes('except grapling')
+    ) || false) || (s.description?.toLowerCase().includes('except grapple') || false)
+
+    const hasRealGrab = pvpCCs.includes('Grapple') && !isFalseGrab
+
+    // CC stats: exclude Black Spirit rage skills (they're not part of normal PvP rotation)
+    if (!s.isBlackSpirit) {
+      if (pvpCCs.length > 0) pvpCcSkillCount++
+      if (hasRealGrab) grabCount++
+    }
 
     // Protection stats
     const pveOnlyProts = new Set<string>()
@@ -138,7 +162,6 @@ function computeSpecStats(skills: any[]): SpecStats {
       : sorted[Math.floor(sorted.length / 2)])
     : 0
 
-  // DPS estimate: avg PvP damage / avg animation duration (in seconds)
   const avgAnimSec = animDurations.length > 0
     ? (animDurations.reduce((a, b) => a + b, 0) / animDurations.length) / 1000
     : 1
@@ -146,17 +169,17 @@ function computeSpecStats(skills: any[]): SpecStats {
     ? Math.round(avgPvpDamage / avgAnimSec)
     : 0
 
-  // Protected coverage: % of skills with any protection
   const protectedCoverage = skills.length > 0
     ? Math.round((protectedCount / skills.length) * 100)
     : 0
+
+  const avgDpc = dpcCount > 0 ? Math.round(totalDpc / dpcCount) : 0
 
   return {
     skillCount: skills.length,
     avgPvpDamage,
     medianPvpDamage,
     pvpCcSkillCount,
-    ccChainPotential,
     grabCount,
     superArmorCount,
     forwardGuardCount,
@@ -165,6 +188,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     coreFgCount,
     topPvpDamageSkill,
     dpsEstimate,
+    avgDpc,
     protectedCoverage,
   }
 }
@@ -183,7 +207,7 @@ export async function GET() {
       skillId: true, name: true, className: true, classId: true,
       damageRowsJson: true, pvpDamagePercent: true, ccTypes: true, protectionTypes: true,
       isAwakening: true, isSuccession: true, isAbsolute: true, isBlackSpirit: true, isPassive: true,
-      requiredLevel: true,
+      requiredLevel: true, animationDurationMs: true, description: true, cooldownSec: true,
     },
   })
 
@@ -287,32 +311,19 @@ export async function GET() {
       }
     }
 
-    // Ascension spec: for ascension-only classes (Wukong, Scholar, Shai, Archer,
-    // Seraph, Deadeye), the "awakening" skills are actually ascension skills.
-    // These classes have no succession — their "awakening" IS their ascension.
-    // For normal classes, ascension = empty (they don't have ascension).
+    // Ascension spec: for ascension-only classes, the "awakening" skills are
+    // actually ascension skills. Use isAscension flag from DB (PA Wiki data).
     const ascensionSkills: typeof classSkills = []
     const ascAdded = new Set<number>()
-    const isAscensionClass = ['wukong', 'scholar', 'shai', 'archer', 'seraph', 'deadeye'].includes(cls.slug)
+    const isAscensionClass = cls.isAscension === true
 
     if (isAscensionClass) {
-      // For ascension-only classes: their "awakening" skills are ascension skills
-      // Also include Main (Lv56+), Absolute, BS, Passive
+      // For ascension-only classes: ALL skills are part of the ascension spec.
+      // These classes don't have the awakening/succession split — they use
+      // everything: awakening skills (ascension tree), main skills (all levels),
+      // absolute, BS, and passive.
       for (const s of maxRankSkills) {
-        if (s.isAwakening && !ascAdded.has(s.skillId)) {
-          ascensionSkills.push(s); ascAdded.add(s.skillId)
-        }
-      }
-      // Include unclassified Lv56+ main skills (new ascension skill tree)
-      for (const s of maxRankSkills) {
-        const isOther = s.isAwakening || s.isSuccession || s.isAbsolute || s.isBlackSpirit || s.isPassive
-        if (!isOther && s.requiredLevel >= 56 && !ascAdded.has(s.skillId)) {
-          ascensionSkills.push(s); ascAdded.add(s.skillId)
-        }
-      }
-      // Also include BS + Passive
-      for (const s of maxRankSkills) {
-        if ((s.isBlackSpirit || s.isPassive) && !ascAdded.has(s.skillId)) {
+        if (!ascAdded.has(s.skillId)) {
           ascensionSkills.push(s); ascAdded.add(s.skillId)
         }
       }
@@ -323,27 +334,24 @@ export async function GET() {
     const effectiveAwakeningSkills = isAscensionClass ? [] : awakeningSkills
     const effectiveSuccessionSkills = isAscensionClass ? [] : successionSkills
 
-    // Parse PA Wiki data from awakeningWeapon field (stored as JSON)
-    let wikiData: any = {}
-    try { wikiData = cls.awakeningWeapon ? JSON.parse(cls.awakeningWeapon) : {} } catch {}
-
+    // PA Wiki data is stored directly in DB columns (combatType, successionGroup, etc.)
     results.push({
       classId: cls.id,
       className: cls.name,
       slug: cls.slug,
-      combatType: cls.mainWeapon || null,
-      successionGroup: wikiData.successionGroup || null,
-      awakeningGroup: wikiData.awakeningGroup || null,
-      ascensionGroup: wikiData.ascensionGroup || null,
-      successionSaDr: wikiData.successionSaDr ?? 10,
-      awakeningSaDr: wikiData.awakeningSaDr ?? 10,
-      ascensionSaDr: wikiData.ascensionSaDr ?? 10,
+      combatType: cls.combatType || null,
+      successionGroup: cls.successionGroup || null,
+      awakeningGroup: cls.awakeningGroup || null,
+      ascensionGroup: cls.ascensionGroup || null,
+      successionSaDr: cls.successionSaDr ?? 10,
+      awakeningSaDr: cls.awakeningSaDr ?? 10,
+      ascensionSaDr: cls.ascensionSaDr ?? 10,
       awakening: computeSpecStats(effectiveAwakeningSkills),
       succession: computeSpecStats(effectiveSuccessionSkills),
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
-        pvpCcSkillCount: 0, ccChainPotential: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
-        topPvpDamageSkill: null, dpsEstimate: 0, protectedCoverage: 0,
+        pvpCcSkillCount: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
+        topPvpDamageSkill: null, dpsEstimate: 0, avgDpc: 0, protectedCoverage: 0,
       },
     })
   }

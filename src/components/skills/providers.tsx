@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ErrorBoundary } from '@/components/skills/error-boundary'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [client] = React.useState(
@@ -17,5 +18,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       }),
   )
 
-  return <QueryClientProvider client={client}>{children}</QueryClientProvider>
+  return (
+    <ErrorBoundary>
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    </ErrorBoundary>
+  )
 }

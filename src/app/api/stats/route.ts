@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { getCached, setCached } from '@/lib/cache'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
+  const cached = getCached('stats')
+  if (cached) return NextResponse.json(cached)
+
   const [
     total,
     withDescription,
@@ -73,7 +77,7 @@ export async function GET() {
     passive: passiveCount,
   }
 
-  return NextResponse.json({
+  const result = {
     total,
     withDescription,
     withVideo,
@@ -90,5 +94,8 @@ export async function GET() {
       message: l.message,
       createdAt: l.createdAt,
     })),
-  })
+  }
+
+  setCached('stats', result, 60 * 1000) // cache for 1 min (shorter since sync logs change)
+  return NextResponse.json(result)
 }

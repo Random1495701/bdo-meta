@@ -143,6 +143,7 @@ export async function GET(req: NextRequest) {
   const q = sp.get('q')?.trim() || ''
   // Multi-select: comma-separated values
   const classParam = sp.get('class') // "0,1,2" or "all"
+  const excludeClassParam = sp.get('excludeClass') // "3,5" — exclude these classes
   const typeParam = sp.get('type') // "succession,absolute" or "all"
   const protectionParam = sp.get('protection') // "Super Armor,Forward Guard" or "none" or "all"
   const cc = sp.get('cc')
@@ -333,7 +334,37 @@ export async function GET(req: NextRequest) {
         AND.push({ classId: classIds[0] })
       }
     } else if (classIds.length > 1) {
-      AND.push({ classId: { in: classIds } })
+      // Multi-class: match by classId OR className
+      const selectedClasses = await db.bdoClass.findMany({
+        where: { id: { in: classIds } },
+        select: { name: true },
+      })
+      const classNameList = selectedClasses.map((c) => c.name)
+      AND.push({
+        OR: [
+          { classId: { in: classIds } },
+          { className: { in: classNameList } },
+        ],
+      })
+    }
+  }
+
+  // Excluded classes (double-click to exclude)
+  if (excludeClassParam && excludeClassParam !== 'all') {
+    const excludeIds = excludeClassParam.split(',').map((c) => parseInt(c.trim(), 10)).filter((c) => !Number.isNaN(c))
+    if (excludeIds.length > 0) {
+      const excludeNames = (await db.bdoClass.findMany({
+        where: { id: { in: excludeIds } },
+        select: { name: true },
+      })).map((c) => c.name)
+      AND.push({
+        NOT: {
+          OR: [
+            { classId: { in: excludeIds } },
+            { className: { in: excludeNames } },
+          ],
+        },
+      })
     }
   }
 
