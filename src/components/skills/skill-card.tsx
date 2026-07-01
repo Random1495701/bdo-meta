@@ -161,15 +161,21 @@ export const SkillCard = React.memo(function SkillCard({
   const anim = formatAnimDuration(skill.animationDurationMs)
 
   return (
-    <motion.button
-      type="button"
+    <motion.div
       data-skill-card
+      role="button"
       tabIndex={0}
       onClick={() => selectSkill(skill.skillId)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          selectSkill(skill.skillId)
+        }
+      }}
       whileHover={{ y: -3 }}
       transition={{ type: 'spring', stiffness: 350, damping: 25 }}
       className={cn(
-        'group relative flex h-full w-full flex-col gap-2 overflow-hidden rounded-sm border p-3 text-left transition-colors',
+        'group relative flex h-full w-full cursor-pointer flex-col gap-2 overflow-hidden rounded-sm border p-3 text-left transition-colors',
         'border-amber-800/50 bg-bdo-leather hover:border-amber-500/70',
       )}
       style={{
@@ -324,6 +330,6 @@ export const SkillCard = React.memo(function SkillCard({
           </div>
         )}
       </div>
-    </motion.button>
+    </motion.div>
   )
 })

@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 import type { SkillFilters, SkillType, SkillSort } from './skills'
 
 interface SkillStore {
@@ -57,9 +56,7 @@ const DEFAULT_FILTERS: SkillFilters = {
   pageSize: 24,
 }
 
-export const useSkillStore = create<SkillStore>()(
-  persist(
-    (set) => ({
+export const useSkillStore = create<SkillStore>((set) => ({
   filters: { ...DEFAULT_FILTERS },
   selectedSkillId: null,
   compareSkillId: null,
@@ -127,17 +124,4 @@ export const useSkillStore = create<SkillStore>()(
   setCompareSkill: (id) => set({ compareSkillId: id }),
   setCompareOpen: (open) => set({ compareOpen: open }),
   setFiltersOpen: (open) => set({ filtersOpen: open }),
-    }),
-    {
-      name: 'bdo-meta-skill-store',
-      // Only persist filters + viewMode (not transient UI state like drawers/sheets)
-      partialize: (state) => ({
-        filters: state.filters,
-        viewMode: state.viewMode,
-      }),
-      // Skip hydration during SSR — prevents React hydration mismatch errors.
-      // The store hydrates from localStorage on the client side automatically.
-      skipHydration: true,
-    },
-  ),
-)
+}))

@@ -352,6 +352,7 @@ export function SkillDetailDrawer() {
   const selectSkill = useSkillStore((s) => s.selectSkill)
   const skillId = useSkillStore((s) => s.selectedSkillId)
   const isMobile = useIsMobile()
+  const [videoAutoplay, setVideoAutoplay] = React.useState(true)
 
   // Refetch the open skill every 15s so the lurker's enrichment shows up
   // live without needing to close/reopen the drawer.
