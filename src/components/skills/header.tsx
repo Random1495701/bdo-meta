@@ -12,7 +12,10 @@ import {
   FileText,
   Database,
   Sparkles,
+  ChevronDown,
+  GitBranch,
 } from 'lucide-react'
+import { APP_VERSION, GIT_TAGS } from '@/lib/version'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -223,6 +226,7 @@ export function Header() {
             <div className="min-w-0">
               <h1 className="bdo-title truncate text-xl tracking-wide">
                 BDO Meta
+                <span className="ml-2 font-mono text-xs text-amber-400/60">{APP_VERSION}</span>
               </h1>
               <p className="hidden text-[11px] text-amber-200/50 sm:block">
                 Black Desert Online skill database — synced from bdocodex.com

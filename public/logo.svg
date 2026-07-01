@@ -1,53 +1,92 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;">
   <defs>
     <style>
-      .bdo-logo-spin { animation: bdo-spin 8s linear infinite; transform-origin: 20px 20px; }
-      @keyframes bdo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      .bdo-logo-spin-rev { animation: bdo-spin-rev 12s linear infinite; transform-origin: 20px 20px; }
-      @keyframes bdo-spin-rev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+      .ring-outer { animation: spin-cw 20s linear infinite; transform-origin: 24px 24px; }
+      .ring-inner { animation: spin-ccw 14s linear infinite; transform-origin: 24px 24px; }
+      .ring-mid { animation: spin-cw 10s linear infinite; transform-origin: 24px 24px; }
+      .pulse { animation: pulse-glow 4s ease-in-out infinite; transform-origin: 24px 24px; }
+      @keyframes spin-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes spin-ccw { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+      @keyframes pulse-glow { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
       @media (prefers-reduced-motion: reduce) {
-        .bdo-logo-spin, .bdo-logo-spin-rev { animation: none; }
+        .ring-outer, .ring-inner, .ring-mid, .pulse { animation: none; }
       }
     </style>
-    <radialGradient id="bdo-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#f0d060" stop-opacity="0.8"/>
-      <stop offset="50%" stop-color="#c8aa44" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#9c7e2e" stop-opacity="0"/>
+    <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c8aa44" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0a0908" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0d060"/>
+      <stop offset="50%" stop-color="#c8aa44"/>
+      <stop offset="100%" stop-color="#9c7e2e"/>
+    </linearGradient>
   </defs>
 
-  <!-- Outer glow -->
-  <circle cx="20" cy="20" r="18" fill="url(#bdo-glow)"/>
+  <!-- Background glow -->
+  <circle cx="24" cy="24" r="22" fill="url(#bg-glow)"/>
 
-  <!-- Outer rotating ring with ornate ticks -->
-  <g class="bdo-logo-spin">
-    <circle cx="20" cy="20" r="17" fill="none" stroke="#c8aa44" stroke-width="0.5" stroke-dasharray="2 1.5" opacity="0.6"/>
-    <!-- 8 ornate ticks around the ring -->
-    <g fill="#f0d060" opacity="0.7">
-      <path d="M20 2 L21 5 L19 5 Z"/>
-      <path d="M20 38 L21 35 L19 35 Z"/>
-      <path d="M2 20 L5 21 L5 19 Z"/>
-      <path d="M38 20 L35 21 L35 19 Z"/>
-      <path d="M7.3 7.3 L9.5 8.2 L8.2 9.5 Z" transform="rotate(0 7.3 7.3)"/>
-      <path d="M32.7 7.3 L30.5 8.2 L31.8 9.5 Z" transform="rotate(0 32.7 7.3)"/>
-      <path d="M7.3 32.7 L9.5 31.8 L8.2 30.5 Z" transform="rotate(0 7.3 32.7)"/>
-      <path d="M32.7 32.7 L30.5 31.8 L31.8 30.5 Z" transform="rotate(0 32.7 32.7)"/>
+  <!-- Outer ring with runic ticks (slowest rotation) -->
+  <g class="ring-outer">
+    <circle cx="24" cy="24" r="22" fill="none" stroke="url(#gold-grad)" stroke-width="0.5" opacity="0.5"/>
+    <!-- 12 ornate ticks -->
+    <g fill="url(#gold-grad)" opacity="0.6">
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5"/>
+      <rect x="23.5" y="44" width="1" height="3" rx="0.5"/>
+      <rect x="1" y="23.5" width="3" height="1" rx="0.5"/>
+      <rect x="44" y="23.5" width="3" height="1" rx="0.5"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(30 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(60 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(120 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(150 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(210 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(240 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(300 24 24)"/>
+      <rect x="23.5" y="1" width="1" height="3" rx="0.5" transform="rotate(330 24 24)"/>
     </g>
   </g>
 
-  <!-- Inner counter-rotating ring -->
-  <g class="bdo-logo-spin-rev">
-    <circle cx="20" cy="20" r="13" fill="none" stroke="#9c7e2e" stroke-width="0.4" opacity="0.5"/>
-    <!-- Occult star (8-pointed) -->
-    <path d="M20 7 L22 17 L33 20 L22 23 L20 33 L18 23 L7 20 L18 17 Z" fill="#c8aa44" opacity="0.15"/>
-    <path d="M20 7 L22 17 L33 20 L22 23 L20 33 L18 23 L7 20 L18 17 Z" fill="none" stroke="#f0d060" stroke-width="0.4" opacity="0.6"/>
+  <!-- Mid ring with BDO-style ornamental arcs -->
+  <g class="ring-mid">
+    <circle cx="24" cy="24" r="17" fill="none" stroke="url(#gold-grad)" stroke-width="0.4" opacity="0.4"/>
+    <!-- 4 ornamental arcs -->
+    <g fill="none" stroke="url(#gold-grad)" stroke-width="0.6" opacity="0.5">
+      <path d="M24 7 A17 17 0 0 1 41 24" />
+      <path d="M24 41 A17 17 0 0 1 7 24" />
+    </g>
+    <!-- Decorative diamonds at cardinal points -->
+    <g fill="url(#gold-grad)" opacity="0.5">
+      <path d="M24 6 L25.5 8 L24 10 L22.5 8 Z"/>
+      <path d="M24 38 L25.5 40 L24 42 L22.5 40 Z"/>
+      <path d="M6 24 L8 22.5 L10 24 L8 25.5 Z"/>
+      <path d="M38 24 L40 22.5 L42 24 L40 25.5 Z"/>
+    </g>
   </g>
 
-  <!-- Center emblem (static) -->
-  <circle cx="20" cy="20" r="6" fill="none" stroke="#f0d060" stroke-width="0.6" opacity="0.8"/>
-  <circle cx="20" cy="20" r="3" fill="#c8aa44" opacity="0.3"/>
-  <!-- Cross in center -->
-  <path d="M20 14 L20 26 M14 20 L26 20" stroke="#f0d060" stroke-width="0.5" opacity="0.7"/>
-  <!-- Center dot -->
-  <circle cx="20" cy="20" r="1" fill="#f0d060"/>
+  <!-- Inner counter-rotating ring with occult star -->
+  <g class="ring-inner">
+    <circle cx="24" cy="24" r="13" fill="none" stroke="#9c7e2e" stroke-width="0.3" opacity="0.4"/>
+    <!-- 8-pointed occult star (two overlaid squares) -->
+    <g opacity="0.3" fill="url(#gold-grad)">
+      <rect x="14" y="14" width="20" height="20" rx="1" transform="rotate(0 24 24)"/>
+      <rect x="14" y="14" width="20" height="20" rx="1" transform="rotate(45 24 24)"/>
+    </g>
+    <!-- Star outline -->
+    <g fill="none" stroke="url(#gold-grad)" stroke-width="0.4" opacity="0.5">
+      <path d="M24 11 L26 22 L37 24 L26 26 L24 37 L22 26 L11 24 L22 22 Z"/>
+    </g>
+  </g>
+
+  <!-- Center sigil (pulsing) -->
+  <g class="pulse">
+    <!-- Hexagram (Star of Solomon) -->
+    <g fill="none" stroke="url(#gold-grad)" stroke-width="0.5" opacity="0.7">
+      <path d="M24 14 L31 26 L17 26 Z"/>
+      <path d="M24 34 L17 22 L31 22 Z"/>
+    </g>
+    <!-- Center circle -->
+    <circle cx="24" cy="24" r="4" fill="none" stroke="#f0d060" stroke-width="0.4" opacity="0.6"/>
+    <!-- Center dot -->
+    <circle cx="24" cy="24" r="1.5" fill="#f0d060" opacity="0.8"/>
+  </g>
 </svg>
