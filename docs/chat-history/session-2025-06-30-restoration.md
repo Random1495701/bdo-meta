@@ -322,3 +322,39 @@ User confirmed: https://www.naeu.playblackdesert.com/en-us/Wiki?wikiNo=225 is th
 ### Roadmap Created
 - docs/ROADMAP_2026-07-01.md with 15 items across P0-P3 priorities
 - P0.1 (Missing Skills) is the critical blocker for grab logic, max-rank, and Q-block
+
+---
+
+## v5.1.0: DB-level max-rank + Damage Calculator v2 (2025-07-01)
+
+### P0.2: Max-Rank Filtering (COMPLETED)
+- Added `baseName` and `isMaxRank` columns to Skill model
+- Created `scripts/compute-max-rank.ts` that computes max-rank for all skills:
+  - Strips prefixes (Prime:/Succession:/Absolute:/Core:/Flow:) and rank suffixes (I-XXX)
+  - Groups by (classId, baseName)
+  - For each group: Prime/Succession → max for succ spec, Absolute → max for awk spec, highest rank → max if no Prime/Absolute
+  - BS/Passive/Flow/Core skills are always maxRank
+- 2,557 skills marked as maxRank (from 4,111 enriched)
+- Updated `/api/skills` to use `isMaxRank: true` DB filter instead of JS-level baseName/rank grouping
+- Updated `/api/meta` to use `isMaxRank` filter instead of JS-level grouping
+- Result: 2,514 max-rank skills shown in Data tab (was ~2,321 with old JS filter)
+- Performance improvement: no more loading all matching skills + JS grouping per request
+
+### P0.4: Damage Calculator Rewrite (COMPLETED)
+- Completely rewritten with validated PvP formula from bdo-tools.net/@gpw
+- Formula: `[(AP - DR) × (1 - DR_Rate%)] × Crit × (PvP% × Skill% × Hits) × Group_Modifier × (1 - SA_DR%)`
+- Input panel: Total AP, Enemy DR, DR Rate%, 4 scalar toggles (Crit/Back/Down/Air)
+- Class group selectors (attacker + target) for +5% counter advantage
+- SA DR toggle with advanced mode (auto-fill from /api/meta class data)
+- Skill search with debounced results
+- Results table with sortable columns, per-scalar damage, expandable formula breakdown
+- Formula display with validation note
+
+### Matchups Fix
+- Spec-separated entries (50 rows: each class×spec is separate)
+- Spec column with colored badges (AWK/SUCC/ASC)
+- Groups now correct per spec (Warrior Succ=Vanguard, Awk=Skirmisher)
+
+### Sync
+- 3,564 missing combat skill IDs synced from bdocodex sitemap (7,675 total in DB)
+- 4,111 enriched, 3,564 stubs (need lurker enrichment)

@@ -64,6 +64,8 @@ model Skill {
   isPassive           Boolean  @default(false)
   isFlow              Boolean  @default(false) // "Flow:" skills (combo continuations)
   isCore              Boolean  @default(false) // "Core:" skills (core abilities, player picks 1)
+  baseName            String?  // stripped name (no rank suffix, no Prime:/Absolute: prefix)
+  isMaxRank           Boolean  @default(false) // true = highest rank/version of this skill
   prerequisiteIds     String?  // comma-separated skill IDs
   videoUrl            String?  // bdocodex preview video URL
   animationDurationMs Int?     // video duration in ms = animation duration proxy

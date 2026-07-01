@@ -208,6 +208,7 @@ export async function GET() {
       damageRowsJson: true, pvpDamagePercent: true, ccTypes: true, protectionTypes: true,
       isAwakening: true, isSuccession: true, isAbsolute: true, isBlackSpirit: true, isPassive: true,
       requiredLevel: true, animationDurationMs: true, description: true, cooldownSec: true,
+      isMaxRank: true,
     },
   })
 
@@ -218,17 +219,8 @@ export async function GET() {
     const classSkills = allSkills.filter((s) => s.classId === cls.id)
     if (classSkills.length === 0) continue
 
-    // Max-rank filtering
-    const baseNameMap = new Map<string, { skill: typeof classSkills[0]; rank: number; level: number }>()
-    for (const s of classSkills) {
-      const baseName = getBaseName(s.name)
-      const rank = RANK_MAP[s.name.match(RANK_SUFFIX)?.[1] || ''] || 0
-      const existing = baseNameMap.get(baseName)
-      if (!existing || rank > existing.rank || (rank === existing.rank && s.requiredLevel > existing.level)) {
-        baseNameMap.set(baseName, { skill: s, rank, level: s.requiredLevel })
-      }
-    }
-    const maxRankSkills = Array.from(baseNameMap.values()).map((v) => v.skill)
+    // Max-rank filtering (DB-level via isMaxRank flag, precomputed)
+    const maxRankSkills = classSkills.filter((s) => s.isMaxRank)
 
     // Build spec dedup map
     const specMap = new Map<string, { skillIds: number[]; hasSuccession: boolean; hasAbsolute: boolean; hasAwakening: boolean; isBS: boolean; isPassive: boolean }>()

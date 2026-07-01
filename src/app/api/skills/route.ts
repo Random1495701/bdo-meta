@@ -493,13 +493,12 @@ export async function GET(req: NextRequest) {
     ? { skillId: 'asc' as const }
     : orderBy
 
-  // --- Max-rank filtering ---
+  // --- Max-rank filtering (DB-level via isMaxRank column) ---
   if (maxRank) {
-    // Include all sort-relevant fields up-front so we can sort filteredIds
-    // directly (the page slice + items.sort pattern below only stable-sorts
-    // by idOrder, so the orderBy on the inner query would otherwise be lost).
+    // Use the precomputed isMaxRank flag instead of JS-level grouping.
+    // This is much faster and more accurate than the old baseName/rank approach.
     const allMatching = await db.skill.findMany({
-      where,
+      where: { ...where, isMaxRank: true },
       select: {
         skillId: true,
         name: true,
@@ -516,21 +515,7 @@ export async function GET(req: NextRequest) {
       orderBy: { requiredLevel: 'asc' },
     })
 
-    const baseNameMap = new Map<string, { skillId: number; rank: number; level: number }>()
-    for (const s of allMatching) {
-      const baseName = getBaseName(s.name)
-      const rank = getRank(s.name)
-      const existing = baseNameMap.get(baseName)
-      if (!existing) {
-        baseNameMap.set(baseName, { skillId: s.skillId, rank, level: s.requiredLevel })
-      } else {
-        if (rank > existing.rank || (rank === existing.rank && s.requiredLevel > existing.level)) {
-          baseNameMap.set(baseName, { skillId: s.skillId, rank, level: s.requiredLevel })
-        }
-      }
-    }
-
-    const maxRankSkillIds = Array.from(baseNameMap.values()).map((v) => v.skillId)
+    const maxRankSkillIds = allMatching.map((s) => s.skillId)
 
     // Build a skillId → row map for sorting (avoids re-querying).
     const rowById = new Map<number, (typeof allMatching)[number]>()

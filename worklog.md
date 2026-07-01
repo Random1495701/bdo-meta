@@ -2591,3 +2591,62 @@ Stage Summary:
   4. Formula display with legend + amber validation note: "Formula is approximate and based on community research. Needs validation." mentioning bigandshiny's BDO documentation.
 - Calculation function implements the spec exactly: `[(AP × Skill% × PvP%) - (DR × Coef)] × Scalars` with min 1 damage floor, multiplicative scalar stacking, and per-scalar damage columns showing what each scalar alone would yield.
 - Lint clean. TypeScript clean for all 3 modified files. Dev server still serving HTTP 200.
+
+---
+Task ID: 32-DMGCALC-V2
+Agent: dmg-calc-dev-v2
+Task: Completely rewrite Damage Calculator page with validated PvP formula (bdo-tools.net/@gpw + garmoth.com)
+
+Work Log:
+- Read /home/z/my-project/worklog.md (last 3 sections: Task 29 docs/sync, Task 30 GitHub merge, Task 31-DMGCALC v1 build) to understand project context — confirmed v1 used an unvalidated "[AP × Skill% × PvP%] - (DR × Coef)" formula, and the user requested a complete rewrite using the validated multi-step formula.
+- Read src/lib/skills.ts (classColor, classIconUrl exports + Skill/SkillListResponse types + SkillFilters with maxRank=true & filterEvasion=true convention) and src/lib/damage.ts (formatDamage: int → "K%/M%/N%" formatted; PhaseDamage shape: {phase, percent, multiplier, maxHits, totalPerHit, totalMax, pvpOnly, pveOnly}; DamageCalculation shape with phases/totalPvE/totalPvP/pvpDamagePercent).
+- Read src/app/api/meta/route.ts — confirmed /api/meta returns {classes: ClassStats[]} where each class has awakeningSaDr / successionSaDr / ascensionSaDr, plus awakeningGroup / successionGroup / ascensionGroup (one of "Vanguard" | "Pulverizer" | "Skirmisher" | null), and per-spec SpecStats objects. Verified by sampling live API responses for skills (e.g. "Corrupt Sword Dance I": pvpPercent=42.03, totalPvE=34540, phases with hit_count=13).
+- Read src/lib/pa-wiki-data.ts to confirm class-group counter relationship: Vanguard > Pulverizer > Skirmisher > Vanguard (+5% damage when attacker counters defender).
+- Completely rewrote src/components/skills/damage-calculator-page.tsx (1285 lines):
+  - Top-of-file header comment documents the full 6-step formula + the assumption that Total AP already includes Species AP, and that we assume 100% accuracy + 100% crit rate.
+  - calculatePvpDamage() implements the validated formula EXACTLY as specified:
+    1. baseDamage = max(1, totalAp - enemyDr)  [Total AP already includes Species AP]
+    2. afterDrRate = baseDamage × (1 - drRate/100)
+    3. afterCrit = afterDrRate × (crit ? 2.25 : 1)  [×2.25 at 100% crit rate when crit toggle is ON]
+    4. afterSkill = afterCrit × (pvpPercent/100) × (skillDamagePercent/100) × hitCount
+       where skillDamagePercent = skill.damage.totalPvE (e.g. 1207 for "1207%")
+       and hitCount = Σ (multiplier × maxHits) across all phases in skill.damage.phases
+    5. afterGroup = afterSkill × (hasCounterAdvantage(attacker, target) ? 1.05 : 1)
+       where advantage follows Vanguard > Pulverizer > Skirmisher > Vanguard
+    6. afterSaDr = afterGroup × (1 - saDr/100)  [only if SA DR toggle is ON]
+    7. finalDamage = afterSaDr × (back ? 1.5 : 1) × (down ? 1.5 : 1) × (air ? 1.3 : 1)
+       [Back/Down/Air positional scalars applied as final multiplier; multiplication is commutative so applying Crit at step 3 vs the end produces the same final number]
+    - Returns null when skill has no pvpDamagePercent or no damage.totalPvE (e.g. passives, buffs).
+    - Per-scalar damage values: perScalar[key] = afterSaDr × cfg.multiplier (shows what each scalar alone would yield, on top of base formula).
+  - Layout: 2-column on desktop (340px sticky input panel on left, search+results+formula on right), single-column stacked on mobile. Uses bg-bdo-ink / bg-bdo-leather-dark / border-amber-900/50 / bdo-title / bdo-icon-frame / bdo-input / bdo-chip / bdo-chip-on / bdo-stat-box / bdo-divider theme classes throughout.
+  - Input panel (sticky on lg+):
+    - Combat Stats: Total AP (default 300, with tooltip "Includes Species AP"), Enemy DR (default 350), DR Rate (default 30, with tooltip "Damage Reduction Rate from gear") — 2-col grid.
+    - Damage Scalars: 4 toggle chips (Critical ×2.25, Back Atk ×1.5, Down Atk ×1.5, Air Atk ×1.3) with active scalar counter (e.g. "1/4"). Active state uses bdo-chip-on with each scalar's accent color border + a colored dot indicator. Each chip has a tooltip explaining the trigger condition.
+    - Class Groups: two GroupSelector components — Attacker (default Vanguard) and Target (default Pulverizer). Each is a 3-button grid with glyph (🛡/💥/⚔) + label. Live indicator below shows whether counter advantage is active (green pill "Vanguard counters Pulverizer → ×1.05" or muted "Vanguard does not counter Skirmisher → ×1.00").
+    - Super Armor DR: checkbox "Target is in Super Armor" (default ON) + numeric SA DR input (default 10%).
+    - Advanced Mode toggle (Settings icon): when ON, fetches /api/meta via useQuery (enabled: advanced) and shows a class dropdown + spec selector (Awakening/Succession/Ascension). Selecting a class+spec auto-fills the SA DR% input from cls.awakeningSaDr / successionSaDr / ascensionSaDr. Display shows "ClassName · spec · group X → SA DR Y%". AnimatePresence + motion for smooth expand/collapse.
+  - Skill Search panel:
+    - Debounced (300ms) text input with Search icon, X clear button. Uses useQuery(['dmgcalc-v2-skill-search', q]) calling /api/skills?q=...&maxRank=true&filterEvasion=true&pageSize=10.
+    - Results list (max-h-80 overflow-y-auto) shows SkillIcon (gold-bevel bdo-icon-frame with first-letter fallback in class color) + name + class-color badge + "Skill: <totalPvE>" + "PvP: <pvpDamagePercent>%". Click a result to add to the selected list; "Added" state if already present.
+    - Loading spinner, empty state ("No skills found for X"), and prompt state ("Start typing to search skills. Only max-rank, non-evasion skills are returned.").
+  - Results section:
+    - Desktop: sortable table with columns Skill (icon+name+class) / Skill Dmg / PvP % / Hits / PvP Dmg / 4 scalar columns (CRIT/BACK/DOWN/AIR with each scalar's accent color, muted if not toggled) / Actions (expand+remove buttons). Sortable by name / skillDamage / pvpPercent / hits / finalDamage with asc/desc toggle. Clicking the expand button reveals a FormulaBreakdown row.
+    - Mobile: card list — each card has icon+name+class+remove button, a 4-col stat grid (Skill Dmg / PvP % / Hits / PvP Dmg), a 4-col scalar grid (each with its accent color), and a collapsible "Show Formula" button that toggles the same FormulaBreakdown via AnimatePresence.
+    - Empty state with Calculator icon + prompt to search above.
+    - "Clear all" button to remove all selected skills.
+  - FormulaBreakdown component (expanded row): 7-step calculation breakdown showing each formula step with the actual numeric values plugged in (e.g. "1.575 × (42.0/100) × (34540/100) × 13 (hits) = 2972.5900"). Footer shows active scalar chips and the final damage value.
+  - Formula display section at the bottom: shows the exact formula string `PvP Damage = [(AP + Species AP − DR) × (1 − DR_Rate%)] × Crit × (PvP% × Skill% × Hits) × Group_Modifier × (1 − SA_DR%)` in a mono font, followed by a 2-col legend explaining each term (AP+Species AP, DR, DR_Rate%, Crit, PvP%, Skill%, Hits, Group_Modifier, SA_DR%, Back/Down/Air), followed by an emerald-bordered validation note: "Validated formula. Matches bdo-tools.net/@gpw and garmoth.com. Assumes 100% accuracy and 100% crit rate. The breakdown panel for each skill shows every intermediate value so you can verify the math."
+  - Header counter-advantage indicator at top right shows live status ("YES (+5%)" green / "NO" muted) so users immediately see the +5% group modifier state.
+- Ran `bun run lint` — clean (no errors, no warnings).
+- Ran `bunx tsc --noEmit` — zero errors in damage-calculator-page.tsx (grep returned no matches). Only pre-existing errors in scripts/, skills/image-edit/, src/lib/skill-store.ts, src/components/skills/{filter-sidebar,header,meta-page,sync-footer}.tsx, and src/app/api/skills/route.ts — all unrelated to my changes.
+- Verified dev server (PID 20360) still responding with HTTP 200 on localhost:3000 after edits.
+- Files modified:
+  1. src/components/skills/damage-calculator-page.tsx (COMPLETELY REWRITTEN, 1285 lines, was 855)
+
+Stage Summary:
+- Damage Calculator tab now uses the validated PvP damage formula from bdo-tools.net/@gpw (confirmed by garmoth.com). The 6-step formula is implemented exactly as specified, with Back/Down/Air positional scalars applied as a final multiplicative step.
+- Simple, opinionated input panel: 3 combat stats (Total AP / Enemy DR / DR Rate with tooltip), 4 scalar toggles (Crit ×2.25 / Back ×1.5 / Down ×1.5 / Air ×1.3), 3-button Attacker & Target group selectors (Vanguard/Pulverizer/Skirmisher) with live counter-advantage indicator, SA DR checkbox+input, and an Advanced Mode toggle that auto-fills SA DR% from /api/meta data for any class+spec.
+- Skill search uses /api/skills?q=...&maxRank=true&filterEvasion=true&pageSize=10 (debounced 300ms via useQuery). Results show icon + name + class + totalPvE + pvpDamagePercent. Multiple skills can be added to the calculation list.
+- Results table (desktop sortable, mobile card list) shows per-skill: icon+name+class, Skill Dmg % (totalPvE formatted), PvP %, Hit Count (Σ multiplier × maxHits across phases), calculated PvP Damage, 4 per-scalar damage columns (showing what each scalar alone would yield), expand button revealing a 7-step formula breakdown with all intermediate values, and a remove button. Sortable by name / final damage / skill damage / PvP % / hit count.
+- Formula display at the bottom shows the exact formula string + a legend explaining every term + an emerald validation note crediting bdo-tools.net/@gpw and garmoth.com.
+- Lint clean. TypeScript clean for damage-calculator-page.tsx. Dev server still serving HTTP 200.
