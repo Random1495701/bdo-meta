@@ -2246,3 +2246,300 @@ Stage Summary:
 - **Backup**: backup-local-restoration branch preserves my local restoration work. DB export committed locally (d8e28bc).
 - **Token**: Auto-revoked by GitHub. NOT saved to any file. User should revoke at https://github.com/settings/tokens and generate new one if needed.
 - **Lint**: clean. **Dev server**: running, all APIs 200.
+
+---
+Task ID: AUDIT-3
+Agent: audit-comprehensive
+Task: Comprehensive audit of ALL features across all versions, chat history, docs, and git
+
+Work Log:
+- Read full worklog.md (2248 lines, 30+ Task IDs including AUDIT-1, AUDIT-2, 26-30, 27-META-EXPAND).
+- Read all 10 chat-history files (session-2025-06-28-evening through session-2025-06-30-restoration). Most recent (restoration, 222 lines) contains the LATEST user-reported issues.
+- Read docs/ROADMAP.md (131 lines, 5 phases), docs/RESTORATION_PLAN.md (157 lines, 6 phases), docs/IMPROVEMENT_PLAN.md (165 lines, 20 items, 5 priorities), docs/SESSION_HANDOFF.md (156 lines, last updated v2.0.0+).
+- Listed current codebase: 19 components in src/components/skills/, 15 API routes in src/app/api/, ~80 scripts in scripts/, 3 data files (patch-notes/patch-archive/patch-lurker-state JSON).
+- Read prisma/schema.prisma (140 lines): BdoClass has PA Wiki fields + isAscension; Skill has isFlow/isCore; SkillChangeLog model exists.
+- Queried live DB via bun: 4111 skills total (down from 7231), 4111 enriched (100%!), 1792 w/ animation, 1852 w/ video, 144 Flow, 90 Core, **0 with addonsJson** (regression — was 725). 31 BdoClasses all have combatType populated, 6 ascension.
+- Verified git history (85 commits across main + backup-local-restoration branches). Tags: v1.0.0–v2.7.0, v4.1.0, v4.2.0. Missing tags: v2.6.0 (was deleted), v2.8.0–v3.9.0, v4.0.0 (no tags exist for these versions, only commit messages).
+- Grep-verified current state of every feature mentioned across worklog/chat/docs/git:
+  - src/lib/skill-store.ts: zustand `persist` middleware REMOVED (line 59 plain `create<SkillStore>()`). Sort/filter state lost on reload. Documented as fix for hydration race per session-2025-06-30-restoration.md "Crash Fixes Applied".
+  - src/lib/damage.ts (208 lines): special-mode separation EXISTS (lines 158-187, hasSpecialMode flag, modes array, first-mode totals).
+  - src/components/skills/skill-detail-drawer.tsx: Addons section EXISTS (lines 980-1015) but DB has 0 skills with addons → always shows empty. Spec colors FIXED (Awakening=red border-blue-500, Succession=blue border-blue-500 lines 484/489). videoAutoplay state EXISTS (line 355, toggle line 1024). PA Wiki data (combatType/group/SaDr) NOT shown in drawer.
+  - src/components/skills/meta-page.tsx (1121 lines): SpecCard expanded inline EXISTS (Task 27). MatchupMatrix EXISTS (line 949+), uses hardcoded getCounter() with 'Crusher' (line 976-981) — DB has 'Crusher' (verified), so works correctly. View modes Cards/Table/Matchups all exist.
+  - src/components/skills/tier-list-page.tsx: 4 view modes Ranked/Table/Portraits/Tiers all exist. Weights persisted to localStorage ('bdo-meta-tier-weights-v1'). 6 presets, 13 params, AutoTierView uses percentile S/A/B/C/D.
+  - src/components/skills/filter-sidebar.tsx: BS cooldown button EXISTS (line 590). hasAddon toggle EXISTS (line 697). Collapsible sections MISSING (no `Collapsible` import). NO `onDoubleClick` anywhere (exclusion system MISSING).
+  - src/components/skills/class-bar.tsx: S/A/Asc buttons with onKeyDown EXISTS (lines 140/166/190). Touch swipe handlers MISSING (no onTouchStart/Move/End). Group-by filter (Vanguard/Crusher/Skirmisher chips) MISSING.
+  - src/components/skills/skill-card.tsx: motion.div with role="button" (Bug 1 fix from crash analysis). Compare button EXISTS (lines 225/274). data-skill-card attribute EXISTS (line 165) for arrow nav.
+  - src/components/skills/header.tsx: APP_VERSION displayed (line 229). logo.svg used (line 224). Version dropdown NOT in header (it's in tab-switcher.tsx).
+  - src/components/skills/tab-switcher.tsx: Version dropdown EXISTS (lines 86-126), calls /api/version/switch.
+  - src/components/skills/error-boundary.tsx: ErrorBoundary class component EXISTS with reset button.
+  - src/app/api/skills/route.ts: smart effect search EXISTS (lines 207-296, EFFECT_KEYWORDS dictionary). classId+className OR match EXISTS (lines 314-348). Max-rank still done in JS (lines 499-513, no isMaxRank DB column).
+  - src/app/api/upload/skills-json/route.ts: EXISTS at CORRECT path (was previously broken at /api/upload).
+  - src/app/api/version/switch/route.ts: EXISTS, does git stash + checkout.
+  - All API caching present: classes/meta/ranges/stats (getCached/setCached). Skills endpoint NOT cached (intentional, too dynamic).
+  - scripts/sync-lurker.ts: jitteredDelay() is in TURBO mode by default (0.3-0.8s, 2% chance 2-4s pause, ~45/min) per comment lines 507-509. NO --turbo CLI flag (it's just always-on now). avgDelayMs field in state still reports 2500 (stale metadata).
+  - scripts/patch-lurker.ts: Thursday-only check EXISTS (getLastThursday, should-scrape logic).
+  - scripts/import-pa-wiki.ts: **STILL USES 'Pulverizer'** in lines 10-12 type and 21-46 data (NOT 'Crusher'). The DB has 'Crusher' (from pa-wiki-data.ts which is correct), so re-running import-pa-wiki.ts would RE-INTRODUCE the Pulverizer bug (commit 6950485 fix would be undone).
+  - scripts/import-garmoth-addons.ts: EXISTS but never successfully run — DB has 0 addonsJson entries.
+  - scripts/backup.ts: EXISTS (manual run only, no cron).
+  - public/logo.svg: EXISTS, occult spinning-rings SVG with BDO gold theme (NOT z.ai logo as user claimed).
+  - public/icons/classes-transparent/: 31 transparent class icons exist.
+  - public/icons/skills/: ~300 self-hosted skill icons exist.
+  - public/icons/portraits/ + portraits/specs/: 31 main + 50+ spec portraits exist.
+- CHANGELOG.md stops at v2.0.0 (no v2.1+ entries). docs-page.tsx has v1.0.0–v2.5.0 + v3.0.0/v3.1.0/v3.2.0 (gap v2.6–v2.9, v3.3–v3.9, v4.0+ missing).
+- Cross-referenced EVERY feature mentioned in worklog/chat/docs/git against current codebase state.
+
+Stage Summary:
+
+# COMPREHENSIVE FEATURE AUDIT — v4.2.0 (commit 055f142, 2025-07-01)
+
+## Summary by Status
+- **EXISTS**: 60 features (fully implemented and functional)
+- **PARTIAL**: 4 features (implemented but with issues)
+- **BROKEN**: 2 features (exists in code but DB/data missing or path wrong)
+- **MISSING**: 24 features (mentioned in docs/chat/git but NOT in current codebase)
+
+## 1. Data Page Features (filters, views, search, sorting)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 1.1 | Has-Addon toggle | Filter skills with Garmoth addon data | RESTORATION_PLAN §3.4 | EXISTS | Medium | filter-sidebar.tsx:697. **DB has 0 addons** so toggle returns nothing. |
+| 1.2 | Include Black Spirit (20m) cooldown button | Jump button to set maxCd=1200s | chat session-8 | EXISTS | High | filter-sidebar.tsx:590 |
+| 1.3 | Smart Effect Search | Search "super armor knockdown" → match both keywords | ROADMAP D2 | EXISTS | Medium | /api/skills route.ts:207-296, EFFECT_KEYWORDS dict |
+| 1.4 | classId + className double matching | OR-match by classId OR className contains | RESTORATION_PLAN §5.2 | EXISTS | Medium | route.ts:314-348 |
+| 1.5 | Max-rank filtering (JS-level) | Show only highest rank per skill | v1.4.0 | EXISTS | Low | route.ts:499-513. Still in JS, no DB columns. |
+| 1.6 | Precomputed baseName + isMaxRank columns | DB-level max-rank filter | ROADMAP E1, IMPROVEMENT_PLAN 3.1 | MISSING | Low | Still JS-only, loads 4111 IDs per query |
+| 1.7 | PvP CC only filter | First option in CC types | chat session-6 | EXISTS | Medium | filter-sidebar.tsx |
+| 1.8 | Evasion filter (default on) | Excludes 40 evasion skills | v1.4.0 | EXISTS | Low | |
+| 1.9 | Sort field + direction persistence | localStorage across reloads | chat session-10, AUDIT-2 §2.1 | **MISSING** | High | zustand persist REMOVED in crash fix (skill-store.ts:59 plain create()). User-flagged QoL loss. |
+| 1.10 | Sortable column headers | Click to sort table columns | v1.6.0 | EXISTS | Low | skill-table.tsx SortHeader |
+| 1.11 | Column picker (toggle visible columns) | Checkbox dropdown | v1.6.0 | EXISTS | Low | skill-table.tsx, persisted to localStorage |
+| 1.12 | Sort dropdown in header | 10 sort options + asc/desc | v1.0.0 | EXISTS | Low | header.tsx SORT_OPTIONS |
+| 1.13 | Arrow key navigation | Arrows move focus between cards | ROADMAP 3.2, Task 29 | EXISTS | Medium | page.tsx:90-104, data-skill-card attr |
+| 1.14 | Enter key opens focused skill | Activate card on Enter | ROADMAP 3.2 | EXISTS | Medium | page.tsx:104 |
+| 1.15 | S/A/Asc button onKeyDown | Enter + Space activation | RESTORATION_PLAN C1 | EXISTS | Medium | class-bar.tsx:140,166,190 |
+| 1.16 | Collapsible filter sections | Sections collapse + state saved | ROADMAP C1, IMPROVEMENT_PLAN 2.3 | MISSING | Low | No `Collapsible` import in filter-sidebar |
+| 1.17 | Mobile class bar touch swipe | Touch handlers for swipe | IMPROVEMENT_PLAN 2.2 | MISSING | Low | No onTouchStart in class-bar |
+| 1.18 | Exclusion system on double-click | Double-click chip to exclude | chat session-10 line 69 | MISSING | Medium | User-flagged, NO onDoubleClick in src/ |
+| 1.19 | Filter by class ratio group (not by classes) | Vanguard/Crusher/Skirmisher chips | chat session-10 line 67 | MISSING | Medium | User-flagged, class-bar still filters by class |
+| 1.20 | Asc button for ascension-only classes | Replaces S/A for Archer/Shai/Scholar/Seraph/Deadeye/Wukong | RESTORATION_PLAN §3.2 | EXISTS | High | class-bar.tsx:130-155, 6 ascension classes verified in DB |
+| 1.21 | Self-hosted class icons (31 webp) | bdocodex CDN → local | v1.4.0 | EXISTS | Low | public/icons/classes/ |
+| 1.22 | Self-hosted skill icons (~300 webp) | Caching for offline | IMPROVEMENT_PLAN 3.2 | EXISTS | Low | public/icons/skills/ |
+| 1.23 | Transparent class icons | Batch-processed backgrounds | ROADMAP C1 | EXISTS | Low | public/icons/classes-transparent/ (31 files) |
+
+## 2. Meta Page Features (cards, ratios, matchups, expand)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 2.1 | 56 spec cards | Each class×spec = separate card | v2.4.0 | EXISTS | Low | meta-page.tsx SpecCard |
+| 2.2 | Expanded card (inline) | Click card → expands with details | chat session-10 line 47, Task 27 | EXISTS | High | meta-page.tsx:64-348, AnimatePresence, vs-class-average bar chart |
+| 2.3 | Matchups view (group matrix) | Rock-paper-scissors grid | ROADMAP B2, Task 29 | EXISTS | High | meta-page.tsx MatchupMatrix:949 |
+| 2.4 | Matchups redesign (merge specs, pin classes, top page) | Per user spec | chat session-10 line 81 | MISSING | High | User-flagged NOT DONE |
+| 2.5 | PA Wiki data display (combatType, group, SA DR) | Badges in compact + expanded | Task 26 | EXISTS | High | meta-page.tsx SpecCard |
+| 2.6 | CC Chain Potential display | Skills with 2+ PvP CCs | Task 26 | EXISTS | Medium | sortKey='ccChainPotential' |
+| 2.7 | Grab Count display | Skills with Grapple CC | v3.1.0 | EXISTS | Medium | sortKey='grabCount' |
+| 2.8 | Core SA/FG display | Core: skills with SA/FG | Task 26 | EXISTS | Medium | Depends on isCore flag (90 in DB) |
+| 2.9 | DPS estimate | Damage / cooldown | v2.7.0 | EXISTS | Low | api/meta SpecStats.dpsEstimate |
+| 2.10 | Protected Coverage % | % of skills with SA/FG/IF | v2.7.0 | EXISTS | Low | sortKey='protectedCoverage' |
+| 2.11 | Top PvP damage skill | Per spec | v2.7.0 | EXISTS | Low | SpecCard |
+| 2.12 | vs Class Average bar chart | 10 stat rows w/ %diff | Task 27 | EXISTS | Medium | ExpandedStatBox + bar chart in expanded card |
+| 2.13 | View modes Cards/Table/Matchups | Three view modes | Task 29 | EXISTS | Low | meta-page.tsx:641 |
+| 2.14 | Sortable meta table (10 cols) | Click header to sort | v2.7.0 | EXISTS | Low | MetaTable component |
+| 2.15 | Ratio mode (multi-select) | Multi-select classes for pairwise ratios | v3.1.0 | EXISTS | Medium | meta-page.tsx ratioMode + ratioSelections |
+| 2.16 | Awakening vs Succession comparison | Side-by-side diff per class | ROADMAP B3 | MISSING | Medium | Never implemented |
+| 2.17 | Addon Popularity Leaderboard | Top 10 addons per class from Garmoth | ROADMAP 2.7, IMPROVEMENT_PLAN implied | MISSING | Medium | Never implemented, addonsJson empty |
+| 2.18 | Combo Extraction | Foundry class guide combos in cards | ROADMAP B1 | MISSING | Medium | Never implemented (combosJson field doesn't exist) |
+
+## 3. Tier Page Features (weights, views, portraits, auto-tiers)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 3.1 | Tier Builder (merged all specs) | Single list w/ Awakening/Succ/Ascension | chat session-10 line 17 | EXISTS | High | tier-list-page.tsx |
+| 3.2 | 13 user-weighted parameters | Sliders 0-100 per param | chat session-10 line 18 | EXISTS | High | SCORE_PARAMS array |
+| 3.3 | 6 presets (Balanced/Damage/CC/Defense/Burst/Bruiser) | Quick weight profiles | Task 30 commit | EXISTS | Medium | PRESETS dict |
+| 3.4 | Ranked view (expandable rows) | Default view | v3.0.0 | EXISTS | Low | RankedView component |
+| 3.5 | Table view (sortable) | All specs sortable by column | v3.0.0 | EXISTS | Low | TableView component |
+| 3.6 | Portraits view (podium top 3) | Character portraits as bg | chat session-10 line 38, v2.6.0 | EXISTS | Medium | PortraitsView + PortraitCard |
+| 3.7 | Portrait redesign | Per user spec | chat session-10 line 82 | MISSING | Medium | User-flagged NOT DONE |
+| 3.8 | Auto S/A/B/C/D tier table | Percentile-based tiers | RESTORATION_PLAN §4.2, Task 29 | EXISTS | High | AutoTierView component |
+| 3.9 | Weights persisted to localStorage | Survive reloads | v3.0.0 | EXISTS | Low | 'bdo-meta-tier-weights-v1' |
+| 3.10 | Composite score with normalization | 0→1 per param × weight | v3.0.0 | EXISTS | Low | tier-list-page.tsx:279 |
+
+## 4. Patch Notes Features (scraper, UI, linking, lurker)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 4.1 | Structured patch notes parser | PA notes → per-skill changes | v3.0.0 | EXISTS | High | scrape-patch-notes.ts |
+| 4.2 | Patches UI with change type filters | damage_up/down, cc_change, etc. | v3.0.0 | EXISTS | High | patches-page.tsx CHANGE_META |
+| 4.3 | Skill linking (matchedSkillId) | Match parsed names to DB | v3.0.0 | EXISTS | High | /api/patches returns matchedSkillId |
+| 4.4 | Skill icons in patch UI | Icon for linked skills | chat session-10 line 33, v3.1.0 | EXISTS | Medium | matchedIconUrl in API response |
+| 4.5 | Up/down arrows (buff/nerf) | Green/red direction indicators | v3.0.0 | EXISTS | Low | CHANGE_META.direction |
+| 4.6 | Before → After values | Numeric changes with arrow | v3.0.0 | EXISTS | Low | patches-page.tsx |
+| 4.7 | Latest patch only | Archive others | chat session-10 line 25 | EXISTS | Medium | patches-page.tsx shows patches[0] |
+| 4.8 | Thursday-only lurker | Scrape only Thu-Sun | chat session-10 line 40 | EXISTS | Medium | patch-lurker.ts getLastThursday |
+| 4.9 | Patch lurker state file | Track last scrape | v3.1.0 | EXISTS | Low | data/patch-lurker-state.json |
+| 4.10 | Change log banner (SkillChangeLog) | Live change tracking on every page | v3.1.0 | EXISTS | High | change-log-banner.tsx |
+| 4.11 | Change log API | Filter by source/field/skillId | v3.1.0 | EXISTS | Medium | /api/change-log |
+| 4.12 | Up/down arrow indicators in Data tab | Show buffs/nerfs from patches | chat session-10 line 113-117 | MISSING | Medium | User multiple-choice A/B/C/D unanswered |
+| 4.13 | Full auto-apply patch system | Auto-update DB from patches | chat session-10 line 116 | MISSING | Low | User chose neither A/B/C/D |
+
+## 5. Skill Detail Drawer (addons, video, spec colors, compare)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 5.1 | Skill Add-Ons section | Garmoth addon popularity per slot | RESTORATION_PLAN §2.3 | **BROKEN** | High | UI EXISTS (drawer:980-1015) but DB has 0 addonsJson → always empty. import-garmoth-addons.ts never successfully run. |
+| 5.2 | Video autoplay toggle | ON/OFF button | RESTORATION_PLAN §4.4, Task 28 | EXISTS | Low | drawer.tsx:355, 1024 |
+| 5.3 | Spec color consistency (Awakening=red, Succession=blue) | Use SPEC_COLORS | RESTORATION_PLAN §2.4, Task 28 | EXISTS | Medium | drawer.tsx:484 (red), 489 (blue) |
+| 5.4 | Skill Compare Drawer | Side-by-side 2 skills | ROADMAP D1, Task 26 | EXISTS | Medium | skill-compare-drawer.tsx (220 lines) |
+| 5.5 | Compare button on skill cards | Hover-revealed GitCompare icon | Task 26 | EXISTS | Medium | skill-card.tsx:225, 274 |
+| 5.6 | Special mode indicator | Shows when skill has multiple damage modes | commit 62b132f | EXISTS | Medium | drawer.tsx:522, 534 |
+| 5.7 | PA Wiki data in drawer (combatType/group/SaDr) | Context badges in header | AUDIT-2 §4.3 | MISSING | Medium | Drawer doesn't read class PA Wiki data |
+| 5.8 | PA Wiki data live scraping (wikiNo=225) | agent-browser → naeu.playblackdesert.com | chat session-10 line 219 | MISSING | High | Hardcoded in import-pa-wiki.ts instead |
+| 5.9 | Per-phase damage breakdown | Attack 1, Attack 2, etc. | v1.5.0 | EXISTS | Low | drawer.tsx PhaseDamageRow |
+| 5.10 | Damage rows color-coded | amber/red/cyan/pink/emerald | v1.0.0 | EXISTS | Low | drawer.tsx |
+| 5.11 | CC type chips | Red chips per CC | v1.0.0 | EXISTS | Low | drawer.tsx |
+| 5.12 | Protection chips (💪🛡✦) | New icons | chat session-7 | EXISTS | Low | PROTECTION_META in cc.ts |
+| 5.13 | X+Y CC counter display | "1+1" for Stun+Knockdown | chat session-7 | EXISTS | Low | cc.ts formatCCCounters |
+| 5.14 | PvE-only CC orange warning banner | PvE-only flag indicator | chat session-7 | EXISTS | Low | drawer.tsx |
+| 5.15 | Prerequisite chips (clickable) | Re-selects prereq skill | v1.0.0 | EXISTS | Low | drawer.tsx:924-949 |
+| 5.16 | Related-rank pills (clickable) | Navigate to other ranks | v1.0.0 | EXISTS | Low | drawer.tsx:965-970 |
+
+## 6. Database/Schema (fields, flags, indexes)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 6.1 | PA Wiki fields on BdoClass | combatType, groups, SaDr, isAscension | Task 26 | EXISTS | Critical | schema.prisma:24-31, 31 classes populated |
+| 6.2 | isFlow / isCore flags | 144 Flow + 90 Core skills | ROADMAP A3, Task 28 | EXISTS | Medium | schema.prisma:65-66, DB verified |
+| 6.3 | SkillChangeLog model | Field-level change tracking | v3.1.0 | EXISTS | High | schema.prisma:103-121 |
+| 6.4 | Single-column indexes | classId, name, groupId, etc. | v1.0.0 | EXISTS | Low | schema.prisma:76-82 |
+| 6.5 | Composite DB indexes | (classId, isAwakening), etc. | ROADMAP E1, IMPROVEMENT_PLAN 3.3 | MISSING | Low | Only single-column indexes exist |
+| 6.6 | Precomputed baseName column | For fast max-rank filter | ROADMAP E1, IMPROVEMENT_PLAN 3.1 | MISSING | Low | Still JS-level grouping |
+| 6.7 | Precomputed isMaxRank column | Boolean flag for max rank | ROADMAP E1 | MISSING | Low | Still JS-level grouping |
+| 6.8 | AddonsJson populated | Garmoth addon data per skill | v2.3.0, IMPROVEMENT_PLAN 1.1 | **BROKEN** | High | DB has 0 entries. import-garmoth-addons.ts exists but wasn't run. Was 725 in v2.3.0. |
+| 6.9 | DB backup automation (cron) | Weekly export + commit | ROADMAP E1, IMPROVEMENT_PLAN 5.1 | PARTIAL | Low | scripts/backup.ts exists, no cron scheduled |
+| 6.10 | combosJson field on BdoClass | Foundry combo data | ROADMAP B1 | MISSING | Medium | Field doesn't exist in schema |
+
+## 7. API Endpoints (routes, caching, fields)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 7.1 | /api/skills (filter+paginate) | 12 filter params | v1.0.0 | EXISTS | Low | route.ts 795 lines |
+| 7.2 | /api/skills/[id] (detail+addons+prereqs) | Full skill data | v1.0.0 | EXISTS | Low | Returns addons (always null currently) |
+| 7.3 | /api/stats (cached 1min) | Total/enriched/animation counts | v1.0.0, Task 26 | EXISTS | Low | getCached/setCached |
+| 7.4 | /api/classes (cached 10min) | 31 classes + counts | v1.0.0, Task 26 | EXISTS | Low | getCached/setCached |
+| 7.5 | /api/ranges (cached 10min) | Dynamic slider maxes | v1.4.0 | EXISTS | Low | getCached/setCached |
+| 7.6 | /api/meta (cached 5min) | Spec stats + PA Wiki | v2.7.0, Task 26 | EXISTS | Low | getCached/setCached, returns all 28 fields |
+| 7.7 | /api/sync/status + /api/sync/trigger | Lurker control | v1.1.0 | EXISTS | Low | |
+| 7.8 | /api/upload/skills-json (CORRECT PATH) | Manual JSON import | v1.2.0, Task 28 fix | EXISTS | Critical | Path fixed in Task 28 |
+| 7.9 | /api/export | DB → JSON | v1.2.0 | EXISTS | Low | |
+| 7.10 | /api/change-log | SkillChangeLog query | v3.1.0 | EXISTS | Medium | |
+| 7.11 | /api/patches (with skill linking) | Structured patch notes | v3.0.0 | EXISTS | Medium | Returns matchedSkillId/IconUrl/ClassSlug |
+| 7.12 | /api/version/switch | Git checkout via API | v4.1.0 | EXISTS | Medium | Stashes + checks out tag |
+| 7.13 | /api/skills NOT cached | Intentional | — | EXISTS | Low | Too dynamic to cache |
+
+## 8. Calculation/Algorithm (damage, CC, grabs)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 8.1 | Damage special-mode separation | First-group-only counting | RESTORATION_PLAN §5.1, Task 28 | EXISTS | Critical | damage.ts:158-187, hasSpecialMode flag |
+| 8.2 | Damage phases array (modes) | All modes preserved | v3.5.0 (commit c730a00) | EXISTS | Medium | damage.ts:39-44 DamageMode interface |
+| 8.3 | Max hits as multiplier (not target) | percent × mult × maxHits | v3.4.0, v3.6.0 | EXISTS | High | damage.ts:65, 80 |
+| 8.4 | CC counter values (Stiffness=0.7, Knockback=0.7) | Per foundry/garmoth guides | chat session-6/7 | EXISTS | High | cc.ts |
+| 8.5 | X+Y CC counter format | "1+1" not total | chat session-7 | EXISTS | Medium | cc.ts formatCCCounters |
+| 8.6 | PvE-only CC exclusion | Excluded from PvP counter | chat session-7 | EXISTS | Medium | cc.ts |
+| 8.7 | BS skills excluded from CC counter | Black Spirit skills don't count | commit c278510 | EXISTS | Medium | |
+| 8.8 | Grab counting (ascension all skills) | Ascension classes count grabs | commit 6950485 | EXISTS | High | |
+| 8.9 | False grab filter | "All CC Resistance except Grapple" excluded | commit 055f142 | EXISTS | Medium | |
+| 8.10 | Grab spec assignment per user explanation | Main→both, awk→awk only | chat session-10 line 210-214 | MISSING | High | User confirmed logic, NOT yet implemented |
+| 8.11 | Multi-class skill attribution fix | classId OR className | RESTORATION_PLAN §5.2 | EXISTS | Medium | route.ts:314-348 |
+| 8.12 | Animation duration via ffprobe | Video duration as proxy | v1.0.0 | EXISTS | Low | 1792 skills have anim |
+| 8.13 | Video parsing (ffmpeg scene detection) | Detect double-casts/hanging-time | ROADMAP A1, VIDEO_PARSING_PLAN.md | MISSING | Medium | Plan exists, never executed |
+| 8.14 | DPS estimate re-enabled | Once durations accurate | ROADMAP A1 | PARTIAL | Low | dpsEstimate field exists but durations may be inflated |
+
+## 9. UI/UX (keyboard nav, error handling, logos, themes)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 9.1 | Error boundary with reset button | Catches render errors, clears localStorage | commit c278510 | EXISTS | High | error-boundary.tsx |
+| 9.2 | BDO occult SVG logo | Spinning rings, gold gradient | commit c278510, 3beae80 | PARTIAL | Medium | public/logo.svg exists with occult design, but user says "just z.ai's logo" — wants proper BDO design |
+| 9.3 | Version number in header | APP_VERSION next to title | chat session-10 line 90 | EXISTS | Medium | header.tsx:229 |
+| 9.4 | Version dropdown (switch git vaults) | List of tags, checkout on click | chat session-10 line 91 | EXISTS | Medium | tab-switcher.tsx:86-126 |
+| 9.5 | BDO in-game theme (dark leather + gold) | Custom palette | v1.3.0 | EXISTS | Low | globals.css bdo-* classes |
+| 9.6 | SPEC_COLORS (Awakening=red, Succession=blue, Ascension=yellow) | Consistent spec colors | ROADMAP 1.2 | EXISTS | Low | skills.ts SPEC_COLORS |
+| 9.7 | 15-second auto-refresh (no flicker) | TanStack placeholderData | v1.3.0 | EXISTS | Low | providers.tsx |
+| 9.8 | Three view modes (Grid/List/Table) | Per user pref | v1.5.0 | EXISTS | Low | header.tsx ViewModeToggle |
+| 9.9 | Mobile filters Sheet | Left-side Sheet on mobile | v1.0.0 | EXISTS | Low | page.tsx |
+| 9.10 | Dark/Light theme toggle | Parchment light theme | IMPROVEMENT_PLAN 4.4 | MISSING | Low | next-themes installed but only sonner uses it |
+| 9.11 | i18n (DE/FR/ES/KR) | Multi-language | IMPROVEMENT_PLAN 4.5 | MISSING | Low | English only |
+| 9.12 | Hydration-safe skill cards | motion.div not motion.button | commit 5d02cb9 | EXISTS | Critical | skill-card.tsx:164 (Bug 1 fix from crash analysis) |
+
+## 10. Infrastructure (backup, lurker, sync, monitoring)
+
+| # | Feature | Description | Source | Status | Priority | Notes |
+|---|---------|-------------|--------|--------|----------|-------|
+| 10.1 | Lurker v2 with JS challenge solver | get_jhash port, bypasses Cloudflare | chat session-3, v1.2.0 | EXISTS | Critical | sync-lurker.ts |
+| 10.2 | Lurker PID lock | Single-instance | v1.2.0 | EXISTS | Low | scripts/lurker.lock |
+| 10.3 | Lurker endpoint rotation | 6 bdocodex locale URLs | v1.1.0 | EXISTS | Low | pickEndpointExcluding |
+| 10.4 | Lurker turbo mode (default-on) | 0.3-0.8s delays, ~45/min | commit 261da53, AUDIT-2 §6.1 | EXISTS | High | sync-lurker.ts:510-513. NO --turbo flag, just always-on. avgDelayMs in state still 2500 (stale metadata). |
+| 10.5 | Lurker --re-enrich / --kr-names / --batch / --videos / --once modes | CLI flags | v1.1.0 | EXISTS | Low | sync-lurker.ts:821 |
+| 10.6 | Lurker auto-refresh (staleness check) | Re-enrich skills >N days old | AUDIT-2 §6.2 | MISSING | Medium | No timestamp-based refresh |
+| 10.7 | Lurker health monitoring / auto-restart | Restart if heartbeat stale >10min | ROADMAP E1, IMPROVEMENT_PLAN 5.2 | MISSING | Medium | No monitor script |
+| 10.8 | Dev server watchdog | Auto-restart dev server | SESSION_HANDOFF | EXISTS | Low | scripts/dev-watchdog.sh |
+| 10.9 | DB backup script (manual) | Export JSON + git commit | Task 28 | EXISTS | Low | scripts/backup.ts |
+| 10.10 | DB backup cron automation | Weekly auto-backup | ROADMAP E1 | MISSING | Low | No cron scheduled |
+| 10.11 | GitHub sync automation | Auto-push on commit | SESSION_HANDOFF | MISSING | Low | Manual push only, token was revoked then restored |
+| 10.12 | GitHub token storage | ~/.config/bdo-meta/github-token | chat session-10 line 53 | EXISTS | Low | Outside repo, chmod 600 |
+| 10.13 | CHANGELOG.md gap (v2.1+) | Missing v2.1.0–v4.2.0 entries | RESTORATION_PLAN §6.2 | MISSING | Medium | Stops at v2.0.0 (line 405) |
+| 10.14 | docs-page.tsx version history gap | Missing v2.6–v2.9, v3.3–v3.9, v4.0+ | RESTORATION_PLAN §6.2 | MISSING | Medium | Has v1.0–v2.5, v3.0, v3.1, v3.2 only |
+| 10.15 | Chat history saving to GitHub | Track session transcripts | chat session-10 line 92 | EXISTS | Low | commit 3beae80 |
+| 10.16 | Worklog auto-update | Append per task | v1.3.0 | EXISTS | Low | This file |
+| 10.17 | Skill icon caching (300 webp) | Self-hosted icons | IMPROVEMENT_PLAN 3.2 | EXISTS | Low | public/icons/skills/ |
+| 10.18 | Class icon transparency batch | 31 transparent webp | ROADMAP C1 | EXISTS | Low | public/icons/classes-transparent/ |
+| 10.19 | Spec portraits (87 total) | 31 main + 31 awakening + 25 succession | v2.5.0 | EXISTS | Low | public/icons/portraits/ + portraits/specs/ |
+
+## Special User-Flagged Concerns (from chat session-2025-06-30-restoration.md)
+
+| # | User Quote | Status | Notes |
+|---|------------|--------|-------|
+| U1 | "exclusion system on double click in filtering" | **MISSING** | NO onDoubleClick anywhere in src/. Was likely a v3.x feature lost in reset. |
+| U2 | "QoL changes on sorting which dont exist anymore" | **MISSING** | zustand persist REMOVED from skill-store.ts due to hydration crash. Need alternative persistence strategy. |
+| U3 | "card system features" (expanded card) | **EXISTS** | Task 27-META-EXPAND implemented it. |
+| U4 | "PA Wiki data scraping (wikiNo=225)" | **MISSING** | Hardcoded in import-pa-wiki.ts, not live-scraped via agent-browser. |
+| U5 | "Awakening vs Succession comparison view" | **MISSING** | ROADMAP B3, never implemented. |
+| U6 | "Addon popularity leaderboard" | **MISSING** | ROADMAP, never implemented. Also addonsJson DB is empty. |
+| U7 | "Skill build calculator" | **MISSING** | IMPROVEMENT_PLAN 4.1, never implemented. |
+| U8 | "Video parsing (ffmpeg scene detection)" | **MISSING** | VIDEO_PARSING_PLAN.md exists, never executed. |
+| U9 | "Combo extraction (B1)" | **MISSING** | ROADMAP B1, never implemented. |
+| U10 | "Performance optimization (E1 baseName/isMaxRank)" | **MISSING** | ROADMAP E1, never implemented. Still JS-level. |
+| U11 | "logo is just z.ais logo" | **UNRESOLVED** | SVG occult logo exists but user rejects it. Wants proper BDO occult design. |
+| U12 | "Matchups redesign" | **MISSING** | User wants merge specs, move to top, pin classes. |
+| U13 | "Tiers portrait redesign" | **MISSING** | User wants portrait redesign. |
+| U14 | "grab details, classes like seraph list no grab" | **PARTIAL** | Fixed ascension grab counting, but spec assignment logic per user explanation NOT yet implemented. |
+| U15 | "Meta > Matchup just does nothing" | **FIXED** | Was Pulverizer→Crusher name mismatch (commit 6950485). Verified DB has 'Crusher'. |
+| U16 | "filtering should be by class ratio group, not by classes" | **MISSING** | Class bar still filters by class, not by group. |
+
+## Top 10 Restoration Priorities (next session)
+
+1. **Sort persistence restoration** (1.9) — High, user-flagged QoL loss. Need alternative to removed zustand persist (e.g., manual localStorage sync with mounted guard).
+2. **AddonsJson re-import** (5.1/6.8) — High. Run import-garmoth-addons.ts to populate 725 skills. Currently UI shows empty section.
+3. **PA Wiki live scraping** (5.8) — High. Replace hardcoded data with agent-browser scrape of wikiNo=225.
+4. **Matchups redesign** (2.4) — High, user-flagged. Merge specs, move to top, pin classes.
+5. **Grab spec assignment logic** (8.10) — High, user confirmed logic but not implemented.
+6. **Filter by class ratio group** (1.19) — Medium, user-flagged. Replace class chips with group chips.
+7. **Exclusion system on double-click** (1.18) — Medium, user-flagged. Add onDoubleClick to chips for exclude-mode.
+8. **Combo Extraction** (2.18) — Medium, ROADMAP B1. Scrape Foundry class guides.
+9. **Awakening vs Succession comparison** (2.16) — Medium, ROADMAP B3. Side-by-side diff.
+10. **Documentation gaps** (10.13, 10.14) — Medium. CHANGELOG.md and docs-page.tsx missing v2.6-v4.2 entries.
+
+## Stats Summary
+- **60 EXISTS** features (fully functional)
+- **4 PARTIAL** (logo, backup cron, DPS estimate, lurker turbo default-on but no flag)
+- **2 BROKEN** (Addons UI w/ empty DB, import-pa-wiki.ts still uses 'Pulverizer')
+- **24 MISSING** features (15 user-flagged or in ROADMAP, 9 nice-to-have)
+
+## Notable Codebase Health Issues
+1. `scripts/import-pa-wiki.ts` STILL uses 'Pulverizer' (lines 10-12, 21-46) instead of 'Crusher'. Re-running this script would RE-INTRODUCE the bug fixed in commit 6950485. Should be updated to match `src/lib/pa-wiki-data.ts`.
+2. `scripts/lurker.state.json` reports `avgDelayMs: 2500` but actual code is in turbo mode (~500ms). Stale metadata.
+3. `src/lib/skill-store.ts` lost zustand persist middleware (intentional fix for hydration race per session-2025-06-30-restoration.md). Need alternative persistence that doesn't trigger hydration mismatch.
+4. DB has 4111 skills (down from 7231 mentioned in older docs). All 4111 are enriched (100%), but addon data is completely missing.
+5. CHANGELOG.md hasn't been updated since v2.0.0 (June 29). 17 versions of changes undocumented in canonical changelog.
+6. docs-page.tsx version history has gaps (v2.6-v2.9, v3.3-v3.9, v4.0+).
