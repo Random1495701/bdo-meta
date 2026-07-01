@@ -88,14 +88,22 @@ async function main() {
     console.log('  - Git commit failed:', (err as Error).message)
   }
 
-  // 3. Push to GitHub (if token provided)
+  // 3. Push to GitHub (if token available)
+  // Token is read from ~/.config/bdo-meta/github-token (outside the repo, never committed)
+  // or from GH_TOKEN env var. The file approach keeps the token out of shell history.
   const pushFlag = process.argv.includes('--push')
-  const ghToken = process.env.GH_TOKEN
+  let ghToken = process.env.GH_TOKEN || ''
+  if (!ghToken) {
+    try {
+      ghToken = readFileSync(`${process.env.HOME}/.config/bdo-meta/github-token`, 'utf-8').trim()
+    } catch {}
+  }
+
   if (pushFlag || ghToken) {
     console.log('[3/3] Pushing to GitHub...')
     try {
       if (ghToken) {
-        // Use token in the remote URL temporarily
+        // Use token in the push URL — token is NOT saved to git config
         execSync('git push https://Random1495701:' + ghToken + '@github.com/Random1495701/bdo-meta.git main', { stdio: 'pipe' })
       } else {
         execSync('git push origin main', { stdio: 'pipe' })
@@ -103,10 +111,11 @@ async function main() {
       console.log('  ✓ Pushed to GitHub')
     } catch (err) {
       console.log('  ✗ Push failed:', (err as Error).message)
-      console.log('  Set GH_TOKEN env var or configure git credentials to push.')
+      console.log('  Store token in ~/.config/bdo-meta/github-token or set GH_TOKEN env var.')
     }
   } else {
-    console.log('[3/3] Skipping push (use --push or set GH_TOKEN)')
+    console.log('[3/3] Skipping push (no token found)')
+    console.log('  Store token in ~/.config/bdo-meta/github-token to enable automatic push.')
   }
 
   console.log('\n=== Backup complete ===')
