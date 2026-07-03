@@ -1,156 +1,59 @@
-# Session Handoff — READ THIS FIRST
+# Session Handoff — BDO Meta Current State
 
-> **If you are a new AI session starting work on this project, read this file
-> and `worklog.md` BEFORE doing anything else.**
+## Current Version
+Find dynamically: `git tag | sort -V | tail -1`
+Last known: v5.1.0
 
-## Project: BDO Meta
+## What's Working
+- 7 tabs: Data, Meta, Matchups, Tiers, Patches, Dmg Calc, Docs
+- 7,921 skills in DB (4,111 enriched, 3,810 stubs)
+- 31 classes with correct PA Wiki data (spec-dependent groups, SA DR)
+- DB-level max-rank filtering (isMaxRank column)
+- Grab logic with prerequisite-based replacement
+- False grab / Q-block fix (17 skills corrected)
+- Damage Calculator v2 with validated PvP formula
+- Spec-separated matchups (50 rows with AWK/SUCC/ASC)
+- Arena of Solare 3v3 selector
+- Version dropdown (switch between git tags)
+- Error boundary with reset button
+- Video autoplay OFF (no bdocodex sniping)
+- Lurker stop button (always visible)
+- Sort persistence via localStorage
+- Exclusion system (double-click class chip)
+- GitHub token at ~/.config/bdo-meta/github-token
+- Rescue beacon at /home/user_skills/RESCUE.md
 
-A Black Desert Online skill database tool with live data synced from
-bdocodex.com, including animation durations extracted via ffprobe.
+## Known Issues
+1. 3,810 stub skills need enrichment (name="Skill {id}")
+2. Hashashin & Scholar have 0 grabs in DB (may use different CC label)
+3. CHAT_HISTORY.md is empty (needs population)
+4. db/custom.db still tracked in some old commits (untracked going forward)
+5. Lurker not running (died, needs investigation)
+6. BDOToolkit and UnPAZ GitHub repos are gone (PAZ guide needs update)
 
-## Current State (as of last commit — v2.0.0+)
+## What Was Done This Session
+- P0.2: DB-level max-rank filtering (isMaxRank column, compute script)
+- P0.3: Grab spec assignment (prerequisite-based exclusion)
+- P0.4: Damage Calculator v2 (validated formula from bdo-tools.net/@gpw)
+- PA Wiki data fixed (Pulverizer not Crusher, spec-dependent groups)
+- Spec-separated matchups (50 rows)
+- 3,810 missing skill IDs synced from bdocodex sitemap
+- Project management fixes (.env untracked, .gitignore, rescue beacon)
+- PAZ extraction guide created
+- Revised roadmap created
 
-- **Version**: 2.0.0+ (see `CHANGELOG.md`)
-- **Database**: 7,231 skills ingested, 1,605 enriched with descriptions/damage/CC
-- **Lurker**: Running in background (PID in `scripts/lurker.lock`), enriching remaining skills
-- **Dev server**: Running on port 3000 (started via `node scripts/start-dev.mjs`)
-- **Lint**: Clean (0 errors)
-- **GitHub**: https://github.com/Random1495701/bdo-meta (token revoked, need new one to push)
+## What's Next (see docs/ROADMAP_2026-07-01_v2.md)
+1. P0.1: Enrich 3,810 stub skills (PAZ extraction or lurker restart)
+2. P0.2: Patch note → DB update pipeline (apply diffs, not re-download)
+3. P1.1: Arena of Solare redesign with portraits + SA heatmap
+4. P1.3: Lurker investigation & restart
+5. P1.5: Tiers portrait redesign
+6. P3.2: DB size optimization (filter to only spec-relevant skills)
 
-## CRITICAL: Dev Server Must Use Node spawn
-
-The dev server dies when started with `nohup`, `setsid`, or `&`. It MUST be
-started using `node scripts/start-dev.mjs` which uses `spawn` with `detached: true`
-and `child.unref()`. This is the only reliable way to keep it alive.
-
+## How to Verify This Doc Isn't Lying
 ```bash
-node scripts/start-dev.mjs
+git tag | sort -V | tail -1          # Should show v5.1.0 or higher
+bun -e "const{db}=require('./src/lib/db');db.skill.count().then(c=>console.log(c))"  # Should show ~7921
+curl -s http://localhost:3000/api/stats | head -c 100  # Should return JSON
+bash scripts/health-check.sh          # Should pass all checks
 ```
-
-## CRITICAL: Lurker Has PID Lock
-
-The lurker uses `scripts/lurker.lock` to prevent multiple instances. If the lurker
-dies, restart it via the API:
-```bash
-curl -X POST http://localhost:3000/api/sync/trigger \
-  -H "Content-Type: application/json" \
-  -d '{"script":"lurker","phase":"daemon"}'
-```
-
-## What to Read First
-
-1. **`CHANGELOG.md`** — Versioned history (v1.0.0 → v2.0.0+). Check `[Unreleased]`.
-2. **`docs/PROJECT.md`** — Architecture, API, database schema, data sources.
-3. **`worklog.md`** — Per-task agent work log (18+ tasks, 1122+ lines). Read last 3 sections.
-4. **`docs/chat-history/`** — Full transcripts of all sessions (9 sessions).
-
-## Key Features Implemented
-
-### Data Layer
-- 7,231 skills from bdocodex.com (query.php + ajax.php + tip.php)
-- Animation durations via ffprobe on preview videos
-- Lurker v2 with JS challenge solver (get_jhash port)
-- Self-hosted class icons (31 webp files in `public/icons/classes/`)
-- Garmoth API discovered: `api.garmoth.com/api/skill-addons` (open, no rate limit)
-
-### Filtering
-- Multi-select: classes, skill types, protections, CC types
-- Spec filtering: S (Succession) / A (Awakening) buttons on class chips
-  - Clicking class icon activates BOTH specs
-  - S and A can be toggled independently
-  - Spec-aware deduplication (Prime replaces Main/Absolute, Absolute replaces Main)
-- "PvP CC only" filter (first in CC types)
-- Max-rank filtering (only highest rank per skill shown)
-- Evasion filtering (excluded by default)
-- Dynamic slider ranges (percentile-based, with Black Spirit 20m jump button)
-
-### Damage Calculation
-- Per-phase breakdown (Attack 1, Attack 2, etc.)
-- Total PvE damage + Total PvP damage
-- X+Y CC counter display (e.g., "1+1" for Stun+Knockdown)
-- PvE-only CCs excluded from PvP counter
-
-### UI
-- BDO in-game theme (dark leather + gold + serif)
-- Three view modes: Grid, List, Table (sortable columns + column picker)
-- 15-second auto-refresh (no flicker, preserves user state)
-- Skill detail drawer: Damage → Cooldown → Protection → CC → Animation
-- Protection icons: 💪 SA, 🛡 FG, ✦ IF
-- CC symbols: ⚡ Stun, ✦ Stiffness, ❄ Freeze, ↓↓ Knockdown, ↑↑ Float, ⬇ Bound, ✊ Grapple, ← Knockback
-
-### CC System (from foundry + garmoth guides)
-- 8 real CCs: Stun(1), Stiffness(0.7), Freeze(1), Knockdown(1), Float(1), Bound(1), Grapple(1), Knockback(0.7)
-- At 2 counters, target is CC-immune. Stiffness + 2 CCs can reach 2.7 (bypasses cap)
-- Non-CC effects: displacements, DoTs, smashes (shown separately)
-
-## How to Continue Work
-
-### 1. Check the Lurker
-```bash
-cat scripts/lurker.state.json    # current progress
-ps aux | grep sync-lurker        # is it running?
-```
-
-### 2. Check the Dev Server
-```bash
-curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/  # should be 200
-tail -20 dev.log  # check for errors
-```
-
-### 3. Check the Database
-```bash
-bun run scripts/count.ts  # total/enriched/video/animation counts
-```
-
-### 4. Before Making Changes
-- Read `CHANGELOG.md` and `worklog.md` (last 3 sections)
-- Run `bun run lint` to verify clean state
-- **Do NOT kill the lurker process**
-
-### 5. After Making Changes
-- Update `CHANGELOG.md` under `[Unreleased]`
-- Append work to `worklog.md` with next Task ID
-- Commit to git
-- Export fresh DB snapshot: `curl -s http://localhost:3000/api/export?enriched=true -o db/skills-export.json`
-
-## Important Files
-
-| File | Purpose |
-|------|---------|
-| `CHANGELOG.md` | Versioned changelog (v1.0.0 → v2.0.0+) |
-| `docs/PROJECT.md` | Full project documentation |
-| `docs/SESSION_HANDOFF.md` | This file — read first |
-| `docs/IMPROVEMENT_PLAN.md` | 20 prioritized improvement items |
-| `docs/VIDEO_PARSING_PLAN.md` | Plan for video duration correction (not executed) |
-| `docs/PAZ_EXTRACTION.md` | Guide for extracting data from BDO game files |
-| `docs/chat-history/` | 9 session transcripts |
-| `worklog.md` | 18+ task work logs (1122+ lines) |
-| `prisma/schema.prisma` | Database schema |
-| `scripts/sync-lurker.ts` | Lurker v2 daemon (JS challenge solver) |
-| `scripts/sync-skills.ts` | Fast sync script |
-| `scripts/start-dev.mjs` | Dev server launcher (MUST use this) |
-| `scripts/lurker.state.json` | Lurker heartbeat (committed) |
-| `scripts/lurker.lock` | Single-instance PID lock |
-| `db/skills-export.json` | JSON export of enriched skills (2.2MB, committed) |
-| `db/custom.db` | SQLite DB (102MB, NOT committed — in .gitignore) |
-
-## GitHub Backup
-
-- **Repo**: https://github.com/Random1495701/bdo-meta
-- **Token**: REVOKED by user. Need new token to push.
-- **Remote URL**: `https://github.com/Random1495701/bdo-meta.git` (clean, no token)
-- All version tags (v1.0.0 through v2.0.0) are pushed
-- DB is exported as JSON (`db/skills-export.json`) since SQLite is too large for GitHub
-
-## Common Pitfalls
-
-1. **Don't kill the lurker** — it's enriching skills in the background
-2. **Use `node scripts/start-dev.mjs`** to start dev server (not `bun run dev &`)
-3. **Don't use `bun run build`** — only `bun run dev` (port 3000 only)
-4. **Don't create new routes** — only `/` is user-visible
-5. **Don't use indigo/blue colors** — BDO theme is dark + gold
-6. **Always commit the JSON export** — it's the enriched skill data backup
-7. **Check `CHANGELOG.md` before starting** — avoid redoing completed work
-8. **Append to `worklog.md`, don't overwrite**
-9. **Don't commit `db/custom.db`** — it's 102MB, exceeds GitHub limit
-10. **Token hygiene** — never save GitHub tokens to files

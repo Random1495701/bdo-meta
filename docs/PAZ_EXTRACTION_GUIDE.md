@@ -16,12 +16,12 @@ This guide explains how to extract skill data directly from Black Desert Online'
 ## Step 1: Install UnPAZ
 
 ### Option A: BDO Toolkit (Recommended)
-- **Download**: https://github.com/Aiiee-Works/BDOToolkit
+- **Download**: BDOToolkit (repo no longer available — search BDO modding communities for mirrors)
 - This is a .NET library + GUI for reading PAZ files
 - Supports all PAZ formats including the latest BDO patches
 
 ### Option B: UnPAZ (Command Line)
-- **Download**: Search "BDO UnPAZ" on the BDO modding community
+- **Download**: Search "BDO UnPAZ" on BDO modding Discords/communities (original repo at github.com/AngeloCairo/BDO-UnPAZ is no longer available)
 - Simpler CLI tool, extracts all files from PAZ archives
 
 ### Option C: Black Desert Online File Extractor
