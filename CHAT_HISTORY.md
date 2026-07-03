@@ -39,3 +39,42 @@
 - Created PAZ extraction guide at docs/PAZ_EXTRACTION_GUIDE.md
 - Created revised roadmap at docs/ROADMAP_2026-07-01_v2.md
 - Note: BDOToolkit and UnPAZ repos are gone — PAZ guide needs update
+
+## 👤 USER (2025-07-01)
+> Do P0.3. PAZ tools repos gone. Do next steps on roadmap. Filter to only spec-relevant skills. Skip P2.4.
+
+## 🤖 AI Actions (v5.3.0: P0.3 + P0.2 + P1.1 + P1.5)
+### P0.3: Project management setup
+- Created scripts/health-check.sh (9-point check)
+- Created scripts/vault.sh (commit + tag + auto-push)
+- Untracked db/custom.db, .env, lurker.lock, dev.pid, bun.lock
+- Created .env.example with GITHUB_PAT template
+- Created docs/SESSION_HANDOFF.md (current state)
+- Created docs/KNOWN_ISSUES.md (living tech-debt doc)
+- Populated CHAT_HISTORY.md with session history
+- Updated PAZ guide (BDOToolkit and UnPAZ repos are gone)
+- Fixed eslint config (ignore scripts directory)
+- Rescue beacon at /home/user_skills/RESCUE.md
+
+### P0.2: Patch note → DB update pipeline
+- POST /api/patches/apply — applies patch changes to DB (dryRun support)
+- GET /api/patches/changed — returns changed skill IDs for visual indicators
+- Handles: cooldown changes, protection additions, CC additions
+- Damage changes flagged for manual review (too complex to auto-parse)
+- All changes logged via SkillChangeLog
+
+### P1.1: Arena of Solare redesign
+- SA DR heatmap on class chips (amber→green based on 10-25% SA DR)
+- ↑ arrows for above-average SA DR (>10%)
+- Class portraits in team display (spec-specific)
+- SA advantage notes (avg SA DR comparison between teams)
+- Spec-colored borders (red/blue/yellow)
+- Spec badges (AWK/SUCC/ASC) on chips
+- Fixed team state from string[] to spec-qualified entries
+
+### P1.5: Tiers portrait redesign
+- Spec-specific portraits (awakening/succession/ascension)
+- Spec-color borders on portrait cards
+- Bigger podium (rank 1=280px, rank 2=240px, rank 3=220px)
+- Score overlay on portrait (large number with semi-transparent background)
+- Portrait URL fallback chain (spec-specific → main → png)
