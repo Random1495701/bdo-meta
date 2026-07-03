@@ -16,6 +16,7 @@ import { DocsPage } from '@/components/skills/docs-page'
 import { TierListPage } from '@/components/skills/tier-list-page'
 import { PatchesPage } from '@/components/skills/patches-page'
 import { MatchupsPage } from '@/components/skills/matchups-page'
+import { SessionTrackerPage } from '@/components/skills/session-tracker-page'
 import { DamageCalculatorPage } from '@/components/skills/damage-calculator-page'
 import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
 
@@ -154,6 +155,16 @@ export default function Home() {
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
         <TabSwitcher view={view} onChange={setView} />
         <MatchupsPage />
+        <SyncFooter />
+      </div>
+    )
+  }
+
+  if (view === 'sessions') {
+    return (
+      <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <TabSwitcher view={view} onChange={setView} />
+        <SessionTrackerPage />
         <SyncFooter />
       </div>
     )

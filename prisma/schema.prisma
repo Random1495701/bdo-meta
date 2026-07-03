@@ -122,6 +122,37 @@ model SkillChangeLog {
   @@map("skill_change_logs")
 }
 
+// PvP session tracker — AoS, Node War, War of the Roses
+model PvpSession {
+  id          String   @id @default(cuid())
+  playerTag   String   // player name/IGN
+  sessionType String   // "aos" | "nodewar" | "wotr"
+  result      String   // "victory" | "defeat" | "draw"
+  isPractice  Boolean  @default(false) // AoS: practice vs ranked
+  duration    String?  // "02:44" (mm:ss)
+  sessionDate String?  // "7/1/26" or manually input date
+  // Player stats (from screenshot for AoS, manual for NW/WotR)
+  kills       Int      @default(0)
+  deaths      Int      @default(0)
+  assists     Int      @default(0)
+  ccCount     Int      @default(0)
+  damageDealt Int      @default(0)
+  damageTaken Int      @default(0)
+  healing     Int      @default(0)
+  // Team data (all 6 players for AoS, just player for NW/WotR)
+  teamData    String?  // JSON: [{name, class, kills, deaths, cc, dealt, taken, healed}]
+  enemyData   String?  // JSON: [{name, class, kills, deaths, cc, dealt, taken, healed}]
+  // Metadata
+  screenshotUrl String? // stored screenshot path (if uploaded)
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  @@index([playerTag])
+  @@index([sessionType])
+  @@index([sessionDate])
+  @@map("pvp_sessions")
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
