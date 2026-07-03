@@ -299,7 +299,7 @@ export function MatchupsPage() {
                   <p className="text-[10px] leading-relaxed text-amber-300/50">
                     Click a chip to assign to Team A (1st click) or Team B (when A is full or already has it). Max 3 per team.
                     Chip background = <span className="text-emerald-300">SA DR heatmap</span> (amber &rarr; green);
-                    <ArrowUp className="ml-1 inline size-2.5 text-emerald-400" /> marks above-average SA DR (>10%).
+                    <ArrowUp className="ml-1 inline size-2.5 text-emerald-400" /> marks above-average SA DR ({'>'}10%).
                   </p>
 
                   {/* Team display — portraits + class info */}
