@@ -65,3 +65,16 @@ tool-results/
 # Database is too large for GitHub (100MB limit). Exported as JSON instead.
 db/custom.db
 db/custom.db-journal
+
+# Runtime artifacts (never track)
+.env
+.env.*
+!.env.example
+*.log
+*.lock
+*.pid
+.zscripts/dev.pid
+scripts/dev.pid
+scripts/lurker.lock
+bun.lock
+db/custom.db
