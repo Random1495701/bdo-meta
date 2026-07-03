@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Vault script — commits, tags, and pushes to GitHub
+# Vault script — updates version, commits, tags, and pushes to GitHub
 # Usage: ./scripts/vault.sh <version-tag> [commit-message] [--no-push] [--skip-gate]
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
@@ -26,13 +26,11 @@ done
 
 if [ -z "$VERSION" ]; then
   echo "Usage: ./scripts/vault.sh <version-tag> [commit-message] [--no-push] [--skip-gate]"
-  echo "Example: ./scripts/vault.sh v5.2.0 'Add damage calculator'"
   exit 1
 fi
 
 MSG="${MSG:-Vault $VERSION}"
 echo "=== Vaulting $VERSION ==="
-echo "Message: $MSG"
 
 # Pre-vault gate
 if [ "$SKIP_GATE" -eq 0 ]; then
@@ -40,6 +38,17 @@ if [ "$SKIP_GATE" -eq 0 ]; then
   bun run lint || { echo "❌ Lint failed"; exit 1; }
   echo "[gate] ✅ Lint clean"
 fi
+
+# Update version in src/lib/version.ts
+echo "[version] Updating APP_VERSION to $VERSION..."
+sed -i "s/export const APP_VERSION = '[^']*'/export const APP_VERSION = '$VERSION'/" src/lib/version.ts
+
+# Add version to GIT_TAGS if not already present
+if ! grep -q "'$VERSION'" src/lib/version.ts; then
+  sed -i "s/\]/, '$VERSION']/" src/lib/version.ts
+fi
+
+git add src/lib/version.ts
 
 # Commit all changes
 git add -A
@@ -60,16 +69,14 @@ if [ "$NO_PUSH" -eq 0 ]; then
   if [ -n "$TOKEN" ]; then
     echo "[push] Pushing to GitHub..."
     git push https://Random1495701:${TOKEN}@github.com/Random1495701/bdo-meta.git main --tags 2>&1 || {
-      echo "⚠️ Push failed — token may be expired. Changes are committed locally."
+      echo "⚠️ Push failed — token may be expired."
     }
     unset TOKEN
   else
-    echo "⚠️ No token at ~/.config/bdo-meta/github-token — skipping push"
-    echo "   Push manually: git push origin main --tags"
+    echo "⚠️ No token — skipping push"
   fi
 fi
 
-# Verify
 LATEST=$(git tag | sort -V | tail -1)
 echo ""
 echo "=== Vault complete ==="
