@@ -2650,3 +2650,63 @@ Stage Summary:
 - Results table (desktop sortable, mobile card list) shows per-skill: icon+name+class, Skill Dmg % (totalPvE formatted), PvP %, Hit Count (Σ multiplier × maxHits across phases), calculated PvP Damage, 4 per-scalar damage columns (showing what each scalar alone would yield), expand button revealing a 7-step formula breakdown with all intermediate values, and a remove button. Sortable by name / final damage / skill damage / PvP % / hit count.
 - Formula display at the bottom shows the exact formula string + a legend explaining every term + an emerald validation note crediting bdo-tools.net/@gpw and garmoth.com.
 - Lint clean. TypeScript clean for damage-calculator-page.tsx. Dev server still serving HTTP 200.
+
+---
+Task ID: 33-ARENA-TIERS
+Agent: arena-tiers-dev
+Task: Two UI improvements — (1) Arena of Solare redesign with SA DR heatmap, arrows, class portraits, advantage notes, spec-colored borders/badges; (2) Tier list Portraits view redesign with spec-specific portraits, spec-color borders, bigger podium, score overlay.
+
+Work Log:
+- Read /home/z/my-project/worklog.md (last 3 sections: AUDIT-2 feature matrix, Task 31-DMGCALC, Task 32-DMGCALC-V2) to understand project context — confirmed the codebase has full BDO dark theme (bdo-ink, bdo-leather-dark, bdo-title, bdo-btn, bdo-input, bdo-icon-frame, bdo-chip-on, bdo-stat-box), uses useQuery from @tanstack/react-query for fetching, framer-motion for animation, lucide-react for icons. /api/meta returns {classes: ClassStats[]} with awakeningSaDr/successionSaDr/ascensionSaDr and awakeningGroup/successionGroup/ascensionGroup fields per class.
+- Read src/components/skills/matchups-page.tsx (495 lines) — confirmed it has an existing Arena of Solare section with Team A/Team B string-array state (storing className strings, which is buggy because className is not unique per spec — both Warrior Awakening and Warrior Succession have className "Warrior"). The existing chips show className + class icon only.
+- Read src/components/skills/tier-list-page.tsx (1313 lines) — confirmed it has a PortraitCard component used by PortraitsView. Current PortraitCard uses specPortraitUrl=`/icons/portraits/specs/${slug}-${spec}.jpg` with onError fallback to main `.jpg` only (no .png fallback), uses medalColor (gold/silver/bronze) for border, and uses aspect-ratio (3/4, 3/4.5, 3/4.2) for sizing.
+- Read src/lib/skills.ts lines 310-410 — confirmed SPEC_COLORS = {awakening: '#ef4444', succession: '#3b82f6', ascension: '#eab308'}, classColor() returns amber '#c9a25c' for normal classes / yellow '#eab308' for ascension-only, classIconUrl() returns `/icons/classes-transparent/${slug}.webp`.
+- Verified public/icons/portraits/specs/ contains 56 .jpg files (all awakening + succession portraits, including shai-awakening.jpg, archer-awakening.jpg — ascension-only classes only have awakening spec portraits).
+- Verified public/icons/portraits/ contains 32 main portraits — MIXED extensions: some .jpg, some .png, some both. The current onError fallback to .jpg only would fail for slugs that only have .png (e.g. sage.png exists but sage.jpg also exists — OK; but to be safe, my chain tries .jpg then .png).
+- Sampled /api/meta — confirmed SA DR values range 10–25 (Mystic awakening/succession = 25%, Corsair succession = 20%, Guardian awakening = 20%, Berserker succession/Kunoichi awakening/Maehwa awakening/Musa awakening/Guardian succession = 15%, rest = 10%). This matches the task spec's 4-tier color scale (25/20/15/10).
+
+TASK 1 — Arena of Solare Redesign (src/components/skills/matchups-page.tsx):
+
+- Added new SpecEntry type (classId, className, slug, combatType, spec: 'awakening'|'succession'|'ascension', group, saDr, stats, isAscension) at top of file.
+- Added getSaDrColor(saDr) helper: linearly interpolates from amber rgba(245,158,11,0.25) at 10% → bright green rgba(34,197,94,0.55) at 25%, clamped to 10..25 range. Returns {bg, text, border} as rgba() strings for use in inline style backgroundColor/borderColor.
+- Added getPortraitUrls(slug, spec) helper: builds the URL chain [spec-specific .jpg (only for awakening/succession), main .jpg, main .png] for graceful fallback.
+- Added SpecPortrait component (small client component with useState for portraitIdx) — picks the first URL that loads, falls back through the chain via onError.
+- Added entryKey/sameEntry helpers for spec-qualified identity.
+- Refactored team state: `useState<SpecEntry[]>([])` for teamA/teamB (was `string[]` of classNames). This fixes the spec-collision bug — now both Warrior Awakening and Warrior Succession can be selected independently.
+- Refactored specEntries useMemo to be typed as SpecEntry[].
+- Rewrote the entire `{arenaMode && (...)}` block (lines 297-554):
+  • Help text now mentions the heatmap color meaning + the ↑ arrow meaning.
+  • Team display panels (Team A emerald-bordered, Team B red-bordered) now use a new TeamMemberRow component for each member, showing: 32×32px spec-specific portrait thumbnail (specColor-bordered), class icon (3×3px), class name, spec badge (AWK/SUCC/ASC in spec color), group badge (Vanguard/Pulverizer/Skirmisher 3-letter code in group color), and SA DR chip with heatmap background + ↑ arrow if saDr > 10. Hover reveals an X remove button. A team-colored accent strip on the left edge of each row.
+  • Team advantage analysis section now has 4 sub-sections: (1) 3-column aggregate counter summary (A counters / Neutral / B counters); (2) SA DR advantage note — only shows when |avgA − avgB| ≥ 0.5%, displays "Team X has Y% more SA DR on average (max% vs min%)" with green/red coloring matching the advantaged team; (3) pairwise matchup grid showing each Team A vs Team B pairing with class names colored by their SA DR heatmap, spec letters, and +5%/−5%/= counter indicator; (4) SA DR legend showing 10/15/20/25% color swatches + the ↑ arrow explanation.
+  • Class chips for arena selection now have: SA DR heatmap background color (interpolated via getSaDrColor), spec-color border (red/blue/yellow — replaced when selected with emerald/red), class icon (3.5×3.5px), class name, spec badge (AWK/SUCC/ASC), ↑ arrow (emerald, strokeWidth 3) if saDr > 10, and a hover-revealed SA DR % readout. Each chip is uniquely keyed by `${classId}:${spec}`. Selected chips get a team-colored ring (ring-1 ring-offset-1). Disabled state when both teams are full.
+- Added TeamMemberRow component at end of file (lines 722-833) — used by both Team A and Team B panels, takes entry/teamColor/onRemove props.
+- Imported ShieldHalf icon from lucide-react (for the SA DR advantage note).
+- Fixed JSX parsing error: replaced bare `>` in help text with `&gt;` and `→` with `&rarr;`.
+
+TASK 2 — Tiers Portrait Redesign (src/components/skills/tier-list-page.tsx):
+
+- Added getPortraitUrls(slug, spec) helper (lines 212-223) — same chain as Task 1: spec-specific .jpg (awakening/succession only) → main .jpg → main .png.
+- Rewrote PortraitCard component (lines 1021-1230):
+  • Portrait URL chain: useState for portraitIdx, onError advances through the chain. Replaces the previous single-URL-fallback logic that only tried .jpg.
+  • Border color: specColor (red/blue/yellow) per task spec — was previously medalColor (gold/silver/bronze). Medal color is still used as accent for the rank badge and score bar.
+  • Podium min-heights: rank 1 = 280px, rank 2 = 240px, rank 3 = 220px (per task spec). Compact cards (rank 4+) keep the existing aspect-[3/4] behaviour. The portrait div uses `absolute inset-0` for podium cards (fills the min-height) and `aspect-[3/4]` for compact cards.
+  • Large score overlay: a centered semi-transparent radial-gradient backdrop (rgba(10,9,8,0.55) → 0.25 → transparent) with a large monospace bold number in spec color. Font size scales: 4.5rem for rank 1, 3.5rem for rank 2/3, 2.5rem for other podium, 2rem for compact. Text shadow + WebkitTextStroke for legibility against any portrait background.
+  • Small top-right score badge kept (shows decimal score like "85.3") — now uses specColor for border/text instead of medalColor.
+  • Spec badge in bottom info overlay changed from `{entry.spec.slice(0, 4)}` ("awak"/"succ"/"asce") to explicit AWK/SUCC/ASC labels for consistency with matchups page.
+  • Hover glow now uses specColor instead of medalColor.
+- Removed unused `color` variable warning potential — still used in the className span at bottom.
+
+VALIDATION:
+- `bun run lint` — clean (0 errors, 0 warnings) on both files.
+- `bunx tsc --noEmit` — 0 errors in matchups-page.tsx and tier-list-page.tsx (only pre-existing errors in scripts/ and examples/ directories, all unrelated).
+- `curl http://localhost:3000/` — HTTP 200, page renders successfully.
+- `curl http://localhost:3000/api/meta` — API returns 31 classes with SA DR values ranging 10-25 as expected.
+
+Files modified:
+1. src/components/skills/matchups-page.tsx (was 495 lines, now 834 lines — added helpers + SpecPortrait + TeamMemberRow + rewrote Arena section)
+2. src/components/skills/tier-list-page.tsx (was 1313 lines, now ~1450 lines — added getPortraitUrls helper + rewrote PortraitCard)
+
+Stage Summary:
+- Arena of Solare (Matchups tab): now a full tactical 3v3 team builder. Each class chip is a SA DR heatmap cell (amber→green interpolation) with spec-colored border, spec badge, ↑ arrow for above-average SA DR, and hover-revealed SA DR %. Team A/B panels show each member as a card with spec-specific portrait thumbnail, class icon, spec badge, group badge, and heatmap-colored SA DR chip. Team advantage analysis shows aggregate counter counts, a SA DR advantage note ("Team X has Y% more SA DR on average") when meaningful, and pairwise matchup grid with colored class names. The team state was refactored from string[] (className-based, buggy due to spec collisions) to SpecEntry[] (classId+spec-qualified) so both Awakening Warrior and Succession Warrior can be on the same team independently.
+- Tier list Portraits view: each portrait card now has a spec-color border (red/blue/yellow) instead of medal-colored, the top 3 podium cards have explicit min-heights (280/240/220px) for a stronger podium feel, and a large semi-transparent score number is overlaid on each portrait (radial-gradient backdrop + spec-colored number with text-shadow + stroke). Portrait loading is more robust — tries spec-specific .jpg → main .jpg → main .png (previously only tried .jpg fallback, which failed for slugs that only have .png main portraits).
+- Lint clean. TypeScript clean for both modified files. Dev server still serving HTTP 200.
