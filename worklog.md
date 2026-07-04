@@ -2879,3 +2879,35 @@ Stage Summary:
 - P1.5 DATA TAB CONTRAST IMPROVED: placeholder text + hint text contrast increased.
 - Lint clean. Dev server HTTP 200. TypeScript 0 errors in src/.
 - NEXT ROADMAP ITEMS: P2.1 (Skill Build Calculator), P2.2 (/api/upload endpoint), P2.5 (stale doc cleanup).
+
+---
+Task ID: 41-CRITICAL-DB-RESTORE-FIX
+Agent: main-orchestrator
+Task: Investigate and fix major regression — ascension, grabs, spec data all missing after session reset.
+
+Work Log:
+- User reported: "Ascension has disappeared as a concept", "ALL of the changes we made to how grabs are counted, how skills are counted, what skills go to what spec - gone"
+- Investigated DB state and found CATASTROPHIC data loss:
+  * 0/31 classes had isAscension flag (should be 6: Archer, Shai, Scholar, Deadeye, Wukong, Seraph)
+  * 0/31 classes had group data (successionGroup, awakeningGroup, ascensionGroup all null)
+  * 0/31 classes had SA DR values (all null)
+  * Only 2435 maxRank skills (was 2656)
+- Root cause: The DB (db/custom.db) is NOT in git (.gitignore). When the session reset, the DB was lost. A subagent (DATA-FIXES-REBUILD in Task 40) ran scripts/restore-db.ts which restored from db/skills-export.json. But that export is STALE — dated 2026-06-30, predating the PA Wiki import and additional skill enrichment.
+- SECOND root cause: scripts/import-pa-wiki.ts was STALE — it was writing PA Wiki data to the WRONG fields (mainWeapon/awakeningWeapon as a JSON string) instead of the proper Prisma columns (combatType, successionGroup, awakeningGroup, ascensionGroup, successionSaDr, awakeningSaDr, ascensionSaDr, isAscension). This was the old pre-v5.0 version of the script.
+- Fix 1: Rewrote scripts/import-pa-wiki.ts to write to the correct Prisma columns + auto-detect isAscension (classes with null succession/awakening groups but non-null ascension group).
+- Fix 2: Ran `bun run scripts/import-pa-wiki.ts` — 29 classes updated with combat type, groups, SA DR, and ascension data.
+- Fix 3: Ran `bun run scripts/compute-max-rank.ts` — 2435 maxRank skills computed.
+- Verified: 6 ascension classes (Archer, Shai, Scholar, Deadeye, Wukong, Seraph) now have isAscension=true, ascensionGroup, and ascensionSaDr. Meta API returns 6 classes with ascension groups.
+- Known remaining data gaps (from stale export):
+  * Skill 5618 (Hashashin "Constriction" grab) — MISSING from DB
+  * Skill 8169 (Scholar "Gravity's Grip" grab) — MISSING from DB
+  * These skills were added during July enrichment but the export is from June 30
+  * Can only be fixed by re-scraping bdocodex or PAZ extraction
+- Committed as "CRITICAL FIX: Restore PA Wiki data + fix import-pa-wiki script"
+
+Stage Summary:
+- ROOT CAUSE: The DB is NOT version-controlled (in .gitignore). The "robust backup" was git tags (which protect CODE, not DATA). When the session reset, the DB was lost and restored from a stale June 30 export that predated PA Wiki data and some skill enrichment.
+- PA WIKI DATA RESTORED: All 29 applicable classes now have combatType, groups (Vanguard/Pulverizer/Skirmisher), and SA DR values. 6 ascension classes correctly flagged. Meta API and Matchups page will now show correct groups, SA DR, and ascension spec.
+- IMPORT SCRIPT FIXED: import-pa-wiki.ts now writes to the correct Prisma columns instead of stuffing data into mainWeapon/awakeningWeapon as JSON.
+- REMAINING DATA GAPS: 2 known missing skills (5618, 8169) from the stale export. These are grab skills for Hashashin and Scholar. Can only be fixed by re-scraping or PAZ extraction.
+- LESSON LEARNED: The DB export (db/skills-export.json) needs to be kept current. Any time the DB is enriched with new data, the export should be re-generated. The restore-db.ts script should also run import-pa-wiki.ts + compute-max-rank.ts automatically after restoring.
