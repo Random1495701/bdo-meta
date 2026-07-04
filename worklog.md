@@ -2836,3 +2836,46 @@ Stage Summary:
 - Matchups page redesigned from 50 spec-separated rows down to ~31 collapsed class rows. New spec selector (ALL/AWK/SUCC/ASC, default ALL = best spec per class), pinned-classes persistence via `localStorage['bdo-meta-pinned-classes']` with Pin/PinOff buttons and gold-row highlight, group filter chips (Vanguard/Pulverizer/Skirmisher), and SA DR rendered as colored numbers only (no heatmap background) in the redesigned table. The Arena of Solare 3v3 selector section is unchanged and still uses heatmap chip backgrounds.
 - New spec-comparison modal shows side-by-side Awakening (red) vs Succession (blue) with 12 stat rows, a verdict box, SA DR comparison, group counter advantage, and "View Skills" buttons. Triggered from a new "⚔ AWK vs SUCC" button on each SpecCard (only shown when both Awakening AND Succession have skills). Wrapped in `AnimatePresence` for open/close animation. Escape key + backdrop click close it.
 - Lint clean. Dev server returns HTTP 200. No new TypeScript errors introduced (only pre-existing ones remain).
+
+---
+Task ID: 40-VERSION-VALIDATE-REBUILD-ROADMAP
+Agent: main-orchestrator + 3 subagents
+Task: Validate version vs GitHub, rebuild all lost work from session reset, continue roadmap.
+
+Work Log:
+- Validated version: fetched all 41 tags from GitHub. Found working tree was at commit 8c6724e (between v5.1.0 and v5.2.0), not v5.4.1. All Task 34-39 work (spec-dedup, PvP DPC, theme toggle, patch arrows, spec comparison, matchups redesign, Awakening leak fix, heatmap removal, German skill fix, addon removal, lean app, CHAT_HISTORY, version metadata) was LOST — never committed.
+- Restored v5.4.1 files via `git checkout v5.4.1 -- .` + stash pop. Verified v5.4.1 has: sessions API, patches/apply + changed, session-tracker-page, damage-calculator-page. But MISSING: spec-dedup.ts, spec-comparison-modal, patch-change-indicator, theme toggle, PvP DPC, Awakening leak fix, heatmap removal.
+- Created shared dedup module `src/lib/spec-dedup.ts` (~220 lines) — implements user's confirmed spec logic: Awakening (Absolute + Main, excludes Awakening-weapon prereqs), Succession (Prime > Absolute > Main, excludes Awakening-weapon skills + isAwakening Core/Flow), Default (Prime > Absolute > Core > Flow > Main, excludes Awakening-weapon).
+- Launched 3 subagents in parallel:
+  * API-REBUILD: Refactored /api/skills + /api/meta to use shared dedup module. Added damagePerCooldownPvP + avgDpcPvP. Added hasPatchChange + patchChange placeholder.
+  * UI-REBUILD: Rebuilt theme toggle (next-themes + parchment light variant), patch-change-indicator (TrendingUp/Down/CircleDot), matchups redesign (31 rows, pin classes, group filter, no heatmap overlays), spec-comparison-modal (AWK vs SUCC side-by-side with verdict).
+  * DATA-FIXES-REBUILD: Fixed German skill (Absolute Finsternis II → Absolute Darkness II), removed addon system, made app lean (removed z-ai-web-dev-sdk from screenshot parsing), updated DPC UI to show PvP DPC as primary, verified Awakening leak fix (0 leaks).
+- All 3 subagents completed successfully. Lint clean. Dev server HTTP 200.
+- Browser-verified: DPC* column visible, "AWK vs SUCC" buttons on Meta page, Matchups shows "One row per class" + group filters + pin, theme toggle switches dark/light.
+- Committed as v5.5.0: "Restore + rebuild all lost work from session reset" (commit e7a5191).
+- Continued roadmap:
+  * P1.1: Archived 64 one-off scripts to scripts/archive/. 26 useful scripts remain. Updated eslint config to ignore archive dir.
+  * P1.5: Improved Data tab contrast — table placeholder text (text-amber-200/30 → /50), column hint text (text-amber-200/40 → /60).
+  * P1.2: Fixed ALL TypeScript errors in src/ (0 remaining, was 10):
+    - Regenerated Prisma client (fixed PvpSession model errors)
+    - Added blackSpiritMax/absoluteMax to SkillRanges type
+    - Fixed header.tsx query cache event type ('fetched' → 'observerResultsUpdated')
+    - Added grabCount to SortKey type in meta-page
+    - Added hint? to sortOptions type in meta-page
+    - Fixed skill-store.ts optional type handling (sort/order fallbacks)
+    - Fixed sync-footer.tsx optional parameter ordering
+    - Fixed meta-page img src null type
+  * Committed as v5.5.1: "Fix all TypeScript errors in src/" (commit bbceec8).
+- Files created: src/lib/spec-dedup.ts, src/components/skills/patch-change-indicator.tsx, src/components/skills/spec-comparison-modal.tsx
+- Files modified: ~25 files across API routes, UI components, lib, types, eslint config, scripts cleanup
+- 64 scripts archived to scripts/archive/
+
+Stage Summary:
+- VERSION VALIDIDATED: All 41 tags fetched from GitHub. Working tree was at v5.1.0-era commit, not v5.4.1. All uncommitted Task 34-39 work was lost.
+- ALL LOST WORK REBUILT: spec-dedup module, PvP DPC, theme toggle, patch arrows, spec comparison modal, matchups redesign, Awakening leak fix, heatmap removal, German skill fix, addon removal, lean app — all rebuilt via 3 parallel subagents.
+- COMMITTED TO GIT: v5.5.0 (e7a5191) = full rebuild. v5.5.1 (bbceec8) = TS error fixes + scripts cleanup. Work is now safe against future session resets.
+- P1.1 SCRIPTS CLEANUP DONE: 64 one-off scripts archived, 26 useful scripts remain.
+- P1.2 TYPESCRIPT ERRORS FIXED: 0 errors in src/ (was 10). All pre-existing errors resolved.
+- P1.5 DATA TAB CONTRAST IMPROVED: placeholder text + hint text contrast increased.
+- Lint clean. Dev server HTTP 200. TypeScript 0 errors in src/.
+- NEXT ROADMAP ITEMS: P2.1 (Skill Build Calculator), P2.2 (/api/upload endpoint), P2.5 (stale doc cleanup).
