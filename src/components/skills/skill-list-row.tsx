@@ -15,6 +15,7 @@ import {
 import { formatDamage } from '@/lib/damage'
 import { useSkillStore } from '@/lib/skill-store'
 import { cn } from '@/lib/utils'
+import { PatchChangeIndicator } from '@/components/skills/patch-change-indicator'
 
 // Compact list-row skill icon. Same gold-bevel frame as the grid card but at 40px.
 function ListSkillIcon({ skill, size }: { skill: Skill; size: number }) {
@@ -111,10 +112,11 @@ export const SkillListRow = React.memo(function SkillListRow({
       {/* Name + class/type badges */}
       <div className="min-w-0 flex-1">
         <div
-          className="bdo-heading truncate text-sm leading-tight text-amber-100 group-hover:text-amber-200"
+          className="bdo-heading flex items-center gap-1.5 truncate text-sm leading-tight text-amber-100 group-hover:text-amber-200"
           title={skill.name}
         >
-          {skill.name}
+          <span className="truncate">{skill.name}</span>
+          <PatchChangeIndicator patchChange={skill.patchChange} />
         </div>
         <div className="mt-0.5 flex flex-wrap items-center gap-1.5">
           {skill.className && (

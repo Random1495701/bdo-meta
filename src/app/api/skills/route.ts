@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
 import { calculateDamage, type DamageRow } from '@/lib/damage'
 import { calculateCCCounters, getRealCCs, getNonCCEffects, formatCCCounters } from '@/lib/cc'
+import { dedupSkillsBySpec } from '@/lib/spec-dedup'
 
 export const dynamic = 'force-dynamic'
 
@@ -43,25 +44,6 @@ function splitCsv(s: string | null): string[] | null {
   if (!s) return null
   const arr = s.split(',').map((x) => x.trim()).filter(Boolean)
   return arr.length ? arr : null
-}
-
-// Extended rank map — includes high roman numerals used by passive skills (up to XXX)
-const RANK_MAP: Record<string, number> = {
-  I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10,
-  XI: 11, XII: 12, XIII: 13, XIV: 14, XV: 15, XVI: 16, XVII: 17, XVIII: 18,
-  XIX: 19, XX: 20, XXI: 21, XXII: 22, XXIII: 23, XXIV: 24, XXV: 25,
-  XXVI: 26, XXVII: 27, XXVIII: 28, XXIX: 29, XXX: 30,
-}
-// Regex ordered longest-first to ensure correct matching (XXX before XX before X)
-const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|X|IX|VIII|VII|VI|IV|V|III|II|I)$/
-
-function getBaseName(name: string): string {
-  return name.replace(RANK_SUFFIX, '')
-}
-
-function getRank(name: string): number {
-  const m = name.match(RANK_SUFFIX)
-  return m ? (RANK_MAP[m[1]] || 0) : 0
 }
 
 function serializeSkill(s: any) {
@@ -110,6 +92,9 @@ function serializeSkill(s: any) {
     damagePerCooldown: (damage.totalPvE > 0 && s.cooldownSec && s.cooldownSec > 0)
       ? Math.round(damage.totalPvE / s.cooldownSec)
       : null,
+    damagePerCooldownPvP: (damage.totalPvP != null && damage.totalPvP > 0 && s.cooldownSec && s.cooldownSec > 0)
+      ? Math.round(damage.totalPvP / s.cooldownSec)
+      : null,
     ccTypes,
     ccCounters,
     ccCounterDisplay,
@@ -129,6 +114,7 @@ function serializeSkill(s: any) {
       : [],
     videoUrl: s.videoUrl,
     animationDurationMs: s.animationDurationMs,
+    patchChange: null,
     syncedAt: s.syncedAt,
     bdocodexUrl: `https://bdocodex.com/us/skill/${s.skillId}/`,
   }
@@ -160,8 +146,8 @@ export async function GET(req: NextRequest) {
   const hasVideo = sp.get('hasVideo')
   const hasAnim = sp.get('hasAnim')
   const quickslot = sp.get('quickslot')
-  const hasAddon = sp.get('hasAddon')
   const hasPrereqs = sp.get('hasPrereqs')
+  const hasPatchChange = sp.get('hasPatchChange')
   const maxRank = sp.get('maxRank') !== 'false'
   const filterEvasion = sp.get('filterEvasion') !== 'false'
   // Multi-spec: comma-separated "succession,awakening,ascension"
@@ -463,9 +449,16 @@ export async function GET(req: NextRequest) {
   else if (hasAnim === 'false') AND.push({ animationDurationMs: null })
   if (quickslot === 'true') AND.push({ isQuickSlot: true })
   else if (quickslot === 'false') AND.push({ isQuickSlot: false })
-  if (hasAddon === 'true') AND.push({ addonsJson: { not: null } })
   if (hasPrereqs === 'true') AND.push({ prerequisiteIds: { not: null } })
   else if (hasPrereqs === 'false') AND.push({ OR: [{ prerequisiteIds: null }, { prerequisiteIds: '' }] })
+  // Patch-change filter: placeholder — when true, narrow to skills flagged with
+  // patch-change data. The actual patch-change flag/column will be wired up
+  // separately; for now we keep all rows (filter is a no-op) so the param
+  // parses correctly end-to-end.
+  if (hasPatchChange === 'true') {
+    // TODO: replace with a real column filter once patch-change data is loaded.
+    // AND.push({ hasPatchChange: true })
+  }
 
   if (AND.length) where.AND = AND
 
@@ -504,6 +497,7 @@ export async function GET(req: NextRequest) {
         name: true,
         requiredLevel: true,
         className: true,
+        classId: true,
         cooldownSec: true,
         animationDurationMs: true,
         isPassive: true,
@@ -511,6 +505,10 @@ export async function GET(req: NextRequest) {
         isAbsolute: true,
         isSuccession: true,
         isAwakening: true,
+        isFlow: true,
+        isCore: true,
+        isMaxRank: true,
+        prerequisiteIds: true,
       },
       orderBy: { requiredLevel: 'asc' },
     })
@@ -521,83 +519,32 @@ export async function GET(req: NextRequest) {
     const rowById = new Map<number, (typeof allMatching)[number]>()
     for (const s of allMatching) rowById.set(s.skillId, s)
 
-    // --- Spec-aware deduplication ---
-    // For succession spec: if a Prime:/Succession: version exists, exclude
-    //   Main/Absolute versions with the same base name.
-    // For awakening spec: if an Absolute: version exists, exclude the Main
-    //   version with the same base name.
-    // For both specs: apply BOTH dedup rules independently.
-    // NOTE: "Black Spirit: " prefix is KEPT — BS skills are separate from regular skills.
-    let specFilteredIds = maxRankSkillIds
-    if (hasSuccessionSpec || hasAwakeningSpec) {
-      // Build spec base name map
-      const specMap = new Map<string, { skillIds: number[]; hasSuccession: boolean; hasAbsolute: boolean; hasAwakening: boolean; isBlackSpirit: boolean; isPassive: boolean }>()
-      for (const id of maxRankSkillIds) {
-        const s = rowById.get(id)
-        if (!s) continue
-        let specBase = s.name
-        const isSucc = s.isSuccession || s.name.includes('Prime: ') || s.name.startsWith('Succession:')
-        const isAbs = s.isAbsolute || s.name.includes('Absolute: ')
-        const isAwk = s.isAwakening
-        // Strip ONLY the spec prefix (Prime/Succession/Absolute), keep "Black Spirit: "
-        if (isSucc) specBase = s.name.replace(/(Prime:|Succession:)\s+/, '')
-        else if (isAbs) specBase = s.name.replace(/Absolute:\s+/, '')
-        specBase = getBaseName(specBase)
-        const existing = specMap.get(specBase) || { skillIds: [], hasSuccession: false, hasAbsolute: false, hasAwakening: false, isBlackSpirit: false, isPassive: false }
-        existing.skillIds.push(id)
-        if (isSucc) existing.hasSuccession = true
-        if (isAbs) existing.hasAbsolute = true
-        if (isAwk) existing.hasAwakening = true
-        if (s.isBlackSpirit) existing.isBlackSpirit = true
-        if (s.isPassive) existing.isPassive = true
-        specMap.set(specBase, existing)
-      }
-
+    // --- Spec-aware deduplication (delegated to @/lib/spec-dedup) ---
+    // Rules (mirrors the shared module so /api/skills, /api/meta, and the
+    // Tiers page all agree on which variant of each baseName wins):
+    //   - Both succession + awakening: union of awakening dedup + succession dedup
+    //   - Succession only: succession dedup
+    //   - Awakening only: awakening dedup
+    //   - Ascension only: no dedup (ascension-only classes show all skills)
+    //   - No spec: default dedup (spec=null) — prefers Prime > Absolute > Main,
+    //     excludes Awakening-weapon skills.
+    let specFilteredIds: number[]
+    if (hasAscensionSpec) {
+      specFilteredIds = maxRankSkillIds
+    } else if (hasSuccessionSpec && hasAwakeningSpec) {
+      const awk = dedupSkillsBySpec(allMatching, { spec: 'awakening' })
+      const succ = dedupSkillsBySpec(allMatching, { spec: 'succession' })
+      const seen = new Set<number>()
       specFilteredIds = []
-      for (const [, info] of specMap) {
-        if (hasSuccessionSpec && info.hasSuccession) {
-          // Succession spec: show Prime:/Succession: version only (exclude main/absolute)
-          for (const id of info.skillIds) {
-            const s = rowById.get(id)
-            if (s && (s.isSuccession || s.name.includes('Prime: ') || s.name.startsWith('Succession:'))) {
-              specFilteredIds.push(id)
-            }
-          }
-          // If also awakening spec, show awakening version too
-          if (hasAwakeningSpec && info.hasAwakening) {
-            for (const id of info.skillIds) {
-              const s = rowById.get(id)
-              if (s && s.isAwakening) specFilteredIds.push(id)
-            }
-          }
-        } else if (hasAwakeningSpec && info.hasAbsolute) {
-          // Awakening spec (no succession): show Absolute, exclude Main
-          for (const id of info.skillIds) {
-            const s = rowById.get(id)
-            if (s && (s.isAbsolute || s.name.includes('Absolute: '))) {
-              specFilteredIds.push(id)
-            }
-          }
-          // Also show awakening version if it exists
-          if (info.hasAwakening) {
-            for (const id of info.skillIds) {
-              const s = rowById.get(id)
-              if (s && s.isAwakening) specFilteredIds.push(id)
-            }
-          }
-        } else if (hasSuccessionSpec && info.hasAbsolute && !info.hasAwakening) {
-          // Succession spec, no Prime version but has Absolute: show Absolute, exclude Main
-          for (const id of info.skillIds) {
-            const s = rowById.get(id)
-            if (s && (s.isAbsolute || s.name.includes('Absolute: '))) {
-              specFilteredIds.push(id)
-            }
-          }
-        } else {
-          // No spec override for this skill — include all versions
-          specFilteredIds.push(...info.skillIds)
-        }
+      for (const s of [...awk, ...succ]) {
+        if (!seen.has(s.skillId)) { seen.add(s.skillId); specFilteredIds.push(s.skillId) }
       }
+    } else if (hasSuccessionSpec) {
+      specFilteredIds = dedupSkillsBySpec(allMatching, { spec: 'succession' }).map((s) => s.skillId)
+    } else if (hasAwakeningSpec) {
+      specFilteredIds = dedupSkillsBySpec(allMatching, { spec: 'awakening' }).map((s) => s.skillId)
+    } else {
+      specFilteredIds = dedupSkillsBySpec(allMatching, { spec: null }).map((s) => s.skillId)
     }
 
     // Apply damage range filter post-query (since damage is computed, not stored).
@@ -608,6 +555,7 @@ export async function GET(req: NextRequest) {
     let dmgPvEMap: Map<number, number> | null = null
     let dmgPvPMap: Map<number, number> | null = null
     let ccMap: Map<number, number> | null = null
+    let cooldownMap: Map<number, number> | null = null
     if (needsDmg || needsCC) {
       const skills = await db.skill.findMany({
         where: { skillId: { in: maxRankSkillIds } },
@@ -622,11 +570,13 @@ export async function GET(req: NextRequest) {
       dmgPvEMap = new Map<number, number>()
       dmgPvPMap = new Map<number, number>()
       ccMap = new Map<number, number>()
+      cooldownMap = new Map<number, number>()
       for (const s of skills) {
         const rows = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
         const dmg = calculateDamage(rows, s.pvpDamagePercent)
         dmgPvEMap.set(s.skillId, dmg.totalPvE)
         dmgPvPMap.set(s.skillId, dmg.totalPvP ?? 0)
+        cooldownMap.set(s.skillId, s.cooldownSec ?? 0)
 
         // Exclude PvE-only CCs from the counter calculation
         const pveOnlySet = new Set<string>()
@@ -690,15 +640,18 @@ export async function GET(req: NextRequest) {
         return dir * (ca - cb_)
       })
     } else if (sort === 'dmgPerCd') {
-      // Damage per cooldown: totalPvE / cooldownSec (higher = more efficient)
+      // Damage per cooldown: PvP damage / cooldownSec (matches the PvP DPC
+      // column shown in the UI; falls back to PvE when PvP damage is missing).
       filteredIds = [...filteredIds].sort((a, b) => {
-        const da = dmgPvEMap!.get(a) ?? 0
-        const db_ = dmgPvEMap!.get(b) ?? 0
-        // Need cooldown data — fetch from the skills array we already have
-        const sa = skills.find(s => s.skillId === a)
-        const sb = skills.find(s => s.skillId === b)
-        const cda = sa?.cooldownSec ?? 0
-        const cdb = sb?.cooldownSec ?? 0
+        const daPvE = dmgPvEMap!.get(a) ?? 0
+        const dbPvE = dmgPvEMap!.get(b) ?? 0
+        const daPvP = dmgPvPMap?.get(a) ?? 0
+        const dbPvP = dmgPvPMap?.get(b) ?? 0
+        const cda = cooldownMap?.get(a) ?? 0
+        const cdb = cooldownMap?.get(b) ?? 0
+        // Prefer PvP DPC; fall back to PvE DPC when PvP damage is unavailable.
+        const da = daPvP > 0 ? daPvP : daPvE
+        const db_ = dbPvP > 0 ? dbPvP : dbPvE
         // DPC = damage / cooldown (if cooldown is 0 or null, treat as instant = high efficiency)
         const dpcA = cda > 0 ? da / cda : da
         const dpcB = cdb > 0 ? db_ / cdb : db_

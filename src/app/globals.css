@@ -123,6 +123,45 @@
   --sidebar-ring: #c8aa44;
 }
 
+.light {
+  --background: #f5f0e1;
+  --foreground: #3a2a10;
+  --card: #ebe3cc;
+  --card-foreground: #3a2a10;
+  --popover: #ebe3cc;
+  --popover-foreground: #3a2a10;
+  --primary: #9c7e2e;
+  --primary-foreground: #f5f0e1;
+  --secondary: #e0d5b8;
+  --secondary-foreground: #3a2a10;
+  --muted: #e0d5b8;
+  --muted-foreground: #6b5a3e;
+  --accent: #9c7e2e;
+  --accent-foreground: #f5f0e1;
+  --destructive: #b03030;
+  --border: #c8aa44;
+  --input: #ebe3cc;
+  --ring: #9c7e2e;
+  --chart-1: #9c7e2e;
+  --chart-2: #c8aa44;
+  --chart-3: #f0d060;
+  --chart-4: #6b4423;
+  --chart-5: #d9c79a;
+  --sidebar: #ebe3cc;
+  --sidebar-foreground: #3a2a10;
+  --sidebar-primary: #9c7e2e;
+  --sidebar-primary-foreground: #f5f0e1;
+  --sidebar-accent: #e0d5b8;
+  --sidebar-accent-foreground: #3a2a10;
+  --sidebar-border: #c8aa44;
+  --sidebar-ring: #9c7e2e;
+
+  /* BDO palette overrides for light mode — parchment/leather look */
+  --color-bdo-ink: #f5f0e1;
+  --color-bdo-leather: #ebe3cc;
+  --color-bdo-leather-dark: #e0d5b8;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -132,7 +171,7 @@
     background-image:
       radial-gradient(circle at 20% 0%, rgba(200, 170, 68, 0.04) 0%, transparent 40%),
       radial-gradient(circle at 80% 100%, rgba(156, 126, 46, 0.03) 0%, transparent 50%),
-      linear-gradient(to bottom, #0a0908 0%, #0d0a08 100%);
+      linear-gradient(to bottom, var(--background) 0%, var(--sidebar) 100%);
     background-attachment: fixed;
   }
   /* Subtle noise texture overlay for the leather feel */

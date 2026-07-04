@@ -8,6 +8,7 @@ import { Zap, ArrowUpDown, Table2, LayoutGrid, Database, X, ChevronDown, Externa
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { formatDamage as fmtDmg } from '@/lib/damage'
 import { cn } from '@/lib/utils'
+import { SpecComparisonModal } from '@/components/skills/spec-comparison-modal'
 
 interface SpecStats {
   skillCount: number
@@ -22,7 +23,7 @@ interface SpecStats {
   coreFgCount: number
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number
-  avgDpc: number
+  avgDpcPvP: number
   protectedCoverage: number
 }
 
@@ -42,7 +43,7 @@ interface ClassStats {
   ascension: SpecStats
 }
 
-type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'avgDpc' | 'protectedCoverage'
+type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'avgDpcPvP' | 'protectedCoverage'
 
 // Spec display metadata — Red=Awakening, Blue=Succession, Yellow=Ascension
 const SPEC_META: Record<string, { label: string; color: string; shortLabel: string }> = {
@@ -61,7 +62,7 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 // Portrait is the card background, with a dark gradient overlay for readability.
 // Framed class icon in top-right corner with spec-colored border.
 // Card is clickable → navigates to Data tab with class+spec pre-filtered.
-function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpanded, onExpand }: {
+function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpanded, onExpand, onCompare }: {
   cls: ClassStats
   specName: 'awakening' | 'succession' | 'ascension'
   stats: SpecStats
@@ -70,6 +71,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
   onDataClick: () => void
   isExpanded: boolean
   onExpand: () => void
+  onCompare?: () => void
 }) {
   const iconUrl = classIconUrl(cls.slug)
   const specPortraitUrl = `/icons/portraits/specs/${cls.slug}-${specName}.jpg`
@@ -102,7 +104,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
     { label: 'SA', value: stats.superArmorCount, avg: avgOf('superArmorCount'), color: '#fbbf24' },
     { label: 'FG', value: stats.forwardGuardCount, avg: avgOf('forwardGuardCount'), color: '#60a5fa' },
     { label: 'IF', value: stats.iFrameCount, avg: avgOf('iFrameCount'), color: '#a78bfa' },
-    { label: 'DPC', value: stats.avgDpc, avg: avgOf('avgDpc'), color: '#22d3ee' },
+    { label: 'PvP DPC', value: stats.avgDpcPvP, avg: avgOf('avgDpcPvP'), color: '#22d3ee' },
     { label: 'Grab', value: stats.grabCount, avg: avgOf('grabCount'), color: '#f97316' },
     { label: 'Prot %', value: stats.protectedCoverage, avg: avgOf('protectedCoverage'), color: '#22d3ee' },
   ]
@@ -251,6 +253,19 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
         <div className="flex items-center justify-between">
           <span className="text-[10px] text-amber-200/40">{stats.skillCount} skills</span>
           <div className="flex items-center gap-1">
+            {onCompare && cls.awakening.skillCount > 0 && cls.succession.skillCount > 0 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onCompare()
+                }}
+                className="flex items-center gap-1 rounded-sm border border-purple-700/50 bg-purple-900/15 px-2 py-0.5 text-[9px] font-semibold text-purple-300/80 transition-all hover:border-purple-500/60 hover:bg-purple-500/15 hover:text-purple-200"
+                title={`Compare Awakening vs Succession for ${cls.className}`}
+              >
+                <Swords className="size-2.5" />
+                AWK vs SUCC
+              </button>
+            )}
             <button
               onClick={(e) => {
                 e.stopPropagation()
@@ -365,7 +380,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
                   Combat Breakdown
                 </div>
                 <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
-                  <ExpandedStatBox label="Avg DPC" value={String(stats.avgDpc)} color="#22d3ee" />
+                  <ExpandedStatBox label="PvP DPC" value={String(stats.avgDpcPvP)} color="#22d3ee" />
                   <ExpandedStatBox label="Grab Count" value={String(stats.grabCount)} color="#f97316" />
                   <ExpandedStatBox label="Core SA" value={String(stats.coreSaCount)} color="#fbbf24" />
                   <ExpandedStatBox label="Core FG" value={String(stats.coreFgCount)} color="#60a5fa" />
@@ -555,7 +570,7 @@ function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelectio
     { key: 'avgPvpDamage', label: 'Avg PvP' },
     { key: 'medianPvpDamage', label: 'Med PvP' },
     { key: 'pvpCcSkillCount', label: 'CC*', hint: 'Black Spirit rage skills are not counted in CC stats' },
-    { key: 'avgDpc', label: 'DPC' },
+    { key: 'avgDpcPvP', label: 'PvP DPC' },
     { key: 'grabCount', label: 'Grab' },
     { key: 'superArmorCount', label: '💪 SA' },
     { key: 'forwardGuardCount', label: '🛡 FG' },
@@ -622,7 +637,7 @@ function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelectio
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.avgPvpDamage > 0 ? fmtDmg(row.stats.avgPvpDamage) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.medianPvpDamage > 0 ? fmtDmg(row.stats.medianPvpDamage) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-red-300">{row.stats.pvpCcSkillCount}</td>
-                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-cyan-300">{row.stats.avgDpc}</td>
+                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-cyan-300">{row.stats.avgDpcPvP}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-orange-300">{row.stats.grabCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-amber-300">{row.stats.superArmorCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-blue-300">{row.stats.forwardGuardCount}</td>
@@ -644,6 +659,7 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
   const [expandedCard, setExpandedCard] = React.useState<string | null>(null)
   const [ratioMode, setRatioMode] = React.useState(false)
   const [ratioSelections, setRatioSelections] = React.useState<Set<string>>(new Set())
+  const [comparingClass, setComparingClass] = React.useState<ClassStats | null>(null)
 
   const metaQuery = useQuery({
     queryKey: ['meta'],
@@ -689,7 +705,7 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
     { key: 'avgPvpDamage', label: 'Avg PvP', icon: null },
     { key: 'medianPvpDamage', label: 'Med PvP', icon: null },
     { key: 'pvpCcSkillCount', label: 'CC Skills', icon: <Zap className="size-3" /> },
-    { key: 'avgDpc', label: 'DPC', icon: null },
+    { key: 'avgDpcPvP', label: 'PvP DPC', icon: null },
     { key: 'grabCount', label: 'Grab', icon: null },
     { key: 'superArmorCount', label: 'SA', icon: <span>💪</span> },
     { key: 'forwardGuardCount', label: 'FG', icon: <span>🛡</span> },
@@ -884,6 +900,7 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
                       setExpandedCard(expandedCard === cardKey ? null : cardKey)
                     }
                   }}
+                  onCompare={() => setComparingClass(cls)}
                 />
               )
             })}
@@ -913,6 +930,17 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
       <div className="border-t border-amber-900/30 bg-bdo-ink px-4 py-2 text-center text-[10px] text-amber-300/30">
         {specCards.length} spec cards · Each class×spec = separate card · Black Spirit rage skills excluded · PvE-only CC/protection excluded · Max-rank skills only
       </div>
+
+      {/* Spec Comparison Modal — opens when comparingClass is set */}
+      <AnimatePresence>
+        {comparingClass && (
+          <SpecComparisonModal
+            cls={comparingClass}
+            onClose={() => setComparingClass(null)}
+            onCardClick={onCardClick}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

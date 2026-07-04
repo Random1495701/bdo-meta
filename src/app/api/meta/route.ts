@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { calculateDamage, type DamageRow } from '@/lib/damage'
 import { isRealCC } from '@/lib/cc'
 import { getCached, setCached } from '@/lib/cache'
+import { dedupSkillsBySpec } from '@/lib/spec-dedup'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,7 +32,8 @@ interface SpecStats {
   coreFgCount: number // Core: skills with Forward Guard (player picks only 1)
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number // avg PvP damage / avg animation duration
-  avgDpc: number // avg damage per cooldown second
+  avgDpc: number // avg PvE damage per cooldown second
+  avgDpcPvP: number // avg PvP damage per cooldown second
   protectedCoverage: number // % of skills with any protection
 }
 
@@ -51,18 +53,6 @@ interface ClassStats {
   ascension: SpecStats
 }
 
-const RANK_SUFFIX = /\s+(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|X|IX|VIII|VII|VI|IV|V|III|II|I)$/
-const RANK_MAP: Record<string, number> = {
-  I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10,
-  XI: 11, XII: 12, XIII: 13, XIV: 14, XV: 15, XVI: 16, XVII: 17, XVIII: 18,
-  XIX: 19, XX: 20, XXI: 21, XXII: 22, XXIII: 23, XXIV: 24, XXV: 25,
-  XXVI: 26, XXVII: 27, XXVIII: 28, XXIX: 29, XXX: 30,
-}
-
-function getBaseName(name: string): string {
-  return name.replace(RANK_SUFFIX, '')
-}
-
 function computeSpecStats(skills: any[]): SpecStats {
   const pvpDamages: number[] = []
   let pvpCcSkillCount = 0
@@ -79,6 +69,8 @@ function computeSpecStats(skills: any[]): SpecStats {
   const animDurations: number[] = []
   let totalDpc = 0
   let dpcCount = 0
+  let totalDpcPvP = 0
+  let dpcPvPCount = 0
 
   for (const s of skills) {
     // Skip "(Not in use)" skills — leftovers from old patches
@@ -93,10 +85,14 @@ function computeSpecStats(skills: any[]): SpecStats {
         topPvpDamage = damage.totalPvP
         topPvpDamageSkill = { skillId: s.skillId, name: s.name, damage: damage.totalPvP }
       }
-      // Damage per cooldown: totalPvP / cooldownSec (higher = more efficient)
+      // Damage per cooldown — PvE & PvP variants (higher = more efficient).
+      // Only counted for skills with positive PvP damage so the average stays
+      // comparable to the avgPvpDamage sample.
       if (s.cooldownSec && s.cooldownSec > 0) {
-        totalDpc += damage.totalPvP / s.cooldownSec
+        totalDpc += damage.totalPvE / s.cooldownSec
         dpcCount++
+        totalDpcPvP += damage.totalPvP / s.cooldownSec
+        dpcPvPCount++
       }
     }
 
@@ -174,6 +170,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     : 0
 
   const avgDpc = dpcCount > 0 ? Math.round(totalDpc / dpcCount) : 0
+  const avgDpcPvP = dpcPvPCount > 0 ? Math.round(totalDpcPvP / dpcPvPCount) : 0
 
   return {
     skillCount: skills.length,
@@ -189,6 +186,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     topPvpDamageSkill,
     dpsEstimate,
     avgDpc,
+    avgDpcPvP,
     protectedCoverage,
   }
 }
@@ -207,6 +205,7 @@ export async function GET() {
       skillId: true, name: true, className: true, classId: true,
       damageRowsJson: true, pvpDamagePercent: true, ccTypes: true, protectionTypes: true,
       isAwakening: true, isSuccession: true, isAbsolute: true, isBlackSpirit: true, isPassive: true,
+      isFlow: true, isCore: true,
       requiredLevel: true, animationDurationMs: true, description: true, cooldownSec: true,
       isMaxRank: true, prerequisiteIds: true,
     },
@@ -219,128 +218,25 @@ export async function GET() {
     const classSkills = allSkills.filter((s) => s.classId === cls.id)
     if (classSkills.length === 0) continue
 
-    // Max-rank filtering (DB-level via isMaxRank flag, precomputed)
-    const maxRankSkills = classSkills.filter((s) => s.isMaxRank)
-
-    // Build spec dedup map
-    const specMap = new Map<string, { skillIds: number[]; hasSuccession: boolean; hasAbsolute: boolean; hasAwakening: boolean; isBS: boolean; isPassive: boolean }>()
-    for (const s of maxRankSkills) {
-      let specBase = s.name
-      const isSucc = s.isSuccession || s.name.includes('Prime: ') || s.name.startsWith('Succession:')
-      const isAbs = s.isAbsolute || s.name.includes('Absolute: ')
-      const isAwk = s.isAwakening
-      if (isSucc) specBase = s.name.replace(/(Prime:|Succession:)\s+/, '')
-      else if (isAbs) specBase = s.name.replace(/Absolute:\s+/, '')
-      specBase = getBaseName(specBase)
-      const existing = specMap.get(specBase) || { skillIds: [], hasSuccession: false, hasAbsolute: false, hasAwakening: false, isBS: false, isPassive: false }
-      existing.skillIds.push(s.skillId)
-      if (isSucc) existing.hasSuccession = true
-      if (isAbs) existing.hasAbsolute = true
-      if (isAwk) existing.hasAwakening = true
-      if (s.isBlackSpirit) existing.isBS = true
-      if (s.isPassive) existing.isPassive = true
-      specMap.set(specBase, existing)
-    }
-
-    const skillById = new Map(maxRankSkills.map((s) => [s.skillId, s]))
-    const awakeningSkills: typeof classSkills = []
-    const successionSkills: typeof classSkills = []
-    const awkAdded = new Set<number>()
-    const succAdded = new Set<number>()
-
-    // Build set of skill IDs that are prerequisites for awakening skills.
-    // These main skills are REPLACED by the awakening skill in awakening spec
-    // (e.g., Guardian's Neck Impaler is replaced by Chokeslam for awakening).
-    const replacedByAwakening = new Set<number>()
-    for (const s of maxRankSkills) {
-      if (s.isAwakening && s.prerequisiteIds) {
-        const prereqIds = s.prerequisiteIds.split(',').map((x: string) => parseInt(x.trim(), 10)).filter((x: number) => !isNaN(x))
-        for (const pid of prereqIds) {
-          replacedByAwakening.add(pid)
-        }
-      }
-    }
-
-    for (const [, info] of specMap) {
-      // Succession spec
-      if (info.hasSuccession) {
-        for (const id of info.skillIds) {
-          const s = skillById.get(id)
-          if (s && (s.isSuccession || s.name.includes('Prime: ') || s.name.startsWith('Succession:')) && !succAdded.has(id)) {
-            successionSkills.push(s); succAdded.add(id)
-          }
-        }
-      } else if (info.hasAbsolute) {
-        for (const id of info.skillIds) {
-          const s = skillById.get(id)
-          if (s && (s.isAbsolute || s.name.includes('Absolute: ')) && !succAdded.has(id)) {
-            successionSkills.push(s); succAdded.add(id)
-          }
-        }
-      } else {
-        for (const id of info.skillIds) {
-          const s = skillById.get(id)
-          if (s && !s.isAwakening && !succAdded.has(id)) { successionSkills.push(s); succAdded.add(id) }
-        }
-      }
-
-      // Awakening spec
-      if (info.hasAbsolute && !info.hasSuccession) {
-        for (const id of info.skillIds) {
-          const s = skillById.get(id)
-          if (s && (s.isAbsolute || s.name.includes('Absolute: ')) && !awkAdded.has(id)) {
-            awakeningSkills.push(s); awkAdded.add(id)
-          }
-        }
-      } else if (!info.hasSuccession) {
-        for (const id of info.skillIds) {
-          const s = skillById.get(id)
-          // Skip awakening, absolute, BS, passive — handled elsewhere
-          // Skip main skills that are replaced by awakening skills (prerequisite chain)
-          if (s && !s.isAwakening && !s.isAbsolute && !s.isBlackSpirit && !s.isPassive
-              && !replacedByAwakening.has(id) && !awkAdded.has(id)) {
-            awakeningSkills.push(s); awkAdded.add(id)
-          }
-        }
-      }
-      if (info.hasAwakening) {
-        for (const id of info.skillIds) {
-          const s = skillById.get(id)
-          if (s && s.isAwakening && !awkAdded.has(id)) { awakeningSkills.push(s); awkAdded.add(id) }
-        }
-      }
-      // BS + Passive in both
-      for (const id of info.skillIds) {
-        const s = skillById.get(id)
-        if (s && (s.isBlackSpirit || s.isPassive)) {
-          if (!awkAdded.has(id)) { awakeningSkills.push(s); awkAdded.add(id) }
-          if (!succAdded.has(id)) { successionSkills.push(s); succAdded.add(id) }
-        }
-      }
-    }
-
-    // Ascension spec: for ascension-only classes, the "awakening" skills are
-    // actually ascension skills. Use isAscension flag from DB (PA Wiki data).
-    const ascensionSkills: typeof classSkills = []
-    const ascAdded = new Set<number>()
+    // Spec-aware deduplication is delegated to @/lib/spec-dedup so /api/meta,
+    // /api/skills, and the Tiers page all agree on which variant of each
+    // baseName wins. The module filters by isMaxRank internally, so we pass
+    // the full per-class list (max-rank + lower ranks) and let it pick.
     const isAscensionClass = cls.isAscension === true
-
-    if (isAscensionClass) {
-      // For ascension-only classes: ALL skills are part of the ascension spec.
-      // These classes don't have the awakening/succession split — they use
-      // everything: awakening skills (ascension tree), main skills (all levels),
-      // absolute, BS, and passive.
-      for (const s of maxRankSkills) {
-        if (!ascAdded.has(s.skillId)) {
-          ascensionSkills.push(s); ascAdded.add(s.skillId)
-        }
-      }
-    }
+    const awakeningSkills = isAscensionClass
+      ? []
+      : dedupSkillsBySpec(classSkills, { spec: 'awakening' })
+    const successionSkills = isAscensionClass
+      ? []
+      : dedupSkillsBySpec(classSkills, { spec: 'succession' })
+    const ascensionSkills = isAscensionClass
+      ? dedupSkillsBySpec(classSkills, { spec: 'ascension' })
+      : []
 
     // For ascension-only classes, awakening spec should be empty (their "awakening"
     // IS ascension, not a separate awakening spec)
-    const effectiveAwakeningSkills = isAscensionClass ? [] : awakeningSkills
-    const effectiveSuccessionSkills = isAscensionClass ? [] : successionSkills
+    const effectiveAwakeningSkills = awakeningSkills
+    const effectiveSuccessionSkills = successionSkills
 
     // PA Wiki data is stored directly in DB columns (combatType, successionGroup, etc.)
     results.push({
@@ -359,7 +255,7 @@ export async function GET() {
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
         pvpCcSkillCount: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
-        topPvpDamageSkill: null, dpsEstimate: 0, avgDpc: 0, protectedCoverage: 0,
+        topPvpDamageSkill: null, dpsEstimate: 0, avgDpc: 0, avgDpcPvP: 0, protectedCoverage: 0,
       },
     })
   }

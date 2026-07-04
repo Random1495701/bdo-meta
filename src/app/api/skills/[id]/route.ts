@@ -119,6 +119,9 @@ export async function GET(
     damagePerCooldown: (damage.totalPvE > 0 && skill.cooldownSec && skill.cooldownSec > 0)
       ? Math.round(damage.totalPvE / skill.cooldownSec)
       : null,
+    damagePerCooldownPvP: (damage.totalPvP != null && damage.totalPvP > 0 && skill.cooldownSec && skill.cooldownSec > 0)
+      ? Math.round(damage.totalPvP / skill.cooldownSec)
+      : null,
     ccTypes,
     ccCounters,
     ccCounterDisplay,
@@ -148,7 +151,6 @@ export async function GET(
     })),
     videoUrl: skill.videoUrl,
     animationDurationMs: skill.animationDurationMs,
-    addons: skill.addonsJson ? JSON.parse(skill.addonsJson) : null,
     syncedAt: skill.syncedAt,
     bdocodexUrl: `https://bdocodex.com/us/skill/${skill.skillId}/`,
   }

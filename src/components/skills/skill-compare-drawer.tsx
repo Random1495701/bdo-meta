@@ -168,10 +168,10 @@ export function SkillCompareDrawer() {
                 higherIsBetter={false}
               />
               <CompareStat
-                label="Dmg / Cooldown"
+                label="PvP Dmg / CD"
                 icon={<Swords className="size-3" />}
-                valueA={skillA.damagePerCooldown ? formatDamage(skillA.damagePerCooldown) : '—'}
-                valueB={skillB.damagePerCooldown ? formatDamage(skillB.damagePerCooldown) : '—'}
+                valueA={skillA.damagePerCooldownPvP ? formatDamage(skillA.damagePerCooldownPvP) : '—'}
+                valueB={skillB.damagePerCooldownPvP ? formatDamage(skillB.damagePerCooldownPvP) : '—'}
               />
               <CompareStat
                 label="CC Counters"

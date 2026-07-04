@@ -67,6 +67,20 @@ const CHANGE_TYPE_ORDER: ChangeType[] = [
 
 // ─── Component ───────────────────────────────────────────────────────
 
+
+// Normalize patch data — handle both old format (changes as string) and new format (changes as SkillChange[])
+function normalizePatch(patch: any): PatchNote {
+  return {
+    ...patch,
+    classChanges: (patch.classChanges || []).map((cc: any) => ({
+      className: cc.className || '',
+      spec: cc.spec || null,
+      intro: cc.intro || '',
+      changes: Array.isArray(cc.changes) ? cc.changes : [],
+    })),
+  }
+}
+
 export function PatchesPage() {
   const [patch, setPatch] = React.useState<PatchNote | null>(null)
   const [archiveInfo, setArchiveInfo] = React.useState<{ totalPatches: number; dates: string[] } | null>(null)
@@ -124,7 +138,7 @@ export function PatchesPage() {
       for (const ch of cc.changes) {
         total++
         byType[ch.changeType] = (byType[ch.changeType] || 0) + 1
-        const meta = CHANGE_META[ch.changeType]
+        const meta = CHANGE_META[ch.changeType] || CHANGE_META.other
         if (meta.direction === 'up' && (ch.changeType === 'damage_up' || ch.changeType === 'cooldown_down')) buffs++
         if (meta.direction === 'down' && (ch.changeType === 'damage_down' || ch.changeType === 'cooldown_up')) nerfs++
         if (ch.changeType === 'added_effect') buffs++

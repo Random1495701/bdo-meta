@@ -602,6 +602,16 @@ export function SkillDetailDrawer() {
                       accent="amber"
                       hint="Extracted via ffprobe from the bdocodex preview video"
                     />
+                    {/* 6. PvP DPC (primary) — PvE DPC in the hint */}
+                    <StatCard
+                      icon={<Gauge className="size-3" />}
+                      label="PvP DPC"
+                      value={skill.damagePerCooldownPvP != null && skill.damagePerCooldownPvP > 0
+                        ? `${formatDamage(skill.damagePerCooldownPvP)}/s`
+                        : '—'}
+                      accent="cyan"
+                      hint={`PvP damage per cooldown second. PvE DPC: ${skill.damagePerCooldown != null && skill.damagePerCooldown > 0 ? formatDamage(skill.damagePerCooldown) + '/s' : '—'}`}
+                    />
                     {/* Secondary stats */}
                     <StatCard
                       icon={<Gauge className="size-3" />}

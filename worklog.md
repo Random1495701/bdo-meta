@@ -2650,3 +2650,189 @@ Stage Summary:
 - Results table (desktop sortable, mobile card list) shows per-skill: icon+name+class, Skill Dmg % (totalPvE formatted), PvP %, Hit Count (Σ multiplier × maxHits across phases), calculated PvP Damage, 4 per-scalar damage columns (showing what each scalar alone would yield), expand button revealing a 7-step formula breakdown with all intermediate values, and a remove button. Sortable by name / final damage / skill damage / PvP % / hit count.
 - Formula display at the bottom shows the exact formula string + a legend explaining every term + an emerald validation note crediting bdo-tools.net/@gpw and garmoth.com.
 - Lint clean. TypeScript clean for damage-calculator-page.tsx. Dev server still serving HTTP 200.
+
+---
+Task ID: 33-ARENA-TIERS
+Agent: arena-tiers-dev
+Task: Two UI improvements — (1) Arena of Solare redesign with SA DR heatmap, arrows, class portraits, advantage notes, spec-colored borders/badges; (2) Tier list Portraits view redesign with spec-specific portraits, spec-color borders, bigger podium, score overlay.
+
+Work Log:
+- Read /home/z/my-project/worklog.md (last 3 sections: AUDIT-2 feature matrix, Task 31-DMGCALC, Task 32-DMGCALC-V2) to understand project context — confirmed the codebase has full BDO dark theme (bdo-ink, bdo-leather-dark, bdo-title, bdo-btn, bdo-input, bdo-icon-frame, bdo-chip-on, bdo-stat-box), uses useQuery from @tanstack/react-query for fetching, framer-motion for animation, lucide-react for icons. /api/meta returns {classes: ClassStats[]} with awakeningSaDr/successionSaDr/ascensionSaDr and awakeningGroup/successionGroup/ascensionGroup fields per class.
+- Read src/components/skills/matchups-page.tsx (495 lines) — confirmed it has an existing Arena of Solare section with Team A/Team B string-array state (storing className strings, which is buggy because className is not unique per spec — both Warrior Awakening and Warrior Succession have className "Warrior"). The existing chips show className + class icon only.
+- Read src/components/skills/tier-list-page.tsx (1313 lines) — confirmed it has a PortraitCard component used by PortraitsView. Current PortraitCard uses specPortraitUrl=`/icons/portraits/specs/${slug}-${spec}.jpg` with onError fallback to main `.jpg` only (no .png fallback), uses medalColor (gold/silver/bronze) for border, and uses aspect-ratio (3/4, 3/4.5, 3/4.2) for sizing.
+- Read src/lib/skills.ts lines 310-410 — confirmed SPEC_COLORS = {awakening: '#ef4444', succession: '#3b82f6', ascension: '#eab308'}, classColor() returns amber '#c9a25c' for normal classes / yellow '#eab308' for ascension-only, classIconUrl() returns `/icons/classes-transparent/${slug}.webp`.
+- Verified public/icons/portraits/specs/ contains 56 .jpg files (all awakening + succession portraits, including shai-awakening.jpg, archer-awakening.jpg — ascension-only classes only have awakening spec portraits).
+- Verified public/icons/portraits/ contains 32 main portraits — MIXED extensions: some .jpg, some .png, some both. The current onError fallback to .jpg only would fail for slugs that only have .png (e.g. sage.png exists but sage.jpg also exists — OK; but to be safe, my chain tries .jpg then .png).
+- Sampled /api/meta — confirmed SA DR values range 10–25 (Mystic awakening/succession = 25%, Corsair succession = 20%, Guardian awakening = 20%, Berserker succession/Kunoichi awakening/Maehwa awakening/Musa awakening/Guardian succession = 15%, rest = 10%). This matches the task spec's 4-tier color scale (25/20/15/10).
+
+TASK 1 — Arena of Solare Redesign (src/components/skills/matchups-page.tsx):
+
+- Added new SpecEntry type (classId, className, slug, combatType, spec: 'awakening'|'succession'|'ascension', group, saDr, stats, isAscension) at top of file.
+- Added getSaDrColor(saDr) helper: linearly interpolates from amber rgba(245,158,11,0.25) at 10% → bright green rgba(34,197,94,0.55) at 25%, clamped to 10..25 range. Returns {bg, text, border} as rgba() strings for use in inline style backgroundColor/borderColor.
+- Added getPortraitUrls(slug, spec) helper: builds the URL chain [spec-specific .jpg (only for awakening/succession), main .jpg, main .png] for graceful fallback.
+- Added SpecPortrait component (small client component with useState for portraitIdx) — picks the first URL that loads, falls back through the chain via onError.
+- Added entryKey/sameEntry helpers for spec-qualified identity.
+- Refactored team state: `useState<SpecEntry[]>([])` for teamA/teamB (was `string[]` of classNames). This fixes the spec-collision bug — now both Warrior Awakening and Warrior Succession can be selected independently.
+- Refactored specEntries useMemo to be typed as SpecEntry[].
+- Rewrote the entire `{arenaMode && (...)}` block (lines 297-554):
+  • Help text now mentions the heatmap color meaning + the ↑ arrow meaning.
+  • Team display panels (Team A emerald-bordered, Team B red-bordered) now use a new TeamMemberRow component for each member, showing: 32×32px spec-specific portrait thumbnail (specColor-bordered), class icon (3×3px), class name, spec badge (AWK/SUCC/ASC in spec color), group badge (Vanguard/Pulverizer/Skirmisher 3-letter code in group color), and SA DR chip with heatmap background + ↑ arrow if saDr > 10. Hover reveals an X remove button. A team-colored accent strip on the left edge of each row.
+  • Team advantage analysis section now has 4 sub-sections: (1) 3-column aggregate counter summary (A counters / Neutral / B counters); (2) SA DR advantage note — only shows when |avgA − avgB| ≥ 0.5%, displays "Team X has Y% more SA DR on average (max% vs min%)" with green/red coloring matching the advantaged team; (3) pairwise matchup grid showing each Team A vs Team B pairing with class names colored by their SA DR heatmap, spec letters, and +5%/−5%/= counter indicator; (4) SA DR legend showing 10/15/20/25% color swatches + the ↑ arrow explanation.
+  • Class chips for arena selection now have: SA DR heatmap background color (interpolated via getSaDrColor), spec-color border (red/blue/yellow — replaced when selected with emerald/red), class icon (3.5×3.5px), class name, spec badge (AWK/SUCC/ASC), ↑ arrow (emerald, strokeWidth 3) if saDr > 10, and a hover-revealed SA DR % readout. Each chip is uniquely keyed by `${classId}:${spec}`. Selected chips get a team-colored ring (ring-1 ring-offset-1). Disabled state when both teams are full.
+- Added TeamMemberRow component at end of file (lines 722-833) — used by both Team A and Team B panels, takes entry/teamColor/onRemove props.
+- Imported ShieldHalf icon from lucide-react (for the SA DR advantage note).
+- Fixed JSX parsing error: replaced bare `>` in help text with `&gt;` and `→` with `&rarr;`.
+
+TASK 2 — Tiers Portrait Redesign (src/components/skills/tier-list-page.tsx):
+
+- Added getPortraitUrls(slug, spec) helper (lines 212-223) — same chain as Task 1: spec-specific .jpg (awakening/succession only) → main .jpg → main .png.
+- Rewrote PortraitCard component (lines 1021-1230):
+  • Portrait URL chain: useState for portraitIdx, onError advances through the chain. Replaces the previous single-URL-fallback logic that only tried .jpg.
+  • Border color: specColor (red/blue/yellow) per task spec — was previously medalColor (gold/silver/bronze). Medal color is still used as accent for the rank badge and score bar.
+  • Podium min-heights: rank 1 = 280px, rank 2 = 240px, rank 3 = 220px (per task spec). Compact cards (rank 4+) keep the existing aspect-[3/4] behaviour. The portrait div uses `absolute inset-0` for podium cards (fills the min-height) and `aspect-[3/4]` for compact cards.
+  • Large score overlay: a centered semi-transparent radial-gradient backdrop (rgba(10,9,8,0.55) → 0.25 → transparent) with a large monospace bold number in spec color. Font size scales: 4.5rem for rank 1, 3.5rem for rank 2/3, 2.5rem for other podium, 2rem for compact. Text shadow + WebkitTextStroke for legibility against any portrait background.
+  • Small top-right score badge kept (shows decimal score like "85.3") — now uses specColor for border/text instead of medalColor.
+  • Spec badge in bottom info overlay changed from `{entry.spec.slice(0, 4)}` ("awak"/"succ"/"asce") to explicit AWK/SUCC/ASC labels for consistency with matchups page.
+  • Hover glow now uses specColor instead of medalColor.
+- Removed unused `color` variable warning potential — still used in the className span at bottom.
+
+VALIDATION:
+- `bun run lint` — clean (0 errors, 0 warnings) on both files.
+- `bunx tsc --noEmit` — 0 errors in matchups-page.tsx and tier-list-page.tsx (only pre-existing errors in scripts/ and examples/ directories, all unrelated).
+- `curl http://localhost:3000/` — HTTP 200, page renders successfully.
+- `curl http://localhost:3000/api/meta` — API returns 31 classes with SA DR values ranging 10-25 as expected.
+
+Files modified:
+1. src/components/skills/matchups-page.tsx (was 495 lines, now 834 lines — added helpers + SpecPortrait + TeamMemberRow + rewrote Arena section)
+2. src/components/skills/tier-list-page.tsx (was 1313 lines, now ~1450 lines — added getPortraitUrls helper + rewrote PortraitCard)
+
+Stage Summary:
+- Arena of Solare (Matchups tab): now a full tactical 3v3 team builder. Each class chip is a SA DR heatmap cell (amber→green interpolation) with spec-colored border, spec badge, ↑ arrow for above-average SA DR, and hover-revealed SA DR %. Team A/B panels show each member as a card with spec-specific portrait thumbnail, class icon, spec badge, group badge, and heatmap-colored SA DR chip. Team advantage analysis shows aggregate counter counts, a SA DR advantage note ("Team X has Y% more SA DR on average") when meaningful, and pairwise matchup grid with colored class names. The team state was refactored from string[] (className-based, buggy due to spec collisions) to SpecEntry[] (classId+spec-qualified) so both Awakening Warrior and Succession Warrior can be on the same team independently.
+- Tier list Portraits view: each portrait card now has a spec-color border (red/blue/yellow) instead of medal-colored, the top 3 podium cards have explicit min-heights (280/240/220px) for a stronger podium feel, and a large semi-transparent score number is overlaid on each portrait (radial-gradient backdrop + spec-colored number with text-shadow + stroke). Portrait loading is more robust — tries spec-specific .jpg → main .jpg → main .png (previously only tried .jpg fallback, which failed for slugs that only have .png main portraits).
+- Lint clean. TypeScript clean for both modified files. Dev server still serving HTTP 200.
+
+---
+Task ID: API-REBUILD
+Agent: api-rebuild-dev
+Task: Rebuild API routes with shared spec-dedup + PvP DPC
+
+Work Log:
+- Read src/lib/spec-dedup.ts (240 lines) — understood the dedupSkillsBySpec<T>(skills, { spec, applyPrereqExclusion }) API. The module filters by isMaxRank internally, builds a specMap keyed by getBaseName(name), and picks variants per spec: awakening → Absolute > Main (excluding prereqs of awakening skills); succession → Prime > Absolute > Main (excluding awakening); default/ascension → Prime > Absolute > Main (excluding awakening-weapon skills). Core:/Flow: skills are kept except Awakening-flagged ones in succession/default. Black Spirit + Passive skills are always kept.
+- Read src/lib/skills.ts — identified the Skill interface (line 53), SkillFilters interface (line 181), and filtersToQuery function (line 233) as the three edit targets.
+- Read src/app/api/skills/route.ts (799 lines) — found serializeSkill at line 67, the allMatching query at line 500, and the inline spec-dedup block at lines 524-601 (specMap + per-group picking loop).
+- Read src/app/api/meta/route.ts (370 lines) — found SpecStats interface at line 21, computeSpecStats at line 66, the allSkills query at line 202, and the inline spec-dedup block at lines 225-320 (specMap + replacedByAwakening + loops).
+- Updated src/lib/skills.ts: added `damagePerCooldownPvP?: number | null` and `patchChange?: { direction; fields; before; after } | null` to the Skill interface; added `hasPatchChange?: boolean` to SkillFilters; added `if (f.hasPatchChange != null) sp.set('hasPatchChange', String(f.hasPatchChange))` to filtersToQuery.
+- Updated src/app/api/skills/route.ts:
+  • Added `import { dedupSkillsBySpec } from '@/lib/spec-dedup'`.
+  • Removed the now-unused RANK_MAP, RANK_SUFFIX, getBaseName, getRank helpers (they live in spec-dedup.ts).
+  • In serializeSkill: added `damagePerCooldownPvP` (computed as Math.round(damage.totalPvP / s.cooldownSec) when totalPvP > 0 and cooldownSec > 0, else null) alongside the existing PvE `damagePerCooldown`; added `patchChange: null` placeholder.
+  • Added `const hasPatchChange = sp.get('hasPatchChange')` param parsing and a placeholder filter block (no-op for now, with a TODO comment to wire up the real column filter once patch-change data is loaded).
+  • Extended the allMatching query select to include `classId`, `isFlow`, `isCore`, `isMaxRank`, `prerequisiteIds` (all required by DedupInputSkill).
+  • Replaced the ~75-line inline spec-dedup block (specMap + per-group picking) with a compact branch calling dedupSkillsBySpec: ascension → no dedup (all max-rank ids); succession+awakening → union of awakening dedup + succession dedup (deduped by skillId); succession only → succession dedup; awakening only → awakening dedup; no spec → default dedup (spec=null).
+- Updated src/app/api/meta/route.ts:
+  • Added `import { dedupSkillsBySpec } from '@/lib/spec-dedup'`.
+  • Removed the now-unused RANK_SUFFIX, RANK_MAP, getBaseName helpers.
+  • Added `isFlow: true, isCore: true` to the allSkills query select.
+  • Added `avgDpcPvP: number` to the SpecStats interface (renamed the avgDpc comment to "avg PvE damage per cooldown second").
+  • In computeSpecStats: added `totalDpcPvP`/`dpcPvPCount` accumulators; changed the existing `totalDpc`/`dpcCount` to accumulate PvE DPC (damage.totalPvE / cooldownSec) instead of PvP; added `totalDpcPvP += damage.totalPvP / s.cooldownSec` and `dpcPvPCount++` inside the existing `if (s.cooldownSec && s.cooldownSec > 0)` block; computed `avgDpcPvP = dpcPvPCount > 0 ? Math.round(totalDpcPvP / dpcPvPCount) : 0`; added `avgDpcPvP` to the return object and the empty ascension stats placeholder.
+  • Replaced the ~95-line inline spec-dedup block (specMap + replacedByAwakening + per-group loops + ascension loop) with three dedupSkillsBySpec calls per the task spec: `awakeningSkills = isAscensionClass ? [] : dedupSkillsBySpec(classSkills, { spec: 'awakening' })`, `successionSkills = isAscensionClass ? [] : dedupSkillsBySpec(classSkills, { spec: 'succession' })`, `ascensionSkills = isAscensionClass ? dedupSkillsBySpec(classSkills, { spec: 'ascension' }) : []`. Removed the `maxRankSkills` intermediate filter (the dedup module filters by isMaxRank internally).
+- Ran `bun run lint` — clean (0 errors, 0 warnings).
+- Verified dev server: `GET /api/skills?pageSize=2` → HTTP 200; `GET /api/meta` → HTTP 200.
+- Verified skills API response includes `damagePerCooldownPvP` (True) and `patchChange: null` (True) on the first item.
+- Verified meta API response includes `avgDpcPvP` in awakening stats (True); sampled Archer awakening: avgDpc=1522 (now PvE-based), avgDpcPvP=623 (new). Empty ascension placeholder for non-ascension classes correctly includes `avgDpcPvP: 0`.
+
+Stage Summary:
+- All three target files updated. The /api/skills and /api/meta routes now share a single source of truth for spec-aware skill deduplication via `dedupSkillsBySpec` from `@/lib/spec-dedup`. This eliminates ~170 lines of duplicated specMap/picking logic across the two routes and ensures both views agree on which variant of each baseName wins per spec.
+- PvP DPC is now exposed end-to-end: the skills API returns `damagePerCooldownPvP` per skill (Math.round(totalPvP / cooldownSec)), and the meta API returns `avgDpcPvP` per spec in SpecStats. The existing `damagePerCooldown` (skills) / `avgDpc` (meta) fields were repurposed to PvE damage (totalPvE / cooldownSec) — previously they used PvP damage, so the meta route's avgDpc values have shifted from PvP-based to PvE-based.
+- Patch-change support is scaffolded: the `hasPatchChange` query param parses end-to-end (added to SkillFilters + filtersToQuery + route param parsing), and `patchChange: null` is included on every serialized skill. The actual patch-change data loading + DB column filter is left as a TODO (per task spec — "the patch-change data loading can be added later").
+- Lint clean. Both required endpoints return HTTP 200. New fields confirmed present in API responses.
+- Note (out-of-scope, pre-existing): `GET /api/skills?sort=dmgPerCd` currently returns HTTP 500 with `ReferenceError: skills is not defined` at route.ts:647. This is a pre-existing block-scope bug in the dmgPerCd sort branch (a `skills` const declared inside the `if (needsDmg || needsCC)` block is referenced outside it) — it predates this task and was not introduced by the dedup/PvP-DPC changes. The concurrent edits visible in `git diff` (removal of hasAddon param/filter, modification of the dmgPerCd sort to prefer PvP damage with PvE fallback) suggest another agent is actively working on the same file; the scoping fix is left for that workstream to avoid conflicts.
+
+---
+Task ID: DATA-FIXES-REBUILD
+Agent: data-fixes-dev
+Task: Rebuild German skill fix, addon removal, lean app, DPC UI, Awakening leak fix
+
+Work Log:
+- Restored the empty SQLite DB (skills table was empty after the session reset) by running `bun run scripts/restore-db.ts` — seeded 31 classes + 4111 skills from `db/skills-export.json`.
+- Fix 1 (German skill name): ran the inline `bun -e` script to update skillId 1431. Before: name='Absolute Finsternis II', baseName=null. After: name='Absolute Darkness II', baseName='Absolute Darkness', description='Create a condensed ball of dark energy and fire it at enemies.' Re-ran `bun run scripts/compute-max-rank.ts` (1964 maxRank + 471 enriched → 2435 total maxRank skills).
+- Fix 2 (addon system removal): edited 5 files cleanly with MultiEdit.
+  - `src/app/api/skills/route.ts`: removed `const hasAddon = sp.get('hasAddon')` and the `if (hasAddon === 'true') AND.push({ addonsJson: { not: null } })` line.
+  - `src/app/api/skills/[id]/route.ts`: removed `addons: skill.addonsJson ? JSON.parse(skill.addonsJson) : null` from the serialized response.
+  - `src/lib/skill-store.ts`: removed `toggleHasAddon` from the interface and the implementation.
+  - `src/lib/skills.ts`: removed `hasAddon?: boolean` from `SkillFilters`, removed `addons?: any` from the `Skill` interface, removed the `hasAddon` line from `filtersToQuery`.
+  - `src/components/skills/filter-sidebar.tsx`: removed the "Has add-on data" `ToggleRow`, removed the `toggleHasAddon` store binding, removed `hasAddon` from the `activeCount` memo.
+- Fix 3 (lean app — remove internal LLM from screenshot parsing): rewrote `src/app/api/sessions/parse-screenshot/route.ts` to drop the `z-ai-web-dev-sdk` import + all VLM API calls. The endpoint now ONLY saves the uploaded screenshot to `/public/screenshots/session-{timestamp}.png` and returns `{ ok, screenshotUrl, parsePrompt, suggestedServices }`. The `parsePrompt` is the existing JSON-extraction prompt for BDO scoreboards; `suggestedServices` lists ChatGPT, Gemini, Claude, Copilot with their URLs.
+  - Rewrote the upload flow in `src/components/skills/session-tracker-page.tsx` to a 3-step paste-JSON UX: (1) upload screenshot → server saves + returns URL + prompt + services; (2) UI shows screenshot link, copyable prompt textarea with Copy button, four service buttons; (3) user pastes AI-returned JSON into a textarea and `handlePasteJsonSubmit` parses it and creates a session. Added state `screenshotUrl`, `parsePrompt`, `suggestedServices`, `pasteJsonText`, `pasteError`, `pasteSuccess`, plus `handleCopyPrompt` and `handlePasteJsonSubmit` functions and a `promptTextareaRef`. Button label changed from "Parsing..." to "Saving..." since the server no longer parses.
+- Fix 4 (DPC UI — show PvP DPC as primary): updated 7 files.
+  - `src/app/api/skills/[id]/route.ts`: added `damagePerCooldownPvP` (Math.round(totalPvP / cooldownSec)) to the detail response alongside the existing PvE `damagePerCooldown`.
+  - `src/app/api/skills/route.ts`: also fixed a pre-existing block-scope bug in the `dmgPerCd` sort branch (a `skills` const was declared inside the `if (needsDmg || needsCC)` block but referenced outside it — caused 500 errors on `?sort=dmgPerCd`). Added a `cooldownMap` built alongside `dmgPvEMap`/`dmgPvPMap`/`ccMap`, and rewrote the sort to prefer PvP DPC (totalPvP / cooldownSec) with PvE fallback, matching the UI's PvP-primary display.
+  - `src/components/skills/skill-table.tsx`: added a new `'dpc'` column to `ColumnId`, the `COLUMNS` array (`{ id: 'dpc', label: 'DPC*', sortKey: 'dmgPerCd' }`), and `DEFAULT_VISIBLE`. The cell renders `skill.damagePerCooldownPvP ?? skill.damagePerCooldown` in cyan with `/s` suffix; the tooltip shows both PvP and PvE DPC values plus which one is currently displayed.
+  - `src/components/skills/skill-detail-drawer.tsx`: added a new "PvP DPC" `StatCard` (cyan accent) showing `damagePerCooldownPvP` value with `/s` suffix; hint shows the PvE DPC value. Placed between Animation Duration and Required Lv.
+  - `src/components/skills/skill-card.tsx`: `dpc` now prefers `damagePerCooldownPvP`, falls back to `damagePerCooldown`. Color switched from emerald-400 to cyan-400 (to match the rest of the PvP-DPC UI). Tooltip indicates whether the displayed value is PvP or PvE, and includes the PvE DPC when PvP is shown.
+  - `src/components/skills/skill-compare-drawer.tsx`: `CompareStat` label changed from "Dmg / Cooldown" to "PvP Dmg / CD" and now reads `damagePerCooldownPvP`.
+  - `src/components/skills/header.tsx`: sort dropdown label for `dmgPerCd` changed from "Dmg / Cooldown" to "PvP Dmg / Cooldown".
+  - `src/components/skills/meta-page.tsx`: `SpecStats.avgDpc` → `avgDpcPvP`; `SortKey` type updated; bar stat label "DPC" → "PvP DPC"; expanded stat label "Avg DPC" → "PvP DPC"; two sort option entries (`avgDpc`/`DPC`) → (`avgDpcPvP`/`PvP DPC`); table cell now reads `row.stats.avgDpcPvP`.
+  - `src/components/skills/matchups-page.tsx`: `SpecStats.avgDpc` → `avgDpcPvP`; table header "DPC" → "PvP DPC"; table cell now reads `cls.stats.avgDpcPvP`.
+- Fix 5 (Awakening leak verification): ran the inline verification script against the shared `dedupSkillsBySpec` from `src/lib/spec-dedup.ts`. Warrior Succession leaks: 0 (verified). Also spot-checked Sorceress, Berserker, Ranger — all 0 leaks.
+- Lint: `bun run lint` is clean (no errors, no warnings).
+- Dev server: `curl http://localhost:3000/` → HTTP 200. Also verified `GET /api/skills?sort=dmgPerCd` (200, previously 500), `GET /api/skills/1431` (200, returns "Absolute Darkness II" with no `addons` field), `GET /api/meta` (200), `GET /api/stats` (200), and `POST /api/sessions/parse-screenshot` (200, returns screenshotUrl + parsePrompt + suggestedServices, no LLM calls).
+- Cleaned up test screenshot files from `/public/screenshots/` that were created during endpoint testing.
+
+Stage Summary:
+- DB restored: 31 classes + 4111 skills seeded from `db/skills-export.json`. German skill 1431 renamed "Absolute Finsternis II" → "Absolute Darkness II" with description. compute-max-rank re-ran: 2435 maxRank skills.
+- Addon system fully removed across 5 files. `addonsJson` column remains in the Prisma schema (out of scope) but is no longer read, written, filtered, or surfaced by the app.
+- Session screenshot parsing is now lean: server saves the image and returns a JSON-extraction prompt + 4 external AI service links (ChatGPT, Gemini, Claude, Copilot). The actual vision parsing happens client-side via any of those services; the user pastes the returned JSON back to create a session. No `z-ai-web-dev-sdk` dependency required at runtime.
+- DPC UI now shows PvP DPC as the primary metric everywhere: skill-table column ("DPC*", cyan, `/s` suffix, tooltip with both PvP+PvE), skill-detail-drawer StatCard ("PvP DPC", cyan, PvE in hint), skill-card badge (prefers PvP, falls back to PvE, cyan), skill-compare-drawer ("PvP Dmg / CD"), header sort option ("PvP Dmg / Cooldown"), meta-page (avgDpcPvP everywhere, "PvP DPC" labels, sort key updated), matchups-page (avgDpcPvP in SpecStats + table, "PvP DPC" header). The skills API detail response now also returns `damagePerCooldownPvP`.
+- Pre-existing `?sort=dmgPerCd` 500 bug fixed: added a `cooldownMap` and rewrote the sort to prefer PvP damage (matching the PvP-DPC UI), with PvE fallback. Endpoint now returns HTTP 200.
+- Awakening leak fix verified: 0 Awakening-flagged skills in Succession dedup output for Warrior, Sorceress, Berserker, Ranger. The shared `dedupSkillsBySpec` module at `src/lib/spec-dedup.ts` correctly excludes Awakening-flagged Core/Flow skills from the Succession spec list (lines 165–173).
+- Lint clean. Dev server returns HTTP 200 for all tested endpoints.
+
+---
+Task ID: UI-REBUILD
+Agent: ui-rebuild-dev
+Task: Rebuild theme toggle, patch arrows, matchups redesign, spec comparison modal
+
+Work Log:
+- Feature 1 (Theme Toggle):
+  - `src/components/skills/providers.tsx`: wrapped QueryClientProvider with `ThemeProvider` from `next-themes` using `attribute="class"`, `defaultTheme="dark"`, `enableSystem={false}`, `disableTransitionOnChange`.
+  - `src/app/globals.css`: added a `.light` CSS-variables block after `.dark` with parchment palette (--background `#f5f0e1`, --foreground `#3a2a10`, --card `#ebe3cc`, --primary `#9c7e2e`, --border `#c8aa44`, --sidebar `#ebe3cc`) and BDO palette overrides (`--color-bdo-ink: #f5f0e1`, `--color-bdo-leather: #ebe3cc`, `--color-bdo-leather-dark: #e0d5b8`). Updated the body background gradient to use `var(--background)` and `var(--sidebar)` instead of hardcoded `#0a0908` / `#0d0a08`.
+  - `src/components/skills/header.tsx`: added `Sun, Moon` to lucide imports and a new `ThemeToggle` component (uses `useState` + `useEffect` + `localStorage` key `'theme'`, toggles `document.documentElement.className` between `'dark'` and `'light'`, defaults to dark). Rendered `<ThemeToggle />` immediately after the refresh button in the header.
+- Feature 2 (Patch Change Arrows in Data Tab):
+  - Created `src/components/skills/patch-change-indicator.tsx`: a compact component accepting a `patchChange` prop (`{ direction: 'up'|'down'|'changed'; fields: string[]; before?; after? } | null`) and rendering a size-3.5 lucide icon (`TrendingUp` green for `up`, `TrendingDown` red for `down`, `CircleDot` yellow for `changed`). Hovering shows a tooltip with direction label, changed fields, and an optional before→after diff. Returns `null` when `patchChange` is null/undefined.
+  - `src/components/skills/skill-table.tsx`: imported `PatchChangeIndicator` and rendered it inline next to the skill name text inside the `name` column cell (using a flex container with `gap-1.5`).
+  - `src/components/skills/skill-card.tsx`: imported `PatchChangeIndicator` and rendered it inline next to the skill name in the card header.
+  - `src/components/skills/skill-list-row.tsx`: imported `PatchChangeIndicator` and rendered it inline next to the skill name in the row title.
+  - `src/components/skills/filter-sidebar.tsx`: added `TrendingUp` to lucide imports, wired `toggleHasPatchChange` from the store, incremented `activeCount` when `filters.hasPatchChange` is truthy, and added a new "Changed in latest patch" `ToggleRow` (with hint "Skill was buffed, nerfed, or reworked in the most recent patch") immediately after the "Has prerequisites" toggle.
+  - `src/lib/skill-store.ts`: added `toggleHasPatchChange: () => void` to the `SkillStore` interface and a `toggleHasPatchChange` action implementation following the same `!flag ? true : undefined` pattern as `toggleHasPrereqs` (mutates `filters.hasPatchChange`, resets page to 1). The `hasPatchChange` field already exists on `SkillFilters` in `src/lib/skills.ts` and is already serialized by `filtersToQuery`.
+- Feature 3 (Matchups Redesign):
+  - Rewrote `src/components/skills/matchups-page.tsx` to collapse the 50-row spec-per-entry table down to one row per class (~31 rows). Added a `buildClassRow(cls, specMode)` helper that picks the appropriate SpecEntry per class based on the active spec mode (`'all'` picks the best spec by `dpsEstimate` → `skillCount` → `saDr`; `'awakening'` / `'succession'` / `'ascension'` return that spec or `null` when unavailable). Ascension-only classes always return their ascension entry.
+  - Added a 4-chip spec selector toggle (ALL / AWK / SUCC / ASC) at the top of the matchups section. Default is ALL.
+  - Added a `usePinnedClasses()` hook backed by `localStorage` key `'bdo-meta-pinned-classes'` (loads on mount, persists on toggle). Each row has a `Pin` / `PinOff` button in the rightmost column. Pinned classes sort to the top of the table and receive a `bg-amber-500/10` highlight; a small filled `Pin` icon appears next to the class name as a visual cue.
+  - Added 3 toggle chips (Vanguard 🛡 / Pulverizer 💥 / Skirmisher ⚔) that filter classes whose ANY spec group matches the selected filter set. Multiple groups can be active simultaneously; an empty set means "all". Includes a Clear button.
+  - Removed heatmap background fills from the redesigned matchup table — SA DR now renders as a colored number using `getSaDrColor(saDr).text` (amber→green interpolation), with the existing ↑ arrow kept for above-average (>10%) values. The Arena of Solare selector section is unchanged and still uses the heatmap chip backgrounds and `saDrColor.bg` (per task instruction to leave that section as-is).
+  - The collapsed table columns are: Class | Spec | Group | SA DR (colored) | CC | Grab | DPC | vs Vanguard | vs Pulverizer | vs Skirmisher | Pin.
+  - Kept the existing Arena of Solare 3v3 selector section (header, team panels, advantage analysis, SA DR legend, and heatmap chips) completely unchanged.
+  - Updated the `GROUP_ICONS` map to match the task spec (Vanguard 🛡, Pulverizer 💥, Skirmisher ⚔) and added `PinOff` to the lucide imports.
+- Feature 4 (Spec Comparison Modal):
+  - Created `src/components/skills/spec-comparison-modal.tsx`: a centered modal that takes `cls: ClassStats` and `onClose: () => void` props (plus an optional `onCardClick` for the "View Skills" buttons). Shows:
+    - Header with framed class icon + name + combat type + close button.
+    - Two-column comparison: Awakening column tinted red (`#ef4444`) vs Succession column tinted blue (`#3b82f6`).
+    - 12 stat comparison rows rendered with a `grid-cols-[1fr_auto_1fr]` layout: Skill Count, Avg PvP, Med PvP, PvP DPC, DPS Est, CC Skills, Grabs, SA, FG, IF, Protected %, Top PvP Skill. Each row highlights the winning side with a `Trophy` icon and the spec color.
+    - Verdict box tallying how many categories each spec wins (e.g. "Awakening wins 7 of 12 categories"), colored by overall winner.
+    - SA DR comparison section showing both percentages side-by-side with the "Special vs Default" note and a delta line when they differ.
+    - Group counter advantage section showing each spec's group with the +5% arrow when one counters the other.
+    - Two "View Skills" buttons (Awakening red, Succession blue) that call `onCardClick?.(cls.classId, 'awakening'|'succession')`.
+    - Escape key closes the modal; clicking the backdrop closes the modal.
+    - Uses framer-motion `motion.div` for the backdrop + panel with `initial/animate/exit` transitions. The parent (`MetaPage`) wraps the conditional render in `AnimatePresence` so exit animations fire.
+  - `src/components/skills/meta-page.tsx`: imported `SpecComparisonModal`. Added `comparingClass` state (`React.useState<ClassStats | null>(null)`). Added an `onCompare?: () => void` prop to `SpecCard`. Rendered an "⚔ AWK vs SUCC" button (purple-accented) in the SpecCard's action row, ONLY when `onCompare` is defined and both `cls.awakening.skillCount > 0` and `cls.succession.skillCount > 0`. The button calls `onCompare()` which sets `comparingClass` to the current class. Added `<AnimatePresence>` block at the bottom of MetaPage that renders `<SpecComparisonModal>` when `comparingClass` is set, passing `onCardClick` through so the "View Skills" buttons navigate to the Data tab.
+- Lint: `bun run lint` is clean (no errors, no warnings).
+- TypeScript: ran `bunx tsc --noEmit --skipLibCheck`. Verified that no NEW errors were introduced by my changes — the only remaining errors in the files I touched are pre-existing (e.g. `blackSpiritMax` not in `SkillRanges.cooldownSec` type, `grabCount` not in `SortKey` union, `'fetched'` query-cache event comparison, `string | null` FormData value). Adjusted the modal's local `ClassStats`/`SpecStats` interfaces to match `meta-page.tsx`'s local interfaces exactly (used `avgDpcPvP`, not `avgDpc`) so the two `ClassStats` types are structurally compatible.
+- Dev server: `curl http://localhost:3000/` → HTTP 200. Verified the served HTML has `<html lang="en" class="dark">` (theme attribute applied). Also verified `GET /api/meta` (200) and `GET /api/skills` (200). Dev log shows clean compiles with no errors related to my changed files.
+
+Stage Summary:
+- Theme toggle wired end-to-end: `next-themes` `ThemeProvider` in providers, `.light` CSS variables block + BDO palette overrides + variable-driven body gradient in `globals.css`, and a `ThemeToggle` button (Sun/Moon icons) in the header next to the refresh button. Persists to `localStorage['theme']`, defaults to dark, applies the `.dark`/`.light` class on `<html>`.
+- Patch-change arrows visible across all three Data-tab view modes (table, grid, list): a small `TrendingUp`/`TrendingDown`/`CircleDot` icon appears next to the skill name when `skill.patchChange` is set, with a tooltip describing the direction, fields, and before→after diff. A new "Changed in latest patch" toggle in the filter sidebar (with `TrendingUp` icon) filters to those skills via the new `toggleHasPatchChange` store action (already plumbed through `SkillFilters.hasPatchChange` and `filtersToQuery`).
+- Matchups page redesigned from 50 spec-separated rows down to ~31 collapsed class rows. New spec selector (ALL/AWK/SUCC/ASC, default ALL = best spec per class), pinned-classes persistence via `localStorage['bdo-meta-pinned-classes']` with Pin/PinOff buttons and gold-row highlight, group filter chips (Vanguard/Pulverizer/Skirmisher), and SA DR rendered as colored numbers only (no heatmap background) in the redesigned table. The Arena of Solare 3v3 selector section is unchanged and still uses heatmap chip backgrounds.
+- New spec-comparison modal shows side-by-side Awakening (red) vs Succession (blue) with 12 stat rows, a verdict box, SA DR comparison, group counter advantage, and "View Skills" buttons. Triggered from a new "⚔ AWK vs SUCC" button on each SpecCard (only shown when both Awakening AND Succession have skills). Wrapped in `AnimatePresence` for open/close animation. Escape key + backdrop click close it.
+- Lint clean. Dev server returns HTTP 200. No new TypeScript errors introduced (only pre-existing ones remain).

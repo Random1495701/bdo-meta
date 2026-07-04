@@ -41,6 +41,7 @@ import {
 import { formatDamage } from '@/lib/damage'
 import { useSkillStore } from '@/lib/skill-store'
 import { cn } from '@/lib/utils'
+import { PatchChangeIndicator } from '@/components/skills/patch-change-indicator'
 
 // ---------- column definitions ----------
 
@@ -53,6 +54,7 @@ type ColumnId =
   | 'cooldown'
   | 'pveDmg'
   | 'pvpDmg'
+  | 'dpc'
   | 'anim'
   | 'ccCounters'
   | 'ccTypes'
@@ -78,6 +80,7 @@ const COLUMNS: ColumnDef[] = [
   { id: 'cooldown', label: 'CD', sortable: true, sortKey: 'cooldown', width: 'w-16' },
   { id: 'pveDmg', label: 'PvE', sortable: true, sortKey: 'damage', width: 'w-20' },
   { id: 'pvpDmg', label: 'PvP', sortable: true, sortKey: 'pvpDamage', width: 'w-20' },
+  { id: 'dpc', label: 'DPC*', sortable: true, sortKey: 'dmgPerCd', width: 'w-20' },
   { id: 'anim', label: 'Anim', sortable: true, sortKey: 'anim', width: 'w-16' },
   { id: 'ccCounters', label: 'CC', sortable: true, sortKey: 'ccCounters', width: 'w-14' },
   { id: 'ccTypes', label: 'CC Types', sortable: false, sortKey: null, width: 'w-20' },
@@ -93,6 +96,7 @@ const DEFAULT_VISIBLE: ColumnId[] = [
   'level',
   'pveDmg',
   'pvpDmg',
+  'dpc',
   'ccCounters',
   'protection',
 ]
@@ -405,10 +409,11 @@ export const SkillTable = React.memo(function SkillTable({
                         return (
                           <TableCell key={col.id} className="py-1.5">
                             <div
-                              className="bdo-heading truncate text-sm text-amber-100"
+                              className="bdo-heading flex items-center gap-1.5 truncate text-sm text-amber-100"
                               title={skill.name}
                             >
-                              {skill.name}
+                              <span className="truncate">{skill.name}</span>
+                              <PatchChangeIndicator patchChange={skill.patchChange} />
                             </div>
                           </TableCell>
                         )
@@ -499,6 +504,40 @@ export const SkillTable = React.memo(function SkillTable({
                             )}
                           </TableCell>
                         )
+                      case 'dpc': {
+                        // DPC* — PvP damage per cooldown (primary), cyan with /s suffix.
+                        // Tooltip shows both PvP and PvE DPC.
+                        const dpcPvP = skill.damagePerCooldownPvP
+                        const dpcPvE = skill.damagePerCooldown
+                        const dpcVal = dpcPvP ?? dpcPvE
+                        const dpcLabel = dpcPvP != null && dpcPvP > 0 ? 'PvP' : 'PvE'
+                        const tooltip = `PvP DPC: ${dpcPvP != null ? dpcPvP.toLocaleString() + '/s' : '—'}\nPvE DPC: ${dpcPvE != null ? dpcPvE.toLocaleString() + '/s' : '—'}`
+                        return (
+                          <TableCell key={col.id} className="py-1.5">
+                            {dpcVal != null && dpcVal > 0 ? (
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span
+                                    className="cursor-help font-mono font-bold tabular-nums text-cyan-300"
+                                    title={tooltip}
+                                  >
+                                    {formatDamage(dpcVal)}/s
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent side="top" className="max-w-[200px]">
+                                  <div className="space-y-0.5 text-[10px]">
+                                    <div className="text-cyan-300">PvP DPC: {dpcPvP != null ? `${dpcPvP.toLocaleString()}/s` : '—'}</div>
+                                    <div className="text-amber-300/70">PvE DPC: {dpcPvE != null ? `${dpcPvE.toLocaleString()}/s` : '—'}</div>
+                                    <div className="text-amber-200/40">Showing {dpcLabel} DPC (primary)</div>
+                                  </div>
+                                </TooltipContent>
+                              </Tooltip>
+                            ) : (
+                              <span className="text-amber-200/30">—</span>
+                            )}
+                          </TableCell>
+                        )
+                      }
                       case 'anim':
                         return (
                           <TableCell

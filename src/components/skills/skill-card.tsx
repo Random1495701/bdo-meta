@@ -15,6 +15,7 @@ import {
 import { formatDamage } from '@/lib/damage'
 import { useSkillStore } from '@/lib/skill-store'
 import { cn } from '@/lib/utils'
+import { PatchChangeIndicator } from '@/components/skills/patch-change-indicator'
 
 // Skill icon rendered inside an ornate gold frame (BDO skill-bar style).
 function SkillIcon({ skill, size }: { skill: Skill; size: number }) {
@@ -111,7 +112,9 @@ function DamageRow({ skill }: { skill: Skill }) {
   }
   const pve = formatDamage(dmg.totalPvE)
   const pvp = dmg.totalPvP != null ? formatDamage(dmg.totalPvP) : null
-  const dpc = skill.damagePerCooldown
+  // Prefer PvP DPC, fall back to PvE DPC
+  const dpc = skill.damagePerCooldownPvP ?? skill.damagePerCooldown
+  const dpcIsPvP = skill.damagePerCooldownPvP != null && skill.damagePerCooldownPvP > 0
   return (
     <div
       className="flex items-center gap-2.5 rounded-sm border border-amber-700/40 bg-gradient-to-r from-amber-950/40 to-bdo-leather-dark px-2.5 py-1.5"
@@ -135,10 +138,10 @@ function DamageRow({ skill }: { skill: Skill }) {
       )}
       {dpc != null && dpc > 0 && (
         <div
-          className="ml-auto flex items-center gap-1 text-[10px] font-bold tabular-nums text-emerald-400"
-          title={`Damage per cooldown second: ${dpc.toLocaleString()}%`}
+          className="ml-auto flex items-center gap-1 text-[10px] font-bold tabular-nums text-cyan-400"
+          title={`${dpcIsPvP ? 'PvP' : 'PvE'} damage per cooldown second: ${dpc.toLocaleString()}%${dpcIsPvP && skill.damagePerCooldown != null && skill.damagePerCooldown > 0 ? ` (PvE DPC: ${skill.damagePerCooldown.toLocaleString()}%)` : ''}`}
         >
-          <Gauge className="size-3 text-emerald-400/80" />
+          <Gauge className="size-3 text-cyan-400/80" />
           {formatDamage(dpc)}/s
         </div>
       )}
@@ -197,10 +200,11 @@ export const SkillCard = React.memo(function SkillCard({
 
         <div className="min-w-0 flex-1">
           <div
-            className="bdo-heading line-clamp-2 text-sm leading-tight text-amber-100 group-hover:text-amber-200"
+            className="bdo-heading flex items-center gap-1.5 line-clamp-2 text-sm leading-tight text-amber-100 group-hover:text-amber-200"
             title={skill.name}
           >
-            {skill.name}
+            <span className="line-clamp-2">{skill.name}</span>
+            <PatchChangeIndicator patchChange={skill.patchChange} />
           </div>
           {skill.krName && (
             <div

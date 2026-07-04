@@ -53,7 +53,7 @@ interface SkillStore {
   toggleHasAnim: () => void
   toggleQuickslot: () => void
   toggleHasPrereqs: () => void
-  toggleHasAddon: () => void
+  toggleHasPatchChange: () => void
   setSpec: (spec: 'all' | 'succession' | 'awakening' | 'ascension') => void
   toggleSpec: (spec: 'succession' | 'awakening' | 'ascension') => void
   setSort: (s: SkillSort) => void
@@ -135,7 +135,7 @@ export const useSkillStore = create<SkillStore>((set) => ({
   toggleHasAnim: () => set((s) => ({ filters: { ...s.filters, hasAnim: !s.filters.hasAnim ? true : undefined, page: 1 } })),
   toggleQuickslot: () => set((s) => ({ filters: { ...s.filters, quickslot: !s.filters.quickslot ? true : undefined, page: 1 } })),
   toggleHasPrereqs: () => set((s) => ({ filters: { ...s.filters, hasPrereqs: !s.filters.hasPrereqs ? true : undefined, page: 1 } })),
-  toggleHasAddon: () => set((s) => ({ filters: { ...s.filters, hasAddon: !s.filters.hasAddon ? true : undefined, page: 1 } })),
+  toggleHasPatchChange: () => set((s) => ({ filters: { ...s.filters, hasPatchChange: !s.filters.hasPatchChange ? true : undefined, page: 1 } })),
   setSpec: (spec) => set((s) => {
     // Legacy single-spec setter — maps to specs array
     if (spec === 'all') return { filters: { ...s.filters, specs: [], types: [], page: 1 } }

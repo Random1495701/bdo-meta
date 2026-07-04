@@ -209,6 +209,19 @@ function formatParamValue(key: ParamKey, value: number): string {
   }
 }
 
+// ─── Spec-specific portrait URL chain ───────────────────────────────
+// Awakening/Succession use spec-specific portraits under /specs/.
+// Ascension (and as fallback) uses the main portrait — try .jpg then .png.
+function getPortraitUrls(slug: string, spec: SpecName): string[] {
+  const urls: string[] = []
+  if (spec === 'awakening' || spec === 'succession') {
+    urls.push(`/icons/portraits/specs/${slug}-${spec}.jpg`)
+  }
+  urls.push(`/icons/portraits/${slug}.jpg`)
+  urls.push(`/icons/portraits/${slug}.png`)
+  return urls
+}
+
 // ─── localStorage persistence ───────────────────────────────────────
 
 const WEIGHTS_STORAGE_KEY = 'bdo-meta-tier-weights-v1'
@@ -1023,17 +1036,37 @@ function PortraitCard({
   const specColor = SPEC_COLORS[entry.spec]
   const scorePct = maxScore > 0 ? (score / maxScore) * 100 : 0
 
-  // Portrait URLs
-  const specPortraitUrl = `/icons/portraits/specs/${entry.slug}-${entry.spec}.jpg`
-  const mainPortraitUrl = `/icons/portraits/${entry.slug}.jpg`
+  // Portrait URL chain (spec-specific → main .jpg → main .png)
+  const portraitUrls = React.useMemo(
+    () => getPortraitUrls(entry.slug, entry.spec),
+    [entry.slug, entry.spec],
+  )
+  const [portraitIdx, setPortraitIdx] = React.useState(0)
 
-  // Medal colors
+  // Medal colors (used as accent for the rank badge + score bar)
   const medalColors: Record<number, string> = {
     1: '#fbbf24', // gold
     2: '#cbd5e1', // silver
     3: '#d97706', // bronze
   }
   const medalColor = medalColors[rank] || specColor
+
+  // Podium min-heights — only top 3 get explicit heights per task spec
+  // (rank 1 = 280px, rank 2 = 240px, rank 3 = 220px). Compact cards
+  // (rank 4+) keep the existing aspect-ratio behaviour.
+  const isPodium = rank >= 1 && rank <= 3
+  const podiumMinHeight = isPodium
+    ? (rank === 1 ? 280 : rank === 2 ? 240 : 220)
+    : undefined
+
+  // Large score overlay font size — bigger for podium, smaller for compact
+  const scoreFontSize = compact
+    ? '2rem'
+    : isFirst
+      ? '4.5rem'
+      : rank === 2 || rank === 3
+        ? '3.5rem'
+        : '2.5rem'
 
   // Top weighted params for mini bars
   const topParams = SCORE_PARAMS
@@ -1055,11 +1088,13 @@ function PortraitCard({
         isHovered && 'shadow-2xl',
       )}
       style={{
-        borderColor: medalColor,
-        boxShadow: `0 4px 16px rgba(0,0,0,0.7), inset 0 0 0 1px ${medalColor}33`,
+        // Spec-color border (per P1.5 task spec)
+        borderColor: specColor,
+        boxShadow: `0 4px 16px rgba(0,0,0,0.7), inset 0 0 0 1px ${specColor}33`,
+        ...(podiumMinHeight !== undefined ? { minHeight: podiumMinHeight } : {}),
       }}
     >
-      {/* Rank medal badge */}
+      {/* Rank medal badge — keeps medal color for accent */}
       <div
         className="absolute left-1.5 top-1.5 z-20 flex size-7 items-center justify-center rounded-full border-2 font-mono text-xs font-black"
         style={{ borderColor: medalColor, backgroundColor: 'rgba(10,9,8,0.9)', color: medalColor }}
@@ -1067,27 +1102,51 @@ function PortraitCard({
         {rank}
       </div>
 
-      {/* Score badge */}
+      {/* Score badge (top-right) — small precise score with decimals */}
       <div
         className="absolute right-1.5 top-1.5 z-20 rounded-sm border px-1.5 py-0.5 font-mono text-[10px] font-bold backdrop-blur-sm"
-        style={{ borderColor: `${medalColor}66`, backgroundColor: 'rgba(10,9,8,0.8)', color: medalColor }}
+        style={{ borderColor: `${specColor}66`, backgroundColor: 'rgba(10,9,8,0.8)', color: specColor }}
       >
         {score.toFixed(1)}
       </div>
 
-      {/* Portrait */}
-      <div className={cn('relative overflow-hidden', compact ? 'aspect-[3/4]' : isFirst ? 'aspect-[3/4.5]' : 'aspect-[3/4.2]')}>
+      {/* Portrait — fills the card (absolute inset-0 for podium, aspect-ratio for compact) */}
+      <div
+        className={cn(
+          'relative overflow-hidden',
+          compact ? 'aspect-[3/4]' : 'absolute inset-0',
+        )}
+      >
         <img
-          src={specPortraitUrl}
+          src={portraitUrls[portraitIdx]}
           alt={`${entry.className} ${entry.spec}`}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
-          onError={(e) => {
-            const img = e.target as HTMLImageElement
-            if (img.src !== mainPortraitUrl) img.src = mainPortraitUrl
-          }}
+          onError={() => setPortraitIdx(i => Math.min(i + 1, portraitUrls.length - 1))}
         />
-        {/* Gradient overlay for text readability */}
+        {/* Large score overlay — semi-transparent radial backdrop + big number */}
+        <div
+          className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center"
+          style={{
+            background: `radial-gradient(circle at center,
+              rgba(10,9,8,0.55) 0%,
+              rgba(10,9,8,0.25) 38%,
+              transparent 65%)`,
+          }}
+        >
+          <span
+            className="font-mono font-black leading-none"
+            style={{
+              fontSize: scoreFontSize,
+              color: specColor,
+              textShadow: `0 0 16px rgba(10,9,8,0.9), 0 2px 6px rgba(0,0,0,0.85)`,
+              WebkitTextStroke: '1.5px rgba(10,9,8,0.55)',
+            }}
+          >
+            {score.toFixed(0)}
+          </span>
+        </div>
+        {/* Bottom-to-top gradient overlay for text readability */}
         <div
           className="absolute inset-0"
           style={{
@@ -1103,11 +1162,11 @@ function PortraitCard({
           className="absolute inset-x-0 top-0 h-1"
           style={{ background: `linear-gradient(to bottom, ${specColor}aa, transparent)` }}
         />
-        {/* Hover glow */}
+        {/* Hover glow (spec-colored) */}
         {isHovered && (
           <div
             className="absolute inset-0"
-            style={{ background: `radial-gradient(circle at 50% 30%, ${medalColor}22, transparent 60%)` }}
+            style={{ background: `radial-gradient(circle at 50% 30%, ${specColor}22, transparent 60%)` }}
           />
         )}
       </div>
@@ -1124,14 +1183,14 @@ function PortraitCard({
             className="rounded-sm px-1 py-0.5 text-[7px] font-bold uppercase leading-none"
             style={{ color: specColor, backgroundColor: `${specColor}22`, border: `1px solid ${specColor}66` }}
           >
-            {entry.spec.slice(0, 4)}
+            {entry.spec === 'awakening' ? 'AWK' : entry.spec === 'succession' ? 'SUCC' : 'ASC'}
           </span>
           {!compact && entry.combatType && (
             <span className="truncate text-[8px] text-amber-300/40">{entry.combatType}</span>
           )}
         </div>
 
-        {/* Score bar */}
+        {/* Score bar — medal color for podium, spec color otherwise */}
         <div className="mt-1 h-1 overflow-hidden rounded-full bg-amber-900/40">
           <motion.div
             initial={{ width: 0 }}

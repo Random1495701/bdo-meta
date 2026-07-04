@@ -70,6 +70,8 @@ export interface Skill {
   damageRows: DamageRow[] | null
   damage?: DamageCalculation
   damagePerCooldown?: number | null
+  damagePerCooldownPvP?: number | null
+  patchChange?: { direction: 'up' | 'down' | 'changed'; fields: string[]; before?: string; after?: string } | null
   ccTypes: string[] | null
   ccCounters?: number
   ccCounterDisplay?: string
@@ -89,7 +91,6 @@ export interface Skill {
   relatedRanks?: RelatedRank[]
   videoUrl: string | null
   animationDurationMs: number | null
-  addons?: any
   syncedAt: string
   bdocodexUrl: string
 }
@@ -200,8 +201,8 @@ export interface SkillFilters {
   hasVideo?: boolean
   hasAnim?: boolean
   quickslot?: boolean
-  hasAddon?: boolean
   hasPrereqs?: boolean
+  hasPatchChange?: boolean
   sort?: SkillSort
   order?: 'asc' | 'desc'
   page?: number
@@ -253,8 +254,8 @@ export function filtersToQuery(f: SkillFilters): URLSearchParams {
   if (f.hasVideo != null) sp.set('hasVideo', String(f.hasVideo))
   if (f.hasAnim != null) sp.set('hasAnim', String(f.hasAnim))
   if (f.quickslot != null) sp.set('quickslot', String(f.quickslot))
-  if (f.hasAddon != null) sp.set('hasAddon', String(f.hasAddon))
   if (f.hasPrereqs != null) sp.set('hasPrereqs', String(f.hasPrereqs))
+  if (f.hasPatchChange != null) sp.set('hasPatchChange', String(f.hasPatchChange))
   sp.set('maxRank', 'true')
   sp.set('filterEvasion', 'true')
   if (f.sort) sp.set('sort', f.sort)
