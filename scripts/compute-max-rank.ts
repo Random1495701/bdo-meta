@@ -99,24 +99,28 @@ async function main() {
     }
 
     // Check for Prime:/Succession: variant (max for succession spec)
-    const primeSkill = groupSkills.find(s => getVariant(s.name) === 'prime' || getVariant(s.name) === 'succession')
+    const primeSkills = groupSkills.filter(s => getVariant(s.name) === 'prime' || getVariant(s.name) === 'succession')
     // Check for Absolute: variant (max for awakening spec)
-    const absSkill = groupSkills.find(s => getVariant(s.name) === 'absolute')
+    const absSkills = groupSkills.filter(s => getVariant(s.name) === 'absolute')
     // Main skills (no prefix)
     const mainSkills = groupSkills.filter(s => getVariant(s.name) === 'main')
 
-    if (primeSkill) {
-      await db.skill.update({ where: { skillId: primeSkill.skillId }, data: { isMaxRank: true } })
+    // For Prime/Succession: pick the HIGHEST rank (not just the first one)
+    if (primeSkills.length > 0) {
+      const sorted = primeSkills.sort((a, b) => getRank(b.name) - getRank(a.name))
+      await db.skill.update({ where: { skillId: sorted[0].skillId }, data: { isMaxRank: true } })
       maxRankCount++
     }
 
-    if (absSkill) {
-      await db.skill.update({ where: { skillId: absSkill.skillId }, data: { isMaxRank: true } })
+    // For Absolute: pick the HIGHEST rank
+    if (absSkills.length > 0) {
+      const sorted = absSkills.sort((a, b) => getRank(b.name) - getRank(a.name))
+      await db.skill.update({ where: { skillId: sorted[0].skillId }, data: { isMaxRank: true } })
       maxRankCount++
     }
 
     // If no Prime and no Absolute, find the highest rank main skill
-    if (!primeSkill && !absSkill && mainSkills.length > 0) {
+    if (primeSkills.length === 0 && absSkills.length === 0 && mainSkills.length > 0) {
       // Sort by rank descending, pick highest
       const sorted = mainSkills.sort((a, b) => getRank(b.name) - getRank(a.name))
       await db.skill.update({ where: { skillId: sorted[0].skillId }, data: { isMaxRank: true } })

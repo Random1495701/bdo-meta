@@ -55,6 +55,12 @@ export async function GET() {
     // Only return the LATEST patch (first in array — scraper saves newest first)
     const latest = data[0]
 
+    // Normalize: ensure changes is always an array
+    latest.classChanges = (latest.classChanges || []).map((cc: any) => ({
+      ...cc,
+      changes: Array.isArray(cc.changes) ? cc.changes : [],
+    }))
+
     // Link skill names to DB skills
     const allSkills = await db.skill.findMany({
       where: { className: { not: { startsWith: 'NEW_CLASS' } } },
@@ -84,7 +90,7 @@ export async function GET() {
 
     // Enrich changes with matched skill IDs + icons
     for (const cc of latest.classChanges) {
-      for (const change of cc.changes) {
+      for (const change of (cc.changes || [])) {
         if (!change.skillName || typeof change.skillName !== 'string') continue
         const cleanName = change.skillName
           .replace(/^(Prime:\s*|Succession:\s*|Absolute:\s*|Core:\s*|Flow:\s*)/i, '')
