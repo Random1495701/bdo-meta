@@ -147,19 +147,19 @@ export const useSkillStore = create<SkillStore>((set) => ({
     return { filters: { ...s.filters, specs: next, types: [], page: 1 } }
   }),
   setSort: (sort) => set((s) => {
-    saveSortPrefs({ sort, order: s.filters.order, viewMode: s.viewMode })
+    saveSortPrefs({ sort, order: s.filters.order || 'asc', viewMode: s.viewMode })
     return { filters: { ...s.filters, sort, page: 1 } }
   }),
   toggleOrder: () => set((s) => {
-    const order = s.filters.order === 'asc' ? 'desc' : 'asc'
-    saveSortPrefs({ sort: s.filters.sort, order, viewMode: s.viewMode })
+    const order: 'asc' | 'desc' = s.filters.order === 'asc' ? 'desc' : 'asc'
+    saveSortPrefs({ sort: s.filters.sort || 'skillId', order, viewMode: s.viewMode })
     return { filters: { ...s.filters, order, page: 1 } }
   }),
   setPage: (p) => set((s) => ({ filters: { ...s.filters, page: p } })),
   setPageSize: (n) => set((s) => ({ filters: { ...s.filters, pageSize: n, page: 1 } })),
   setViewMode: (m) => {
     const state = useSkillStore.getState()
-    saveSortPrefs({ sort: state.filters.sort, order: state.filters.order, viewMode: m })
+    saveSortPrefs({ sort: state.filters.sort || 'skillId', order: state.filters.order || 'asc', viewMode: m })
     set({ viewMode: m })
   },
   resetFilters: () => set({ filters: { ...DEFAULT_FILTERS } }),

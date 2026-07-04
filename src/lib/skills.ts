@@ -299,7 +299,7 @@ export async function fetchSyncStatus(): Promise<SyncStatus> {
 // Dynamic filter ranges — used to set slider max values to actual data max
 export interface SkillRanges {
   requiredLevel: { min: number; max: number }
-  cooldownSec: { min: number; max: number }
+  cooldownSec: { min: number; max: number; blackSpiritMax?: number; absoluteMax?: number }
   animationDurationMs: { min: number; max: number }
   skillPoints?: { min: number; max: number }
   damage?: { min: number; max: number }

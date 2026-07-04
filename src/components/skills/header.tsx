@@ -139,7 +139,7 @@ function UpdatedIndicator() {
     const unsubscribe = queryClient.getQueryCache().subscribe((event) => {
       if (
         event.query.queryKey[0] === 'skills' &&
-        (event.type === 'updated' || event.type === 'fetched')
+        (event.type === 'updated' || event.type === 'observerResultsUpdated')
       ) {
         const state = event.query.state
         if (state.status === 'success' && state.dataUpdatedAt) {

@@ -43,7 +43,7 @@ interface ClassStats {
   ascension: SpecStats
 }
 
-type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'avgDpcPvP' | 'protectedCoverage'
+type SortKey = 'className' | 'avgPvpDamage' | 'medianPvpDamage' | 'pvpCcSkillCount' | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount' | 'dpsEstimate' | 'avgDpcPvP' | 'protectedCoverage' | 'grabCount'
 
 // Spec display metadata — Red=Awakening, Blue=Succession, Yellow=Ascension
 const SPEC_META: Record<string, { label: string; color: string; shortLabel: string }> = {
@@ -700,7 +700,7 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
     }
   }
 
-  const sortOptions: { key: SortKey; label: string; icon: React.ReactNode }[] = [
+  const sortOptions: { key: SortKey; label: string; icon: React.ReactNode; hint?: string }[] = [
     { key: 'className', label: 'Class', icon: null },
     { key: 'avgPvpDamage', label: 'Avg PvP', icon: null },
     { key: 'medianPvpDamage', label: 'Med PvP', icon: null },
@@ -1072,7 +1072,7 @@ function MatchupMatrix({ classes }: { classes: ClassStats[] }) {
                 <th key={c.className} className="px-1 py-1 text-center" title={`${c.className} (${c.group})`}>
                   <div className="flex flex-col items-center gap-0.5">
                     <div className="size-5 overflow-hidden rounded-sm border" style={{ borderColor: `${classColor(c.className)}44` }}>
-                      {classIconUrl(c.slug) && <img src={classIconUrl(c.slug)} alt={c.className} className="h-full w-full object-cover" loading="lazy" />}
+                      {classIconUrl(c.slug) && <img src={classIconUrl(c.slug) ?? undefined} alt={c.className} className="h-full w-full object-cover" loading="lazy" />}
                     </div>
                     <span className="text-[8px]" style={{ color: GROUP_COLORS[c.group || ''] || '#a1a1aa' }}>
                       {(GROUP_ICONS[c.group || ''] || '')}

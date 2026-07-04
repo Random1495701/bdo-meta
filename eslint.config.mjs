@@ -44,7 +44,7 @@ const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, {
     "no-useless-escape": "off",
   },
 }, {
-  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts", "examples/**", "skills", "scripts/start-dev.js", "scripts/start-dev.mjs", "scripts/sync-missing.ts", "scripts/restore-db.ts", "scripts/compute-max-rank.ts", "scripts/fix-false-grabs.ts", "scripts/import-pa-wiki.ts", "scripts/import-export.ts", "scripts/scrape-patch-notes.ts", "scripts/patch-lurker.ts", "scripts/backup.ts", "scripts/switch-version.ts", "scripts/check-grabs.ts", "scripts/export-db.ts", "scripts/sync-skills.ts", "scripts/sync-lurker.ts"]
+  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts", "examples/**", "skills", "scripts/archive/**", "scripts/start-dev.js", "scripts/start-dev.mjs", "scripts/sync-missing.ts", "scripts/restore-db.ts", "scripts/compute-max-rank.ts", "scripts/fix-false-grabs.ts", "scripts/import-pa-wiki.ts", "scripts/import-export.ts", "scripts/scrape-patch-notes.ts", "scripts/patch-lurker.ts", "scripts/backup.ts", "scripts/switch-version.ts", "scripts/check-grabs.ts", "scripts/export-db.ts", "scripts/sync-skills.ts", "scripts/sync-lurker.ts", "scripts/verify.ts", "scripts/import-garmoth-addons.ts", "scripts/scrape-patch.ts", "scripts/make-icons-transparent.ts", "scripts/make-transparent.ts"]
 }];
 
 export default eslintConfig;

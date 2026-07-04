@@ -115,7 +115,7 @@ export function SyncFooter() {
 
   const handleTrigger = async (
     phase: 'list' | 'trees' | 'tooltips' | 'videos' | 'all',
-    limit?: number,
+    limit: number | undefined,
     label: string,
   ) => {
     if (syncing) return
@@ -132,7 +132,7 @@ export function SyncFooter() {
 
   const handleLurker = async (
     phase: 'daemon' | 'batch' | 'videos' | 'kr-names' | 're-enrich',
-    limit?: number,
+    limit: number | undefined,
     label: string,
   ) => {
     if (syncing) return
