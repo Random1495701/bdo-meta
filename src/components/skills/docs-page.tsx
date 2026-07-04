@@ -413,6 +413,42 @@ export function DocsPage() {
           </div>
         </section>
 
+        {/* Skill Specs Explained */}
+        <section className="mb-8">
+          <h2 className="bdo-title mb-3 text-lg font-bold text-amber-300">Skill Specs Explained</h2>
+          <div className="space-y-3">
+            <div className="rounded-sm border-l-4 border-red-500/60 bg-bdo-leather-dark/40 p-4">
+              <h3 className="text-sm font-semibold text-amber-200">Awakening (red)</h3>
+              <p className="mt-1 text-xs text-amber-100/70">
+                Equip a new Awakening weapon. Pre-56 skills upgrade to <strong>Absolute:</strong> variants.
+                Gain Awakening-weapon skills. No Prime:/Succession: variants.
+              </p>
+            </div>
+            <div className="rounded-sm border-l-4 border-blue-500/60 bg-bdo-leather-dark/40 p-4">
+              <h3 className="text-sm font-semibold text-amber-200">Succession (blue)</h3>
+              <p className="mt-1 text-xs text-amber-100/70">
+                Keep main weapon. Pre-56 skills upgrade to <strong>Prime:</strong>/Succession: variants.
+                Falls back to Absolute: if no Prime exists. No Awakening-weapon skills.
+              </p>
+            </div>
+            <div className="rounded-sm border-l-4 border-yellow-500/60 bg-bdo-leather-dark/40 p-4">
+              <h3 className="text-sm font-semibold text-amber-200">Ascension (yellow)</h3>
+              <p className="mt-1 text-xs text-amber-100/70">
+                Single-spec classes (Archer, Shai, Scholar, Deadeye, Wukong, Seraph).
+                No Awakening or Succession — Ascension is their only spec.
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 rounded-sm border-2 border-amber-800/40 bg-bdo-ink/40 p-4">
+            <h3 className="bdo-title mb-2 text-sm font-bold text-amber-300">Deduplication</h3>
+            <p className="text-xs text-amber-100/70">
+              One row per (classId, baseName). Preference: Prime &gt; Absolute &gt; Core &gt; Flow &gt; Main.
+              Awakening-flagged Core:/Flow: skills are excluded from Succession (they need the Awakening weapon).
+              See <code className="text-amber-300">docs/SPEC_DEDUP_LOGIC.md</code> for full details.
+            </p>
+          </div>
+        </section>
+
         {/* Version history */}
         <section>
           <h2 className="bdo-title mb-3 text-lg font-bold text-amber-300">Version History</h2>

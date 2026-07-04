@@ -1075,6 +1075,18 @@ export function SkillDetailDrawer() {
                   <ExternalLink className="size-3" />
                   View on bdocodex.com
                 </a>
+                {skill.className && (
+                  <a
+                    href={`https://www.blackdesertfoundry.com/${encodeURIComponent(skill.className.toLowerCase().replace(/\s+/g, '-'))}-guide/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bdo-btn flex items-center gap-1 !py-1 !text-[11px]"
+                    title="BDO Foundry class guide — includes combo notation"
+                  >
+                    <ExternalLink className="size-3" />
+                    Combo Guide
+                  </a>
+                )}
               </div>
             </footer>
           )}

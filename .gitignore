@@ -62,8 +62,8 @@ server.log
 # - docs/               (project documentation + chat history)
 # - tool-results/       (temporary tool outputs — can be ignored)
 tool-results/
-# Database is too large for GitHub (100MB limit). Exported as JSON instead.
-db/custom.db
+# Database — committed to git (5.7MB, well under GitHub 100MB limit)
+# Only the journal file is transient.
 db/custom.db-journal
 
 # Runtime artifacts (never track)
@@ -77,5 +77,3 @@ db/custom.db-journal
 scripts/dev.pid
 scripts/lurker.lock
 bun.lock
-db/custom.db
-db/custom.db

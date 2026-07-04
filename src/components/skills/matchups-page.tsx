@@ -984,14 +984,10 @@ function TeamMemberRow({
               {entry.group.slice(0, 3)}
             </span>
           )}
-          {/* SA DR chip with heatmap color */}
+          {/* SA DR — colored number + arrow only (no background overlay) */}
           <span
-            className="ml-auto flex items-center gap-0.5 rounded-sm border px-1 font-mono text-[8px] font-bold leading-tight"
-            style={{
-              color: saDrColor.text,
-              backgroundColor: saDrColor.bg,
-              borderColor: saDrColor.border,
-            }}
+            className="ml-auto flex items-center gap-0.5 font-mono text-[8px] font-bold leading-tight"
+            style={{ color: saDrColor.text }}
             title="Super Armor Damage Reduction"
           >
             {entry.saDr > 10 && <ArrowUp className="size-2" strokeWidth={3} />}

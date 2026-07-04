@@ -116,6 +116,26 @@ async function main() {
   console.log(`  Skills: ${finalSkills}`)
   console.log(`  Classes: ${finalClasses}`)
   await db.$disconnect()
+
+  // Auto-run PA Wiki import + compute-max-rank so the restored DB has all
+  // the enrichment data (groups, SA DR, isAscension, baseName, isMaxRank).
+  // Without this, the restored DB is missing PA Wiki data and max-rank filtering breaks.
+  console.log('\n=== Running PA Wiki import ===')
+  const { execSync } = await import('node:child_process')
+  try {
+    execSync('bun run scripts/import-pa-wiki.ts', { cwd: process.cwd(), stdio: 'inherit' })
+  } catch (e) {
+    console.error('  PA Wiki import failed:', e)
+  }
+
+  console.log('\n=== Computing max-rank ===')
+  try {
+    execSync('bun run scripts/compute-max-rank.ts', { cwd: process.cwd(), stdio: 'inherit' })
+  } catch (e) {
+    console.error('  Compute max-rank failed:', e)
+  }
+
+  console.log('\n=== Full restore complete ===')
 }
 
 main().catch(e => { console.error(e); process.exit(1) })
