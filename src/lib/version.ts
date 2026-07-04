@@ -2,7 +2,7 @@
 // Update this when a new version is released.
 // The header displays this so users can track when z.ai session resets revert the code.
 
-export const APP_VERSION = 'v5.4.1'
+export const APP_VERSION = 'v5.5.1'
 export const APP_VERSION_DATE = '2026-07-04'
 
 // All available git tags (for the version dropdown).
@@ -17,4 +17,5 @@ export const GIT_TAGS = [
   'v3.6.0', 'v3.7.0', 'v3.8.0', 'v3.9.0',
   'v4.0.0', 'v4.1.0', 'v4.2.0', 'v4.3.0', 'v4.3.1',
   'v5.1.0', 'v5.2.0', 'v5.2.1', 'v5.3.0', 'v5.4.0', 'v5.4.1',
+  'v5.5.0', 'v5.5.1',
 ]
