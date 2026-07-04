@@ -57,23 +57,25 @@ async function main() {
       console.warn(`  Class not found: ${data.className}`)
       continue
     }
+    // Determine if this is an ascension-only class (no succession/awakening groups)
+    const isAscension = data.successionGroup === null && data.awakeningGroup === null && data.ascensionGroup !== null
+    
     await db.bdoClass.update({
       where: { id: cls.id },
       data: {
-        mainWeapon: data.combatType,
-        awakeningWeapon: JSON.stringify({
-          successionGroup: data.successionGroup,
-          awakeningGroup: data.awakeningGroup,
-          ascensionGroup: data.ascensionGroup,
-          successionSaDr: data.successionSaDr,
-          awakeningSaDr: data.awakeningSaDr,
-          ascensionSaDr: data.ascensionSaDr,
-        }),
+        combatType: data.combatType,
+        successionGroup: data.successionGroup,
+        awakeningGroup: data.awakeningGroup,
+        ascensionGroup: data.ascensionGroup,
+        successionSaDr: data.successionSaDr,
+        awakeningSaDr: data.awakeningSaDr,
+        ascensionSaDr: data.ascensionSaDr,
+        isAscension: isAscension,
       },
     })
     updated++
   }
-  console.log(`Updated ${updated} classes with combat type, group, and SA DR data`)
+  console.log(`Updated ${updated} classes with combat type, group, SA DR, and ascension data`)
   await db.$disconnect()
 }
 main().catch(console.error)
