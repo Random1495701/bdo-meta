@@ -176,7 +176,7 @@ function CCSymbols({ skill }: { skill: Skill }) {
   const realCCs = skill.realCCs ?? []
   const others = skill.nonCCEffects ?? []
   if (!realCCs.length && !others.length) {
-    return <span className="text-amber-200/30">—</span>
+    return <span className="text-amber-200/50">—</span>
   }
   const parts: { symbol: string; color: string; name: string }[] = []
   for (const c of realCCs) {
@@ -188,7 +188,7 @@ function CCSymbols({ skill }: { skill: Skill }) {
     if (m) parts.push({ symbol: m.symbol, color: m.color, name: e })
   }
   if (!parts.length) {
-    return <span className="text-amber-200/30">—</span>
+    return <span className="text-amber-200/50">—</span>
   }
   const tooltipText = parts.map((p) => p.name).join(', ')
   return (
@@ -222,14 +222,14 @@ function CCSymbols({ skill }: { skill: Skill }) {
 // Renders compact Protection symbols (🛡⬛ for SA + FG). Tooltip shows full names.
 function ProtectionSymbols({ skill }: { skill: Skill }) {
   const prots = skill.protectionTypes ?? []
-  if (!prots.length) return <span className="text-amber-200/30">—</span>
+  if (!prots.length) return <span className="text-amber-200/50">—</span>
   const parts = prots
     .map((p) => {
       const m = PROTECTION_META[p]
       return m ? { symbol: m.symbol, color: m.color, name: p, short: m.shortName } : null
     })
     .filter((x): x is { symbol: string; color: string; name: string; short: string } => x !== null)
-  if (!parts.length) return <span className="text-amber-200/30">—</span>
+  if (!parts.length) return <span className="text-amber-200/50">—</span>
   const tooltipText = parts.map((p) => `${p.name} (${p.short})`).join(', ')
   return (
     <Tooltip>
@@ -319,7 +319,7 @@ export const SkillTable = React.memo(function SkillTable({
     <div className="space-y-2">
       {/* Column picker dropdown */}
       <div className="flex items-center justify-between gap-2">
-        <div className="text-[10px] uppercase tracking-wider text-amber-200/40">
+        <div className="text-[10px] uppercase tracking-wider text-amber-300/60">
           {skills.length} skill{skills.length === 1 ? '' : 's'} · click any header to sort
         </div>
         <DropdownMenu>
@@ -441,7 +441,7 @@ export const SkillTable = React.memo(function SkillTable({
                                 </TooltipContent>
                               </Tooltip>
                             ) : (
-                              <span className="text-amber-200/30">—</span>
+                              <span className="text-amber-200/50">—</span>
                             )}
                           </TableCell>
                         )
@@ -485,7 +485,7 @@ export const SkillTable = React.memo(function SkillTable({
                                 {formatDamage(dmg!.totalPvE)}
                               </span>
                             ) : (
-                              <span className="text-amber-200/30">—</span>
+                              <span className="text-amber-200/50">—</span>
                             )}
                           </TableCell>
                         )
@@ -500,7 +500,7 @@ export const SkillTable = React.memo(function SkillTable({
                                 {formatDamage(dmg!.totalPvP)}
                               </span>
                             ) : (
-                              <span className="text-amber-200/30">—</span>
+                              <span className="text-amber-200/50">—</span>
                             )}
                           </TableCell>
                         )
@@ -533,7 +533,7 @@ export const SkillTable = React.memo(function SkillTable({
                                 </TooltipContent>
                               </Tooltip>
                             ) : (
-                              <span className="text-amber-200/30">—</span>
+                              <span className="text-amber-200/50">—</span>
                             )}
                           </TableCell>
                         )
@@ -561,7 +561,7 @@ export const SkillTable = React.memo(function SkillTable({
                                 {skill.ccCounterDisplay || skill.ccCounters}
                               </span>
                             ) : (
-                              <span className="text-amber-200/30">0</span>
+                              <span className="text-amber-200/50">0</span>
                             )}
                           </TableCell>
                         )
@@ -588,7 +588,7 @@ export const SkillTable = React.memo(function SkillTable({
                                 {formatCommandCompact(skill.command)}
                               </kbd>
                             ) : (
-                              <span className="text-amber-200/30">—</span>
+                              <span className="text-amber-200/50">—</span>
                             )}
                           </TableCell>
                         )
