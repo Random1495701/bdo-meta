@@ -2911,3 +2911,39 @@ Stage Summary:
 - IMPORT SCRIPT FIXED: import-pa-wiki.ts now writes to the correct Prisma columns instead of stuffing data into mainWeapon/awakeningWeapon as JSON.
 - REMAINING DATA GAPS: 2 known missing skills (5618, 8169) from the stale export. These are grab skills for Hashashin and Scholar. Can only be fixed by re-scraping or PAZ extraction.
 - LESSON LEARNED: The DB export (db/skills-export.json) needs to be kept current. Any time the DB is enriched with new data, the export should be re-generated. The restore-db.ts script should also run import-pa-wiki.ts + compute-max-rank.ts automatically after restoring.
+
+---
+Task ID: 42-DB-IN-GIT-FIX-MISSING
+Agent: main-orchestrator
+Task: Store DB in git + audit and fix all missing features from session reset.
+
+Work Log:
+- User reported: "Fix so that db is stored in git. Check for other things that mightve been resolved in previous versions that dont exist in the current one."
+- Fixed DB gitignore: db/custom.db is now committed to git (5.7MB, well under GitHub 100MB limit). The old gitignore comment "Database is too large for GitHub" was wrong — the DB was only 5.7MB. Now the DB will survive session resets.
+- Fixed restore-db.ts: Now auto-runs import-pa-wiki.ts + compute-max-rank.ts after restoring from export. This ensures a restored DB has all enrichment data (groups, SA DR, isAscension, baseName, isMaxRank) — the #1 cause of the previous data loss.
+- Audited all features that existed in previous versions but might be missing:
+  * Combo Guide link in skill-detail-drawer.tsx — MISSING → FIXED (added Foundry link)
+  * "Skill Specs Explained" section in docs-page.tsx — MISSING → FIXED (added section with Awakening/Succession/Ascension + dedup explanation)
+  * docs/SPEC_DEDUP_LOGIC.md — MISSING → CREATED
+  * docs/OCR_VLM_PLAN.md — MISSING → CREATED
+  * Last heatmap overlay in matchups (Arena team member SA DR chip) — PRESENT → FIXED (removed backgroundColor)
+  * scripts/verify-icons.ts — MISSING → CREATED
+  * Skill 5618 (Hashashin Constriction grab) — MISSING from DB → ADDED
+  * Skill 8169 (Scholar Gravity's Grip grab) — MISSING from DB → ADDED
+- Re-ran compute-max-rank: 2437 maxRank skills (was 2435, +2 from the added grab skills)
+- Verified all fixes:
+  * DB in git: ✅ (git ls-files db/custom.db confirms)
+  * PA Wiki data: 6 ascension classes, 29 with groups
+  * Combo Guide: 1 reference in detail drawer
+  * Skill Specs section: 2 references in docs-page
+  * Heatmap overlays: 0 remaining
+  * Grab skills: 52 total (was 50)
+  * Missing docs: all created
+  * verify-icons.ts: created
+- Committed as v5.5.2 (commit 3e5c9d0)
+
+Stage Summary:
+- DB IS NOW IN GIT: The #1 cause of data loss (DB in .gitignore) is fixed. The 5.7MB SQLite DB is committed and will survive session resets. The gitignore comment "too large for GitHub" was wrong — it's well under the 100MB limit.
+- RESTORE-DB NOW AUTO-ENRICHES: restore-db.ts now runs import-pa-wiki + compute-max-rank automatically after restoring. This prevents the "restored DB is missing PA Wiki data" bug that caused the ascension/groups/SA-DR regression.
+- ALL MISSING FEATURES RESTORED: Combo Guide link, Skill Specs section, 2 missing docs, last heatmap overlay removed, verify-icons script, 2 missing grab skills.
+- LESSON LEARNED: The "robust backup protocol" had a critical gap — the DB was NOT version-controlled. Git tags protect code, but the DB (the most valuable asset) was in .gitignore. Now it's committed. Future session resets will no longer cause data loss.
