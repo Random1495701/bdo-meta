@@ -19,6 +19,7 @@ import { MatchupsPage } from '@/components/skills/matchups-page'
 import { SessionTrackerPage } from '@/components/skills/session-tracker-page'
 import { DamageCalculatorPage } from '@/components/skills/damage-calculator-page'
 import { TabSwitcher, type ViewMode } from '@/components/skills/tab-switcher'
+import { SessionResetBanner } from '@/components/skills/session-reset-banner'
 
 import {
   Sheet,
@@ -143,6 +144,7 @@ export default function Home() {
   if (view === 'meta') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <SessionResetBanner />
         <TabSwitcher view={view} onChange={setView} />
         <MetaPage onCardClick={handleMetaCardClick} />
         <SyncFooter />
@@ -153,6 +155,7 @@ export default function Home() {
   if (view === 'matchups') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <SessionResetBanner />
         <TabSwitcher view={view} onChange={setView} />
         <MatchupsPage />
         <SyncFooter />
@@ -163,6 +166,7 @@ export default function Home() {
   if (view === 'sessions') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <SessionResetBanner />
         <TabSwitcher view={view} onChange={setView} />
         <SessionTrackerPage />
         <SyncFooter />
@@ -173,6 +177,7 @@ export default function Home() {
   if (view === 'docs') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <SessionResetBanner />
         <TabSwitcher view={view} onChange={setView} />
         <DocsPage />
         <SyncFooter />
@@ -183,6 +188,7 @@ export default function Home() {
   if (view === 'tierlist') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <SessionResetBanner />
         <TabSwitcher view={view} onChange={setView} />
         <TierListPage />
         <SyncFooter />
@@ -193,6 +199,7 @@ export default function Home() {
   if (view === 'patches') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <SessionResetBanner />
         <TabSwitcher view={view} onChange={setView} />
         <PatchesPage />
         <SyncFooter />
@@ -203,6 +210,7 @@ export default function Home() {
   if (view === 'dmgcalc') {
     return (
       <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <SessionResetBanner />
         <TabSwitcher view={view} onChange={setView} />
         <DamageCalculatorPage />
         <SyncFooter />
@@ -212,6 +220,7 @@ export default function Home() {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-bdo-ink text-amber-50">
+        <SessionResetBanner />
       <TabSwitcher view={view} onChange={setView} />
 
       <Header />

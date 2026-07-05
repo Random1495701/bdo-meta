@@ -112,12 +112,20 @@ function computeSpecStats(skills: any[]): SpecStats {
     // FALSE GRAB FILTER: Some skills have "Grapple" in ccTypes but it's from
     // "All CC Resistance (except Grapple), including from Back Attacks" text
     // which is a RESISTANCE buff, not a grab CC. Check damageRows AND description.
+    // Also check for block/guard skills (Forward Guard + name suggests blocking)
+    // — these have Grapple CC from "except Grapple" tooltip text but are NOT grabs.
     const isFalseGrab = (damageRows?.some((r: DamageRow) =>
       r.label?.toLowerCase().includes('except grapple') ||
       r.label?.toLowerCase().includes('except grapling')
     ) || false) || (s.description?.toLowerCase().includes('except grapple') || false)
 
-    const hasRealGrab = pvpCCs.includes('Grapple') && !isFalseGrab
+    // Block/guard skills with Forward Guard protection are NOT grabs.
+    // The Grapple CC on these comes from "All CC Resistance (except Grapple)" tooltip.
+    const blockSkillNames = ['guard', 'shield chase', 'greatsword defense', 'bladewall', 'noble spirit', 'vindicta', 'death line chase', 'icy fog', 'mass teleport', 'frenzied dash']
+    const isBlockSkill = s.protectionTypes?.includes('Forward Guard') &&
+      blockSkillNames.some(n => s.name?.toLowerCase().includes(n))
+
+    const hasRealGrab = pvpCCs.includes('Grapple') && !isFalseGrab && !isBlockSkill
 
     // CC stats: exclude Black Spirit rage skills (they're not part of normal PvP rotation)
     if (!s.isBlackSpirit) {
