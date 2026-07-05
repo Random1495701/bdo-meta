@@ -1,11 +1,12 @@
 import { create } from 'zustand'
 import type { SkillFilters, SkillType, SkillSort } from './skills'
 
-// Manual localStorage persistence for sort/view preferences.
+// Manual localStorage persistence for sort/view preferences AND key filters.
 // We don't use zustand persist middleware because it causes hydration mismatches.
 // Instead, we load from localStorage on first client render and save on change.
 
 const SORT_STORAGE_KEY = 'bdo-meta-sort-prefs'
+const FILTERS_STORAGE_KEY = 'bdo-meta-filters'
 
 function loadSortPrefs(): { sort?: SkillSort; order?: 'asc' | 'desc'; viewMode?: 'grid' | 'list' | 'table' } {
   if (typeof window === 'undefined') return {}
@@ -23,7 +24,27 @@ function saveSortPrefs(prefs: { sort: SkillSort; order: 'asc' | 'desc'; viewMode
   } catch {}
 }
 
+// Persisted filters (classIds, specs, q, excludedClassIds) — loaded on first client render.
+type PersistedFilters = Pick<SkillFilters, 'classIds' | 'specs' | 'q' | 'excludedClassIds'>
+
+function loadPersistedFilters(): PersistedFilters {
+  if (typeof window === 'undefined') return {}
+  try {
+    const raw = localStorage.getItem(FILTERS_STORAGE_KEY)
+    if (raw) return JSON.parse(raw)
+  } catch {}
+  return {}
+}
+
+function savePersistedFilters(f: PersistedFilters) {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(f))
+  } catch {}
+}
+
 const savedPrefs = loadSortPrefs()
+const savedFilters = loadPersistedFilters()
 
 interface SkillStore {
   filters: SkillFilters
@@ -70,12 +91,13 @@ interface SkillStore {
 }
 
 const DEFAULT_FILTERS: SkillFilters = {
-  q: '',
-  classIds: [],
+  q: savedFilters.q ?? '',
+  classIds: savedFilters.classIds ?? [],
+  excludedClassIds: savedFilters.excludedClassIds ?? [],
   types: [],
   protections: [],
   cc: [],
-  specs: [],
+  specs: savedFilters.specs ?? [],
   sort: savedPrefs.sort || 'skillId',
   order: savedPrefs.order || 'asc',
   page: 1,
@@ -90,21 +112,32 @@ export const useSkillStore = create<SkillStore>((set) => ({
   compareOpen: false,
   filtersOpen: false,
   viewMode: savedPrefs.viewMode || 'table',
-  setQ: (q) => set((s) => ({ filters: { ...s.filters, q, page: 1 } })),
+  setQ: (q) => set((s) => {
+    savePersistedFilters({ q, classIds: s.filters.classIds, specs: s.filters.specs, excludedClassIds: s.filters.excludedClassIds })
+    return { filters: { ...s.filters, q, page: 1 } }
+  }),
   toggleClass: (classId) =>
     set((s) => {
       const cur = s.filters.classIds || []
       const next = cur.includes(classId) ? cur.filter((x) => x !== classId) : [...cur, classId]
+      savePersistedFilters({ q: s.filters.q, classIds: next, specs: s.filters.specs, excludedClassIds: s.filters.excludedClassIds })
       return { filters: { ...s.filters, classIds: next, page: 1 } }
     }),
-  clearClasses: () => set((s) => ({ filters: { ...s.filters, classIds: [], page: 1 } })),
+  clearClasses: () => set((s) => {
+    savePersistedFilters({ q: s.filters.q, classIds: [], specs: s.filters.specs, excludedClassIds: s.filters.excludedClassIds })
+    return { filters: { ...s.filters, classIds: [], page: 1 } }
+  }),
   toggleExcludeClass: (classId) =>
     set((s) => {
       const cur = s.filters.excludedClassIds || []
       const next = cur.includes(classId) ? cur.filter((x) => x !== classId) : [...cur, classId]
+      savePersistedFilters({ q: s.filters.q, classIds: s.filters.classIds, specs: s.filters.specs, excludedClassIds: next })
       return { filters: { ...s.filters, excludedClassIds: next, page: 1 } }
     }),
-  clearExcludedClasses: () => set((s) => ({ filters: { ...s.filters, excludedClassIds: [], page: 1 } })),
+  clearExcludedClasses: () => set((s) => {
+    savePersistedFilters({ q: s.filters.q, classIds: s.filters.classIds, specs: s.filters.specs, excludedClassIds: [] })
+    return { filters: { ...s.filters, excludedClassIds: [], page: 1 } }
+  }),
   toggleType: (t) =>
     set((s) => {
       const cur = s.filters.types || []
@@ -138,12 +171,14 @@ export const useSkillStore = create<SkillStore>((set) => ({
   toggleHasPatchChange: () => set((s) => ({ filters: { ...s.filters, hasPatchChange: !s.filters.hasPatchChange ? true : undefined, page: 1 } })),
   setSpec: (spec) => set((s) => {
     // Legacy single-spec setter — maps to specs array
-    if (spec === 'all') return { filters: { ...s.filters, specs: [], types: [], page: 1 } }
-    return { filters: { ...s.filters, specs: [spec], types: [], page: 1 } }
+    const nextSpecs = spec === 'all' ? [] : [spec]
+    savePersistedFilters({ q: s.filters.q, classIds: s.filters.classIds, specs: nextSpecs, excludedClassIds: s.filters.excludedClassIds })
+    return { filters: { ...s.filters, specs: nextSpecs, types: [], page: 1 } }
   }),
   toggleSpec: (spec) => set((s) => {
     const cur = s.filters.specs || []
     const next = cur.includes(spec) ? cur.filter((x) => x !== spec) : [...cur, spec]
+    savePersistedFilters({ q: s.filters.q, classIds: s.filters.classIds, specs: next, excludedClassIds: s.filters.excludedClassIds })
     return { filters: { ...s.filters, specs: next, types: [], page: 1 } }
   }),
   setSort: (sort) => set((s) => {
@@ -162,7 +197,10 @@ export const useSkillStore = create<SkillStore>((set) => ({
     saveSortPrefs({ sort: state.filters.sort || 'skillId', order: state.filters.order || 'asc', viewMode: m })
     set({ viewMode: m })
   },
-  resetFilters: () => set({ filters: { ...DEFAULT_FILTERS } }),
+  resetFilters: () => {
+    savePersistedFilters({ q: '', classIds: [], specs: [], excludedClassIds: [] })
+    return set({ filters: { ...DEFAULT_FILTERS, q: '', classIds: [], specs: [], excludedClassIds: [] } })
+  },
   selectSkill: (id) => set({ selectedSkillId: id, detailOpen: id != null }),
   setDetailOpen: (open) => set({ detailOpen: open }),
   setCompareSkill: (id) => set({ compareSkillId: id }),
