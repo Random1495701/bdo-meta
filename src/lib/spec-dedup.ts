@@ -175,15 +175,22 @@ export function dedupSkillsBySpec<T extends DedupInputSkill>(
       workingInfo = { ...info, skillIds: nonPassiveIds, hasPassive: false }
     }
 
-    // Core:/Flow: skills — kept EXCEPT Awakening-flagged ones in Succession/default
+    // Core:/Flow: skills — spec-filtered like regular skills.
+    // - Core:/Flow: with isAwakening=true → Awakening only (not Succession, not default)
+    // - Core:/Flow: with isSuccession=true → Succession only (not Awakening)
+    // - Core:/Flow: with neither → both specs
     for (const s of pickWhere(workingInfo, (s) => s.name.includes('Core: ') || s.isCore)) {
       if (spec === 'succession' && s.isAwakening) continue
       if (spec === null && s.isAwakening) continue
+      if (spec === 'awakening' && s.isSuccession) continue
+      if (spec === null && s.isSuccession) continue
       if (!added.has(s.skillId)) { result.push(s); added.add(s.skillId) }
     }
     for (const s of pickWhere(workingInfo, (s) => s.name.includes('Flow: ') || s.isFlow)) {
       if (spec === 'succession' && s.isAwakening) continue
       if (spec === null && s.isAwakening) continue
+      if (spec === 'awakening' && s.isSuccession) continue
+      if (spec === null && s.isSuccession) continue
       if (!added.has(s.skillId)) { result.push(s); added.add(s.skillId) }
     }
 
@@ -211,11 +218,12 @@ function pickVariant<T extends DedupInputSkill>(
 
   if (spec === 'awakening') {
     if (info.hasAbsolute) {
-      return pickWhere((s) => s.isAbsolute || s.name.includes('Absolute: '))
+      return pickWhere((s) => (s.isAbsolute || s.name.includes('Absolute: ')) && !s.isSuccession)
     }
     return pickWhere((s) => {
       if (s.isAwakening) return true
       if (s.isAbsolute) return false
+      if (s.isSuccession) return false
       if (s.name.includes('Prime: ') || s.name.startsWith('Succession:')) return false
       if (replacedByAwakening.has(s.skillId)) return false
       return true

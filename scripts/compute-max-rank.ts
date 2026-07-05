@@ -84,7 +84,7 @@ async function main() {
     // BS, Passive, Flow, Core skills: group by baseName too (don't auto-mark all as maxRank)
     // This ensures only the highest rank of each BS skill is marked maxRank
     const baseName = getBaseName(s.name)
-    const variant = getVariant(s as any)
+    const variant = getVariant(s.name)
     const key = `${s.classId}-${baseName}-${variant}`
     if (!groups.has(key)) groups.set(key, [])
     groups.get(key)!.push(s)

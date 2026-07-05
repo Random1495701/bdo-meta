@@ -14,8 +14,6 @@ import {
   Sparkles,
   ChevronDown,
   GitBranch,
-  Sun,
-  Moon,
 } from 'lucide-react'
 import { APP_VERSION, GIT_TAGS } from '@/lib/version'
 
@@ -288,7 +286,6 @@ export function Header() {
               />
             </Button>
 
-            <ThemeToggle />
           </div>
         </div>
 
@@ -336,50 +333,3 @@ export function Header() {
   )
 }
 
-// Theme toggle — switches between dark and light themes using a localStorage
-// key ('theme') and toggles the .dark/.light class on <html>. Falls back to
-// dark theme on first load.
-function ThemeToggle() {
-  const [theme, setTheme] = React.useState<'dark' | 'light'>('dark')
-
-  React.useEffect(() => {
-    const stored = (typeof window !== 'undefined'
-      ? localStorage.getItem('theme')
-      : null) as 'dark' | 'light' | null
-    const initial = stored ?? 'dark'
-    setTheme(initial)
-    if (typeof document !== 'undefined') {
-      document.documentElement.className = initial === 'light' ? 'light' : 'dark'
-    }
-  }, [])
-
-  const toggle = () => {
-    const next = theme === 'dark' ? 'light' : 'dark'
-    setTheme(next)
-    try {
-      localStorage.setItem('theme', next)
-    } catch {
-      // ignore (private mode etc.)
-    }
-    if (typeof document !== 'undefined') {
-      document.documentElement.className = next === 'light' ? 'light' : 'dark'
-    }
-  }
-
-  return (
-    <Button
-      variant="outline"
-      size="icon"
-      title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-      onClick={toggle}
-      className="bdo-btn size-8 p-0"
-      aria-label="Toggle theme"
-    >
-      {theme === 'dark' ? (
-        <Sun className="size-4" />
-      ) : (
-        <Moon className="size-4" />
-      )}
-    </Button>
-  )
-}

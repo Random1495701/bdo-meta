@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ThemeProvider } from 'next-themes'
 import { ErrorBoundary } from '@/components/skills/error-boundary'
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -21,14 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem={false}
-        disableTransitionOnChange
-      >
-        <QueryClientProvider client={client}>{children}</QueryClientProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
     </ErrorBoundary>
   )
 }
