@@ -186,14 +186,17 @@ export function calculateDamage(
     modes.push({ modeName: 'Normal', phases, totalPvE: pve, totalPvP: pvp })
   }
 
-  // Use first mode for backward-compat fields
-  const firstMode = modes[0]
+  // Use the HIGHEST-damage mode for backward-compat fields.
+  // Special modes (e.g. Deadeye Marni bullets, Sorc Prime: Bloody Calamity charged mode)
+  // are alternatives — you can only use one at a time. The total should reflect
+  // the strongest mode, not the first one.
+  const bestMode = modes.reduce((best, m) => m.totalPvE > best.totalPvE ? m : best, modes[0])
   return {
-    phases: firstMode.phases,
-    totalPvE: firstMode.totalPvE,
-    totalPvP: firstMode.totalPvP,
+    phases: bestMode.phases,
+    totalPvE: bestMode.totalPvE,
+    totalPvP: bestMode.totalPvP,
     pvpDamagePercent,
-    hasDamage: firstMode.phases.length > 0,
+    hasDamage: bestMode.phases.length > 0,
     hasSpecialMode,
     modes,
   }
