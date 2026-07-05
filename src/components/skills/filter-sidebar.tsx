@@ -176,11 +176,13 @@ function GoldDivider() {
 
 function Chip({
   active,
+  excluded,
   color,
   onClick,
   children,
 }: {
   active: boolean
+  excluded?: boolean
   color?: string
   onClick: () => void
   children: React.ReactNode
@@ -191,24 +193,36 @@ function Chip({
       onClick={onClick}
       className={cn(
         'inline-flex items-center gap-1.5 rounded-sm px-2.5 py-1 text-xs font-medium transition-all',
-        active ? 'bdo-chip-on' : 'bdo-chip',
+        excluded ? 'bdo-chip' : active ? 'bdo-chip-on' : 'bdo-chip',
       )}
       style={
-        active && color
+        excluded
           ? {
-              borderColor: `${color}aa`,
-              color: color,
-              background: `linear-gradient(to bottom, ${color}33, ${color}11)`,
-              boxShadow: `inset 0 0 0 1px ${color}44, 0 0 8px ${color}33`,
+              borderColor: 'rgba(239, 68, 68, 0.6)',
+              color: '#f87171',
+              background: 'linear-gradient(to bottom, rgba(239,68,68,0.2), rgba(239,68,68,0.05))',
+              boxShadow: 'inset 0 0 0 1px rgba(239,68,68,0.3)',
+              textDecoration: 'line-through',
+              opacity: 0.7,
             }
-          : undefined
+          : active && color
+            ? {
+                borderColor: `${color}aa`,
+                color: color,
+                background: `linear-gradient(to bottom, ${color}33, ${color}11)`,
+                boxShadow: `inset 0 0 0 1px ${color}44, 0 0 8px ${color}33`,
+              }
+            : undefined
       }
     >
-      {color && (
+      {color && !excluded && (
         <span
           className="size-2 rounded-full"
           style={{ backgroundColor: color }}
         />
+      )}
+      {excluded && (
+        <span className="text-[10px]">✕</span>
       )}
       {children}
     </button>
@@ -336,12 +350,13 @@ function FilterNotice() {
 
 export function FilterSidebar() {
   const filters = useSkillStore((s) => s.filters)
-  const toggleType = useSkillStore((s) => s.toggleType)
+  const cycleType = useSkillStore((s) => s.cycleType)
   const clearTypes = useSkillStore((s) => s.clearTypes)
-  const toggleProtection = useSkillStore((s) => s.toggleProtection)
+  const cycleProtection = useSkillStore((s) => s.cycleProtection)
   const clearProtections = useSkillStore((s) => s.clearProtections)
-  const toggleCc = useSkillStore((s) => s.toggleCc)
+  const cycleCc = useSkillStore((s) => s.cycleCc)
   const clearCc = useSkillStore((s) => s.clearCc)
+  const ccExcluded = filters.excludedCc ?? []
   const setLevelRange = useSkillStore((s) => s.setLevelRange)
   const setCooldownRange = useSkillStore((s) => s.setCooldownRange)
   const setAnimRange = useSkillStore((s) => s.setAnimRange)
@@ -375,8 +390,11 @@ export function FilterSidebar() {
     let n = 0
     if (filters.classIds && filters.classIds.length) n++
     if (filters.types && filters.types.length) n++
+    if (filters.excludedTypes && filters.excludedTypes.length) n++
     if (filters.protections && filters.protections.length) n++
+    if (filters.excludedProtections && filters.excludedProtections.length) n++
     if (filters.cc && filters.cc.length) n++
+    if (filters.excludedCc && filters.excludedCc.length) n++
     if (filters.minLvl != null || filters.maxLvl != null) n++
     if (filters.minCd != null || filters.maxCd != null) n++
     if (filters.minAnim != null || filters.maxAnim != null) n++
@@ -409,7 +427,9 @@ export function FilterSidebar() {
   ]
 
   const typesActive = filters.types ?? []
+  const typesExcluded = filters.excludedTypes ?? []
   const protectionsActive = filters.protections ?? []
+  const protectionsExcluded = filters.excludedProtections ?? []
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -473,8 +493,9 @@ export function FilterSidebar() {
                 <Chip
                   key={key}
                   active={typesActive.includes(key)}
+                  excluded={typesExcluded.includes(key)}
                   color={meta.color}
-                  onClick={() => toggleType(key)}
+                  onClick={() => cycleType(key)}
                 >
                   {meta.label}
                 </Chip>
@@ -511,8 +532,9 @@ export function FilterSidebar() {
                   <Chip
                     key={p}
                     active={protectionsActive.includes(p)}
+                    excluded={protectionsExcluded.includes(p)}
                     color={meta?.color ?? '#5cbfd6'}
-                    onClick={() => toggleProtection(p)}
+                    onClick={() => cycleProtection(p)}
                   >
                     {meta && <span className="mr-0.5">{meta.symbol}</span>}
                     {p}
@@ -548,8 +570,9 @@ export function FilterSidebar() {
               {/* PvP CC only — special filter (first option) */}
               <Chip
                 active={filters.cc?.includes('__pvp_only__') ?? false}
+                excluded={ccExcluded.includes('__pvp_only__')}
                 color="#f87171"
-                onClick={() => toggleCc('__pvp_only__')}
+                onClick={() => cycleCc('__pvp_only__')}
               >
                 <Zap className="mr-0.5 size-3" />
                 PvP CC only
@@ -560,8 +583,9 @@ export function FilterSidebar() {
                   <Chip
                     key={c}
                     active={filters.cc?.includes(c) ?? false}
+                    excluded={ccExcluded.includes(c)}
                     color={meta?.color ?? '#d6533a'}
-                    onClick={() => toggleCc(c)}
+                    onClick={() => cycleCc(c)}
                   >
                     <span className="mr-0.5">{meta?.symbol}</span>
                     {c}
@@ -589,8 +613,9 @@ export function FilterSidebar() {
                   <Chip
                     key={e}
                     active={filters.cc?.includes(e) ?? false}
+                    excluded={ccExcluded.includes(e)}
                     color={meta?.color ?? '#94a3b8'}
-                    onClick={() => toggleCc(e)}
+                    onClick={() => cycleCc(e)}
                   >
                     <span className="mr-0.5">{meta?.symbol}</span>
                     {e}

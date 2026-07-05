@@ -141,8 +141,11 @@ export async function GET(req: NextRequest) {
   const classParam = sp.get('class') // "0,1,2" or "all"
   const excludeClassParam = sp.get('excludeClass') // "3,5" — exclude these classes
   const typeParam = sp.get('type') // "succession,absolute" or "all"
+  const excludeTypeParam = sp.get('excludeType')
   const protectionParam = sp.get('protection') // "Super Armor,Forward Guard" or "none" or "all"
+  const excludeProtectionParam = sp.get('excludeProtection')
   const cc = sp.get('cc')
+  const excludeCc = sp.get('excludeCc')
   const minLvl = sp.get('minLvl')
   const maxLvl = sp.get('maxLvl')
   const minCd = sp.get('minCd')
@@ -391,6 +394,28 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  // Excluded skill types (3-state toggle: off → filter → exclude → off)
+  if (excludeTypeParam && excludeTypeParam !== 'all') {
+    const exTypes = excludeTypeParam.split(',').map((t) => t.trim()).filter(Boolean)
+    if (exTypes.length > 0) {
+      const exConditions: Prisma.SkillWhereInput[] = []
+      for (const t of exTypes) {
+        if (t === 'main') {
+          exConditions.push({ isAbsolute: false, isAwakening: false, isSuccession: false, isBlackSpirit: false, isPassive: false })
+        } else if (t === 'awakening') exConditions.push({ isAwakening: true })
+        else if (t === 'succession') exConditions.push({ isSuccession: true })
+        else if (t === 'absolute') exConditions.push({ isAbsolute: true })
+        else if (t === 'blackspirit') exConditions.push({ isBlackSpirit: true })
+        else if (t === 'passive') exConditions.push({ isPassive: true })
+      }
+      if (exConditions.length === 1) {
+        AND.push({ NOT: exConditions[0] })
+      } else {
+        AND.push({ NOT: { OR: exConditions } })
+      }
+    }
+  }
+
   // Spec filter — supports multi-spec (succession + awakening together).
   // In BDO, at level 56 a character chooses Awakening (awakened weapon) or
   // Succession (enhanced main weapon). Each spec has access to different skills:
@@ -426,6 +451,14 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  // Excluded protections
+  if (excludeProtectionParam && excludeProtectionParam !== 'all') {
+    const exProts = excludeProtectionParam.split(',').map((p) => p.trim()).filter(Boolean)
+    if (exProts.length > 0) {
+      AND.push({ NOT: { OR: exProts.map((p) => ({ protectionTypes: { contains: p } })) } })
+    }
+  }
+
   // CC filter (multi-select). Special value "__pvp_only__" filters for skills
   // that have at least one PvP CC (ccCounters > 0, excluding PvE-only CCs).
   const pvpOnlyFilter = cc?.includes('__pvp_only__')
@@ -442,6 +475,14 @@ export async function GET(req: NextRequest) {
 
   if (ccFilterValues.length) {
     AND.push({ OR: ccFilterValues.map((c) => ({ ccTypes: { contains: c } })) })
+  }
+
+  // Excluded CC types
+  if (excludeCc) {
+    const exCcValues = excludeCc.split(',').map((c) => c.trim()).filter(Boolean).filter((c) => c !== '__pvp_only__')
+    if (exCcValues.length > 0) {
+      AND.push({ NOT: { OR: exCcValues.map((c) => ({ ccTypes: { contains: c } })) } })
+    }
   }
 
   // Numeric ranges

@@ -60,10 +60,13 @@ interface SkillStore {
   clearExcludedClasses: () => void
   clearClasses: () => void
   toggleType: (t: SkillType) => void
+  cycleType: (t: SkillType) => void
   clearTypes: () => void
   toggleProtection: (p: string) => void
+  cycleProtection: (p: string) => void
   clearProtections: () => void
   toggleCc: (c: string) => void
+  cycleCc: (c: string) => void
   clearCc: () => void
   setLevelRange: (min: number | undefined, max: number | undefined) => void
   setCooldownRange: (min: number | undefined, max: number | undefined) => void
@@ -144,21 +147,61 @@ export const useSkillStore = create<SkillStore>((set) => ({
       const next = cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]
       return { filters: { ...s.filters, types: next, page: 1 } }
     }),
-  clearTypes: () => set((s) => ({ filters: { ...s.filters, types: [], page: 1 } })),
+  cycleType: (t) =>
+    set((s) => {
+      // 3-state: off → filter → exclude → off
+      const cur = s.filters.types || []
+      const exCur = s.filters.excludedTypes || []
+      if (cur.includes(t)) {
+        // Currently filtering → switch to exclude
+        return { filters: { ...s.filters, types: cur.filter((x) => x !== t), excludedTypes: [...exCur, t], page: 1 } }
+      } else if (exCur.includes(t)) {
+        // Currently excluding → turn off
+        return { filters: { ...s.filters, excludedTypes: exCur.filter((x) => x !== t), page: 1 } }
+      } else {
+        // Off → filter
+        return { filters: { ...s.filters, types: [...cur, t], page: 1 } }
+      }
+    }),
+  clearTypes: () => set((s) => ({ filters: { ...s.filters, types: [], excludedTypes: [], page: 1 } })),
   toggleProtection: (p) =>
     set((s) => {
       const cur = s.filters.protections || []
       const next = cur.includes(p) ? cur.filter((x) => x !== p) : [...cur, p]
       return { filters: { ...s.filters, protections: next, page: 1 } }
     }),
-  clearProtections: () => set((s) => ({ filters: { ...s.filters, protections: [], page: 1 } })),
+  cycleProtection: (p) =>
+    set((s) => {
+      const cur = s.filters.protections || []
+      const exCur = s.filters.excludedProtections || []
+      if (cur.includes(p)) {
+        return { filters: { ...s.filters, protections: cur.filter((x) => x !== p), excludedProtections: [...exCur, p], page: 1 } }
+      } else if (exCur.includes(p)) {
+        return { filters: { ...s.filters, excludedProtections: exCur.filter((x) => x !== p), page: 1 } }
+      } else {
+        return { filters: { ...s.filters, protections: [...cur, p], page: 1 } }
+      }
+    }),
+  clearProtections: () => set((s) => ({ filters: { ...s.filters, protections: [], excludedProtections: [], page: 1 } })),
   toggleCc: (c) =>
     set((s) => {
       const cur = s.filters.cc || []
       const next = cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]
       return { filters: { ...s.filters, cc: next, page: 1 } }
     }),
-  clearCc: () => set((s) => ({ filters: { ...s.filters, cc: [], page: 1 } })),
+  cycleCc: (c) =>
+    set((s) => {
+      const cur = s.filters.cc || []
+      const exCur = s.filters.excludedCc || []
+      if (cur.includes(c)) {
+        return { filters: { ...s.filters, cc: cur.filter((x) => x !== c), excludedCc: [...exCur, c], page: 1 } }
+      } else if (exCur.includes(c)) {
+        return { filters: { ...s.filters, excludedCc: exCur.filter((x) => x !== c), page: 1 } }
+      } else {
+        return { filters: { ...s.filters, cc: [...cur, c], page: 1 } }
+      }
+    }),
+  clearCc: () => set((s) => ({ filters: { ...s.filters, cc: [], excludedCc: [], page: 1 } })),
   setLevelRange: (min, max) => set((s) => ({ filters: { ...s.filters, minLvl: min, maxLvl: max, page: 1 } })),
   setCooldownRange: (min, max) => set((s) => ({ filters: { ...s.filters, minCd: min, maxCd: max, page: 1 } })),
   setAnimRange: (min, max) => set((s) => ({ filters: { ...s.filters, minAnim: min, maxAnim: max, page: 1 } })),

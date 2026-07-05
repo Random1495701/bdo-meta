@@ -182,13 +182,16 @@ export interface SyncStatus {
 
 export interface SkillFilters {
   q?: string
-  classIds?: number[] // multi-select (empty = all)
-  excludedClassIds?: number[] // double-click to exclude (negative filter)
-  types?: SkillType[] // multi-select (empty = all)
-  protections?: string[] // multi-select (empty = all)
+  classIds?: number[]
+  excludedClassIds?: number[]
+  types?: SkillType[]
+  excludedTypes?: SkillType[]
+  protections?: string[]
+  excludedProtections?: string[]
   cc?: string[]
-  spec?: 'all' | 'succession' | 'awakening' | 'ascension' // single spec (legacy)
-  specs?: ('succession' | 'awakening' | 'ascension')[] // multi-spec (empty = all)
+  excludedCc?: string[]
+  spec?: 'all' | 'succession' | 'awakening' | 'ascension'
+  specs?: ('succession' | 'awakening' | 'ascension')[]
   minLvl?: number
   maxLvl?: number
   minCd?: number
@@ -239,8 +242,11 @@ export function filtersToQuery(f: SkillFilters): URLSearchParams {
   if (f.classIds && f.classIds.length > 0) sp.set('class', f.classIds.join(','))
   if (f.excludedClassIds && f.excludedClassIds.length > 0) sp.set('excludeClass', f.excludedClassIds.join(','))
   if (f.types && f.types.length > 0) sp.set('type', f.types.join(','))
+  if (f.excludedTypes && f.excludedTypes.length > 0) sp.set('excludeType', f.excludedTypes.join(','))
   if (f.protections && f.protections.length > 0) sp.set('protection', f.protections.join(','))
+  if (f.excludedProtections && f.excludedProtections.length > 0) sp.set('excludeProtection', f.excludedProtections.join(','))
   if (f.cc && f.cc.length) sp.set('cc', f.cc.join(','))
+  if (f.excludedCc && f.excludedCc.length > 0) sp.set('excludeCc', f.excludedCc.join(','))
   if (f.specs && f.specs.length > 0) sp.set('specs', f.specs.join(','))
   if (f.minLvl != null) sp.set('minLvl', String(f.minLvl))
   if (f.maxLvl != null) sp.set('maxLvl', String(f.maxLvl))

@@ -72,21 +72,17 @@ function ClassIcon({
 function ClassChip({
   cls,
   active,
-  excluded,
   count,
   specs,
   onClick,
   onSpecClick,
-  onExcludeClick,
 }: {
   cls: BdoClass
   active: boolean
-  excluded: boolean
   count: number
   specs: ('succession' | 'awakening' | 'ascension')[]
   onClick: () => void
   onSpecClick: (spec: 'succession' | 'awakening' | 'ascension') => void
-  onExcludeClick?: () => void
 }) {
   const color = classColor(cls.name)
   const isAsc = cls.isAscension
@@ -94,18 +90,12 @@ function ClassChip({
     <button
       type="button"
       onClick={onClick}
-      onDoubleClick={(e) => {
-        e.stopPropagation()
-        onExcludeClick?.()
-      }}
-      title={`${cls.name} — ${count} skills${active ? ' (click to deselect)' : ' (click to select)'} · double-click to exclude`}
+      title={`${cls.name} — ${count} skills${active ? ' (click to deselect)' : ' (click to select)'}`}
       className={cn(
         'group flex shrink-0 flex-col items-center gap-1 rounded-sm border px-2 py-1.5 transition-all',
-        excluded
-          ? 'border-red-700/60 bg-red-900/20 opacity-60'
-          : active
-            ? 'border-amber-400/80 bg-amber-500/10'
-            : 'border-amber-900/40 bg-bdo-leather-dark hover:border-amber-600/60 hover:bg-amber-900/10',
+        active
+          ? 'border-amber-400/80 bg-amber-500/10'
+          : 'border-amber-900/40 bg-bdo-leather-dark hover:border-amber-600/60 hover:bg-amber-900/10',
       )}
       style={
         active
@@ -217,9 +207,7 @@ function ClassChip({
 
 export function ClassBar() {
   const classIds = useSkillStore((s) => s.filters.classIds) ?? []
-  const excludedClassIds = useSkillStore((s) => s.filters.excludedClassIds) ?? []
   const toggleClass = useSkillStore((s) => s.toggleClass)
-  const toggleExcludeClass = useSkillStore((s) => s.toggleExcludeClass)
   const clearClasses = useSkillStore((s) => s.clearClasses)
   const specs = useSkillStore((s) => s.filters.specs) ?? []
   const toggleSpec = useSkillStore((s) => s.toggleSpec)
@@ -395,9 +383,7 @@ export function ClassBar() {
                     cls={c}
                     count={countMap.get(c.id) ?? c.skillCount ?? 0}
                     active={classIds.includes(c.id)}
-                    excluded={excludedClassIds.includes(c.id)}
                     specs={specs}
-                    onExcludeClick={() => toggleExcludeClass(c.id)}
                     onClick={() => {
                       // Clicking the class icon selects it + activates appropriate specs
                       if (!classIds.includes(c.id)) {
