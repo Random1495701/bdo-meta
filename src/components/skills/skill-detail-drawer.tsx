@@ -356,6 +356,12 @@ export function SkillDetailDrawer() {
   const skillId = useSkillStore((s) => s.selectedSkillId)
   const isMobile = useIsMobile()
   const [videoAutoplay, setVideoAutoplay] = React.useState(false)
+  const [selectedMode, setSelectedMode] = React.useState(0)
+
+  // Reset mode selection when skill changes
+  React.useEffect(() => {
+    setSelectedMode(0)
+  }, [skillId])
 
   // Refetch the open skill every 15s so the lurker's enrichment shows up
   // live without needing to close/reopen the drawer.
@@ -374,6 +380,7 @@ export function SkillDetailDrawer() {
   const type = skill ? skillTypeLabel(skill) : null
   const typeMeta = type ? SKILL_TYPE_META[type] : null
   const color = skill ? classColor(skill.className) : '#a1a1aa'
+  const selectedModeData = skill?.damage?.modes?.[selectedMode] ?? null
 
   const handleOpenChange = (next: boolean) => {
     setOpen(next)
@@ -559,8 +566,8 @@ export function SkillDetailDrawer() {
                     {skill.damage && skill.damage.hasDamage ? (
                       <StatCard
                         icon={<Swords className="size-3" />}
-                        label={skill.damage.hasSpecialMode ? "PvE Damage (Mode 1)" : "PvE Damage"}
-                        value={formatDamage(skill.damage.totalPvE)}
+                        label={skill.damage.hasSpecialMode ? `PvE Damage (${selectedMode})` : "PvE Damage"}
+                        value={formatDamage(selectedModeData?.totalPvE ?? skill.damage.totalPvE)}
                         accent="amber"
                       />
                     ) : (
@@ -570,18 +577,26 @@ export function SkillDetailDrawer() {
                         value="—"
                       />
                     )}
-                    {/* Special mode indicator */}
+                    {/* Special mode toggle */}
                     {skill.damage && skill.damage.hasSpecialMode && skill.damage.modes && skill.damage.modes.length > 1 && (
-                      <div className="col-span-2 flex items-center gap-2 rounded-sm border border-purple-700/40 bg-purple-900/10 px-2 py-1 text-[10px]">
+                      <div className="col-span-2 flex flex-wrap items-center gap-2 rounded-sm border border-purple-700/40 bg-purple-900/10 px-2 py-1.5 text-[10px]">
                         <AlertTriangle className="size-3 text-purple-400" />
                         <span className="text-purple-300/70">
-                          This skill has {skill.damage.modes.length} damage modes (e.g., regular vs Marni ammo).
-                          Showing Mode 1 only.
+                          {skill.damage.modes.length} damage modes — click to switch:
                         </span>
                         {skill.damage.modes.map((m: any, i: number) => (
-                          <span key={i} className="rounded-sm border border-purple-700/30 bg-purple-900/20 px-1.5 py-0.5 font-mono text-[9px] text-purple-300/50">
+                          <button
+                            key={i}
+                            onClick={() => setSelectedMode(i)}
+                            className={cn(
+                              'rounded-sm border px-1.5 py-0.5 font-mono text-[9px] transition-all',
+                              selectedMode === i
+                                ? 'border-purple-400 bg-purple-700/40 text-purple-200'
+                                : 'border-purple-700/30 bg-purple-900/20 text-purple-300/50 hover:bg-purple-800/30'
+                            )}
+                          >
                             {m.modeName}: {formatDamage(m.totalPvE)}
-                          </span>
+                          </button>
                         ))}
                       </div>
                     )}
@@ -752,10 +767,10 @@ export function SkillDetailDrawer() {
                       {skill.damage && skill.damage.phases.length > 0 && (
                         <div className="mb-3 space-y-1.5">
                           <div className="mb-1 flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-amber-200/50">
-                            <span>{skill.damage.hasSpecialMode ? 'Per-phase Breakdown (Mode 1 only)' : 'Per-phase Breakdown'}</span>
+                            <span>{skill.damage.hasSpecialMode ? `Per-phase Breakdown (${selectedModeData?.modeName ?? 'Mode 1'})` : 'Per-phase Breakdown'}</span>
                             <span>percent × multiplier × maxHits = total</span>
                           </div>
-                          {skill.damage.phases.map((p, i) => (
+                          {(selectedModeData?.phases ?? skill.damage.phases).map((p, i) => (
                             <PhaseDamageRow key={`${p.phase}-${i}`} phase={p} />
                           ))}
                           <div
@@ -766,7 +781,7 @@ export function SkillDetailDrawer() {
                               Total PvE
                             </span>
                             <span className="font-mono text-lg font-bold tabular-nums text-amber-300">
-                              {formatDamage(skill.damage.totalPvE)}
+                              {formatDamage(selectedModeData?.totalPvE ?? skill.damage.totalPvE)}
                             </span>
                           </div>
                           {skill.damage.totalPvP != null && (
