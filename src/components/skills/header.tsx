@@ -321,9 +321,19 @@ export function Header() {
             {statsQuery.isError && (
               <Badge
                 variant="outline"
-                className="border-red-700/50 bg-red-900/20 text-red-300"
+                className="cursor-pointer border-red-700/50 bg-red-900/20 text-red-300"
+                onClick={() => statsQuery.refetch()}
+                title="Click to retry"
               >
-                stats offline
+                stats offline — retry
+              </Badge>
+            )}
+            {statsQuery.isLoading && !statsQuery.data && (
+              <Badge
+                variant="outline"
+                className="border-amber-700/50 bg-amber-900/20 text-amber-300/70"
+              >
+                loading...
               </Badge>
             )}
           </div>

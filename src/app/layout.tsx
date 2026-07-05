@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   title: "BDO Meta — Black Desert Online Skill Database",
   description:
     "Live Black Desert Online skill database synced from bdocodex.com, including animation durations extracted via ffprobe.",
+  icons: {
+    icon: "/favicon.svg",
+  },
   keywords: [
     "BDO",
     "Black Desert Online",

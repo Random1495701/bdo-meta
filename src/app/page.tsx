@@ -63,6 +63,7 @@ function MobileFilterTrigger() {
 
 export default function Home() {
   const [view, setView] = React.useState<ViewMode>('data')
+  const [showHelp, setShowHelp] = React.useState(false)
 
   // Handle Meta card click → switch to Data tab with class+spec pre-filtered
   const handleMetaCardClick = React.useCallback((classId: number, spec: 'awakening' | 'succession' | 'ascension') => {
@@ -121,6 +122,8 @@ export default function Home() {
         } else if (store.filtersOpen) {
           store.setFiltersOpen(false)
         }
+      } else if (e.key === '?') {
+        setShowHelp(true)
       } else if (e.key === '1') {
         setView('data')
       } else if (e.key === '2') {
@@ -255,6 +258,35 @@ export default function Home() {
       <MobileFiltersSheet />
       <SkillDetailDrawer />
       <SkillCompareDrawer />
+
+      {/* Keyboard help overlay */}
+      {showHelp && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70"
+          onClick={() => setShowHelp(false)}
+        >
+          <div
+            className="max-w-md rounded-sm border-2 border-amber-700/50 bg-bdo-leather-dark p-6 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="bdo-title mb-4 text-lg text-amber-400">Keyboard Shortcuts</h2>
+            <div className="space-y-1.5 text-xs text-amber-100/70">
+              <div className="flex justify-between"><span>Switch tabs</span><kbd className="rounded bg-amber-900/30 px-1.5 text-amber-300">1-7</kbd></div>
+              <div className="flex justify-between"><span>Focus search</span><kbd className="rounded bg-amber-900/30 px-1.5 text-amber-300">/</kbd></div>
+              <div className="flex justify-between"><span>Navigate skills</span><kbd className="rounded bg-amber-900/30 px-1.5 text-amber-300">Arrow keys</kbd></div>
+              <div className="flex justify-between"><span>Open skill</span><kbd className="rounded bg-amber-900/30 px-1.5 text-amber-300">Enter</kbd></div>
+              <div className="flex justify-between"><span>Close drawer/panel</span><kbd className="rounded bg-amber-900/30 px-1.5 text-amber-300">Esc</kbd></div>
+              <div className="flex justify-between"><span>Show this help</span><kbd className="rounded bg-amber-900/30 px-1.5 text-amber-300">?</kbd></div>
+            </div>
+            <button
+              onClick={() => setShowHelp(false)}
+              className="bdo-btn mt-4 w-full"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
