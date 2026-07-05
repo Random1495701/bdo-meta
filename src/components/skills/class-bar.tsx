@@ -272,6 +272,21 @@ export function ClassBar() {
     el.scrollLeft = dragState.current.scrollLeft - walk
   }, [])
 
+  // Touch swipe support for mobile
+  const touchState = React.useRef<{ startX: number; scrollLeft: number }>({ startX: 0, scrollLeft: 0 })
+  const handleTouchStart = React.useCallback((e: React.TouchEvent) => {
+    const el = scrollRef.current
+    if (!el) return
+    touchState.current = { startX: e.touches[0].pageX - el.offsetLeft, scrollLeft: el.scrollLeft }
+  }, [])
+  const handleTouchMove = React.useCallback((e: React.TouchEvent) => {
+    const el = scrollRef.current
+    if (!el) return
+    const x = e.touches[0].pageX - el.offsetLeft
+    const walk = (x - touchState.current.startX) * 1.5
+    el.scrollLeft = touchState.current.scrollLeft - walk
+  }, [])
+
   const classesQuery = useQuery({
     queryKey: ['classes'],
     queryFn: fetchClasses,
@@ -361,6 +376,8 @@ export function ClassBar() {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
           className="bdo-class-scroll flex flex-1 items-stretch gap-1.5 overflow-x-auto pb-1"
           style={{ cursor: 'grab' }}
           role="tablist"
