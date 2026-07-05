@@ -279,7 +279,7 @@
   /* BDO gold button — like in-game UI */
   .bdo-btn {
     @apply rounded-sm border px-3 py-1.5 text-xs font-medium transition-all;
-    background-image: linear-gradient(to bottom, #2a2218, #15110d);
+    background-image: linear-gradient(to bottom, var(--color-bdo-leather), var(--color-bdo-leather-dark));
     border-color: rgba(156, 126, 46, 0.5);
     color: #d9c79a;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
