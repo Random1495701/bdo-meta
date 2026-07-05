@@ -486,16 +486,21 @@ export function DamageCalculatorPage() {
   })
 
   // When advanced mode is on and a class+spec is chosen, auto-fill SA DR
-  React.useEffect(() => {
-    if (!advanced || !metaData || metaClassId == null) return
+  // Auto-fill SA DR when advanced mode class/spec changes
+  const autoSaDr = React.useMemo(() => {
+    if (!advanced || !metaData || metaClassId == null) return null
     const cls = metaData.classes.find((c) => c.classId === metaClassId)
-    if (!cls) return
+    if (!cls) return null
     const v =
       metaSpec === 'awakening' ? cls.awakeningSaDr :
       metaSpec === 'succession' ? cls.successionSaDr :
       cls.ascensionSaDr
-    if (typeof v === 'number') setSaDr(v)
+    return typeof v === 'number' ? v : null
   }, [advanced, metaData, metaClassId, metaSpec])
+
+  React.useEffect(() => {
+    if (autoSaDr != null) setSaDr(autoSaDr)
+  }, [autoSaDr])
 
   const counterAdvantage = hasCounterAdvantage(attackerGroup, targetGroup)
 
