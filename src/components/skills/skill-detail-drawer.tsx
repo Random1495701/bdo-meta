@@ -20,6 +20,9 @@ import {
   Swords,
   AlertTriangle,
   Gem,
+  TrendingUp,
+  TrendingDown,
+  CircleDot,
 } from 'lucide-react'
 
 import {
@@ -511,6 +514,43 @@ export function SkillDetailDrawer() {
                       </Badge>
                     )}
                   </div>
+
+                  {/* Patch change diff — shows before/after if skill was changed in latest patch */}
+                  {skill.patchChange && (
+                    <div className="mt-2 rounded-sm border-2 border-amber-700/40 bg-amber-950/20 p-3">
+                      <div className="mb-2 flex items-center gap-2">
+                        {skill.patchChange.direction === 'up' && <TrendingUp className="size-4 text-emerald-400" />}
+                        {skill.patchChange.direction === 'down' && <TrendingDown className="size-4 text-red-400" />}
+                        {skill.patchChange.direction === 'changed' && <CircleDot className="size-4 text-amber-400" />}
+                        <span className="bdo-heading text-[11px] uppercase tracking-widest text-amber-300">
+                          Changed in latest patch
+                        </span>
+                        <span className="ml-auto flex gap-1">
+                          {skill.patchChange.fields.map((f, i) => (
+                            <span key={i} className="rounded-sm bg-amber-900/30 px-1.5 py-0.5 text-[9px] font-semibold text-amber-400/80">
+                              {f}
+                            </span>
+                          ))}
+                        </span>
+                      </div>
+                      {(skill.patchChange.before || skill.patchChange.after) && (
+                        <div className="grid grid-cols-2 gap-2 text-[11px]">
+                          {skill.patchChange.before && (
+                            <div className="rounded-sm border border-red-800/30 bg-red-950/10 p-2">
+                              <div className="mb-0.5 text-[9px] font-bold uppercase text-red-400/60">Before</div>
+                              <div className="whitespace-pre-wrap text-red-200/70">{skill.patchChange.before}</div>
+                            </div>
+                          )}
+                          {skill.patchChange.after && (
+                            <div className="rounded-sm border border-emerald-800/30 bg-emerald-950/10 p-2">
+                              <div className="mb-0.5 text-[9px] font-bold uppercase text-emerald-400/60">After</div>
+                              <div className="whitespace-pre-wrap text-emerald-200/70">{skill.patchChange.after}</div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Primary stat cards — ordered by relevance:
                       Damage → Cooldown → Protection → CC Count → Animation */}
