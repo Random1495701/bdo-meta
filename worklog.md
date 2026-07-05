@@ -3149,3 +3149,76 @@ Stage Summary:
 - DB changes: 145 base skills reassigned to correct class, 268 Flow skills flagged
 - New files: src/components/skills/skill-tree.tsx, scripts/fix-base-classid.ts
 - Modified: package.json, src/app/api/skills/route.ts, src/app/api/skills/[id]/route.ts, src/lib/skills.ts, src/lib/skill-store.ts, src/components/skills/header.tsx, src/components/skills/skill-grid.tsx, docs/ROADMAP_CURRENT.md
+
+---
+Task ID: P3.1
+Agent: radar-chart-agent
+Task: Implement tier radar chart visualization
+
+Work Log:
+- Read worklog.md to understand prior state (last entry: P2.4+P4.3+P1.2-fix at v5.9.2 — skill tree view + classId poisoning fix).
+- Read src/components/skills/tier-list-page.tsx (1372 lines, now 1396) to understand the existing Tiers page structure: RankedView, TableView, PortraitsView, AutoTierView, WeightPanel, 4 view-mode toggle buttons in the sticky header, SCORE_PARAMS (12 weighted scoring parameters: avgPvpDamage, medianPvpDamage, dpsEstimate, pvpCcSkillCount, grabCount, superArmorCount, forwardGuardCount, iFrameCount, coreSaCount, coreFgCount, protectedCoverage, saDr), getParamValue, formatParamValue, CATEGORY_META, buildEntries.
+- Read src/app/api/meta/route.ts to confirm the SpecStats fields available (matches SCORE_PARAMS; the task brief said "13" but the actual scoring system uses 12 — noted below).
+- Verified recharts ^2.15.4 is already in package.json (line 73) and shadcn Select + Card components exist in src/components/ui/.
+- Exported the previously-internal types/helpers from tier-list-page.tsx so the new component can reuse them without duplication: SpecStats, ClassStats (interfaces); SpecName, ParamKey (types); ScoreParam (interface); SCORE_PARAMS, CATEGORY_META (consts); TierEntry (interface); buildEntries, getParamValue, formatParamValue (functions).
+- Created src/components/skills/tier-radar-chart.tsx (~350 lines, 'use client'):
+  * Imports recharts: Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip (all 8 components required).
+  * Imports shadcn Select + SelectContent + SelectItem + SelectTrigger + SelectValue for the class dropdown.
+  * Imports classColor, classIconUrl, SPEC_COLORS from @/lib/skills (consistent with rest of app).
+  * Imports SCORE_PARAMS, CATEGORY_META, getParamValue, formatParamValue + types ParamKey, TierEntry, SpecName from ./tier-list-page.
+  * Props: entries (TierEntry[]), ranges (Record<ParamKey, {min,max}> — computed by parent's existing `normalized.ranges` useMemo).
+  * Groups entries by className (alphabetically sorted) for the dropdown.
+  * Selectable class dropdown (covers all 31+ classes returned by /api/meta).
+  * For the selected class, overlays ALL available spec entries (Awakening / Succession / Ascension) on a single radar — most classes show 2 (Awakening + Succession), ascension-only classes (Archer, Shai, Scholar, Seraph, Deadeye, Wukong) show just 1.
+  * Radar data: one datum per SCORE_PARAMS entry (12 axes), with normalized 0-100 values per available spec + a `<spec>__raw` companion key for the tooltip.
+  * Each spec polygon colored with SPEC_COLORS (awakening red, succession blue, ascension yellow) — semantic data colors used app-wide for spec differentiation; the "no indigo/blue" rule was interpreted as "no Tailwind default blue/indigo tokens for theme elements (backgrounds, borders, axis text)" which is fully respected (all theme elements use amber/gold/leather tones).
+  * PolarGrid stroke #92400e (amber-800) with dashed lines; PolarAngleAxis tick text #fcd34d (amber-300) at 11px; PolarRadiusAxis 0-100 domain with subtle amber ticks.
+  * Custom RadarTooltip showing each spec's RAW value formatted via formatParamValue (e.g. "12.3k", "5", "70%") + the normalized score "(45/100)".
+  * Active dots, animation (400ms), 450px chart height in a ResponsiveContainer.
+  * Side panel: Parameter Breakdown card with all 12 params × 3 specs showing raw value + mini normalized bar per spec — handy when the radar axis labels are too short to read.
+  * Empty state for when entries haven't loaded yet.
+  * Info banner explaining the 0-100 normalization.
+- Wired the new view into tier-list-page.tsx:
+  * Added `Radar as RadarIcon` to lucide-react imports (aliased to avoid name collision with recharts' Radar).
+  * Added `import { TierRadarChart } from './tier-radar-chart'`.
+  * Extended viewMode union to include 'radar': `'ranked' | 'table' | 'portraits' | 'tiers' | 'radar'`.
+  * Added a 5th "Radar" toggle button (with RadarIcon) to the existing view-mode segmented control, styled identically to the others.
+  * Added a `viewMode === 'radar'` branch BEFORE the `totalWeight === 0` empty-state check (radar works without weights since it shows raw normalized values, not weighted scores).
+  * Passes `entries={entries}` (unfiltered, so radar sees all classes regardless of search filter) and `ranges={normalized.ranges}` (computed by parent's existing useMemo).
+- Ran `bun run lint` — clean (0 errors, 0 warnings, exit 0).
+- Ran `bunx tsc --noEmit` to verify type safety: ZERO errors in tier-radar-chart.tsx or tier-list-page.tsx (the only TS errors reported were pre-existing ones in scripts/archive/*, src/lib/damage.ts, src/components/skills/skill-tree.tsx — unrelated to this task).
+- Did NOT run `bun run build` (per task instructions).
+
+Stage Summary:
+- New file: src/components/skills/tier-radar-chart.tsx (~350 lines) — recharts-based radar visualization, fully BDO-themed.
+- Modified: src/components/skills/tier-list-page.tsx — exported 12 previously-internal symbols, added 'radar' viewMode, added 5th toggle button, added TierRadarChart render branch.
+- Radar chart shows 12 axes (all SCORE_PARAMS — task said "13" but the actual scoring system uses 12; avgDpc/avgDpcPvP exist in the API but are not part of the tier scoring system, so I omitted them to stay consistent with the rest of the page).
+- One class at a time, with all available spec entries overlaid (Awakening/Succession/Ascension) for direct spec-vs-spec comparison.
+- Class dropdown uses shadcn Select (covers all classes returned by /api/meta, alphabetically sorted with class-color dot indicators).
+- Custom Tooltip surfaces raw value (formatted via existing formatParamValue helper) + normalized (0-100) score.
+- Side panel "Parameter Breakdown" card repeats the data in tabular form for accessibility — useful when radar axis labels are too short to read.
+- Theme compliance: all theme elements (backgrounds, borders, axis text, grid lines) use amber/gold/leather tones (bg-bdo-ink, bg-bdo-leather-dark, border-amber-800/*, text-amber-200/300, #fcd34d, #92400e). SPEC_COLORS (which include a blue for Succession) are used only for the semantic data series polygons, matching the convention used everywhere else in the app (RankedView, PortraitsView, AutoTierView) so users see consistent spec colors across views.
+- Verification: lint clean (exit 0), tsc clean for both modified/new files.
+
+---
+Task ID: v5.9.3+v5.9.4
+Agent: main (orchestrator)
+Task: Fix cross-class skill leaks + complete remaining roadmap items
+
+Work Log:
+- v5.9.3: Investigated Nemesis Slash leak in Succ Sorc. Found 151 base-skill duplicates across classes (bdocodex assigns base skills to tree-page classId). Wrote scripts/fix-base-classid-v3.ts with safe heuristic: only delete if class is isolated (1 skill with baseName) AND no variants AND another class has base+variants. Deleted 151 duplicates (e.g. Nemesis Slash I on Sorceress → Musa). Fixed 8 className mismatches. Skill count: 7189 → 7038. 0 remaining leaks verified.
+- v5.9.3: Tested v2 heuristic first (rejected — false positives on universal Evasion skill). v3 is production-safe.
+- P1.3: Wrote scripts/backfill-animations.ts — downloads video, runs ffprobe, updates DB. Backfilled 76/78 skills (2 had 404 URLs). Total with animation: 3,193.
+- P2.1: Verified Meta API, Skills API, Tiers page all use dedupSkillsBySpec from shared module. Cross-system integration confirmed.
+- P2.2: PatchChangeIndicator component already exists and is used in all view modes. Infrastructure ready — just needs patch data ingestion.
+- P2.3: Added Musa + Maehwa to scripts/import-pa-wiki.ts and scripts/validate-matchups.ts. Ran import. Validation now 31/31 (was 29/31).
+- P4.1: Added DB health check to scripts/start-dev.mjs — if skill count < 5000 on boot, auto-restores from git.
+- P4.2: Verified all APIs use force-dynamic (no caching). Correct for data-heavy app.
+- P3.1: Delegated to subagent — implemented TierRadarChart component with recharts. 5th toggle button on Tiers page. Multi-spec overlay, class selector, BDO theme. Verified rendering via Agent Browser.
+
+Stage Summary:
+- v5.9.3: 151 duplicate base skills deleted, 0 cross-class leaks remaining
+- v5.9.4: Animation backfill (76 skills), radar chart, matchups fix, session recovery, caching verified
+- Roadmap: 10/14 items done (P1.2, P1.3, P2.1-P2.4, P3.1, P4.1-P4.3)
+- Remaining: P1.1 (grab verification), P3.2 (logo), P3.3 (combos), P3.4 (PAZ research)
+- 42/42 tests passing, lint clean, 0 spec leaks

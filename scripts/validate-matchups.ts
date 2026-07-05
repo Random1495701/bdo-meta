@@ -20,6 +20,8 @@ const WIKI_DATA = [
   { className: 'Striker', combatType: 'Melee', successionGroup: 'Vanguard', awakeningGroup: 'Skirmisher', ascensionGroup: null, successionSaDr: 25, awakeningSaDr: 25, ascensionSaDr: 10 },
   { className: 'Mystic', combatType: 'Melee', successionGroup: 'Skirmisher', awakeningGroup: 'Vanguard', ascensionGroup: null, successionSaDr: 25, awakeningSaDr: 25, ascensionSaDr: 10 },
   { className: 'Lahn', combatType: 'Melee', successionGroup: 'Pulverizer', awakeningGroup: 'Skirmisher', ascensionGroup: null, successionSaDr: 10, awakeningSaDr: 10, ascensionSaDr: 10 },
+  { className: 'Musa', combatType: 'Melee', successionGroup: 'Pulverizer', awakeningGroup: 'Skirmisher', ascensionGroup: null, successionSaDr: 10, awakeningSaDr: 15, ascensionSaDr: null },
+  { className: 'Maehwa', combatType: 'Melee', successionGroup: 'Pulverizer', awakeningGroup: 'Skirmisher', ascensionGroup: null, successionSaDr: 10, awakeningSaDr: 15, ascensionSaDr: null },
   { className: 'Archer', combatType: 'Ranged', successionGroup: null, awakeningGroup: null, ascensionGroup: 'Pulverizer', successionSaDr: 10, awakeningSaDr: 10, ascensionSaDr: 10 },
   { className: 'Shai', combatType: 'Melee', successionGroup: null, awakeningGroup: null, ascensionGroup: 'Vanguard', successionSaDr: 10, awakeningSaDr: 10, ascensionSaDr: 20 },
   { className: 'Guardian', combatType: 'Melee', successionGroup: 'Vanguard', awakeningGroup: 'Vanguard', ascensionGroup: null, successionSaDr: 15, awakeningSaDr: 20, ascensionSaDr: 10 },

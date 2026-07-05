@@ -7,6 +7,7 @@ import {
   Swords, Zap, Shield, ShieldHalf, Grab, Gauge,
   RotateCcw, SlidersHorizontal, Table2, LayoutList, Crown,
   TrendingUp, Info, ChevronDown, Search, Medal, Award, Skull,
+  Radar as RadarIcon,
 } from 'lucide-react'
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { cn } from '@/lib/utils'
@@ -15,10 +16,11 @@ import {
   Sheet, SheetContent, SheetTitle,
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
+import { TierRadarChart } from './tier-radar-chart'
 
 // ─── Types (mirror the /api/meta response) ───────────────────────────
 
-interface SpecStats {
+export interface SpecStats {
   skillCount: number
   avgPvpDamage: number
   medianPvpDamage: number
@@ -34,7 +36,7 @@ interface SpecStats {
   protectedCoverage: number
 }
 
-interface ClassStats {
+export interface ClassStats {
   classId: number
   className: string
   slug: string
@@ -50,7 +52,7 @@ interface ClassStats {
   ascension: SpecStats
 }
 
-type SpecName = 'awakening' | 'succession' | 'ascension'
+export type SpecName = 'awakening' | 'succession' | 'ascension'
 
 // ─── Scoring parameter definitions ──────────────────────────────────
 // Every parameter that can contribute to the composite score.
@@ -58,14 +60,14 @@ type SpecName = 'awakening' | 'succession' | 'ascension'
 // 0→1 across all entries before weighting, so weights are directly
 // comparable regardless of the raw unit (damage vs. count vs. %).
 
-type ParamKey =
+export type ParamKey =
   | 'avgPvpDamage' | 'medianPvpDamage' | 'dpsEstimate'
   | 'pvpCcSkillCount' | 'grabCount'
   | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount'
   | 'coreSaCount' | 'coreFgCount' | 'protectedCoverage'
   | 'saDr'
 
-interface ScoreParam {
+export interface ScoreParam {
   key: ParamKey
   label: string
   short: string
@@ -74,7 +76,7 @@ interface ScoreParam {
   description: string
 }
 
-const SCORE_PARAMS: ScoreParam[] = [
+export const SCORE_PARAMS: ScoreParam[] = [
   // Damage
   { key: 'avgPvpDamage', label: 'Avg PvP Damage', short: 'Avg DMG', category: 'damage', icon: <Swords className="size-3.5" />, description: 'Average PvP damage per skill (excludes Black Spirit rage skills).' },
   { key: 'medianPvpDamage', label: 'Median PvP Damage', short: 'Med DMG', category: 'damage', icon: <Swords className="size-3.5" />, description: 'Median PvP damage — less skewed by outlier nukes.' },
@@ -93,7 +95,7 @@ const SCORE_PARAMS: ScoreParam[] = [
   { key: 'saDr', label: 'SA Damage Reduction', short: 'SA DR', category: 'defense', icon: <ShieldHalf className="size-3.5" />, description: 'Damage reduction while in Super Armor (from PA Wiki, per spec).' },
 ]
 
-const CATEGORY_META: Record<string, { label: string; color: string }> = {
+export const CATEGORY_META: Record<string, { label: string; color: string }> = {
   damage: { label: 'Damage', color: '#ef4444' },
   cc: { label: 'Crowd Control', color: '#eab308' },
   protection: { label: 'Protection', color: '#3b82f6' },
@@ -156,7 +158,7 @@ function getSpecGroup(cls: ClassStats, spec: SpecName): string | null {
   return cls.ascensionGroup
 }
 
-interface TierEntry {
+export interface TierEntry {
   classId: number
   className: string
   slug: string
@@ -167,7 +169,7 @@ interface TierEntry {
   group: string | null
 }
 
-function buildEntries(classes: ClassStats[]): TierEntry[] {
+export function buildEntries(classes: ClassStats[]): TierEntry[] {
   const entries: TierEntry[] = []
   for (const cls of classes) {
     for (const spec of ['awakening', 'succession', 'ascension'] as SpecName[]) {
@@ -189,12 +191,12 @@ function buildEntries(classes: ClassStats[]): TierEntry[] {
   return entries
 }
 
-function getParamValue(entry: TierEntry, key: ParamKey): number {
+export function getParamValue(entry: TierEntry, key: ParamKey): number {
   if (key === 'saDr') return entry.saDr
   return entry.stats[key] as number
 }
 
-function formatParamValue(key: ParamKey, value: number): string {
+export function formatParamValue(key: ParamKey, value: number): string {
   if (value === 0) return '0'
   switch (key) {
     case 'avgPvpDamage':
@@ -260,7 +262,7 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 export function TierListPage() {
   const metaQuery = useQuery({ queryKey: ['meta'], queryFn: fetchMeta, staleTime: 60_000 })
   const [weights, setWeights] = React.useState<Weights>(loadWeights)
-  const [viewMode, setViewMode] = React.useState<'ranked' | 'table' | 'portraits' | 'tiers'>('ranked')
+  const [viewMode, setViewMode] = React.useState<'ranked' | 'table' | 'portraits' | 'tiers' | 'radar'>('ranked')
   const [sortBy, setSortBy] = React.useState<ParamKey | 'score'>('score')
   const [sortDir, setSortDir] = React.useState<'desc' | 'asc'>('desc')
   const [mobileWeightsOpen, setMobileWeightsOpen] = React.useState(false)
@@ -410,6 +412,13 @@ export function TierListPage() {
               >
                 <Crown className="size-3.5" /> Tiers
               </button>
+              <button
+                onClick={() => setViewMode('radar')}
+                className={cn('flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold transition-all',
+                  viewMode === 'radar' ? 'bg-amber-500/20 text-amber-200' : 'bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}
+              >
+                <RadarIcon className="size-3.5" /> Radar
+              </button>
             </div>
 
             <Button
@@ -487,6 +496,11 @@ export function TierListPage() {
                   <div key={i} className="h-14 animate-pulse rounded-sm border border-amber-900/30 bg-bdo-leather-dark/50" />
                 ))}
               </div>
+            ) : viewMode === 'radar' ? (
+              <TierRadarChart
+                entries={entries}
+                ranges={normalized.ranges}
+              />
             ) : totalWeight === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <SlidersHorizontal className="mb-4 size-12 text-amber-400/30" />
