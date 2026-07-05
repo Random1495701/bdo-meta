@@ -1,5 +1,11 @@
 import { spawn } from 'node:child_process'
-import { writeFileSync } from 'node:fs'
+import { writeFileSync, existsSync } from 'node:fs'
+
+// Ensure .env exists (it's gitignored so it gets lost on git reset)
+if (!existsSync('.env')) {
+  writeFileSync('.env', 'DATABASE_URL=file:/home/z/my-project/db/custom.db\n')
+  console.log('Created .env with DATABASE_URL')
+}
 
 const child = spawn('npx', ['next', 'dev', '-p', '3000'], {
   cwd: process.cwd(),
