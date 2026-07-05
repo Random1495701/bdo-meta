@@ -154,7 +154,16 @@ export function calculateDamage(
     })
   }
 
-  // Detect special modes: multiple "Attack 1" entries
+  // Detect special modes: REAL special modes have COMPLETELY DIFFERENT damage values
+  // for the same attack names (e.g. Deadeye normal bullets vs Marni bullets).
+  // Multiple "Attack 1" entries with THE SAME damage value are NOT special modes —
+  // they're just multiple damage instances within the same skill (e.g. Prime: Bloody Calamity
+  // has Attack 1 x2 + Attack 1 x1 + Attack 2 x2 = 3 hits in ONE mode).
+  //
+  // Detection: Split at "Attack 1" boundaries. If the resulting modes have DIFFERENT
+  // damage values for the same attack names → real special mode.
+  // If they have the SAME values → it's one mode with multiple hits.
+
   const attack1Indices: number[] = []
   for (let i = 0; i < parsedRows.length; i++) {
     if (parsedRows[i].phaseLabel.toLowerCase().includes('attack 1')) {
@@ -162,35 +171,67 @@ export function calculateDamage(
     }
   }
 
-  const hasSpecialMode = attack1Indices.length > 1
+  let hasSpecialMode = false
   const modes: DamageMode[] = []
 
-  if (hasSpecialMode) {
-    // Split into modes — each mode starts at an "Attack 1" and goes until the next one
+  if (attack1Indices.length > 1) {
+    // Check if the modes have DIFFERENT damage values (real special mode)
+    // or SAME values (just multiple hits in one mode)
     const splitPoints = [...attack1Indices, parsedRows.length]
+    const potentialModes: typeof parsedRows[][] = []
     for (let m = 0; m < splitPoints.length - 1; m++) {
-      const modeRows = parsedRows.slice(splitPoints[m], splitPoints[m + 1])
-      const phases = buildPhasesFromRows(modeRows)
-      const { pve, pvp } = computeTotal(phases, pvpDamagePercent)
-      modes.push({
-        modeName: m === 0 ? 'Normal' : `Mode ${m + 1}`,
-        phases,
-        totalPvE: pve,
-        totalPvP: pvp,
+      potentialModes.push(parsedRows.slice(splitPoints[m], splitPoints[m + 1]))
+    }
+
+    // Compare damage values between modes
+    const mode0Values = potentialModes[0].map(r => r.percent)
+    const mode1Values = potentialModes[1].map(r => r.percent)
+    const valuesDiffer = mode0Values.some(v => !mode1Values.includes(v)) || mode1Values.some(v => !mode0Values.includes(v))
+
+    if (valuesDiffer) {
+      // Real special mode — split into separate modes
+      hasSpecialMode = true
+      for (let m = 0; m < potentialModes.length; m++) {
+        const phases = buildPhasesFromRows(potentialModes[m])
+        const { pve, pvp } = computeTotal(phases, pvpDamagePercent)
+        modes.push({
+          modeName: m === 0 ? 'Normal' : `Mode ${m + 1}`,
+          phases,
+          totalPvE: pve,
+          totalPvP: pvp,
+        })
+      }
+    } else {
+      // Same values — one mode with multiple hits. Sum ALL rows together.
+      // Each "Attack 1" entry is a separate damage instance, not a separate mode.
+      // We need to give each a unique phase label so they don't get merged incorrectly.
+      const uniqueRows = parsedRows.map((r, i) => {
+        // If there are duplicate phase labels, append a suffix
+        const duplicates = parsedRows.filter((other, j) => other.phaseLabel === r.phaseLabel && j !== i)
+        if (duplicates.length > 0) {
+          // Count how many of this label appeared before this index
+          const count = parsedRows.slice(0, i).filter(other => other.phaseLabel === r.phaseLabel).length
+          return { ...r, phaseLabel: count > 0 ? `${r.phaseLabel} (${count + 1})` : r.phaseLabel }
+        }
+        return r
       })
+      const phases = buildPhasesFromRows(uniqueRows)
+      const { pve, pvp } = computeTotal(phases, pvpDamagePercent)
+      modes.push({ modeName: 'Normal', phases, totalPvE: pve, totalPvP: pvp })
     }
   } else {
-    // Single mode
+    // Single mode — no duplicate Attack 1
     const phases = buildPhasesFromRows(parsedRows)
     const { pve, pvp } = computeTotal(phases, pvpDamagePercent)
     modes.push({ modeName: 'Normal', phases, totalPvE: pve, totalPvP: pvp })
   }
 
-  // Use the HIGHEST-damage mode for backward-compat fields.
-  // Special modes (e.g. Deadeye Marni bullets, Sorc Prime: Bloody Calamity charged mode)
-  // are alternatives — you can only use one at a time. The total should reflect
-  // the strongest mode, not the first one.
-  const bestMode = modes.reduce((best, m) => m.totalPvE > best.totalPvE ? m : best, modes[0])
+  // For special modes, use the HIGHEST-damage mode.
+  // For single mode (with multiple hits), sum is already correct.
+  const bestMode = hasSpecialMode
+    ? modes.reduce((best, m) => m.totalPvE > best.totalPvE ? m : best, modes[0])
+    : modes[0]
+
   return {
     phases: bestMode.phases,
     totalPvE: bestMode.totalPvE,
