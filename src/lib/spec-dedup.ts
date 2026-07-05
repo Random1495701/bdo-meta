@@ -146,23 +146,23 @@ export function dedupSkillsBySpec<T extends DedupInputSkill>(
   const added = new Set<number>()
 
   for (const [, info] of specMap) {
-    // Black Spirit skills: kept, but spec-filtered like regular skills.
-    // BS Prime: skills → Succession only (not Awakening)
-    // BS Absolute: skills → Awakening only (not Succession)
-    // BS skills without Prime/Absolute → both specs
+    // Black Spirit skills: spec-filtered like regular skills.
+    // - BS Prime: → Succession only (not Awakening, not default)
+    // - BS Absolute: → Awakening only (not Succession, not default if Prime exists)
+    // - BS Awakening-weapon skills (isAwakening=true, no Prime/Abs prefix) → Awakening only
+    // - BS skills without spec prefix and isAwakening=false → both specs
     if (info.isBlackSpirit) {
       for (const s of pickWhere(info, (s) => s.isBlackSpirit)) {
-        // Check if this BS skill has a spec prefix
         const innerName = s.name.replace(/^Black Spirit:\s*/i, '')
         const isBSPrime = innerName.includes('Prime: ') || innerName.startsWith('Succession:')
         const isBSAbs = innerName.includes('Absolute: ')
-        
+        const isBSAwk = s.isAwakening // Awakening-weapon BS skill
+
         if (isBSPrime && spec === 'awakening') continue // Prime → Succession only
         if (isBSAbs && spec === 'succession') continue // Absolute → Awakening only
-        // For default (no spec): prefer Prime > Absolute (same as regular skills)
-        if (spec === null) {
-          if (isBSAbs && info.hasSuccession) continue // Skip Absolute if Prime exists
-        }
+        if (isBSAbs && spec === null && info.hasSuccession) continue // Absolute → skip in default if Prime exists
+        if (isBSAwk && !isBSPrime && !isBSAbs && spec === 'succession') continue // Awakening-weapon BS → Awakening only
+        if (isBSAwk && !isBSPrime && !isBSAbs && spec === null) continue // Awakening-weapon BS → not in default view
         if (!added.has(s.skillId)) { result.push(s); added.add(s.skillId) }
       }
       continue
