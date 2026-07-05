@@ -320,7 +320,7 @@ export async function GET(req: NextRequest) {
         AND.push({ classId: classIds[0] })
       }
     } else if (classIds.length > 1) {
-      // Multi-class: match by classId OR className
+      // Multi-class: match by classId OR className (using contains for multi-class skills like "Musa, Dosa")
       const selectedClasses = await db.bdoClass.findMany({
         where: { id: { in: classIds } },
         select: { name: true },
@@ -330,6 +330,8 @@ export async function GET(req: NextRequest) {
         OR: [
           { classId: { in: classIds } },
           { className: { in: classNameList } },
+          // Also match multi-class skills (e.g. "Musa, Dosa" when filtering for "Musa")
+          ...classNameList.map((name) => ({ className: { contains: name } })),
         ],
       })
     }
