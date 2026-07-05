@@ -2998,3 +2998,58 @@ Stage Summary:
 - DB NOW HAS: 7,189 skills, 3,471 maxRank, 97 grapples, 6 ascension classes, 29 classes with PA Wiki groups, 0 stubs.
 - GIT HISTORY AUDIT: Checked all 43 tags. Found /api/upload/skills-json (already restored), logo.svg (never lost), Skill Build Calculator (never built, user said skip). No other missing features found in git history.
 - ROADMAP UPDATED: docs/DB_AUDIT_2026-07-05.md has the full audit + updated roadmap. Build Calculator skipped per user. Next priorities: P2 (theme polish, doc cleanup — partially done), P3 (infrastructure — upload endpoint done, cron pending).
+
+---
+Task ID: 44-STABILITY-FILTERING-AUDIT
+Agent: main-orchestrator
+Task: Stability + backup + skill filtering audit. Fix grab counts, spec skills, Q-block.
+
+Work Log:
+- User asked: "Prioritize fixing stability and backuping (including chat history). Then prioritize figuring out the final versions of skill auto-filtering so that classes filter/count/display the correct number of skills. Stability + Project Hygiene > Figure out everything that was discussed about skills (grab count, what skills awa has, what skills succ has, what skills asc has, q block)"
+
+STABILITY & BACKUP:
+- T1.1: Regenerated db/skills-export.json from current 7,189-skill DB. Was stale (4,113-skill export from v4.1.0 era). New export is 21.9MB with all 7,189 skills. Prevents catastrophic data loss on next session reset.
+- T1.2+T1.3: Created scripts/sync-version.ts that auto-derives APP_VERSION, APP_VERSION_DATE, and GIT_TAGS from git. Updated version.ts to use process.env.NEXT_PUBLIC_APP_VERSION with hardcoded fallback. Ran sync-version: v5.5.3, date 2026-07-05, 45 tags.
+- T1.5: Created src/components/skills/session-reset-banner.tsx — auto-detects session resets by checking DB skill count (<5000 = likely reset) and version mismatch. Added to all 8 view blocks in page.tsx.
+- T1.7: Updated docs/KNOWN_ISSUES.md (was stale — said "3,810 stubs" when actually 10). Updated docs/SESSION_HANDOFF.md (was stale — said v5.1.0).
+- T3.14: Refreshed CHAT_HISTORY.md — now includes Tasks 34-44 + all key user decisions.
+
+SKILL FILTERING AUDIT:
+- Comprehensive audit of all 31 classes:
+  * Spec skill counts (AWK/SUCC/ASC) verified correct
+  * 0 Awakening leaks in Succession (verified)
+  * 6 ascension classes confirmed (Archer, Shai, Scholar, Deadeye, Wukong, Seraph)
+  * 29 classes with PA Wiki groups + SA DR
+- GRAB AUDIT — Found 15 false grabs:
+  * Block/guard skills (Guard, Shield Chase, Greatsword Defense, Bladewall, etc.) had Grapple in ccTypes
+  * This came from bdocodex tooltip "All CC Resistance (except Grapple)" which was parsed as a Grapple CC
+  * These are NOT grab abilities — they're block skills that list Grapple as a VULNERABILITY (you CAN be grabbed while blocking)
+  * Fixed all 15: removed Grapple from ccTypes
+  * Updated meta route false-grab filter to also catch block/guard skills with Forward Guard protection
+  * Grab counts now correct: Valkyrie 6→1 AWK / 4→2 SUCC, Warrior 4→2 AWK / 4→2 SUCC
+  * 82 real Grapple skills remain (was 97 with 15 false positives)
+- Q-BLOCK: 0 false grabs remaining. The original Q-block fix (checking "except Grapple" in description) still works. New block-skill filter adds an additional layer of protection.
+
+FALSE GRABS FIXED:
+- 718 Guard (Valkyrie) — block skill, not a grab
+- 736-738 Shield Chase I-III (Valkyrie) — dodge skill, not a grab
+- 1019 Guard (Warrior) — block skill
+- 1744 Greatsword Defense (Warrior) — block skill
+- 1944 Noble Spirit (Valkyrie) — buff skill
+- 1962 Vindicta (Valkyrie) — attack skill
+- 1980 Death Line Chase (Valkyrie) — movement skill
+- 4211 Shield Chase IV (Valkyrie) — dodge skill
+- 4832 Succession: Guard (Warrior) — block skill
+- 4858 Succession: Shield Chase III (Valkyrie) — dodge skill
+- 5051 Guard (Guardian) — block skill
+- 5729 Icy Fog (Nova) — area skill
+- 9677 Bladewall (Seraph) — block skill
+
+Committed as v5.5.4 (commit 767071a).
+
+Stage Summary:
+- STABILITY: Export regenerated (7,189 skills), version auto-derived from git, session reset banner added, stale docs updated.
+- BACKUP: DB in git, export in git, CHAT_HISTORY refreshed.
+- SKILL FILTERING: 15 false grabs fixed, grab counts now correct across all classes. 0 Awakening leaks. 6 ascension classes. 82 real grabs.
+- Q-BLOCK: 0 false grabs remaining. Filter updated to catch block/guard skills.
+- DB STATE: 7,189 skills, 3,471 maxRank, 82 Grapple, 6 ascension classes, 29 with PA Wiki data.
