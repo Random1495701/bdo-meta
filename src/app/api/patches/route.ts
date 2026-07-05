@@ -40,7 +40,9 @@ function iconUrl(iconPath: string | null): string | null {
   return basename ? `/icons/skills/${basename}.webp` : null
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  const url = new URL(req.url)
+  const showAll = url.searchParams.get('all') === 'true'
   const filePath = 'data/patch-notes.json'
   if (!existsSync(filePath)) {
     return NextResponse.json({ patches: [], hasData: false })
@@ -52,14 +54,17 @@ export async function GET() {
       return NextResponse.json({ patches: [], hasData: false })
     }
 
-    // Only return the LATEST patch (first in array — scraper saves newest first)
-    const latest = data[0]
+    // If ?all=true, return all patches (for archive browser)
+    // Otherwise return only the LATEST patch (first in array)
+    const patchesToReturn = showAll ? data : [data[0]]
 
-    // Normalize: ensure changes is always an array
-    latest.classChanges = (latest.classChanges || []).map((cc: any) => ({
-      ...cc,
-      changes: Array.isArray(cc.changes) ? cc.changes : [],
-    }))
+    // Normalize + enrich ALL patches being returned
+    for (const patch of patchesToReturn) {
+      patch.classChanges = (patch.classChanges || []).map((cc: any) => ({
+        ...cc,
+        changes: Array.isArray(cc.changes) ? cc.changes : [],
+      }))
+    }
 
     // Link skill names to DB skills
     const allSkills = await db.skill.findMany({
@@ -88,39 +93,41 @@ export async function GET() {
       }
     }
 
-    // Enrich changes with matched skill IDs + icons
-    for (const cc of latest.classChanges) {
-      for (const change of (cc.changes || [])) {
-        if (!change.skillName || typeof change.skillName !== 'string') continue
-        const cleanName = change.skillName
-          .replace(/^(Prime:\s*|Succession:\s*|Absolute:\s*|Core:\s*|Flow:\s*)/i, '')
-          .replace(/\s+(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)$/i, '')
-          .trim()
-          .toLowerCase()
-        const fullLower = change.skillName.toLowerCase()
+    // Enrich changes with matched skill IDs + icons for ALL patches
+    for (const patch of patchesToReturn) {
+      for (const cc of patch.classChanges) {
+        for (const change of (cc.changes || [])) {
+          if (!change.skillName || typeof change.skillName !== 'string') continue
+          const cleanName = change.skillName
+            .replace(/^(Prime:\s*|Succession:\s*|Absolute:\s*|Core:\s*|Flow:\s*)/i, '')
+            .replace(/\s+(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)$/i, '')
+            .trim()
+            .toLowerCase()
+          const fullLower = change.skillName.toLowerCase()
 
-        const exact = exactNameMap.get(fullLower)
-        const base = baseNameMap.get(cleanName)
-        let match: MatchInfo | null = exact || base || null
+          const exact = exactNameMap.get(fullLower)
+          const base = baseNameMap.get(cleanName)
+          let match: MatchInfo | null = exact || base || null
 
-        // Fuzzy fallback
-        if (!match && cleanName.length > 3) {
-          for (const [name, info] of exactNameMap) {
-            const strippedName = name
-              .replace(/^(prime:|succession:|absolute:|core:|flow:)\s*/i, '')
-              .replace(/\s+(i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii|xiii|xiv|xv|xvi|xvii|xviii|xix|xx)$/i, '')
-              .trim()
-            if (strippedName === cleanName || (strippedName.length > 3 && cleanName.includes(strippedName))) {
-              match = info
-              break
+          // Fuzzy fallback
+          if (!match && cleanName.length > 3) {
+            for (const [name, info] of exactNameMap) {
+              const strippedName = name
+                .replace(/^(prime:|succession:|absolute:|core:|flow:)\s*/i, '')
+                .replace(/\s+(i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii|xiii|xiv|xv|xvi|xvii|xviii|xix|xx)$/i, '')
+                .trim()
+              if (strippedName === cleanName || (strippedName.length > 3 && cleanName.includes(strippedName))) {
+                match = info
+                break
+              }
             }
           }
-        }
 
-        change.matchedSkillId = match?.skillId ?? null
-        change.matchedSkillClassName = match?.className ?? null
-        change.matchedClassSlug = match?.className ? (classNameToSlug.get(match.className.toLowerCase()) || null) : null
-        change.matchedIconUrl = match ? iconUrl(match.iconPath) : null
+          change.matchedSkillId = match?.skillId ?? null
+          change.matchedSkillClassName = match?.className ?? null
+          change.matchedClassSlug = match?.className ? (classNameToSlug.get(match.className.toLowerCase()) || null) : null
+          change.matchedIconUrl = match ? iconUrl(match.iconPath) : null
+        }
       }
     }
 
@@ -137,7 +144,7 @@ export async function GET() {
     }
 
     return NextResponse.json({
-      patches: [latest],
+      patches: patchesToReturn,
       hasData: true,
       archiveInfo,
     })

@@ -1065,6 +1065,15 @@ export function SkillDetailDrawer() {
                       timeStyle: 'short',
                     })}
                   </span>
+                  {/* Data source provenance badges */}
+                  <span className="text-amber-700/50">·</span>
+                  <span className="rounded-sm bg-amber-900/20 px-1 text-[9px] text-amber-400/60" title="Damage, CC, protection, cooldown data from bdocodex.com tip.php">bdocodex</span>
+                  {skill.animationDurationMs && (
+                    <span className="rounded-sm bg-purple-900/20 px-1 text-[9px] text-purple-400/60" title="Animation duration from ffprobe on preview video">ffprobe</span>
+                  )}
+                  {skill.krName && (
+                    <span className="rounded-sm bg-cyan-900/20 px-1 text-[9px] text-cyan-400/60" title="Korean name from bdocodex KR endpoint">KR</span>
+                  )}
                 </div>
                 <a
                   href={skill.bdocodexUrl}

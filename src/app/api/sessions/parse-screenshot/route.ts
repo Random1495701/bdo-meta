@@ -12,37 +12,59 @@ export const dynamic = 'force-dynamic'
 // prompt + uploaded screenshot into any of those services, then pastes the
 // returned JSON back into the UI to create the session.
 
-const PARSE_PROMPT = `You are parsing a Black Desert Online PvP scoreboard screenshot. This could be:
-1. Arena of Solare (AoS) - shows player names, classes, K/D, CC count, damage dealt, damage taken, healing, match result (Victory/Defeat), practice/ranked, duration, date
-2. Node War scoreboard - shows player stats
-3. War of the Roses scoreboard - shows player stats
+const AOS_PROMPT = `You are parsing a Black Desert Online Arena of Solare (AoS) scoreboard screenshot.
+AoS scoreboards show: player names, classes, K/D/A, CC count, damage dealt, damage taken, healing, match result (Victory/Defeat), practice/ranked, duration, date.
 
 Extract ALL visible data as JSON. Format:
 {
-  "sessionType": "aos" | "nodewar" | "wotr",
+  "sessionType": "aos",
   "result": "victory" | "defeat" | "draw" | "unknown",
   "isPractice": true | false,
   "duration": "MM:SS" or null,
   "sessionDate": "M/D/YY" or null,
-  "playerStats": {
-    "name": "player name",
-    "kills": 0,
-    "deaths": 0,
-    "assists": 0,
-    "ccCount": 0,
-    "damageDealt": 0,
-    "damageTaken": 0,
-    "healing": 0
-  },
-  "teamData": [
-    { "name": "", "class": "", "kills": 0, "deaths": 0, "cc": 0, "dealt": 0, "taken": 0, "healed": 0 }
-  ],
-  "enemyData": [
-    { "name": "", "class": "", "kills": 0, "deaths": 0, "cc": 0, "dealt": 0, "taken": 0, "healed": 0 }
-  ]
+  "playerStats": { "name": "", "kills": 0, "deaths": 0, "assists": 0, "ccCount": 0, "damageDealt": 0, "damageTaken": 0, "healing": 0 },
+  "teamData": [{ "name": "", "class": "", "kills": 0, "deaths": 0, "cc": 0, "dealt": 0, "taken": 0, "healed": 0 }],
+  "enemyData": [{ "name": "", "class": "", "kills": 0, "deaths": 0, "cc": 0, "dealt": 0, "taken": 0, "healed": 0 }]
 }
-
 Return ONLY the JSON, no other text. If you can't determine a field, use null or 0.`
+
+const NW_PROMPT = `You are parsing a Black Desert Online Node War scoreboard screenshot.
+Node War scoreboards show: player name, kills, deaths, class, damage dealt, damage taken, healing.
+
+Extract ALL visible data as JSON. Format:
+{
+  "sessionType": "nodewar",
+  "result": "victory" | "defeat" | "draw" | "unknown",
+  "isPractice": false,
+  "duration": null,
+  "sessionDate": "M/D/YY" or null,
+  "playerStats": { "name": "", "kills": 0, "deaths": 0, "assists": 0, "ccCount": 0, "damageDealt": 0, "damageTaken": 0, "healing": 0 },
+  "teamData": [{ "name": "", "class": "", "kills": 0, "deaths": 0, "cc": 0, "dealt": 0, "taken": 0, "healed": 0 }],
+  "enemyData": []
+}
+Return ONLY the JSON, no other text. If you can't determine a field, use null or 0.`
+
+const WOTR_PROMPT = `You are parsing a Black Desert Online War of the Roses (WotR) scoreboard screenshot.
+WotR scoreboards show: player names, classes, K/D, damage, healing, match result.
+
+Extract ALL visible data as JSON. Format:
+{
+  "sessionType": "wotr",
+  "result": "victory" | "defeat" | "draw" | "unknown",
+  "isPractice": false,
+  "duration": "MM:SS" or null,
+  "sessionDate": "M/D/YY" or null,
+  "playerStats": { "name": "", "kills": 0, "deaths": 0, "assists": 0, "ccCount": 0, "damageDealt": 0, "damageTaken": 0, "healing": 0 },
+  "teamData": [{ "name": "", "class": "", "kills": 0, "deaths": 0, "cc": 0, "dealt": 0, "taken": 0, "healed": 0 }],
+  "enemyData": []
+}
+Return ONLY the JSON, no other text. If you can't determine a field, use null or 0.`
+
+const PARSE_PROMPTS: Record<string, string> = {
+  aos: AOS_PROMPT,
+  nodewar: NW_PROMPT,
+  wotr: WOTR_PROMPT,
+}
 
 const SUGGESTED_SERVICES = [
   { name: 'ChatGPT', url: 'https://chat.openai.com/' },
@@ -73,7 +95,8 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       screenshotUrl,
-      parsePrompt: PARSE_PROMPT,
+      parsePrompt: PARSE_PROMPTS.aos, // Default — user can pick session type in UI
+      parsePrompts: PARSE_PROMPTS, // All 3 session-type-specific prompts
       suggestedServices: SUGGESTED_SERVICES,
     })
   } catch (e) {
