@@ -2947,3 +2947,54 @@ Stage Summary:
 - RESTORE-DB NOW AUTO-ENRICHES: restore-db.ts now runs import-pa-wiki + compute-max-rank automatically after restoring. This prevents the "restored DB is missing PA Wiki data" bug that caused the ascension/groups/SA-DR regression.
 - ALL MISSING FEATURES RESTORED: Combo Guide link, Skill Specs section, 2 missing docs, last heatmap overlay removed, verify-icons script, 2 missing grab skills.
 - LESSON LEARNED: The "robust backup protocol" had a critical gap — the DB was NOT version-controlled. Git tags protect code, but the DB (the most valuable asset) was in .gitignore. Now it's committed. Future session resets will no longer cause data loss.
+
+---
+Task ID: 43-DB-AUDIT-AND-RESTORE
+Agent: main-orchestrator
+Task: Audit DB validity, check all git versions for completed features, restore best DB.
+
+Work Log:
+- User asked: "Audit the new DB you imported for validity, was that really the best move? Check all github versions for completed stuff, not just one."
+- Audited ALL git tags for features:
+  * /api/upload/skills-json: found in v1.2.0–v5.1.0 (was already restored in Task 42)
+  * public/logo.svg: exists in ALL tags (was never lost)
+  * Skill Build Calculator: never built in any tag (user said skip anyway)
+  * Filter sidebar collapsible sections: never built
+  * Lurker health monitoring: never built
+  * Automated tests: never built
+- CRITICAL DB AUDIT FINDING: Compared skills-export.json across ALL tags:
+  * v3.9.0 and v4.0.0: 16.4MB export with 7,189 skills
+  * v4.1.0+: 7.5MB export with 4,113 skills (TRUNCATED — lost 3,076 skills!)
+  * The v4.1.0+ export was a regeneration that lost 3,076 skills
+  * We've been using the wrong (truncated) export since v4.1.0
+- The v3.9.0 export has:
+  * 7,189 skills (vs 4,113 — 74% more data)
+  * Both grab skills (5618, 8169) natively present
+  * All rank variants (I, II, III, IV) that were missing
+  * Same enrichment rate (99% with damage, 63% with PvP %)
+- Was importing the v5.4.1 DB the right move? NO. The v3.9.0 export was the better data source.
+- Executed P0 fix: Restored DB from v3.9.0 export:
+  * Deleted all existing skills
+  * Imported 7,189 skills from v3.9.0 export (0 errors)
+  * Fixed ccTypes/protectionTypes array-to-CSV conversion during import
+  * Ran import-pa-wiki.ts (29 classes updated with groups/SA DR/ascension)
+  * Ran compute-max-rank.ts (3,471 maxRank skills computed)
+- Verified restored DB:
+  * Total skills: 7,189 (was 4,113, +3,076)
+  * MaxRank: 3,471 (was 2,437, +1,034)
+  * Grapples: 97 (was 52, +45)
+  * Both grab skills natively present (no manual addition needed)
+  * 0 stubs, 0 errors
+  * Meta API works: Sorc AWK 94 skills, Hash AWK 1 grab
+  * Awakening leak fix still works: 0 leaks in Warrior Succession (97 skills)
+- Also completed:
+  * P1.1 Light theme polish: BDO utility classes now use CSS variables
+  * P1.2 Stale doc cleanup: Archived 4 old roadmaps to docs/archive/
+  * Created docs/DB_AUDIT_2026-07-05.md with full audit findings
+- Committed as v5.5.3 (commit 614510a)
+
+Stage Summary:
+- CRITICAL DB FIX: Restored from v3.9.0 export (7,189 skills, was 4,113). The v4.1.0+ export was truncated and lost 3,076 skills. This single fix recovered more data than any other roadmap item.
+- DB NOW HAS: 7,189 skills, 3,471 maxRank, 97 grapples, 6 ascension classes, 29 classes with PA Wiki groups, 0 stubs.
+- GIT HISTORY AUDIT: Checked all 43 tags. Found /api/upload/skills-json (already restored), logo.svg (never lost), Skill Build Calculator (never built, user said skip). No other missing features found in git history.
+- ROADMAP UPDATED: docs/DB_AUDIT_2026-07-05.md has the full audit + updated roadmap. Build Calculator skipped per user. Next priorities: P2 (theme polish, doc cleanup — partially done), P3 (infrastructure — upload endpoint done, cron pending).
