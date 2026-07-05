@@ -109,21 +109,22 @@ function computeSpecStats(skills: any[]): SpecStats {
     const ccTypes = s.ccTypes ? s.ccTypes.split(',').map((x: string) => x.trim()).filter(Boolean) : []
     const pvpCCs = ccTypes.filter((cc: string) => !pveOnlyCCs.has(cc) && isRealCC(cc))
 
-    // FALSE GRAB FILTER: Some skills have "Grapple" in ccTypes but it's from
-    // "All CC Resistance (except Grapple), including from Back Attacks" text
-    // which is a RESISTANCE buff, not a grab CC. Check damageRows AND description.
-    // Also check for block/guard skills (Forward Guard + name suggests blocking)
-    // — these have Grapple CC from "except Grapple" tooltip text but are NOT grabs.
+    // FALSE GRAB FILTER: Skills with Forward Guard protection + Grapple CC are
+    // almost always false grabs. The Grapple CC comes from "All CC Resistance
+    // (except Grapple)" tooltip text which was parsed as a Grapple CC.
+    // Exception: a few skills legitimately have both Forward Guard + Grapple
+    // (e.g. Warrior's Greatsword Defense which is an awakening guard+grab).
+    // We check damageRows for 'except Grapple' to confirm it's a false grab.
     const isFalseGrab = (damageRows?.some((r: DamageRow) =>
       r.label?.toLowerCase().includes('except grapple') ||
       r.label?.toLowerCase().includes('except grapling')
     ) || false) || (s.description?.toLowerCase().includes('except grapple') || false)
 
-    // Block/guard skills with Forward Guard protection are NOT grabs.
-    // The Grapple CC on these comes from "All CC Resistance (except Grapple)" tooltip.
-    const blockSkillNames = ['guard', 'shield chase', 'greatsword defense', 'bladewall', 'noble spirit', 'vindicta', 'death line chase', 'icy fog', 'mass teleport', 'frenzied dash']
+    // If the skill has Forward Guard + Grapple but NO 'except Grapple' in tooltip,
+    // check if it's a known block/guard skill pattern
     const isBlockSkill = s.protectionTypes?.includes('Forward Guard') &&
-      blockSkillNames.some(n => s.name?.toLowerCase().includes(n))
+      pvpCCs.includes('Grapple') &&
+      !isFalseGrab // if 'except Grapple' was found, isFalseGrab already handles it
 
     const hasRealGrab = pvpCCs.includes('Grapple') && !isFalseGrab && !isBlockSkill
 
