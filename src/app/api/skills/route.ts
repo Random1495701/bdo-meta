@@ -109,6 +109,10 @@ function serializeSkill(s: any) {
     isSuccession: s.isSuccession,
     isBlackSpirit: s.isBlackSpirit,
     isPassive: s.isPassive,
+    isFlow: s.isFlow,
+    isCore: s.isCore,
+    isMaxRank: s.isMaxRank,
+    baseName: s.baseName,
     prerequisiteIds: s.prerequisiteIds
       ? s.prerequisiteIds.split(',').map((x: string) => parseInt(x, 10)).filter((x: number) => x > 0)
       : [],

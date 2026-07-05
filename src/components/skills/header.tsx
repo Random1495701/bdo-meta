@@ -30,7 +30,7 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { fetchStats, type SkillSort } from '@/lib/skills'
 import { useSkillStore } from '@/lib/skill-store'
-import { LayoutGrid, List, Table as TableIcon } from 'lucide-react'
+import { LayoutGrid, List, Table as TableIcon, Network } from 'lucide-react'
 
 const SORT_OPTIONS: { value: SkillSort; label: string }[] = [
   { value: 'skillId', label: 'Skill ID' },
@@ -46,15 +46,16 @@ const SORT_OPTIONS: { value: SkillSort; label: string }[] = [
   { value: 'ccCounters', label: 'CC Counters' },
 ]
 
-// View-mode toggle: Grid / List / Table. Each is a small icon button styled
+// View-mode toggle: Grid / List / Table / Tree. Each is a small icon button styled
 // with the BDO chip aesthetic. Active mode gets the gold-glow treatment.
 function ViewModeToggle() {
   const viewMode = useSkillStore((s) => s.viewMode)
   const setViewMode = useSkillStore((s) => s.setViewMode)
-  const modes: { key: 'grid' | 'list' | 'table'; label: string; icon: React.ReactNode }[] = [
+  const modes: { key: 'grid' | 'list' | 'table' | 'tree'; label: string; icon: React.ReactNode }[] = [
     { key: 'grid', label: 'Grid', icon: <LayoutGrid className="size-3.5" /> },
     { key: 'list', label: 'List', icon: <List className="size-3.5" /> },
     { key: 'table', label: 'Table', icon: <TableIcon className="size-3.5" /> },
+    { key: 'tree', label: 'Tree', icon: <Network className="size-3.5" /> },
   ]
   return (
     <div

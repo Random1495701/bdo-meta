@@ -136,6 +136,10 @@ export async function GET(
     isSuccession: skill.isSuccession,
     isBlackSpirit: skill.isBlackSpirit,
     isPassive: skill.isPassive,
+    isFlow: skill.isFlow,
+    isCore: skill.isCore,
+    isMaxRank: skill.isMaxRank,
+    baseName: skill.baseName,
     prerequisiteIds: prereqIds,
     prerequisites: prerequisites.map((p) => ({
       skillId: p.skillId,

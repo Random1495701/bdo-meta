@@ -8,7 +8,7 @@ import type { SkillFilters, SkillType, SkillSort } from './skills'
 const SORT_STORAGE_KEY = 'bdo-meta-sort-prefs'
 const FILTERS_STORAGE_KEY = 'bdo-meta-filters'
 
-function loadSortPrefs(): { sort?: SkillSort; order?: 'asc' | 'desc'; viewMode?: 'grid' | 'list' | 'table' } {
+function loadSortPrefs(): { sort?: SkillSort; order?: 'asc' | 'desc'; viewMode?: 'grid' | 'list' | 'table' | 'tree' } {
   if (typeof window === 'undefined') return {}
   try {
     const raw = localStorage.getItem(SORT_STORAGE_KEY)
@@ -17,7 +17,7 @@ function loadSortPrefs(): { sort?: SkillSort; order?: 'asc' | 'desc'; viewMode?:
   return {}
 }
 
-function saveSortPrefs(prefs: { sort: SkillSort; order: 'asc' | 'desc'; viewMode: 'grid' | 'list' | 'table' }) {
+function saveSortPrefs(prefs: { sort: SkillSort; order: 'asc' | 'desc'; viewMode: 'grid' | 'list' | 'table' | 'tree' }) {
   if (typeof window === 'undefined') return
   try {
     localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(prefs))
@@ -53,7 +53,7 @@ interface SkillStore {
   detailOpen: boolean
   compareOpen: boolean
   filtersOpen: boolean
-  viewMode: 'grid' | 'list' | 'table'
+  viewMode: 'grid' | 'list' | 'table' | 'tree'
   setQ: (q: string) => void
   toggleClass: (classId: number) => void
   toggleExcludeClass: (classId: number) => void
@@ -84,7 +84,7 @@ interface SkillStore {
   toggleOrder: () => void
   setPage: (p: number) => void
   setPageSize: (n: number) => void
-  setViewMode: (m: 'grid' | 'list' | 'table') => void
+  setViewMode: (m: 'grid' | 'list' | 'table' | 'tree') => void
   resetFilters: () => void
   selectSkill: (id: number | null) => void
   setDetailOpen: (open: boolean) => void

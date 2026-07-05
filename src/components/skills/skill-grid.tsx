@@ -9,6 +9,7 @@ import { useSkillStore } from '@/lib/skill-store'
 import { SkillCard } from './skill-card'
 import { SkillListRow } from './skill-list-row'
 import { SkillTable } from './skill-table'
+import { SkillTree } from './skill-tree'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 
@@ -66,6 +67,41 @@ function ListSkeleton() {
           <div className="flex gap-3">
             <Skeleton className="h-3 w-10 bg-amber-950/40" />
             <Skeleton className="h-3 w-12 bg-amber-950/40" />
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function TreeSkeleton() {
+  return (
+    <div className="space-y-3">
+      {/* Section header skeleton */}
+      {[0, 1, 2].map((sec) => (
+        <div key={sec}>
+          <div
+            className="flex items-center gap-2 rounded-sm border border-amber-900/40 bg-bdo-leather-dark px-3 py-2"
+            style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
+          >
+            <Skeleton className="size-3.5 rounded-sm bg-amber-950/40" />
+            <Skeleton className="size-5 rounded-sm bg-amber-950/40" />
+            <Skeleton className="h-3.5 w-32 bg-amber-950/40" />
+            <Skeleton className="ml-auto h-4 w-8 rounded-sm bg-amber-950/40" />
+          </div>
+          <div className="mt-1.5 space-y-1 pl-1">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2.5 rounded-sm border border-amber-900/40 bg-bdo-leather-dark/60 px-2.5 py-1.5"
+              >
+                <Skeleton className="size-8 shrink-0 rounded-sm bg-amber-950/40" />
+                <div className="flex-1 space-y-1">
+                  <Skeleton className="h-3 w-1/3 bg-amber-950/40" />
+                  <Skeleton className="h-2.5 w-2/3 bg-amber-950/40" />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       ))}
@@ -170,15 +206,22 @@ export function SkillGrid() {
   const viewMode = useSkillStore((s) => s.viewMode)
 
   // Filter out undefined values so the query key is stable.
+  // Includes viewMode so toggling to/from tree (which bumps pageSize) refetches.
   const queryKey = React.useMemo(() => {
-    return ['skills', filters] as const
-  }, [filters])
+    return ['skills', filters, viewMode] as const
+  }, [filters, viewMode])
 
   // Strip undefined fields from the actual fetch payload.
+  // Tree view wants as many skills as possible per page (the API caps at 100)
+  // so the whole class+spec tree loads in one request — pagination is still
+  // available via the Pagination component for classes with 100+ skills.
   const cleanFilters: SkillFilters = React.useMemo(() => {
     const out: SkillFilters = { ...filters }
+    if (viewMode === 'tree' && (!out.pageSize || out.pageSize < 100)) {
+      out.pageSize = 100
+    }
     return out
-  }, [filters])
+  }, [filters, viewMode])
 
   const query = useQuery({
     queryKey,
@@ -196,6 +239,7 @@ export function SkillGrid() {
   if (query.isPending) {
     if (viewMode === 'list') return <ListSkeleton />
     if (viewMode === 'table') return <TableSkeleton />
+    if (viewMode === 'tree') return <TreeSkeleton />
     return <GridSkeleton />
   }
   if (query.isError) {
@@ -241,6 +285,7 @@ export function SkillGrid() {
         </div>
       )}
       {viewMode === 'table' && <SkillTable skills={items} />}
+      {viewMode === 'tree' && <SkillTree skills={items} />}
     </div>
   )
 }

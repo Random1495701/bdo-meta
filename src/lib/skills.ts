@@ -87,6 +87,10 @@ export interface Skill {
   isSuccession: boolean
   isBlackSpirit: boolean
   isPassive: boolean
+  isFlow?: boolean
+  isCore?: boolean
+  isMaxRank?: boolean
+  baseName?: string | null
   prerequisiteIds: number[]
   prerequisites?: PrerequisiteRef[]
   relatedRanks?: RelatedRank[]
