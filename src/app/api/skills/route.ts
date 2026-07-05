@@ -114,6 +114,16 @@ function serializeSkill(s: any) {
       : [],
     videoUrl: s.videoUrl,
     animationDurationMs: s.animationDurationMs,
+    staminaCost: (() => {
+      if (!damageRows) return null
+      for (const r of damageRows) {
+        if (r.label && r.label.toLowerCase().includes('stamina')) {
+          const match = r.label.match(/(?:Consumes?|Consume)\s+(\d+)\s+Stamina/i)
+          if (match) return parseInt(match[1], 10)
+        }
+      }
+      return null
+    })(),
     patchChange: null,
     syncedAt: s.syncedAt,
     bdocodexUrl: `https://bdocodex.com/us/skill/${s.skillId}/`,

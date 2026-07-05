@@ -71,6 +71,7 @@ export interface Skill {
   damage?: DamageCalculation
   damagePerCooldown?: number | null
   damagePerCooldownPvP?: number | null
+  staminaCost?: number | null
   patchChange?: { direction: 'up' | 'down' | 'changed'; fields: string[]; before?: string; after?: string } | null
   ccTypes: string[] | null
   ccCounters?: number

@@ -56,6 +56,11 @@ async function main() {
   })
   console.log(`Total skills: ${skills.length}`)
 
+  // Step 0: Reset ALL isMaxRank to false
+  console.log('\n[0/3] Resetting isMaxRank...')
+  await db.skill.updateMany({ data: { isMaxRank: false } })
+  console.log('  ✓ All isMaxRank reset to false')
+
   // Step 1: Compute baseName for all skills
   console.log('\n[1/3] Computing baseName...')
   let baseNameCount = 0
@@ -67,7 +72,7 @@ async function main() {
   }
   console.log(`  ✓ baseName computed for ${baseNameCount} skills`)
 
-  // Step 2: Group by (classId, baseName) and determine max-rank
+  // Step 2: Group by (classId, baseName, variant) and determine max-rank
   console.log('\n[2/3] Computing isMaxRank...')
 
   // Build groups
@@ -76,14 +81,11 @@ async function main() {
     // Skip stub skills (name starts with "Skill ")
     if (s.name.startsWith('Skill ')) continue
 
-    // BS, Passive, Flow, Core skills are always max rank (their own group)
-    if (s.isBlackSpirit || s.isPassive || s.isFlow || s.isCore) {
-      await db.skill.update({ where: { skillId: s.skillId }, data: { isMaxRank: true } })
-      continue
-    }
-
+    // BS, Passive, Flow, Core skills: group by baseName too (don't auto-mark all as maxRank)
+    // This ensures only the highest rank of each BS skill is marked maxRank
     const baseName = getBaseName(s.name)
-    const key = `${s.classId}-${baseName}`
+    const variant = getVariant(s as any)
+    const key = `${s.classId}-${baseName}-${variant}`
     if (!groups.has(key)) groups.set(key, [])
     groups.get(key)!.push(s)
   }

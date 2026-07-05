@@ -146,9 +146,23 @@ export function dedupSkillsBySpec<T extends DedupInputSkill>(
   const added = new Set<number>()
 
   for (const [, info] of specMap) {
-    // Black Spirit skills: always kept
+    // Black Spirit skills: kept, but spec-filtered like regular skills.
+    // BS Prime: skills → Succession only (not Awakening)
+    // BS Absolute: skills → Awakening only (not Succession)
+    // BS skills without Prime/Absolute → both specs
     if (info.isBlackSpirit) {
       for (const s of pickWhere(info, (s) => s.isBlackSpirit)) {
+        // Check if this BS skill has a spec prefix
+        const innerName = s.name.replace(/^Black Spirit:\s*/i, '')
+        const isBSPrime = innerName.includes('Prime: ') || innerName.startsWith('Succession:')
+        const isBSAbs = innerName.includes('Absolute: ')
+        
+        if (isBSPrime && spec === 'awakening') continue // Prime → Succession only
+        if (isBSAbs && spec === 'succession') continue // Absolute → Awakening only
+        // For default (no spec): prefer Prime > Absolute (same as regular skills)
+        if (spec === null) {
+          if (isBSAbs && info.hasSuccession) continue // Skip Absolute if Prime exists
+        }
         if (!added.has(s.skillId)) { result.push(s); added.add(s.skillId) }
       }
       continue

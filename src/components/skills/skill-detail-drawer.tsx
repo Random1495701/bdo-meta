@@ -658,6 +658,14 @@ export function SkillDetailDrawer() {
                       label="Required Lv"
                       value={skill.requiredLevel ? String(skill.requiredLevel) : '—'}
                     />
+                    {skill.staminaCost != null && skill.staminaCost > 0 && (
+                      <StatCard
+                        icon={<Activity className="size-3" />}
+                        label="Stamina"
+                        value={String(skill.staminaCost)}
+                        accent="green"
+                      />
+                    )}
                   </div>
 
                   {/* PvE-only CC warning */}
