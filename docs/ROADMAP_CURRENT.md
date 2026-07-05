@@ -1,7 +1,7 @@
-# BDO Meta — Current Roadmap (v5.8.5+)
+# BDO Meta — Current Roadmap (v5.9.2+)
 
 > **Created**: 2026-07-05
-> **State**: v5.8.5 · 7,189 skills · 3,788 maxRank · 40 real Grapples · 6 ascension classes
+> **State**: v5.9.2 · 7,189 skills · 3,788 maxRank · 46 real Grapples · 6 ascension classes
 > **Tests**: 42/42 passing · **Lint**: clean · **GitHub**: in sync · **Server**: HTTP 200
 
 ---
@@ -40,9 +40,9 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 - Core:/Rabam skills (160) correctly visible and spec-filtered
 - BS Prime: → Succession only, BS Absolute: → Awakening only, BS Awakening-weapon → Awakening only
 
-### Grab Counts: 40 REAL GRABS ✅
+### Grab Counts: 46 REAL GRABS ✅
 - Fixed 14 additional false grabs (Forward Guard + Grapple = block skill, not grab)
-- 40 real Grapple skills remain across 20 classes
+- 46 real Grapple skills remain across 20 classes
 - Meta API grab counts match dedup counts
 - False grab filter updated to use Forward Guard + Grapple check (more robust than name matching)
 
@@ -52,6 +52,18 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 - 25 real special modes across all classes
 - 42 automated tests covering damage, CC, and spec-dedup
 
+### Base-Skill ClassId Poisoning: FIXED ✅ (v5.9.2)
+- 145 base-skill rows (no Prime:/Absolute: prefix) were assigned to the wrong class
+- bdocodex assigns base skills to the tree-page classId, not the actual class
+- Fixed via majority vote of variant siblings (Prime:/Absolute:/Succession:)
+- 0 remaining mismatches ✅
+- Example: Kamasylvia Slash I → Dark Knight (was Berserker)
+
+### Flow Flag Backfill: FIXED ✅ (v5.9.2)
+- 268 Flow: skills had `isFlow: false` in the DB (flag never populated)
+- Backfilled from name prefix — all 268 now correctly flagged
+- Core: (160) and Black Spirit: (649) flags were already correct
+
 ---
 
 ## New Roadmap
@@ -59,11 +71,11 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 ### P1 — Data Quality (quick wins)
 
 #### P1.1: Verify grab counts match BDO community data
-**What**: Cross-reference our 40 grab skills against BDO Foundry/community grab lists. Some classes may have grabs we're missing (e.g. Hashashin's "Constriction" was missing before). Others may have false grabs we haven't caught.
+**What**: Cross-reference our 46 grab skills against BDO Foundry/community grab lists. Some classes may have grabs we're missing (e.g. Hashashin's "Constriction" was missing before). Others may have false grabs we haven't caught.
 **Effort**: 1h research
 
-#### P1.2: Verify spec skill counts match bdocodex skill builder
-**What**: For each class×spec, compare our dedup'd skill count against bdocodex's skill builder page. Discrepancies = missing or extra skills.
+#### P1.2: Verify spec skill counts match bdocodex skill builder ✅ DONE (v5.9.2)
+**What**: Found and fixed classId poisoning for 145 base-skill rows. bdocodex assigns base skills (no Prime:/Absolute: prefix) to the tree-page classId, not the actual class. Fixed via majority vote of variant siblings. 0 remaining mismatches across all 31 classes. 0 spec leaks confirmed.
 **Effort**: 2h
 
 #### P1.3: Animation duration backfill (79 skills)
@@ -84,19 +96,24 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 **What**: Run `scripts/validate-matchups.ts` and fix any remaining mismatches. Currently 29/31 pass (Musa + Maehwa missing from import script).
 **Effort**: 30 min
 
-#### P2.4: Skill Tree View
-**What**: Add a "Skill Tree" visualization to the Data tab that mirrors the bdocodex/in-game skill tree layout. Only shows when a spec (AWK/SUCC) is selected — NOT in default "Main" view (only succession/awakening is relevant for players).
-**Rules**:
-- Only max-rank skills shown (no lower-rank clutter)
-- NO prerequisite lines (would be chaos with all max-rank skills) — ONLY Flow: connection lines (showing which skills chain into which)
-- Core: (Rabam) skills are part of Awakening strictly
-- Rabam skills are available to everyone the same (both specs can pick them)
-- Black Spirit skills should be correctly visualized with their component skills (BS skills are rage versions of regular skills — show them grouped/linked with their base skill)
-- Group by category: Main weapon → Awakening/Succession weapon → Core (Rabam) → Flow → Black Spirit
-- Within each group, sort by requiredLevel (ascending)
-- Each skill node shows: icon, name, level, SP cost, damage
+#### P2.4: Skill Tree View ✅ DONE (v5.9.2)
+**What**: Added a "Skill Tree" visualization (4th view mode: Grid/List/Table/**Tree**) to the Data tab that mirrors the bdocodex/in-game skill tree layout. Only shows when BOTH a class AND a spec (AWK/SUCC/Asc) are selected.
+**Rules implemented**:
+- Only max-rank skills shown (default API behavior)
+- NO prerequisite lines (would be chaos with all max-rank skills)
+- ONLY Flow: connection lines (inline tree indentation with connector)
+- Core: (Rabam) skills in their own section
+- BS skills shown with "rage of {base}" badge linking to their base skill
+- 5 collapsible sections: Main Weapon → {Spec} Weapon → Core (Rabam) → Flow (orphans) → Black Spirit
+- Within each section, sorted by requiredLevel ascending
+- Each node shows: icon, name, level, SP cost, PvE/PvP damage, cooldown, command
 - Clicking a node opens the skill detail drawer
-- Collapsible sections per weapon/category
+- Sections persist collapsed/expanded state to localStorage
+- Exposed `baseName`, `isFlow`, `isCore`, `isMaxRank` in API serializeSkill() + Skill interface
+- Tree view bumps pageSize to 100 (max) to load whole class+spec in one request
+**Bonus fixes**:
+- Fixed classId poisoning for 145 base-skill rows (Kamasylvia Slash I → Dark Knight, etc.)
+- Backfilled `isFlow` flag for 268 Flow: skills (flag was never populated)
 **Effort**: 6h
 
 ### P3 — Features
@@ -127,18 +144,24 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 **What**: Verify `/api/meta`, `/api/classes`, `/api/stats` are properly cached. Clear cache when DB changes (isAwakening fixes, false grab fixes, etc.).
 **Effort**: 30 min
 
-#### P4.3: Add "test" script to package.json
-**What**: Add `"test": "vitest run"` to package.json scripts so `bun run test` works.
+#### P4.3: Add "test" script to package.json ✅ DONE (v5.9.2)
+**What**: Added `"test": "vitest run"` to package.json scripts. `bun run test` now works and runs all 42 tests.
 **Effort**: 5 min
 
 ---
 
 ## Summary
 
-| Priority | Items | Focus |
-|----------|-------|-------|
-| P1 | 3 | Data quality (grab verification, spec counts, animation backfill) |
-| P2 | 3 | UI/UX (cross-system integration, patch indicators, matchup validation) |
-| P3 | 4 | Features (radar chart, logo, combos, PAZ research) |
-| P4 | 3 | Infrastructure (auto-recovery, caching, test script) |
-| **Total** | **13** | |
+| Priority | Items | Done | Focus |
+|----------|-------|------|-------|
+| P1 | 3 | 1 (P1.2) | Data quality (grab verification, spec counts ✅, animation backfill) |
+| P2 | 4 | 1 (P2.4) | UI/UX (cross-system, patch indicators, matchup validation, **skill tree ✅**) |
+| P3 | 4 | 0 | Features (radar chart, logo, combos, PAZ research) |
+| P4 | 3 | 1 (P4.3) | Infrastructure (auto-recovery, caching, **test script ✅**) |
+| **Total** | **14** | **3** | |
+
+## Recent Releases
+
+- **v5.9.2** — Skill Tree View (P2.4) + classId poisoning fix for 145 base skills + Flow flag backfill (268 skills) + `bun run test` script
+- **v5.9.1** — 3-state filter toggle (include → exclude → off) + remove class double-click exclude
+- **v5.9.0** — classId poisoning fix for Prime/Absolute variants (128 skills reassigned)

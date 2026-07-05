@@ -159,16 +159,21 @@ function SkillNode({
   const dmgPvP = skill.damage?.totalPvP
   const cooldown = formatCooldown(skill.cooldownSec, skill.cooldown)
 
-  // Determine the spec accent for the left border
+  // Determine the spec accent for the left border.
+  // Uses DB flags with name-prefix fallbacks (flags aren't populated for all
+  // skills in the DB yet).
+  const isBs = skill.isBlackSpirit || /^Black Spirit:\s/i.test(skill.name)
+  const isFlow = !isBs && (skill.isFlow || /^Flow:\s/i.test(skill.name))
+  const isCore = !isBs && !isFlow && (skill.isCore || /^Core:\s/i.test(skill.name))
   const accent = skill.isSuccession
     ? 'border-l-blue-500'
     : skill.isAwakening
     ? 'border-l-red-500'
-    : skill.isBlackSpirit
+    : isBs
     ? 'border-l-purple-500'
-    : skill.isCore
+    : isCore
     ? 'border-l-emerald-500'
-    : skill.isFlow
+    : isFlow
     ? 'border-l-amber-500/60'
     : 'border-l-amber-700/30'
 
@@ -349,7 +354,7 @@ function TreeSection({
   )
 }
 
-// --- Empty prompt when no spec is selected ---------------------------------
+// --- Empty prompt when no class/spec is selected ---------------------------
 function NoSpecPrompt() {
   return (
     <div className="flex flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-amber-800/40 bg-bdo-leather-dark/40 px-6 py-12 text-center">
@@ -358,7 +363,7 @@ function NoSpecPrompt() {
       </div>
       <div>
         <h3 className="text-sm font-semibold text-amber-200">
-          Select a spec to view the skill tree
+          Select a class &amp; spec to view the skill tree
         </h3>
         <p className="mt-1 max-w-md text-xs text-amber-200/60">
           The skill tree mirrors the in-game layout per weapon/spec. Click a
@@ -393,7 +398,10 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
       ? 'ascension'
       : null
 
-  // Group skills into categories
+  // Group skills into categories.
+  // Uses DB flags (isFlow/isCore/isBlackSpirit) when available, with name-prefix
+  // fallbacks ("Flow: "/"Core: "/"Black Spirit: ") because the flags aren't
+  // populated for all skills in the DB yet.
   const groups = React.useMemo(() => {
     const main: Skill[] = []
     const specWeapon: Skill[] = []
@@ -402,11 +410,14 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
     const bs: Skill[] = []
 
     for (const s of skills) {
-      if (s.isBlackSpirit) {
+      const isBs = s.isBlackSpirit || /^Black Spirit:\s/i.test(s.name)
+      const isFlow = !isBs && (s.isFlow || /^Flow:\s/i.test(s.name))
+      const isCore = !isBs && !isFlow && (s.isCore || /^Core:\s/i.test(s.name))
+      if (isBs) {
         bs.push(s)
-      } else if (s.isFlow) {
+      } else if (isFlow) {
         flow.push(s)
-      } else if (s.isCore) {
+      } else if (isCore) {
         core.push(s)
       } else if (s.isPassive) {
         // Passives are not shown in the tree (kept in other views)
@@ -435,10 +446,15 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
 
   // Build a map of baseName → skillId for connecting Flow: and BS: skills to
   // their parent. We key on the stripped baseName (no Flow:/BS: prefix, no rank).
+  // Excludes Flow/BS/Core/Passive skills from being parents — Flow chains FROM
+  // a Main/Spec-weapon skill, never from another Flow or a Core skill.
   const parentByBaseName = React.useMemo(() => {
     const m = new Map<string, Skill>()
     for (const s of skills) {
-      if (s.isFlow || s.isBlackSpirit || s.isPassive) continue
+      const isBs = s.isBlackSpirit || /^Black Spirit:\s/i.test(s.name)
+      const isFlow = !isBs && (s.isFlow || /^Flow:\s/i.test(s.name))
+      const isCore = !isBs && !isFlow && (s.isCore || /^Core:\s/i.test(s.name))
+      if (isFlow || isBs || isCore || s.isPassive) continue
       const bn = s.baseName || getBaseName(s.name)
       if (bn && !m.has(bn)) m.set(bn, s)
     }
@@ -472,13 +488,10 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
     [parentByBaseName],
   )
 
-  // --- No spec selected: show prompt ---
-  if (!hasSpec || !activeSpec) {
-    // Edge case: class selected but no spec — still show prompt.
-    // (Tree view is only meaningful with a spec, per P2.4 rules.)
-    if (classIds.length === 0) {
-      return <NoSpecPrompt />
-    }
+  // --- Prompt states ---
+  // Tree view is only meaningful when BOTH a class AND a spec are selected
+  // (per P2.4 rules — the tree mirrors the in-game per-class layout).
+  if (!hasSpec || !activeSpec || classIds.length === 0) {
     return <NoSpecPrompt />
   }
 

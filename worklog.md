@@ -3108,3 +3108,44 @@ FINAL STATE (v5.5.9):
 - Rescue docs (download/README.md, SESSION_RECOVERY.md, STARTUP_PROMPT.md) all BDO Meta-specific
 
 COMMITTED: v5.5.5 through v5.5.9, all pushed to GitHub.
+
+---
+Task ID: P2.4+P4.3+P1.2-fix
+Agent: main (orchestrator)
+Task: Implement P2.4 Skill Tree View, P4.3 test script, fix base-skill classId poisoning + Flow flag backfill
+
+Work Log:
+- Read worklog.md to understand prior state (v5.9.1 already done: 3-state filter toggle)
+- P4.3: Added `"test": "vitest run"` to package.json — `bun run test` now works (42/42 passing)
+- Explored Data tab architecture via Explore subagent (view modes, skill-grid, header toggle, spec-dedup, API structure)
+- P2.4 API: Exposed `baseName`, `isFlow`, `isCore`, `isMaxRank` in serializeSkill() for both /api/skills and /api/skills/[id] routes + Skill interface in skills.ts
+- P2.4 store: Extended viewMode union to 'grid'|'list'|'table'|'tree' in skill-store.ts (4 spots: interface, setViewMode, loadSortPrefs, saveSortPrefs)
+- P2.4 header: Added 4th "Tree" toggle button (Network icon) in ViewModeToggle
+- P2.4 component: Created src/components/skills/skill-tree.tsx (676 lines) with:
+  - 5 collapsible sections: Main Weapon → Spec Weapon → Core (Rabam) → Flow (orphans) → Black Spirit
+  - Flow: connector lines (inline tree indentation, vertical+horizontal lines)
+  - BS skills linked to base via "rage of {base}" badge
+  - NoSpecPrompt when class or spec not selected
+  - Sections persist collapsed state to localStorage
+  - TreeSkeleton for loading state
+- P2.4 wiring: Added SkillTree import + {viewMode === 'tree'} branch in skill-grid.tsx + TreeSkeleton for pending state + bumped pageSize to 100 for tree view
+- P1.2 fix: Found 145 base-skill rows with classId poisoning (bdocodex assigns base skills to tree-page classId, not actual class). Wrote scripts/fix-base-classid.ts — majority vote of variant siblings. 0 remaining mismatches.
+- Flow flag backfill: 268 Flow: skills had isFlow=false. Backfilled via db.updateMany. Core (160) and BS (649) flags were already correct.
+- Bug fix in skill-tree.tsx: parentByBaseName was including Core: skills as potential parents, causing Flow: Sea Burial to match Core: Sea Burial instead of Sea Burial III. Fixed by excluding Core from parent map.
+- Name-prefix fallbacks added to tree (isFlow/isCore/isBlackSpirit) since DB flags weren't populated for all skills — now they are, but fallbacks remain as safety.
+- Agent Browser verification:
+  - Tree button appears in view-mode toggle ✅
+  - NoSpecPrompt shows when no class+spec selected ✅
+  - Berserker Succession: 10 Main + 26 Succession Weapon + 5 Black Spirit sections render ✅
+  - Mystic Awakening: 11 Flow skills, 1 nested under Sea Burial III with connector line ✅
+  - BS skills show "rage of {base}" badge (e.g. "rage of Prime: Fearsome Tyrant III") ✅
+  - Clicking a tree node opens skill detail drawer ✅
+  - Kamasylvia Slash I no longer appears in Berserker (now correctly Dark Knight) ✅
+- Lint clean, 42/42 tests passing, 0 spec leaks
+
+Stage Summary:
+- v5.9.2 tagged: Skill Tree View complete + classId poisoning fixed + Flow flags backfilled + test script
+- 3 roadmap items done: P2.4 (Skill Tree), P4.3 (test script), P1.2 (spec count verification)
+- DB changes: 145 base skills reassigned to correct class, 268 Flow skills flagged
+- New files: src/components/skills/skill-tree.tsx, scripts/fix-base-classid.ts
+- Modified: package.json, src/app/api/skills/route.ts, src/app/api/skills/[id]/route.ts, src/lib/skills.ts, src/lib/skill-store.ts, src/components/skills/header.tsx, src/components/skills/skill-grid.tsx, docs/ROADMAP_CURRENT.md
