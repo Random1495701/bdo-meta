@@ -49,21 +49,58 @@ import { useSkillStore } from '@/lib/skill-store'
 import { cn } from '@/lib/utils'
 
 // Local helper to render a BDO-style section header with ornate dividers
+// and collapsible behavior (persists to localStorage)
 function SectionTitle({
   icon,
   children,
   hint,
   right,
+  sectionId,
 }: {
   icon?: React.ReactNode
   children: React.ReactNode
   hint?: string
   right?: React.ReactNode
+  sectionId?: string
 }) {
+  const [isOpen, setIsOpen] = React.useState(() => {
+    if (!sectionId || typeof window === 'undefined') return true
+    try {
+      const stored = localStorage.getItem(`bdo-meta-filter-section-${sectionId}`)
+      return stored === null ? true : stored === 'true'
+    } catch {
+      return true
+    }
+  })
+
+  const toggle = () => {
+    const next = !isOpen
+    setIsOpen(next)
+    if (sectionId) {
+      try {
+        localStorage.setItem(`bdo-meta-filter-section-${sectionId}`, String(next))
+        // Dispatch custom event for same-tab updates
+        window.dispatchEvent(new CustomEvent('filter-section-toggle', { detail: { sectionId, isOpen: next } }))
+      } catch {}
+    }
+  }
+
   return (
     <div className="mb-2 flex items-center gap-1.5">
+      {sectionId && (
+        <button
+          onClick={toggle}
+          className="text-amber-500/60 transition-transform hover:text-amber-400"
+          aria-label={isOpen ? 'Collapse section' : 'Expand section'}
+        >
+          {isOpen ? '▾' : '▸'}
+        </button>
+      )}
       {icon && <span className="text-amber-500/80">{icon}</span>}
-      <h3 className="bdo-heading text-[11px] uppercase tracking-widest">
+      <h3
+        className={cn('bdo-heading text-[11px] uppercase tracking-widest', sectionId && 'cursor-pointer select-none')}
+        onClick={sectionId ? toggle : undefined}
+      >
         {children}
       </h3>
       {right}
@@ -79,6 +116,51 @@ function SectionTitle({
       )}
     </div>
   )
+}
+
+// Wrapper that conditionally hides content when section is collapsed
+function SectionContent({
+  sectionId,
+  children,
+}: {
+  sectionId?: string
+  children: React.ReactNode
+}) {
+  const [isOpen, setIsOpen] = React.useState(() => {
+    if (!sectionId || typeof window === 'undefined') return true
+    try {
+      const stored = localStorage.getItem(`bdo-meta-filter-section-${sectionId}`)
+      return stored === null ? true : stored === 'true'
+    } catch {
+      return true
+    }
+  })
+
+  // Listen for toggle events (same-tab custom event + cross-tab storage event)
+  React.useEffect(() => {
+    if (!sectionId) return
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail
+      if (detail && detail.sectionId === sectionId) {
+        setIsOpen(detail.isOpen)
+        return
+      }
+      // Fallback: re-read from localStorage
+      try {
+        const stored = localStorage.getItem(`bdo-meta-filter-section-${sectionId}`)
+        setIsOpen(stored === null ? true : stored === 'true')
+      } catch {}
+    }
+    window.addEventListener('filter-section-toggle', handler)
+    window.addEventListener('storage', handler)
+    return () => {
+      window.removeEventListener('filter-section-toggle', handler)
+      window.removeEventListener('storage', handler)
+    }
+  }, [sectionId])
+
+  if (!isOpen) return null
+  return <>{children}</>
 }
 
 // Ornate gold divider
@@ -362,6 +444,7 @@ export function FilterSidebar() {
           {/* Skill Type — multi-select chips */}
           <section>
             <SectionTitle
+              sectionId="type"
               icon={<Crosshair className="size-3.5" />}
               hint="Multi-select — match skills with ANY of these types"
               right={
@@ -404,6 +487,7 @@ export function FilterSidebar() {
           {/* Protection — multi-select */}
           <section>
             <SectionTitle
+              sectionId="protection"
               icon={<Shield className="size-3.5" />}
               hint="Multi-select — match skills with ANY of these protections"
               right={
@@ -443,6 +527,7 @@ export function FilterSidebar() {
           {/* CC Types — multi-select (8 real CCs that count toward the PvP CC counter) */}
           <section>
             <SectionTitle
+              sectionId="cc"
               icon={<Zap className="size-3.5" />}
               hint="Real CCs that count toward the PvP CC counter (2 = target is CC-immune)"
               right={
@@ -491,6 +576,7 @@ export function FilterSidebar() {
           {/* Other Effects — multi-select (non-CC: displacements, DoTs, smashes) */}
           <section>
             <SectionTitle
+              sectionId="level"
               icon={<Sparkles className="size-3.5" />}
               hint="Non-CC effects (displacements, DoTs, damage modifiers). These do NOT count toward the PvP CC counter."
             >
