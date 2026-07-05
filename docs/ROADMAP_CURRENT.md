@@ -84,6 +84,25 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 **What**: Run `scripts/validate-matchups.ts` and fix any remaining mismatches. Currently 29/31 pass (Musa + Maehwa missing from import script).
 **Effort**: 30 min
 
+#### P2.4: Skill Tree View
+**What**: Add a "Skill Tree" visualization to the Data tab that mirrors the bdocodex/in-game skill tree layout. When a spec is selected, the tree shows only the skills for that spec (using the same dedup logic). Skills are organized in the same order/grouping as the bdocodex skill builder (Main → Awakening/Succession → Core/Rabam → Flow → Black Spirit). Visual connections between skills show prerequisite chains (arrows from prereq → skill). Flow: skills are visually connected to their parent skills. This creates the foundation for combo data integration later.
+**Why**: 
+- Visualizes the skill tree as it appears in-game (familiar to players)
+- Shows prerequisite connections (which skill unlocks which)
+- Shows Flow: connections (which skills chain into which)
+- Foundation for combo data (combos flow through the tree)
+- Helps users understand WHY certain skills are in a spec
+**Implementation**:
+- Fetch skills from `/api/skills?class=X&specs=Y&pageSize=500` (all skills for spec)
+- Group by category: Main weapon → Awakening weapon → Core (Rabam) → Flow → Black Spirit
+- Within each group, sort by requiredLevel (ascending)
+- Draw connection lines between prerequisites (prerequisiteIds → skillId)
+- Use a tree/graph layout (could use CSS grid or a simple SVG overlay)
+- Each skill node shows: icon, name, level, SP cost, damage
+- Clicking a node opens the skill detail drawer
+- Collapsible sections per weapon/category
+**Effort**: 6h
+
 ### P3 — Features
 
 #### P3.1: Tier visualization — radar chart
