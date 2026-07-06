@@ -1,0 +1,627 @@
+{
+  "scrapedAt": "2026-07-06T00:04:33.077Z",
+  "source": "blackdesertfoundry.com (BDO Foundry)",
+  "note": "BDO Foundry class guides do not publish structured skill-combo sequences. The fields below are combo-adjacent context (locked, hotbar, core skills). Curated combo sequences live in src/lib/combo-data.ts.",
+  "classes": [
+    {
+      "className": "Warrior",
+      "slug": "warrior",
+      "foundryUrl": "https://www.blackdesertfoundry.com/warrior-class-guide/",
+      "fetchedAt": "2026-07-06T00:02:15.431Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Absolute: Kick Shield Push Stield Strike Charging Slash Flow: Knee Kick Frenzied Strikes (use from hotbar/only lock in PVP) Pulverize (optional) These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion Kick Charging Slash Deep Ground Slash Shield Counter Shield Push Hilt Smash Furious Blow",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Flow: Overwhelm, Chain: Heavens Cleave, Grave Digging, Piercing Spear, Scars of Dusk, Upper Shield Strike, Pulverize, War Cry, Frenzied Strikes, Frenzied Spear/Seismic Strike, Shield Tide Succession: Piercing Spear, War Cry, Upper Shield Strike, Charging Thrust, Prime: Enhanced Spirit, Prime: Solar Flare, Frenzied Spear/Seismic Strike, Shield Tide",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Solare Flare to start with. I recommend experimenting with the cores for Balance Strike and Pulverize when you get a little more comfortable with the class. Core: Solar Flare : Super Armor during the skill. Core: Frenzied Strikes : Forward Guard during the skill. Core: Merciless : Forward Guard during the skill (nullified on cooldown) Core: Balance Strike : Forward Guard during the skill. Core: Grave Digging : Bound on smash attack hits Core: Pulverize : Knockdown on last attack hits.",
+      "lockedSkills": [
+        "Evasion Absolute: Kick Shield Push Stield Strike Charging Slash Flow: Knee Kick Frenzied Strikes Pulverize",
+        "Evasion Kick Charging Slash Deep Ground Slash Shield Counter Shield Push Hilt Smash Furious Blow"
+      ],
+      "hotbarSkills": [
+        "Chain: Heavens Cleave",
+        "Grave Digging",
+        "Piercing Spear",
+        "Scars of Dusk",
+        "Upper Shield Strike",
+        "Pulverize",
+        "War Cry",
+        "Frenzied Strikes",
+        "Frenzied Spear/Seismic Strike",
+        "Shield Tide Succession: Piercing Spear",
+        "Charging Thrust",
+        "Prime: Enhanced Spirit",
+        "Prime: Solar Flare",
+        "Shield Tide"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Ranger",
+      "slug": "ranger",
+      "foundryUrl": "https://www.blackdesertfoundry.com/ranger-class-guide/",
+      "fetchedAt": "2026-07-06T00:02:21.241Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "These are the skills I recommend locking to help prevent messing up combos during PVP. Evasion Moving Shot Pinpoint Dagger of Protection To lock a skill, press the lock icon on the top of each skill icon in the skill window (K).",
+      "hotbarSkillsText": "These are the minimum Awakening skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Skill Name Reason Regeneration Can only be used from the Hotbar Guardian Can only be used from the Hotbar Call of the Earth Can only be used from the Hotbar Breezy Blade Using from the Hotbar reduces gaps in the skills protection Wind Step Using from the Hotbar reduces gaps in the skills protection Winds of the Prairie Using from the Hotbar reduces gaps in the skills protection Waltz of Wind Allows you to use from pre-awakening stance Wailing Wind Allows you to use from pre-awakening stance These are the minimum Succession skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Skill Name Reason Prime: Descending Current Can only be used from the Hotbar Call of the Earth Can only be used from the Hotbar",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose the Waltz of Wind skill because of the super armor with a low cooldown skill. Core: Waltz of Wind : Super Armor while using the skill. Core: Elven Rage : Forward Guard while charging the skill, then Super Armor while attacking. Core: Cold Blade : Forward Guard while attacking. Core: Breezy Blade : Stiffness on good hits. Core: Wailing Wind : Knockback on good hits. Core: Nature’s Tremble : Stun on good hits..",
+      "lockedSkills": [],
+      "hotbarSkills": [],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Sorceress",
+      "slug": "sorceress",
+      "foundryUrl": "https://www.blackdesertfoundry.com/sorceress-class-guide/",
+      "fetchedAt": "2026-07-06T00:02:27.359Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the skills I recommend locking to help prevent messing up combos during PVP. Evasion Bloody Contract Shadow Kick Rushing Crow",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. Dark Trade, Absolute: Darkness Released, Shard Explosion, Flow: Soul Reaper, Shadow Leap, Shadow Kick, Dark Tendrils, Rushing Crow, Shadow Hellfire You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide .",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose between Grim Reaper’s Judgment for PVP or Dead Hunt for PVE. Core: Dead Hunt : Forward Guard while using the skill. Core: Violation : Forward Guard while using the skill Core: Grim Reaper’s Judgment : Super Armor while using the skill. Core: Turn-back Slash : Super Armor while using the skill Core: Cartian’s Nightmare : Stiffness on 1st good hit. Core: Swirling Darkness : Floating on 1st good hit.",
+      "lockedSkills": [
+        "Evasion Bloody Contract Shadow Kick Rushing Crow"
+      ],
+      "hotbarSkills": [
+        "Absolute: Darkness Released",
+        "Shard Explosion",
+        "Flow: Soul Reaper",
+        "Shadow Leap",
+        "Shadow Kick",
+        "Dark Tendrils",
+        "Rushing Crow"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Berserker",
+      "slug": "berserker",
+      "foundryUrl": "https://www.blackdesertfoundry.com/berserker-class-guide/",
+      "fetchedAt": "2026-07-06T00:02:33.602Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the skills I recommend locking to help prevent messing up combos during PVP. Evasion Weakling Hunt Falling Rock Tackling Rock Flow: Earth Dividing Lava Piercer (optional) Fierce Strike (optional) Titan Syndrome (optional – can use on hotbar instead to avoid conflicts with Seismic Blast)",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Beast Roar, Fearsome Tyrant, Flame Buster, Flow: Earth Dividing, Flow: General Disarray, Titan Syndrome, Wailing Beast, Feral Stampede/Feral Rage, Frenzied Winds/Frenzied Tyrant Succession: Rock Smash, Wrath of Beast, Prime: Beast Form, Prime: Lava Piercer, Prime: Predartory Hunt, Prime: Fearsome Tyrant, Beast Roar, Wailing Beast, Frenzied Tyrant/Frenzied Winds",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose between Ground Lifting , Giant Leap , and Titan Blow . Ground Lifting is useful since it adds Super Armor to the skill when it is off cooldown, allowing you to use it for fully protected damage. Giant Leap is good for 1v1 scenarios since you can CC as you leap, however it does shortern the distance of the jump slightly. While Titan Blow is useful because the forward guard lingers and is a protected stiffen CC. For general use, I would personally recommend Ground Lifting. Core: Blasting : Forward Guard during the skill (nullified during cooldown). Core: Flame Buster : Forward Guard during the skill (nullified during cooldown). Core: Devastation : Stun on good hits. Core: Ground Lifting : Super Armor during the skill (nullified during cooldown). Core: Titan Blow : Forward Guard during the skill. Core: Seismic Blast : Knockdown on good hits",
+      "lockedSkills": [
+        "Evasion Weakling Hunt Falling Rock Tackling Rock Flow: Earth Dividing Lava Piercer Fierce Strike Titan Syndrome"
+      ],
+      "hotbarSkills": [
+        "Fearsome Tyrant",
+        "Flame Buster",
+        "Flow: Earth Dividing",
+        "Flow: General Disarray",
+        "Titan Syndrome",
+        "Wailing Beast",
+        "Feral Stampede/Feral Rage",
+        "Frenzied Winds/Frenzied Tyrant Succession: Rock Smash",
+        "Wrath of Beast",
+        "Prime: Beast Form",
+        "Prime: Lava Piercer",
+        "Prime: Predartory Hunt",
+        "Prime: Fearsome Tyrant",
+        "Beast Roar",
+        "Frenzied Tyrant/Frenzied Winds"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Tamer",
+      "slug": "tamer",
+      "foundryUrl": "https://www.blackdesertfoundry.com/tamer-class-guide/",
+      "fetchedAt": "2026-07-06T00:02:38.833Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Evasive Attack Flurry of Kicks Stretch Kick Whiplash Lightning of Earth Heilang: Berserk Stance Shift (optional) Flow: Fullmoon (only if you take Core: Beast Rampage) Throat-Burn (optional) These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasive Attack Flurry of Kicks Stretch Kick Whiplash Prime: Heilang’s Aura",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Summon Heilang, Absorb Heilang, Heilang: Howling, Breath Spike, Moonlight Strike, Flow: Intimidation, Heilang: Berserk, Heilang: Roaring, Flow: Soaring Strike, Command: Follow, Command: Attack, Command: Guard, Command: Help, Skyreach Succession: Summon Heilang, Absorb Heilang, Heilang Roaring, Breath Spike, Trample, Prime: Heilang’s Aura, Command: Follow, Command: Attack, Command: Guard, Command: Help",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Beast Rampage for general PVP and Garuda for PVE. I recommend starting with Garuda for PVE and trying out your other cores once you learn the class a bit more. Legendary Beast Dance and Moonlight are also useful in PVP for certain situtations. Core: Beast Rampage : Bound on hits (nullifed on cooldown) Core: Garuda : Forward Guard during the skill (nullified on cooldown) Core: Legendary Beast Dance : Super Armor during the skill (nullified on cooldown) Core: Moonlight Strike : Stiffness on hits. Core: Allround Spinner : Floating on extra attack hits Core: Echo Pierce : Super Armor during the skill (nullified on cooldown)",
+      "lockedSkills": [
+        "Evasion Evasive Attack Flurry of Kicks Stretch Kick Whiplash Lightning of Earth Heilang: Berserk Stance Shift Flow: Fullmoon Throat-Burn",
+        "Evasive Attack Flurry of Kicks Stretch Kick Whiplash Prime: Heilang’s Aura"
+      ],
+      "hotbarSkills": [
+        "Absorb Heilang",
+        "Heilang: Howling",
+        "Breath Spike",
+        "Moonlight Strike",
+        "Flow: Intimidation",
+        "Heilang: Berserk",
+        "Heilang: Roaring",
+        "Flow: Soaring Strike",
+        "Command: Follow",
+        "Command: Attack",
+        "Command: Guard",
+        "Command: Help",
+        "Skyreach Succession: Summon Heilang",
+        "Heilang Roaring",
+        "Trample",
+        "Prime: Heilang’s Aura"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Valkyrie",
+      "slug": "valkyrie",
+      "foundryUrl": "https://www.blackdesertfoundry.com/valkyrie_class_guide/",
+      "fetchedAt": "2026-07-06T00:02:45.315Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Charging Slash Shield Strike Flurry of Kicks (optional) Skyward Strike (optional) These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion Charging Slash Severing Light Flurry of Kicks Shield Strike Vow of Trust",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Flow: Lucem Fluxum, Elion’s Blessing, Noble Spirit, Just Counter, Shining Dash, Verdict: Lancia Iustilae, Sancitas de Enslar, Judgment of Light, Skyward Strike, Divine/Shining Judgment of Light Succession: Flurry of Kicks, Just Counter, Elions Blessing, Sanctitas de Enslar, Shining Dash, Shining Judgment of Light",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose between Sanctitas de Enslar or Castigatio . Selecting core on Sanctitas de Enslar adds a knockdown CC which makes the skill a protected CC. The knockdown is useful for an extra catch in PVP and it has a large AOE that can also go through blocks. It also has good damage when paired with Flow: Divina Vult, because of the air attack modifiers. While Core: Castigatio adds Super Amor to the unprotected skill. Castigatio is useful against classes with higher mobility, since it has a low cooldown and a bound CC on the 1st and 3rd hit, meaning you can spam it quite often to try and get catches. It is also a good option for PVE. Core: Sacrum Ferit : Forward Guard while using skill (nullified durin cooldown). Core: Purificatione : Stun on hits (nullified durin cooldown). Core: Castigatio : Super Armor during the skill. Core: Hastiludium : Knockdown on last attack hits. Core: Verdict: Lancia Iustitiae : Floating on hits. Core: Sanctitas de Enslar : Knockdown on last attack hits.",
+      "lockedSkills": [
+        "Evasion Charging Slash Shield Strike Flurry of Kicks Skyward Strike",
+        "Evasion Charging Slash Severing Light Flurry of Kicks Shield Strike Vow of Trust"
+      ],
+      "hotbarSkills": [
+        "Elion’s Blessing",
+        "Noble Spirit",
+        "Just Counter",
+        "Shining Dash",
+        "Verdict: Lancia Iustilae",
+        "Sancitas de Enslar",
+        "Judgment of Light",
+        "Skyward Strike",
+        "Divine/Shining Judgment of Light Succession: Flurry of Kicks",
+        "Elions Blessing",
+        "Sanctitas de Enslar",
+        "Shining Judgment of Light"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Wizard",
+      "slug": "wizard",
+      "foundryUrl": "https://www.blackdesertfoundry.com/wizard-class-guide/",
+      "fetchedAt": "2026-07-06T00:02:51.418Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K) These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Summon: Keeper Arne Summon: Keeper Marg Dagger Stab Magic Arrow Concentrated Magic Arrow These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Dagger Stab Prime: Freeze (put on hotbar) Magic Arrow",
+      "hotbarSkillsText": "These are the skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Spellbound Heart, Magic Lighthouse, Teleport, Speed Spell, Summon: Keeper Arne, Summon: Keeper Marg, Water Sphere, Lightning Spear/Mana Arrows, Healing Aura, Multiple Magic Arrows, Sages’ Memory Succession: Prime: Elemental Palace, Mana Arrows/Lightning Spear, Teleport, Prime: Frigid Fog: Disrupt, Magical Evasion (for moving foward), Prime: Freeze, Prime: Multiple Magic Arrows, Healling Lighthouse",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Water Sphere because it is the best pick for PVE and can also be used in PVP since it is a protected ranged Knockdown. For PVP, Aqual Jail Explosion is or Bolide of Destruction are the best options. Aqual Jail Explosion is a large AOE if Arne is summoneed, and has a stiffen on the first part of the skill. Bolide of Destruction is useful in large scale because it has a quick kknockdown and long super armor protection that lingers. Core: Aqua Jail Explosion : Stiffness on hits. Core: Water Sphere : Forward Guard while using skill (nullified during cooldown). Core: Bolide of Destruction : Knockdown on hits. Core: Chilling Wave : Knockback on hits (PVP only).",
+      "lockedSkills": [
+        "Summon: Keeper Arne Summon: Keeper Marg Dagger Stab Magic Arrow Concentrated Magic Arrow",
+        "Dagger Stab Prime: Freeze Magic Arrow"
+      ],
+      "hotbarSkills": [
+        "Magic Lighthouse",
+        "Teleport",
+        "Speed Spell",
+        "Summon: Keeper Arne",
+        "Summon: Keeper Marg",
+        "Water Sphere",
+        "Lightning Spear/Mana Arrows",
+        "Healing Aura",
+        "Multiple Magic Arrows",
+        "Sages’ Memory Succession: Prime: Elemental Palace",
+        "Mana Arrows/Lightning Spear",
+        "Prime: Frigid Fog: Disrupt",
+        "Magical Evasion",
+        "Prime: Freeze",
+        "Prime: Multiple Magic Arrows",
+        "Healling Lighthouse"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Witch",
+      "slug": "witch",
+      "foundryUrl": "https://www.blackdesertfoundry.com/witch-class-guide/",
+      "fetchedAt": "2026-07-06T00:02:57.946Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K) These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Summon: Keeper Gorr Summon: Keeper Tett Dagger Stab Lightning Blast Magic Arrow Concentrated Magic Arrow These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Dagger Stab Magic Arrow",
+      "hotbarSkillsText": "These are the skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Spellbound Heart, Magic Lighthouse, Teleport, Speed Spell, Summon: Keeper Gorr, Summon: Keeper Tett, Healing Aura, Lightning Blast, Healing Lighthouse, Mana Arrows, Sage’s Memory, Multiple Magic Arrows, Frigid Fog Succession: Prime: Elemental Palace, Spellbound Heart, Magic Lighthouse, Teleport, Speed Spell, Prime: Frigid Fog: Disrupt, Magical Evasion (forwards), Healing Lighthouse, Mana Arrows",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Fissure Wave because it is the best option for PVE and is also very strong in PVP because it is a protected knockdown with a very short cooldown. Core: Equilibrium Break : Stiffness before attacks, bound on hits. Core: Detonative Flow : Forward Guard while using skill (nullified during cooldown). Core: Fissure Wave : Forward Guard while using skill. Core: Thunder Storm : Stun on hits.",
+      "lockedSkills": [
+        "Summon: Keeper Gorr Summon: Keeper Tett Dagger Stab Lightning Blast Magic Arrow Concentrated Magic Arrow",
+        "Dagger Stab Magic Arrow"
+      ],
+      "hotbarSkills": [
+        "Magic Lighthouse",
+        "Teleport",
+        "Speed Spell",
+        "Summon: Keeper Gorr",
+        "Summon: Keeper Tett",
+        "Healing Aura",
+        "Lightning Blast",
+        "Healing Lighthouse",
+        "Mana Arrows",
+        "Sage’s Memory",
+        "Multiple Magic Arrows",
+        "Frigid Fog Succession: Prime: Elemental Palace",
+        "Spellbound Heart",
+        "Prime: Frigid Fog: Disrupt",
+        "Magical Evasion"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Musa",
+      "slug": "musa",
+      "foundryUrl": "https://www.blackdesertfoundry.com/musa-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:03.963Z",
+      "httpStatus": 404,
+      "lockedSkillsText": "",
+      "hotbarSkillsText": "",
+      "coreSkillsText": "",
+      "lockedSkills": [],
+      "hotbarSkills": [],
+      "coreSkills": [],
+      "hasStructuredCombos": false,
+      "error": "HTTP 404"
+    },
+    {
+      "className": "Maehwa",
+      "slug": "maehwa",
+      "foundryUrl": "https://www.blackdesertfoundry.com/maehwa-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:10.139Z",
+      "httpStatus": 404,
+      "lockedSkillsText": "",
+      "hotbarSkillsText": "",
+      "coreSkillsText": "",
+      "lockedSkills": [],
+      "hotbarSkills": [],
+      "coreSkills": [],
+      "hasStructuredCombos": false,
+      "error": "HTTP 404"
+    },
+    {
+      "className": "Lahn",
+      "slug": "lahn",
+      "foundryUrl": "https://www.blackdesertfoundry.com/lahn-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:14.693Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). The reason you want to lock the Rage Absorption (Common) skill is that you want to use the Rage Absorption (Innate) version instead for Critical Hit Rate. These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Blade of Blood Berated Ghost Sring Breeze Soul Ascent Wind Orchid Rage Absorption (Common) These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion Blade of Blood Berated Ghost Rage Absorption (Common)",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Blade of Blood, Blood Moon Twist, White Heron, Spring Breeze, Eyes of Blood/Phoenix Chase, Salp’uri Purge, Flow: Vice, Flow: Sacred Dance Succession: Blade of Blood, White Heron, Eyes of Blood/Phoenix Chase, Salp’uri Purge, Flow: Sacred Dance",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose the Deadly Dance skill for PVX or Eradication for PVP. Core: Eradication : Forward Guard while using skill. Core: Bridled Despair : Stun on good hits. Core: Taunting Death : Super Armor while using skill. Core: Deadly Dance : Forward Guard while using skill. Core: Furor : Forward Guard while using skill. Core: Tailspin : Floating on good 2nd hit.",
+      "lockedSkills": [
+        "Evasion Blade of Blood Berated Ghost Sring Breeze Soul Ascent Wind Orchid Rage Absorption",
+        "Evasion Blade of Blood Berated Ghost Rage Absorption"
+      ],
+      "hotbarSkills": [
+        "Blood Moon Twist",
+        "White Heron",
+        "Spring Breeze",
+        "Eyes of Blood/Phoenix Chase",
+        "Salp’uri Purge",
+        "Flow: Vice",
+        "Flow: Sacred Dance Succession: Blade of Blood",
+        "Flow: Sacred Dance"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Striker",
+      "slug": "striker",
+      "foundryUrl": "https://www.blackdesertfoundry.com/striker-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:19.375Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Flow: Bombardment Adamantine These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. Crouching Wolf, Skull Crusher, Taeback Kick, Wolf’s Fang, Battle Cry, Flow: Back Step, Iron Fist Fury/Perfect Blow, Wolf’s Explosive Fangs You may also want to put more skills on your Hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide .",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose the Spiral Cannon skill. Core: Ultimate Crush : Forward Guard while using skill. Core: Spiral Cannon : Super Armor while using the skill. Core: Infernal Destruction : Super Armor while using the skill.. Core: Endless Explosion : Forward Guard while using skill. Core: Skull Crusher : Knockdown on good hits. Core: Rampaging Predator : Stun on good hits.",
+      "lockedSkills": [
+        "Evasion Flow: Bombardment Adamantine",
+        "Evasion"
+      ],
+      "hotbarSkills": [
+        "Skull Crusher",
+        "Taeback Kick",
+        "Wolf’s Fang",
+        "Battle Cry",
+        "Flow: Back Step",
+        "Iron Fist Fury/Perfect Blow"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Mystic",
+      "slug": "mystic",
+      "foundryUrl": "https://www.blackdesertfoundry.com/mystic-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:24.046Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the skills I recommend locking to help prevent messing up combos during PVP. Evasion Flow: Fatal Smash Flow: Death Clout Combo: Splinter Thud Martial Deva Ankle Hook Flow: Rib Crusher Hurricane Kick Fist of True Strength Adamantine (optional) Sweeping Kick (Awakening only) Fist Fury (Awakening only) Soul Basher (Awakening only) Flow: Tornado Kick (Awakening only)",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. Scissor Kick, Infinite Fortitude, Dragon’s Pit, Spiral Torpedo, Crouching Wolf, Hurricane Kick. Perfect Blow, Unbridled Wrath, Raging Wolf You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide .",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Tidal Burst for PVE and Spiral Torpedo for general PVP. Wave Orb can also be useful for large scale PVP since it adds full protection to Wave Orb and is good for debuffing Attack/Casting and Movement Speed. Core: Tidal Burst : Forward Guard during the skill (nullified during cooldown). Core: Spiral Torpedo : Super Armor during the skill. Core: Rapid Stream : Forward Guard during the skill (nullified during cooldown). Core: Sea Burial : Bound on good hits. Core: Rising Dragon : Floating on good hits. Core: Wave Orb : Forward Guard during the skill.",
+      "lockedSkills": [
+        "Evasion Flow: Fatal Smash Flow: Death Clout Combo: Splinter Thud Martial Deva Ankle Hook Flow: Rib Crusher Hurricane Kick Fist of True Strength Adamantine Sweeping Kick Fist Fury Soul Basher Flow: Tornado Kick"
+      ],
+      "hotbarSkills": [
+        "Infinite Fortitude",
+        "Dragon’s Pit",
+        "Spiral Torpedo",
+        "Crouching Wolf",
+        "Hurricane Kick. Perfect Blow",
+        "Unbridled Wrath"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Kunoichi",
+      "slug": "kunoichi",
+      "foundryUrl": "https://www.blackdesertfoundry.com/kunoichi-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:28.917Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K) These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Ninja Evasion Kunai Stab Flow: Kick Down Heart Aiming (optional) Flow: Block Jump (locking this allows you to use the skill to swap to mainhand) These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Ninja Evasion Kunai Stab Flow: Kick Down Tragic Blade Absolute: Brace Prime: Shadow Clone (optional)",
+      "hotbarSkillsText": "These are the skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Flow: Chakram Rise, Moon Storm, Crimson Eclipse, Ninjutsu: Concealment, Ninjutsu: Sinew Cut, Ninjutsu: Heart Snatch, Shackle Target Succession: Prime: Shackles, Absolute: Black Moonlight, Prime: Ninjutsu Commence, Ninjutsu: Concealment, Prime: Shadow Clone, Absolute: Brace, Ninjutsu: Sinew Cut, Ninjutsu: Heart Snatch, Shackle Target",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Delighted Blast / Wheel of Wrath for more protection in PVX, or Lethal Spin / Half Moon for protected CCs in PVP. Personally, I would recommend starting with Wheel of Wrath . Core: Sah Spree of Sonan : Forward Guard while using skill (nullified during cooldown). Core: Lunar Dash : Stiffness on hits. Core: Half Moon Slash : Stiffness on hits (nullified during cooldown). Core: Delighted Blast : Super Armor while using skill Core: Lethal Spin Spree : Stiffness on 1st hit. Core: Wheel of Wrath : Forward Guard while using skill (nullified during cooldown).",
+      "lockedSkills": [
+        "Ninja Evasion Kunai Stab Flow: Kick Down Heart Aiming Flow: Block Jump",
+        "Ninja Evasion Kunai Stab Flow: Kick Down Tragic Blade Absolute: Brace Prime: Shadow Clone"
+      ],
+      "hotbarSkills": [
+        "Moon Storm",
+        "Crimson Eclipse",
+        "Ninjutsu: Concealment",
+        "Ninjutsu: Sinew Cut",
+        "Ninjutsu: Heart Snatch",
+        "Shackle Target Succession: Prime: Shackles",
+        "Absolute: Black Moonlight",
+        "Prime: Ninjutsu Commence",
+        "Prime: Shadow Clone",
+        "Absolute: Brace",
+        "Shackle Target"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Ninja",
+      "slug": "ninja",
+      "foundryUrl": "https://www.blackdesertfoundry.com/ninja-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:33.537Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "These are the skills I recommend locking to help prevent messing up combos during PVP. Ninja Evasion Vacuum Slash (optional) Absolute: Boss Slaughter (optional – place on hotbar and use while holding [W] to skip the animation) Prime: Red Rain (optional place on hotbar instead if you have issues since it can conflict with other inputs) To lock a skill, press the lock icon on the top of each skill icon in the skill window (K).",
+      "hotbarSkillsText": "These are the skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Smokescreen, Ninjutsu: Blade Spin, Flashing Light, Ninjutsu: Black moonlight, Ghost Claw/Slash, Target Chase, Ninjutsu: Concealment, Murderous Intent, Flow: Execution, Covert: Cut Throat, Throwing Kick, Ninjutsu: Oni Shadow/Shuriken: Moon Dive Succession: Prime: Red Rain, Ninjutsu: Blade Spin, Ghost Claw/Slash, Target Chase, Ninjutsu: Concealment, Illusion of Restraint, Ninjutsu: Oni Shadow/Shuriken: Moon Dive, Boss Slaughter, Ninjutsu: Shackles, Absolute: Shadow Clone, Absolute: Brace",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Murderous Intent . Core: Corrupt Sword Dance : Stiffness on 1st hit. Core: Murderous Intent : Super Armor while using skill. Core: Sudden Decapitation : Bound on 2nd hit. Floating on double sword attack 3rd hit. Core: Serpent Ascension : Forward Guard while using skill Core: Bloodthirst: Katana Shower : Floating on slash attack hits. Core: Drastic Measure : Bound on hits.",
+      "lockedSkills": [],
+      "hotbarSkills": [
+        "Ninjutsu: Blade Spin",
+        "Flashing Light",
+        "Ninjutsu: Black moonlight",
+        "Ghost Claw/Slash",
+        "Target Chase",
+        "Ninjutsu: Concealment",
+        "Murderous Intent",
+        "Flow: Execution",
+        "Covert: Cut Throat",
+        "Throwing Kick",
+        "Illusion of Restraint",
+        "Ninjutsu: Oni Shadow/Shuriken: Moon Dive",
+        "Boss Slaughter",
+        "Ninjutsu: Shackles",
+        "Absolute: Shadow Clone",
+        "Absolute: Brace"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Dark Knight",
+      "slug": "dark-knight",
+      "foundryUrl": "https://www.blackdesertfoundry.com/dark-knight-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:38.290Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the skills I recommend locking to help prevent messing up combos during PVP. Evasion Scarring Slash Spirit Satiation Sudden Attack Darkness Burst (if you have not completed Magnus) Hidden Strike (optional) Trap of Vedir (awakening only – put on hotbar instead) Flow: Spirit Blaze",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Wheel of Fortune, Lunacy of Vedir, Nocturne, Balanced Strike, Shadow Strike, Trap of Vedir, Flow Spirit Blaze Succession: Lunacy of Vedir, Balanced Strike, Spirit Absorption, Spirit Legacy, Nocturne",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Seed of Catastrophe . Core: Touch of Exploitation : Bound on last good hit. Core: Spirit Hunt : Stiffness on good hits. Core: Spirit Blaze : Forward Guard while using skill Core: Shattering Darkness : Stiffness on good hits. Core: Seed of Catastrophe : Super Armor during the skill. Core: Spirit Legacy : Stun on good hits",
+      "lockedSkills": [
+        "Evasion Scarring Slash Spirit Satiation Sudden Attack Darkness Burst Hidden Strike Trap of Vedir Flow: Spirit Blaze"
+      ],
+      "hotbarSkills": [
+        "Lunacy of Vedir",
+        "Nocturne",
+        "Balanced Strike",
+        "Shadow Strike",
+        "Trap of Vedir",
+        "Flow Spirit Blaze Succession: Lunacy of Vedir",
+        "Spirit Absorption",
+        "Spirit Legacy"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Guardian",
+      "slug": "guardian",
+      "foundryUrl": "https://www.blackdesertfoundry.com/guardian-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:43.699Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Merciless Kick Strike Down Beast Demolisher Juggernaut: Smite Fireborne Rupture These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion Frigid Wind",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Fireborne Rupture, God Incinerator, Cleansing Flame, Omua’s Objurgation, Mountain’s Echo Succession: Frigid Wind, Mountain’s Echo",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose between Cleansing Flame for PVP or Glorious Advance for PVE. Core: Glorious Advance : Forward Guard while using skill. Core: Searing Fang : Bound on 1st good hit. Core: Scornful Slash : Forward Guard while using skill Core: God Incinerator : Bound on good hits. Core: Cleansing Flame : Floating on good hits. Core: Dragon’s Maw : Knockdown on good hits",
+      "lockedSkills": [
+        "Evasion Merciless Kick Strike Down Beast Demolisher Juggernaut: Smite Fireborne Rupture",
+        "Evasion Frigid Wind"
+      ],
+      "hotbarSkills": [
+        "God Incinerator",
+        "Cleansing Flame",
+        "Omua’s Objurgation",
+        "Mountain’s Echo Succession: Frigid Wind",
+        "Mountain’s Echo"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Hashashin",
+      "slug": "hashashin",
+      "foundryUrl": "https://www.blackdesertfoundry.com/hashashin-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:48.700Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Paradise Beckons These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Aal’s Breath, Descent, Sin Splitter, Quicksand, Haladie Assault, Haladie Throw, Aals Command Succession: Prime: Binding Spirals, Prime: Aal’s Breath, Prime: Blade’s Pact, Haladie Throw",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose between Sin Splitter for 1v1 PVP or Dune Slash for PVE and 1vX. Both skills have super armor on the skill whilst being used. Core: Inquisition : Forward Guard while using skill. Core: Dune Slash : Super Armor while using skill. Core: Sin Splitter : Bound on good hits. Core: Collapse : Forward Guard while using skill Core: Ensnaring Sands : Bound on good 2nd hits Core: Serpant’s Coil : Knockdown on good 1st hit",
+      "lockedSkills": [
+        "Evasion Paradise Beckons",
+        "Evasion"
+      ],
+      "hotbarSkills": [
+        "Descent",
+        "Sin Splitter",
+        "Quicksand",
+        "Haladie Assault",
+        "Haladie Throw",
+        "Aals Command Succession: Prime: Binding Spirals",
+        "Prime: Aal’s Breath",
+        "Prime: Blade’s Pact"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Nova",
+      "slug": "nova",
+      "foundryUrl": "https://www.blackdesertfoundry.com/nova-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:53.384Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the skills I recommend locking: Evasion, Icy Fog (Awakening only) To lock a skill, press the lock icon on the bottom right of each skill icon in the skill window (K). Most players tend to lock Icy Fog for awakening to make the awakening dash flow better and then will use the Quoratum’s Closing skill to switch to pre-awakening instead since it has a frontal guard.",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar Quaratum’s Guard, Command: Frozen Earth, Command: Opening, Winter Testudo, Quaratum’s Binding, Quaratum’s Earth, Queen’s Gambit, Frozen Ring, Brutal Ring You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide .",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Starfall for the Super Armor in PVE, or Frozen Ring for PVP. Core: Swooping Ring : Stiffness on good hits. Core: Royal Fencing: Remise : Bound on good 1st hit. Core: Comet : Forward Guard while using skill. Core: Royal Fencing: Fleche : Stiffness on good 1st hit. Core: Frozen Ring : Stiffness on good hits. Core: Starfall : Super Armor while using skill.",
+      "lockedSkills": [],
+      "hotbarSkills": [
+        "Command: Frozen Earth",
+        "Command: Opening",
+        "Winter Testudo",
+        "Quaratum’s Binding",
+        "Quaratum’s Earth",
+        "Queen’s Gambit",
+        "Frozen Ring"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Sage",
+      "slug": "sage",
+      "foundryUrl": "https://www.blackdesertfoundry.com/sage-class-guide/",
+      "fetchedAt": "2026-07-06T00:03:58.045Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Ator’s Thorn Form Shift These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion Ator’s Thorn",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Awakening: Reset, Illusion Compression, Radiant Annihilation, Void Gateways, Illusion Expansion, Void Eruption/Void Blast Succession: Reset, Illusion Compression, Void Eruption/Void Blast",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Upsurge since it is a well-rounded skill that is useful in various scenarios. The core version adds a Stun CC on the last hit of the skill. The skill is quite fast to cast and protected, so useful to try and catch out enemies in PVP. If you are a bit more experienced, you can also experiment with Spear Bolt or Enlightening Bolt. Enlightening Bolt is useful for PVE and may be useful in large-scale PVP due to it being a medium/long-range CC with a Forward Guard. The core Spear Bolt gains a knockdown CC which can be useful as a catch in PVP, but the skill is mostly used for mobility so having it as one of your only protected CC options can be hard to get used to as you don’t want to waste the skill for movement. Core: Spear Bolt : Knockdown on dash attack hits Core: Enlightening Bolt : Forward Guard during the skill Core: Rift Storm : Bound on hits Core: Divine Executioner : Bound on attack 2 hits Core: Upsurge : Stun on last attack hits Core: Lightning Prison : Stun on first hit",
+      "lockedSkills": [
+        "Evasion Ator’s Thorn Form Shift",
+        "Evasion Ator’s Thorn"
+      ],
+      "hotbarSkills": [
+        "Illusion Compression",
+        "Radiant Annihilation",
+        "Void Gateways",
+        "Illusion Expansion",
+        "Void Eruption/Void Blast Succession: Reset",
+        "Void Eruption/Void Blast"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Corsair",
+      "slug": "corsair",
+      "foundryUrl": "https://www.blackdesertfoundry.com/corsair-class-guide/",
+      "fetchedAt": "2026-07-06T00:04:02.908Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion Heart-catcher Patraca Whirling Slash Whirlpool Flow: After the Storm Flow: Tide’s Kiss Sea Prowler These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion Flow: After the Storm Flow: Tide’s Kiss Sea Prowler",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Skill Name Reason Flow: Tide’s Kiss Optional – Can be used from hotbar directly instead of using Wave Pout first Overflow Awakening only – Can be used to transition from Awakening to Pre-awakening Mareca: Jet Stream Awakening only – Can be used to transition from Awakening to Pre-awakening Mareca: Spiral Soak Awakening only – Can be used to transition from Awakening to Pre-awakening Mareca: Whale Song Awakening only – Can be used to transition from Awakening to Pre-awakening Mareca: Sea of Dreams Can only be used from hotbar Heart-catcher Patraca Awakening only – Allows you to use the grab from Pre-awakening Light ‘Em Up Awakening only – Allows you to use the skill from Pre-awakening Cap’n’s Orders: Open Fire! Awakening only – Allows you to use the skill from Pre-awakening Family’s Honor Awakening only – Can only be used from hotbar and allows you to use the skill from Pre-awakening Labao On Deck! Awakening only – Can only be used from hotbar and allows you to use the skill from Pre-awakening Flow: After the Storm Optional – Can be used from hotbar directly for a quick Knockdown CC instead of using Storm Surge first Prime: Hydropower Succession only – Can only be used from hotbar",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Sea Mist for PVP and Cap’n’s Orders: Open Fire for PVE. Core: Close Quarters: Suppress : Super Armor during the skill (nullified during cooldown) Core : Spare No Quarter!: Bound on hits Core: Sea Mist : Stun on hits Core: Crow’s Mark : Knockback on hits Core : Sun-shielder Patraca : Stiffness on hits Core: Cap’n’s Orders: Open Fire! : Bound on hits",
+      "lockedSkills": [
+        "Evasion Heart-catcher Patraca Whirling Slash Whirlpool Flow: After the Storm Flow: Tide’s Kiss Sea Prowler",
+        "Evasion Flow: After the Storm Flow: Tide’s Kiss Sea Prowler"
+      ],
+      "hotbarSkills": [],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Drakania",
+      "slug": "drakania",
+      "foundryUrl": "https://www.blackdesertfoundry.com/drakania-class-guide/",
+      "fetchedAt": "2026-07-06T00:04:07.630Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Awakening and Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion All Drakania skills are useful and don’t interfere with other skill inputs, so the only recommended skill to lock is Evasion. Optional locks/more info: Brimbolt Annihilation (unlearn) Some Succession players choose to unlearn (not lock) the Magnus Skill – Brimbolt Annihilation. This is because as soon as you learn it, you can no longer use the S + E keybind to activate Markthanan’s Breath and must hotbar it instead. Using Markthanan’s Breath through the hotbar is not as smooth and some of the best skill cancels do not work. Skewer You can also choose to lock Skewer and/or Flow: Aphyxiate (RMB flow after Skewer). Locking Skewer allows you to use other RMB skills without Skewer taking priority. Drakania also already has a lot of accuracy in succession, so the accuracy % buff on Skewer is not really needed in most cases and is overkill if you are already hitting monsters with 100% hit rate. Skewer is hard to use from the hotbar though because of its long animation and since it can no longer be canceled into, so if you can get used to the potential input conflicts then you should keep it unlocked. Slayer Training Slayer Training is another optional lock and the reasons to lock it are the same as for Skewer. Locking your LMB auto attack allows you to flow into LMB skills more fluidly. Flow: Markthanan’s Wings For awakening, you can also lock Flow: Markthanan’s Wings to allow you to use the Legacy (SPACE) skill after Refraction (A/D + RMB) and Dragonwalk (SHIFT + A/S/D). This allows smoother transitions with Legacy swaps, but you will not be able to use the Dragon Flight skill and will have to use other mobility skills instead. Personally, I wouldn’t recommend locking the skill, but some players prefer this playstyle.",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Skill Name Reason Absolute: Markthanan’s Scale Allows you to use the skill in Awakening to swap to pre-awakening Absolute: Azure Onslaught Allows you to use the skill in Awakening to swap to pre-awakening Doombringer Allows you to use the skill in pre-awakening to swap to Awakening Burning Resolve Must be placed on hotbar Sundering Roar Allows you to swap to Hexeblood form Flow: Concealed Claw Allows you to swap to Hexeblood form Sundering Roar Allows you to swap to Dragonblood form Aerial Burst Allows you to swap to Dragonblood form Abyssal Advance/Dominion Rabam skill – Must be placed on hotbar Prime: Dragon’s Fury Must be placed on hotbar Absolute: Markthanan’s Breath Must be placed on hotbar if you learn the Magnus Skill (Brimbolt Annihilation)",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference and there are quite a few viable options. Personally, I would start with either Techtonic Slam , or Sundering Roar , but feel free to test out all the cores and figure out which one fits your playstyle best. Core: Tip of the Scale : Forward Guard during the skill (nullified during cooldown) Very versatile, with the core giving more stamina regeneration than the normal version. Core : Spiteful Soul: Stiffness on 3rd attack hit (nullified during cooldown) Currently considered to be the worst of the core options, not recommended to take. Core: Sundering Roar : Super Armor during the skill Useful for high protected damage at a decent range, Super Armor trading during PVP, or getting a catch with a Knockdown CC. Core: Savage Decree : Forward Guard during the skill (nullified during cooldown) Useful for catches since it has a proteced float CC. The Forward Guard is also useful for trading since it doesn’t have the forward movement that Core: Tip of the Scales has. Core : Tectonic Slam : Super Armor during the skill Protected movement skill with CC catch that flows well into Flow: Obliterate then Doombringer. Useful as an engage skill if you take the core, or just as unprotected movement if you don’t take the core. Core: Extinction : Super Armor during the skill Similar to Core: Sundering Roar in the sense that they are both offer Super Armor with a Knockdown CC. However, Sundering Roar tends to be preferred as a core when comparing the two, since Extinction is safer to use without the protection and Sundering Roar has a lot more damage with bigger AOE.",
+      "lockedSkills": [
+        "but some players prefer this playstyle"
+      ],
+      "hotbarSkills": [],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Woosa",
+      "slug": "woosa",
+      "foundryUrl": "https://www.blackdesertfoundry.com/woosa-class-guide/",
+      "fetchedAt": "2026-07-06T00:04:13.814Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Succession skills I recommend locking to help prevent messing up combos during PVP. Evasion Chain: Fan Kick – optional Prime: Rain’s Thirst – optional Absolute: Pummel – optional",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Skill Name Reason Prime: Butterfly Dream Can only be used from Hotbar Absolute: Cloud Flower Can only be used from Hotbar Reinigorate OR Spring Blossom (Level 59 Rabam) Can only be used from Hotbar Prime: Rain’s Thirst Optional – You can lock the skill and put it on your hotbar if you keep using it accidentally",
+      "coreSkillsText": "",
+      "lockedSkills": [
+        "Evasion Chain: Fan Kick – optional Prime: Rain’s Thirst – optional Absolute: Pummel – optional"
+      ],
+      "hotbarSkills": [],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Maegu",
+      "slug": "maegu",
+      "foundryUrl": "https://www.blackdesertfoundry.com/maegu-class-guide/",
+      "fetchedAt": "2026-07-06T00:04:18.931Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K). These are the Succession and Awakening skills I recommend locking to help prevent messing up combos during PVP. Evasion",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Skill Name Reason Prime: Foxspirit: Form Can only be used from Hotbar Foxspirit Conduit Can only be used from Hotbar Constriction Charm (Level 57 Rabam) Optional: Some players find it easier to use from Hotbar for quick use. Spirit Sparks OR Soul Charm (Level 58 Rabam) Can only be used from Hotbar",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose the Twirling Foxflare skill for PVE due to the added Forward Guard, and Twirling Rhapsoldy is a good PVP options for different situations as it can be used as an additonal CC catch. Core: Emberclaw Torrent : Floating on attack 1 hits Core: Emberclaw Slash : Forward Guard while using the skill. Core: Twirling Foxflare: Forward Guard while using the skill.. Core: Emberclaw Crush : Super Armor while using skill. Core: Twirling Rhapsody : Floating on first and last attack hits (nullified during cooldown) Core: Emberclaw Finale : Knockdown on good hits.",
+      "lockedSkills": [
+        "Evasion"
+      ],
+      "hotbarSkills": [],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Archer",
+      "slug": "archer",
+      "foundryUrl": "https://www.blackdesertfoundry.com/archer-class-guide/",
+      "fetchedAt": "2026-07-06T00:04:26.348Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "To lock a skill, press the lock icon on the top of each skill icon in the skill window (K) These are the skills I recommend locking to help prevent messing up combos during PVP. Evasion Earth Kick Purging Shot Volant Kick Ascending Spirit Vine Cutter Shadow Hack Watcher (use from hotbar) Radiant Explosion (use from hotbar) Gaping Darkness (optional – put on hotbar) Storm of Light (optional)",
+      "hotbarSkillsText": "These are the skills I recommend putting on your hotbar. Nature Shattering Arrow, Righteous Smite, Spear of Sylvia, Ensnare, Watcher, Radiant Explosion, Bold of Radiance, Gaping Darkness You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide .",
+      "coreSkillsText": "Core skills are a way of upgrading 1 skill from your awakening skill kit. Core skills are usually down to preference but most players choose Full Bloom because it is the best option for PVE. It is also good in large scale PVP. Other options are Uproot for smaller scale PVP and protected mobility with floating CC on hits, or Radiant Explosion for a protected bound CC. Core: Radiant Explosion : Bound on hits Core: Full Bloom : Forward Guard while using skill (nullified during cooldown). Core: Spear of Sylvia : Bound on hits Core: Uproot : Super Armor while using skill. Core : Luthraghon’s Call : Forward Guard while using skill. Core: Piercing Light : Super Armor while using skill.",
+      "lockedSkills": [
+        "Evasion Earth Kick Purging Shot Volant Kick Ascending Spirit Vine Cutter Shadow Hack Watcher Radiant Explosion Gaping Darkness Storm of Light"
+      ],
+      "hotbarSkills": [
+        "Righteous Smite",
+        "Spear of Sylvia",
+        "Ensnare",
+        "Watcher",
+        "Radiant Explosion",
+        "Bold of Radiance"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    },
+    {
+      "className": "Shai",
+      "slug": "shai",
+      "foundryUrl": "https://www.blackdesertfoundry.com/shai-class-guide/",
+      "fetchedAt": "2026-07-06T00:04:30.947Z",
+      "httpStatus": 200,
+      "lockedSkillsText": "These are the skills I recommend locking to help prevent messing up combos during PVP. Evasion To lock a skill, press the lock icon on the top of each skill icon in the skill window (K).",
+      "hotbarSkillsText": "These are the minimum skills I recommend putting on your hotbar. You may also want to put more skills on your hotbar and cooldown slots to keep track of them. For more information about how to do this, check out our Edit UI and Settings Guide . Skill Name Reason Delusive Light Using from the Hotbar allows you to use the skill from Florang state. Sun’s Fury Using from the Hotbar allows you to use the skill from Florang state. Sun, Moon, Stars Using from the Hotbar allows you to use the skill from Florang state.",
+      "coreSkillsText": "",
+      "lockedSkills": [],
+      "hotbarSkills": [
+        "Moon"
+      ],
+      "coreSkills": [],
+      "hasStructuredCombos": false
+    }
+  ]
+}
