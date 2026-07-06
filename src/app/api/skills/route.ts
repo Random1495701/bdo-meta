@@ -46,7 +46,7 @@ function splitCsv(s: string | null): string[] | null {
   return arr.length ? arr : null
 }
 
-function serializeSkill(s: any) {
+function serializeSkill(s: any, includeDamageRows = true) {
   const damageRows: DamageRow[] | null = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
   const damage = calculateDamage(damageRows, s.pvpDamagePercent)
   const ccTypes = splitCsv(s.ccTypes)
@@ -87,7 +87,7 @@ function serializeSkill(s: any) {
     cooldown: s.cooldown,
     cooldownSec: s.cooldownSec,
     description: s.description,
-    damageRows,
+    damageRows: includeDamageRows ? damageRows : undefined,
     damage,
     damagePerCooldown: (damage.totalPvE > 0 && s.cooldownSec && s.cooldownSec > 0)
       ? Math.round(damage.totalPvE / s.cooldownSec)
@@ -781,7 +781,7 @@ export async function GET(req: NextRequest) {
     items.sort((a, b) => (idOrder.get(a.skillId) || 0) - (idOrder.get(b.skillId) || 0))
 
     return NextResponse.json({
-      items: items.map(serializeSkill),
+      items: items.map((s) => serializeSkill(s, false)),
       total,
       page,
       pageSize,
@@ -798,7 +798,7 @@ export async function GET(req: NextRequest) {
   ])
 
   return NextResponse.json({
-    items: items.map(serializeSkill),
+    items: items.map((s) => serializeSkill(s, false)),
     total,
     page,
     pageSize,
