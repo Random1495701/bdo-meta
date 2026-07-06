@@ -3371,3 +3371,26 @@ Stage Summary:
 - NOTE: GitHub push failed (credentials expired). 3 commits unpushed:
   - v5.9.5 commit + version sync + tag
   - These will push when credentials are restored
+
+---
+Task ID: Q1.1
+Agent: combo-expansion-agent
+Task: Expand curated combo data to all 31 classes
+
+Work Log:
+- Read worklog.md tail (last ~100 lines) for context — confirmed prior state: P3.3 had created combo-data.ts with 8 classes (Warrior, Sorceress, Berserker, Musa, Ninja, Lahn, Striker, Wizard) and 17 combos total.
+- Read src/lib/combo-data.ts (395 lines) to understand existing format (ComboSpec 'awakening'|'succession'|'both', ComboType 'pvp'|'pve'|'both', Combo interface with ordered steps).
+- Queried DB for real max-rank skill names of all 23 missing classes via bun + Prisma (filtered out Black Spirit:, Flow:, Elvia:, Awakening:, Succession: variants for cleaner reading). Saved outputs to /tmp/skills_part1.txt and the bash output buffer.
+- Updated COVERAGE comment at top of file to reflect all 31 classes + the ascension-only special case (Archer, Shai, Scholar, Dosa, Deadeye, Wukong, Seraph use spec: 'both').
+- Added 2-3 combos per class for the 23 missing classes (Ranger, Tamer, Valkyrie, Kunoichi, Witch, Dark Knight, Mystic, Archer, Shai, Guardian, Hashashin, Nova, Sage, Corsair, Drakania, Woosa, Maegu, Scholar, Dosa, Deadeye, Wukong, Seraph, Maehwa), each using real BDO skill names pulled from the DB. Combos follow the existing style: 1-2 PvP (engage/stiffness → bound → down attack → burst → finisher) + 1 PvE rotation per class. Ascension-only classes use spec:'both' and have 2 combos each (PvP + PvE).
+- Notes added for key combo steps (gap closer, stiffness, bound, grab, down attack, burst, cancel, finisher) to match the existing 8-class style.
+- Ran `bun run lint` — clean (0 errors, 0 warnings).
+- Ran the verification command — all 31 classes return at least 1 combo in at least one spec filter. Final count: 85 total combos across 31 classes. Ascension-only classes (Archer, Shai, Scholar, Dosa, Deadeye, Wukong, Seraph) correctly return 2 combos for every spec filter since 'both' matches all.
+
+Stage Summary:
+- Combo coverage expanded from 8 → 31 classes (full BDO class roster).
+- Total combo count: 85 (was 17). Per-class distribution: ascension-only classes have 2 combos each; awak/succ classes have 2-3 each.
+- All skill names verified against the live DB (Prisma query of max-rank skills per className).
+- COVERAGE comment updated to list all 31 classes and explain the ascension-only special case.
+- Lint clean. No component or schema changes needed — combo-display.tsx and getCombosForClass() already handle 'both' spec and arbitrary class names.
+- File: src/lib/combo-data.ts grew from 395 lines → ~840 lines.
