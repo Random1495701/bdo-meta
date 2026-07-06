@@ -3344,3 +3344,30 @@ Stage Summary:
 - **Structural recommendation**: extend the bdocodex parser's false-positive filter to also catch "not be able to" / "cannot" / "will not" / "excluded" notes adjacent to `cc: Grapple` rows (current filter only catches "except Grapple").
 - Report file: `docs/GRAB_VERIFICATION.md`
 - No DB modifications made (per task instructions — reporting only).
+
+---
+Task ID: v5.9.5
+Agent: main (orchestrator)
+Task: Reload to v5.9.4 + complete remaining roadmap items (P1.1, P3.2, P3.3, P3.4)
+
+Work Log:
+- Verified project state: git at v5.9.4, DB has 7038 skills, server running
+- Reinstalled node_modules (was broken — vitest missing)
+- Restarted dev server (P4.1 auto-recovery confirmed DB healthy: 7038 skills)
+- Launched 4 parallel subagents:
+  - P3.2 (logo): Replaced spinning-rings logo with BDO occult seal (sword + B monogram + gold filigree). VLM-verified.
+  - P3.3 (combos): Created curated combo data for 8 classes + combo-display component + scrape-combos script. Integrated into Meta page.
+  - P3.4 (PAZ research): Found sibercat/PAZ-Unpacker v2.3.0 as recommended tool. Updated PAZ_EXTRACTION_GUIDE.md.
+  - P1.1 (grab verification): Found 1 false positive (Archwizardry: Mass Teleport). Fixed DB. 38 real grabs.
+- All 4 subagents completed (P3.3 hit turn limit but files were created successfully)
+- Agent Browser verification: logo loads, combos render on Meta page for Berserker
+- 42/42 tests passing, lint clean, all APIs 200
+
+Stage Summary:
+- v5.9.5: All 14 roadmap items complete 🎉
+- New files: logo.svg, favicon.svg, combo-data.ts, combo-display.tsx, scrape-combos.ts, GRAB_VERIFICATION.md
+- Updated: PAZ_EXTRACTION_GUIDE.md, ROADMAP_CURRENT.md
+- DB fix: removed false Grapple from Archwizardry: Mass Teleport (38 grabs now)
+- NOTE: GitHub push failed (credentials expired). 3 commits unpushed:
+  - v5.9.5 commit + version sync + tag
+  - These will push when credentials are restored
