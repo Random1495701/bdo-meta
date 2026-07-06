@@ -6,7 +6,11 @@
 //   1. Base Damage    = AP + Species AP - Enemy DR
 //   2. After DR Rate  = Base × (1 - DR_Rate%)
 //   3. After Crit     = × Crit Multiplier   (×2.25 at 100% crit rate)
-//   4. After Skill    = × (PvP_Damage_% / 100) × (Skill_Damage_% / 100) × Hit_Count
+//   4. After Skill    = × (PvP_Damage_% / 100) × (Skill_Damage_% / 100)
+//                      (Skill_Damage_% = totalPvE already includes
+//                       per-phase multiplier × maxHits, so the hit
+//                       count is NOT multiplied again — doing so would
+//                       double-count. Hit_Count is shown for display only.)
 //   5. After Class Group = × 1.05 if attacker has counter advantage
 //                          (Vanguard > Pulverizer > Skirmisher > Vanguard)
 //   6. After SA DR    = × (1 - SA_DR%)   [if target is in Super Armor]
@@ -201,8 +205,12 @@ function calculatePvpDamage(opts: {
   // Step 3: After Crit
   const critMult = scalars.crit ? 2.25 : 1
   const afterCrit = afterDrRate * critMult
-  // Step 4: After Skill = × (PvP%/100) × (Skill%/100) × Hit_Count
-  const afterSkill = afterCrit * (pvpPercent / 100) * (skillDamagePercent / 100) * hitCount
+  // Step 4: After Skill = × (PvP%/100) × (Skill%/100)
+  // skillDamagePercent (= totalPvE) already includes each phase's
+  // multiplier × maxHits, so we must NOT multiply by hitCount again
+  // (doing so would double-count hits and inflate damage by Nx or 6x+).
+  // hitCount is kept for display only.
+  const afterSkill = afterCrit * (pvpPercent / 100) * (skillDamagePercent / 100)
   // Step 5: After Class Group (×1.05 if attacker has counter advantage)
   const counterAdvantage = hasCounterAdvantage(attackerGroup, targetGroup)
   const groupModifier = counterAdvantage ? 1.05 : 1
@@ -1165,7 +1173,7 @@ export function DamageCalculatorPage() {
               </h2>
               <div className="overflow-x-auto rounded-sm bg-bdo-ink/60 px-3 py-2.5">
                 <code className="whitespace-nowrap font-mono text-[11px] leading-relaxed text-amber-200/90 sm:text-xs">
-                  PvP Damage = [(AP + Species AP − DR) × (1 − DR_Rate%)] × Crit × (PvP% × Skill% × Hits) × Group_Modifier × (1 − SA_DR%)
+                  PvP Damage = [(AP + Species AP − DR) × (1 − DR_Rate%)] × Crit × (PvP% × Skill%) × Group_Modifier × (1 − SA_DR%)
                 </code>
               </div>
               <div className="mt-3 grid grid-cols-1 gap-2 text-[11px] sm:grid-cols-2">
@@ -1174,8 +1182,8 @@ export function DamageCalculatorPage() {
                 <Legend term="DR_Rate%" desc="Damage Reduction Rate from gear (0–100)" />
                 <Legend term="Crit" desc="×2.25 (assumes 100% crit rate)" />
                 <Legend term="PvP%" desc="Skill's PvP damage percent (e.g. 32%)" />
-                <Legend term="Skill%" desc="Skill's total PvE damage percent (e.g. 1207%)" />
-                <Legend term="Hits" desc="Σ (multiplier × maxHits) across phases" />
+                <Legend term="Skill%" desc="Skill's total PvE damage percent (Σ percent × multiplier × maxHits across phases) — already includes hit count" />
+                <Legend term="Hits" desc="Σ (multiplier × maxHits) across phases — display only, already included in Skill%" />
                 <Legend term="Group_Modifier" desc="×1.05 if attacker counters target group" />
                 <Legend term="SA_DR%" desc="Target's Super Armor damage reduction" />
                 <Legend term="Back/Down/Air" desc="Positional scalars (×1.5/1.5/1.3) applied at end" />
@@ -1221,7 +1229,7 @@ function FormulaBreakdown({ result, scalars, attackerGroup, targetGroup }: {
     },
     {
       label: '4. After Skill',
-      calc: `${fmt(r.afterCrit, 4)} × (${fmt(r.pvpPercent, 1)}/100) × (${fmt(r.skillDamagePercent)}/100) × ${fmt(r.hitCount)} (hits)`,
+      calc: `${fmt(r.afterCrit, 4)} × (${fmt(r.pvpPercent, 1)}/100) × (${fmt(r.skillDamagePercent)}/100)  [Hits=${fmt(r.hitCount)} already in Skill%]`,
       value: fmt(r.afterSkill, 4),
     },
     {

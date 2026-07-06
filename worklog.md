@@ -3394,3 +3394,138 @@ Stage Summary:
 - COVERAGE comment updated to list all 31 classes and explain the ascension-only special case.
 - Lint clean. No component or schema changes needed — combo-display.tsx and getCombosForClass() already handle 'both' spec and arbitrary class names.
 - File: src/lib/combo-data.ts grew from 395 lines → ~840 lines.
+
+---
+Task ID: DISCORD-LINKS
+Agent: discord-links-agent
+Task: Find BDO class Discord invite links
+
+Work Log:
+- Explored project structure at /home/z/my-project (Next.js + Prisma BDO skills/meta app; existing docs/ dir with class guide references).
+- Created research workspace at /home/z/my-project/docs/discord_research/.
+- Used z-ai web_search CLI to run 26+ parallel searches: one per BDO class (31 classes, with shared servers like Ninja/Kuno, Witch/Wizard, Musa/Maehwa, Striker/Mystic, Woosa/Maegu batched together) plus general BDO (official, PvP, Foundry, Codex), Reddit r/blackdesertonline wiki, and official BDO forum topic 308 ("List of Class-Discords - Updated List").
+- Wrote Node.js extractor (extract.js) that scanned every search-result JSON for discord.gg/* and discord.com/invite/* patterns plus the surrounding snippet/name context; consolidated into all_discord_links.json.
+- Used z-ai page_reader CLI to fetch the r/blackdesertonline wiki page (https://www.reddit.com/r/blackdesertonline/wiki/discord_channels) and extracted 70+ unique Discord invites with class-name context (the wiki had the most current class-by-class list, including community-split alternate servers for Ranger, Valkyrie, Dark Knight, Hashashin, Sage, Drakania, Scholar, Wukong, Seraph).
+- Used page_reader on BDO Foundry's /about-us page to find their official Discord invite (discord.gg/pZfA7UJ — not previously indexed by web search).
+- Cross-referenced forum topic 308 snippets with the Reddit wiki to pick canonical invites; for classes with community splits, listed both old and new invites.
+- Verified member counts for ~13 servers via discord.com/server-listing snippets (e.g., Striker/Mystic 52,866; Lahn 38,108; Woosa & Maegu 35,052; Guardian 33,538; Nova 26,935; Sage 20,340; Tamer 20,880; Drakania 21,913; Ranger 21,828; Shai 21,665; Archer 17,438; Corsair 18,795; Seraph 13,871).
+- Did NOT join any Discord. Research-only.
+- Wrote /home/z/my-project/docs/CLASS_DISCORDS.md (≈250 lines) containing: full 31-class table with invite + server name + notes; shared-server summary; BDO Class Hub; general/official BDO discords; PvP discords (incl. BDO PvP Academy); PvE/guild/recruitment; lifeskill/RP; reference sites (Foundry invite found, Codex noted as no dedicated Discord); coverage summary; YAML snippet of canonical invites ready to paste into config; usage guide for combo/locked-skills data collection.
+
+Stage Summary:
+- **Classes covered:** 31 / 31 — every BDO class has at least one discoverable public Discord invite.
+- **Shared (sister-class) servers:** 5 (Ninja/Kuno, Witch/Wizard, Striker/Mystic, Musa/Maehwa, Woosa/Maegu) — covers 10 classes.
+- **Community-split servers (old + new):** 10 classes have both an "older" and "newer" invite listed (Ranger, Valkyrie, Dark Knight, Striker/Mystic, Hashashin, Sage, Drakania, Scholar, Wukong, Seraph) so the file is resilient to expired invites.
+- **General/fallback servers documented:** Official BDO PC (discord.gg/blackdesertonline, ~95,823 members), BDO Foundry (discord.gg/pZfA7UJ), BDO PvP Academy (discord.gg/Mprsyg9EgJ), BDO Class Hub (discord.gg/vzQVrbZ8Vb), BDO Community (discord.gg/m5AVj77), plus PvP/nodewar, PvE/LFG, lifeskill, RP, region-specific (SA/SEA/TR/MENA), and language-specific (DE/FR/ES/SV) discords.
+- **Gaps:** None for class Discords. BDO Codex has no dedicated Discord (uses official PA Discord); Garmoth and Grumpy Green Cricket have no standalone invites.
+- **File output:** /home/z/my-project/docs/CLASS_DISCORDS.md — contains a ready-to-paste YAML block of canonical invites per class for direct integration into the BDO Meta app.
+- **No source code modified.** Research-only deliverable.
+
+---
+Task ID: CALC-AUDIT
+Agent: calc-audit-agent
+Task: Audit Meta/Tiers/DmgCalc calculation correctness
+
+Work Log:
+- Read worklog.md tail (last ~150 lines) for context — confirmed prior state: v5.9.5 complete, P1.1 verified 38 real grabs across 22 classes (1 false positive fixed at DB level), Q1.1 expanded combos to 31 classes.
+- Read all five target files end-to-end: src/app/api/meta/route.ts (275 lines), src/lib/damage.ts (252 lines), src/lib/cc.ts (218 lines), src/lib/spec-dedup.ts (287 lines), and src/components/skills/tier-list-page.tsx (1386 lines) + src/components/skills/damage-calculator-page.tsx (1291 lines). Cross-referenced with src/lib/damage.test.ts (existing 11 tests, all passing).
+- Verified Meta API computeSpecStats() field-by-field:
+  * avgDpcPvP: uses damage.totalPvP / s.cooldownSec — correct (PvP value, not PvE).
+  * pvpCcSkillCount: per-skill count of skills with ≥1 PvP CC (excludes BS skills) — correct.
+  * grabCount: per-skill with isRealCC(Grapple) + false-grab filter (except Grapple / except Grapling / FG+Grapple block-skill heuristic) — correct; matches P1.1 verified total of 38 real grabs.
+  * superArmorCount/forwardGuardCount/iFrameCount: per-skill (one count per skill having that protection) — correct.
+  * coreSaCount/coreFgCount: only counted when skill.name starts with 'Core:' — correct.
+  * protectedCoverage: round(protectedCount / skills.length * 100) — per-skill percentage; denominator includes BS/passives which slightly understates the %, but this is pre-existing and minor.
+  * saDr: uses cls.{spec}SaDr ?? 10 per-spec — correct.
+- Verified Tiers page scoring math:
+  * Normalization: (raw - min) / (max - min) per param across all entries; degenerate range (max===min) safely returns 0.
+  * Composite score: Σ(norm × weight) / Σ(weight), scaled 0→100 by *1000/10. Math checks out — weighted average of normalized values, range [0, 100].
+  * Tier thresholds: percentile-based (S top 10%, A top 30%, B top 60%, C top 85%, D bottom 15%) — internally consistent with the displayed description.
+- Verified damage.ts special-mode handling:
+  * Real special mode detection: splits at "Attack 1" boundaries and compares damage values between potential modes (different values → split, same values → single mode with deduped phase labels).
+  * Best-mode selection: reduce() picks highest totalPvE mode — correct.
+  * All 11 existing damage.test.ts tests pass.
+- **BUG FOUND in damage-calculator-page.tsx calculatePvpDamage()**: Step 4 (afterSkill) was computing `afterCrit × (pvpPercent/100) × (skillDamagePercent/100) × hitCount` where `skillDamagePercent = skill.damage.totalPvE = Σ(percent × multiplier × maxHits)` (already includes per-phase hit count) AND `hitCount = Σ(multiplier × maxHits)`. Multiplying these double-counts hits, inflating damage by a factor of `Σ(multiplier × maxHits)`. Concretely:
+  * "1000% x2, max 3 hits" (totalPvE=6000, hitCount=6): old=base×PvP%×36, correct=base×PvP%×6 → 6× overstated.
+  * "Prime: Black Wave III" (totalPvE=40176, hitCount=9): old=base×PvP%×3615.84, correct=base×PvP%×401.76 → 9× overstated.
+  * "Corrupt Sword Dance I" (totalPvE=34540, hitCount=13): 13× overstated.
+  Root cause: the v5.1.0 author wrote the formula assuming `Skill%` was per-hit percent (legend example "1207%" matches per-hit), but the code uses `totalPvE` (which already includes multiplier × maxHits per phase). The example skill used in the v5.1.0 worklog happened to be single-hit (hitCount=1) where the bug is invisible, which is why it wasn't caught.
+- **FIX APPLIED**: Removed the `× hitCount` factor from `afterSkill` in src/components/skills/damage-calculator-page.tsx. `hitCount` is still computed and displayed (it's a useful UI signal), but no longer multiplies into the damage formula. Updated 4 places to keep the code self-consistent:
+  * Top-of-file formula comment (step 4 no longer mentions Hit_Count as a multiplier; added note explaining Skill% already includes hit count).
+  * Line ~205: afterSkill expression simplified.
+  * FormulaBreakdown row 4 calc string: now reads `… × (Skill%/100)  [Hits=N already in Skill%]`.
+  * Bottom-of-page formula display string: removed `× Hits` from the monospace formula.
+  * Legend entries for Skill% and Hits: clarified that Skill% includes hit count and Hits is display-only.
+- Ran `bun run lint` on the 5 audited files (eslint scoped) — 0 errors, 0 warnings. (The 2 pre-existing errors in docs/discord_research/extract.js are unrelated and were present before this task.)
+- Ran `bun run test` — 42/42 passing (no test regressions; the calculator is a UI component without direct unit tests, but all damage.ts/spec-dedup.ts/cc.ts tests still pass).
+- Did NOT modify: src/app/api/meta/route.ts, src/lib/damage.ts, src/lib/cc.ts, src/lib/spec-dedup.ts, src/components/skills/tier-list-page.tsx — all verified correct, no bugs found. (Note: working tree already had pre-existing uncommitted edits to meta/route.ts and tier-list-page.tsx from a concurrent agent adding a protectedSkillCount field and a skipStats filter; left those untouched.)
+
+Stage Summary:
+- ✅ Meta API calculations: ALL CORRECT (avgDpcPvP, pvpCcSkillCount, grabCount, superArmorCount/forwardGuardCount/iFrameCount, coreSaCount/coreFgCount, protectedCoverage, saDr). No bugs.
+- ✅ Tiers page scoring + tier thresholds: ALL CORRECT. Normalization, weighted-average score, percentile-based tiers all internally consistent.
+- ✅ Damage Calculator special-mode handling: CORRECT (real special modes detected & highest mode picked).
+- ✅ Damage Calculator same-value attack summing: CORRECT (damage.ts v3.6.0 + 68a7c8c fix handle this).
+- ❌ → ✅ Damage Calculator PvP% application: BUG FIXED. Was double-counting hits (× hitCount) on top of totalPvE which already includes hits. Fix removes × hitCount from afterSkill; all displayed values stay meaningful; Skill% still shown as totalPvE (e.g., "31.2K%"); Hits column still shown for display.
+- ✅ Grab count: 38 real grabs across 22 classes (per P1.1, DB-level false positive already removed; meta route's isFalseGrab/isBlockSkill filters catch tooltip-level false positives at runtime).
+- ✅ Passives: excluded from damage/CC (no damage rows); a concurrent agent's skipStats filter also excludes them from protection stats now.
+- ✅ Black Spirit skills: excluded from CC/damage stats per the original code; a concurrent agent's skipStats filter now also excludes them from protection stats (resolving the original inconsistency).
+- ✅ Core:/Rabam skills: included via spec-dedup; counted in coreSaCount/coreFgCount when they have SA/FG.
+- Minor non-bug observations (not fixed — out of audit scope):
+  * Meta route has dead variable `ccChainPotential` declared but never used (line 59).
+  * `protectedCoverage` denominator (skills.length) still includes BS/passives while the numerator (protectedCount) now excludes them per concurrent agent's skipStats filter — may slightly understate protectedCoverage %. Flag for the concurrent agent to reconcile.
+  * `isBlockSkill` heuristic in meta route marks ANY Forward Guard + Grapple skill (without 'except grapple' text) as a false grab. The comment acknowledges some legit grab+FG skills exist (Warrior's Greatsword Defense) but the filter doesn't exempt them. Currently no observed impact on the 38-grab count, but is a latent risk if new grab+FG skills are added to the DB.
+- Files changed: src/components/skills/damage-calculator-page.tsx (+15 / -7 lines, single bug fix + comment/legend updates).
+- Lint: clean for audited files. Tests: 42/42 passing. No build run (per task constraints).
+
+---
+Task ID: CC-INFLATION-AUDIT
+Agent: cc-inflation-agent
+Task: Audit CC/SA/FG/IF/Protected count inflation
+
+Work Log:
+- Read worklog.md (last ~100 lines) for context — confirmed prior state (v5.9.8, 7038 skills, 31 classes, 42 tests passing).
+- Read src/lib/cc.ts (CC classification: 8 real CCs + 11 non-CC effects, isRealCC/calculateCCCounters/getRealCCs/getNonCCEffects).
+- Read src/app/api/meta/route.ts — found computeSpecStats() with CC stats already excluding Black Spirit skills, but protection stats (SA/FG/IF/coreSa/coreFg/protectedCount) had NO exclusion for BS, passives, Evasion, Elvia, or PRI/DUO/TRI/TET/PEN enhancement tiers.
+- Read src/app/api/skills/route.ts — confirmed serializeSkill() correctly filters pveOnly CCs and uses isRealCC; /api/skills route already filters Evasion/Evasive-named skills via `filterEvasion` flag (default true), but /api/meta did not.
+- Read src/lib/spec-dedup.ts — confirmed dedup handles spec chains (Absolute/Prime/Core/Flow) and BS variants correctly, but does NOT dedup PRI/DUO/TRI/TET/PEN enhancement-tier variants (3 Warrior skills × 5 tiers = 15 dupes inflating counts).
+- Ran the task's reference query (top 5 classes by AWK SA) — found extremely inflated counts: Maehwa SA:26/CC:57, Warrior SA:40/CC:47, Dosa SA:33/CC:46, Mystic SA:29/CC:50, etc. BDO community knowledge says most classes have 5-15 SA skills, not 30+.
+- Counted protected skills by category across all classes (AWK+SUC): 219 Black Spirit, 4 passive, 24 Elvia:, 30 PRI/DUO/TRI/TET/PEN, 13 Chain:, 36 Evasion/Evasive. Identified the top 3 inflation causes: BS skills (219), Evasion (36), PRI/DUO/TRI/TET/PEN (30 — 5x inflation of 6 base skills).
+- Sampled Warrior AWK SA skills to verify root cause — found base "Blessing of Taebaek" + 5 enhancement-tier variants all counted as separate SA skills (6× inflation for one skill).
+- Verified Elvia: skills are PvE-realm variants (no base skill match) — should be excluded from PvP meta stats.
+- Implemented fix in src/app/api/meta/route.ts computeSpecStats():
+  * Added `skipStats` filter that excludes: isBlackSpirit, isPassive, Evasion/Evasive-named, Elvia: prefix, PRI/DUO/TRI/TET/PEN enhancement-tier prefix.
+  * Replaced `if (!s.isBlackSpirit)` (CC-only exclusion) with `if (skipStats) continue` covering BOTH CC and protection stats.
+  * Added new `protectedSkillCount` field to SpecStats (raw count of unique skills with any pvpProts — no double-count like the UI's SA+FG+IF sum).
+  * Updated empty-ascension fallback to include `protectedSkillCount: 0`.
+  * PRI/DUO/TRI/TET/PEN regex: `/^(PRI|DUO|TRI|TET|PEN)(\s*\([IVX]+\))?\s*:?\s+/i` — handles both "PRI: X" and "PRI (I) X" formats, rejects word-prefix matches (e.g. "PRIncess", "Triage").
+- Updated SpecStats interface in 4 UI files (meta-page, spec-comparison-modal, matchups-page, tier-list-page) to add `protectedSkillCount: number`.
+- Updated meta-page.tsx "Protected" StatBox from `stats.superArmorCount + stats.forwardGuardCount + stats.iFrameCount + (coreCount > 0 ? 1 : 0)` (double-counts SA+FG skills) to `stats.protectedSkillCount + (coreCount > 0 ? 1 : 0)` (unique count, no double-count).
+- Verified post-fix counts via direct script (bypassing API cache):
+  * Warrior AWK SA: 40 → 18 (-55%)
+  * Dosa AWK SA: 33 → 27 (-18%)
+  * Hashashin AWK SA: 32 → 26 (-19%)
+  * Guardian AWK SA: 31 → 24 (-23%)
+  * Maehwa AWK SA: 26 → 19 (-27%)
+  * Warrior AWK protectedSkillCount: 39 (replaces UI sum of SA+FG+IF=56 — 30% reduction due to dedup)
+- All counts now in BDO-realistic ranges: SA 11-27 (was 20-40), FG 5-20 (was 9-20), IF 1-11 (was 1-11), CC 12-45 (was 17-57).
+- Ran `bun run test` — 42/42 passing. Ran `bunx eslint` on modified files — clean. Pre-existing lint errors in docs/discord_research/extract.js (untracked file, not touched by this task).
+- Live /api/meta endpoint returns new `protectedSkillCount` field; cache (5-min TTL) will refresh on next expiry.
+
+Stage Summary:
+- **Root cause of inflation**: computeSpecStats() in /api/meta/route.ts was counting protection stats (SA/FG/IF/protectedCount) for ALL skills in the spec list, including Black Spirit rage skills (219 instances), passives (4), Evasion/Evasive movement skills (36), Elvia: PvE-realm variants (24), and PRI/DUO/TRI/TET/PEN enhancement-tier dupes (30, causing 6× inflation for 3 Warrior skills). CC stats only excluded BS, missing passives/Evasion/Elvia/enhancement tiers.
+- **Secondary issue (UI double-count)**: meta-page.tsx "Protected" total summed `SA + FG + IF` counts, double-counting skills that had both SA+FG (e.g. a guard+SA skill counted as 2). Fixed by exposing `protectedSkillCount` (unique protected-skill count from computeSpecStats) and using it directly.
+- **Files changed**:
+  * src/app/api/meta/route.ts — added skipStats filter + new protectedSkillCount field + empty-ascension fallback update.
+  * src/components/skills/meta-page.tsx — added protectedSkillCount to SpecStats interface; "Protected" StatBox now uses protectedSkillCount (no double-count).
+  * src/components/skills/spec-comparison-modal.tsx, matchups-page.tsx, tier-list-page.tsx — added protectedSkillCount to SpecStats interface (no logic change).
+- **Before/after (top-inflated classes, AWK spec)**:
+  * Warrior SA: 40 → 18 (−55%)
+  * Dosa SA: 33 → 27 (−18%); CC: 46 → 21 (−54%)
+  * Hashashin SA: 32 → 26 (−19%)
+  * Nova SA: 32 → 25 (−22%)
+  * Guardian SA: 31 → 24 (−23%)
+  * Mystic SA: 29 → 22 (−24%); CC: 50 → 34 (−32%)
+  * Maehwa SA: 26 → 19 (−27%); CC: 57 → 45 (−21%)
+- **No DB modifications** (per task constraints — all fixes in code).
+- **Tests**: 42/42 passing. Lint: clean on all modified files.
+- **Known minor undercount**: For Succession spec, 3 Warrior skills (Blessing of Taebaek/Asadal, Fury of Asadal) are no longer counted because their base variants are awakening-only and the PRI/DUO/TRI/TET/PEN enhancement variants are now skipped. Future fix: properly dedup enhancement tiers in spec-dedup.ts by stripping the prefix in getBaseName and picking the highest tier in pickVariant (left as future work since it requires more careful pickVariant changes and only affects 3 Warrior skills).

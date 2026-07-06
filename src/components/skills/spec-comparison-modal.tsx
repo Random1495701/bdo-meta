@@ -18,6 +18,7 @@ interface SpecStats {
   iFrameCount: number
   coreSaCount: number
   coreFgCount: number
+  protectedSkillCount: number
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number
   avgDpcPvP: number

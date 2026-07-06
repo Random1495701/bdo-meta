@@ -23,6 +23,7 @@ interface SpecStats {
   iFrameCount: number
   coreSaCount: number
   coreFgCount: number
+  protectedSkillCount: number
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number
   avgDpcPvP: number
@@ -230,7 +231,7 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
 
         {/* Total protected skills + SA DR */}
         <div className="grid grid-cols-2 gap-1">
-          <StatBox label="Protected" value={String(stats.superArmorCount + stats.forwardGuardCount + stats.iFrameCount + (stats.coreSaCount > 0 || stats.coreFgCount > 0 ? 1 : 0))} color="#60a5fa" />
+          <StatBox label="Protected" value={String(stats.protectedSkillCount + (stats.coreSaCount > 0 || stats.coreFgCount > 0 ? 1 : 0))} color="#60a5fa" />
           <StatBox label="SA DR" value={`${cls[specName === 'awakening' ? 'awakeningSaDr' : specName === 'succession' ? 'successionSaDr' : 'ascensionSaDr']}%`} color="#fbbf24" />
         </div>
 

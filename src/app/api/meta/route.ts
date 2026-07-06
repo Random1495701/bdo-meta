@@ -13,11 +13,19 @@ export const dynamic = 'force-dynamic'
 // - median PvP damage (same)
 // - number of PvP CC skills (count skills with CC, not CC count; ignore PvE-only)
 // - number of Super Armors, Forward Guards, I-Frames (separately, ignore PvE only)
+// - protectedSkillCount: unique count of skills with any PvP protection (no double-count)
 // - CC chain potential (skills with 2+ PvP CCs)
 // - grab count (skills with Grapple CC)
 // - core SA/FG counts (Core: skills)
 // - PA Wiki data: combat type, class group, SA damage reduction per spec
 // - computed separately for Awakening, Succession, and Ascension specs
+//
+// CC/protection counts EXCLUDE skills that aren't part of the normal PvP rotation:
+//   - Black Spirit rage skills (burst skills, separate from rotation)
+//   - Passive skills (don't add active protection/CC)
+//   - Evasion/Evasive-named skills (movement, not protection — matches /api/skills)
+//   - Elvia: prefix (PvE-realm variants, don't apply in PvP)
+//   - PRI/DUO/TRI/TET/PEN enhancement-tier variants (dupes of base skill)
 
 interface SpecStats {
   skillCount: number
@@ -30,6 +38,7 @@ interface SpecStats {
   iFrameCount: number
   coreSaCount: number // Core: skills with Super Armor (player picks only 1)
   coreFgCount: number // Core: skills with Forward Guard (player picks only 1)
+  protectedSkillCount: number // unique skills with any PvP protection (no double-count)
   topPvpDamageSkill: { skillId: number; name: string; damage: number } | null
   dpsEstimate: number // avg PvP damage / avg animation duration
   avgDpc: number // avg PvE damage per cooldown second
@@ -128,11 +137,24 @@ function computeSpecStats(skills: any[]): SpecStats {
 
     const hasRealGrab = pvpCCs.includes('Grapple') && !isFalseGrab && !isBlockSkill
 
-    // CC stats: exclude Black Spirit rage skills (they're not part of normal PvP rotation)
-    if (!s.isBlackSpirit) {
-      if (pvpCCs.length > 0) pvpCcSkillCount++
-      if (hasRealGrab) grabCount++
-    }
+    // Skip skills that shouldn't count toward CC/protection stats:
+    //   - Black Spirit rage skills (burst skills, separate from rotation)
+    //   - Passive skills (don't add active protection/CC)
+    //   - Evasion/Evasive-named skills (movement, not protection — matches /api/skills filterEvasion)
+    //   - Elvia: prefix (PvE-realm variants, don't apply in PvP)
+    //   - PRI/DUO/TRI/TET/PEN enhancement-tier variants (dupes of base skill)
+    const lowerName = (s.name || '').toLowerCase()
+    const isEvasionSkill = lowerName.includes('evasion') || lowerName.includes('evasive')
+    const isElviaSkill = (s.name || '').startsWith('Elvia:')
+    const isEnhancementTier = /^(PRI|DUO|TRI|TET|PEN)(\s*\([IVX]+\))?\s*:?\s+/i.test(s.name || '')
+    const skipStats = s.isBlackSpirit || s.isPassive || isEvasionSkill || isElviaSkill || isEnhancementTier
+
+    // CC + protection stats: exclude skills that aren't part of normal PvP rotation.
+    // Damage/animation stats above already exclude BS (and are unaffected by these other skips).
+    if (skipStats) continue
+
+    if (pvpCCs.length > 0) pvpCcSkillCount++
+    if (hasRealGrab) grabCount++
 
     // Protection stats
     const pveOnlyProts = new Set<string>()
@@ -192,6 +214,7 @@ function computeSpecStats(skills: any[]): SpecStats {
     iFrameCount,
     coreSaCount,
     coreFgCount,
+    protectedSkillCount: protectedCount,
     topPvpDamageSkill,
     dpsEstimate,
     avgDpc,
@@ -264,6 +287,7 @@ export async function GET() {
       ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
         pvpCcSkillCount: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
+        protectedSkillCount: 0,
         topPvpDamageSkill: null, dpsEstimate: 0, avgDpc: 0, avgDpcPvP: 0, protectedCoverage: 0,
       },
     })
