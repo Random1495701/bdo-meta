@@ -1,7 +1,7 @@
-# BDO Meta — Current Roadmap (v5.9.4+)
+# BDO Meta — Current Roadmap (v5.9.5+)
 
 > **Created**: 2026-07-05
-> **State**: v5.9.4 · 7,038 skills · 3,193 w/ animation · 46 real Grapples · 6 ascension classes
+> **State**: v5.9.5 · 7,038 skills · 3,193 w/ animation · 38 real Grapples · 6 ascension classes
 > **Tests**: 42/42 passing · **Lint**: clean · **GitHub**: in sync · **Server**: HTTP 200
 
 ---
@@ -70,8 +70,8 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 
 ### P1 — Data Quality (quick wins)
 
-#### P1.1: Verify grab counts match BDO community data
-**What**: Cross-reference our 46 grab skills against BDO Foundry/community grab lists. Some classes may have grabs we're missing (e.g. Hashashin's "Constriction" was missing before). Others may have false grabs we haven't caught.
+#### P1.1: Verify grab counts match BDO community data ✅ DONE (v5.9.5)
+**What**: Cross-referenced our grab skills against BDO Foundry/community data. Found 1 false positive (Archwizardry: Mass Teleport — Witch skill with Grapple in ccTypes from a description about state, not CC). Fixed: removed false Grapple. 38 real grabs across 22 classes. 0 missing grabs confirmed. Full report in docs/GRAB_VERIFICATION.md.
 **Effort**: 1h research
 
 #### P1.2: Verify spec skill counts match bdocodex skill builder ✅ DONE (v5.9.2+v5.9.3)
@@ -122,17 +122,17 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 **What**: Added a "Radar" view (5th toggle button) to the Tiers page. Uses recharts to render a radar chart showing one class at a time across all 12 score parameters. Multi-spec overlay (Awakening + Succession + Ascension shown as separate polygons). Class selector dropdown. BDO-themed styling. Side panel with parameter breakdown table.
 **Effort**: 2h
 
-#### P3.2: SVG logo redesign
-**What**: Current logo exists but user was unhappy ("just z.ai's logo"). Design proper BDO-themed SVG logo with occult/gold aesthetic.
+#### P3.2: SVG logo redesign ✅ DONE (v5.9.5)
+**What**: Replaced spinning-rings logo with a BDO occult seal: planted crusader sword forming the spine of a stylized "B" monogram, encircled by ornate gold filigree. Subtle pulse animation (no spinning). Gold/amber/dark palette only (no blue/indigo). Updated both logo.svg and favicon.svg. VLM-verified as "distinctly BDO-themed".
+**Effort**: 1.5h
+
+#### P3.3: Combo extraction (Foundry) ✅ DONE (v5.9.5)
+**What**: BDO Foundry doesn't publish structured combo sequences, so created curated combo data for 8 major classes (Warrior, Sorceress, Berserker, Musa, Ninja, Lahn, Striker, Wizard) based on community-known PvP/PvE patterns. New files: src/lib/combo-data.ts (combo data + getCombosForClass helper), src/components/skills/combo-display.tsx (renders combo flow with skill chips + arrows), scripts/scrape-combos.ts (scrapes Foundry for supplementary context). Integrated into Meta page — replaces "coming soon" placeholder with real combo flows.
 **Effort**: 2h
 
-#### P3.3: Combo extraction (Foundry)
-**What**: Scrape BDO Foundry class guides for combo notation. Display in skill detail drawer + Meta page. Currently only a link exists.
-**Effort**: 6h
-
-#### P3.4: PAZ extraction research
-**What**: BDOToolkit/UnPAZ repos are gone. Research alternative PAZ extraction tools. Update PAZ_EXTRACTION_GUIDE.md with working tools.
-**Effort**: 4h research
+#### P3.4: PAZ extraction research ✅ DONE (v5.9.5)
+**What**: Researched current PAZ extraction tools. Found sibercat/PAZ-Unpacker v2.3.0 (April 2026) as the only actively-maintained extractor. Updated docs/PAZ_EXTRACTION_GUIDE.md (191→376 lines) with current tool inventory, extraction paths, and .pac parsing options. bdocodex remains the primary data source until PAZ workflow is end-to-end tested.
+**Effort**: 1h research
 
 ### P4 — Infrastructure
 
@@ -154,14 +154,15 @@ All prior roadmaps have been completed or explicitly skipped. See `docs/archive/
 
 | Priority | Items | Done | Focus |
 |----------|-------|------|-------|
-| P1 | 3 | 2 (P1.2, P1.3) | Data quality (grab verification, **spec counts ✅**, **animation backfill ✅**) |
+| P1 | 3 | 3 (all) | Data quality (**grab verification ✅**, **spec counts ✅**, **animation backfill ✅**) |
 | P2 | 4 | 4 (all) | UI/UX (**cross-system ✅**, **patch indicators ✅**, **matchup validation ✅**, **skill tree ✅**) |
-| P3 | 4 | 1 (P3.1) | Features (**radar chart ✅**, logo, combos, PAZ research) |
+| P3 | 4 | 4 (all) | Features (**radar chart ✅**, **logo ✅**, **combos ✅**, **PAZ research ✅**) |
 | P4 | 3 | 3 (all) | Infrastructure (**auto-recovery ✅**, **caching ✅**, **test script ✅**) |
-| **Total** | **14** | **10** | |
+| **Total** | **14** | **14** | **🎉 All roadmap items complete!** |
 
 ## Recent Releases
 
+- **v5.9.5** — Logo redesign (P3.2) + combo display (P3.3) + PAZ research (P3.4) + grab verification (P1.1) + 1 false grab fixed
 - **v5.9.4** — Animation backfill (76 skills) + radar chart (P3.1) + matchups fix (P2.3) + session recovery (P4.1) + caching verified (P4.2) + cross-system verified (P2.1)
 - **v5.9.3** — Fix cross-class skill leaks: 151 duplicate base skills deleted (Nemesis Slash on Sorc, etc.) + className fixes
 - **v5.9.2** — Skill Tree View (P2.4) + classId poisoning fix for 145 base skills + Flow flag backfill (268 skills) + `bun run test` script

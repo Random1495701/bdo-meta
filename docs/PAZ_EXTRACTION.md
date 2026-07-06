@@ -4,6 +4,12 @@
 > bypassing bdocodex entirely. This gives frame-accurate durations and can be
 > re-extracted after every BDO patch.
 
+> **Note (2026-07-05, P3.4)**: The `github.com/AngeloCairo/BDO-UnPAZ` link below is dead.
+> See **`docs/PAZ_EXTRACTION_GUIDE.md`** for the current list of working extractors — the
+> recommended tool is now **sibercat/PAZ-Unpacker v2.3.0** (https://github.com/sibercat/PAZ-Unpacker),
+> an actively-maintained fork of `kukdh1/PAZ-Unpacker`. The `AMGarkin/UnPAZ` CLI tool is
+> still available for scripting.
+
 ## Can I extract animation data from PAZ files?
 
 **Yes.** BDO's PAZ archives contain everything we need:

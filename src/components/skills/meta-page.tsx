@@ -9,6 +9,8 @@ import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { formatDamage as fmtDmg } from '@/lib/damage'
 import { cn } from '@/lib/utils'
 import { SpecComparisonModal } from '@/components/skills/spec-comparison-modal'
+import { ComboDisplay } from '@/components/skills/combo-display'
+import { getCombosForClass } from '@/lib/combo-data'
 
 interface SpecStats {
   skillCount: number
@@ -347,13 +349,12 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
                 </div>
               </div>
 
-              {/* Combos placeholder */}
-              <div>
-                <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-amber-200/40">Combos</div>
-                <div className="rounded-sm border border-amber-900/30 bg-bdo-ink/50 px-3 py-2 text-xs text-amber-200/40">
-                  Combo data coming soon — will show PvP and PvE combo sequences from community guides.
-                </div>
-              </div>
+              {/* Combos — curated community-known sequences from src/lib/combo-data.ts */}
+              <ComboDisplay
+                className={cls.className}
+                spec={specName}
+                combos={getCombosForClass(cls.className, specName)}
+              />
             </div>
           </div>
         )}

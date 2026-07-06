@@ -3222,3 +3222,125 @@ Stage Summary:
 - Roadmap: 10/14 items done (P1.2, P1.3, P2.1-P2.4, P3.1, P4.1-P4.3)
 - Remaining: P1.1 (grab verification), P3.2 (logo), P3.3 (combos), P3.4 (PAZ research)
 - 42/42 tests passing, lint clean, 0 spec leaks
+
+---
+Task ID: P3.4
+Agent: paz-research-agent
+Task: Research alternative PAZ extraction tools and update guide
+
+Work Log:
+- Read worklog.md (last 224 lines) — previous agent ended at v5.9.3+v5.9.4; 10/14 roadmap items done. Remaining: P1.1, P3.2, P3.3, P3.4 (this task).
+- Read existing docs/PAZ_EXTRACTION_GUIDE.md (191 lines) and docs/PAZ_EXTRACTION.md (185 lines). Both referenced dead repos (BDOToolkit repo gone, AngeloCairo/BDO-UnPAZ gone) and were last revised 2025-07-01.
+- Used z-ai web_search skill (CLI) to run 15 targeted searches:
+  * "BDO PAZ extractor 2024 Black Desert Online"
+  * "Black Desert Online PazUnpack github"
+  * "BDOToolkit alternative PAZ file reader"
+  * "BDO game data extraction tools modding discord"
+  * "github bdo paz extractor pad00000"
+  * "BDO modding toolkit 2025 PAZ archive"
+  * "BDO .pac file animation parser"
+  * "BDO coding toolkit github release"
+  * "bdocodex alternative bdo database grutor garmoth"
+  * "github kukdh1 PAZ-Unpacker fork community maintained"
+  * "Black Desert Explorer BDO file browser model viewer"
+  * "BDO skill data dump community github JSON 2025"
+  * "Black Desert Online Noesis plugin pac file"
+- Fetched GitHub API metadata for 7 candidate repos and the README of 3 (AMGarkin/UnPAZ, kukdh1/PAZ-Unpacker, sibercat/PAZ-Unpacker).
+- KEY FINDING: **sibercat/PAZ-Unpacker** (https://github.com/sibercat/PAZ-Unpacker) is actively maintained — v2.3.0 released 2026-04-03, last commit 2026-04-09. Modern C++ (C++26, VS2025, 64-bit) Windows GUI fork of kukdh1/PAZ-Unpacker. Dark-mode UI, search across 800k+ files, multi-language (EN/JP/KR), binary cache for fast startup, "Check for Updates" button. This is the new recommended tool — previous guide referenced the dead AngeloCairo/BDO-UnPAZ repo and was unaware of this fork.
+- Other tools evaluated:
+  * kukdh1/PAZ-Unpacker — original, last push 2019-08-08, 40 stars, legacy (32-bit)
+  * AMGarkin/UnPAZ — CLI tool, last push 2018-09-06, v1.2, still useful for scripting (has -f filter flag)
+  * FearYuzu/BDOToolBox — last push 2017-06-21, language patcher (NOT an extractor)
+  * jabbber/BDO-toolkit — last push 2023-08-02, only 2 stars, CSS-heavy unclear purpose
+  * Black Desert Explorer (Maxes727) — Reddit 2016, dead
+  * Crimson Desert unpackers (lazorr410, Ekey, NattKh) — different engine (BlackSpace), do NOT work on BDO
+- For .pac animation parsing: NO publicly-maintained standalone parser found. Options documented: (1) BDO Modding Discord (discord.gg/bdomodding), (2) Noesis plugin (requested but not published), (3) manual Python struct.unpack on the .pac header, (4) WistfulHopes/FrontiersAnimDecompress for BlackSpace only.
+- Alternative data sources documented: bdocodex.com (current, no formal API, tip.php endpoint), garmoth.com (gear planner, no public skill API), bdolytics.com (items/NPCs/recipes, no skills), man90es/BDO-REST-API (Go scraper, May 2026, marketplace data), pxds/bdo-skill-list (2018 InvenGlobal scraper, stale).
+- Rewrote docs/PAZ_EXTRACTION_GUIDE.md from scratch (191 → ~290 lines): new TL;DR table with 6 evaluated tools, Option A/B/C extraction paths with concrete sibercat v2.3.0 download URL + step-by-step GUI usage, AMGarkin CLI examples with -f filter, .pac parsing options, "Alternative Approaches" section with 5 fallbacks (bdocodex, community dumps, companion sites, memory inspection ❌, manual frame counting), Research Log section listing all 13 searches + 7 GitHub repos verified.
+- Added a deprecation note to the top of docs/PAZ_EXTRACTION.md pointing to the revised guide and noting that the AngeloCairo/BDO-UnPAZ link in the body is dead.
+
+Stage Summary:
+- ✅ docs/PAZ_EXTRACTION_GUIDE.md fully rewritten with current 2026 tool inventory.
+- ✅ docs/PAZ_EXTRACTION.md got a header note flagging the dead link.
+- ⭐ RECOMMENDATION: Use **sibercat/PAZ-Unpacker v2.3.0** (April 2026) as the primary PAZ extraction tool. It is the only actively-maintained extractor. Old references to BDOToolkit / AngeloCairo BDO-UnPAZ can be replaced with this fork.
+- ⚠️ .pac animation parsing remains unsolved publicly — recommend either (a) building a minimal Python header parser (frame count is at a fixed offset, see PAZ_EXTRACTION.md pseudocode), or (b) asking the BDO Modding Discord for their internal tool, or (c) continuing to use bdocodex video durations as a fallback.
+- 📋 bdocodex remains a viable fallback — no need to abandon the lurker scraper; PAZ extraction is an enhancement, not a replacement, until .pac parsing is solved.
+- 📋 Roadmap item P3.4 marked complete. Remaining roadmap items: P1.1 (grab verification), P3.2 (logo), P3.3 (combos).
+- No source code modified, no build run, no tests run (pure research/documentation task per instructions).
+
+---
+Task ID: P3.2
+Agent: logo-agent
+Task: Redesign SVG logo with BDO occult/gold aesthetic
+
+Work Log:
+- Read worklog.md tail (last 200 lines) to absorb prior context — last entry was v5.9.3+v5.9.4 (radar chart, cross-class leak fix, animation backfill). P3.2 (logo) was explicitly listed as a remaining roadmap item.
+- Read existing public/logo.svg and public/favicon.svg — both were byte-identical 95-line SVGs with three concentric counter-rotating gold rings, 12 runic ticks, an 8-pointed occult star, and a pulsing hexagram center. The animation was the "spinning rings" design the user found distracting and similar to z.ai's logo.
+- Read src/components/skills/header.tsx line 216 — logo is rendered as `<img src="/logo.svg" alt="BDO Meta" className="size-6" />` inside a `size-8` flex container, so the design must read clearly at 24px display size. Read src/app/layout.tsx line 28 — favicon served via `metadata.icons.icon: "/favicon.svg"`. No other references to logo.svg/favicon.svg anywhere in src/.
+- Designed a NEW BDO occult seal logo (48x48 viewBox) with the following concept: "An ornate gold filigree seal containing a planted crusader sword whose blade forms the vertical spine of a stylized 'B' monogram, with two gold arcs forming the B's bumps on the right. Subtle amber halo pulse only — no spinning rings."
+- Design elements (logo.svg, 152 lines):
+  * Background: full-disc radial gradient #1a1612 → #0d0a08 → #050403 (dark amber-tinted, BDO black-sun vibe). Full 48px circle fill so the seal reads on any backdrop.
+  * Outer frame: thick gold ring (r=22, stroke 1.1) + thin inner gold ring (r=19.4, stroke 0.45) for engraved look. Vertical gold gradient (#fbe48a → #f0d060 → #c8aa44 → #7e6320).
+  * Cardinal ornaments: 4 ornate diamond/leaf shapes at N/E/S/W with amber accent dots at their centers.
+  * Diagonal runic ticks: 4 small rounded rectangles at NE/SE/SW/NW (via static rotate transforms), creating an 8-point star pattern around the ring.
+  * Inner recessed dark seal (r=16, fill #0a0908 at 55% opacity, gold hairline border).
+  * Central sword (blade pointing down, hilt at top — classic "planted crusader sword" heraldic motif):
+    - Pommel: gold disc with amber ember (subtle 3.2s flicker animation) + tiny highlight dot
+    - Grip: wrapped hilt rectangle with 4 diagonal wrap lines
+    - Cross-guard: swept quillon path with horizontal gold gradient, center diamond, two end-cap orbs with amber dots
+    - Blade: tapering path with steel-gold gradient, central fuller groove, edge highlight
+    - Ground burst: small ornate flourish at the planted tip
+  * "B" monogram arcs on the right: two curved gold strokes (1.6px stroke) forming the upper and lower bumps of a B, with amber gem accents at their apexes.
+  * Pulsing amber halo: radial gradient (#fbbf24 → transparent) behind the central emblem, 4.5s ease-in-out opacity pulse (0.30 → 0.85 → 0.30). NO spinning/rotation animations anywhere.
+  * Accessibility: `<title>BDO Meta</title>` + `<desc>` for screen readers, `role="img"` + `aria-label`.
+  * Reduced-motion: `@media (prefers-reduced-motion: reduce)` freezes halo and ember at fixed opacity.
+  * Color compliance: only gold/amber/dark-brown palette (#fbe48a, #f0d060, #c8aa44, #7e6320, #5e4717, #fbbf24, #fffbe0, #0a0908, #1a1612, #0d0a08, #050403). Verified zero blue/indigo hex codes via grep.
+  * Self-contained: all gradients inline in <defs>, all animation in inline <style>, no external references.
+- Wrote simplified favicon.svg (77 lines): same overall design but stripped of fine details that disappear at 16-32px — no diagonal runic ticks, no inner thin ring, no grip wraps, no fuller, no ground burst, no animation (many browsers don't animate SVG favicons reliably). Thicker strokes (1.4-1.8px) for legibility at 16px.
+- Verified both SVGs parse as valid XML via Python xml.etree.ElementTree.
+- Verified no spinning/rotating animations: only the 4 static `transform="rotate(N 24 24)"` calls positioning the diagonal ticks (not animated).
+- Verified dev server (already running on :3000) serves the new SVGs unchanged via curl + diff.
+- Built a temporary HTML preview page rendering both SVGs at 48/32/24/16px, screenshotted via agent-browser, and ran VLM (z-ai vision) for objective visual verification. VLM verdict:
+  * "ornate and medieval-inspired, with a strong BDO (Black Desert Online) theme"
+  * "circular emblem with intricate gold filigree surrounding a central stylized 'B' letter"
+  * "No blue or indigo colors are present; the palette is limited to gold and black"
+  * "distinctly BDO-themed ... does not resemble a generic tech startup logo"
+  * "scales down well to 16px ... the 'B' and overall emblem structure are still distinguishable"
+- Cleaned up the temp preview HTML from public/ (removed _logo-preview.html).
+- Ran `bun run lint` — clean (0 errors, 0 warnings).
+
+Stage Summary:
+- Replaced public/logo.svg (was: 95-line spinning-rings design) with a 152-line BDO occult seal featuring a planted crusader sword forming the spine of a stylized "B" monogram, encircled by gold filigree with cardinal diamond ornaments and diagonal runic ticks. Subtle amber halo pulse + pommel ember flicker — no spinning.
+- Replaced public/favicon.svg with a simplified 77-line version (thicker strokes, no animation, no fine details) for legibility at 16-32px favicon sizes.
+- Color palette is strictly gold/amber/dark (no blue/indigo anywhere — verified via grep).
+- SVGs are self-contained (inline gradients + styles, no external refs), 48x48 viewBox, valid XML, screen-reader accessible (title + desc + role + aria-label).
+- Animations respect prefers-reduced-motion.
+- VLM verified the design reads as ornate BDO-themed B emblem at all sizes 16-48px.
+- Lint clean. No source code changes (header.tsx and layout.tsx already reference /logo.svg and /favicon.svg — no edits needed).
+
+---
+Task ID: P1.1
+Agent: grab-verify-agent
+Task: Verify grab counts against BDO community data
+
+Work Log:
+- Read worklog.md (last 200 lines) — understood prior state: v5.5.4 fixed 15 false grabs (block/guard skills with "except Grapple" tooltip text), v5.9.3 deleted 151 cross-class duplicates, current DB has 7038 skills.
+- Queried DB for max-rank Grapple skills: **39 skills across 22 classes** (not 46/20 as user stated — older baseline).
+- Ran 8 web searches via z-ai web_search skill: "BDO grab skills list by class", "BDO Grapple skills all classes", "BDO Foundry grab skills", "black desert online grapple skills 2024", plus per-class searches for Musa/Maehwa/Kunoichi/Dark Knight/Dosa/Deadeye/Maegu/Woosa and Witch Wizard grab confirmation.
+- Inspected `damageRowsJson` field for every max-rank grab to distinguish real Grapple CC rows from "disqualifying state" notes (the same parser false-positive pattern documented in v5.5.4 worklog).
+- Cross-referenced with BDFoundry class guides, Garmoth.com combat guide, Reddit PvP threads (incl. the canonical "4 classes with 30% grab passive = striker/mystic/warrior/zerker" thread).
+- Verified all 11 missing-from-DB classes (Musa, Maehwa, DK, Kunoichi, Dosa, Deadeye, Maegu, Woosa, Sorceress, Shai, Archer) genuinely have NO grab skills in BDO — 0 missing grabs.
+- Identified 1 new false positive: **Archwizardry: Mass Teleport (Witch, skillId 6799)** — bdocodex tooltip lists Grapple as a state in which party members CANNOT be teleported; parser mis-tagged the skill itself as having Grapple CC. Same root-cause pattern as v5.5.4 false positives, but slightly different surface text ("not be able to join" rather than "All CC Resistance (except Grapple)").
+- Verified all other 38 grabs are real: each has multiple `cc: Grapple` rows in damageRowsJson with no surrounding "except"/"cannot" notes; descriptions confirm grab semantics ("Grab your foe", "Bind the target", "Rapidly approach the opponent and grab them by the neck", etc.).
+- Wrote verification report to `docs/GRAB_VERIFICATION.md` with: full per-class table, false-positive root-cause analysis, 0-missing-grabs confirmation, recommended 1-row DB fix, and a reusable verification script.
+
+Stage Summary:
+- Grab count verification COMPLETE.
+- **Result**: 39 max-rank grabs currently in DB; 1 is a false positive (Witch Mass Teleport). After fix: **38 real grabs across 22 classes**.
+- **False positives**: 1 — `Archwizardry: Mass Teleport` (Witch, skillId 6799). Root cause: bdocodex tooltip parser saw "Grapple" listed as a disqualifying state for party members being teleported and incorrectly tagged the skill itself as a Grapple CC skill.
+- **Missing grabs**: 0. All BDO classes known to have grabs are represented. All 11 non-grab classes correctly have no Grapple skills (verified via BDFoundry guides + Reddit PvP threads).
+- **User's "46 grabs / 20 classes" baseline** is older than current DB state — prior false-positive cleanups (v5.5.4) already reduced the count to 39; newer classes (Scholar, Seraph, Wukong) were added bringing the class count up to 22.
+- **Recommended fix**: `db.skill.update({ where: { skillId: 6799 }, data: { ccTypes: null } })` — single-row fix.
+- **Structural recommendation**: extend the bdocodex parser's false-positive filter to also catch "not be able to" / "cannot" / "will not" / "excluded" notes adjacent to `cc: Grapple` rows (current filter only catches "except Grapple").
+- Report file: `docs/GRAB_VERIFICATION.md`
+- No DB modifications made (per task instructions — reporting only).
