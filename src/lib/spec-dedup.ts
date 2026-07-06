@@ -151,18 +151,43 @@ export function dedupSkillsBySpec<T extends DedupInputSkill>(
     // - BS Absolute: → Awakening only (not Succession, not default if Prime exists)
     // - BS Awakening-weapon skills (isAwakening=true, no Prime/Abs prefix) → Awakening only
     // - BS skills without spec prefix and isAwakening=false → both specs
+    //
+    // BSR REPLACEMENT RULE (user-confirmed 2026-07-06):
+    //   - For Succession: if a BS Prime: version exists, it REPLACES the normal
+    //     BS version → only show BS Prime:, skip normal BS
+    //   - For Awakening: if a BS Absolute: version exists, it REPLACES the normal
+    //     BS version → only show BS Absolute:, skip normal BS
+    //   - For Default: prefer BS Prime: if it exists, else normal BS
     if (info.isBlackSpirit) {
-      for (const s of pickWhere(info, (s) => s.isBlackSpirit)) {
+      const bsSkills = pickWhere(info, (s) => s.isBlackSpirit)
+      // Check if BS Prime or BS Absolute variants exist in this group
+      const hasBSPrime = bsSkills.some((s) => {
+        const inner = s.name.replace(/^Black Spirit:\s*/i, '')
+        return inner.includes('Prime: ') || inner.startsWith('Succession:')
+      })
+      const hasBSAbs = bsSkills.some((s) => {
+        const inner = s.name.replace(/^Black Spirit:\s*/i, '')
+        return inner.includes('Absolute: ')
+      })
+
+      for (const s of bsSkills) {
         const innerName = s.name.replace(/^Black Spirit:\s*/i, '')
         const isBSPrime = innerName.includes('Prime: ') || innerName.startsWith('Succession:')
         const isBSAbs = innerName.includes('Absolute: ')
         const isBSAwk = s.isAwakening // Awakening-weapon BS skill
+        const isNormalBS = !isBSPrime && !isBSAbs // plain "Black Spirit: X"
 
         if (isBSPrime && spec === 'awakening') continue // Prime → Succession only
         if (isBSAbs && spec === 'succession') continue // Absolute → Awakening only
-        if (isBSAbs && spec === null && info.hasSuccession) continue // Absolute → skip in default if Prime exists
+        if (isBSAbs && spec === null && hasBSPrime) continue // Absolute → skip in default if Prime exists
         if (isBSAwk && !isBSPrime && !isBSAbs && spec === 'succession') continue // Awakening-weapon BS → Awakening only
         if (isBSAwk && !isBSPrime && !isBSAbs && spec === null) continue // Awakening-weapon BS → not in default view
+
+        // BSR replacement: if spec-appropriate Prime/Absolute exists, skip normal BS
+        if (isNormalBS && spec === 'succession' && hasBSPrime) continue
+        if (isNormalBS && spec === 'awakening' && hasBSAbs) continue
+        if (isNormalBS && spec === null && hasBSPrime) continue
+
         if (!added.has(s.skillId)) { result.push(s); added.add(s.skillId) }
       }
       continue
