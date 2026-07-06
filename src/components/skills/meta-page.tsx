@@ -538,14 +538,11 @@ function StatBox({ label, value, color, highlighted }: { label: string; value: s
   )
 }
 
-function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelections, onRowClick }: {
+function MetaTable({ classes, sortKey, sortDir, onSort }: {
   classes: ClassStats[]
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
   onSort: (key: SortKey) => void
-  ratioMode: boolean
-  ratioSelections: Set<string>
-  onRowClick: (cls: ClassStats, spec: 'awakening' | 'succession' | 'ascension') => void
 }) {
   // Flatten into spec rows
   const rows: { cls: ClassStats; spec: 'awakening' | 'succession' | 'ascension'; stats: SpecStats }[] = []
@@ -614,15 +611,11 @@ function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelectio
             const mainPortraitUrl = `/icons/portraits/${row.cls.slug}.jpg`
             const specMeta = SPEC_META[row.spec]
             const rowKey = `${row.cls.classId}-${row.spec}`
-            const isSelected = ratioSelections.has(rowKey)
             return (
               <tr
                 key={rowKey}
-                onClick={() => ratioMode && onRowClick(row.cls, row.spec)}
                 className={cn(
                   'border-b border-amber-900/20 hover:bg-amber-500/5',
-                  ratioMode && 'cursor-pointer',
-                  isSelected && 'bg-amber-500/10 ring-1 ring-amber-400/40',
                 )}
               >
                 <td className="px-2 py-1.5">
@@ -655,12 +648,10 @@ function MetaTable({ classes, sortKey, sortDir, onSort, ratioMode, ratioSelectio
 }
 
 export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec: 'awakening' | 'succession' | 'ascension') => void }) {
-  const [viewMode, setViewMode] = React.useState<'cards' | 'table' | 'matchups'>('cards')
-  const [sortKey, setSortKey] = React.useState<SortKey>('className')
-  const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('asc')
+  const [viewMode, setViewMode] = React.useState<'cards' | 'table'>('cards')
+  const [sortKey, setSortKey] = React.useState<SortKey>('avgDpcPvP')
+  const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('desc')
   const [expandedCard, setExpandedCard] = React.useState<string | null>(null)
-  const [ratioMode, setRatioMode] = React.useState(false)
-  const [ratioSelections, setRatioSelections] = React.useState<Set<string>>(new Set())
   const [comparingClass, setComparingClass] = React.useState<ClassStats | null>(null)
 
   const metaQuery = useQuery({
@@ -725,20 +716,8 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
             {specCards.length} spec cards · {classes.length} classes
           </span>
 
-          {/* View toggle + Ratio toggle */}
+          {/* View toggle */}
           <div className="ml-auto flex items-center gap-2">
-            <button
-              onClick={() => { setRatioMode(!ratioMode); setRatioSelections(new Set()) }}
-              className={cn(
-                'flex items-center gap-1 rounded-sm border px-2.5 py-1.5 text-xs font-semibold transition-all',
-                ratioMode
-                  ? 'border-amber-400/60 bg-amber-500/15 text-amber-200'
-                  : 'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200',
-              )}
-              title="Click class cards to compare class group advantages (multi-select)"
-            >
-              ⚔ Ratios
-            </button>
             <div className="flex rounded-sm border border-amber-800/50 overflow-hidden">
               <button
                 onClick={() => setViewMode('cards')}
@@ -752,95 +731,8 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
               >
                 <Table2 className="size-3.5" /> Table
               </button>
-              <button
-                onClick={() => setViewMode('matchups')}
-                className={cn('flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold transition-all', viewMode === 'matchups' ? 'bg-amber-500/20 text-amber-200' : 'bg-bdo-leather-dark text-amber-300/50 hover:text-amber-200')}
-              >
-                <Swords className="size-3.5" /> Matchups
-              </button>
             </div>
           </div>
-
-        {/* Ratio mode banner — multi-select with pairwise display */}
-        {ratioMode && (
-          <div className="border-b border-amber-900/30 bg-bdo-leather-dark/50 px-4 py-2 lg:px-6">
-            {ratioSelections.size > 0 ? (
-              <div className="flex flex-col gap-2">
-                {/* Pairwise ratios: "Class A (Group) vs Class B (Group) → Advantage" */}
-                {ratioSelections.size >= 2 && (
-                  <div className="flex flex-wrap items-center gap-2">
-                    {(() => {
-                      const keys = Array.from(ratioSelections)
-                      const pairs: React.ReactNode[] = []
-                      for (let i = 0; i < keys.length; i++) {
-                        for (let j = i + 1; j < keys.length; j++) {
-                          const [idA, specA] = keys[i].split('-')
-                          const [idB, specB] = keys[j].split('-')
-                          const clsA = classes.find(c => c.classId === parseInt(idA))
-                          const clsB = classes.find(c => c.classId === parseInt(idB))
-                          if (!clsA || !clsB) continue
-                          const groupA = specA === 'awakening' ? clsA.awakeningGroup : specA === 'succession' ? clsA.successionGroup : clsA.ascensionGroup
-                          const groupB = specB === 'awakening' ? clsB.awakeningGroup : specB === 'succession' ? clsB.successionGroup : clsB.ascensionGroup
-                          const specColorA = SPEC_META[specA]?.color || '#fff'
-                          const specColorB = SPEC_META[specB]?.color || '#fff'
-                          let adv = 'Neutral'
-                          let advColor = '#a1a1aa'
-                          // Counter cycle: Vanguard > Pulverizer > Skirmisher > Vanguard
-                          if (groupA === 'Vanguard' && groupB === 'Pulverizer') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
-                          else if (groupA === 'Skirmisher' && groupB === 'Vanguard') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
-                          else if (groupA === 'Pulverizer' && groupB === 'Skirmisher') { adv = `${clsA.className} +5%`; advColor = '#34d399' }
-                          else if (groupB === 'Vanguard' && groupA === 'Pulverizer') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
-                          else if (groupB === 'Skirmisher' && groupA === 'Vanguard') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
-                          else if (groupB === 'Pulverizer' && groupA === 'Skirmisher') { adv = `${clsB.className} +5%`; advColor = '#34d399' }
-                          pairs.push(
-                            <div key={`${keys[i]}-${keys[j]}`} className="flex items-center gap-1.5 rounded-sm border border-amber-800/30 bg-bdo-ink/40 px-2 py-1 text-xs">
-                              <span className="font-bold" style={{ color: specColorA }}>{clsA.className}</span>
-                              <span className="text-amber-300/40">({groupA || '?'})</span>
-                              <span className="text-amber-400">vs</span>
-                              <span className="font-bold" style={{ color: specColorB }}>{clsB.className}</span>
-                              <span className="text-amber-300/40">({groupB || '?'})</span>
-                              <span className="text-amber-400">→</span>
-                              <span className="rounded-sm px-1.5 py-0.5 text-[10px] font-bold" style={{ color: advColor, backgroundColor: `${advColor}15` }}>
-                                {adv}
-                              </span>
-                            </div>
-                          )
-                        }
-                      }
-                      return pairs
-                    })()}
-                  </div>
-                )}
-                {/* Selected classes with remove buttons */}
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-[10px] uppercase tracking-wider text-amber-300/40">Selected ({ratioSelections.size}):</span>
-                  {Array.from(ratioSelections).map((key) => {
-                    const [classId, spec] = key.split('-')
-                    const cls = classes.find(c => c.classId === parseInt(classId))
-                    if (!cls) return null
-                    const group = spec === 'awakening' ? cls.awakeningGroup : spec === 'succession' ? cls.successionGroup : cls.ascensionGroup
-                    const specColor = SPEC_META[spec]?.color || '#fff'
-                    return (
-                      <span key={key} className="flex items-center gap-1 rounded-sm border px-2 py-0.5 text-xs" style={{ borderColor: `${specColor}44`, backgroundColor: `${specColor}11` }}>
-                        <span className="font-bold text-amber-200">{cls.className}</span>
-                        <span style={{ color: specColor }}>{SPEC_META[spec]?.label}</span>
-                        <span className="text-amber-300/50">({group || '?'})</span>
-                        <button onClick={() => {
-                          const next = new Set(ratioSelections)
-                          next.delete(key)
-                          setRatioSelections(next)
-                        }} className="ml-1 text-amber-300/40 hover:text-red-400">✕</button>
-                      </span>
-                    )
-                  })}
-                  <button onClick={() => setRatioSelections(new Set())} className="ml-auto rounded-sm border border-amber-800/50 px-2 py-0.5 text-xs text-amber-300/70 hover:text-amber-200">Clear</button>
-                </div>
-              </div>
-            ) : (
-              <div className="text-xs text-amber-200/50">Click class cards to compare group advantages. Multi-select supported.</div>
-            )}
-          </div>
-        )}
 
           {/* Sort buttons */}
           <div className="flex flex-wrap items-center gap-1.5">
@@ -893,37 +785,19 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
                   onDataClick={() => onCardClick?.(cls.classId, spec)}
                   isExpanded={expandedCard === cardKey}
                   onExpand={() => {
-                    if (ratioMode) {
-                      const next = new Set(ratioSelections)
-                      if (next.has(cardKey)) next.delete(cardKey)
-                      else next.add(cardKey)
-                      setRatioSelections(next)
-                    } else {
-                      setExpandedCard(expandedCard === cardKey ? null : cardKey)
-                    }
+                    setExpandedCard(expandedCard === cardKey ? null : cardKey)
                   }}
                   onCompare={() => setComparingClass(cls)}
                 />
               )
             })}
           </div>
-        ) : viewMode === 'matchups' ? (
-          <MatchupMatrix classes={classes} />
         ) : (
           <MetaTable
             classes={classes}
             sortKey={sortKey}
             sortDir={sortDir}
             onSort={handleSort}
-            ratioMode={ratioMode}
-            ratioSelections={ratioSelections}
-            onRowClick={(cls, spec) => {
-              const key = `${cls.classId}-${spec}`
-              const next = new Set(ratioSelections)
-              if (next.has(key)) next.delete(key)
-              else next.add(key)
-              setRatioSelections(next)
-            }}
           />
         )}
       </div>
@@ -956,194 +830,6 @@ function ExpandedStatBox({ label, value, color }: { label: string; value: string
     >
       <span className="text-[8px] font-semibold uppercase tracking-wider" style={{ color: `${color}cc` }}>{label}</span>
       <span className="font-mono text-base font-bold tabular-nums" style={{ color }}>{value}</span>
-    </div>
-  )
-}
-
-// ─── Matchup Matrix ─────────────────────────────────────────────────
-// Shows class group counter relationships (Vanguard > Pulverizer > Skirmisher > Vanguard).
-// +5% damage advantage when attacking the counter group.
-
-const GROUP_COLORS: Record<string, string> = {
-  Vanguard: '#ef4444',
-  Pulverizer: '#f97316',
-  Skirmisher: '#3b82f6',
-}
-
-const GROUP_ICONS: Record<string, string> = {
-  Vanguard: '🛡',
-  Pulverizer: '⚔',
-  Skirmisher: '🏹',
-}
-
-function MatchupMatrix({ classes }: { classes: ClassStats[] }) {
-  const [selectedSpec, setSelectedSpec] = React.useState<'awakening' | 'succession' | 'ascension'>('awakening')
-
-  // Get unique classes with their group for the selected spec
-  const classGroups = React.useMemo(() => {
-    const seen = new Map<string, { className: string; slug: string; group: string | null; combatType: string | null }>()
-    for (const cls of classes) {
-      const group = selectedSpec === 'awakening' ? cls.awakeningGroup
-        : selectedSpec === 'succession' ? cls.successionGroup
-        : cls.ascensionGroup
-      if (group && !seen.has(cls.className)) {
-        seen.set(cls.className, { className: cls.className, slug: cls.slug, group, combatType: cls.combatType })
-      }
-    }
-    return Array.from(seen.values()).sort((a, b) => a.group!.localeCompare(b.group!) || a.className.localeCompare(b.className))
-  }, [classes, selectedSpec])
-
-  // Group counts
-  const groupCounts = React.useMemo(() => {
-    const counts: Record<string, number> = {}
-    for (const c of classGroups) {
-      if (c.group) counts[c.group] = (counts[c.group] || 0) + 1
-    }
-    return counts
-  }, [classGroups])
-
-  // Get counter relationship
-  const getCounter = (group: string): string => {
-    if (group === 'Vanguard') return 'Pulverizer'
-    if (group === 'Pulverizer') return 'Skirmisher'
-    if (group === 'Skirmisher') return 'Vanguard'
-    return ''
-  }
-
-  return (
-    <div className="space-y-4">
-      {/* Info header */}
-      <div className="rounded-sm border-2 border-amber-800/40 bg-bdo-leather-dark/30 p-4">
-        <h2 className="bdo-title mb-2 text-lg font-bold text-amber-300">Class Group Matchups</h2>
-        <p className="text-xs leading-relaxed text-amber-100/60">
-          BDO classes are divided into 3 groups that follow a rock-paper-scissors counter system.
-          Attacking a counter group grants <span className="font-bold text-emerald-400">+5% damage</span>.
-        </p>
-        {/* Counter cycle */}
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          {['Vanguard', 'Pulverizer', 'Skirmisher'].map((group, i) => {
-            const color = GROUP_COLORS[group]
-            return (
-              <React.Fragment key={group}>
-                <div
-                  className="flex items-center gap-1.5 rounded-sm border px-3 py-1.5"
-                  style={{ borderColor: `${color}66`, backgroundColor: `${color}15` }}
-                >
-                  <span className="text-base">{GROUP_ICONS[group]}</span>
-                  <div className="flex flex-col">
-                    <span className="text-xs font-bold" style={{ color }}>{group}</span>
-                    <span className="text-[9px] text-amber-300/40">{groupCounts[group] || 0} classes</span>
-                  </div>
-                </div>
-                {i < 2 && <span className="text-amber-400/40">→ counters →</span>}
-              </React.Fragment>
-            )
-          })}
-          <span className="text-amber-400/40">→ counters →</span>
-          <span className="text-xs text-amber-300/40">(cycle)</span>
-        </div>
-      </div>
-
-      {/* Spec selector */}
-      <div className="flex items-center gap-2">
-        <span className="text-[10px] uppercase tracking-wider text-amber-300/40">Spec:</span>
-        {(['awakening', 'succession', 'ascension'] as const).map(s => (
-          <button
-            key={s}
-            onClick={() => setSelectedSpec(s)}
-            className={cn(
-              'rounded-sm border px-2.5 py-1 text-[10px] font-semibold capitalize transition-all',
-              selectedSpec === s ? 'text-amber-200' : 'border-amber-800/40 bg-bdo-leather-dark/50 text-amber-300/50 hover:text-amber-200',
-            )}
-            style={selectedSpec === s ? { borderColor: SPEC_COLORS[s], backgroundColor: `${SPEC_COLORS[s]}15`, color: SPEC_COLORS[s] } : undefined}
-          >
-            {s}
-          </button>
-        ))}
-      </div>
-
-      {/* Matchup grid */}
-      <div className="overflow-x-auto rounded-sm border border-amber-800/30">
-        <table className="w-full border-collapse text-[10px]">
-          <thead>
-            <tr className="border-b border-amber-800/40 bg-bdo-leather-dark/50">
-              <th className="sticky left-0 z-10 bg-bdo-leather-dark/50 px-2 py-2 text-left font-semibold uppercase tracking-wider text-amber-300/50">
-                Attacker ↓ / Defender →
-              </th>
-              {classGroups.map(c => (
-                <th key={c.className} className="px-1 py-1 text-center" title={`${c.className} (${c.group})`}>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <div className="size-5 overflow-hidden rounded-sm border" style={{ borderColor: `${classColor(c.className)}44` }}>
-                      {classIconUrl(c.slug) && <img src={classIconUrl(c.slug) ?? undefined} alt={c.className} className="h-full w-full object-cover" loading="lazy" />}
-                    </div>
-                    <span className="text-[8px]" style={{ color: GROUP_COLORS[c.group || ''] || '#a1a1aa' }}>
-                      {(GROUP_ICONS[c.group || ''] || '')}
-                    </span>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {classGroups.map(attacker => {
-              const attackerColor = classColor(attacker.className)
-              return (
-                <tr key={attacker.className} className="border-b border-amber-900/15 hover:bg-amber-500/5">
-                  <td className="sticky left-0 z-10 bg-bdo-ink/80 px-2 py-1">
-                    <div className="flex items-center gap-1.5">
-                      <div className="size-4 shrink-0 overflow-hidden rounded-sm border" style={{ borderColor: `${attackerColor}55` }}>
-                        {classIconUrl(attacker.slug) && <img src={classIconUrl(attacker.slug)!} alt="" className="h-full w-full object-cover" loading="lazy" />}
-                      </div>
-                      <span className="truncate text-[10px] font-semibold" style={{ color: attackerColor }}>{attacker.className}</span>
-                      <span className="text-[8px]" style={{ color: GROUP_COLORS[attacker.group || ''] }}>
-                        {GROUP_ICONS[attacker.group || '']}
-                      </span>
-                    </div>
-                  </td>
-                  {classGroups.map(defender => {
-                    if (attacker.className === defender.className) {
-                      return <td key={defender.className} className="bg-amber-900/10 px-1 py-1 text-center text-amber-700/30">—</td>
-                    }
-                    const hasAdvantage = getCounter(attacker.group || '') === defender.group
-                    const hasDisadvantage = getCounter(defender.group || '') === attacker.group
-                    return (
-                      <td key={defender.className} className="px-1 py-1 text-center">
-                        <div
-                          className={cn(
-                            'mx-auto flex size-7 items-center justify-center rounded-sm border text-[9px] font-bold',
-                            hasAdvantage && 'border-emerald-500/50 bg-emerald-900/20 text-emerald-300',
-                            hasDisadvantage && 'border-red-500/50 bg-red-900/20 text-red-300',
-                            !hasAdvantage && !hasDisadvantage && 'border-amber-900/20 text-amber-300/30',
-                          )}
-                          title={hasAdvantage ? `${attacker.className} counters ${defender.className} (+5% damage)` : hasDisadvantage ? `${defender.className} counters ${attacker.className} (-5% damage taken)` : 'No counter relationship'}
-                        >
-                          {hasAdvantage ? '+5%' : hasDisadvantage ? '−5%' : '='}
-                        </div>
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 text-[10px]">
-        <div className="flex items-center gap-1.5">
-          <div className="size-4 rounded-sm border border-emerald-500/50 bg-emerald-900/20" />
-          <span className="text-emerald-300/70">+5% damage (counter advantage)</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="size-4 rounded-sm border border-red-500/50 bg-red-900/20" />
-          <span className="text-red-300/70">−5% damage taken (disadvantage)</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="size-4 rounded-sm border border-amber-900/20" />
-          <span className="text-amber-300/50">No counter (same group or neutral)</span>
-        </div>
-      </div>
     </div>
   )
 }
