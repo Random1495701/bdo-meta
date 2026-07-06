@@ -93,7 +93,10 @@ export default function Home() {
         const searchInput = document.querySelector('input[placeholder*="Search"]') as HTMLInputElement
         searchInput?.focus()
       } else if (view === 'data' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter')) {
-        // Arrow key navigation in skill grid
+        // Arrow key navigation in skill grid.
+        // Tree view has its own keyboard handler (Q3.3) — defer to it so we
+        // don't call preventDefault on keys the tree component owns.
+        if (useSkillStore.getState().viewMode === 'tree') return
         e.preventDefault()
         const cards = Array.from(document.querySelectorAll('[data-skill-card]')) as HTMLElement[]
         if (cards.length === 0) return

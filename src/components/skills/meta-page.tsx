@@ -3,13 +3,14 @@
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Zap, ArrowUpDown, Table2, LayoutGrid, Database, X, ChevronDown, ExternalLink, Swords } from 'lucide-react'
+import { Zap, ArrowUpDown, Table2, LayoutGrid, Database, X, ChevronDown, ExternalLink, Swords, Search } from 'lucide-react'
 
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { formatDamage as fmtDmg } from '@/lib/damage'
 import { cn } from '@/lib/utils'
+import { Input } from '@/components/ui/input'
 import { SpecComparisonModal } from '@/components/skills/spec-comparison-modal'
-import { ComboDisplay } from '@/components/skills/combo-display'
+import { ComboDisplay, type ComboTypeFilter } from '@/components/skills/combo-display'
 import { getCombosForClass } from '@/lib/combo-data'
 
 interface SpecStats {
@@ -65,7 +66,7 @@ async function fetchMeta(): Promise<{ classes: ClassStats[] }> {
 // Portrait is the card background, with a dark gradient overlay for readability.
 // Framed class icon in top-right corner with spec-colored border.
 // Card is clickable → navigates to Data tab with class+spec pre-filtered.
-function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpanded, onExpand, onCompare }: {
+function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpanded, onExpand, onCompare, comboSearch, comboFilter }: {
   cls: ClassStats
   specName: 'awakening' | 'succession' | 'ascension'
   stats: SpecStats
@@ -75,6 +76,10 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
   isExpanded: boolean
   onExpand: () => void
   onCompare?: () => void
+  /** Global combo search query (forwarded to ComboDisplay). */
+  comboSearch?: string
+  /** Global combo type filter (forwarded to ComboDisplay). */
+  comboFilter?: ComboTypeFilter
 }) {
   const iconUrl = classIconUrl(cls.slug)
   const specPortraitUrl = `/icons/portraits/specs/${cls.slug}-${specName}.jpg`
@@ -355,6 +360,8 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
                 className={cls.className}
                 spec={specName}
                 combos={getCombosForClass(cls.className, specName)}
+                searchQuery={comboSearch}
+                typeFilter={comboFilter}
               />
             </div>
           </div>
@@ -653,6 +660,9 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
   const [sortDir, setSortDir] = React.useState<'asc' | 'desc'>('desc')
   const [expandedCard, setExpandedCard] = React.useState<string | null>(null)
   const [comparingClass, setComparingClass] = React.useState<ClassStats | null>(null)
+  // Global combo search/filter — applies to every SpecCard's ComboDisplay.
+  const [comboSearch, setComboSearch] = React.useState('')
+  const [comboFilter, setComboFilter] = React.useState<ComboTypeFilter>('all')
 
   const metaQuery = useQuery({
     queryKey: ['meta'],
@@ -705,6 +715,16 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
     { key: 'iFrameCount', label: 'IF', icon: <span>✦</span> },
     { key: 'protectedCoverage', label: 'Prot %', icon: null },
   ]
+
+  // Filter chips for the combo search bar. Colors mirror ComboDisplay's TYPE_META
+  // so the active chip visually matches the combo type badge.
+  const comboFilterOptions: { key: ComboTypeFilter; label: string; color: string | null }[] = [
+    { key: 'all', label: 'All', color: null },
+    { key: 'pvp', label: 'PvP', color: '#f472b6' },
+    { key: 'pve', label: 'PvE', color: '#34d399' },
+    { key: 'both', label: 'Both', color: '#fbbf24' },
+  ]
+  const comboFilterActive = comboSearch.trim().length > 0 || comboFilter !== 'all'
 
   return (
     <div className="flex min-h-screen flex-col bg-bdo-ink text-zinc-100">
@@ -771,27 +791,96 @@ export function MetaPage({ onCardClick }: { onCardClick?: (classId: number, spec
             Failed to load meta data. Make sure the database is restored.
           </div>
         ) : viewMode === 'cards' ? (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {specCards.map(({ cls, spec, stats }) => {
-              const cardKey = `${cls.classId}-${spec}`
-              return (
-                <SpecCard
-                  key={cardKey}
-                  cls={cls}
-                  specName={spec}
-                  stats={stats}
-                  sortKey={sortKey}
-                  onClick={() => onCardClick?.(cls.classId, spec)}
-                  onDataClick={() => onCardClick?.(cls.classId, spec)}
-                  isExpanded={expandedCard === cardKey}
-                  onExpand={() => {
-                    setExpandedCard(expandedCard === cardKey ? null : cardKey)
-                  }}
-                  onCompare={() => setComparingClass(cls)}
+          <>
+            {/* Combo search + type filter — global; affects ComboDisplay inside each expanded SpecCard. */}
+            <div className="mb-4 flex flex-wrap items-center gap-3 rounded-sm border border-amber-900/40 bg-bdo-leather-dark/40 p-2.5">
+              <div className="flex items-center gap-2">
+                <Search className="size-4 shrink-0 text-amber-300/60" aria-hidden />
+                <Input
+                  type="text"
+                  value={comboSearch}
+                  onChange={(e) => setComboSearch(e.target.value)}
+                  placeholder="Search combos by name, skill, or type (pvp / pve / both)…"
+                  aria-label="Search combos"
+                  className="h-8 w-72 max-w-full border-amber-900/50 bg-bdo-ink/70 text-xs text-amber-100 placeholder:text-amber-200/30 focus-visible:border-amber-500/60 focus-visible:ring-amber-500/20"
                 />
-              )
-            })}
-          </div>
+                {comboSearch && (
+                  <button
+                    type="button"
+                    onClick={() => setComboSearch('')}
+                    title="Clear search"
+                    aria-label="Clear search"
+                    className="flex size-6 shrink-0 items-center justify-center rounded-sm border border-amber-900/40 bg-bdo-ink/60 text-amber-300/60 transition-colors hover:text-amber-200"
+                  >
+                    <X className="size-3" />
+                  </button>
+                )}
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] uppercase tracking-wider text-amber-300/40">Type:</span>
+                {comboFilterOptions.map((opt) => {
+                  const isActive = comboFilter === opt.key
+                  return (
+                    <button
+                      key={opt.key}
+                      type="button"
+                      onClick={() => setComboFilter(opt.key)}
+                      className={cn(
+                        'rounded-sm border px-2 py-1 text-[10px] font-bold uppercase tracking-wider transition-all',
+                        isActive
+                          ? 'border-amber-400/60 bg-amber-500/15 text-amber-200'
+                          : 'border-amber-900/40 bg-bdo-leather-dark text-amber-300/50 hover:border-amber-600/40 hover:text-amber-200',
+                      )}
+                      style={isActive && opt.color
+                        ? { color: opt.color, borderColor: `${opt.color}66`, backgroundColor: `${opt.color}1a` }
+                        : undefined}
+                    >
+                      {opt.label}
+                    </button>
+                  )
+                })}
+              </div>
+
+              {comboFilterActive && (
+                <button
+                  type="button"
+                  onClick={() => { setComboSearch(''); setComboFilter('all') }}
+                  className="ml-auto text-[10px] uppercase tracking-wider text-amber-300/50 transition-colors hover:text-amber-200"
+                  title="Reset combo search and filter"
+                >
+                  Reset
+                </button>
+              )}
+              <span className="hidden text-[10px] text-amber-200/30 sm:inline">
+                Applies to combos inside expanded class cards
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {specCards.map(({ cls, spec, stats }) => {
+                const cardKey = `${cls.classId}-${spec}`
+                return (
+                  <SpecCard
+                    key={cardKey}
+                    cls={cls}
+                    specName={spec}
+                    stats={stats}
+                    sortKey={sortKey}
+                    onClick={() => onCardClick?.(cls.classId, spec)}
+                    onDataClick={() => onCardClick?.(cls.classId, spec)}
+                    isExpanded={expandedCard === cardKey}
+                    onExpand={() => {
+                      setExpandedCard(expandedCard === cardKey ? null : cardKey)
+                    }}
+                    onCompare={() => setComparingClass(cls)}
+                    comboSearch={comboSearch}
+                    comboFilter={comboFilter}
+                  />
+                )
+              })}
+            </div>
+          </>
         ) : (
           <MetaTable
             classes={classes}

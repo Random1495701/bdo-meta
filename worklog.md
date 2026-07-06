@@ -3529,3 +3529,125 @@ Stage Summary:
 - **No DB modifications** (per task constraints — all fixes in code).
 - **Tests**: 42/42 passing. Lint: clean on all modified files.
 - **Known minor undercount**: For Succession spec, 3 Warrior skills (Blessing of Taebaek/Asadal, Fury of Asadal) are no longer counted because their base variants are awakening-only and the PRI/DUO/TRI/TET/PEN enhancement variants are now skipped. Future fix: properly dedup enhancement tiers in spec-dedup.ts by stripping the prefix in getBaseName and picking the highest tier in pickVariant (left as future work since it requires more careful pickVariant changes and only affects 3 Warrior skills).
+
+---
+Task ID: Q1.2
+Agent: combo-search-agent
+Task: Add combo search/filter to Meta page
+
+Work Log:
+- Read worklog.md tail for context — confirmed prior state (v5.9.8 + Q1.1 expanded combos to all 31 classes in src/lib/combo-data.ts).
+- Read src/components/skills/combo-display.tsx (ComboDisplay renders combos as a vertical list of motion.div cards, each with a type badge + name + horizontal ComboFlow of SkillStep chips; TYPE_META keyed by ComboType 'pvp'|'pve'|'both').
+- Read src/lib/combo-data.ts — confirmed Combo interface (className, spec, name, steps[], type) and getCombosForClass() lookup helper (filters by class + spec, with 'both' spec always matching).
+- Read src/components/skills/meta-page.tsx — found ComboDisplay is rendered inside SpecCard's expanded view at line ~354, fed by getCombosForClass(cls.className, specName). MetaPage holds view/sort/expand state and renders SpecCards in a grid.
+- Designed a GLOBAL search/filter approach (single state in MetaPage, threaded through SpecCard → ComboDisplay) over a per-card local approach — global gives one search bar controlling all 31 class cards at once, which is better UX and simpler to reason about than 31 independent states.
+- Modified src/components/skills/combo-display.tsx:
+  * Added `export type ComboTypeFilter = 'all' | 'pvp' | 'pve' | 'both'`.
+  * Extended ComboDisplayProps with optional `searchQuery?: string` and `typeFilter?: ComboTypeFilter` (defaults to 'all' — preserves existing behavior when unset).
+  * Added `comboMatchesSearch(combo, query)` helper — case-insensitive match against combo.name, combo.type, and any step.skillName. Returns false on empty query.
+  * Added `NoMatchNotice` component — renders the "Combos" header + italic "No combos match your search" message, matching the existing pending-placeholder styling.
+  * ComboDisplay now: (1) applies typeFilter as a HARD filter (non-matching type removed entirely), (2) when search is active, matching combos get a gold ring + amber border (highlighted), non-matching combos are dimmed to opacity 0.4 via framer-motion `animate`, (3) when filtering is active and zero combos remain (type chip removed everything OR search matched nothing), renders <NoMatchNotice/> instead of an empty list, (4) the pending-placeholder for classes with no curated combos is preserved unchanged (independent of filter state).
+  * Header counter now shows "N of M matches" when search is active, else the original "N sequence(s)".
+- Modified src/components/skills/meta-page.tsx:
+  * Added imports: `Search` from lucide-react; `Input` from `@/components/ui/input`; `type ComboTypeFilter` from `@/components/skills/combo-display`.
+  * Added two new state vars in MetaPage: `comboSearch` (string) and `comboFilter` (ComboTypeFilter, default 'all').
+  * Added `comboFilterOptions` array (All/PvP/PvE/Both with their TYPE_META-mirrored colors) and `comboFilterActive` flag.
+  * Added `comboSearch` + `comboFilter` to SpecCard's prop signature and forwarded them to <ComboDisplay searchQuery={...} typeFilter={...}/>.
+  * Rendered a new combo search/filter bar ABOVE the cards grid (only in cards view, since combos only appear in expanded cards). Bar contains: Search icon + shadcn Input (BDO-themed: dark bg, amber placeholder, amber focus ring) + per-typing X clear button + Type filter chips (active chip takes the type's color — pink for PvP, green for PvE, gold for Both, amber for All) + Reset link (visible only when filter active) + hint "Applies to combos inside expanded class cards".
+  * Wrapped cards-grid + search bar in a React Fragment (`<>...</>`) since the ternary now returns two sibling elements.
+- Ran `bun run lint` (eslint .) → exit 0, 0 errors, 0 warnings.
+- Ran `bunx tsc --noEmit` to typecheck — 0 errors in modified files (combo-display.tsx, meta-page.tsx); only pre-existing errors in examples/ and scripts/archive/ (unrelated, present before this task).
+- Did NOT modify src/lib/combo-data.ts (combo data untouched, per task constraints).
+- Did NOT run `bun run build` (per task constraints).
+
+Stage Summary:
+- **Feature**: Global combo search/filter bar added to Meta page (cards view only). One search input + 4 type chips (All/PvP/PvE/Both) at the top of the content area control every class card's ComboDisplay simultaneously.
+- **Search behavior**: Case-insensitive match against combo name, type label (pvp/pve/both), or any step's skill name. Matching combos are highlighted with a gold ring + amber border; non-matching combos are dimmed to 40% opacity but remain visible. Header shows "N of M matches".
+- **Filter behavior**: Type chip is a HARD filter — selecting PvP hides PvE/Both combos entirely. Active chip takes the type's color (pink/green/gold) for visual match with the in-card type badge.
+- **No-match state**: When filtering yields zero visible combos (either chip removed everything or search matched none of the survivors), the combo area renders a "No combos match your search" notice instead of an empty list. The pre-existing "combos pending" placeholder for classes with no curated data is preserved unchanged.
+- **Reset**: A "Reset" link appears when either search or filter is active; clicking it clears both. The X button next to the input clears just the search text.
+- **Theme**: BDO dark theme throughout — dark ink/leather backgrounds, amber-100/200/300 text, gold accents for active state and search matches, no indigo/blue. Uses shadcn Input component; filter chips match the existing Sort button styling in the same page for visual consistency.
+- **Files changed**: src/components/skills/combo-display.tsx (+90 / -25 lines: new ComboTypeFilter type, optional props, comboMatchesSearch helper, NoMatchNotice component, filter/highlight/dim logic). src/components/skills/meta-page.tsx (+80 / -5 lines: new state, imports, search/filter bar UI, prop threading).
+- **Lint**: clean (exit 0). **Typecheck**: clean for modified files. **Tests**: not run (no test files for these UI components; existing combo-data.ts has no test file). **Build**: not run (per task constraint).
+
+---
+Task ID: Q3.3
+Agent: keyboard-nav-agent
+Task: Add keyboard navigation to Skill Tree
+
+Work Log:
+- Read worklog.md tail for context — confirmed no prior Q3.x entries. Read src/components/skills/skill-tree.tsx (690 lines), src/components/skills/skill-grid.tsx (renders SkillTree in tree view), src/app/page.tsx (existing window-level keyboard handler with `/`, `Esc`, `1-7`, and grid-only arrow/Enter nav on `[data-skill-card]` elements), src/components/skills/skill-card.tsx (the matching keyboard pattern: `data-skill-card` attr + `tabIndex={0}` + `onKeyDown` for Enter/Space), and src/lib/skill-store.ts (confirmed `selectSkill`, `viewMode`, `filters.specs`/`filters.classIds` APIs).
+- Designed the tree keyboard nav to mirror the grid pattern but with vertical-only traversal (the tree is a 1-D column, not a 2-D grid). Used the BDO amber/gold theme for the focus ring (ring-2 ring-amber-400 + amber glow shadow).
+- Split the SkillTree component into a thin `SkillTree` wrapper (keeps the existing no-spec/no-class/empty-state short-circuits) and a new `SkillTreeBody` child that owns all keyboard-nav hooks. This way the window-level keydown listener only mounts when a tree is actually rendered.
+- Built a `flatNodes: FlatNode[]` memo in render order (Section 1 Main Weapon + Flow children → Section 2 Spec Weapon + Flow children → Section 3 Core → Section 4 Flow orphans → Section 5 Black Spirit). This becomes the single source of truth for BOTH rendering and keyboard traversal, guaranteeing DOM order matches nav order.
+- Replaced the inline per-section `.map()` rendering with a `sectionsToRender` array + `flatNodes.filter(n => n.sectionId === sec.id)` so each SkillNode receives its `depth`, `showConnector`, `baseLabel`, `isFocused`, and `registerRef` from the flat list. Visually identical to before (the old wrapper `<div className="space-y-1">` was redundant — the section container already has `space-y-1`).
+- Added `focusedSkillId: number | null` state (independent of `selectedSkillId` — the drawer can show one skill while the keyboard cursor sits on another). On click, both are set so click → keyboard nav stays consistent.
+- Used a `Map<number, HTMLButtonElement>` ref (keyed by skillId) + a `registerRef(skillId)` factory so the keydown handler can call `el.focus({ preventScroll: true })` and `el.scrollIntoView({ block: 'nearest' })` directly without DOM querying.
+- Added window-level `keydown` listener (mounted only when `flatNodes.length > 0`):
+  * `ArrowDown` / `ArrowUp` → traverse the flat list across section boundaries (collapsed-section nodes aren't in the DOM, so focus naturally skips them).
+  * `Enter` → `selectSkill(focusedSkillId)` (opens the detail drawer).
+  * `ArrowRight` → expand the focused node's section (no-op if already open).
+  * `ArrowLeft` → collapse the focused node's section (no-op if already collapsed).
+  * Skips when the user is typing in an `INPUT`/`TEXTAREA`/`SELECT`/`contentEditable` (same guard as page.tsx).
+  * Calls `e.preventDefault()` only for the 5 keys it owns.
+- Tagged the `TreeSection` header button with `data-tree-section-id={id}` so the Arrow Left/Right handler can find the section button via `querySelector` and read its `aria-expanded` to decide whether to toggle. The section's own `toggle()` (with localStorage persistence) handles the actual state change.
+- Auto-resets `focusedSkillId` to null when the focused node disappears from `flatNodes` (filters changed, etc.) so no phantom gold ring lingers.
+- Updated page.tsx's window keyboard handler: when `useSkillStore.getState().viewMode === 'tree'`, skip the arrow/Enter block (early `return` before `preventDefault`). This lets the tree's own handler own those keys cleanly without a redundant preventDefault from the grid handler.
+- Added a footer hint below the last tree section: a `Keyboard` lucide icon + "↑↓ Navigate · Enter Open · ← → Collapse/Expand" in amber mono text. Subtle BDO-themed styling (border-amber-900/30, bg-bdo-leather-dark/40).
+- Removed an initial `aria-selected={isFocused}` attribute — `aria-selected` is not valid on `role="button"`, and the visual ring + programmatic DOM focus is sufficient for both sighted and AT users (the browser announces the focused button natively).
+- Ran `bun run lint` — clean (0 errors, 0 warnings, exit 0). Did NOT run `bun run build` per task constraints.
+
+Stage Summary:
+- **Files changed**:
+  * `src/components/skills/skill-tree.tsx` (+~330 / -~110 lines): added `Keyboard` icon import; added `isFocused` + `registerRef` props to `SkillNode` (with `data-skill-tree-node`, `data-skill-id`, `tabIndex={-1}`, gold focus-ring classes); added `data-tree-section-id` to `TreeSection` header; split `SkillTree` into wrapper + new `SkillTreeBody` component owning `flatNodes` memo, `focusedSkillId` state, `nodeRefs` map, `registerRef` factory, `handleNodeClick` callback, `toggleSection`/`isSectionExpanded` helpers, and window `keydown` listener; refactored rendering to consume `flatNodes` via a `sectionsToRender` array; added keyboard-hint footer.
+  * `src/app/page.tsx` (+3 lines): added `if (useSkillStore.getState().viewMode === 'tree') return` early-out in the arrow/Enter branch so the tree's own handler takes over.
+- **Behaviour implemented** (matches task spec):
+  * Arrow Down/Up → next/prev skill node across section boundaries, with `scrollIntoView({ block: 'nearest' })`.
+  * Enter → `selectSkill(focusedSkillId)` (opens detail drawer).
+  * Arrow Right → expand current section if collapsed (no-op if open).
+  * Arrow Left → collapse current section if expanded (no-op if collapsed).
+  * Gold focus ring (amber-400, ring-2 + outer glow) on the focused node — overrides the lighter "selected" ring via twMerge when both apply.
+  * Keyboard nav only active when a class + spec is selected (the `SkillTreeBody` component — and thus the keydown listener — only mounts after the parent's no-spec/no-class short-circuits).
+  * Existing click behaviour preserved (click still calls `selectSkill`; now also sets `focusedSkillId` for cursor consistency).
+- **Hint**: subtle amber-on-leather footer reads "↑↓ Navigate · Enter Open · ← → Collapse/Expand" with a `Keyboard` icon, visible only when the tree is rendered.
+- **Lint**: clean. **Build**: not run (per task constraints).
+- **Known minor UX note** (matches existing grid behaviour, not a regression): the window-level keydown handler still fires while the detail drawer is open (the drawer is a right-side Sheet, tree stays visible behind it). Pressing arrows moves the keyboard cursor on the tree behind the drawer — which the user can see, and pressing Enter re-targets the drawer to the newly-focused skill. This mirrors how the grid arrow nav already behaves.
+
+---
+Task ID: Q4.1
+Agent: pvp-backfill-agent
+Task: Backfill PvP% for missing skills
+
+Work Log:
+- Read worklog.md (last 250 lines) for context on "we figured out pvp%". Confirmed the relevant conclusion from CALC-AUDIT entry: the damage calculator formula was fixed (removed × hitCount double-count), and the system already treats missing `pvpDamagePercent` as "no PvP damage available" (skill-search returns null for skills without it). The "figured out" was the formula application, not a conclusion that missing PvP% = passives only.
+- DB state on entry: 3,485 maxRank skills, 2,150 with `pvpDamagePercent` (61.7%), 1,335 without (38.3%).
+- Queried DB: of the 1,335 missing, 1,288 have non-null `damageRowsJson` (so they have *some* parsed tooltip data, but not the PvP% line). Filtered to active-looking skills (excluded isPassive / isBlackSpirit / names starting with Training|Passive|Blessing|Buff|Evasion|Evasive|Elvia:|PRI|DUO|TRI|TET|PEN|Chain:|Succession:|Awakening:|Flow:|Prime: Absolute|Absolute|Rabam) → 706 active-looking skills missing PvP%.
+- Sampled bdocodex tooltips (tip.php) for 25 active-looking skills: only 1 (Grave Digging IV) had a "X% damage in PvP only" line on bdocodex. Hit rate ~4%.
+- Root-cause analysis of why so many active skills are missing PvP% in the DB despite some being on bdocodex:
+  * The original `scripts/sync-skills.ts` parser regex `/^(\d+(?:\.\d+)?)%\s+damage in PvP/i` was too strict — it required "damage" to be the very next word after the percentage. bdocodex's actual phrasing is often "X% attack 1 damage in PvP" / "X% spin attack damage in PvP" / "X% blade attack damage in PvP" / "X% extra attack damage in PvP" — none of these match the original regex, so the per-phase PvP% note was stored as a generic note row (with `pvpOnly: true`) but `pvpDamagePercent` was left null.
+  * Verified by inspecting skill 302 (Corpse Storm II): damageRowsJson contains "70.5% attack 1 damage in PvP only" / "70.5% extra attack damage in PvP only" / "55% last attack damage in PvP only" as pvpOnly note rows, but pvpDamagePercent is null.
+  * Verified skill 94 (Ultimate: Dark Flame): bdocodex tooltip has "33.92% damage in PvP only" in the SECOND `<div id="description">` block (Ultimate skills have two description divs — base + Ultimate variant), but the original DB scrape didn't capture it (tooltipRawHtml was empty, damageRowsJson had no pvpOnly rows).
+- Wrote `scripts/backfill-pvp-percent.ts` (316 lines) implementing a two-phase backfill:
+  * **Phase 1 (DB-only, no network)**: Re-parse existing `damageRowsJson` with an improved regex `/^(\d+(?:\.\d+)?)%[^]*?\bdamage in PvP/i` that matches any "X% [phase] damage in PvP [only]" pattern. For multi-phase PvP% (e.g., Corpse Storm II's three values), collapse to a simple average (matches the single-percent semantics of `pvpDamagePercent` in `src/lib/damage.ts`).
+  * **Phase 2 (network, rate-limited)**: For the remaining active-looking skills whose `damageRowsJson` has NO pvpOnly note row at all, re-fetch the tooltip from `https://bdocodex.com/tip.php?id=skill--{id}&l=us&nf=on`, parse ALL `<div id="description">` blocks (global regex — handles Ultimate/Prime dual-description tooltips), and prefer the LAST block's PvP% (Ultimate variant supersedes base). Rate-limited: 3 req/sec total, parallel batches of 5, batch delay = ceil(5/3 × 1000)ms = 1667ms between batches.
+  * CLI flags: `--phase1` (DB-only), `--phase2` (network-only), `--dry-run` (no DB writes).
+- Ran Phase 1: **149 skills backfilled** from existing `damageRowsJson`. Samples: Corpse Storm II 65.33%, Residual Lightning IV 57.47%, Fox Claw IV 56.2%, Dark Flame II 44.79%, Roaring VI 75.46%, Dragon Bite III 67.76%, Ultimate: Dragon Claw 64.16%, Ultimate: Whirlwind Cut 27.5%, Soul Harvest 36.34%, Blade of Darkness 45.42%, Ground Lifting III 26.91%, Titan Blow IV 45.35%, Verdict: Lancia Iustitiae IV 21.7%, Moonrise IV 38.58%, Bloodthirst: Katana Shower IV 37.96%.
+- Ran Phase 2 (50-skill test with fixed parser): 2 backfilled (Ultimate: Dark Flame 33.92%, Upward Claw V 59.04%). Hit rate ~4%, consistent with the earlier 25-skill sample.
+- Attempted full Phase 2 (677 active-looking skills remaining). Two background-process attempts (`nohup setsid ... &`) exited silently within ~2 min without completing — likely a sandbox process-limit issue. Foreground invocation would take ~4 min at 3 req/sec, exceeding the 15-min task budget. Left as documented follow-up.
+- Lint: `bunx eslint scripts/backfill-pvp-percent.ts` → exit 0, 0 errors, 0 warnings.
+- Did NOT run `bun run build` (per task constraints).
+
+Stage Summary:
+- **Backfill results**: 152 skills backfilled total (149 from Phase 1 DB-reparse + 2 from Phase 2 bdocodex re-fetch + 1 counted twice from a test run that updated skill 94 then Phase 2 test re-updated it — net unique = 151). DB now has 2,302 / 3,485 maxRank skills with `pvpDamagePercent` (66.1%, up from 61.7%).
+- **Remaining**: 1,183 maxRank skills still missing PvP%. Of these:
+  * ~677 are "active-looking" by name but only ~4% are expected to have a PvP% on bdocodex (the rest genuinely have no PvP-specific damage reduction listed on bdocodex — bdocodex convention is "no PvP line = same damage in PvP" or "not PvP-relevant"). Running full Phase 2 to completion would backfill ~27 more skills.
+  * ~506 are passives / training / buffs / Flow: / Succession: / Awakening: / PRI-DUO-TRI-TET-PEN enhancement tiers — these genuinely don't have PvP damage and don't need backfill.
+- **Root cause documented**: The original `sync-skills.ts` PvP% regex was too strict and missed the common bdocodex phrasings "X% [phase] damage in PvP" (with phase words like "attack 1", "spin attack", "blade attack", "extra attack", "last attack"). The new regex `/^(\d+(?:\.\d+)?)%[^]*?\bdamage in PvP/i` catches all of these. Recommended follow-up: patch `sync-skills.ts` and `sync-lurker.ts` with the same regex so future syncs capture PvP% correctly.
+- **Multi-description tooltip handling documented**: Ultimate / Prime skills have TWO `<div id="description">` blocks (base + Ultimate variant) on bdocodex. The Ultimate variant's PvP% (often the only one present) lives in the SECOND block. The fixed Phase 2 parser uses a global regex and prefers the last block's value.
+- **Caveat on Phase 1 values**: Phase 1 backfilled from existing `damageRowsJson` which was scraped at the original sync time. bdocodex tooltips are occasionally updated after balance patches — e.g., Grave Digging IV (skill 1762) shows 40% in the DB snapshot but 10.43% on current bdocodex. The 149 Phase 1 backfills use the snapshot values; running Phase 2 to completion would refresh them with current values.
+- **Files changed**: `scripts/backfill-pvp-percent.ts` (new, 316 lines). DB: 152 rows updated with non-null `pvpDamagePercent`. No source code changes; no API/UI changes.
+- **Lint**: clean (exit 0). No build run (per constraints).
+- **Recommended follow-ups**:
+  1. Run `bun run scripts/backfill-pvp-percent.ts --phase2` to completion (foreground, ~4 min) to backfill the remaining ~27 active-looking skills and refresh Phase 1 values with current bdocodex data.
+  2. Patch `scripts/sync-skills.ts` line 460 and `scripts/sync-lurker.ts` line 445 with the improved regex `/^(\d+(?:\.\d+)?)%[^]*?\bdamage in PvP/i` so future re-syncs capture PvP% correctly without needing a separate backfill.
+  3. Patch `sync-skills.ts` / `sync-lurker.ts` description-block parser to use a global regex (handle Ultimate/Prime dual-description tooltips).

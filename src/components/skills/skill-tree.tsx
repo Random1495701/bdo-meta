@@ -14,6 +14,7 @@ import {
   Sword,
   Sparkles,
   Info,
+  Keyboard,
 } from 'lucide-react'
 
 import {
@@ -145,12 +146,22 @@ function SkillNode({
   depth = 0,
   showConnector = false,
   baseLabel,
+  isFocused = false,
+  registerRef,
 }: {
   skill: Skill
   onClick: () => void
   depth?: number
   showConnector?: boolean
   baseLabel?: string
+  /**
+   * Whether this node currently has keyboard focus (set via arrow keys).
+   * Distinct from `isSelected` — selection opens the detail drawer; focus is
+   * the keyboard-cursor position. They can coincide.
+   */
+  isFocused?: boolean
+  /** Ref callback so the parent can keep a Map of skillId → button DOM el. */
+  registerRef?: (el: HTMLButtonElement | null) => void
 }) {
   const selectedSkillId = useSkillStore((s) => s.selectedSkillId)
   const isSelected = selectedSkillId === skill.skillId
@@ -201,13 +212,25 @@ function SkillNode({
       <motion.button
         type="button"
         onClick={onClick}
+        ref={registerRef as React.Ref<HTMLButtonElement>}
+        data-skill-tree-node
+        data-skill-id={String(skill.skillId)}
+        // Programmatically focusable (we call .focus() on arrow nav). Excluded
+        // from the Tab ring so the browser's tab order stays predictable; AT
+        // users still hear the focused button because we move real DOM focus
+        // to it on every arrow press.
+        tabIndex={-1}
         whileHover={{ x: 2 }}
         transition={{ duration: 0.12 }}
         className={cn(
-          'flex flex-1 items-center gap-2.5 rounded-sm border border-l-2 bg-bdo-leather-dark/60 px-2.5 py-1.5 text-left transition-all',
+          'flex flex-1 items-center gap-2.5 rounded-sm border border-l-2 bg-bdo-leather-dark/60 px-2.5 py-1.5 text-left outline-none transition-all',
           accent,
           'border-amber-900/40 hover:border-amber-600/60 hover:bg-amber-900/10',
           isSelected && 'ring-1 ring-amber-400/60 bg-amber-500/10',
+          // Keyboard-focus ring — gold (BDO amber). Overrides the lighter
+          // selected ring when both apply (twMerge resolves the conflict).
+          isFocused &&
+            'ring-2 ring-amber-400 bg-amber-500/15 shadow-[0_0_0_1px_rgba(245,158,11,0.55),0_0_10px_rgba(245,158,11,0.25)]',
         )}
         style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
         title={skill.name}
@@ -319,6 +342,7 @@ function TreeSection({
       <button
         type="button"
         onClick={toggle}
+        data-tree-section-id={id}
         className="flex w-full items-center gap-2 rounded-sm border border-amber-900/50 bg-bdo-leather-dark px-3 py-2 text-left transition-colors hover:bg-amber-900/15"
         style={{ boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.6)' }}
         aria-expanded={isOpen}
@@ -528,6 +552,369 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
   }
 
   return (
+    <SkillTreeBody
+      groups={groups}
+      findFlowParent={findFlowParent}
+      findBsBase={findBsBase}
+      specLabel={specLabel}
+      specColor={specColor}
+      selectSkill={selectSkill}
+      totalVisible={totalVisible}
+    />
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Q3.3 — Keyboard navigation
+//
+// The body is split into its own component so all the keyboard-nav hooks
+// (focusedSkillId state, keydown listener, ref map) only mount when a tree
+// is actually being rendered. The parent `SkillTree` short-circuits earlier
+// for the no-spec / no-class / empty-filters cases, so this component is
+// guaranteed to have a non-empty `flatNodes` list.
+// ---------------------------------------------------------------------------
+
+// One entry per visible SkillNode, in DOM render order. Mirrors the section
+// rendering below so that ArrowUp/ArrowDown traversal matches what the user
+// sees on screen (including Flow: children nested under their parent).
+type FlatNode = {
+  skillId: number
+  skill: Skill
+  depth: number
+  showConnector: boolean
+  baseLabel?: string
+  sectionId: TreeSectionId
+}
+
+type TreeSectionId =
+  | 'main-weapon'
+  | 'spec-weapon'
+  | 'core-rabam'
+  | 'flow-orphan'
+  | 'black-spirit'
+
+interface SkillTreeBodyProps {
+  groups: {
+    main: Skill[]
+    specWeapon: Skill[]
+    core: Skill[]
+    flow: Skill[]
+    bs: Skill[]
+  }
+  findFlowParent: (s: Skill) => Skill | null
+  findBsBase: (s: Skill) => Skill | null
+  specLabel: string
+  specColor: string
+  selectSkill: (id: number | null) => void
+  totalVisible: number
+}
+
+function SkillTreeBody({
+  groups,
+  findFlowParent,
+  findBsBase,
+  specLabel,
+  specColor,
+  selectSkill,
+  totalVisible,
+}: SkillTreeBodyProps) {
+  // --- Build the flat node list (source of truth for both rendering + nav) --
+  const flatNodes = React.useMemo<FlatNode[]>(() => {
+    const nodes: FlatNode[] = []
+
+    // Section 1: Main Weapon — each main skill followed by its Flow: children
+    for (const s of groups.main) {
+      nodes.push({
+        skillId: s.skillId,
+        skill: s,
+        depth: 0,
+        showConnector: false,
+        sectionId: 'main-weapon',
+      })
+      const flowChildren = groups.flow.filter(
+        (f) => findFlowParent(f)?.skillId === s.skillId,
+      )
+      for (const f of flowChildren) {
+        nodes.push({
+          skillId: f.skillId,
+          skill: f,
+          depth: 1,
+          showConnector: true,
+          sectionId: 'main-weapon',
+        })
+      }
+    }
+
+    // Section 2: Spec Weapon — same parent/Flow structure
+    for (const s of groups.specWeapon) {
+      nodes.push({
+        skillId: s.skillId,
+        skill: s,
+        depth: 0,
+        showConnector: false,
+        sectionId: 'spec-weapon',
+      })
+      const flowChildren = groups.flow.filter(
+        (f) => findFlowParent(f)?.skillId === s.skillId,
+      )
+      for (const f of flowChildren) {
+        nodes.push({
+          skillId: f.skillId,
+          skill: f,
+          depth: 1,
+          showConnector: true,
+          sectionId: 'spec-weapon',
+        })
+      }
+    }
+
+    // Section 3: Core (Rabam)
+    for (const s of groups.core) {
+      nodes.push({
+        skillId: s.skillId,
+        skill: s,
+        depth: 0,
+        showConnector: false,
+        sectionId: 'core-rabam',
+      })
+    }
+
+    // Section 4: Flow orphans — Flow skills whose parent isn't visible
+    const parentIds = new Set<number>()
+    for (const s of [
+      ...groups.main,
+      ...groups.specWeapon,
+      ...groups.core,
+    ]) {
+      parentIds.add(s.skillId)
+    }
+    const orphanFlows = groups.flow.filter((f) => {
+      const parent = findFlowParent(f)
+      return !parent || !parentIds.has(parent.skillId)
+    })
+    for (const f of orphanFlows) {
+      const parent = findFlowParent(f)
+      nodes.push({
+        skillId: f.skillId,
+        skill: f,
+        depth: 0,
+        showConnector: false,
+        baseLabel: parent ? `from ${parent.name}` : undefined,
+        sectionId: 'flow-orphan',
+      })
+    }
+
+    // Section 5: Black Spirit
+    for (const s of groups.bs) {
+      const base = findBsBase(s)
+      nodes.push({
+        skillId: s.skillId,
+        skill: s,
+        depth: 0,
+        showConnector: false,
+        baseLabel: base ? `rage of ${base.name}` : undefined,
+        sectionId: 'black-spirit',
+      })
+    }
+
+    return nodes
+  }, [groups, findFlowParent, findBsBase])
+
+  // --- Keyboard focus state -------------------------------------------------
+  // focusedSkillId is the keyboard-cursor position. Independent of the detail-
+  // drawer's selectedSkillId (click vs. keyboard can target different nodes).
+  const [focusedSkillId, setFocusedSkillId] = React.useState<number | null>(
+    null,
+  )
+
+  // Drop focus if the node disappears from the list (filters changed, section
+  // collapsed, etc.) — keeping a stale id would leave a phantom gold ring.
+  React.useEffect(() => {
+    if (focusedSkillId == null) return
+    if (!flatNodes.some((n) => n.skillId === focusedSkillId)) {
+      setFocusedSkillId(null)
+    }
+  }, [flatNodes, focusedSkillId])
+
+  // Direct DOM handle per node, keyed by skillId. We use this for .focus()
+  // and .scrollIntoView() instead of querySelector for speed and to avoid
+  // surprises if the DOM structure ever changes.
+  const nodeRefs = React.useRef<Map<number, HTMLButtonElement>>(new Map())
+  const registerRef = React.useCallback(
+    (skillId: number) => (el: HTMLButtonElement | null) => {
+      const map = nodeRefs.current
+      if (el) map.set(skillId, el)
+      else map.delete(skillId)
+    },
+    [],
+  )
+
+  // Stable click handler — keeps SkillNode onClick closures cheap.
+  const handleNodeClick = React.useCallback(
+    (skillId: number) => {
+      setFocusedSkillId(skillId)
+      selectSkill(skillId)
+    },
+    [selectSkill],
+  )
+
+  // --- Section toggle (for Arrow Left/Right) -------------------------------
+  // TreeSection manages its own isOpen state (persisted to localStorage), so
+  // we collapse/expand by simulating a click on its header button. We look up
+  // the button via [data-tree-section-id] and read aria-expanded to decide
+  // whether to act.
+  const toggleSection = React.useCallback((sectionId: TreeSectionId) => {
+    if (typeof document === 'undefined') return
+    const btn = document.querySelector<HTMLElement>(
+      `[data-tree-section-id="${sectionId}"]`,
+    )
+    btn?.click()
+  }, [])
+
+  const isSectionExpanded = React.useCallback((sectionId: TreeSectionId) => {
+    if (typeof document === 'undefined') return true
+    const btn = document.querySelector<HTMLElement>(
+      `[data-tree-section-id="${sectionId}"]`,
+    )
+    return btn?.getAttribute('aria-expanded') === 'true'
+  }, [])
+
+  // --- Window-level keydown handler ----------------------------------------
+  // Mounted only when there are nodes to navigate. We mirror the page.tsx
+  // pattern (window-level listener, skip when typing in an input).
+  React.useEffect(() => {
+    if (flatNodes.length === 0) return
+
+    const focusNode = (skillId: number) => {
+      const el = nodeRefs.current.get(skillId)
+      if (el) {
+        el.focus({ preventScroll: true })
+        el.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      }
+    }
+
+    const handleKey = (e: KeyboardEvent) => {
+      // Skip if user is typing in an input/textarea/contenteditable — those
+      // keys belong to the field, not the tree.
+      const target = e.target as HTMLElement | null
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable)
+      ) {
+        return
+      }
+
+      const key = e.key
+      if (
+        key !== 'ArrowDown' &&
+        key !== 'ArrowUp' &&
+        key !== 'ArrowLeft' &&
+        key !== 'ArrowRight' &&
+        key !== 'Enter'
+      ) {
+        return
+      }
+
+      e.preventDefault()
+
+      // Enter → open detail drawer for the focused skill (no-op if nothing
+      // is focused yet — matches the grid view's behaviour).
+      if (key === 'Enter') {
+        if (focusedSkillId != null) selectSkill(focusedSkillId)
+        return
+      }
+
+      // Arrow Up/Down → traverse the flat node list across section boundaries.
+      if (key === 'ArrowDown' || key === 'ArrowUp') {
+        const curIdx = focusedSkillId == null
+          ? -1
+          : flatNodes.findIndex((n) => n.skillId === focusedSkillId)
+        const base = curIdx === -1 ? -1 : curIdx
+        const nextIdx =
+          key === 'ArrowDown'
+            ? Math.min(base + 1, flatNodes.length - 1)
+            : Math.max(base - 1, 0)
+        const nextNode = flatNodes[nextIdx]
+        if (!nextNode) return
+        setFocusedSkillId(nextNode.skillId)
+        focusNode(nextNode.skillId)
+        return
+      }
+
+      // Arrow Left/Right → collapse/expand the section the focused node lives
+      // in. We act as a no-op when the section is already in the desired state
+      // (so a user mashing Arrow Right on an open section doesn't accidentally
+      // collapse it on the next press).
+      if (focusedSkillId == null) return
+      const current = flatNodes.find((n) => n.skillId === focusedSkillId)
+      if (!current) return
+      const expanded = isSectionExpanded(current.sectionId)
+      if (key === 'ArrowRight' && !expanded) {
+        toggleSection(current.sectionId)
+      } else if (key === 'ArrowLeft' && expanded) {
+        toggleSection(current.sectionId)
+      }
+    }
+
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [
+    flatNodes,
+    focusedSkillId,
+    selectSkill,
+    isSectionExpanded,
+    toggleSection,
+  ])
+
+  // --- Section render metadata ---------------------------------------------
+  const sectionsToRender: Array<{
+    id: TreeSectionId
+    title: string
+    icon: React.ReactNode
+    accentColor: string
+    defaultOpen: boolean
+  }> = [
+    {
+      id: 'main-weapon',
+      title: 'Main Weapon',
+      icon: <Sword className="size-3" />,
+      accentColor: '#c9a25c',
+      defaultOpen: true,
+    },
+    {
+      id: 'spec-weapon',
+      title: specLabel,
+      icon: <Crown className="size-3" />,
+      accentColor: specColor,
+      defaultOpen: true,
+    },
+    {
+      id: 'core-rabam',
+      title: 'Core (Rabam)',
+      icon: <Gem className="size-3" />,
+      accentColor: '#10b981',
+      defaultOpen: true,
+    },
+    {
+      id: 'flow-orphan',
+      title: 'Flow',
+      icon: <GitBranch className="size-3" />,
+      accentColor: '#f59e0b',
+      defaultOpen: false,
+    },
+    {
+      id: 'black-spirit',
+      title: 'Black Spirit',
+      icon: <Sparkles className="size-3" />,
+      accentColor: '#a855f7',
+      defaultOpen: false,
+    },
+  ]
+
+  return (
     <div className="space-y-1">
       {/* Header summary */}
       <div className="mb-3 flex flex-wrap items-center gap-2 rounded-sm border border-amber-900/40 bg-bdo-leather-dark/60 px-3 py-2">
@@ -550,140 +937,48 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
         </span>
       </div>
 
-      {/* Section 1: Main Weapon */}
-      <TreeSection
-        id="main-weapon"
-        title="Main Weapon"
-        icon={<Sword className="size-3" />}
-        count={groups.main.length}
-        accentColor="#c9a25c"
-        defaultOpen
-      >
-        {groups.main.map((s) => {
-          // Find Flow: children of this skill
-          const flowChildren = groups.flow.filter((f) => {
-            const parent = findFlowParent(f)
-            return parent?.skillId === s.skillId
-          })
-          return (
-            <div key={s.id} className="space-y-1">
-              <SkillNode skill={s} onClick={() => selectSkill(s.skillId)} />
-              {flowChildren.map((f) => (
-                <SkillNode
-                  key={f.id}
-                  skill={f}
-                  onClick={() => selectSkill(f.skillId)}
-                  depth={1}
-                  showConnector
-                />
-              ))}
-            </div>
-          )
-        })}
-      </TreeSection>
-
-      {/* Section 2: Spec Weapon (Awakening/Succession/Ascension) */}
-      <TreeSection
-        id="spec-weapon"
-        title={specLabel}
-        icon={<Crown className="size-3" />}
-        count={groups.specWeapon.length}
-        accentColor={specColor}
-        defaultOpen
-      >
-        {groups.specWeapon.map((s) => {
-          const flowChildren = groups.flow.filter((f) => {
-            const parent = findFlowParent(f)
-            return parent?.skillId === s.skillId
-          })
-          return (
-            <div key={s.id} className="space-y-1">
-              <SkillNode skill={s} onClick={() => selectSkill(s.skillId)} />
-              {flowChildren.map((f) => (
-                <SkillNode
-                  key={f.id}
-                  skill={f}
-                  onClick={() => selectSkill(f.skillId)}
-                  depth={1}
-                  showConnector
-                />
-              ))}
-            </div>
-          )
-        })}
-      </TreeSection>
-
-      {/* Section 3: Core (Rabam) */}
-      <TreeSection
-        id="core-rabam"
-        title="Core (Rabam)"
-        icon={<Gem className="size-3" />}
-        count={groups.core.length}
-        accentColor="#10b981"
-        defaultOpen
-      >
-        {groups.core.map((s) => (
-          <SkillNode key={s.id} skill={s} onClick={() => selectSkill(s.skillId)} />
-        ))}
-      </TreeSection>
-
-      {/* Section 4: Flow (orphans — Flow skills whose parent isn't in this view) */}
-      {(() => {
-        // Find Flow skills whose parent isn't in any visible section
-        const parentIds = new Set<number>()
-        for (const s of [...groups.main, ...groups.specWeapon, ...groups.core]) {
-          parentIds.add(s.skillId)
-        }
-        const orphanFlows = groups.flow.filter((f) => {
-          const parent = findFlowParent(f)
-          return !parent || !parentIds.has(parent.skillId)
-        })
-        if (orphanFlows.length === 0) return null
+      {/* Sections — rendered from the flatNodes list so DOM order is
+          guaranteed to match the keyboard-nav order. */}
+      {sectionsToRender.map((sec) => {
+        const sectionNodes = flatNodes.filter((n) => n.sectionId === sec.id)
+        if (sectionNodes.length === 0) return null
         return (
           <TreeSection
-            id="flow-orphan"
-            title="Flow"
-            icon={<GitBranch className="size-3" />}
-            count={orphanFlows.length}
-            accentColor="#f59e0b"
-            defaultOpen={false}
+            key={sec.id}
+            id={sec.id}
+            title={sec.title}
+            icon={sec.icon}
+            count={sectionNodes.length}
+            accentColor={sec.accentColor}
+            defaultOpen={sec.defaultOpen}
           >
-            {orphanFlows.map((f) => {
-              const parent = findFlowParent(f)
-              return (
-                <SkillNode
-                  key={f.id}
-                  skill={f}
-                  onClick={() => selectSkill(f.skillId)}
-                  baseLabel={parent ? `from ${parent.name}` : undefined}
-                />
-              )
-            })}
+            {sectionNodes.map((n) => (
+              <SkillNode
+                key={`${sec.id}-${n.skillId}`}
+                skill={n.skill}
+                onClick={() => handleNodeClick(n.skillId)}
+                depth={n.depth}
+                showConnector={n.showConnector}
+                baseLabel={n.baseLabel}
+                isFocused={focusedSkillId === n.skillId}
+                registerRef={registerRef(n.skillId)}
+              />
+            ))}
           </TreeSection>
         )
-      })()}
+      })}
 
-      {/* Section 5: Black Spirit */}
-      <TreeSection
-        id="black-spirit"
-        title="Black Spirit"
-        icon={<Sparkles className="size-3" />}
-        count={groups.bs.length}
-        accentColor="#a855f7"
-        defaultOpen={false}
-      >
-        {groups.bs.map((s) => {
-          const base = findBsBase(s)
-          return (
-            <SkillNode
-              key={s.id}
-              skill={s}
-              onClick={() => selectSkill(s.skillId)}
-              baseLabel={base ? `rage of ${base.name}` : undefined}
-            />
-          )
-        })}
-      </TreeSection>
+      {/* Keyboard-nav hint */}
+      <div className="mt-2 flex items-center justify-center gap-1.5 rounded-sm border border-amber-900/30 bg-bdo-leather-dark/40 px-3 py-1.5 text-[10px] text-amber-200/50">
+        <Keyboard className="size-3 text-amber-500/60" />
+        <span className="font-mono tabular-nums">
+          <span className="text-amber-300/80">↑↓</span> Navigate
+          <span className="mx-1.5 text-amber-700/60">·</span>
+          <span className="text-amber-300/80">Enter</span> Open
+          <span className="mx-1.5 text-amber-700/60">·</span>
+          <span className="text-amber-300/80">← →</span> Collapse/Expand
+        </span>
+      </div>
     </div>
   )
 }

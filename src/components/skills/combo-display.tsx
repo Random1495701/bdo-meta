@@ -13,7 +13,14 @@ interface ComboDisplayProps {
   spec: 'awakening' | 'succession' | 'ascension'
   /** When false, render a compact "combos pending" placeholder card. */
   combos: Combo[]
+  /** Optional global search query — matching combos are highlighted, non-matches dimmed. */
+  searchQuery?: string
+  /** Optional hard filter on combo type. Defaults to 'all' (no filter). */
+  typeFilter?: ComboTypeFilter
 }
+
+/** Filter values for the combo type chips. 'all' = no filter. */
+export type ComboTypeFilter = 'all' | 'pvp' | 'pve' | 'both'
 
 const TYPE_META: Record<ComboType, { label: string; icon: typeof Zap; color: string }> = {
   pvp: { label: 'PvP', icon: Swords, color: '#f472b6' },
@@ -91,11 +98,55 @@ function ComboFlow({ combo, specColor }: { combo: Combo; specColor: string }) {
   )
 }
 
-export function ComboDisplay({ className, spec, combos }: ComboDisplayProps) {
+/**
+ * Case-insensitive search match against a combo.
+ * Matches on combo name, type label (pvp/pve/both), or any step's skill name.
+ * Returns false when the query is empty (no search active).
+ */
+function comboMatchesSearch(combo: Combo, query: string): boolean {
+  if (!query) return false
+  if (combo.name.toLowerCase().includes(query)) return true
+  if (combo.type.toLowerCase().includes(query)) return true
+  return combo.steps.some(s => s.skillName.toLowerCase().includes(query))
+}
+
+/** Shared "no matches" notice shown when filtering yields zero visible combos. */
+function NoMatchNotice() {
+  return (
+    <div className="rounded-sm border border-amber-900/30 bg-bdo-ink/50 px-3 py-2">
+      <div className="text-[10px] font-semibold uppercase tracking-wider text-amber-200/40">
+        Combos
+      </div>
+      <p className="mt-1 text-[10px] italic text-amber-200/50">
+        No combos match your search
+      </p>
+    </div>
+  )
+}
+
+export function ComboDisplay({
+  className,
+  spec,
+  combos,
+  searchQuery,
+  typeFilter = 'all',
+}: ComboDisplayProps) {
   const specColor = SPEC_COLORS[spec] ?? '#c9a25c'
 
+  // Normalize search query
+  const query = (searchQuery ?? '').trim().toLowerCase()
+  const searchActive = query.length > 0
+  const typeFilterActive = typeFilter !== 'all'
+  const filteringActive = searchActive || typeFilterActive
+
+  // Hard filter by type (PvP/PvE/Both chip) — non-matching combos are removed entirely.
+  const visibleCombos = typeFilterActive
+    ? combos.filter(c => c.type === typeFilter)
+    : combos
+
   // No curated combos for this class+spec — show a graceful placeholder
-  // that doesn't pretend to have data it doesn't have.
+  // that doesn't pretend to have data it doesn't have. This is independent
+  // of the search/filter state (you can't filter what doesn't exist).
   if (combos.length === 0) {
     return (
       <div className="rounded-sm border border-amber-900/30 bg-bdo-ink/50 px-3 py-2">
@@ -110,6 +161,23 @@ export function ComboDisplay({ className, spec, combos }: ComboDisplayProps) {
     )
   }
 
+  // When filtering is active and nothing remains (either the type chip
+  // removed everything, or the search query matched none of the survivors),
+  // show the no-match notice instead of an empty list.
+  if (filteringActive) {
+    const hasSearchMatches = searchActive
+      ? visibleCombos.some(c => comboMatchesSearch(c, query))
+      : false
+    if (visibleCombos.length === 0 || (searchActive && !hasSearchMatches)) {
+      return <NoMatchNotice />
+    }
+  }
+
+  // Pre-compute match count for the header (only when search is active).
+  const matchCount = searchActive
+    ? visibleCombos.filter(c => comboMatchesSearch(c, query)).length
+    : 0
+
   return (
     <div>
       <div className="mb-1 flex items-center justify-between">
@@ -117,19 +185,36 @@ export function ComboDisplay({ className, spec, combos }: ComboDisplayProps) {
           Combos
         </div>
         <div className="text-[9px] text-amber-200/30">
-          {combos.length} sequence{combos.length === 1 ? '' : 's'}
+          {searchActive ? (
+            <span>
+              <span className="font-semibold text-amber-300/70">{matchCount}</span>
+              {' of '}
+              {visibleCombos.length} match{matchCount === 1 ? '' : 'es'}
+            </span>
+          ) : (
+            <span>
+              {visibleCombos.length} sequence{visibleCombos.length === 1 ? '' : 's'}
+            </span>
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-1.5">
-        {combos.map((combo, i) => {
+        {visibleCombos.map((combo, i) => {
           const TypeIcon = TYPE_META[combo.type].icon
+          const isMatch = searchActive && comboMatchesSearch(combo, query)
+          const isDimmed = searchActive && !isMatch
           return (
             <motion.div
               key={`${combo.name}-${i}`}
               initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: isDimmed ? 0.4 : 1, y: 0 }}
               transition={{ duration: 0.18, delay: i * 0.04 }}
-              className="rounded-sm border border-amber-900/30 bg-bdo-ink/60 p-1.5"
+              className={cn(
+                'rounded-sm border bg-bdo-ink/60 p-1.5 transition-all',
+                isMatch
+                  ? 'border-amber-400/70 ring-1 ring-amber-400/40'
+                  : 'border-amber-900/30',
+              )}
             >
               <div className="mb-1 flex items-center gap-1.5">
                 <span
