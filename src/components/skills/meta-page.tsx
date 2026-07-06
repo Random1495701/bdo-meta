@@ -18,6 +18,10 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
+  // Granular CC breakdown — only populated for awakening/succession specs.
+  specInheritedCcCount: number // Prime:/Succession: (Succ) or Absolute: (Awk) CC skills
+  weaponOnlyCcCount: number    // Awakening-weapon CC skills (Awk only); 0 for Succession
+  mainAbsoCcCount: number      // Main-weapon + Absolute fallback CC skills
   grabCount: number
   superArmorCount: number
   forwardGuardCount: number
@@ -234,6 +238,48 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
           <StatBox label="✦ IF" value={String(stats.iFrameCount)} color="#a78bfa" highlighted={sortKey === 'iFrameCount'} />
         </div>
 
+        {/* Granular CC breakdown — small stat badges.
+            Only shown for Awakening/Succession specs (ascension uses everything,
+            so the breakdown is intentionally 0/0/0). Labels adapt per spec:
+              - Awakening spec: Abso (spec-inherited) · Awa (awakening-weapon) · Main (pure main)
+              - Succession spec: Succ (spec-inherited, Prime:/Succession:) · Main+Abso (main weapon + Absolute fallback)
+            The "Weapon" badge is omitted for Succession because Succession has no
+            separate weapon — it uses the main weapon. The tooltip on each badge
+            explains the exact rule. */}
+        {(specName === 'awakening' || specName === 'succession') && stats.pvpCcSkillCount > 0 && (
+          <div className="flex flex-wrap items-center gap-1">
+            <span className="text-[8px] font-semibold uppercase tracking-wider text-red-300/50">CC:</span>
+            <CcBreakdownBadge
+              label={specName === 'awakening' ? 'Abso' : 'Succ'}
+              value={stats.specInheritedCcCount}
+              color="#f87171"
+              tooltip={
+                specName === 'awakening'
+                  ? 'Absolute: CC skills — Awakening spec\'s enhanced main-weapon variants.'
+                  : 'Prime:/Succession: CC skills — Succession spec\'s enhanced variants.'
+              }
+            />
+            {specName === 'awakening' && (
+              <CcBreakdownBadge
+                label="Awa"
+                value={stats.weaponOnlyCcCount}
+                color="#fb923c"
+                tooltip="Awakening-weapon CC skills — unique to the Awakening weapon."
+              />
+            )}
+            <CcBreakdownBadge
+              label={specName === 'awakening' ? 'Main' : 'Main+Abso'}
+              value={stats.mainAbsoCcCount}
+              color="#fbbf24"
+              tooltip={
+                specName === 'awakening'
+                  ? 'Pure main-weapon CC skills (not Absolute, not Awakening-weapon).'
+                  : 'Main-weapon CC skills + Absolute: fallback (when no Prime variant exists).'
+              }
+            />
+          </div>
+        )}
+
         {/* Total protected skills + SA DR */}
         <div className="grid grid-cols-2 gap-1">
           <StatBox label="Protected" value={String(stats.protectedSkillCount + (stats.coreSaCount > 0 || stats.coreFgCount > 0 ? 1 : 0))} color="#60a5fa" />
@@ -307,6 +353,18 @@ function SpecCard({ cls, specName, stats, sortKey, onClick, onDataClick, isExpan
               <DetailedStat label="Avg PvP Damage" value={stats.avgPvpDamage > 0 ? fmtDmg(stats.avgPvpDamage) : '—'} />
               <DetailedStat label="Median PvP Damage" value={stats.medianPvpDamage > 0 ? fmtDmg(stats.medianPvpDamage) : '—'} />
               <DetailedStat label="PvP CC Skills" value={String(stats.pvpCcSkillCount)} />
+              {/* Granular CC breakdown — same logic as the card badges. Hidden for
+                  ascension (no breakdown applies). */}
+              {(specName === 'awakening' || specName === 'succession') && (
+                <DetailedStat
+                  label="CC Breakdown"
+                  value={
+                    specName === 'awakening'
+                      ? `Abso ${stats.specInheritedCcCount} · Awa ${stats.weaponOnlyCcCount} · Main ${stats.mainAbsoCcCount}`
+                      : `Succ ${stats.specInheritedCcCount} · Main+Abso ${stats.mainAbsoCcCount}`
+                  }
+                />
+              )}
               <DetailedStat label="Top PvP Skill" value={stats.topPvpDamageSkill?.name || '—'} />
               <DetailedStat label="Combat Type" value={cls.combatType || '—'} />
               <DetailedStat label="Class Group" value={
@@ -545,6 +603,23 @@ function StatBox({ label, value, color, highlighted }: { label: string; value: s
   )
 }
 
+// Small inline badge for granular CC breakdown (Abso / Awa / Main / Succ / Main+Abso).
+// Rendered as a compact pill — label + count — with a hover tooltip explaining
+// exactly what the count represents. Color-coded red/orange/amber to match the
+// parent CC* stat.
+function CcBreakdownBadge({ label, value, color, tooltip }: { label: string; value: number; color: string; tooltip: string }) {
+  return (
+    <span
+      className="inline-flex items-center gap-0.5 rounded-sm border px-1.5 py-0.5 text-[9px] font-bold leading-none"
+      style={{ borderColor: `${color}55`, backgroundColor: `${color}15`, color }}
+      title={tooltip}
+    >
+      <span className="uppercase tracking-wider" style={{ color: `${color}cc` }}>{label}</span>
+      <span className="font-mono tabular-nums">{value}</span>
+    </span>
+  )
+}
+
 function MetaTable({ classes, sortKey, sortDir, onSort }: {
   classes: ClassStats[]
   sortKey: SortKey
@@ -638,7 +713,27 @@ function MetaTable({ classes, sortKey, sortDir, onSort }: {
                 </td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.avgPvpDamage > 0 ? fmtDmg(row.stats.avgPvpDamage) : '—'}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-pink-300">{row.stats.medianPvpDamage > 0 ? fmtDmg(row.stats.medianPvpDamage) : '—'}</td>
-                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-red-300">{row.stats.pvpCcSkillCount}</td>
+                <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-red-300">
+                  <div className="flex flex-col items-end leading-tight">
+                    <span>{row.stats.pvpCcSkillCount}</span>
+                    {/* Granular CC breakdown sub-line — Abso/Awa/Main or Succ/Main+Abso.
+                        Only rendered for awakening/succession specs (ascension is 0/0/0). */}
+                    {(row.spec === 'awakening' || row.spec === 'succession') && row.stats.pvpCcSkillCount > 0 && (
+                      <span
+                        className="text-[8px] font-normal text-red-300/50"
+                        title={
+                          row.spec === 'awakening'
+                            ? `Absolute: ${row.stats.specInheritedCcCount} · Awakening-weapon: ${row.stats.weaponOnlyCcCount} · Main: ${row.stats.mainAbsoCcCount}`
+                            : `Prime:/Succession: ${row.stats.specInheritedCcCount} · Main+Absolute fallback: ${row.stats.mainAbsoCcCount}`
+                        }
+                      >
+                        {row.spec === 'awakening'
+                          ? `${row.stats.specInheritedCcCount}/${row.stats.weaponOnlyCcCount}/${row.stats.mainAbsoCcCount}`
+                          : `${row.stats.specInheritedCcCount}/${row.stats.mainAbsoCcCount}`}
+                      </span>
+                    )}
+                  </div>
+                </td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-cyan-300">{row.stats.avgDpcPvP}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-orange-300">{row.stats.grabCount}</td>
                 <td className="px-2 py-1 text-right font-mono text-xs tabular-nums text-amber-300">{row.stats.superArmorCount}</td>

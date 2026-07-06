@@ -77,3 +77,4 @@ db/custom.db-journal
 scripts/dev.pid
 scripts/lurker.lock
 bun.lock
+ui-audit-screenshots/

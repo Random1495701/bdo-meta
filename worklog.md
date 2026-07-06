@@ -3651,3 +3651,131 @@ Stage Summary:
   1. Run `bun run scripts/backfill-pvp-percent.ts --phase2` to completion (foreground, ~4 min) to backfill the remaining ~27 active-looking skills and refresh Phase 1 values with current bdocodex data.
   2. Patch `scripts/sync-skills.ts` line 460 and `scripts/sync-lurker.ts` line 445 with the improved regex `/^(\d+(?:\.\d+)?)%[^]*?\bdamage in PvP/i` so future re-syncs capture PvP% correctly without needing a separate backfill.
   3. Patch `sync-skills.ts` / `sync-lurker.ts` description-block parser to use a global regex (handle Ultimate/Prime dual-description tooltips).
+
+---
+Task ID: CC-GRANULARITY
+Agent: cc-granularity-agent
+Task: Add granular CC breakdown to Meta/Tiers
+
+Work Log:
+- Read worklog.md tail (last 100 lines) for context — confirmed no prior CC-GRANULARITY entries. Read src/app/api/meta/route.ts (full, 300 lines) to understand how `pvpCcSkillCount` is computed inside `computeSpecStats()` (line ~156). Read src/lib/spec-dedup.ts (full, 288 lines) to understand the spec flags: `isAwakening` (awakening-weapon skill), `isSuccession` (Prime:/Succession: variant), `isAbsolute` (Absolute: variant); main-weapon skills have none of these flags set. Confirmed `dedupSkillsBySpec` already excludes awakening-weapon skills from the succession list (and vice versa) via `replacedByAwakening`/`replacedByPrime` sets + the `pickVariant` predicate.
+- Found SpecStats interface declarations in 5 files (route.ts, meta-page.tsx, tier-list-page.tsx, spec-comparison-modal.tsx, matchups-page.tsx). Also confirmed damage-calculator-page.tsx uses a stripped-down `MetaSpecStats` type (only skillCount + avgPvpDamage) so it does NOT need updating. `src/lib/skills.ts` has no SpecStats declaration.
+- **API change** — `src/app/api/meta/route.ts`:
+  * Added 3 new fields to `SpecStats`: `specInheritedCcCount`, `weaponOnlyCcCount`, `mainAbsoCcCount` with inline doc-comments explaining each.
+  * Changed `computeSpecStats(skills)` → `computeSpecStats(skills, spec: 'awakening' | 'succession' | 'ascension')` so the function knows which spec it's counting for. Updated all 3 call sites in GET() to pass the spec name.
+  * Implemented the counting logic inside the existing `if (pvpCCs.length > 0)` block (which already excludes BS/passives/evasion/Elvia/enhancement-tier via the existing `skipStats` guard — those filters happen earlier in the loop). Logic per task spec:
+    - Awakening spec: `isAbsolute` → specInherited; `isAwakening` → weaponOnly; otherwise (pure main) → mainAbso.
+    - Succession spec: `isSuccession` → specInherited; `!isAwakening` (main + Absolute fallback) → mainAbso; weaponOnly stays 0.
+    - Ascension spec: skip (all 3 stay 0).
+  * Updated the ascension empty-object literal (non-ascension classes) to include the 3 new fields set to 0.
+  * `pvpCcSkillCount` total is unchanged — kept as the cross-spec total.
+- **Type mirror** — Updated SpecStats interfaces in 4 consumer files to include the 3 new fields: `src/components/skills/meta-page.tsx`, `src/components/skills/tier-list-page.tsx`, `src/components/skills/spec-comparison-modal.tsx`, `src/components/skills/matchups-page.tsx`.
+- **Meta page UI** — `src/components/skills/meta-page.tsx`:
+  * Added a new `CcBreakdownBadge` component (compact pill: label + count, color-coded red/orange/amber, hover tooltip explaining the exact rule).
+  * In the SpecCard (cards view), inserted a new "CC:" badge row directly below the main stats grid. Badges are spec-aware:
+    - Awakening spec shows 3 badges: "Abso N" (specInherited, Absolute:) · "Awa N" (weaponOnly, awakening-weapon) · "Main N" (mainAbso, pure main).
+    - Succession spec shows 2 badges: "Succ N" (specInherited, Prime:/Succession:) · "Main+Abso N" (mainAbso, main + Absolute fallback). The "Weapon" badge is omitted for succession (succession uses main weapon, no separate weapon).
+    - Hidden for ascension (breakdown is 0/0/0 by design).
+  * In the MetaTable (table view), enhanced the existing CC column: kept the total `pvpCcSkillCount` as the primary number, and added a small sub-line below it (8px, red-300/50) showing the breakdown as `specInh/wpnOnly/mainAbso` for awakening (e.g. "10/15/2") or `specInh/mainAbso` for succession (e.g. "8/7"). The sub-line has a tooltip with the verbose breakdown.
+  * In the expanded SpecCard detailed stats grid, added a new "CC Breakdown" DetailedStat row (only for awakening/succession) showing the same breakdown as a single string: "Abso 10 · Awa 15 · Main 2" (Awk) or "Succ 8 · Main+Abso 7" (Succ).
+- **Spec comparison modal** — `src/components/skills/spec-comparison-modal.tsx`:
+  * Added 3 new rows to COMPARISON_ROWS (right after "CC Skills"): "Spec CCs" (specInheritedCcCount), "Weapon CCs" (weaponOnlyCcCount), "Main CCs" (mainAbsoCcCount). Each row's winner is determined by the existing pickWinner logic (higher = better). The Awakening side will show non-zero values for all 3; the Succession side will show 0 for "Weapon CCs" (visible apples-to-oranges comparison — makes it clear that succession trades the awakening-weapon kit for spec-enhanced main-weapon skills).
+  * Updated the verdict text from hardcoded "of 12 categories" to `of ${COMPARISON_ROWS.length} categories` (now 15). Updated the 4 stale "12 comparison/12 stat/12 rows" comments.
+- **Tiers page** — `src/components/skills/tier-list-page.tsx`:
+  * Extended `ParamKey` union type with the 3 new keys.
+  * Added 3 new entries to `SCORE_PARAMS[]` (in the 'cc' category): "Spec-Inherited CCs" (short: "Spec CC"), "Weapon-Only CCs" (short: "Wpn CC"), "Main/Absolute CCs" (short: "Main CC"). Each has a description explaining the semantics and that ascension reports 0 for all 3.
+  * Did NOT modify the existing presets (balanced/damage/control/defense/burst/bruiser) — the new params start with weight 0 by default (via the existing `ZERO_WEIGHTS` reduce from SCORE_PARAMS + the `{...ZERO_WEIGHTS, ...parsed}` merge in `loadWeights()`), so users opt in by adjusting sliders. This avoids asymmetry issues (weaponOnlyCcCount is always 0 for succession, so including it in the "control" preset would unfairly penalize succession).
+  * The radar chart (`tier-radar-chart.tsx`) auto-picks up the new params since it iterates `SCORE_PARAMS` for axis construction. The WeightPanel, RankedView expanded grid, TableView, PortraitsView, AutoTierView all auto-include the new params with no code changes needed.
+- Ran `bun run lint` → exit 0, 0 errors, 0 warnings.
+- Ran `bunx tsc --noEmit` on modified files — 0 new errors introduced (only pre-existing errors in scripts/archive/, examples/websocket/, src/lib/damage.ts, src/components/skills/skill-tree.tsx — all unrelated, present before this task).
+- Ran `bun run test` (vitest) → all 42 tests pass (3 files: damage.test.ts, cc.test.ts, spec-dedup.test.ts).
+- Verified live API output by curling the running dev server (http://localhost:3000/api/meta). Sampled all 27 non-ascension classes — every class verifies the invariant `specInheritedCcCount + weaponOnlyCcCount + mainAbsoCcCount == pvpCcSkillCount` for Awakening spec, and `specInheritedCcCount + mainAbsoCcCount == pvpCcSkillCount` for Succession spec (weaponOnly is always 0). Sample values:
+  * Berserker Awk: 27 CC = 10 Abso + 15 Awa + 2 Main. Berserker Succ: 15 CC = 8 Succ + 7 Main+Abso.
+  * Dark Knight Awk: 33 CC = 13 Abso + 17 Awa + 3 Main. Dark Knight Succ: 17 CC = 8 Succ + 9 Main+Abso.
+  * Maehwa Awk: 45 CC = 17 Abso + 15 Awa + 13 Main. Maehwa Succ: 26 CC = 10 Succ + 16 Main+Abso.
+  * Kunoichi Awk: 34 CC = 15 Abso + 15 Awa + 4 Main. Kunoichi Succ: 20 CC = 9 Succ + 11 Main+Abso.
+- Did NOT run `bun run build` (per task constraints).
+
+Stage Summary:
+- **Fields added** (to SpecStats interface, mirrored in 5 files): `specInheritedCcCount` (Prime:/Succession: for Succ; Absolute: for Awk), `weaponOnlyCcCount` (Awakening-weapon CCs for Awk; always 0 for Succ), `mainAbsoCcCount` (pure main-weapon for Awk; main + Absolute fallback for Succ). All 3 are 0 for Ascension.
+- **Existing total preserved**: `pvpCcSkillCount` is unchanged — it's still the cross-spec total CC count. The 3 new fields sum to `pvpCcSkillCount` for Awakening (specInherited + weaponOnly + mainAbso = total). For Succession (specInherited + mainAbso = total, since weaponOnly is intentionally 0).
+- **Meta page UI**: New CC badge row in cards view (3 colored pills for Awk, 2 for Succ, hidden for Asc). Table view shows the breakdown as a small sub-line under the CC total. Expanded card shows a "CC Breakdown" detailed stat row.
+- **Spec comparison modal**: Added "Spec CCs", "Weapon CCs", "Main CCs" rows (now 15 comparison rows, up from 12). Verdict text dynamically reads `COMPARISON_ROWS.length`.
+- **Tiers page UI**: Added 3 new SCORE_PARAMS entries ("Spec-Inherited CCs", "Weapon-Only CCs", "Main/Absolute CCs") in the 'cc' category. These auto-appear in the weight panel sliders, ranked view expanded grid, table view columns, portraits view mini bars, auto-tier view mini bars, and the radar chart axes. Default weight 0 (presets untouched) so users opt in.
+- **Files changed**: src/app/api/meta/route.ts (+30 / -8 lines), src/components/skills/meta-page.tsx (+62 / -2 lines), src/components/skills/tier-list-page.tsx (+9 / -3 lines), src/components/skills/spec-comparison-modal.tsx (+13 / -7 lines), src/components/skills/matchups-page.tsx (+4 / -0 lines — interface only).
+- **Lint**: clean (exit 0). **Typecheck**: clean for modified files. **Tests**: all 42 pass. **Build**: not run (per constraints).
+
+---
+Task ID: UI-AUDIT
+Agent: ui-audit-agent
+Task: UI/UX/Branding/Optimization audit + new roadmap
+
+Work Log:
+- Read worklog.md tail (Q4.1 PvP backfill, Q3.3 tree keyboard nav, combo search/filter) for context. Confirmed v5.9.5 baseline, 42/42 tests passing, lint clean.
+- Read all 9 key UI files: src/app/page.tsx (295 lines), src/app/globals.css (396 lines), src/components/skills/header.tsx (346 lines), tab-switcher.tsx (133 lines), sync-footer.tsx (604 lines), skill-card.tsx (340 lines), skill-detail-drawer.tsx (1196 lines), meta-page.tsx (926 lines), tier-list-page.tsx (1387 lines), matchups-page.tsx (1019 lines), and public/logo.svg.
+- Used Agent Browser to take 11 screenshots at 1440x900 desktop and 375x812 mobile viewports of all 8 tabs (Data, Meta, Matchups, Tiers, Patches, Sessions, Dmg Calc, Docs) + the skill detail drawer + mobile Data tab. Saved to docs/ui-audit-screenshots/.
+- Used VLM (z-ai vision CLI) to visually analyze each screenshot — confirmed: tab bar overflow at 375px (890px wide in 375px viewport, "Docs" clipped), dense data layout, gold-on-ink theme cohesion, lack of empty/error states on several tabs.
+- Verified mobile tab bar overflow with `agent-browser eval` — confirmed scrollWidth=890px / clientWidth=375px.
+- Verified image optimization gap — 38 raw `<img loading="lazy">` tags across src/components/skills/, no `next/image` usage anywhere in src/. Public icons: 3,069 skill icons + 118 portraits.
+- Verified package.json has heavyweight deps (recharts, @mdxeditor/editor, react-syntax-highlighter, framer-motion, embla-carousel-react) + 25+ @radix-ui/* packages, no `next/dynamic` lazy-loading of tab contents in page.tsx.
+- Verified schema has all flags needed for the user-requested "locked/main skills" feature (isPassive, isFlow, isCore, isBlackSpirit, isAbsolute, isAwakening, isSuccession, isQuickSlot, requiredLevel) — feature is implementable without DB migration.
+- Verified DEFAULT_FILTERS shape in skill-store.ts — clean extension point for new toggles.
+- Wrote comprehensive audit report to docs/UI_AUDIT.md (5 sections: Executive Summary, Strengths, Weaknesses, Specific Recommendations, Roadmap Cross-Reference). Tagged all findings P0-P3 with file paths and effort estimates.
+- Wrote new roadmap to docs/ROADMAP_v7.md — 24 items organized by P0/P1/P2/P3 priority + S/M/L effort, with 4-sprint plan. Integrates: v6 carryovers (Q3.1 tree virtualization → P2.5, Q2 mobile → P0.1+P2.6, Q3.2 API compression → P2.7, Q4.1 PvP% → P2.8, Q4.2 icon gap → P2.9, Q1.1 combo expansion → P2.10), new UI audit findings, and the user-requested "locked skills" / "main skills" toggle (P1.3, M=3h).
+- Did NOT change any source code (per task constraints).
+- Did NOT run `bun run build` (per task constraints).
+
+Stage Summary:
+- **Top 5 findings**:
+  1. **P0 — Mobile tab bar overflows at 375px**: 890px-wide tablist in 375px viewport, "Docs" tab clipped, no scroll affordance. Mobile users can't reach Docs. (src/components/skills/tab-switcher.tsx)
+  2. **P0 — No `next/image`**: 38 raw `<img>` tags ship 3,069 skill icons + 118 portraits at native resolution. Meta tab downloads ~4.7MB of portraits on first paint. No AVIF/WebP, no responsive sizing, causes CLS.
+  3. **P1 — Heavyweight deps bundled at first paint**: recharts, @mdxeditor/editor, react-syntax-highlighter, framer-motion all statically imported. No `next/dynamic` lazy-loading of the 8 tab pages — all bundled into the initial client chunk.
+  4. **P1 — "Locked skills" / "main skills" filter missing** (user-requested): schema has all needed flags (isPassive, isFlow, isCore, isBlackSpirit, isAbsolute, isAwakening, isSuccession, isQuickSlot, requiredLevel) but no UI toggle exists. Recommend a "Build Focus" section in FilterSidebar with 2 switches: "Main Skills Only" + "Hide Locked", plus a Lock icon + reduced opacity visual treatment for locked skills.
+  5. **P2 — Inconsistent empty/error/loading states**: Meta has 12-skeleton-card loader, Sessions has trophy-icon empty state, Patches/Matchups/Tiers have no visible error state. No shared `<EmptyState>` / `<ErrorState>` / `<TabSkeleton>` component.
+- **Roadmap summary**: docs/ROADMAP_v7.md contains 24 items: 2 P0 (M=4.5h), 4 P1 (M=7h), 10 P2 (L=12h), 8 P3 (M=3.5h). Total ~27h. 4-sprint plan: Sprint 1 = P0+P1 quick wins, Sprint 2 = P1 user-facing (incl. locked/main skills toggle), Sprint 3 = P2 perf+a11y, Sprint 4 = P2 content+polish. Cross-references all v6 items (9 items: 2 done, 7 carried over).
+- **Files created**: docs/UI_AUDIT.md (audit report, ~9KB), docs/ROADMAP_v7.md (new roadmap, ~13KB), docs/ui-audit-screenshots/ (11 PNG screenshots, 8.1MB total).
+- **Strengths highlighted in audit**: ornate animated SVG logo with prefers-reduced-motion fallback, 16 custom BDO utility classes in globals.css (bdo-frame, bdo-leather, bdo-title, bdo-chip, bdo-btn, bdo-input, bdo-icon-frame, bdo-divider, bdo-pulse, bdo-loadbar, bdo-fade-in), 8-token color palette duplicated to shadcn tokens, gold-on-ink theme cohesion across all 8 tabs, comprehensive keyboard shortcuts (1-7, /, ?, Esc, arrows + Enter for grid + dedicated tree arrow handler), tri-state filter chips persisted to localStorage, sticky header/sidebar/tab-bar with backdrop-blur, BDO-themed global scrollbar styling, react-query optimistic UI with UpdatedIndicator fade-in pulse.
+
+---
+Task ID: MATCHUPS-REDESIGN
+Agent: matchups-redesign-agent
+Task: Redesign Arena of Solare matchups page
+
+Work Log:
+- Read worklog.md tail (Q3.3 keyboard-nav, Q4.1 pvp-backfill, combo search/filter entries) for context.
+- Read src/components/skills/matchups-page.tsx (1018 lines) fully: identified the Arena of Solare toggle at line ~417, the teamA/teamB state as `SpecEntry[]`, the inline Team Advantage Analysis (text-only), and the SA-DR-heatmap chip grid.
+- Read src/components/skills/meta-page.tsx (925 lines) to study the SpecCard design (portrait background + dark gradient overlay + spec-color border + stat boxes + Top Skill bar + SA DR display) — the visual reference the user wants the team slots to match.
+- Read src/app/api/meta/route.ts (299 lines) to confirm what specStats are available per spec: skillCount, avgPvpDamage, medianPvpDamage, pvpCcSkillCount, grabCount, superArmorCount, forwardGuardCount, iFrameCount, coreSaCount, coreFgCount, protectedSkillCount, topPvpDamageSkill, dpsEstimate, avgDpc, avgDpcPvP, protectedCoverage. Per-class fields: combatType, successionGroup/awakeningGroup/ascensionGroup, successionSaDr/awakeningSaDr/ascensionSaDr, isAscension.
+- Confirmed @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities, cmdk, framer-motion, and the shadcn Command + Popover components are all already installed.
+- Updated imports in matchups-page.tsx: added DndContext/DragOverlay/PointerSensor/KeyboardSensor/useDraggable/useDroppable/closestCenter/useSensor/useSensors + DragStartEvent/DragEndEvent types from @dnd-kit/core; added Command/CommandInput/CommandList/CommandItem/CommandGroup/CommandEmpty from @/components/ui/command; added Popover/PopoverTrigger/PopoverContent from @/components/ui/popover; added Search/Grip/Hand/Crown icons from lucide-react; removed unused AnimatePresence, ArrowDown, Minus, ChevronUp, ChevronDown imports.
+- Added buildEntryFromSpec(cls, spec) helper near buildClassRow — materializes a SpecEntry from a ClassStats + spec name (used by the drag-end handler).
+- Modified MatchupsPage state: removed `arenaMode` (Arena is now always expanded); changed `teamA`/`teamB` from `SpecEntry[]` to `(SpecEntry | null)[]` of length 3 (positionally-stable slots for DnD targeting); added `classSpec: Record<number, SpecName>` for per-card spec selection; added `activeDrag` state for the DragOverlay preview.
+- Added arena-related memos & handlers in MatchupsPage: `arenaClasses` (alphabetical, filtered to classes with ≥1 spec), `teamAEntries`/`teamBEntries` (non-null filters for the analysis), `sensors` (PointerSensor with distance:6 activation + KeyboardSensor), `getCardSpec`/`setCardSpec` (per-class spec default = succession > awakening > ascension), `setSlot` (positional slot setter), `handleDragStart` (sets activeDrag), `handleDragEnd` (resolves classId+spec → SpecEntry, calls setSlot).
+- Replaced the entire Arena section (was ~270 lines: toggle + team panels + text-only analysis + chip grid) with a single `<ArenaOfSolareSection .../>` call passing all needed props.
+- Implemented 7 new sub-components after the MatchupsPage component (replaced the old TeamMemberRow):
+  * **ArenaOfSolareSection** — top-level wrapper. Always-expanded (no toggle). Renders header with drag/search hint, group-cycle legend (Vanguard→Pulverizer→Skirmisher with counters ▸ arrow), DndContext wrapping the two TeamPanels (side-by-side, md:grid-cols-2), TeamAdvantageAnalysis (when any team has a member), and the alphabetical Class Selection Grid (responsive 2→3→4→5→6 cols). DragOverlay renders ArenaClassCardPreview while dragging.
+  * **ArenaClassCard** — big pretty card per class. Portrait background (spec-specific /specs/{slug}-{spec}.jpg, falls back to main portrait) with dark gradient overlay + group-color top band. Header: class name + group badge with GROUP_ICONS + framed class icon (spec-color border + glow). Spec toggle buttons (S/A/Asc — only renders specs that exist for the class; click stops pointer-down propagation so dnd-kit doesn't start a drag). Indicator badges: "SA Adv" (emerald, ShieldHalf icon, when saDr > 10) OR "Standard" (dim amber); "Grab" (orange, Hand icon, when grabCount > 0); SA DR % colored by getSaDrColor. Draggable via useDraggable (id = `arena-class-{classId}`, data carries classId + currently-selected spec). Grip icon in top-right corner as drag-handle affordance. cursor-grab → active:cursor-grabbing.
+  * **ArenaClassCardPreview** — compact floating preview shown inside DragOverlay while dragging. Shows class icon (spec-color border) + class name + spec label + group + SA DR %.
+  * **TeamPanel** — one team (A or B). Header: colored dot + "Team A/B" label + Crown icon when filledCount === 3 + N/3 counter. Renders 3 TeamSlots. Team color = emerald (#10b981) for A, red (#ef4444) for B.
+  * **TeamSlot** — single droppable slot (useDroppable, id = `slot-{teamId}-{slotIndex}`, data carries teamId + slotIndex). Filled state: renders CompactClassCard with gold ring when isOver (drop target highlighted). Empty state: dashed border (team color), Popover+Command search button ("Search class for slot N…"), "or drop a class here" hint. Command list shows all specEntries with class icon + name + spec badge + group + grab icon + SA DR %, filtered by cmdk's built-in fuzzy match on `${className} ${spec}` value. Selecting an item calls onPick(entry) and closes the popover.
+  * **CompactClassCard** — mini SpecCard shown in filled team slots (matches meta-page SpecCard design). Portrait background + dark gradient + team-color left edge strip. Header: class name + spec badge (AWK/SUCC/ASC) + group badge + grab icon + clear (X) button. 6-cell stat grid: Avg PvP (pink), CC (red), SA (amber), FG (blue), IF (purple), Grab (orange). SA DR progress bar (0-25% scale, colored by heatmap) with arrow when > 10%.
+  * **TeamAdvantageAnalysis** — redesigned analysis panel with visual bars (was text-only). 4 metric cards in a 2-col grid: (1) Group Cycle Matchup — stacked horizontal bar (emerald A wins / amber neutral / red B wins) showing pairwise counter counts + per-team group distribution chips; (2) Avg SA Damage Reduction — side-by-side A vs B bars; (3) Total Grab Skills; (4) Total PvP CC Skills; (5) Total Super Armor Skills. Each CompareBar shows "A leads" / "B leads" badge when there's a winner, with the leading team's bar at full saturation and the loser's at 60% opacity.
+  * **CompareBar** — helper component for the A vs B comparison bars. Title + subtitle + winner badge + two horizontal bars (A in emerald, B in red) with monospace value labels.
+- Removed the old TeamMemberRow component (replaced by CompactClassCard). Removed the now-unused SpecPortrait component and getPortraitUrls helper. Removed the now-unused sameEntry helper. Cleaned up unused getCounter prop from TeamAdvantageAnalysis interface (it was destructured in ArenaOfSolareSection but only forwarded — now removed from both the interface, the destructuring, and the call site).
+- BDO theme throughout: bg-bdo-ink, bg-bdo-leather-dark, amber-200/300/400 text, amber-800/900 borders, gold accents. Group colors: Vanguard=#ef4444, Pulverizer=#f97316, Skirmisher=#3b82f6. Team colors: A=emerald #10b981, B=red #ef4444. No indigo/blue outside the Skirmisher group color (which is per the task spec).
+- Ran `bun run lint` → exit 0, 0 errors, 0 warnings.
+- Ran `bunx tsc --noEmit` → 0 errors in matchups-page.tsx (only pre-existing errors in examples/ and scripts/archive/, unrelated).
+- Verified dev server compiles the file: the bundle at `.next/dev/static/chunks/src_components_skills_matchups-page_tsx_0l0qxnd._.js` was rebuilt at 03:18 (251KB, up from 190KB), and contains 39 references to the new component names (ArenaClassCard, TeamAdvantageAnalysis, CompactClassCard, ArenaOfSolareSection, TeamPanel, TeamSlot, CompareBar). @dnd-kit/core is bundled in its own chunk.
+- Did NOT run `bun run build` (per task constraints). Did NOT modify the non-Arena parts of the Matchups page (spec selector, group filter chips, collapsed matchup table, legend — all preserved). Did NOT use z-ai-web-dev-sdk.
+
+Stage Summary:
+- **Default expanded**: Arena of Solare section is always visible. Removed the `arenaMode` toggle state entirely; the section renders directly inside the main content area.
+- **Class selection grid**: Big pretty cards (min-h 150px) in a responsive grid (2/3/4/5/6 cols at sm/md/lg/xl), sorted alphabetically by class name. Each card shows: class name (bdo-title), class icon (framed, spec-color border), group color band on top + group badge with icon, spec toggle buttons (S/A/Asc — only specs that exist for the class, click switches the card's selected spec), "SA Adv" badge (ShieldHalf icon, emerald) when saDr > 10% else "Standard" (dim amber), "Grab" badge (Hand icon, orange) when grabCount > 0, and SA DR % colored by the heatmap. Each card is draggable (useDraggable) with a Grip icon affordance in the top-right.
+- **Drag-and-drop**: Wrapped the teams + analysis + class grid in a DndContext (PointerSensor with distance:6 activation so spec-button clicks don't start drags, plus KeyboardSensor for accessibility). Dragging a class card onto a team slot populates that slot (replaces if filled). DragOverlay renders a compact ArenaClassCardPreview (class icon + name + spec + group + SA DR) while dragging. Slot isOver state shows a gold ring on the drop target.
+- **Type-to-search**: Each empty team slot has a "Search class for slot N…" button that opens a Popover with a cmdk Command. The Command lists all class×spec entries (icon + name + spec badge + group + grab icon + SA DR %), fuzzy-filtered by the typed query. Selecting an entry populates that slot.
+- **Selected-class card**: Filled team slots show a CompactClassCard modeled after the meta-page SpecCard — portrait background, dark gradient, team-color left strip, class name + spec badge + group badge + grab icon + clear button, a 6-cell stat grid (Avg PvP / CC / SA / FG / IF / Grab), and an SA DR progress bar (0-25% scale) with arrow when > 10%.
+- **Team Advantage Analysis**: Redesigned from text-only to visual bars. Five metric cards: (1) Group Cycle Matchup — stacked horizontal bar (A wins / neutral / B wins) with pairwise counter counts + per-team group distribution chips (Vanguard/Pulverizer/Skirmisher icons with counts); (2) Avg SA DR comparison; (3) Total Grab Skills; (4) Total PvP CC Skills; (5) Total Super Armor Skills. Each comparison bar shows "A leads" / "B leads" badge and renders the winning team's bar at full saturation, the loser's at 60% opacity.
+- **BDO theme**: dark bg (bg-bdo-ink, bg-bdo-leather-dark), gold accents (amber-200/300/400 text, amber-800/900 borders), no indigo/blue outside the Skirmisher group color. Team A = emerald, Team B = red. Group colors per spec: Vanguard=#ef4444, Pulverizer=#f97316, Skirmisher=#3b82f6.
+- **Preserved**: All non-Arena parts of the Matchups page (header with counter-cycle legend, spec selector + group filter chips, collapsed 31-row matchup table with pinning, footer legend) are unchanged.
+- **Files changed**: `src/components/skills/matchups-page.tsx` only (+~700 / -~330 lines net; final file is 1703 lines). No new files. No API changes. No DB changes.
+- **Lint**: clean (exit 0). **Typecheck**: clean for matchups-page.tsx. **Build**: not run (per constraints).

@@ -3,9 +3,21 @@
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Swords, Pin, PinOff, X, ArrowUp, ArrowDown, Minus, ChevronUp, ChevronDown, ShieldHalf } from 'lucide-react'
+import {
+  DndContext, DragOverlay, PointerSensor, KeyboardSensor,
+  useDraggable, useDroppable, closestCenter, useSensor, useSensors,
+  type DragStartEvent, type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  Swords, Pin, PinOff, X, ArrowUp,
+  ShieldHalf, Search, Grip, Hand, Crown,
+} from 'lucide-react'
 import { classColor, classIconUrl, SPEC_COLORS } from '@/lib/skills'
 import { cn } from '@/lib/utils'
+import {
+  Command, CommandInput, CommandList, CommandItem, CommandGroup, CommandEmpty,
+} from '@/components/ui/command'
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 
 // ─── Spec entries (shared type) ─────────────────────────────────────
 
@@ -44,52 +56,19 @@ function getSaDrColor(saDr: number): { bg: string; text: string; border: string 
   }
 }
 
-// ─── Spec-specific portrait URLs ────────────────────────────────────
-// Awakening/Succession use spec-specific portraits under /specs/.
-// Ascension (and as fallback) uses the main portrait — try .jpg then .png.
-function getPortraitUrls(slug: string, spec: SpecName): string[] {
-  const urls: string[] = []
-  if (spec === 'awakening' || spec === 'succession') {
-    urls.push(`/icons/portraits/specs/${slug}-${spec}.jpg`)
-  }
-  urls.push(`/icons/portraits/${slug}.jpg`)
-  urls.push(`/icons/portraits/${slug}.png`)
-  return urls
-}
-
-// Small component that picks the first portrait URL that loads,
-// falling back through the chain (spec-specific → main .jpg → main .png).
-function SpecPortrait({
-  slug, spec, alt, className,
-}: {
-  slug: string
-  spec: SpecName
-  alt: string
-  className?: string
-}) {
-  const urls = React.useMemo(() => getPortraitUrls(slug, spec), [slug, spec])
-  const [idx, setIdx] = React.useState(0)
-  return (
-    <img
-      src={urls[idx]}
-      alt={alt}
-      className={className}
-      loading="lazy"
-      onError={() => setIdx(i => Math.min(i + 1, urls.length - 1))}
-    />
-  )
-}
-
 // ─── Team entry helpers ─────────────────────────────────────────────
 
 const entryKey = (e: SpecEntry) => `${e.classId}:${e.spec}`
-const sameEntry = (a: SpecEntry, b: SpecEntry) => a.classId === b.classId && a.spec === b.spec
 
 interface SpecStats {
   skillCount: number
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
+  // Granular CC breakdown — only populated for awakening/succession specs.
+  specInheritedCcCount: number // Prime:/Succession: (Succ) or Absolute: (Awk) CC skills
+  weaponOnlyCcCount: number    // Awakening-weapon CC skills (Awk only); 0 for Succession
+  mainAbsoCcCount: number      // Main-weapon + Absolute fallback CC skills
   grabCount: number
   superArmorCount: number
   forwardGuardCount: number
@@ -238,13 +217,39 @@ function buildClassRow(cls: ClassStats, specMode: SpecMode): SpecEntry | null {
   return candidates.find((c) => c.spec === wanted) ?? null
 }
 
+// ─── buildEntryFromSpec ────────────────────────────────────────────
+// Builds a SpecEntry from a ClassStats + spec name. Used by the Arena
+// drag-and-drop handler to materialize the dropped class into a team slot.
+function buildEntryFromSpec(cls: ClassStats, spec: SpecName): SpecEntry | null {
+  const stats = cls[spec]
+  if (!stats || stats.skillCount === 0) return null
+  const group = spec === 'awakening' ? cls.awakeningGroup
+    : spec === 'succession' ? cls.successionGroup
+    : cls.ascensionGroup
+  const saDr = spec === 'awakening' ? cls.awakeningSaDr
+    : spec === 'succession' ? cls.successionSaDr
+    : cls.ascensionSaDr
+  return {
+    classId: cls.classId, className: cls.className, slug: cls.slug,
+    combatType: cls.combatType, spec, group, saDr, stats,
+    isAscension: cls.isAscension,
+  }
+}
+
 // ─── Main component ─────────────────────────────────────────────────
 
 export function MatchupsPage() {
   const metaQuery = useQuery({ queryKey: ['meta'], queryFn: fetchMeta, staleTime: 60_000 })
-  const [arenaMode, setArenaMode] = React.useState(false)
-  const [teamA, setTeamA] = React.useState<SpecEntry[]>([])
-  const [teamB, setTeamB] = React.useState<SpecEntry[]>([])
+  // Arena of Solare is always expanded now — no arenaMode toggle.
+  // Each team is a fixed-length 3-slot array (null = empty slot) so slots
+  // are positionally stable for drag-and-drop targeting.
+  const [teamA, setTeamA] = React.useState<(SpecEntry | null)[]>([null, null, null])
+  const [teamB, setTeamB] = React.useState<(SpecEntry | null)[]>([null, null, null])
+  // Per-class selected spec for the Arena class-grid cards (classId → spec).
+  // Falls back to succession > awakening > ascension if unset.
+  const [classSpec, setClassSpec] = React.useState<Record<number, SpecName>>({})
+  // Active drag preview state — set on dragStart, cleared on dragEnd/cancel.
+  const [activeDrag, setActiveDrag] = React.useState<{ classId: number; spec: SpecName } | null>(null)
   const [specMode, setSpecMode] = React.useState<SpecMode>('all')
   const [groupFilter, setGroupFilter] = React.useState<Set<string>>(new Set())
 
@@ -366,6 +371,79 @@ export function MatchupsPage() {
     return 'neutral'
   }
 
+  // ─── Arena of Solare: alphabetical class list + dnd-kit setup ──────
+  // One card per class (with spec toggles on the card itself), sorted A→Z.
+  const arenaClasses = React.useMemo(() => {
+    return [...classes]
+      .filter(c => c.awakening.skillCount > 0 || c.succession.skillCount > 0 || c.ascension.skillCount > 0)
+      .sort((a, b) => a.className.localeCompare(b.className))
+  }, [classes])
+
+  // Non-null team entries (for the analysis section).
+  const teamAEntries = React.useMemo(
+    () => teamA.filter((e): e is SpecEntry => e !== null),
+    [teamA],
+  )
+  const teamBEntries = React.useMemo(
+    () => teamB.filter((e): e is SpecEntry => e !== null),
+    [teamB],
+  )
+
+  // PointerSensor needs a small distance threshold so spec-toggle button
+  // clicks don't accidentally start a drag.
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(KeyboardSensor),
+  )
+
+  const getCardSpec = (cls: ClassStats): SpecName => {
+    const stored = classSpec[cls.classId]
+    if (stored) return stored
+    if (cls.isAscension) return 'ascension'
+    if (cls.succession.skillCount > 0) return 'succession'
+    return 'awakening'
+  }
+
+  const setCardSpec = (classId: number, spec: SpecName) => {
+    setClassSpec(prev => ({ ...prev, [classId]: spec }))
+  }
+
+  const setSlot = (teamId: 'A' | 'B', slotIndex: number, entry: SpecEntry | null) => {
+    const setter = teamId === 'A' ? setTeamA : setTeamB
+    setter(prev => {
+      const next = [...prev]
+      next[slotIndex] = entry
+      return next
+    })
+  }
+
+  const handleDragStart = (event: DragStartEvent) => {
+    const data = event.active.data.current as
+      | { type: string; classId: number; spec: SpecName }
+      | undefined
+    if (data?.type === 'class') {
+      setActiveDrag({ classId: data.classId, spec: data.spec })
+    }
+  }
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    setActiveDrag(null)
+    const { active, over } = event
+    if (!over) return
+    const dragData = active.data.current as
+      | { type: string; classId: number; spec: SpecName }
+      | undefined
+    const dropData = over.data.current as
+      | { type: string; teamId: 'A' | 'B'; slotIndex: number }
+      | undefined
+    if (!dragData || dragData.type !== 'class' || !dropData || dropData.type !== 'slot') return
+    const cls = classes.find(c => c.classId === dragData.classId)
+    if (!cls) return
+    const entry = buildEntryFromSpec(cls, dragData.spec)
+    if (!entry) return
+    setSlot(dropData.teamId, dropData.slotIndex, entry)
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-bdo-ink text-zinc-100">
       {/* Header */}
@@ -414,279 +492,26 @@ export function MatchupsPage() {
           </div>
         ) : (
           <div className="mx-auto max-w-6xl space-y-4">
-            {/* Arena of Solare 3v3 Selector (unchanged) */}
-            <div className="rounded-sm border-2 border-amber-800/40 bg-bdo-leather-dark/30 p-4">
-              <div
-                className="flex cursor-pointer items-center gap-2"
-                onClick={() => { setArenaMode(!arenaMode); if (arenaMode) { setTeamA([]); setTeamB([]) } }}
-              >
-                <Swords className="size-4 text-amber-400" />
-                <h2 className="bdo-title text-sm font-bold text-amber-300">Arena of Solare (3v3)</h2>
-                <button
-                  onClick={(e) => { e.stopPropagation(); setArenaMode(!arenaMode); if (arenaMode) { setTeamA([]); setTeamB([]) } }}
-                  className="ml-auto flex items-center gap-1 text-[10px] text-amber-300/50 hover:text-amber-200"
-                >
-                  {arenaMode ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
-                </button>
-              </div>
-              {arenaMode && (
-                <div className="space-y-3">
-                  <p className="text-[10px] leading-relaxed text-amber-300/50">
-                    Click a chip to assign to Team A (1st click) or Team B (when A is full or already has it). Max 3 per team.
-                    Chip background = <span className="text-emerald-300">SA DR heatmap</span> (amber &rarr; green);
-                    <ArrowUp className="ml-1 inline size-2.5 text-emerald-400" /> marks above-average SA DR.
-                  </p>
-
-                  {/* Team display — portraits + class info */}
-                  <div className="grid grid-cols-2 gap-3">
-                    {/* Team A */}
-                    <div className="rounded-sm border-2 border-emerald-700/50 bg-emerald-950/30 p-2">
-                      <div className="mb-1.5 flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
-                          <span className="size-2 rounded-full bg-emerald-400" />
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-300/80">Team A</span>
-                        </div>
-                        <span className="font-mono text-[10px] text-emerald-300/60">{teamA.length}/3</span>
-                      </div>
-                      <div className="space-y-1">
-                        {teamA.map(entry => (
-                          <TeamMemberRow
-                            key={`a-${entryKey(entry)}`}
-                            entry={entry}
-                            teamColor="emerald"
-                            onRemove={() => setTeamA(prev => prev.filter(t => !sameEntry(t, entry)))}
-                          />
-                        ))}
-                        {teamA.length === 0 && (
-                          <div className="rounded-sm border border-dashed border-emerald-800/30 px-2 py-2 text-center text-[9px] text-emerald-300/30">
-                            Click a class chip below
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    {/* Team B */}
-                    <div className="rounded-sm border-2 border-red-700/50 bg-red-950/30 p-2">
-                      <div className="mb-1.5 flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
-                          <span className="size-2 rounded-full bg-red-400" />
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-red-300/80">Team B</span>
-                        </div>
-                        <span className="font-mono text-[10px] text-red-300/60">{teamB.length}/3</span>
-                      </div>
-                      <div className="space-y-1">
-                        {teamB.map(entry => (
-                          <TeamMemberRow
-                            key={`b-${entryKey(entry)}`}
-                            entry={entry}
-                            teamColor="red"
-                            onRemove={() => setTeamB(prev => prev.filter(t => !sameEntry(t, entry)))}
-                          />
-                        ))}
-                        {teamB.length === 0 && (
-                          <div className="rounded-sm border border-dashed border-red-800/30 px-2 py-2 text-center text-[9px] text-red-300/30">
-                            Click a class chip below
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Team advantage analysis */}
-                  {teamA.length > 0 && teamB.length > 0 && (() => {
-                    const avgA = teamA.reduce((s, e) => s + e.saDr, 0) / teamA.length
-                    const avgB = teamB.reduce((s, e) => s + e.saDr, 0) / teamB.length
-                    const diff = avgA - avgB
-                    // Aggregate group counter advantage: count pairwise matchups
-                    let aUpCount = 0, bUpCount = 0, neutralCount = 0
-                    for (const a of teamA) for (const b of teamB) {
-                      const adv = getAdvantage(a.group || '', b.group || '')
-                      if (adv === 'up') aUpCount++
-                      else if (adv === 'down') bUpCount++
-                      else neutralCount++
-                    }
-                    return (
-                      <div className="rounded-sm border border-amber-800/40 bg-bdo-ink/50 p-2.5 text-[10px]">
-                        <div className="mb-1.5 flex items-center gap-1.5">
-                          <Swords className="size-3 text-amber-400" />
-                          <span className="font-bold uppercase tracking-wider text-amber-300/70">Team Advantage Analysis</span>
-                        </div>
-
-                        {/* Aggregate counter advantage summary */}
-                        <div className="mb-2 grid grid-cols-3 gap-1.5">
-                          <div className="rounded-sm border border-emerald-800/40 bg-emerald-900/15 px-2 py-1 text-center">
-                            <div className="font-mono text-sm font-bold text-emerald-300">{aUpCount}</div>
-                            <div className="text-[8px] uppercase tracking-wider text-emerald-300/50">A counters</div>
-                          </div>
-                          <div className="rounded-sm border border-amber-800/30 bg-amber-900/10 px-2 py-1 text-center">
-                            <div className="font-mono text-sm font-bold text-amber-300/60">{neutralCount}</div>
-                            <div className="text-[8px] uppercase tracking-wider text-amber-300/40">Neutral</div>
-                          </div>
-                          <div className="rounded-sm border border-red-800/40 bg-red-900/15 px-2 py-1 text-center">
-                            <div className="font-mono text-sm font-bold text-red-300">{bUpCount}</div>
-                            <div className="text-[8px] uppercase tracking-wider text-red-300/50">B counters</div>
-                          </div>
-                        </div>
-
-                        {/* SA DR advantage note — only when meaningful difference */}
-                        {Math.abs(diff) >= 0.5 && (
-                          <div
-                            className="mb-2 flex items-center gap-1.5 rounded-sm border px-2 py-1"
-                            style={{
-                              borderColor: diff > 0 ? 'rgba(52, 211, 153, 0.4)' : 'rgba(248, 113, 113, 0.4)',
-                              backgroundColor: diff > 0 ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)',
-                            }}
-                          >
-                            <ShieldHalf
-                              className="size-3 shrink-0"
-                              style={{ color: diff > 0 ? '#34d399' : '#f87171' }}
-                            />
-                            <span className="text-amber-100/80">
-                              <span className="font-bold" style={{ color: diff > 0 ? '#34d399' : '#f87171' }}>
-                                Team {diff > 0 ? 'A' : 'B'}
-                              </span>{' '}
-                              has{' '}
-                              <span className="font-mono font-bold text-amber-200">
-                                {Math.abs(diff).toFixed(1)}%
-                              </span>{' '}
-                              more SA DR on average
-                              <span className="text-amber-300/40">
-                                {' '}({Math.max(avgA, avgB).toFixed(1)}% vs {Math.min(avgA, avgB).toFixed(1)}%)
-                              </span>
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Pairwise matchup grid */}
-                        <div className="space-y-0.5">
-                          {teamA.map(a => teamB.map(b => {
-                            const adv = getAdvantage(a.group || '', b.group || '')
-                            const saDrColor = getSaDrColor(a.saDr)
-                            const saDrColorB = getSaDrColor(b.saDr)
-                            return (
-                              <div
-                                key={`${entryKey(a)}-${entryKey(b)}`}
-                                className="flex items-center gap-1.5 rounded-sm bg-bdo-leather-dark/20 px-1.5 py-0.5"
-                              >
-                                <span className="truncate" style={{ color: saDrColor.text }}>{a.className}</span>
-                                <span className="text-[8px]" style={{ color: SPEC_COLORS[a.spec] }}>
-                                  {a.spec === 'awakening' ? 'A' : a.spec === 'succession' ? 'S' : 'X'}
-                                </span>
-                                <span className="text-amber-400/30">vs</span>
-                                <span className="truncate" style={{ color: saDrColorB.text }}>{b.className}</span>
-                                <span className="text-[8px]" style={{ color: SPEC_COLORS[b.spec] }}>
-                                  {b.spec === 'awakening' ? 'A' : b.spec === 'succession' ? 'S' : 'X'}
-                                </span>
-                                <span className="ml-auto flex items-center gap-1">
-                                  {adv === 'up' && <span className="text-emerald-400">+5%</span>}
-                                  {adv === 'down' && <span className="text-red-400">−5%</span>}
-                                  {adv === 'neutral' && <span className="text-amber-300/30">=</span>}
-                                </span>
-                              </div>
-                            )
-                          }))}
-                        </div>
-                      </div>
-                    )
-                  })()}
-
-                  {/* SA DR legend */}
-                  <div className="flex items-center gap-2 rounded-sm border border-amber-900/30 bg-bdo-ink/30 px-2 py-1 text-[9px] text-amber-300/50">
-                    <span className="uppercase tracking-wider text-amber-300/40">SA DR</span>
-                    {[10, 15, 20, 25].map(v => (
-                      <div key={v} className="flex items-center gap-1">
-                        <span
-                          className="size-3 rounded-sm border"
-                          style={{
-                            backgroundColor: getSaDrColor(v).bg,
-                            borderColor: getSaDrColor(v).border,
-                          }}
-                        />
-                        <span className="font-mono">{v}%</span>
-                      </div>
-                    ))}
-                    <span className="ml-auto flex items-center gap-1">
-                      <ArrowUp className="size-3 text-emerald-400" />
-                      <span>= above average (&gt;10%)</span>
-                    </span>
-                  </div>
-
-                  {/* Class chips for arena selection — SA DR heatmap + spec borders */}
-                  <div className="flex flex-wrap gap-1">
-                    {specEntries.map(cls => {
-                      const iconUrl = classIconUrl(cls.slug)
-                      const specColor = SPEC_COLORS[cls.spec]
-                      const saDrColor = getSaDrColor(cls.saDr)
-                      const inA = teamA.some(t => sameEntry(t, cls))
-                      const inB = teamB.some(t => sameEntry(t, cls))
-                      const aboveAverage = cls.saDr > 10
-                      return (
-                        <button
-                          key={entryKey(cls)}
-                          onClick={() => {
-                            if (inA) { setTeamA(prev => prev.filter(t => !sameEntry(t, cls))); return }
-                            if (inB) { setTeamB(prev => prev.filter(t => !sameEntry(t, cls))); return }
-                            if (teamA.length < 3) setTeamA(prev => [...prev, cls])
-                            else if (teamB.length < 3) setTeamB(prev => [...prev, cls])
-                          }}
-                          disabled={!inA && !inB && teamA.length >= 3 && teamB.length >= 3}
-                          className={cn(
-                            'group relative flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-[9px] font-semibold transition-all',
-                            !inA && !inB && 'hover:scale-105 hover:brightness-125',
-                            (inA || inB) && 'ring-1 ring-offset-1 ring-offset-bdo-ink',
-                            inA && 'ring-emerald-400',
-                            inB && 'ring-red-400',
-                          )}
-                          style={{
-                            // SA DR heatmap background; spec color border (or team color when selected)
-                            backgroundColor: inA
-                              ? 'rgba(6, 78, 59, 0.55)'
-                              : inB
-                                ? 'rgba(127, 29, 29, 0.55)'
-                                : saDrColor.bg,
-                            borderColor: inA
-                              ? '#10b981'
-                              : inB
-                                ? '#ef4444'
-                                : specColor,
-                            color: '#fafafa',
-                          }}
-                          title={`${cls.className} (${cls.spec}) — ${cls.group || 'no group'} · SA DR ${cls.saDr}%`}
-                        >
-                          {iconUrl && (
-                            <img
-                              src={iconUrl}
-                              alt=""
-                              className="size-3.5 rounded-sm object-cover"
-                              loading="lazy"
-                            />
-                          )}
-                          <span className="leading-none">{cls.className}</span>
-                          {/* Spec badge (AWK/SUCC/ASC) */}
-                          <span
-                            className="rounded-sm px-0.5 text-[7px] font-bold uppercase leading-none"
-                            style={{
-                              color: specColor,
-                              backgroundColor: `${specColor}22`,
-                              border: `1px solid ${specColor}55`,
-                            }}
-                          >
-                            {cls.spec === 'awakening' ? 'AWK' : cls.spec === 'succession' ? 'SUCC' : 'ASC'}
-                          </span>
-                          {/* SA DR up arrow for above-average classes */}
-                          {aboveAverage && (
-                            <ArrowUp className="size-2.5 text-emerald-400" strokeWidth={3} />
-                          )}
-                          {/* SA DR % — show on hover via group-hover */}
-                          <span className="font-mono text-[7px] text-amber-100/60 group-hover:inline">
-                            {cls.saDr}%
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
+            {/* ═══ Arena of Solare (3v3) — always expanded, fully redesigned ═══ */}
+            <ArenaOfSolareSection
+              classes={classes}
+              arenaClasses={arenaClasses}
+              specEntries={specEntries}
+              teamA={teamA}
+              teamB={teamB}
+              teamAEntries={teamAEntries}
+              teamBEntries={teamBEntries}
+              getCardSpec={getCardSpec}
+              setCardSpec={setCardSpec}
+              setSlot={setSlot}
+              sensors={sensors}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              onDragCancel={() => setActiveDrag(null)}
+              activeDrag={activeDrag}
+              getAdvantage={getAdvantage}
+              groupCounts={groupCounts}
+            />
 
             {/* Spec selector + group filter chips */}
             <div className="flex flex-wrap items-center gap-2 rounded-sm border border-amber-800/30 bg-bdo-leather-dark/30 px-3 py-2">
@@ -908,111 +733,968 @@ export function MatchupsPage() {
   )
 }
 
-// ─── Team member row (used in the Arena team display panels) ────────
-// Renders a class portrait thumbnail + name + spec badge + SA DR chip,
-// with a remove button on hover.
+// ═════════════════════════════════════════════════════════════════════
+// Arena of Solare (3v3) — Redesigned Sub-Components
+// ═════════════════════════════════════════════════════════════════════
+// Always-expanded section. Class selection grid is alphabetical, one big
+// pretty card per class with spec toggles (S/A/Asc) + ratio-group color +
+// SA-Advantage badge (SA DR > 10%) + Has-Grab badge. Drag-and-drop (or
+// type-to-search in each slot) populates the two 3-slot team panels.
+// A redesigned Team Advantage Analysis shows group-cycle matchup, SA DR
+// comparison, grab count, and CC coverage as visual bars.
 
-function TeamMemberRow({
-  entry, teamColor, onRemove,
-}: {
-  entry: SpecEntry
-  teamColor: 'emerald' | 'red'
-  onRemove: () => void
-}) {
-  const specColor = SPEC_COLORS[entry.spec]
-  const saDrColor = getSaDrColor(entry.saDr)
-  const iconUrl = classIconUrl(entry.slug)
-  const teamRing = teamColor === 'emerald' ? 'ring-emerald-500/40' : 'ring-red-500/40'
-  const teamText = teamColor === 'emerald' ? 'text-emerald-300' : 'text-red-300'
+interface ArenaOfSolareSectionProps {
+  classes: ClassStats[]
+  arenaClasses: ClassStats[]
+  specEntries: SpecEntry[]
+  teamA: (SpecEntry | null)[]
+  teamB: (SpecEntry | null)[]
+  teamAEntries: SpecEntry[]
+  teamBEntries: SpecEntry[]
+  getCardSpec: (cls: ClassStats) => SpecName
+  setCardSpec: (classId: number, spec: SpecName) => void
+  setSlot: (teamId: 'A' | 'B', slotIndex: number, entry: SpecEntry | null) => void
+  sensors: ReturnType<typeof useSensors>
+  onDragStart: (event: DragStartEvent) => void
+  onDragEnd: (event: DragEndEvent) => void
+  onDragCancel: () => void
+  activeDrag: { classId: number; spec: SpecName } | null
+  getAdvantage: (a: string, b: string) => 'up' | 'down' | 'neutral'
+  groupCounts: Record<string, number>
+}
+
+function ArenaOfSolareSection({
+  classes, arenaClasses, specEntries, teamA, teamB,
+  teamAEntries, teamBEntries,
+  getCardSpec, setCardSpec, setSlot,
+  sensors, onDragStart, onDragEnd, onDragCancel, activeDrag,
+  getAdvantage, groupCounts,
+}: ArenaOfSolareSectionProps) {
+  const hasAnyTeamMember = teamAEntries.length > 0 || teamBEntries.length > 0
+
+  return (
+    <div className="rounded-sm border-2 border-amber-800/50 bg-bdo-leather-dark/30 p-4">
+      {/* Header — always visible (no toggle) */}
+      <div className="flex flex-wrap items-center gap-2">
+        <Swords className="size-4 text-amber-400" />
+        <h2 className="bdo-title text-sm font-bold text-amber-300">Arena of Solare (3v3)</h2>
+        <span className="ml-auto flex flex-wrap items-center gap-2 text-[10px] text-amber-300/50">
+          <span className="flex items-center gap-1"><Grip className="size-3" /> Drag class cards onto slots</span>
+          <span className="text-amber-300/30">·</span>
+          <span className="flex items-center gap-1"><Search className="size-3" /> Or type in a slot to search</span>
+        </span>
+      </div>
+
+      {/* Group cycle legend */}
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        {['Vanguard', 'Pulverizer', 'Skirmisher'].map((group, i) => {
+          const color = GROUP_COLORS[group]
+          return (
+            <React.Fragment key={group}>
+              <div
+                className="flex items-center gap-1.5 rounded-sm border px-2.5 py-0.5"
+                style={{ borderColor: `${color}66`, backgroundColor: `${color}15` }}
+              >
+                <span className="text-xs">{GROUP_ICONS[group]}</span>
+                <span className="text-[10px] font-bold" style={{ color }}>{group}</span>
+                <span className="text-[9px] text-amber-300/40">{groupCounts[group] || 0}</span>
+              </div>
+              {i < 2 && <span className="text-[9px] text-amber-400/40">counters ▸</span>}
+            </React.Fragment>
+          )
+        })}
+        <span className="text-[9px] text-amber-400/40">cycle</span>
+      </div>
+
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onDragCancel={onDragCancel}
+      >
+        {/* Teams side-by-side */}
+        <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+          <TeamPanel
+            teamId="A"
+            team={teamA}
+            specEntries={specEntries}
+            onClearSlot={(i) => setSlot('A', i, null)}
+            onPick={(i, e) => setSlot('A', i, e)}
+          />
+          <TeamPanel
+            teamId="B"
+            team={teamB}
+            specEntries={specEntries}
+            onClearSlot={(i) => setSlot('B', i, null)}
+            onPick={(i, e) => setSlot('B', i, e)}
+          />
+        </div>
+
+        {/* Team Advantage Analysis — visual bars, not just text */}
+        {hasAnyTeamMember && (
+          <TeamAdvantageAnalysis
+            teamA={teamAEntries}
+            teamB={teamBEntries}
+            getAdvantage={getAdvantage}
+          />
+        )}
+
+        {/* Class Selection Grid — alphabetical, big pretty cards */}
+        <div className="mt-5">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <h3 className="bdo-title text-xs font-bold uppercase tracking-wider text-amber-300/70">
+              Class Selection ({arenaClasses.length})
+            </h3>
+            <span className="text-[10px] text-amber-300/40">
+              Alphabetical · drag a card onto a team slot · click S/A/Asc to switch spec
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            {arenaClasses.map(cls => (
+              <ArenaClassCard
+                key={cls.classId}
+                cls={cls}
+                selectedSpec={getCardSpec(cls)}
+                onSpecChange={(spec) => setCardSpec(cls.classId, spec)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Floating drag preview */}
+        <DragOverlay dropAnimation={null}>
+          {activeDrag && (() => {
+            const cls = classes.find(c => c.classId === activeDrag.classId)
+            if (!cls) return null
+            return <ArenaClassCardPreview cls={cls} selectedSpec={activeDrag.spec} />
+          })()}
+        </DragOverlay>
+      </DndContext>
+    </div>
+  )
+}
+
+// ─── ArenaClassCard ────────────────────────────────────────────────
+// One big pretty card per class. Portrait background, group-color border,
+// spec toggles (S/A/Asc), SA-Advantage / Has-Grab badges, draggable.
+
+interface ArenaClassCardProps {
+  cls: ClassStats
+  selectedSpec: SpecName
+  onSpecChange: (spec: SpecName) => void
+}
+
+function ArenaClassCard({ cls, selectedSpec, onSpecChange }: ArenaClassCardProps) {
+  const dragId = `arena-class-${cls.classId}`
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: dragId,
+    data: { type: 'class', classId: cls.classId, spec: selectedSpec },
+  })
+
+  const stats = cls[selectedSpec]
+  const group = selectedSpec === 'awakening' ? cls.awakeningGroup
+    : selectedSpec === 'succession' ? cls.successionGroup
+    : cls.ascensionGroup
+  const saDr = selectedSpec === 'awakening' ? cls.awakeningSaDr
+    : selectedSpec === 'succession' ? cls.successionSaDr
+    : cls.ascensionSaDr
+  const iconUrl = classIconUrl(cls.slug)
+  const groupColor = group ? GROUP_COLORS[group] : '#9c8a5e'
+  const hasSaAdvantage = saDr > 10
+  const hasGrab = stats.grabCount > 0
+  const specColor = SPEC_COLORS[selectedSpec]
+
+  // Which spec toggle buttons to render (only specs that exist for this class).
+  const availableSpecs: { name: SpecName; label: string }[] = []
+  if (cls.isAscension) {
+    if (cls.ascension.skillCount > 0) availableSpecs.push({ name: 'ascension', label: 'Asc' })
+  } else {
+    if (cls.succession.skillCount > 0) availableSpecs.push({ name: 'succession', label: 'S' })
+    if (cls.awakening.skillCount > 0) availableSpecs.push({ name: 'awakening', label: 'A' })
+  }
+
+  const portraitUrl = selectedSpec === 'awakening' || selectedSpec === 'succession'
+    ? `/icons/portraits/specs/${cls.slug}-${selectedSpec}.jpg`
+    : `/icons/portraits/${cls.slug}.jpg`
+  const fallbackUrl = `/icons/portraits/${cls.slug}.jpg`
+
+  const dragStyle: React.CSSProperties = transform
+    ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`, zIndex: 100 }
+    : {}
+
+  return (
+    <motion.div
+      ref={setNodeRef}
+      layout
+      style={{
+        ...dragStyle,
+        borderColor: groupColor,
+        boxShadow: `0 0 0 1px ${groupColor}33, 0 2px 8px rgba(0,0,0,0.5)`,
+        opacity: isDragging ? 0.3 : 1,
+      }}
+      className="relative flex min-h-[150px] cursor-grab flex-col overflow-hidden rounded border-2 bg-bdo-leather-dark/60 transition-shadow hover:shadow-lg active:cursor-grabbing"
+      {...attributes}
+      {...listeners}
+    >
+      {/* Portrait background */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={portraitUrl}
+          alt=""
+          className="h-full w-full object-cover"
+          loading="lazy"
+          onError={(e) => {
+            const img = e.target as HTMLImageElement
+            if (img.src !== fallbackUrl) img.src = fallbackUrl
+          }}
+        />
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(to bottom,
+            rgba(10,9,8,0.85) 0%,
+            rgba(10,9,8,0.45) 35%,
+            rgba(10,9,8,0.85) 75%,
+            rgba(10,9,8,0.97) 100%)`,
+        }} />
+        {/* Group color band on top */}
+        <div className="absolute inset-x-0 top-0 h-1" style={{ background: groupColor }} />
+      </div>
+
+      {/* Drag handle indicator */}
+      <div className="absolute right-1 top-1 z-20 flex items-center gap-0.5 rounded-sm bg-bdo-ink/60 px-1 py-0.5 text-amber-300/50">
+        <Grip className="size-2.5" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-1 flex-col gap-1.5 p-2">
+        {/* Header: class name + icon */}
+        <div className="flex items-start gap-1.5">
+          <div className="min-w-0 flex-1">
+            <h4 className="bdo-title truncate text-sm font-bold text-amber-50 drop-shadow">{cls.className}</h4>
+            {group && (
+              <div className="mt-0.5 flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider" style={{ color: groupColor }}>
+                <span>{GROUP_ICONS[group]}</span>
+                {group}
+              </div>
+            )}
+          </div>
+          {iconUrl && (
+            <div
+              className="size-7 shrink-0 overflow-hidden rounded-sm border"
+              style={{ borderColor: specColor, boxShadow: `0 0 4px ${specColor}55` }}
+            >
+              <img src={iconUrl} alt="" className="h-full w-full object-cover" loading="lazy" />
+            </div>
+          )}
+        </div>
+
+        {/* Spacer */}
+        <div className="flex-1" />
+
+        {/* Spec toggles — click stops propagation so dnd-kit doesn't start a drag */}
+        <div className="flex gap-1">
+          {availableSpecs.map(s => (
+            <button
+              key={s.name}
+              type="button"
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={(e) => { e.stopPropagation(); onSpecChange(s.name) }}
+              className={cn(
+                'rounded-sm border px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none transition-all',
+                selectedSpec === s.name
+                  ? 'text-amber-50'
+                  : 'border-amber-800/40 bg-bdo-ink/40 text-amber-300/50 hover:text-amber-200',
+              )}
+              style={selectedSpec === s.name ? {
+                borderColor: SPEC_COLORS[s.name],
+                backgroundColor: `${SPEC_COLORS[s.name]}33`,
+                color: SPEC_COLORS[s.name],
+              } : undefined}
+              title={s.name === 'awakening' ? 'Awakening' : s.name === 'succession' ? 'Succession' : 'Ascension'}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Indicator badges */}
+        <div className="flex flex-wrap items-center gap-1">
+          {hasSaAdvantage ? (
+            <span
+              className="inline-flex items-center gap-0.5 rounded-sm border border-emerald-700/50 bg-emerald-900/40 px-1 py-0.5 text-[8px] font-bold uppercase tracking-wider text-emerald-300"
+              title={`SA Damage Reduction: ${saDr}% (above 10% default = advantage)`}
+            >
+              <ShieldHalf className="size-2.5" /> SA Adv
+            </span>
+          ) : (
+            <span
+              className="inline-flex items-center gap-0.5 rounded-sm border border-amber-900/40 bg-amber-900/10 px-1 py-0.5 text-[8px] font-bold uppercase tracking-wider text-amber-300/40"
+              title={`SA Damage Reduction: ${saDr}% (default 10%)`}
+            >
+              Standard
+            </span>
+          )}
+          {hasGrab && (
+            <span
+              className="inline-flex items-center gap-0.5 rounded-sm border border-orange-700/50 bg-orange-900/40 px-1 py-0.5 text-[8px] font-bold uppercase tracking-wider text-orange-300"
+              title={`${stats.grabCount} grab skill${stats.grabCount > 1 ? 's' : ''}`}
+            >
+              <Hand className="size-2.5" /> Grab
+            </span>
+          )}
+          <span
+            className="ml-auto rounded-sm border border-amber-900/40 bg-bdo-ink/40 px-1 py-0.5 font-mono text-[8px] font-bold leading-none"
+            style={{ color: getSaDrColor(saDr).text }}
+            title="SA Damage Reduction %"
+          >
+            {saDr}%
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── ArenaClassCardPreview ─────────────────────────────────────────
+// Compact floating preview rendered inside <DragOverlay> while dragging.
+
+function ArenaClassCardPreview({ cls, selectedSpec }: { cls: ClassStats; selectedSpec: SpecName }) {
+  const iconUrl = classIconUrl(cls.slug)
+  const specColor = SPEC_COLORS[selectedSpec]
+  const group = selectedSpec === 'awakening' ? cls.awakeningGroup
+    : selectedSpec === 'succession' ? cls.successionGroup
+    : cls.ascensionGroup
+  const saDr = selectedSpec === 'awakening' ? cls.awakeningSaDr
+    : selectedSpec === 'succession' ? cls.successionSaDr
+    : cls.ascensionSaDr
+  return (
+    <div
+      className="flex items-center gap-2 rounded border-2 bg-bdo-leather-dark px-3 py-2 shadow-2xl"
+      style={{ borderColor: group ? GROUP_COLORS[group] : specColor }}
+    >
+      {iconUrl && (
+        <div className="size-8 overflow-hidden rounded border" style={{ borderColor: specColor }}>
+          <img src={iconUrl} alt="" className="h-full w-full object-cover" />
+        </div>
+      )}
+      <div className="flex flex-col">
+        <span className="text-sm font-bold text-amber-50">{cls.className}</span>
+        <span className="flex items-center gap-1 text-[9px] font-bold uppercase" style={{ color: specColor }}>
+          {selectedSpec === 'awakening' ? 'Awakening' : selectedSpec === 'succession' ? 'Succession' : 'Ascension'}
+          {group && (
+            <span style={{ color: GROUP_COLORS[group] }}>· {group}</span>
+          )}
+          <span style={{ color: getSaDrColor(saDr).text }}>· {saDr}% SA</span>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+// ─── TeamPanel ─────────────────────────────────────────────────────
+// One team — header + 3 TeamSlots.
+
+interface TeamPanelProps {
+  teamId: 'A' | 'B'
+  team: (SpecEntry | null)[]
+  specEntries: SpecEntry[]
+  onClearSlot: (slotIndex: number) => void
+  onPick: (slotIndex: number, entry: SpecEntry) => void
+}
+
+function TeamPanel({ teamId, team, specEntries, onClearSlot, onPick }: TeamPanelProps) {
+  const teamHex = teamId === 'A' ? '#10b981' : '#ef4444'
+  const filledCount = team.filter(e => e !== null).length
 
   return (
     <div
-      className={cn(
-        'group relative flex items-center gap-1.5 overflow-hidden rounded-sm border bg-bdo-ink/60 p-1 pr-5 ring-1',
-        teamRing,
-      )}
-      style={{ borderColor: `${specColor}66` }}
+      className="rounded-sm border-2 p-2"
+      style={{
+        borderColor: `${teamHex}66`,
+        backgroundColor: `${teamHex}08`,
+      }}
     >
-      {/* Class portrait (spec-specific) */}
+      {/* Team header */}
+      <div className="mb-2 flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <span className="size-2 rounded-full" style={{ backgroundColor: teamHex }} />
+          <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: teamHex }}>
+            Team {teamId}
+          </span>
+          {filledCount === 3 && (
+            <Crown className="size-3" style={{ color: teamHex }} />
+          )}
+        </div>
+        <span className="font-mono text-[10px]" style={{ color: teamHex }}>
+          {filledCount}/3
+        </span>
+      </div>
+
+      {/* 3 slots */}
+      <div className="space-y-1.5">
+        {[0, 1, 2].map(i => (
+          <TeamSlot
+            key={i}
+            teamId={teamId}
+            slotIndex={i}
+            entry={team[i]}
+            onClear={() => onClearSlot(i)}
+            onPick={(e) => onPick(i, e)}
+            specEntries={specEntries}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ─── TeamSlot ──────────────────────────────────────────────────────
+// One slot — droppable. Filled → CompactClassCard. Empty → search
+// button (Popover + cmdk Command) + drop hint.
+
+interface TeamSlotProps {
+  teamId: 'A' | 'B'
+  slotIndex: number
+  entry: SpecEntry | null
+  onClear: () => void
+  onPick: (entry: SpecEntry) => void
+  specEntries: SpecEntry[]
+}
+
+function TeamSlot({ teamId, slotIndex, entry, onClear, onPick, specEntries }: TeamSlotProps) {
+  const [searchOpen, setSearchOpen] = React.useState(false)
+  const dropId = `slot-${teamId}-${slotIndex}`
+  const { setNodeRef, isOver } = useDroppable({
+    id: dropId,
+    data: { type: 'slot', teamId, slotIndex },
+  })
+
+  const teamHex = teamId === 'A' ? '#10b981' : '#ef4444'
+
+  if (entry) {
+    return (
       <div
-        className="size-8 shrink-0 overflow-hidden rounded-sm border"
-        style={{ borderColor: `${specColor}88` }}
+        ref={setNodeRef}
+        className={cn(
+          'relative rounded-sm transition-all',
+          isOver && 'ring-2 ring-amber-400 ring-offset-1 ring-offset-bdo-leather-dark',
+        )}
       >
-        <SpecPortrait
-          slug={entry.slug}
-          spec={entry.spec}
-          alt={`${entry.className} ${entry.spec}`}
+        <CompactClassCard entry={entry} teamHex={teamHex} onClear={onClear} />
+      </div>
+    )
+  }
+
+  // Empty slot — search button + drop hint
+  return (
+    <div
+      ref={setNodeRef}
+      className={cn(
+        'rounded-sm border-2 border-dashed p-1.5 transition-colors',
+        isOver ? 'border-amber-400 bg-amber-500/10' : 'bg-bdo-ink/40',
+      )}
+      style={!isOver ? { borderColor: `${teamHex}44` } : undefined}
+    >
+      <Popover open={searchOpen} onOpenChange={setSearchOpen}>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            className="flex w-full items-center gap-1.5 rounded-sm border border-amber-800/40 bg-bdo-leather-dark/60 px-2 py-1.5 text-[10px] text-amber-300/60 transition-colors hover:border-amber-500/50 hover:text-amber-200"
+          >
+            <Search className="size-3" />
+            <span>Search class for slot {slotIndex + 1}…</span>
+          </button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-80 border-amber-800/60 bg-bdo-leather-dark p-0 text-amber-100"
+          align="start"
+          sideOffset={4}
+        >
+          <Command className="bg-transparent text-amber-100">
+            <CommandInput
+              placeholder="Type a class name (e.g. Warrior, Musa)…"
+              className="text-amber-100"
+            />
+            <CommandList className="max-h-72">
+              <CommandEmpty className="py-4 text-center text-xs text-amber-300/40">
+                No matching class.
+              </CommandEmpty>
+              <CommandGroup heading="Class × Spec" className="text-amber-100">
+                {specEntries.map(e => {
+                  const iconUrl = classIconUrl(e.slug)
+                  const saDrColor = getSaDrColor(e.saDr)
+                  return (
+                    <CommandItem
+                      key={entryKey(e)}
+                      value={`${e.className} ${e.spec}`}
+                      onSelect={() => {
+                        onPick(e)
+                        setSearchOpen(false)
+                      }}
+                      className="flex items-center gap-2 text-amber-100 data-[selected=true]:bg-amber-500/15 data-[selected=true]:text-amber-50"
+                    >
+                      {iconUrl && (
+                        <img src={iconUrl} alt="" className="size-4 rounded-sm" loading="lazy" />
+                      )}
+                      <span className="text-xs">{e.className}</span>
+                      <span
+                        className="rounded-sm px-1 text-[8px] font-bold uppercase"
+                        style={{
+                          color: SPEC_COLORS[e.spec],
+                          backgroundColor: `${SPEC_COLORS[e.spec]}22`,
+                        }}
+                      >
+                        {e.spec === 'awakening' ? 'A' : e.spec === 'succession' ? 'S' : 'Asc'}
+                      </span>
+                      {e.group && (
+                        <span
+                          className="text-[8px] font-semibold uppercase"
+                          style={{ color: GROUP_COLORS[e.group] }}
+                        >
+                          {e.group.slice(0, 3)}
+                        </span>
+                      )}
+                      {e.stats.grabCount > 0 && (
+                        <Hand className="size-2.5 text-orange-400" />
+                      )}
+                      <span
+                        className="ml-auto font-mono text-[8px] font-bold"
+                        style={{ color: saDrColor.text }}
+                      >
+                        {e.saDr}%
+                      </span>
+                    </CommandItem>
+                  )
+                })}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+      <p className="mt-1 text-center text-[8px] text-amber-300/30">
+        or drop a class here
+      </p>
+    </div>
+  )
+}
+
+// ─── CompactClassCard ──────────────────────────────────────────────
+// Mini SpecCard shown inside a filled team slot — portrait background,
+// class name + spec + group badges, stat grid (Avg PvP / CC / SA / FG /
+// IF / Grab), SA DR progress bar.
+
+interface CompactClassCardProps {
+  entry: SpecEntry
+  teamHex: string
+  onClear: () => void
+}
+
+function CompactClassCard({ entry, teamHex, onClear }: CompactClassCardProps) {
+  const specColor = SPEC_COLORS[entry.spec]
+  const iconUrl = classIconUrl(entry.slug)
+  const portraitUrl = entry.spec === 'awakening' || entry.spec === 'succession'
+    ? `/icons/portraits/specs/${entry.slug}-${entry.spec}.jpg`
+    : `/icons/portraits/${entry.slug}.jpg`
+  const fallbackUrl = `/icons/portraits/${entry.slug}.jpg`
+  const saDrColor = getSaDrColor(entry.saDr)
+  const stats = entry.stats
+
+  const statCells: { label: string; value: number | string; color: string; title: string }[] = [
+    { label: 'Avg PvP', value: stats.avgPvpDamage > 0 ? stats.avgPvpDamage.toLocaleString() : '—', color: '#f472b6', title: 'Average PvP damage' },
+    { label: 'CC', value: stats.pvpCcSkillCount, color: '#f87171', title: 'PvP CC skill count' },
+    { label: 'SA', value: stats.superArmorCount, color: '#fbbf24', title: 'Super Armor skills' },
+    { label: 'FG', value: stats.forwardGuardCount, color: '#60a5fa', title: 'Forward Guard skills' },
+    { label: 'IF', value: stats.iFrameCount, color: '#a78bfa', title: 'I-Frame skills' },
+    { label: 'Grab', value: stats.grabCount, color: '#f97316', title: 'Grab skills' },
+  ]
+
+  return (
+    <div
+      className="group relative overflow-hidden rounded-sm border-2 bg-bdo-leather-dark"
+      style={{ borderColor: specColor }}
+    >
+      {/* Portrait background */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={portraitUrl}
+          alt=""
           className="h-full w-full object-cover"
+          loading="lazy"
+          onError={(e) => {
+            const img = e.target as HTMLImageElement
+            if (img.src !== fallbackUrl) img.src = fallbackUrl
+          }}
+        />
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(to bottom,
+            rgba(10,9,8,0.85) 0%,
+            rgba(10,9,8,0.5) 50%,
+            rgba(10,9,8,0.95) 100%)`,
+        }} />
+        {/* Team color accent strip on the left edge */}
+        <div className="absolute left-0 top-0 h-full w-0.5" style={{ backgroundColor: teamHex }} />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col gap-1.5 p-2">
+        {/* Header */}
+        <div className="flex items-start gap-1.5">
+          <div className="min-w-0 flex-1">
+            <h4 className="truncate text-sm font-bold text-amber-50 drop-shadow">{entry.className}</h4>
+            <div className="mt-0.5 flex items-center gap-1">
+              <span
+                className="rounded-sm px-1 text-[8px] font-bold uppercase leading-none"
+                style={{
+                  color: specColor,
+                  backgroundColor: `${specColor}22`,
+                  border: `1px solid ${specColor}55`,
+                }}
+              >
+                {entry.spec === 'awakening' ? 'AWK' : entry.spec === 'succession' ? 'SUCC' : 'ASC'}
+              </span>
+              {entry.group && (
+                <span
+                  className="rounded-sm px-1 text-[8px] font-semibold uppercase leading-none"
+                  style={{
+                    color: GROUP_COLORS[entry.group],
+                    backgroundColor: `${GROUP_COLORS[entry.group]}15`,
+                  }}
+                >
+                  {entry.group}
+                </span>
+              )}
+              {entry.stats.grabCount > 0 && (
+                <span
+                  className="inline-flex items-center gap-0.5 rounded-sm border border-orange-700/50 bg-orange-900/40 px-1 py-0.5 text-[7px] font-bold uppercase tracking-wider text-orange-300"
+                  title={`${entry.stats.grabCount} grab skill${entry.stats.grabCount > 1 ? 's' : ''}`}
+                >
+                  <Hand className="size-2" />
+                </span>
+              )}
+            </div>
+          </div>
+          {/* Clear button */}
+          <button
+            type="button"
+            onClick={onClear}
+            className="shrink-0 rounded-sm border border-amber-800/40 bg-bdo-ink/60 p-0.5 text-amber-300/60 transition-colors hover:border-red-700/60 hover:bg-red-900/30 hover:text-red-300"
+            aria-label={`Remove ${entry.className} from team`}
+          >
+            <X className="size-3" />
+          </button>
+        </div>
+
+        {/* Stat grid */}
+        <div className="grid grid-cols-3 gap-1">
+          {statCells.map(s => (
+            <div
+              key={s.label}
+              className="rounded-sm border border-amber-900/30 bg-bdo-ink/60 px-1 py-0.5 text-center"
+              title={s.title}
+            >
+              <div className="text-[8px] uppercase tracking-wider text-amber-300/50">{s.label}</div>
+              <div className="font-mono text-xs font-bold" style={{ color: s.color }}>{s.value}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* SA DR bar */}
+        <div className="flex items-center gap-1.5 rounded-sm border border-amber-900/30 bg-bdo-ink/60 px-1.5 py-1">
+          <span className="text-[8px] font-semibold uppercase tracking-wider text-amber-300/50">SA DR</span>
+          <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-amber-900/30">
+            <div
+              className="absolute inset-y-0 left-0 rounded-full transition-all"
+              style={{
+                width: `${Math.min(100, (entry.saDr / 25) * 100)}%`,
+                backgroundColor: saDrColor.text,
+              }}
+            />
+          </div>
+          <span className="font-mono text-[10px] font-bold" style={{ color: saDrColor.text }}>
+            {entry.saDr}%
+          </span>
+          {entry.saDr > 10 && (
+            <ArrowUp className="size-2.5" strokeWidth={3} style={{ color: saDrColor.text }} />
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── TeamAdvantageAnalysis ─────────────────────────────────────────
+// Redesigned analysis panel — group-cycle matchup stacked bar, SA DR /
+// Grab / CC / SA comparison bars. Visual bars, not just text.
+
+interface TeamAdvantageAnalysisProps {
+  teamA: SpecEntry[]
+  teamB: SpecEntry[]
+  getAdvantage: (a: string, b: string) => 'up' | 'down' | 'neutral'
+}
+
+function TeamAdvantageAnalysis({ teamA, teamB, getAdvantage }: TeamAdvantageAnalysisProps) {
+  // ── Compute metrics ──
+  const avgSaDrA = teamA.length ? teamA.reduce((s, e) => s + e.saDr, 0) / teamA.length : 0
+  const avgSaDrB = teamB.length ? teamB.reduce((s, e) => s + e.saDr, 0) / teamB.length : 0
+  const saDrMax = 25
+
+  const totalGrabA = teamA.reduce((s, e) => s + e.stats.grabCount, 0)
+  const totalGrabB = teamB.reduce((s, e) => s + e.stats.grabCount, 0)
+
+  const totalCcA = teamA.reduce((s, e) => s + e.stats.pvpCcSkillCount, 0)
+  const totalCcB = teamB.reduce((s, e) => s + e.stats.pvpCcSkillCount, 0)
+
+  const totalSaA = teamA.reduce((s, e) => s + e.stats.superArmorCount, 0)
+  const totalSaB = teamB.reduce((s, e) => s + e.stats.superArmorCount, 0)
+
+  // Pairwise group-cycle matchup counts
+  let aUp = 0, bUp = 0, neutral = 0
+  const totalPairs = teamA.length * teamB.length
+  for (const a of teamA) for (const b of teamB) {
+    const adv = getAdvantage(a.group || '', b.group || '')
+    if (adv === 'up') aUp++
+    else if (adv === 'down') bUp++
+    else neutral++
+  }
+
+  // Group distribution per team (for the cycle legend chips)
+  const GROUP_KEYS = ['Vanguard', 'Pulverizer', 'Skirmisher'] as const
+  const groupDistA: Record<string, number> = { Vanguard: 0, Pulverizer: 0, Skirmisher: 0, None: 0 }
+  const groupDistB: Record<string, number> = { Vanguard: 0, Pulverizer: 0, Skirmisher: 0, None: 0 }
+  for (const e of teamA) {
+    if (e.group && e.group in groupDistA) groupDistA[e.group]++
+    else groupDistA.None++
+  }
+  for (const e of teamB) {
+    if (e.group && e.group in groupDistB) groupDistB[e.group]++
+    else groupDistB.None++
+  }
+
+  return (
+    <div className="mt-4 rounded-sm border border-amber-800/40 bg-bdo-ink/60 p-3">
+      <div className="mb-3 flex items-center gap-1.5">
+        <Swords className="size-3.5 text-amber-400" />
+        <h3 className="bdo-title text-xs font-bold uppercase tracking-wider text-amber-300/80">
+          Team Advantage Analysis
+        </h3>
+        <span className="ml-auto text-[9px] text-amber-300/40">
+          A: {teamA.length} · B: {teamB.length}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        {/* Group-cycle matchup — stacked bar + group distribution */}
+        <div className="rounded-sm border border-amber-900/30 bg-bdo-leather-dark/40 p-2 md:col-span-2">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300/60">
+              Group Cycle Matchup
+            </span>
+            <span className="text-[9px] text-amber-300/40">
+              {totalPairs} pair{totalPairs === 1 ? '' : 's'} · +5% per counter win
+            </span>
+          </div>
+
+          {totalPairs > 0 ? (
+            <>
+              {/* Stacked horizontal bar */}
+              <div className="flex h-7 overflow-hidden rounded-sm border border-amber-900/40">
+                <div
+                  className="flex items-center justify-center bg-emerald-700/70 text-[10px] font-bold text-emerald-50 transition-all"
+                  style={{ width: `${(aUp / totalPairs) * 100}%` }}
+                  title={`Team A wins ${aUp} matchup${aUp === 1 ? '' : 's'} (+${aUp * 5}% damage)`}
+                >
+                  {aUp > 0 && aUp}
+                </div>
+                <div
+                  className="flex items-center justify-center bg-amber-800/40 text-[10px] font-bold text-amber-200"
+                  style={{ width: `${(neutral / totalPairs) * 100}%` }}
+                  title={`${neutral} neutral matchup${neutral === 1 ? '' : 's'}`}
+                >
+                  {neutral > 0 && neutral}
+                </div>
+                <div
+                  className="flex items-center justify-center bg-red-700/70 text-[10px] font-bold text-red-50"
+                  style={{ width: `${(bUp / totalPairs) * 100}%` }}
+                  title={`Team B wins ${bUp} matchup${bUp === 1 ? '' : 's'} (+${bUp * 5}% damage)`}
+                >
+                  {bUp > 0 && bUp}
+                </div>
+              </div>
+
+              <div className="mt-1 flex items-center justify-between text-[9px]">
+                <span className="font-bold text-emerald-300">A: {aUp} counter wins (+{aUp * 5}%)</span>
+                <span className="text-amber-300/40">{neutral} neutral</span>
+                <span className="font-bold text-red-300">B: {bUp} counter wins (+{bUp * 5}%)</span>
+              </div>
+
+              {/* Group distribution per team */}
+              <div className="mt-2 grid grid-cols-2 gap-2 text-[9px]">
+                <div className="rounded-sm bg-emerald-950/30 px-2 py-1">
+                  <div className="font-bold uppercase tracking-wider text-emerald-300/60">Team A groups</div>
+                  <div className="mt-0.5 flex flex-wrap gap-1">
+                    {GROUP_KEYS.map(g => groupDistA[g] > 0 && (
+                      <span
+                        key={g}
+                        className="inline-flex items-center gap-0.5 rounded-sm px-1 py-0.5"
+                        style={{
+                          color: GROUP_COLORS[g],
+                          backgroundColor: `${GROUP_COLORS[g]}15`,
+                        }}
+                      >
+                        {GROUP_ICONS[g]} {groupDistA[g]}
+                      </span>
+                    ))}
+                    {groupDistA.None > 0 && (
+                      <span className="rounded-sm px-1 py-0.5 text-zinc-400 bg-zinc-700/15">
+                        ? {groupDistA.None}
+                      </span>
+                    )}
+                    {teamA.length === 0 && <span className="text-emerald-300/30">empty</span>}
+                  </div>
+                </div>
+                <div className="rounded-sm bg-red-950/30 px-2 py-1">
+                  <div className="font-bold uppercase tracking-wider text-red-300/60">Team B groups</div>
+                  <div className="mt-0.5 flex flex-wrap gap-1">
+                    {GROUP_KEYS.map(g => groupDistB[g] > 0 && (
+                      <span
+                        key={g}
+                        className="inline-flex items-center gap-0.5 rounded-sm px-1 py-0.5"
+                        style={{
+                          color: GROUP_COLORS[g],
+                          backgroundColor: `${GROUP_COLORS[g]}15`,
+                        }}
+                      >
+                        {GROUP_ICONS[g]} {groupDistB[g]}
+                      </span>
+                    ))}
+                    {groupDistB.None > 0 && (
+                      <span className="rounded-sm px-1 py-0.5 text-zinc-400 bg-zinc-700/15">
+                        ? {groupDistB.None}
+                      </span>
+                    )}
+                    {teamB.length === 0 && <span className="text-red-300/30">empty</span>}
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="flex h-7 items-center justify-center text-[10px] text-amber-300/40">
+              Add classes to both teams to see group-cycle matchups
+            </div>
+          )}
+        </div>
+
+        {/* SA DR comparison */}
+        <CompareBar
+          title="Avg SA Damage Reduction"
+          subtitle="Higher = better protected while in Super Armor"
+          valueA={avgSaDrA}
+          valueB={avgSaDrB}
+          max={saDrMax}
+          format={(v) => `${v.toFixed(1)}%`}
+        />
+
+        {/* Grab count */}
+        <CompareBar
+          title="Total Grab Skills"
+          subtitle="More grabs = more catch potential"
+          valueA={totalGrabA}
+          valueB={totalGrabB}
+          max={Math.max(totalGrabA, totalGrabB, 1)}
+          format={(v) => v.toFixed(0)}
+        />
+
+        {/* CC coverage */}
+        <CompareBar
+          title="Total PvP CC Skills"
+          subtitle="More CC = more lockdown potential"
+          valueA={totalCcA}
+          valueB={totalCcB}
+          max={Math.max(totalCcA, totalCcB, 1)}
+          format={(v) => v.toFixed(0)}
+        />
+
+        {/* Super Armor count */}
+        <CompareBar
+          title="Total Super Armor Skills"
+          subtitle="More SA = more trade potential"
+          valueA={totalSaA}
+          valueB={totalSaB}
+          max={Math.max(totalSaA, totalSaB, 1)}
+          format={(v) => v.toFixed(0)}
         />
       </div>
+    </div>
+  )
+}
 
-      {/* Class info */}
-      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <div className="flex items-center gap-1">
-          {iconUrl && (
-            <img
-              src={iconUrl}
-              alt=""
-              className="size-3 rounded-sm object-cover"
-              loading="lazy"
-            />
-          )}
-          <span className="truncate text-[11px] font-bold text-amber-100">
-            {entry.className}
-          </span>
+// ─── CompareBar ────────────────────────────────────────────────────
+// Helper: side-by-side A vs B comparison bar.
+
+interface CompareBarProps {
+  title: string
+  subtitle: string
+  valueA: number
+  valueB: number
+  max: number
+  format: (v: number) => string
+}
+
+function CompareBar({ title, subtitle, valueA, valueB, max, format }: CompareBarProps) {
+  const winner: 'A' | 'B' | 'tie' = valueA === valueB ? 'tie' : valueA > valueB ? 'A' : 'B'
+  const aWidth = max > 0 ? (valueA / max) * 100 : 0
+  const bWidth = max > 0 ? (valueB / max) * 100 : 0
+
+  return (
+    <div className="rounded-sm border border-amber-900/30 bg-bdo-leather-dark/40 p-2">
+      <div className="mb-1.5 flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="text-[10px] font-bold uppercase tracking-wider text-amber-300/60">{title}</div>
+          <div className="text-[9px] text-amber-300/40">{subtitle}</div>
         </div>
-        <div className="flex items-center gap-1">
-          {/* Spec badge */}
+        {winner !== 'tie' && (
           <span
-            className="rounded-sm px-0.5 text-[7px] font-bold uppercase leading-none"
+            className="shrink-0 rounded-sm border px-1.5 py-0.5 text-[9px] font-bold uppercase"
             style={{
-              color: specColor,
-              backgroundColor: `${specColor}22`,
-              border: `1px solid ${specColor}55`,
+              borderColor: winner === 'A' ? '#10b98166' : '#ef444466',
+              backgroundColor: winner === 'A' ? '#10b98115' : '#ef444415',
+              color: winner === 'A' ? '#34d399' : '#f87171',
             }}
           >
-            {entry.spec === 'awakening' ? 'AWK' : entry.spec === 'succession' ? 'SUCC' : 'ASC'}
+            {winner} leads
           </span>
-          {/* Group badge (if any) */}
-          {entry.group && (
-            <span
-              className="rounded-sm px-0.5 text-[7px] font-semibold uppercase leading-none"
-              style={{
-                color: GROUP_COLORS[entry.group] || '#a1a1aa',
-                backgroundColor: `${GROUP_COLORS[entry.group] || '#a1a1aa'}15`,
-              }}
-            >
-              {entry.group.slice(0, 3)}
-            </span>
-          )}
-          {/* SA DR — colored number + arrow only (no background overlay) */}
-          <span
-            className="ml-auto flex items-center gap-0.5 font-mono text-[8px] font-bold leading-tight"
-            style={{ color: saDrColor.text }}
-            title="Super Armor Damage Reduction"
-          >
-            {entry.saDr > 10 && <ArrowUp className="size-2" strokeWidth={3} />}
-            {entry.saDr}% SA
-          </span>
-        </div>
+        )}
       </div>
 
-      {/* Remove button */}
-      <button
-        onClick={onRemove}
-        className={cn(
-          'absolute right-1 top-1/2 -translate-y-1/2 rounded-sm p-0.5 text-amber-300/30 opacity-0 transition-opacity hover:bg-red-900/40 hover:text-red-300 group-hover:opacity-100',
-        )}
-        aria-label={`Remove ${entry.className} from team`}
-      >
-        <X className="size-3" />
-      </button>
-      {/* team-colored accent strip on the left edge */}
-      <span
-        className={cn('absolute left-0 top-0 h-full w-0.5', teamText)}
-        style={{ backgroundColor: 'currentColor' }}
-        aria-hidden
-      />
+      {/* Team A bar */}
+      <div className="mb-1 flex items-center gap-1.5">
+        <span className="w-3 text-right font-mono text-[9px] font-bold text-emerald-300">A</span>
+        <div className="relative h-3 flex-1 overflow-hidden rounded-sm bg-amber-900/20">
+          <div
+            className="absolute inset-y-0 left-0 rounded-sm transition-all"
+            style={{
+              width: `${aWidth}%`,
+              backgroundColor: winner === 'A' ? '#10b981' : '#10b98199',
+            }}
+          />
+        </div>
+        <span className="w-14 text-right font-mono text-[10px] font-bold text-emerald-300">{format(valueA)}</span>
+      </div>
+
+      {/* Team B bar */}
+      <div className="flex items-center gap-1.5">
+        <span className="w-3 text-right font-mono text-[9px] font-bold text-red-300">B</span>
+        <div className="relative h-3 flex-1 overflow-hidden rounded-sm bg-amber-900/20">
+          <div
+            className="absolute inset-y-0 left-0 rounded-sm transition-all"
+            style={{
+              width: `${bWidth}%`,
+              backgroundColor: winner === 'B' ? '#ef4444' : '#ef444499',
+            }}
+          />
+        </div>
+        <span className="w-14 text-right font-mono text-[10px] font-bold text-red-300">{format(valueB)}</span>
+      </div>
     </div>
   )
 }

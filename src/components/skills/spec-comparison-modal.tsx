@@ -12,6 +12,10 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
+  // Granular CC breakdown — only populated for awakening/succession specs.
+  specInheritedCcCount: number // Prime:/Succession: (Succ) or Absolute: (Awk) CC skills
+  weaponOnlyCcCount: number    // Awakening-weapon CC skills (Awk only); 0 for Succession
+  mainAbsoCcCount: number      // Main-weapon + Absolute fallback CC skills
   grabCount: number
   superArmorCount: number
   forwardGuardCount: number
@@ -62,7 +66,7 @@ const COUNTER_CYCLE: Record<string, string> = {
   Skirmisher: 'Vanguard',
 }
 
-// 12 comparison rows. Each row knows how to extract a numeric/string value
+// Comparison rows. Each row knows how to extract a numeric/string value
 // from a SpecStats and which side wins (higher = better, unless `lowerBetter`).
 type Comparator = (s: SpecStats) => number
 
@@ -82,6 +86,16 @@ const COMPARISON_ROWS: ComparisonRow[] = [
   { label: 'PvP DPC', get: (s) => s.avgDpcPvP, format: (v) => String(v) },
   { label: 'DPS Est', get: (s) => s.dpsEstimate, format: (v) => (v > 0 ? fmtDmg(v) : '—') },
   { label: 'CC Skills', get: (s) => s.pvpCcSkillCount, format: (v) => String(v) },
+  // Granular CC breakdown — spec-inherited CCs are Absolute: (Awk) / Prime: (Succ).
+  // For both specs this is the count of CC skills that come from the spec's
+  // enhanced variants — a like-for-like comparison of "how many CCs does the
+  // spec actually grant me above the base weapon kit?".
+  { label: 'Spec CCs', get: (s) => s.specInheritedCcCount, format: (v) => String(v) },
+  // Weapon-only CCs — Awakening-weapon CCs for Awk side; 0 for Succ (no separate weapon).
+  // Useful to show how CC-rich the Awakening weapon itself is.
+  { label: 'Weapon CCs', get: (s) => s.weaponOnlyCcCount, format: (v) => String(v) },
+  // Main/Abso CCs — pure main weapon (Awk) or main+Absolute fallback (Succ).
+  { label: 'Main CCs', get: (s) => s.mainAbsoCcCount, format: (v) => String(v) },
   { label: 'Grabs', get: (s) => s.grabCount, format: (v) => String(v) },
   { label: 'SA', get: (s) => s.superArmorCount, format: (v) => String(v) },
   { label: 'FG', get: (s) => s.forwardGuardCount, format: (v) => String(v) },
@@ -110,7 +124,7 @@ function pickWinner(
 
 /**
  * SpecComparisonModal — side-by-side Awakening vs Succession comparison for
- * a class. Shows 12 stat rows, a verdict box, SA DR comparison, group
+ * a class. Shows all stat rows, a verdict box, SA DR comparison, group
  * counter advantage, and "View Skills" buttons that navigate to the Data
  * tab via onCardClick(classId, spec).
  *
@@ -140,7 +154,7 @@ export function SpecComparisonModal({
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
 
-  // Tally wins across the 12 rows
+  // Tally wins across all rows
   const verdict = React.useMemo(() => {
     let awkWins = 0
     let succWins = 0
@@ -240,7 +254,7 @@ export function SpecComparisonModal({
               </div>
             </div>
 
-            {/* 12 stat comparison rows */}
+            {/* Stat comparison rows */}
             <div className="space-y-0.5">
               {COMPARISON_ROWS.map((row, idx) => {
                 const winner = pickWinner(row, awk, succ)
@@ -341,7 +355,7 @@ export function SpecComparisonModal({
               <p className="mt-1 text-[11px] text-amber-100/70">
                 {overallWinner === 'tie'
                   ? `Tied at ${verdict.awkWins} categor${verdict.awkWins === 1 ? 'y' : 'ies'} each — choose based on playstyle.`
-                  : `${overallWinner === 'awk' ? 'Awakening' : 'Succession'} wins ${overallWinner === 'awk' ? verdict.awkWins : verdict.succWins} of 12 categories (${overallWinner === 'awk' ? 'red' : 'blue'} column).`}
+                  : `${overallWinner === 'awk' ? 'Awakening' : 'Succession'} wins ${overallWinner === 'awk' ? verdict.awkWins : verdict.succWins} of ${COMPARISON_ROWS.length} categories (${overallWinner === 'awk' ? 'red' : 'blue'} column).`}
               </p>
             </div>
 

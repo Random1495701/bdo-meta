@@ -25,6 +25,10 @@ export interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
+  // Granular CC breakdown — only populated for awakening/succession specs.
+  specInheritedCcCount: number // Prime:/Succession: (Succ) or Absolute: (Awk) CC skills
+  weaponOnlyCcCount: number    // Awakening-weapon CC skills (Awk only); 0 for Succession
+  mainAbsoCcCount: number      // Main-weapon + Absolute fallback CC skills
   grabCount: number
   superArmorCount: number
   forwardGuardCount: number
@@ -63,7 +67,7 @@ export type SpecName = 'awakening' | 'succession' | 'ascension'
 
 export type ParamKey =
   | 'avgPvpDamage' | 'medianPvpDamage' | 'dpsEstimate'
-  | 'pvpCcSkillCount' | 'grabCount'
+  | 'pvpCcSkillCount' | 'specInheritedCcCount' | 'weaponOnlyCcCount' | 'mainAbsoCcCount' | 'grabCount'
   | 'superArmorCount' | 'forwardGuardCount' | 'iFrameCount'
   | 'coreSaCount' | 'coreFgCount' | 'protectedCoverage'
   | 'saDr'
@@ -84,6 +88,14 @@ export const SCORE_PARAMS: ScoreParam[] = [
   { key: 'dpsEstimate', label: 'DPS Estimate', short: 'DPS', category: 'damage', icon: <Gauge className="size-3.5" />, description: 'Average PvP damage ÷ average animation duration. Rewards fast, hard-hitting skills.' },
   // CC
   { key: 'pvpCcSkillCount', label: 'PvP CC Skills', short: 'CC Skills', category: 'cc', icon: <Zap className="size-3.5" />, description: 'Number of skills that apply at least one PvP CC.' },
+  // Granular CC breakdown — only populated for awakening/succession specs;
+  // ascension entries report 0 (no breakdown applies). Excluding ascension
+  // from min/max normalization would be cleaner, but the existing 0→1
+  // normalization handles this gracefully (ascension just sits at the
+  // bottom of the range for these three params).
+  { key: 'specInheritedCcCount', label: 'Spec-Inherited CCs', short: 'Spec CC', category: 'cc', icon: <Zap className="size-3.5" />, description: 'CC skills from the spec\'s enhanced variants — Absolute: (Awakening) or Prime:/Succession: (Succession). 0 for Ascension.' },
+  { key: 'weaponOnlyCcCount', label: 'Weapon-Only CCs', short: 'Wpn CC', category: 'cc', icon: <Zap className="size-3.5" />, description: 'Awakening-weapon CC skills (Awakening spec only). Always 0 for Succession (uses main weapon) and Ascension.' },
+  { key: 'mainAbsoCcCount', label: 'Main/Absolute CCs', short: 'Main CC', category: 'cc', icon: <Zap className="size-3.5" />, description: 'Pure main-weapon CC skills (Awakening) or main-weapon + Absolute fallback (Succession). 0 for Ascension.' },
   { key: 'grabCount', label: 'Grabs', short: 'Grab', category: 'cc', icon: <Grab className="size-3.5" />, description: 'Skills with Grapple CC — bypasses Super Armor.' },
   // Protection
   { key: 'superArmorCount', label: 'Super Armor', short: 'SA', category: 'protection', icon: <Shield className="size-3.5" />, description: 'Skills with Super Armor (immune to CC, take reduced damage).' },

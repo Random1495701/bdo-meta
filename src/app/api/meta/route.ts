@@ -32,6 +32,11 @@ interface SpecStats {
   avgPvpDamage: number
   medianPvpDamage: number
   pvpCcSkillCount: number
+  // Granular CC breakdown — only populated for awakening/succession specs.
+  // Ascension uses everything, so these are always 0 for the ascension spec.
+  specInheritedCcCount: number // Prime:/Succession: (Succ) or Absolute: (Awk) CC skills — spec-enhanced variants
+  weaponOnlyCcCount: number    // Awakening-weapon CC skills (Awk only); 0 for Succession (uses main weapon)
+  mainAbsoCcCount: number      // Pure main-weapon + Absolute fallback CC skills
   grabCount: number // skills with Grapple CC
   superArmorCount: number
   forwardGuardCount: number
@@ -62,9 +67,16 @@ interface ClassStats {
   ascension: SpecStats
 }
 
-function computeSpecStats(skills: any[]): SpecStats {
+function computeSpecStats(
+  skills: any[],
+  spec: 'awakening' | 'succession' | 'ascension',
+): SpecStats {
   const pvpDamages: number[] = []
   let pvpCcSkillCount = 0
+  // Granular CC breakdown — see interface docs above.
+  let specInheritedCcCount = 0
+  let weaponOnlyCcCount = 0
+  let mainAbsoCcCount = 0
   let ccChainPotential = 0
   let grabCount = 0
   let superArmorCount = 0
@@ -153,7 +165,30 @@ function computeSpecStats(skills: any[]): SpecStats {
     // Damage/animation stats above already exclude BS (and are unaffected by these other skips).
     if (skipStats) continue
 
-    if (pvpCCs.length > 0) pvpCcSkillCount++
+    if (pvpCCs.length > 0) {
+      pvpCcSkillCount++
+      // Granular CC breakdown — for awakening/succession specs only.
+      // Ascension uses everything (its "awakening" IS ascension), so the
+      // breakdown is left at 0 for ascension to avoid double-counting.
+      //
+      // Succession spec:
+      //   - specInherited = Prime:/Succession: skills (isSuccession)
+      //   - weaponOnly    = 0 (succession uses main weapon, no separate weapon)
+      //   - mainAbso      = main weapon + Absolute fallback (NOT isSuccession AND NOT isAwakening)
+      // Awakening spec:
+      //   - specInherited = Absolute: skills (isAbsolute)
+      //   - weaponOnly    = Awakening-weapon skills (isAwakening)
+      //   - mainAbso      = pure main weapon (NOT isAwakening AND NOT isAbsolute)
+      if (spec === 'awakening') {
+        if (s.isAbsolute) specInheritedCcCount++
+        else if (s.isAwakening) weaponOnlyCcCount++
+        else mainAbsoCcCount++
+      } else if (spec === 'succession') {
+        if (s.isSuccession) specInheritedCcCount++
+        else if (!s.isAwakening) mainAbsoCcCount++
+        // weaponOnlyCcCount stays 0 — succession has no separate weapon
+      }
+    }
     if (hasRealGrab) grabCount++
 
     // Protection stats
@@ -208,6 +243,9 @@ function computeSpecStats(skills: any[]): SpecStats {
     avgPvpDamage,
     medianPvpDamage,
     pvpCcSkillCount,
+    specInheritedCcCount,
+    weaponOnlyCcCount,
+    mainAbsoCcCount,
     grabCount,
     superArmorCount,
     forwardGuardCount,
@@ -282,11 +320,12 @@ export async function GET() {
       successionSaDr: cls.successionSaDr ?? 10,
       awakeningSaDr: cls.awakeningSaDr ?? 10,
       ascensionSaDr: cls.ascensionSaDr ?? 10,
-      awakening: computeSpecStats(effectiveAwakeningSkills),
-      succession: computeSpecStats(effectiveSuccessionSkills),
-      ascension: isAscensionClass ? computeSpecStats(ascensionSkills) : {
+      awakening: computeSpecStats(effectiveAwakeningSkills, 'awakening'),
+      succession: computeSpecStats(effectiveSuccessionSkills, 'succession'),
+      ascension: isAscensionClass ? computeSpecStats(ascensionSkills, 'ascension') : {
         skillCount: 0, avgPvpDamage: 0, medianPvpDamage: 0,
-        pvpCcSkillCount: 0, grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
+        pvpCcSkillCount: 0, specInheritedCcCount: 0, weaponOnlyCcCount: 0, mainAbsoCcCount: 0,
+        grabCount: 0, superArmorCount: 0, forwardGuardCount: 0, iFrameCount: 0, coreSaCount: 0, coreFgCount: 0,
         protectedSkillCount: 0,
         topPvpDamageSkill: null, dpsEstimate: 0, avgDpc: 0, avgDpcPvP: 0, protectedCoverage: 0,
       },
