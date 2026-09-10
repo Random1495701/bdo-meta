@@ -3779,3 +3779,38 @@ Stage Summary:
 - **Preserved**: All non-Arena parts of the Matchups page (header with counter-cycle legend, spec selector + group filter chips, collapsed 31-row matchup table with pinning, footer legend) are unchanged.
 - **Files changed**: `src/components/skills/matchups-page.tsx` only (+~700 / -~330 lines net; final file is 1703 lines). No new files. No API changes. No DB changes.
 - **Lint**: clean (exit 0). **Typecheck**: clean for matchups-page.tsx. **Build**: not run (per constraints).
+
+---
+Task ID: SESSION-LOAD-2026-09-10
+Agent: orchestrator (z.ai code)
+Task: Load bdo-meta project from GitHub (Random1495701/bdo-meta) into the working environment, familiarize with current state, and prepare for resuming development. Ensure lurker is disabled on launch.
+
+Work Log:
+- Cloned https://github.com/Random1495701/bdo-meta.git (PAT-authenticated) to /tmp/bdo-meta. Latest commit: 72717c5 "chore: sync version to v5.9.12". Tags go up to v5.9.12.
+- Read context files to understand the project: package.json, CHAT_HISTORY.md, CHANGELOG.md, docs/PROJECT.md, docs/SESSION_HANDOFF.md, docs/ROADMAP_v7.md, scripts/sync-lurker.ts, src/app/api/sync/trigger/route.ts, src/components/skills/sync-footer.tsx, .zscripts/dev.sh, .zscripts/start.sh, .gitignore, .env.example, prisma/schema.prisma, src/lib/db.ts. Read tail of worklog.md (last task: MATCHUPS-REDESIGN).
+- Stopped the pre-existing scaffold dev server (PIDs 1163/1166/1169/1184/1225) so the bdo-meta project could replace the scaffold.
+- Cleared /home/z/my-project (kept the `upload` tmpfs/ossfs mount which cannot be removed), then rsynced /tmp/bdo-meta/ into /home/z/my-project excluding node_modules, .next, *.log. This preserved bdo-meta's full git history (.git with all 30+ commits + tags v5.9.0–v5.9.12), the committed db/custom.db (10MB SQLite with 7,038 skills + 31 classes), prisma schema, scripts, docs, worklog.md, etc.
+- Created .env with DATABASE_URL=file:/home/z/my-project/db/custom.db (matching .env.example).
+- Ran `bun install` (891 packages, 10.8s). Trusted 4 blocked postinstalls (@parcel/watcher, @swc/core, unrs-resolver, es5-ext).
+- Ran `bun run db:generate` (Prisma Client v6.19.3 generated) and `bun run db:push` (DB already in sync — no migration needed).
+- Verified DB contents: 7,038 skills, 31 BdoClass rows, 0 SyncLog rows. Confirmed the committed db/custom.db is intact and queryable.
+- LURKER DISABLED verification (the user's explicit requirement):
+  * No auto-start code exists: grep for triggerLurker/triggerSync/sync-trigger found only manual invocations in src/components/skills/sync-footer.tsx (Lurker dropdown + Stop Lurker button). No useEffect/auto-trigger on mount anywhere. dev.sh and start.sh do NOT launch the lurker.
+  * No scripts/lurker.lock file present (gitignored, not cloned).
+  * No sync-lurker process running (pgrep confirmed).
+  * scripts/lurker.state.json exists but has a stale heartbeat (lastHeartbeatAt = 2026-06-30T13:45:31Z). The GET /api/sync/trigger route checks Date.now() - lastHeartbeat < 120000 (2 min), so it correctly reports running:false. Confirmed via curl: {"running":false,...}.
+  * Browser-level verification: agent-browser eval on the rendered footer returned {"stopLurkerBtn":true,"lurkerActive":false} — the Stop Lurker button is visible (in its dim/inactive state) and the "Lurker active" gold-pulse indicator is absent. Lurker is OFF on launch.
+- Dev server: Next.js 16.3.4 (Turbopack). Starts cleanly, Ready in ~300ms, compiles / in ~9s on first hit, serves HTTP 200 (117KB page). No fatal errors, no hydration crashes, no error boundary.
+- Agent Browser self-verification (combined command — server + browser in one call because the Bash tool reaps descendant processes on call completion):
+  * Page renders: title "BDO Meta — Black Desert Online Skill Database", version chip v5.9.12, all 8 tabs present (Data, Meta, Matchups, Tiers, Patches, Sessions, Dmg Calc, Docs), header with search + view modes (Grid/List/Table/Tree) + sort + refresh, filter sidebar ("AUTO-FILTERED: Max-rank only, Evasion hidden"), sticky footer with data-source attribution.
+  * API: GET /api/stats → {"total":7038,"withDescription":7038,"withVideo":3192,"withAnimation":3192,"withCc":4745,"withProtection":3693,...classBreakdown:[Tamer 298, Warrior 297, Wizard 296, Kunoichi...]}. GET /api/sync/trigger → running:false. 
+  * Tab switching: clicked Matchups tab (ref @e4 from snapshot) → Arena of Solare section rendered (hasArena:true, bodyLen 4319). Footer lurker-off recheck after tab switch: stopLurkerBtn:true, lurkerActive:false.
+  * Screenshots saved to /tmp/bdo-home.png and /tmp/bdo-matchups.png.
+- NOTE on dev-server persistence: the Bash tool reaps all descendant processes when a command completes (confirmed across multiple detachment attempts: nohup, setsid, exec, disown, double-fork all fail to survive to the next call). The original scaffold dev server was boot-started by the platform; once killed, it does not auto-restart. The dev server works correctly within a single combined command (verified above). To keep the preview live for the user, the server must be re-launched (combined or platform-managed).
+
+Stage Summary:
+- Project bdo-meta (v5.9.12) is fully loaded into /home/z/my-project with complete git history, tags, committed DB (7,038 skills / 31 classes), all 8 tabs, and the v7 roadmap intact.
+- Dependencies installed, Prisma client generated, DB in sync. .env configured.
+- LURKER IS DISABLED ON LAUNCH — verified at 3 levels: (1) no auto-start code, (2) no lock/process, (3) API + browser both report running:false / "Lurker active" absent.
+- App verified end-to-end via Agent Browser: page renders, tabs switch (Matchups→Arena of Solare), real data flows from /api/stats, no errors.
+- Ready to resume work. Roadmap v7 backlog: P0.1 (mobile tab overflow), P0.2 (next/image migration), P1.1 (dynamic tab loading), P1.3 (locked/main skills toggle — user-requested), P1.4 (unified empty/error states), P2.5 (skill tree virtualization), P2.8 (PvP% backfill completion), P2.10 (combo expansion to 23 classes).
