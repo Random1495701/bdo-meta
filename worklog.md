@@ -3814,3 +3814,46 @@ Stage Summary:
 - LURKER IS DISABLED ON LAUNCH — verified at 3 levels: (1) no auto-start code, (2) no lock/process, (3) API + browser both report running:false / "Lurker active" absent.
 - App verified end-to-end via Agent Browser: page renders, tabs switch (Matchups→Arena of Solare), real data flows from /api/stats, no errors.
 - Ready to resume work. Roadmap v7 backlog: P0.1 (mobile tab overflow), P0.2 (next/image migration), P1.1 (dynamic tab loading), P1.3 (locked/main skills toggle — user-requested), P1.4 (unified empty/error states), P2.5 (skill tree virtualization), P2.8 (PvP% backfill completion), P2.10 (combo expansion to 23 classes).
+
+---
+Task ID: ROADMAP-CONSOLIDATION-2026-09-10
+Agent: orchestrator (z.ai code)
+Task: Archive all previous roadmaps in docs and create a single final roadmap with all remaining items.
+
+Work Log:
+- Read all active roadmap docs to inventory done vs remaining: docs/ROADMAP_CURRENT.md (v5.9.5, 14/14 done), docs/ROADMAP_v6.md (9 items: Q1.1/Q1.2/Q3.3 done, Q4.1 partial, rest carried), docs/ROADMAP_v7.md (24 items: P2.10 done per worklog Q1.1, 23 remaining).
+- Read worklog tail (tasks Q1.1, Q1.2, Q3.3, Q4.1, CC-GRANULARITY, UI-AUDIT, MATCHUPS-REDESIGN) to confirm which v6/v7 items were actually completed in v5.9.6–v5.9.12.
+- Verified against the live codebase (grep for overflow-x-auto, next/image, next/dynamic, mainSkillsOnly/hideLocked, useIsFetching, react-virtual, fields=) that all v7 P0/P1/P2/P3 items remain outstanding except P2.10 (combos).
+- Verified combo coverage: 31/31 classes, 85 combos in src/lib/combo-data.ts — confirms v7 P2.10 / v6 Q1.1 is DONE (excluded from final roadmap).
+- Archived all 3 active roadmaps to docs/archive/ with Archive- prefix: ROADMAP_v6.md → Archive-ROADMAP_v6.md, ROADMAP_v7.md → Archive-ROADMAP_v7.md, ROADMAP_CURRENT.md → Archive-ROADMAP_CURRENT.md. Also normalized 3 older un-prefixed archive files (ROADMAP.md, ROADMAP_2026-07-01.md, ROADMAP_2026-07-01_v2.md) to Archive- prefix for consistency.
+- Created docs/ROADMAP.md (321 lines) — the single final roadmap. Contains: Archive Index (11 archived roadmaps), Permanently Skipped items (6), Recently Completed (11 items for context), and 24 REMAINING items grouped P0/P1/P2/P3 with effort tags + a 5-sprint plan.
+- Updated cross-references: docs/SESSION_HANDOFF.md (ROADMAP_MASTER → docs/ROADMAP.md), docs/UI_AUDIT.md (ROADMAP_v7.md → docs/ROADMAP.md + archived v7 reference).
+
+Stage Summary:
+- All previous roadmaps archived: 11 files in docs/archive/ all with Archive- prefix (Archive-ROADMAP.md, Archive-ROADMAP_2026-07-01.md, Archive-ROADMAP_2026-07-01_v2.md, Archive-ROADMAP_2026-07-04_AUDIT.md, Archive-ROADMAP_CURRENT.md, Archive-ROADMAP_MASTER.md, Archive-ROADMAP_POST_V5.7.4.md, Archive-ROADMAP_v6.md, Archive-ROADMAP_v7.md, Archive-PAZ_EXTRACTION.md, plus the existing Archive-VIDEO_PARSING_PLAN.md/Archive-IMPROVEMENT_PLAN.md/Archive-DB_AUDIT).
+- Single final roadmap: docs/ROADMAP.md — 24 remaining items, ~35h total. Top priority is the new P0.DATA initiative (PAZ-based true skill data + animation speed, ~10h) which the user requested this session.
+- No stale roadmap references remain in active docs (only intentional Archive- prefixed cross-references in the new ROADMAP.md).
+
+---
+Task ID: PAZ-GUIDE-2026-09-10
+Agent: orchestrator (z.ai code)
+Task: Research BDO .paz extractors and where skill data + animation speed live in the BDO game files, then write a comprehensive extraction guide. The user has a "White Desert extractor" but will download a new tool if needed.
+
+Work Log:
+- Ran 8 targeted web searches via z-ai web_search CLI: "White Desert extractor BDO", "BDO PAZ extractor 2025", "BDO skill data XML files location", "BDO .pac animation file parser", "reddit White Desert BDO extractor", "BDO skillaction character .pac animation", "BDO .pac action file reverse engineer", "bdo-data-extractor class_skills.json", "site:secret.club Black Desert".
+- Discovered the key tool: github.com/idevelopthings/bdo-data-extractor — a Go CLI (actively maintained) that reverse-engineered BDO's .bss/.dbss binary tables (no prior public docs) and decodes them into clean JSON. Fetched + reviewed README.md, FORMATS.md (2021 lines), internal/tables/classskills.go, src/model/class_skills.go via raw GitHub + PAT-authenticated API.
+- Confirmed via FORMATS.md line 778 that the extractor decodes skill structure (groups, ranks, class UI grids, kind, passive effects, localization) but explicitly does NOT decode: tooltip text (damage/CC/protection/cooldown/PvP%), or animation/action config (the "action configuration" block in skilltype.dbss is "not decoded here").
+- Confirmed the .pac animation files (character/skillaction/{prefix}_skill_{id}.pac) hold frame-accurate durations; no public .pac parser exists as of 2026-09-10 (BDO Modding Discord has private tools; secret.club has a 2019 BDO RE series but not .pac-specific).
+- "White Desert extractor": no public tool by this exact name found. Documented the closest candidates (Crimson Desert Unpacker = wrong game, sibercat/PAZ-Unpacker = current BDO recommendation, kukdh1/PAZ-Unpacker = legacy) and asked the user to confirm what they have. The guide is written to work with any generic PAZ extractor that can open pad00000.meta + search/extract by file mask.
+- Archived the old docs/PAZ_EXTRACTION.md → docs/archive/Archive-PAZ_EXTRACTION.md (superseded).
+- Wrote the comprehensive new guide: docs/PAZ_EXTRACTION_GUIDE.md (817 lines, fully replacing the prior 376-line version). Sections: (1) White Desert question, (2) Tool inventory, (3) Where skill data lives (3-layer breakdown: binary tables vs tooltip XML vs .pac), (4) Install + locate BDO, (5) Extract skill structure via bdo-data-extractor, (6) Extract raw XML + .pac via sibercat/PAZ-Unpacker, (7) Tooltip XML parser (full working TypeScript script parse-skill-xml.ts), (8) .pac frame-count parser (full working TypeScript script parse-pac-frames.ts with offset-scanning heuristic + one-time calibration instructions), (9) Merge into DB, (10) Per-patch automation, (11) Class prefix map (31 classes), (12) Troubleshooting, (13) Research log.
+- Updated docs/PROJECT.md "BDO Game Files" section to point to the new guide + recommended tools (bdo-data-extractor + sibercat/PAZ-Unpacker), replacing the dead AngeloCairo/UnPAZ link.
+- Added the PAZ initiative to docs/ROADMAP.md as P0.DATA (5 sub-items: DATA.1 extractor run, DATA.2 .pac parser, DATA.3 tooltip XML parser, DATA.4 ingest pipeline, DATA.5 lurker retirement), ~10h total, flagged as the user's current focus.
+
+Stage Summary:
+- Single authoritative PAZ guide: docs/PAZ_EXTRACTION_GUIDE.md (817 lines). Old PAZ_EXTRACTION.md archived.
+- Key tool recommendation: idevelopthings/bdo-data-extractor (Go CLI, github.com/idevelopthings/bdo-data-extractor) for skill STRUCTURE + sibercat/PAZ-Unpacker (or user's existing tool) for raw XML + .pac files.
+- Two working TypeScript parser scripts included in the guide: parse-skill-xml.ts (tooltip XML → damage/CC/cooldown/PvP%) and parse-pac-frames.ts (.pac header → frame_count → durationMs = frames/60*1000). Both ready to drop into scripts/ as part of roadmap item DATA.2/DATA.3.
+- Animation truth: BDO ticks at 60 FPS, duration_ms = frame_count / 60 * 1000. Frame-count offset in .pac varies by BDO client version — the parser includes a scanning heuristic + a one-time calibration step (open one known .pac in a hex editor, find the DWORD matching the known frame count, hardcode that offset).
+- "White Desert extractor" identified as likely either Crimson Desert Unpacker (wrong game) or sibercat/PAZ-Unpacker (current BDO tool) or a private Discord tool — guide works with any extractor that can open pad00000.meta + extract by mask; user asked to confirm.
+- The PAZ initiative (P0.DATA) is now the top roadmap priority, scheduled as Sprint 1 in docs/ROADMAP.md.

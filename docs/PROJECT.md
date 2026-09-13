@@ -139,12 +139,23 @@ ffprobe -v error -show_entries format=duration -of csv=p=0 \
 ```
 The video duration IS the skill animation duration.
 
-### BDO Game Files (Alternative)
-Users can extract skill data directly from BDO game files using
-[UnPAZ](https://github.com/AngeloCairo/BDO-UnPAZ):
-1. Extract PAZ archives from BDO installation
-2. Look for `ui_data/skill/skill*.xml`
-3. Upload via the Data dialog in the footer
+### BDO Game Files (Authoritative source — recommended)
+Skill data can be extracted **directly from the BDO game files**, giving frame-accurate
+animation durations and complete skill data without bdocodex. This is the long-term
+replacement for the lurker. See **[`docs/PAZ_EXTRACTION_GUIDE.md`](PAZ_EXTRACTION_GUIDE.md)**
+for the full workflow:
+
+1. Use [`bdo-data-extractor`](https://github.com/idevelopthings/bdo-data-extractor) (Go CLI)
+   to decode the binary tables → `class_skills.json` (skill groups, ranks, class grids, kind).
+2. Use [`sibercat/PAZ-Unpacker`](https://github.com/sibercat/PAZ-Unpacker) (or your existing
+   PAZ extractor) to pull the raw tooltip XML (`ui_data/skill/`) and `.pac` animation files
+   (`character/skillaction/`).
+3. Run the parsers in the guide to extract damage/CC/cooldown/PvP% (from XML) and
+   frame-accurate `animationDurationMs` (from `.pac` frame count / 60).
+4. Merge into the DB via `POST /api/upload/skills-json` (or the planned
+   `POST /api/ingest/paz`).
+
+This is roadmap item **P0.DATA** in `docs/ROADMAP.md`.
 
 ## Sync System
 
