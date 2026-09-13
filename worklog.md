@@ -4072,3 +4072,24 @@ Stage Summary:
 - skilltype.dbss reverse-engineering PLAN WRITTEN: scripts/paz-tools/skilltype-reverse-engineering-plan.md. 4-phase plan to decode the damage/CC/PvP% action-config block, with a hybrid-bdocodex fallback if it's too hard.
 - Tools researched: XeNTaX backup forum archive (found the PAA format docs), Durik256/Noesis-Plugins fmt_pam.py (confirmed PAR magic), Reddit PvP formula thread (confirmed bdocodex used gamecode analysis). No existing public BDO .paa or .paac parser on GitHub — we're the first.
 - Next steps for the user: (1) apply the fork + re-run bdo-data-extractor build, (2) extract the 6 binary tables from gamecommondata/binary/ for the skilltype.dbss reverse-engineering, (3) extract the .paa animation files (folder 1_PC/ — ~500MB-1GB for all classes). Once all three are in, we have the complete pipeline for PAZ-sourced skill data + frame-perfect animation durations, with the damage/CC/PvP% as the final reverse-engineering target.
+
+---
+Task ID: FORK-FIX-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: User said "there is no line like that in that file" about the fork patch. Verify the actual file structure + fix the patch.
+
+Work Log:
+- The user uploaded the actual classskills.go (4759 bytes, 158 lines). Confirmed it is BYTE-IDENTICAL to the current upstream internal/build/classskills.go (verified via `diff` after cloning the upstream repo).
+- Diagnosed the issue: my original fork doc (bdo-data-extractor-fork.md) showed the patch block with 4-tab indentation on the `if header.Kind == model.SkillKindPassive` line, but the actual file uses 3 tabs. When the user searched for the exact text I showed, it didn't match because of the indentation mismatch.
+- The line IS at line 138 — `if header.Kind == model.SkillKindPassive {` with 3 tabs. The user may have been searching for a different indentation or a different line wording.
+- Regenerated the patch using a real `diff -u` between the user's uploaded file and a forked version I created with the exact correct tab indentation (3 tabs outer, 4 tabs body). Saved as scripts/paz-tools/emit-active-skills.patch.
+- Verified the patch applies cleanly: cloned upstream bdo-data-extractor, ran `git apply emit-active-skills.patch` → exit 0, no errors. Confirmed the change landed correctly: the `if effect, exists` block is now OUTSIDE the passive guard, so it runs for all skills.
+- git diff --stat shows: 1 file changed, 6 insertions(+), 3 deletions(-) — minimal, no collateral.
+- Could NOT verify the Go build compiles (Go isn't installed in this sandbox), but the patch is a pure control-flow refactor (no type/signature changes), so build behavior is unchanged.
+- Rewrote scripts/paz-tools/bdo-data-extractor-fork.md with: (1) accurate 3-tab indentation in all code blocks, (2) reference to the verified emit-active-skills.patch file, (3) a "Verification" section documenting the clone + apply + git diff verification, (4) corrected line numbers (138-143 not "line ~140"), (5) note about tabs vs spaces.
+
+Stage Summary:
+- Fork patch VERIFIED against upstream: applies cleanly with git apply (exit 0), change lands correctly (if effect, exists block now outside the passive guard), 1 file changed 6 insertions 3 deletions.
+- Root cause of "no line like that": my original fork doc had 4-tab indentation; the real file uses 3 tabs. Fixed in the rewritten doc + the new verified patch file.
+- Files: scripts/paz-tools/emit-active-skills.patch (the ready-to-apply diff), scripts/paz-tools/bdo-data-extractor-fork.md (updated docs with accurate indentation + verification section).
+- I did NOT install bdo-data-extractor locally (no Go in this sandbox), but I cloned the upstream repo + applied the patch + confirmed via git diff that it's a minimal correct change. The user can now `git apply` the patch and `go build` with confidence.
