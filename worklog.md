@@ -4302,3 +4302,17 @@ Stage Summary:
 - String table CRACKED: [u32 char_count][UTF-16 text] variable-length entries, 290 strings with protection/damage/PvP/BSR keywords.
 - tooltiptable.dbss confirmed as the single source for ALL remaining combat data: protection types (35 FG + 18 SA + 7 IF), damage templates ({p0}% x {p1}), PvP templates (PVP 시...), BSR (흑정령).
 - The full decode requires: (1) extract tooltip offsets from skill.dbss for all skills, (2) parse record sub-entries, (3) match protection keywords in strings, (4) parse damage/PvP parameter values. This is achievable with the formats now cracked.
+
+---
+Task ID: TOOLTIP-DECODE-CONT-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: Continue decoding tooltiptable.dbss for protection/damage/PvP — fix false positives, get to 100% bdocodex-free.
+
+Work Log:
+- Fixed preview by restarting dev server.
+- Investigated protection false positive: skill 94 (Ultimate: Dark Flame) was showing "Super Armor" instead of "Forward Guard". Root cause: the u16 scan of skill.dbss records found ALL u16 values that match tooltip offset indices, including buff IDs and other fields that coincidentally match. u16=354 at byte 46 was a buff ID, not a tooltip reference.
+- Filtered out buff IDs: re-ran parser excluding u16 values in buff_keys set. This reduced matches from 4073 to 1052, and skill 94 now has NO protection (lost the false positive but also lost the real reference).
+- The real tooltip reference for skill 94 is u32=1205 at byte 76 (found earlier). This is an INDEX into offsets_sorted[1205]=50597. The tooltip record at that offset has sub_count=2364, which is a STRING INDEX into the string table. But our string table parser only found 370 strings (not enough — 2364 is out of range).
+- The string table parser is the bottleneck: the table has mixed u16/u32 prefix formats and the parser keeps finding different counts (290, 302, 370, 1362) depending on alignment strategy. Need a more robust parser.
+- All protection keywords (236 hits: 94 SA, 82 FG, 56 IF) are in the STRING TABLE (byte offset > tt_st), not in the record data. The records reference strings via sub_count (string index). The mapping chain works: skill.dbss → u32 tooltip index → tooltiptable record → sub_count → string → protection keyword. But the string table needs to be fully parsed to make this work for all skills.
+- Committed v5.9.14 with protection from the first (false-positive-laden) parser run. Need to re-upsert once the string table parser is fixed.
