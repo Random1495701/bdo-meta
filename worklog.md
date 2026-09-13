@@ -4281,3 +4281,24 @@ Stage Summary:
 - DPS feature COMPLETE: column in table view, stat card in detail drawer, icon on skill cards, sortable in API + header dropdown. Uses frame-perfect animationDurationMs from PAZ .paa files (not bdocodex video-based). Pink color to distinguish from cyan DPC.
 - Tooltip tables analyzed: tooltiptable.dbss has 143 damage templates + PvP damage templates in Korean with {p0}/{p1} placeholders. The parameter values are in the binary record data. Full decode is a future RE task.
 - DB stats: 7,224 skills, 4,417 with animation (frame-perfect from PAZ), 4,712 with cooldown, 5,050 with CC. The DPS is computed for any skill with both damage data (from bdocodex) AND animation duration (from PAZ).
+
+---
+Task ID: TOOLTIP-DECODE-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: Decode tooltiptable.dbss to extract damage/PvP%/protection/BSR data.
+
+Work Log:
+- PUSHED v5.9.13 to GitHub (Random1495701/bdo-meta). Tagged. Large PAZ extraction files excluded from git. DB (db/custom.db) is tracked with PAZ-sourced data. Lurker disabled (0 sync logs). Icons: 2,889 skill icons locally in public/icons/skills/.
+- Decoded tooltiptableoffset.dbss: 16-byte rows containing [hash u32][offset u32] pairs (2 per row). Found 2,303 valid (hash, offset) entries that perfectly tile [8, tt_st) with 0 overlaps.
+- CRACKED skill→tooltip mapping: skill.dbss offset ~76 has a u32 that IS the tooltiptable BYTE OFFSET (not an index or hash). Verified: skill 94 (Ultimate: Dark Flame, protection=Forward Guard) → u32=1205 at offset 76 → tooltiptable record at byte offset 1205. ✓
+- Parsed string table: variable-length [u32 char_count][UTF-16 LE text] entries. Found 290 strings. The first string is 4355 chars containing multiple tooltip text templates with PAColor markup. String[57] (referenced by skill 94's tooltip record) contains "전방 가드" (Forward Guard) AND "무적" (I-Frame) — confirming the skill→tooltip→protection chain works.
+- Found 35 strings with Forward Guard, 18 with Super Armor, 7 with I-Frame. Found 14 strings with PvP keywords ("PVP 시" patterns). Found damage templates with "{p0}% x {p1}" patterns. Found BSR ("흑정령" = Black Spirit) keyword.
+- The tooltip RECORD structure (42 bytes each) has: [hash u32][field4 u32][sub-entries...]. The field4 value (57 for skill 94) is a STRING INDEX into the parsed string array. The sub-entries have [str_id u32][param_count u32][params u32...] which reference additional strings + fill the {p0}/{p1}/{p2} placeholders with actual damage numbers.
+- REMAINING: (1) automate the skill.dbss offset 76 → tooltiptable offset extraction for all 30,400 skills, (2) parse the record sub-entries to extract protection type + damage values + PvP% from the string templates, (3) write the parser + ingest.
+- No new files needed — everything is in the 4 tooltip files we already have.
+
+Stage Summary:
+- Skill→tooltip mapping CRACKED: skill.dbss u32 at offset ~76 = tooltiptable byte offset. Verified for skill 94 (Forward Guard). 
+- String table CRACKED: [u32 char_count][UTF-16 text] variable-length entries, 290 strings with protection/damage/PvP/BSR keywords.
+- tooltiptable.dbss confirmed as the single source for ALL remaining combat data: protection types (35 FG + 18 SA + 7 IF), damage templates ({p0}% x {p1}), PvP templates (PVP 시...), BSR (흑정령).
+- The full decode requires: (1) extract tooltip offsets from skill.dbss for all skills, (2) parse record sub-entries, (3) match protection keywords in strings, (4) parse damage/PvP parameter values. This is achievable with the formats now cracked.
