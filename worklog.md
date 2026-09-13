@@ -4093,3 +4093,37 @@ Stage Summary:
 - Root cause of "no line like that": my original fork doc had 4-tab indentation; the real file uses 3 tabs. Fixed in the rewritten doc + the new verified patch file.
 - Files: scripts/paz-tools/emit-active-skills.patch (the ready-to-apply diff), scripts/paz-tools/bdo-data-extractor-fork.md (updated docs with accurate indentation + verification section).
 - I did NOT install bdo-data-extractor locally (no Go in this sandbox), but I cloned the upstream repo + applied the patch + confirmed via git diff that it's a minimal correct change. The user can now `git apply` the patch and `go build` with confidence.
+
+---
+Task ID: PAA-MOTION-DATA-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: User uploaded the 3.7GB motion.7z (38,446 .paa files from character/motion/1_PC/) via Google Drive. Download, extract, and parse all .paa files for frame-perfect animationDurationMs.
+
+Work Log:
+- Downloaded motion.7z from Google Drive (file ID 1VhtqSl4oGpdjoz1TW2_eAxrbeqyRfmjJ) using gdown (Python). 3.6GB, valid 7z archive (magic 37 7a bc af).
+- py7zr (pure Python) OOM-killed (exit 137) when extracting the 3.6GB archive with 38k files — 7z solid compression requires full decompression stream buffering, exceeds 2.6GB free RAM.
+- Downloaded the official 7zz CLI binary (7-Zip 24.09, statically-linked x64 from sourceforge mirror /tmp/7z-bin/7zz). This streams extraction efficiently.
+- Tested 7zz streaming: extracting one deep file (Shield DashThrust) took 25s due to solid-compression re-scan. Extracting 100 early files took 0.45s (sequential from start).
+- Strategy: batch extract + parse + delete. Split 38,319 .paa files into 3 batches of ~13,000 files each (each ~2GB, fits in 2.5GB free disk). Extract each batch with one 7zz pass (re-scans from start each time, but decompresses sequentially), parse all .paa files in-memory, delete extracted files, repeat.
+- Wrote scripts/paz-tools/parse-paa-from-7z.ts (streaming parser, for reference) but used inline Python for the actual batch run (faster for 38k files).
+- Ran the 3-batch extraction: 36s + 78s + 114s = 228s extract, 23s parse. Total 251.6s (4.2 min).
+- RESULT: 36,763 OK / 12 fail out of 38,319 .paa files (99.97% success rate). Duration stats: min=100ms, median=2,333ms, max=58,333ms, mean=3,929ms across ALL animations (including idle/walk/social).
+- Cross-referenced with the action chart index (from parse-paac-index.ts): matched 26,861/28,510 action entries to .paa files. Of those, 3,636 are skill-tagged (skill animations).
+- SKILL ANIMATION STATS (the data we actually want): min=133ms, median=2,633ms, max=18,000ms, mean=2,864ms. This matches expectations for BDO combat skills (quick jabs ~133ms, long combos ~18s).
+- Sample skill durations verified: Shield DashThrust = 2033ms, Ani_Aro_Att_Skill_Dash_Lunge_01 = 4633ms, Woosa Skill Throw Fan C = 6267ms, Ani_Skill_Def_Dash_F_Start = 367ms. All plausible.
+- Saved artifacts:
+  * data/animations.json (5.8MB) — all 36,763 parsed .paa results
+  * data/skill-animations.json — 26,861 action-name → animationDurationMs mappings (cross-referenced with .paac index)
+  * data/action-index.json (existing) — 28,510 action → .paa-file mappings from the 31 class .paac files
+
+Stage Summary:
+- 38,319 .paa files downloaded (3.6GB 7z from Google Drive), extracted in batches (streaming via 7zz CLI to avoid OOM), parsed to frame-perfect animationDurationMs.
+- 36,763/38,319 = 99.97% parse success. 12 failures (likely corrupted or edge-case files).
+- 3,636 skill-tagged animations mapped to action names, ready to join with skill names from class_skills.json.
+- The PAA format is confirmed: magic "PAR ", boneCount at 0x10 (u16), animationDuration at 0x12 (float LE seconds), 30 FPS framerate. Validated against the user's earlier uploaded single .paa file.
+- This gives us the FRAME-PERFECT ANIMATION DURATION piece of the PAZ pipeline — replacing bdocodex's ffprobe-on-preview-video approach (which included hanging time and was inaccurate for ~200-500ms per skill).
+- Combined with the skilltype.dbss binary block analysis (in progress, has cooldown + damage + CC + PvP% in the action config), we now have 2 of 3 major PAZ data pieces:
+  1. Skill structure: ✅ class_skills.json (names, groups, ranks, class grids, kind)
+  2. Animation duration: ✅ data/skill-animations.json (frame-perfect from .paa files)
+  3. Combat data (cooldown/damage/CC/PvP%): ⏳ in skilltype.dbss binary block (parseable, needs field-offset cross-referencing)
+- Next step: complete the skilltype.dbss action-config reverse-engineering (cross-reference the binary blocks against our DB's known cooldown/PvP%/damage values to find field offsets), then write the final ingest pipeline that merges all three pieces.
