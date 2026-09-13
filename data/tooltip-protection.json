@@ -1,23 +1,98 @@
 {
+  "57005": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "56855": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "57279": [
+    "I-Frame"
+  ],
+  "57327": [
+    "I-Frame"
+  ],
   "57326": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "57289": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "57288": [
+    "I-Frame"
   ],
   "57090": [
     "Forward Guard",
     "Super Armor"
   ],
+  "57117": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57116": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57119": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57118": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57113": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57112": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57115": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57114": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57111": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "56320": [
+    "I-Frame"
+  ],
   "56749": [
     "Forward Guard",
     "Super Armor"
   ],
+  "56751": [
+    "I-Frame"
+  ],
+  "56750": [
+    "I-Frame"
+  ],
+  "56628": [
+    "I-Frame"
+  ],
   "56627": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "56052": [
+    "I-Frame"
+  ],
+  "56054": [
+    "I-Frame"
   ],
   "55823": [
     "Forward Guard",
@@ -27,12 +102,35 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "55814": [
+    "I-Frame"
+  ],
+  "55824": [
+    "I-Frame"
+  ],
   "55901": [
     "Forward Guard",
     "Super Armor"
   ],
+  "55902": [
+    "I-Frame"
+  ],
   "56319": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "55334": [
+    "I-Frame"
+  ],
+  "55356": [
+    "I-Frame"
+  ],
+  "55300": [
+    "I-Frame"
+  ],
+  "55397": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "54943": [
@@ -41,6 +139,11 @@
   ],
   "54928": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "54824": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "54823": [
@@ -67,9 +170,24 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "55052": [
+    "I-Frame"
+  ],
+  "55049": [
+    "I-Frame"
+  ],
+  "55048": [
+    "I-Frame"
+  ],
+  "55051": [
+    "I-Frame"
+  ],
   "55050": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "55045": [
+    "I-Frame"
   ],
   "55044": [
     "Forward Guard",
@@ -79,56 +197,136 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "55046": [
+    "I-Frame"
+  ],
   "55041": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "55043": [
+    "I-Frame"
+  ],
+  "55042": [
+    "I-Frame"
   ],
   "55136": [
     "Forward Guard",
     "Super Armor"
   ],
+  "55152": [
+    "I-Frame"
+  ],
   "55109": [
     "Forward Guard",
     "Super Armor"
   ],
+  "55130": [
+    "I-Frame"
+  ],
+  "54505": [
+    "I-Frame"
+  ],
+  "54483": [
+    "I-Frame"
+  ],
   "54277": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "54278": [
+    "I-Frame"
+  ],
+  "54672": [
+    "I-Frame"
+  ],
+  "54725": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "54724": [
     "Forward Guard",
     "Super Armor"
   ],
+  "54738": [
+    "I-Frame"
+  ],
+  "54536": [
+    "I-Frame"
+  ],
+  "54022": [
+    "I-Frame"
+  ],
+  "53599": [
+    "I-Frame"
+  ],
   "53598": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "52793": [
+    "I-Frame"
   ],
   "53109": [
     "Forward Guard",
     "Super Armor"
   ],
+  "53110": [
+    "I-Frame"
+  ],
+  "52659": [
+    "I-Frame"
+  ],
   "52658": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "52483": [
+    "I-Frame"
   ],
   "52482": [
     "Forward Guard",
     "Super Armor"
   ],
+  "52506": [
+    "I-Frame"
+  ],
   "51773": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "51768": [
     "Forward Guard",
     "Super Armor"
   ],
+  "51762": [
+    "I-Frame"
+  ],
   "51973": [
     "Forward Guard",
     "Super Armor"
   ],
+  "51974": [
+    "I-Frame"
+  ],
   "51205": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "51206": [
+    "I-Frame"
+  ],
+  "51645": [
+    "I-Frame"
+  ],
+  "51646": [
+    "I-Frame"
+  ],
+  "51652": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "51648": [
@@ -143,6 +341,9 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "51490": [
+    "I-Frame"
+  ],
   "50862": [
     "Forward Guard",
     "Super Armor"
@@ -151,23 +352,76 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "50858": [
+    "I-Frame"
+  ],
   "50879": [
     "Forward Guard",
     "Super Armor"
   ],
   "50929": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "50931": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "50930": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "50703": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "50796": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "50760": [
     "Forward Guard",
     "Super Armor"
   ],
+  "50756": [
+    "I-Frame"
+  ],
+  "50772": [
+    "I-Frame"
+  ],
   "50997": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "50999": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50375": [
+    "I-Frame"
+  ],
+  "50231": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50200": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50283": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50272": [
+    "I-Frame"
+  ],
+  "50291": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -175,7 +429,50 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "50623": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50569": [
+    "I-Frame"
+  ],
+  "50568": [
+    "I-Frame"
+  ],
+  "50571": [
+    "I-Frame"
+  ],
+  "50570": [
+    "I-Frame"
+  ],
+  "50565": [
+    "I-Frame"
+  ],
+  "50564": [
+    "I-Frame"
+  ],
+  "50567": [
+    "I-Frame"
+  ],
+  "50566": [
+    "I-Frame"
+  ],
   "50560": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50563": [
+    "I-Frame"
+  ],
+  "50562": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "50579": [
+    "I-Frame"
+  ],
+  "50638": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -186,6 +483,9 @@
   "49157": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "49158": [
+    "I-Frame"
   ],
   "49541": [
     "Forward Guard",
@@ -347,13 +647,22 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "65331": [
+    "I-Frame"
+  ],
   "64005": [
     "Forward Guard",
     "Super Armor"
   ],
+  "64006": [
+    "I-Frame"
+  ],
   "64261": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "64262": [
+    "I-Frame"
   ],
   "62637": [
     "Forward Guard",
@@ -473,18 +782,22 @@
   ],
   "62593": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62592": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62595": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62594": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62621": [
@@ -637,6 +950,7 @@
   ],
   "62520": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62523": [
@@ -649,18 +963,22 @@
   ],
   "62517": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62516": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62519": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62518": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62513": [
@@ -713,10 +1031,12 @@
   ],
   "62469": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62468": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62471": [
@@ -725,38 +1045,47 @@
   ],
   "62470": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62465": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62464": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62467": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62466": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62493": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62492": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62495": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62494": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62489": [
@@ -769,6 +1098,7 @@
   ],
   "62491": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62490": [
@@ -825,10 +1155,12 @@
   ],
   "62569": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62568": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62571": [
@@ -837,6 +1169,7 @@
   ],
   "62570": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62565": [
@@ -849,10 +1182,12 @@
   ],
   "62567": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62566": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62561": [
@@ -881,6 +1216,7 @@
   ],
   "62591": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62590": [
@@ -937,6 +1273,7 @@
   ],
   "62541": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62540": [
@@ -945,10 +1282,12 @@
   ],
   "62543": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62542": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62537": [
@@ -1049,10 +1388,12 @@
   ],
   "62545": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62544": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62547": [
@@ -1125,6 +1466,11 @@
   ],
   "62846": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "62805": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62804": [
@@ -1621,10 +1967,12 @@
   ],
   "62369": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62368": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62371": [
@@ -1633,6 +1981,7 @@
   ],
   "62370": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62397": [
@@ -1653,18 +2002,22 @@
   ],
   "62393": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62392": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62395": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62394": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62389": [
@@ -1677,6 +2030,7 @@
   ],
   "62391": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62390": [
@@ -1717,10 +2071,12 @@
   ],
   "62345": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62344": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62347": [
@@ -1733,6 +2089,7 @@
   ],
   "62341": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62340": [
@@ -1741,10 +2098,12 @@
   ],
   "62343": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62342": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62337": [
@@ -1773,10 +2132,12 @@
   ],
   "62367": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62366": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62361": [
@@ -1829,22 +2190,27 @@
   ],
   "62445": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62444": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62447": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62446": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62441": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62440": [
@@ -1853,10 +2219,12 @@
   ],
   "62443": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62442": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62437": [
@@ -1893,66 +2261,82 @@
   ],
   "62461": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62460": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62463": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62462": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62457": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62456": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62459": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62458": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62453": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62452": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62455": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62454": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62449": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62448": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62451": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62450": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62413": [
@@ -2057,6 +2441,7 @@
   ],
   "62420": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62423": [
@@ -2069,18 +2454,22 @@
   ],
   "62417": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62416": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62419": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62418": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62253": [
@@ -2117,10 +2506,12 @@
   ],
   "62245": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62244": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62247": [
@@ -2133,6 +2524,7 @@
   ],
   "62241": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62240": [
@@ -2141,18 +2533,22 @@
   ],
   "62243": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62242": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62269": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62268": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62271": [
@@ -2161,6 +2557,7 @@
   ],
   "62270": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62265": [
@@ -2173,10 +2570,12 @@
   ],
   "62267": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62266": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62261": [
@@ -2245,6 +2644,7 @@
   ],
   "62213": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62212": [
@@ -2257,6 +2657,7 @@
   ],
   "62214": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62209": [
@@ -2341,18 +2742,22 @@
   ],
   "62317": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62316": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62319": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62318": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62313": [
@@ -2457,6 +2862,7 @@
   ],
   "62320": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62323": [
@@ -2565,18 +2971,22 @@
   ],
   "62293": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62292": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62295": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62294": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62289": [
@@ -2589,6 +2999,7 @@
   ],
   "62291": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "62290": [
@@ -2599,165 +3010,594 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "61702": [
+    "I-Frame"
+  ],
   "60933": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "60934": [
+    "I-Frame"
   ],
   "60421": [
     "Forward Guard",
     "Super Armor"
   ],
+  "60422": [
+    "I-Frame"
+  ],
+  "59596": [
+    "I-Frame"
+  ],
+  "59615": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "59614": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "59438": [
+    "I-Frame"
+  ],
+  "59410": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "59509": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "59476": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "59809": [
+    "I-Frame"
+  ],
+  "59810": [
+    "I-Frame"
   ],
   "59789": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "59794": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "59658": [
     "Forward Guard",
     "Super Armor"
   ],
+  "59770": [
+    "I-Frame"
+  ],
+  "59029": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "59073": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "58372": [
+    "I-Frame"
+  ],
   "58371": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "58484": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "58481": [
+    "I-Frame"
   ],
   "58480": [
     "Forward Guard",
     "Super Armor"
   ],
+  "58482": [
+    "I-Frame"
+  ],
+  "58460": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "58459": [
+    "I-Frame"
+  ],
+  "58649": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "58696": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "58047": [
+    "I-Frame"
+  ],
+  "58084": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "58296": [
+    "I-Frame"
+  ],
   "58295": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "58249": [
+    "I-Frame"
+  ],
+  "57544": [
+    "I-Frame"
+  ],
+  "57351": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "57350": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "57789": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57788": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57790": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57785": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57784": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57787": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57786": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57781": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57783": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57782": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57739": [
+    "I-Frame"
   ],
   "57738": [
     "Forward Guard",
     "Super Armor"
   ],
+  "40490": [
+    "I-Frame"
+  ],
+  "40476": [
+    "I-Frame"
+  ],
   "40475": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "40893": [
+    "I-Frame"
+  ],
+  "40892": [
+    "I-Frame"
+  ],
+  "40895": [
+    "I-Frame"
+  ],
+  "40894": [
+    "I-Frame"
+  ],
+  "40889": [
+    "I-Frame"
+  ],
+  "40891": [
+    "I-Frame"
+  ],
+  "40890": [
+    "I-Frame"
+  ],
+  "40941": [
+    "I-Frame"
+  ],
+  "40940": [
+    "I-Frame"
+  ],
+  "40943": [
+    "I-Frame"
+  ],
+  "40942": [
+    "I-Frame"
+  ],
+  "40937": [
+    "I-Frame"
+  ],
+  "40939": [
+    "I-Frame"
+  ],
+  "40938": [
+    "I-Frame"
+  ],
+  "40929": [
+    "I-Frame"
+  ],
+  "40928": [
+    "I-Frame"
+  ],
+  "40930": [
+    "I-Frame"
+  ],
+  "40945": [
+    "I-Frame"
+  ],
+  "40944": [
+    "I-Frame"
+  ],
+  "40946": [
+    "I-Frame"
+  ],
+  "40909": [
+    "I-Frame"
+  ],
+  "40908": [
+    "I-Frame"
+  ],
+  "40911": [
+    "I-Frame"
+  ],
+  "40910": [
+    "I-Frame"
+  ],
+  "40905": [
+    "I-Frame"
+  ],
+  "40907": [
+    "I-Frame"
+  ],
+  "40906": [
+    "I-Frame"
+  ],
+  "40901": [
+    "I-Frame"
+  ],
+  "40900": [
+    "I-Frame"
+  ],
+  "40902": [
+    "I-Frame"
+  ],
+  "40896": [
+    "I-Frame"
+  ],
+  "40899": [
+    "I-Frame"
+  ],
+  "40898": [
+    "I-Frame"
+  ],
+  "40924": [
+    "I-Frame"
+  ],
+  "40927": [
+    "I-Frame"
+  ],
+  "40921": [
+    "I-Frame"
+  ],
+  "40923": [
+    "I-Frame"
+  ],
+  "40922": [
+    "I-Frame"
+  ],
+  "40913": [
+    "I-Frame"
+  ],
+  "40912": [
+    "I-Frame"
+  ],
+  "40069": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "40043": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "40331": [
+    "I-Frame"
+  ],
+  "40330": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "40421": [
+    "I-Frame"
+  ],
+  "40420": [
+    "I-Frame"
+  ],
+  "40417": [
+    "I-Frame"
+  ],
+  "40416": [
+    "I-Frame"
+  ],
+  "40419": [
+    "I-Frame"
+  ],
+  "40418": [
+    "I-Frame"
+  ],
+  "40413": [
+    "I-Frame"
+  ],
+  "40412": [
+    "I-Frame"
+  ],
+  "40415": [
+    "I-Frame"
+  ],
+  "40414": [
+    "I-Frame"
+  ],
+  "40411": [
+    "I-Frame"
+  ],
+  "40205": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "40204": [
+    "I-Frame"
   ],
   "39429": [
     "Forward Guard",
     "Super Armor"
   ],
+  "39430": [
+    "I-Frame"
+  ],
   "39685": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "39686": [
+    "I-Frame"
   ],
   "38917": [
     "Forward Guard",
     "Super Armor"
   ],
+  "38918": [
+    "I-Frame"
+  ],
   "39173": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "39174": [
+    "I-Frame"
   ],
   "38661": [
     "Forward Guard",
     "Super Armor"
   ],
+  "38662": [
+    "I-Frame"
+  ],
   "37381": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "37382": [
+    "I-Frame"
   ],
   "37637": [
     "Forward Guard",
     "Super Armor"
   ],
+  "37638": [
+    "I-Frame"
+  ],
   "36869": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "36870": [
+    "I-Frame"
   ],
   "37125": [
     "Forward Guard",
     "Super Armor"
   ],
+  "37126": [
+    "I-Frame"
+  ],
   "36357": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "36358": [
+    "I-Frame"
   ],
   "36613": [
     "Forward Guard",
     "Super Armor"
   ],
+  "36614": [
+    "I-Frame"
+  ],
   "36101": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "36102": [
+    "I-Frame"
   ],
   "35589": [
     "Forward Guard",
     "Super Armor"
   ],
+  "35590": [
+    "I-Frame"
+  ],
   "34821": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "34822": [
+    "I-Frame"
   ],
   "35077": [
     "Forward Guard",
     "Super Armor"
   ],
+  "35078": [
+    "I-Frame"
+  ],
   "34309": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "34310": [
+    "I-Frame"
   ],
   "34565": [
     "Forward Guard",
     "Super Armor"
   ],
+  "34566": [
+    "I-Frame"
+  ],
   "34053": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "34054": [
+    "I-Frame"
   ],
   "33285": [
     "Forward Guard",
     "Super Armor"
   ],
+  "33286": [
+    "I-Frame"
+  ],
   "33029": [
     "Forward Guard",
     "Super Armor"
   ],
+  "33030": [
+    "I-Frame"
+  ],
   "47617": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "47618": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "47710": [
     "Forward Guard",
     "Super Armor"
   ],
+  "47697": [
+    "I-Frame"
+  ],
   "47261": [
     "Forward Guard",
     "Super Armor"
   ],
+  "47262": [
+    "I-Frame"
+  ],
   "47449": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "47450": [
+    "I-Frame"
+  ],
+  "47012": [
+    "I-Frame"
   ],
   "47011": [
     "Forward Guard",
     "Super Armor"
   ],
+  "45302": [
+    "I-Frame"
+  ],
   "45153": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "45436": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "44735": [
     "Forward Guard",
     "Super Armor"
   ],
+  "44792": [
+    "I-Frame"
+  ],
   "44791": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "44737": [
+    "I-Frame"
   ],
   "44736": [
     "Forward Guard",
@@ -2767,6 +3607,9 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "45016": [
+    "I-Frame"
+  ],
   "45015": [
     "Forward Guard",
     "Super Armor"
@@ -2775,19 +3618,41 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "44858": [
+    "I-Frame"
+  ],
+  "44825": [
+    "I-Frame"
+  ],
   "44824": [
     "Forward Guard",
     "Super Armor"
   ],
   "44901": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "42687": [
     "Forward Guard",
     "Super Armor"
   ],
+  "42689": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "42688": [
+    "I-Frame"
+  ],
   "42175": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "42176": [
+    "I-Frame"
+  ],
+  "42409": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -2795,13 +3660,35 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "42352": [
+    "I-Frame"
+  ],
+  "41633": [
+    "I-Frame"
+  ],
   "41632": [
     "Forward Guard",
     "Super Armor"
   ],
+  "41481": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "41479": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "41916": [
+    "I-Frame"
+  ],
   "41915": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "41868": [
+    "I-Frame"
   ],
   "41870": [
     "Forward Guard",
@@ -2811,7 +3698,46 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "41866": [
+    "I-Frame"
+  ],
+  "41117": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "41199": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "40992": [
+    "I-Frame"
+  ],
+  "41022": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "40991": [
+    "I-Frame"
+  ],
+  "40990": [
+    "I-Frame"
+  ],
   "41355": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "41354": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "41284": [
+    "I-Frame"
+  ],
+  "41283": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -2819,25 +3745,63 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "18127": [
+    "I-Frame"
+  ],
   "18312": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "18310": [
+    "I-Frame"
+  ],
+  "18305": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "17595": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "17591": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "17197": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "17243": [
+    "I-Frame"
   ],
   "30725": [
     "Forward Guard",
     "Super Armor"
   ],
+  "30726": [
+    "I-Frame"
+  ],
   "30981": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "30982": [
+    "I-Frame"
   ],
   "30213": [
     "Forward Guard",
     "Super Armor"
   ],
+  "30214": [
+    "I-Frame"
+  ],
   "30469": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "30470": [
+    "I-Frame"
   ],
   "7716": [
     "Forward Guard",
@@ -2845,6 +3809,7 @@
   ],
   "7715": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "7714": [
@@ -2857,11 +3822,57 @@
   ],
   "7729": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "7692": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "7745": [
+    "I-Frame"
+  ],
+  "8068": [
+    "I-Frame"
+  ],
+  "8065": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8064": [
+    "Forward Guard",
     "Super Armor"
   ],
   "8067": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "8169": [
+    "I-Frame"
+  ],
+  "8142": [
+    "I-Frame"
+  ],
+  "7968": [
+    "I-Frame"
+  ],
+  "8032": [
+    "I-Frame"
+  ],
+  "8059": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8058": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8055": [
+    "I-Frame"
+  ],
+  "7343": [
+    "I-Frame"
   ],
   "7333": [
     "Forward Guard",
@@ -2871,9 +3882,17 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "7363": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "7388": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "7173": [
+    "I-Frame"
   ],
   "7172": [
     "Forward Guard",
@@ -2883,7 +3902,26 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "7239": [
+    "I-Frame"
+  ],
   "7234": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7597": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7596": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7595": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7594": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -2895,21 +3933,89 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "7634": [
+    "I-Frame"
+  ],
+  "6840": [
+    "I-Frame"
+  ],
   "6799": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "6896": [
+    "I-Frame"
+  ],
+  "6851": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6850": [
+    "I-Frame"
   ],
   "6698": [
     "Forward Guard",
     "Super Armor"
   ],
+  "6717": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6716": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6718": [
+    "I-Frame"
+  ],
+  "6711": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6663": [
+    "I-Frame"
+  ],
+  "6772": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6768": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6771": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6770": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6731": [
+    "Forward Guard"
+  ],
   "6736": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7044": [
     "Forward Guard",
     "Super Armor"
   ],
   "7046": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "7153": [
+    "I-Frame"
   ],
   "7154": [
     "Forward Guard",
@@ -2919,23 +4025,70 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "6931": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "7008": [
     "Forward Guard",
     "Super Armor"
   ],
+  "7037": [
+    "I-Frame"
+  ],
+  "6990": [
+    "I-Frame"
+  ],
+  "6282": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "6351": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "6176": [
     "Forward Guard",
     "Super Armor"
   ],
+  "6205": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6204": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6207": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6206": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6149": [
+    "I-Frame"
+  ],
   "6148": [
     "Forward Guard",
     "Super Armor"
   ],
+  "6174": [
+    "I-Frame"
+  ],
+  "6169": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "6218": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6208": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -2947,9 +4100,21 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "6578": [
+    "I-Frame"
+  ],
+  "6645": [
+    "I-Frame"
+  ],
   "6620": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "6453": [
+    "Forward Guard"
+  ],
+  "6524": [
+    "I-Frame"
   ],
   "6521": [
     "Forward Guard",
@@ -2963,6 +4128,22 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "6471": [
+    "I-Frame"
+  ],
+  "6489": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6491": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6490": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "5807": [
     "Forward Guard",
     "Super Armor"
@@ -2970,6 +4151,13 @@
   "5803": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "5797": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5817": [
+    "I-Frame"
   ],
   "5777": [
     "Forward Guard",
@@ -2979,9 +4167,132 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "5831": [
+    "I-Frame"
+  ],
   "5674": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "5693": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5695": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5694": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5689": [
+    "I-Frame"
+  ],
+  "5688": [
+    "I-Frame"
+  ],
+  "5691": [
+    "I-Frame"
+  ],
+  "5690": [
+    "I-Frame"
+  ],
+  "5639": [
+    "I-Frame"
+  ],
+  "5650": [
+    "Forward Guard"
+  ],
+  "5750": [
+    "I-Frame"
+  ],
+  "5745": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5705": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5706": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5700": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5703": [
+    "I-Frame"
+  ],
+  "5702": [
+    "I-Frame"
+  ],
+  "5697": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5696": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5699": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5698": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5721": [
+    "Forward Guard"
+  ],
+  "6061": [
+    "Forward Guard"
+  ],
+  "6063": [
+    "Forward Guard"
+  ],
+  "6062": [
+    "Forward Guard"
+  ],
+  "6072": [
+    "Forward Guard"
+  ],
+  "6074": [
+    "I-Frame"
+  ],
+  "6069": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6068": [
+    "Forward Guard"
+  ],
+  "6071": [
+    "Forward Guard"
+  ],
+  "6070": [
+    "Forward Guard"
+  ],
+  "6064": [
+    "Forward Guard"
+  ],
+  "6067": [
+    "Forward Guard"
+  ],
+  "6066": [
+    "Forward Guard"
   ],
   "6025": [
     "Forward Guard",
@@ -2991,21 +4302,109 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "6113": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6112": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6114": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "6142": [
     "Forward Guard",
     "Super Armor"
   ],
+  "6083": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6109": [
+    "Forward Guard"
+  ],
+  "6108": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6111": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6110": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6105": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6104": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6107": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6106": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6101": [
+    "I-Frame"
+  ],
+  "6103": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "6102": [
+    "I-Frame"
+  ],
+  "6097": [
+    "I-Frame"
+  ],
+  "6098": [
+    "I-Frame"
+  ],
   "5932": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "5931": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "5923": [
     "Forward Guard",
     "Super Armor"
   ],
+  "5940": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "5894": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "5981": [
+    "I-Frame"
   ],
   "5358": [
     "Forward Guard",
@@ -3013,17 +4412,28 @@
   ],
   "5373": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "5372": [
     "Forward Guard",
     "Super Armor"
   ],
+  "5374": [
+    "Forward Guard"
+  ],
   "5369": [
     "Forward Guard",
     "Super Armor"
   ],
   "5367": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5316": [
+    "I-Frame"
+  ],
+  "5174": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3035,29 +4445,151 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "5142": [
+    "I-Frame"
+  ],
+  "5225": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5224": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5223": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5222": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5235": [
+    "I-Frame"
+  ],
   "5213": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "5211": [
+    "I-Frame"
+  ],
+  "5207": [
+    "I-Frame"
+  ],
+  "5567": [
+    "I-Frame"
+  ],
+  "5566": [
+    "I-Frame"
+  ],
+  "5519": [
+    "I-Frame"
+  ],
+  "5512": [
+    "I-Frame"
+  ],
+  "5526": [
+    "I-Frame"
+  ],
+  "5521": [
+    "I-Frame"
+  ],
+  "5520": [
+    "I-Frame"
+  ],
+  "5523": [
+    "I-Frame"
+  ],
+  "5522": [
+    "I-Frame"
   ],
   "5615": [
     "Forward Guard",
     "Super Armor"
   ],
+  "5604": [
+    "I-Frame"
+  ],
   "5601": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "5603": [
+    "I-Frame"
+  ],
+  "5602": [
+    "I-Frame"
+  ],
+  "5629": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5627": [
+    "I-Frame"
   ],
   "5583": [
     "Forward Guard",
     "Super Armor"
   ],
+  "5422": [
+    "I-Frame"
+  ],
+  "5418": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5411": [
+    "I-Frame"
+  ],
+  "5436": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5439": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5433": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5430": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5385": [
+    "I-Frame"
+  ],
   "5380": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5383": [
+    "I-Frame"
+  ],
+  "5407": [
     "Forward Guard",
     "Super Armor"
   ],
   "5487": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "5479": [
+    "I-Frame"
+  ],
+  "5440": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4781": [
+    "Forward Guard"
   ],
   "4773": [
     "Forward Guard",
@@ -3075,6 +4607,34 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "4795": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4791": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4749": [
+    "I-Frame"
+  ],
+  "4741": [
+    "Forward Guard"
+  ],
+  "4766": [
+    "I-Frame"
+  ],
+  "4759": [
+    "I-Frame"
+  ],
+  "4845": [
+    "I-Frame"
+  ],
+  "4809": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "4658": [
     "Forward Guard",
     "Super Armor"
@@ -3083,9 +4643,79 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "4613": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4633": [
+    "I-Frame"
+  ],
+  "4629": [
+    "Forward Guard"
+  ],
+  "4630": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "4719": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "4712": [
+    "I-Frame"
+  ],
+  "4699": [
+    "I-Frame"
+  ],
+  "4694": [
+    "I-Frame"
+  ],
+  "4691": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5103": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5096": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5095": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5094": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "5071": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5063": [
+    "I-Frame"
+  ],
+  "5077": [
+    "I-Frame"
+  ],
+  "5079": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4901": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4869": [
+    "I-Frame"
   ],
   "4868": [
     "Forward Guard",
@@ -3095,7 +4725,95 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "4957": [
+    "I-Frame"
+  ],
+  "4244": [
+    "I-Frame"
+  ],
+  "4243": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4134": [
+    "I-Frame"
+  ],
+  "4148": [
+    "I-Frame"
+  ],
+  "4100": [
+    "I-Frame"
+  ],
+  "4121": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4116": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4119": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4115": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4114": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4168": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4171": [
+    "I-Frame"
+  ],
+  "4165": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4167": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4166": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4181": [
+    "I-Frame"
+  ],
+  "4180": [
+    "I-Frame"
+  ],
+  "4183": [
+    "I-Frame"
+  ],
+  "4182": [
+    "I-Frame"
+  ],
+  "4177": [
+    "I-Frame"
+  ],
+  "4480": [
+    "Forward Guard"
+  ],
+  "4504": [
+    "I-Frame"
+  ],
   "4507": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4506": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3103,39 +4821,185 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "4500": [
+    "I-Frame"
+  ],
+  "4498": [
+    "I-Frame"
+  ],
+  "4581": [
+    "I-Frame"
+  ],
+  "4580": [
+    "I-Frame"
+  ],
+  "4582": [
+    "I-Frame"
+  ],
+  "4595": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "4594": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4477": [
     "Forward Guard",
     "Super Armor"
   ],
   "4479": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4478": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3727": [
+    "I-Frame"
+  ],
+  "3729": [
+    "I-Frame"
+  ],
+  "3728": [
+    "I-Frame"
+  ],
+  "3730": [
+    "I-Frame"
+  ],
+  "3663": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3665": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3664": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3666": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4077": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "4064": [
+    "Forward Guard",
     "Super Armor"
   ],
   "4067": [
-    "Forward Guard"
+    "Forward Guard",
+    "Super Armor"
   ],
   "4089": [
-    "Forward Guard"
+    "Forward Guard",
+    "Super Armor"
   ],
   "4091": [
-    "Forward Guard"
+    "Forward Guard",
+    "Super Armor"
   ],
   "4090": [
-    "Forward Guard"
+    "Forward Guard",
+    "Super Armor"
   ],
   "4047": [
     "Forward Guard",
     "Super Armor"
   ],
-  "3844": [
+  "4063": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "4056": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4054": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3886": [
+    "I-Frame"
+  ],
+  "3849": [
+    "I-Frame"
+  ],
+  "3848": [
+    "I-Frame"
+  ],
+  "3850": [
+    "I-Frame"
+  ],
+  "3845": [
+    "I-Frame"
+  ],
+  "3844": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "3847": [
+    "I-Frame"
+  ],
+  "3846": [
+    "I-Frame"
+  ],
+  "3841": [
+    "I-Frame"
+  ],
+  "3843": [
+    "I-Frame"
+  ],
+  "3842": [
+    "I-Frame"
+  ],
+  "3868": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3261": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "3209": [
+    "I-Frame"
+  ],
+  "3208": [
+    "I-Frame"
   ],
   "3204": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
+  "3203": [
+    "I-Frame"
+  ],
+  "3229": [
+    "I-Frame"
+  ],
+  "3231": [
+    "I-Frame"
+  ],
   "3230": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3306": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3313": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3143,20 +5007,121 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "3281": [
+    "I-Frame"
+  ],
+  "3118": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3129": [
+    "I-Frame"
+  ],
+  "3128": [
+    "I-Frame"
+  ],
   "3125": [
     "Forward Guard",
     "Super Armor"
   ],
-  "3089": [
+  "3124": [
+    "I-Frame"
+  ],
+  "3126": [
+    "I-Frame"
+  ],
+  "3120": [
+    "I-Frame"
+  ],
+  "3123": [
+    "I-Frame"
+  ],
+  "3084": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "3086": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "3073": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "3072": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "3102": [
+    "I-Frame"
+  ],
+  "3089": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "3181": [
+    "I-Frame"
+  ],
+  "3176": [
+    "I-Frame"
+  ],
+  "3179": [
+    "I-Frame"
+  ],
+  "3178": [
+    "I-Frame"
+  ],
+  "3173": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3175": [
+    "I-Frame"
+  ],
+  "3169": [
+    "I-Frame"
+  ],
+  "3171": [
+    "I-Frame"
+  ],
+  "3196": [
+    "I-Frame"
+  ],
+  "3199": [
+    "I-Frame"
+  ],
+  "3193": [
+    "I-Frame"
+  ],
+  "3192": [
+    "I-Frame"
+  ],
+  "3195": [
+    "I-Frame"
+  ],
+  "3194": [
+    "I-Frame"
+  ],
+  "3189": [
+    "I-Frame"
+  ],
+  "3188": [
+    "I-Frame"
+  ],
+  "3187": [
+    "I-Frame"
   ],
   "3144": [
     "Forward Guard",
     "Super Armor"
   ],
   "3165": [
-    "Forward Guard"
+    "Forward Guard",
+    "Super Armor"
   ],
   "3164": [
     "Forward Guard",
@@ -3190,9 +5155,15 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "3333": [
+    "I-Frame"
+  ],
   "3332": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "3353": [
+    "I-Frame"
   ],
   "3441": [
     "Forward Guard",
@@ -3202,8 +5173,46 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2738": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "2701": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2700": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2703": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2702": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2696": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2699": [
+    "I-Frame"
+  ],
+  "2695": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2694": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2689": [
@@ -3218,7 +5227,34 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2705": [
+    "I-Frame"
+  ],
+  "2704": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "2787": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2759": [
+    "I-Frame"
+  ],
+  "2591": [
+    "Forward Guard"
+  ],
+  "2664": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2663": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2662": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3230,11 +5266,40 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2647": [
+    "I-Frame"
+  ],
+  "3005": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3006": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "2953": [
     "Forward Guard",
     "Super Armor"
   ],
+  "2966": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "3052": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3065": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "3067": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "3060": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3254,9 +5319,37 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2857": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2859": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2853": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "2854": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "2849": [
+    "I-Frame"
+  ],
+  "2848": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2851": [
+    "I-Frame"
+  ],
+  "2850": [
+    "I-Frame"
   ],
   "2877": [
     "Forward Guard",
@@ -3267,9 +5360,69 @@
     "Super Armor"
   ],
   "2872": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2870": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2864": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2866": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2828": [
+    "Forward Guard",
     "Super Armor"
   ],
   "2830": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2820": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2819": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2840": [
+    "I-Frame"
+  ],
+  "2843": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2842": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2837": [
+    "I-Frame"
+  ],
+  "2839": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2833": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2832": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2835": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2834": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3289,8 +5442,14 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2923": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "2922": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2919": [
@@ -3301,6 +5460,11 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2933": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "2932": [
     "Forward Guard",
     "Super Armor"
@@ -3309,49 +5473,767 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2892": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2895": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2891": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "2887": [
     "Forward Guard",
     "Super Armor"
   ],
+  "2883": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "2905": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2906": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2896": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2221": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2220": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2223": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2222": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2217": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2216": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2218": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2213": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2212": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2215": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2214": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2209": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2208": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2211": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2210": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2237": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2236": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2239": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2238": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2233": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2232": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2235": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2234": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2229": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2228": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2231": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2230": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2225": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2224": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2227": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2226": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2189": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2188": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2191": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2190": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2185": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2184": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2187": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2186": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2181": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2180": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2183": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2182": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2177": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2176": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2179": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2178": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2205": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2204": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2207": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2206": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2201": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2200": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2203": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2202": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2197": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2196": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2199": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2198": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2193": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2192": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2195": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2194": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2285": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2284": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2287": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2286": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2281": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2280": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2283": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2282": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2277": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2276": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2279": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2278": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2273": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2272": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2275": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2274": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2301": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2300": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2303": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2302": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2297": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2296": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2299": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2298": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2293": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2292": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2295": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2294": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2289": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2288": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2291": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2290": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2253": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2252": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2255": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2254": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2249": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2248": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2251": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2250": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2245": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2244": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2247": [
     "Forward Guard",
     "Super Armor"
   ],
+  "2246": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2241": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2240": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2243": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2242": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "2269": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2268": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2271": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2270": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "2265": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2264": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2267": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2266": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2261": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2260": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2263": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2262": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2257": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2259": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2093": [
+    "Forward Guard"
+  ],
+  "2092": [
+    "Forward Guard"
+  ],
+  "2094": [
+    "Forward Guard"
+  ],
+  "2089": [
+    "Forward Guard"
+  ],
+  "2088": [
+    "Forward Guard"
+  ],
+  "2091": [
+    "Forward Guard"
+  ],
+  "2090": [
+    "Forward Guard"
+  ],
+  "2085": [
+    "Forward Guard"
+  ],
+  "2084": [
+    "Forward Guard"
+  ],
+  "2087": [
+    "Forward Guard"
+  ],
+  "2086": [
+    "Forward Guard"
+  ],
+  "2081": [
+    "Forward Guard"
+  ],
+  "2080": [
+    "Forward Guard"
+  ],
+  "2083": [
+    "Forward Guard"
+  ],
+  "2082": [
+    "Forward Guard"
+  ],
+  "2109": [
+    "Forward Guard"
+  ],
+  "2108": [
+    "Forward Guard"
+  ],
+  "2111": [
+    "Forward Guard"
+  ],
+  "2105": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2104": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2107": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2106": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2101": [
+    "Forward Guard"
+  ],
+  "2100": [
+    "Forward Guard"
+  ],
+  "2103": [
+    "Forward Guard"
   ],
   "2102": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "2097": [
+    "Forward Guard"
+  ],
+  "2096": [
+    "Forward Guard"
+  ],
+  "2099": [
+    "Forward Guard"
+  ],
+  "2098": [
+    "Forward Guard"
+  ],
+  "2058": [
+    "I-Frame"
   ],
   "2052": [
     "Forward Guard",
@@ -3361,6 +6243,9 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2077": [
+    "Forward Guard"
+  ],
   "2079": [
     "Forward Guard",
     "Super Armor"
@@ -3369,33 +6254,213 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2065": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2157": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2156": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2158": [
+    "Forward Guard"
+  ],
+  "2153": [
+    "Forward Guard"
+  ],
   "2152": [
     "Forward Guard",
     "Super Armor"
   ],
+  "2155": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2154": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2149": [
+    "I-Frame"
+  ],
+  "2148": [
+    "Forward Guard"
+  ],
+  "2151": [
+    "Forward Guard"
+  ],
+  "2145": [
+    "Forward Guard"
+  ],
+  "2144": [
+    "Forward Guard"
+  ],
+  "2147": [
+    "Forward Guard"
+  ],
+  "2146": [
+    "Forward Guard"
+  ],
+  "2173": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2172": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2175": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2174": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "2169": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2168": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2171": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2170": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "2167": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2125": [
+    "Forward Guard"
+  ],
+  "2124": [
+    "Forward Guard"
+  ],
+  "2127": [
+    "Forward Guard"
+  ],
+  "2126": [
+    "Forward Guard"
+  ],
+  "2121": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2120": [
+    "Forward Guard"
+  ],
+  "2123": [
+    "Forward Guard"
+  ],
+  "2122": [
+    "Forward Guard"
+  ],
+  "2117": [
+    "Forward Guard"
+  ],
+  "2116": [
+    "Forward Guard"
+  ],
+  "2119": [
+    "Forward Guard"
+  ],
+  "2118": [
+    "Forward Guard"
+  ],
+  "2113": [
+    "Forward Guard"
+  ],
+  "2112": [
+    "Forward Guard"
+  ],
+  "2115": [
+    "Forward Guard"
+  ],
+  "2140": [
+    "Forward Guard"
+  ],
+  "2143": [
+    "Forward Guard"
+  ],
+  "2137": [
+    "Forward Guard"
+  ],
+  "2136": [
+    "Forward Guard"
+  ],
+  "2139": [
+    "Forward Guard"
+  ],
+  "2138": [
+    "Forward Guard"
+  ],
+  "2133": [
+    "Forward Guard"
+  ],
+  "2132": [
+    "Forward Guard"
+  ],
+  "2135": [
+    "Forward Guard"
+  ],
+  "2134": [
+    "Forward Guard"
+  ],
+  "2129": [
+    "Forward Guard"
+  ],
+  "2128": [
+    "Forward Guard"
+  ],
+  "2131": [
+    "Forward Guard"
+  ],
+  "2130": [
+    "Forward Guard"
   ],
   "2489": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2488": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2487": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2486": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "2482": [
+    "I-Frame"
   ],
   "2553": [
     "Forward Guard",
@@ -3421,31 +6486,793 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "2504": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2507": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "2501": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2503": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2502": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2345": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2344": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2347": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2340": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2343": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2365": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "2364": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2366": [
     "Forward Guard",
     "Super Armor"
   ],
+  "2309": [
+    "I-Frame"
+  ],
   "2308": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "2333": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "2415": [
     "Forward Guard",
     "Super Armor"
   ],
+  "2397": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1709": [
+    "I-Frame"
+  ],
+  "1708": [
+    "I-Frame"
+  ],
+  "1711": [
+    "I-Frame"
+  ],
+  "1710": [
+    "I-Frame"
+  ],
+  "1705": [
+    "I-Frame"
+  ],
+  "1704": [
+    "I-Frame"
+  ],
+  "1707": [
+    "I-Frame"
+  ],
+  "1706": [
+    "I-Frame"
+  ],
+  "1701": [
+    "Forward Guard",
+    "I-Frame"
+  ],
+  "1700": [
+    "I-Frame"
+  ],
+  "1703": [
+    "I-Frame"
+  ],
+  "1702": [
+    "I-Frame"
+  ],
+  "1697": [
+    "I-Frame"
+  ],
+  "1696": [
+    "I-Frame"
+  ],
+  "1699": [
+    "I-Frame"
+  ],
+  "1698": [
+    "I-Frame"
+  ],
+  "1725": [
+    "I-Frame"
+  ],
+  "1724": [
+    "I-Frame"
+  ],
+  "1727": [
+    "I-Frame"
+  ],
+  "1726": [
+    "I-Frame"
+  ],
+  "1721": [
+    "I-Frame"
+  ],
+  "1720": [
+    "I-Frame"
+  ],
+  "1723": [
+    "I-Frame"
+  ],
+  "1722": [
+    "I-Frame"
+  ],
+  "1717": [
+    "I-Frame"
+  ],
+  "1716": [
+    "I-Frame"
+  ],
+  "1719": [
+    "I-Frame"
+  ],
+  "1718": [
+    "I-Frame"
+  ],
+  "1713": [
+    "I-Frame"
+  ],
+  "1712": [
+    "I-Frame"
+  ],
+  "1715": [
+    "I-Frame"
+  ],
+  "1714": [
+    "I-Frame"
+  ],
+  "1677": [
+    "I-Frame"
+  ],
+  "1676": [
+    "I-Frame"
+  ],
+  "1679": [
+    "I-Frame"
+  ],
+  "1678": [
+    "I-Frame"
+  ],
+  "1673": [
+    "I-Frame"
+  ],
+  "1672": [
+    "I-Frame"
+  ],
+  "1675": [
+    "I-Frame"
+  ],
+  "1674": [
+    "I-Frame"
+  ],
+  "1669": [
+    "I-Frame"
+  ],
+  "1668": [
+    "I-Frame"
+  ],
+  "1671": [
+    "I-Frame"
+  ],
+  "1670": [
+    "I-Frame"
+  ],
+  "1665": [
+    "I-Frame"
+  ],
+  "1664": [
+    "I-Frame"
+  ],
+  "1667": [
+    "I-Frame"
+  ],
+  "1666": [
+    "I-Frame"
+  ],
+  "1693": [
+    "I-Frame"
+  ],
+  "1692": [
+    "I-Frame"
+  ],
+  "1695": [
+    "I-Frame"
+  ],
+  "1694": [
+    "I-Frame"
+  ],
+  "1689": [
+    "I-Frame"
+  ],
+  "1688": [
+    "I-Frame"
+  ],
+  "1691": [
+    "I-Frame"
+  ],
+  "1690": [
+    "I-Frame"
+  ],
+  "1685": [
+    "I-Frame"
+  ],
+  "1684": [
+    "I-Frame"
+  ],
+  "1687": [
+    "I-Frame"
+  ],
+  "1686": [
+    "I-Frame"
+  ],
+  "1681": [
+    "I-Frame"
+  ],
+  "1680": [
+    "I-Frame"
+  ],
+  "1683": [
+    "I-Frame"
+  ],
+  "1682": [
+    "I-Frame"
+  ],
+  "1769": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1764": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1761": [
+    "I-Frame"
+  ],
+  "1760": [
+    "I-Frame"
+  ],
+  "1763": [
+    "I-Frame"
+  ],
+  "1762": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "1790": [
     "Forward Guard",
     "Super Armor"
   ],
+  "1781": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1779": [
+    "I-Frame"
+  ],
+  "1778": [
+    "I-Frame"
+  ],
+  "1737": [
+    "I-Frame"
+  ],
+  "1736": [
+    "I-Frame"
+  ],
+  "1738": [
+    "I-Frame"
+  ],
+  "1733": [
+    "I-Frame"
+  ],
+  "1735": [
+    "I-Frame"
+  ],
+  "1734": [
+    "I-Frame"
+  ],
+  "1729": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1728": [
+    "I-Frame"
+  ],
+  "1730": [
+    "I-Frame"
+  ],
+  "1759": [
+    "I-Frame"
+  ],
+  "1758": [
+    "I-Frame"
+  ],
+  "1753": [
+    "I-Frame"
+  ],
+  "1752": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "1755": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1754": [
+    "I-Frame"
+  ],
+  "1748": [
+    "I-Frame"
+  ],
+  "1751": [
+    "I-Frame"
+  ],
+  "1744": [
+    "I-Frame"
+  ],
+  "1581": [
+    "I-Frame"
+  ],
+  "1580": [
+    "I-Frame"
+  ],
+  "1583": [
+    "I-Frame"
+  ],
+  "1582": [
+    "I-Frame"
+  ],
+  "1577": [
+    "I-Frame"
+  ],
+  "1576": [
+    "I-Frame"
+  ],
+  "1579": [
+    "I-Frame"
+  ],
+  "1578": [
+    "I-Frame"
+  ],
+  "1573": [
+    "I-Frame"
+  ],
+  "1572": [
+    "I-Frame"
+  ],
+  "1575": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1574": [
+    "I-Frame"
+  ],
+  "1569": [
+    "I-Frame"
+  ],
+  "1568": [
+    "I-Frame"
+  ],
+  "1571": [
+    "I-Frame"
+  ],
+  "1570": [
+    "I-Frame"
+  ],
+  "1597": [
+    "I-Frame"
+  ],
+  "1596": [
+    "I-Frame"
+  ],
+  "1599": [
+    "I-Frame"
+  ],
+  "1598": [
+    "I-Frame"
+  ],
+  "1593": [
+    "I-Frame"
+  ],
+  "1592": [
+    "I-Frame"
+  ],
+  "1595": [
+    "I-Frame"
+  ],
+  "1594": [
+    "I-Frame"
+  ],
+  "1589": [
+    "I-Frame"
+  ],
+  "1588": [
+    "I-Frame"
+  ],
+  "1591": [
+    "I-Frame"
+  ],
+  "1590": [
+    "I-Frame"
+  ],
+  "1585": [
+    "I-Frame"
+  ],
+  "1584": [
+    "I-Frame"
+  ],
+  "1587": [
+    "I-Frame"
+  ],
+  "1586": [
+    "I-Frame"
+  ],
+  "1549": [
+    "I-Frame"
+  ],
+  "1548": [
+    "I-Frame"
+  ],
+  "1551": [
+    "I-Frame"
+  ],
+  "1550": [
+    "I-Frame"
+  ],
+  "1545": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1544": [
+    "I-Frame"
+  ],
+  "1547": [
+    "I-Frame"
+  ],
+  "1546": [
+    "I-Frame"
+  ],
+  "1541": [
+    "I-Frame"
+  ],
+  "1540": [
+    "I-Frame"
+  ],
+  "1543": [
+    "I-Frame"
+  ],
+  "1542": [
+    "I-Frame"
+  ],
+  "1537": [
+    "I-Frame"
+  ],
+  "1536": [
+    "I-Frame"
+  ],
+  "1539": [
+    "I-Frame"
+  ],
+  "1538": [
+    "I-Frame"
+  ],
+  "1565": [
+    "I-Frame"
+  ],
+  "1564": [
+    "I-Frame"
+  ],
+  "1567": [
+    "I-Frame"
+  ],
+  "1566": [
+    "I-Frame"
+  ],
+  "1561": [
+    "I-Frame"
+  ],
+  "1560": [
+    "I-Frame"
+  ],
+  "1563": [
+    "I-Frame"
+  ],
+  "1562": [
+    "I-Frame"
+  ],
+  "1557": [
+    "I-Frame"
+  ],
+  "1556": [
+    "I-Frame"
+  ],
+  "1559": [
+    "I-Frame"
+  ],
+  "1558": [
+    "I-Frame"
+  ],
+  "1553": [
+    "I-Frame"
+  ],
+  "1552": [
+    "I-Frame"
+  ],
+  "1555": [
+    "I-Frame"
+  ],
+  "1554": [
+    "I-Frame"
+  ],
+  "1645": [
+    "I-Frame"
+  ],
+  "1644": [
+    "I-Frame"
+  ],
+  "1647": [
+    "I-Frame"
+  ],
+  "1646": [
+    "I-Frame"
+  ],
+  "1641": [
+    "I-Frame"
+  ],
+  "1640": [
+    "I-Frame"
+  ],
+  "1643": [
+    "I-Frame"
+  ],
+  "1642": [
+    "I-Frame"
+  ],
+  "1637": [
+    "I-Frame"
+  ],
+  "1636": [
+    "I-Frame"
+  ],
+  "1639": [
+    "I-Frame"
+  ],
+  "1638": [
+    "I-Frame"
+  ],
+  "1633": [
+    "I-Frame"
+  ],
+  "1632": [
+    "I-Frame"
+  ],
+  "1635": [
+    "I-Frame"
+  ],
+  "1634": [
+    "I-Frame"
+  ],
+  "1661": [
+    "I-Frame"
+  ],
+  "1660": [
+    "I-Frame"
+  ],
+  "1663": [
+    "I-Frame"
+  ],
+  "1662": [
+    "I-Frame"
+  ],
+  "1657": [
+    "I-Frame"
+  ],
+  "1656": [
+    "I-Frame"
+  ],
+  "1659": [
+    "I-Frame"
+  ],
+  "1658": [
+    "I-Frame"
+  ],
+  "1653": [
+    "I-Frame"
+  ],
+  "1652": [
+    "I-Frame"
+  ],
+  "1655": [
+    "I-Frame"
+  ],
+  "1654": [
+    "I-Frame"
+  ],
+  "1649": [
+    "I-Frame"
+  ],
+  "1648": [
+    "I-Frame"
+  ],
+  "1651": [
+    "I-Frame"
+  ],
+  "1650": [
+    "I-Frame"
+  ],
+  "1613": [
+    "I-Frame"
+  ],
+  "1612": [
+    "I-Frame"
+  ],
+  "1615": [
+    "I-Frame"
+  ],
+  "1614": [
+    "I-Frame"
+  ],
+  "1609": [
+    "I-Frame"
+  ],
+  "1608": [
+    "I-Frame"
+  ],
+  "1611": [
+    "I-Frame"
+  ],
+  "1610": [
+    "I-Frame"
+  ],
+  "1605": [
+    "I-Frame"
+  ],
+  "1604": [
+    "I-Frame"
+  ],
+  "1607": [
+    "I-Frame"
+  ],
+  "1606": [
+    "I-Frame"
+  ],
+  "1601": [
+    "I-Frame"
+  ],
+  "1600": [
+    "I-Frame"
+  ],
+  "1603": [
+    "I-Frame"
+  ],
+  "1602": [
+    "I-Frame"
+  ],
+  "1629": [
+    "I-Frame"
+  ],
+  "1628": [
+    "I-Frame"
+  ],
+  "1631": [
+    "I-Frame"
+  ],
+  "1630": [
+    "I-Frame"
+  ],
+  "1625": [
+    "I-Frame"
+  ],
+  "1624": [
+    "I-Frame"
+  ],
+  "1627": [
+    "I-Frame"
+  ],
+  "1626": [
+    "I-Frame"
+  ],
+  "1621": [
+    "I-Frame"
+  ],
+  "1620": [
+    "I-Frame"
+  ],
+  "1623": [
+    "I-Frame"
+  ],
+  "1622": [
+    "I-Frame"
+  ],
+  "1617": [
+    "I-Frame"
+  ],
+  "1616": [
+    "I-Frame"
+  ],
+  "1619": [
+    "I-Frame"
+  ],
+  "1618": [
+    "I-Frame"
+  ],
+  "1983": [
+    "I-Frame"
+  ],
+  "1930": [
+    "I-Frame"
+  ],
+  "1944": [
     "Forward Guard",
     "Super Armor"
   ],
-  "1545": [
+  "1941": [
+    "I-Frame"
+  ],
+  "2026": [
+    "I-Frame"
+  ],
+  "2021": [
+    "I-Frame"
+  ],
+  "2020": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2023": [
+    "I-Frame"
+  ],
+  "2043": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3469,22 +7296,70 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1988": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1984": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "1986": [
+    "I-Frame"
+  ],
+  "2000": [
+    "I-Frame"
   ],
   "1837": [
     "Forward Guard",
     "Super Armor"
   ],
+  "1834": [
+    "I-Frame"
+  ],
+  "1855": [
+    "I-Frame"
+  ],
+  "1844": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1847": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1792": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1902": [
+    "I-Frame"
+  ],
   "1895": [
     "Forward Guard",
     "Super Armor"
   ],
+  "1856": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1859": [
+    "I-Frame"
+  ],
+  "1858": [
+    "I-Frame"
+  ],
+  "1878": [
+    "I-Frame"
+  ],
   "1197": [
+    "Forward Guard",
     "Super Armor"
   ],
   "1196": [
+    "Forward Guard",
     "Super Armor"
   ],
   "1199": [
@@ -3492,12 +7367,56 @@
     "Super Armor"
   ],
   "1198": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1193": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1192": [
+    "Forward Guard",
     "Super Armor"
   ],
   "1195": [
+    "Forward Guard",
     "Super Armor"
   ],
   "1194": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1189": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1188": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1191": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1190": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1185": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1184": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1187": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1186": [
+    "Forward Guard",
     "Super Armor"
   ],
   "1213": [
@@ -3522,6 +7441,11 @@
   ],
   "1208": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "1211": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1210": [
@@ -3560,7 +7484,131 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1165": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1164": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1167": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1166": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1161": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1160": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1163": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1162": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1157": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1159": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1158": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1153": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1152": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1155": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1154": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1181": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1180": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1183": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1182": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1177": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1176": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1179": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1178": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1173": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1172": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1175": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1174": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1169": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1168": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1171": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1170": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3610,6 +7658,7 @@
   ],
   "1249": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1248": [
@@ -3618,10 +7667,12 @@
   ],
   "1251": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1250": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1277": [
@@ -3658,6 +7709,7 @@
   ],
   "1269": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1268": [
@@ -3706,6 +7758,7 @@
   ],
   "1225": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1224": [
@@ -3754,6 +7807,7 @@
   ],
   "1245": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1244": [
@@ -3816,7 +7870,19 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1068": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1071": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1070": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1065": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3832,7 +7898,23 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1061": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1060": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1063": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1062": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1057": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3840,7 +7922,96 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1059": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1058": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1085": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1084": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1087": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1086": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1081": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1080": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1083": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1082": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1077": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1076": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1079": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1078": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1073": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1072": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1075": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1074": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1039": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1038": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1033": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1032": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3848,13 +8019,245 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1029": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1025": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1024": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1027": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1053": [
+    "Forward Guard",
     "Super Armor"
   ],
   "1052": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1055": [
+    "Forward Guard",
     "Super Armor"
   ],
   "1054": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1049": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1048": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1051": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1045": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1044": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1047": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1046": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1041": [
+    "Super Armor"
+  ],
+  "1040": [
+    "Super Armor"
+  ],
+  "1043": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1042": [
+    "Super Armor"
+  ],
+  "1133": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1132": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1135": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1134": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1129": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1128": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1131": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1130": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1125": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1127": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1126": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1121": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1120": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1122": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1149": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1148": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1151": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1150": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1145": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1144": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1147": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1146": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1141": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1140": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1143": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1142": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1137": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1136": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1139": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1138": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1101": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1100": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1103": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1102": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1097": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1096": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1099": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1098": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1093": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1092": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1095": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3862,7 +8265,31 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1090": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1116": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1119": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1113": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1112": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1115": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1114": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3870,55 +8297,478 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1105": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1104": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1107": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1453": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1452": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
+  "1455": [
+    "I-Frame"
+  ],
+  "1454": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1449": [
+    "I-Frame"
+  ],
+  "1448": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1451": [
+    "I-Frame"
+  ],
   "1450": [
-    "Forward Guard"
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
   ],
   "1445": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "1444": [
+    "I-Frame"
+  ],
+  "1447": [
+    "I-Frame"
+  ],
+  "1446": [
+    "I-Frame"
+  ],
+  "1441": [
+    "I-Frame"
+  ],
+  "1440": [
+    "I-Frame"
+  ],
+  "1443": [
+    "I-Frame"
+  ],
+  "1442": [
+    "I-Frame"
+  ],
+  "1469": [
+    "I-Frame"
+  ],
+  "1468": [
+    "I-Frame"
+  ],
+  "1471": [
+    "I-Frame"
+  ],
+  "1470": [
+    "I-Frame"
+  ],
+  "1465": [
+    "I-Frame"
+  ],
+  "1464": [
+    "I-Frame"
+  ],
+  "1467": [
+    "I-Frame"
+  ],
+  "1466": [
+    "I-Frame"
+  ],
+  "1461": [
+    "I-Frame"
   ],
   "1460": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "1463": [
+    "I-Frame"
   ],
   "1462": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "1457": [
+    "I-Frame"
+  ],
+  "1456": [
+    "I-Frame"
+  ],
+  "1459": [
+    "I-Frame"
+  ],
+  "1458": [
+    "I-Frame"
   ],
   "1421": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1420": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1423": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1422": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1417": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1416": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1419": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "1418": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1413": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1412": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1415": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1414": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1409": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1408": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1411": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1410": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1437": [
+    "I-Frame"
+  ],
+  "1436": [
+    "I-Frame"
+  ],
+  "1439": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1438": [
+    "I-Frame"
+  ],
+  "1432": [
+    "I-Frame"
+  ],
+  "1435": [
+    "I-Frame"
+  ],
+  "1429": [
+    "I-Frame"
   ],
   "1428": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "1431": [
+    "I-Frame"
+  ],
+  "1430": [
+    "I-Frame"
+  ],
+  "1425": [
+    "Forward Guard",
+    "I-Frame"
+  ],
+  "1424": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1427": [
+    "Forward Guard",
+    "I-Frame"
+  ],
+  "1426": [
+    "Forward Guard",
+    "I-Frame"
+  ],
+  "1517": [
+    "I-Frame"
+  ],
+  "1516": [
+    "I-Frame"
+  ],
+  "1519": [
+    "I-Frame"
+  ],
+  "1518": [
+    "I-Frame"
+  ],
+  "1513": [
+    "I-Frame"
+  ],
+  "1512": [
+    "I-Frame"
+  ],
+  "1515": [
+    "I-Frame"
+  ],
+  "1514": [
+    "I-Frame"
+  ],
+  "1509": [
+    "I-Frame"
+  ],
+  "1508": [
+    "I-Frame"
+  ],
+  "1511": [
+    "I-Frame"
+  ],
+  "1510": [
+    "I-Frame"
+  ],
+  "1505": [
+    "I-Frame"
+  ],
+  "1504": [
+    "I-Frame"
+  ],
+  "1507": [
+    "I-Frame"
+  ],
+  "1506": [
+    "I-Frame"
+  ],
+  "1533": [
+    "I-Frame"
+  ],
+  "1532": [
+    "I-Frame"
+  ],
+  "1535": [
+    "I-Frame"
+  ],
+  "1534": [
+    "I-Frame"
+  ],
+  "1529": [
+    "I-Frame"
+  ],
+  "1528": [
+    "I-Frame"
+  ],
+  "1531": [
+    "I-Frame"
+  ],
+  "1530": [
+    "I-Frame"
+  ],
+  "1525": [
+    "I-Frame"
+  ],
+  "1524": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1527": [
+    "I-Frame"
+  ],
+  "1526": [
+    "I-Frame"
+  ],
+  "1521": [
+    "I-Frame"
+  ],
+  "1520": [
+    "I-Frame"
+  ],
+  "1523": [
+    "I-Frame"
   ],
   "1522": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1485": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
+  ],
+  "1484": [
+    "I-Frame"
+  ],
+  "1487": [
+    "I-Frame"
+  ],
+  "1486": [
+    "I-Frame"
+  ],
+  "1481": [
+    "I-Frame"
+  ],
+  "1480": [
+    "I-Frame"
+  ],
+  "1483": [
+    "I-Frame"
+  ],
+  "1482": [
+    "I-Frame"
+  ],
+  "1477": [
+    "I-Frame"
+  ],
+  "1476": [
+    "I-Frame"
+  ],
+  "1479": [
+    "I-Frame"
+  ],
+  "1478": [
+    "I-Frame"
+  ],
+  "1473": [
+    "I-Frame"
+  ],
+  "1472": [
+    "I-Frame"
+  ],
+  "1475": [
+    "I-Frame"
+  ],
+  "1474": [
+    "I-Frame"
+  ],
+  "1501": [
+    "I-Frame"
+  ],
+  "1500": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1503": [
+    "I-Frame"
+  ],
+  "1502": [
+    "I-Frame"
+  ],
+  "1497": [
+    "I-Frame"
+  ],
+  "1496": [
+    "I-Frame"
+  ],
+  "1499": [
+    "I-Frame"
+  ],
+  "1498": [
+    "I-Frame"
+  ],
+  "1493": [
+    "I-Frame"
+  ],
+  "1492": [
+    "I-Frame"
+  ],
+  "1495": [
+    "I-Frame"
   ],
   "1494": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
+  "1489": [
+    "I-Frame"
+  ],
+  "1488": [
+    "I-Frame"
+  ],
+  "1491": [
+    "I-Frame"
+  ],
+  "1490": [
+    "I-Frame"
+  ],
   "1325": [
-    "Forward Guard"
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1324": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1327": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1326": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
   ],
   "1321": [
     "Forward Guard",
@@ -3933,7 +8783,9 @@
     "Super Armor"
   ],
   "1322": [
-    "Forward Guard"
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
   ],
   "1317": [
     "Forward Guard",
@@ -3949,6 +8801,7 @@
   ],
   "1318": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1313": [
@@ -3967,7 +8820,61 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1341": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1340": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1343": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1342": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1337": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1336": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1339": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1338": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1333": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1332": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1335": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1334": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "1331": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1330": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -3997,6 +8904,7 @@
   ],
   "1291": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1290": [
@@ -4013,6 +8921,7 @@
   ],
   "1287": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1286": [
@@ -4025,6 +8934,7 @@
   ],
   "1280": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1283": [
@@ -4033,6 +8943,7 @@
   ],
   "1282": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1309": [
@@ -4099,32 +9010,334 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "1389": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1388": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1391": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1390": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1377": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1376": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1405": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1404": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1407": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1406": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1401": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1400": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1403": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1402": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "1397": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1396": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1399": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1398": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1393": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1392": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
+  "1395": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1394": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1357": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1356": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1359": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1358": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1353": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1355": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1354": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1345": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1344": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1347": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1346": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1373": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1372": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1375": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1374": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1369": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1368": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1371": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1370": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1365": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1364": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1367": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1366": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1361": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1360": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1363": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1362": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "763": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "712": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "709": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "706": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "730": [
+    "I-Frame"
+  ],
   "581": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "580": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "582": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "943": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "951": [
+    "I-Frame"
+  ],
+  "900": [
+    "Forward Guard"
+  ],
+  "899": [
+    "Forward Guard"
+  ],
+  "922": [
+    "I-Frame"
+  ],
+  "1005": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1000": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1002": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "1020": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1022": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1017": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "1019": [
     "Forward Guard",
     "Super Armor"
   ],
+  "1015": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1008": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1011": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "825": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "776": [
+    "I-Frame"
+  ],
+  "773": [
+    "I-Frame"
+  ],
   "772": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "769": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "771": [
+    "I-Frame"
   ],
   "792": [
     "Forward Guard",
@@ -4134,7 +9347,27 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "784": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "869": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "892": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "891": [
+    "I-Frame"
+  ],
   "833": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "170": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -4142,28 +9375,115 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "162": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "131": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "159": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "237": [
+    "I-Frame"
+  ],
+  "239": [
+    "I-Frame"
+  ],
+  "238": [
+    "I-Frame"
+  ],
+  "235": [
+    "I-Frame"
+  ],
+  "248": [
     "Forward Guard",
     "Super Armor"
   ],
   "204": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "202": [
     "Forward Guard",
     "Super Armor"
   ],
+  "195": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "217": [
+    "I-Frame"
+  ],
+  "219": [
+    "I-Frame"
+  ],
+  "218": [
+    "I-Frame"
+  ],
+  "208": [
+    "I-Frame"
+  ],
+  "41": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "42": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "35": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "5": [
+    "I-Frame"
   ],
   "4": [
     "Forward Guard",
     "Super Armor"
   ],
+  "108": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "101": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "100": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "102": [
     "Forward Guard",
+    "Super Armor"
+  ],
+  "97": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "96": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "99": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "98": [
+    "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "122": [
@@ -4184,14 +9504,21 @@
   ],
   "85": [
     "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "84": [
+    "Forward Guard",
     "Super Armor"
   ],
   "87": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "86": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "424": [
@@ -4201,6 +9528,9 @@
   "418": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "397": [
+    "I-Frame"
   ],
   "399": [
     "Forward Guard",
@@ -4222,11 +9552,24 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "389": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "388": [
     "Forward Guard",
     "Super Armor"
   ],
+  "385": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "408": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "404": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -4234,23 +9577,67 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "319": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "318": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "313": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "312": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "311": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "310": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "306": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "267": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "287": [
     "Forward Guard",
     "Super Armor"
   ],
   "361": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "360": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "362": [
     "Forward Guard",
     "Super Armor"
   ],
   "359": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "358": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "377": [
     "Forward Guard",
     "Super Armor"
   ],
@@ -4262,9 +9649,36 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "372": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "375": [
+    "Forward Guard",
+    "Super Armor"
+  ],
   "374": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "329": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "15521": [
+    "I-Frame"
+  ],
+  "15281": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "15280": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "15329": [
+    "Forward Guard",
+    "I-Frame"
   ],
   "15347": [
     "Forward Guard",
@@ -4274,20 +9688,79 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "9905": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9904": [
+    "I-Frame"
+  ],
   "9860": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "9971": [
+    "I-Frame"
   ],
   "9769": [
     "Forward Guard",
     "Super Armor"
   ],
+  "9733": [
+    "I-Frame"
+  ],
   "9732": [
     "Forward Guard",
     "Super Armor"
   ],
+  "9839": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "9845": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "9844": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "9847": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "9846": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "9841": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "9840": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "9843": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "9842": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "9797": [
     "Forward Guard",
+    "I-Frame",
     "Super Armor"
   ],
   "9818": [
@@ -4302,9 +9775,39 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "10113": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "10114": [
+    "I-Frame"
+  ],
+  "10189": [
+    "Forward Guard"
+  ],
+  "10188": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "10193": [
+    "I-Frame"
+  ],
   "10192": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "10195": [
+    "I-Frame"
+  ],
+  "10032": [
+    "I-Frame"
+  ],
+  "10095": [
+    "I-Frame"
+  ],
+  "10068": [
+    "I-Frame"
   ],
   "9707": [
     "Forward Guard",
@@ -4314,13 +9817,26 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "9696": [
+    "I-Frame"
+  ],
   "9699": [
     "Forward Guard",
     "Super Armor"
   ],
+  "9725": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9724": [
+    "I-Frame"
+  ],
   "9712": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "9692": [
+    "I-Frame"
   ],
   "9695": [
     "Forward Guard",
@@ -4358,13 +9874,80 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "9564": [
+    "I-Frame"
+  ],
+  "8949": [
+    "I-Frame"
+  ],
   "8948": [
     "Forward Guard",
     "Super Armor"
   ],
+  "8927": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8737": [
+    "I-Frame"
+  ],
+  "8736": [
+    "I-Frame"
+  ],
+  "8739": [
+    "I-Frame"
+  ],
+  "8738": [
+    "I-Frame"
+  ],
+  "8767": [
+    "I-Frame"
+  ],
+  "8713": [
+    "I-Frame"
+  ],
   "8708": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "8733": [
+    "I-Frame"
+  ],
+  "8732": [
+    "I-Frame"
+  ],
+  "8735": [
+    "I-Frame"
+  ],
+  "8734": [
+    "I-Frame"
+  ],
+  "8729": [
+    "I-Frame"
+  ],
+  "8728": [
+    "I-Frame"
+  ],
+  "8731": [
+    "I-Frame"
+  ],
+  "8730": [
+    "I-Frame"
+  ],
+  "8727": [
+    "I-Frame"
+  ],
+  "8726": [
+    "I-Frame"
+  ],
+  "8721": [
+    "I-Frame"
+  ],
+  "8720": [
+    "I-Frame"
+  ],
+  "8722": [
+    "I-Frame"
   ],
   "8806": [
     "Forward Guard",
@@ -4373,6 +9956,14 @@
   "8802": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "8783": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
+  "8782": [
+    "I-Frame"
   ],
   "8777": [
     "Forward Guard",
@@ -4386,6 +9977,11 @@
     "Forward Guard",
     "Super Armor"
   ],
+  "8770": [
+    "Forward Guard",
+    "I-Frame",
+    "Super Armor"
+  ],
   "8798": [
     "Forward Guard",
     "Super Armor"
@@ -4397,6 +9993,15 @@
   "8790": [
     "Forward Guard",
     "Super Armor"
+  ],
+  "8785": [
+    "I-Frame"
+  ],
+  "8784": [
+    "I-Frame"
+  ],
+  "8965": [
+    "I-Frame"
   ],
   "9056": [
     "Forward Guard",
