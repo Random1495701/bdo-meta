@@ -3963,3 +3963,70 @@ Stage Summary:
 - For animation duration: the skilltype.dbss "action configuration" block (FORMATS.md line 778, "not decoded here") is the binary-table source. The .paach files in binaryactionchart/pc/{prefix}/ are the per-class action charts. Either could hold the frame count. Need to extract one .paach file and inspect it with White Desert's hex editor to find the animation duration offset.
 - For damage rows / CC types / protection / PvP%: NOT in the binary tables bdo-data-extractor decodes. They're in the tooltip text (loc files — user needs to run `bdo-data-extractor loc --lang en`). OR they need to be parsed from the loc table that maps skillNo → tooltip stat block.
 - Next step for the user: (1) run `bdo-data-extractor loc --lang en --out .\data` to get the localization dump, (2) re-extract with White Desert using the CORRECT paths: `character/binaryactionchart/pc/` (just the 30 class subfolders, ~few hundred MB), `ui_data/window/skill/`, `ui_texture/icon/new_icon/04_pc_skill/01_pc_skill/`. Will update the guide with these corrected paths + the effect-duration fork option.
+
+---
+Task ID: PAAC-PARSE-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: User uploaded the loc dump, character action charts, ui_data, and a hex screenshot of a .paac file. Analyze all to map the real data-flow for skills + animation.
+
+Work Log:
+- Extracted 4 archives from upload/: Locandeverything.7z (302MB, includes locs/ folder), New folder.7z (302MB, same), character.7z (379MB, binaryactionchart/pc/{prefix}/), ui_data.7z (0.7MB, ui_data/window/skill/*.xml).
+- Locandeverything.7z contains `locs/` folder with per-table JSON files (loc table 0 = 29MB items, 10 = 4.3MB skills, 13 = 28k buffs, etc.). Confirmed the user ran `bdo-data-extractor loc --lang en`.
+- character.7z: 34 .paac files (NOT .paach as I'd guessed). Per-class files like `character/character/binaryactionchart/pc/1_phm/fighteraction_noweapon.paac` (7.7MB Warrior), plus one huge `pc_actionchartpackagepcraw.paac` (133MB master action package). Total 379MB — down from the 30GB over-extraction. Naming reveals the class mapping: fighteraction=Warrior, sorceressaction=Sorceress, blademasteraction=Musa, combattantaction=Berserker, tameraaction=Tamer, etc.
+- ui_data.7z: UI LAYOUT xml files (panel_window_skill.xml etc.), NOT tooltip data. These are the in-game skill-window definitions, not per-skill tooltips. The tooltip text is in the loc tables.
+- Analyzed the .paac file format by reading the warrior file:
+  * Magic: `PABR` (Pearl Abyss Binary Resource — bdo-data-extractor has a parser: internal/bss/pabr.go)
+  * Header: [PABR][u32 rows=1][record data...][u64 stringTableOffset at last 8 bytes]
+  * The PABR framing sees the whole action-chart blob as "1 row" — the actual action records are a custom format inside the 7.4MB record span.
+  * String table (296KB): first record is special [u32 id=0x2165][u8 sep=0][u8 length][string\0], then repeating [u32 length][string\0] entries. Parsed 3,743 strings = 742 (action-name → .paa-file-path) pairs for Warrior. 68 of those are skill-named (e.g. `Ani_Battle_Skill_Maddening2` → `1_PC/1_PHM/PHM_01_01_Att_Skill_Shield_DashThrust_01.paa`).
+- KEY FINDING: the per-class `.paac` files are ACTION-CHART INDEXES, not the animation data itself. Each maps action names to `.paa` sub-files. The `.paa` files (e.g. `1_PC/1_PHM/PHM_01_01_Att_Skill_Shield_DashThrust_01.paa`) contain the actual frame counts. Those `.paa` files weren't extracted — they'd be in a different folder (likely `character/character/1_PC/1_PHM/...` based on the paths in the index).
+- KEY FINDING: the 133MB `pc_actionchartpackagepcraw.paac` is the MASTER action package containing all keyframe data for all classes. It's also PABR-framed (rows=102086). This is likely where the per-action frame counts live, indexed by the action-chart files.
+- Analyzed loc table 10 (skills): dict keyed by skillNo (29,358 entries), each with fields "0"=name, "16777216"=description, "33554432"=null. ONLY 3 fields. The descriptions are flavor text (max 594 chars), NOT damage/CC/cooldown/PvP% data. Confirmed: the damage rows / CC types / protection / cooldown / PvP% are NOT in the loc tables — they're in the binary tables (skill.dbss, skilltype.dbss) which bdo-data-extractor partially decodes but doesn't fully emit.
+- VLM analysis of the user's hex screenshot (pasted_image_1789310799184.png = giantwomenaction_noweapon.paac for Lahn): confirmed the PABR magic + the same structure. The screenshot was readable enough to confirm the format matches the warrior file I parsed.
+- Updated understanding of the full data-flow:
+  1. Skill structure (groups, ranks, class grids, kind, names, flavor desc): ✅ in class_skills.json (already have)
+  2. Skill cooldown: in skill.dbss @95 — decoded by bdo-data-extractor but NOT emitted for active skills (only passives/consumables)
+  3. CC durations / buff durations: in buff.dbss DurationMs — decoded but NOT emitted for active skills
+  4. Damage rows / CC types / protection / PvP%: NOT in loc tables, NOT decoded by bdo-data-extractor. Would need a NEW decoder for the skilltype.dbss "action configuration" block (FORMATS.md line 778) OR parsing the in-game tooltip render from binary+loc.
+  5. Animation duration: the per-class .paac files are INDEXES (action name → .paa file). The .paa files (not yet extracted) contain the frame counts. The 133MB pc_actionchartpackagepcraw.paac is the master keyframe package.
+- class prefix mapping confirmed from the .paac filenames:
+  * 1_phm = fighteraction = Warrior
+  * 2_phw = sorceressaction = Sorceress (not Hashashin as I'd guessed)
+  * 3_pew = elfaction = Ranger (KR naming "elf")
+  * 4_pgm = giantaction = Berserker
+  * 5_pbw = tameraaction = Tamer
+  * 6_pkm = blademasteraction = Musa
+  * 7_pvw = valkyrieaction = Valkyrie
+  * 8_pwm = whitemageaction = Witch, 8_pwmm = whitemageaction_main_m = Witch (male)
+  * 9_pem = elfmanaction = Archer? (or Dark Knight)
+  * 11_pgw = giantwomenaction = Lahn
+  * 12_pkw = bladewomenaction = Maehwa
+  * 13_pnw = ninjawomenaction = Kunoichi
+  * 14_plw = shytribeaction = Shai
+  * 15_pdew = darkelfaction = Dark Knight
+  * 16_pcm = combattantaction = Striker, 16_pcw = combattantwomanaction = Mystic
+  * 17_psw = chineseaction = Lahn (alt?) or Hashashin
+  * 18_pam = valenciafighteraction = Hashashin
+  * 20_pjkd = pjkdaction = Guardian? Nova? (the new classes' mapping needs confirmation)
+  * 21_phwb = blackfighterwomenaction = ?
+  * 22_pkww = bladewomen2action = ?
+  * 23_ppm = ppmaction = Sage?
+  * 24_pfw = pfwaction = Corsair?
+  * 25_pqw = pqwaction = Nova?
+  * 27_pkow = pkowaction = Woosa/Maegu?
+  * 28_pmyf = pmyfaction = Maegu
+  * 29_pnyw = pnywaction = ?
+  * 30_pdkl = pdklaction = Drakania
+  * 31_prsa = prsaaction = Corsair?
+  * 32_pwge = pwgeaction = Scholar
+  * 33_pdkl (typo?) 34_pgms = pgmsaction = Dosa
+  (This mapping is INFERRED from filenames — needs verification against character_progression.json's classType enum + the bdocodex class IDs our DB uses. Will document in the guide update.)
+
+Stage Summary:
+- The .paac files are action-chart INDEXES (742 action-name → .paa-file-path pairs per class), not the animation data. To get frame counts, we need the .paa files themselves OR the 133MB master pc_actionchartpackagepcraw.paac.
+- Loc table 10 confirmed: only name + description (flavor text). NO damage/CC/cooldown/PvP%. Those values are in the binary tables (skill.dbss, skilltype.dbss) which bdo-data-extractor doesn't fully emit.
+- The over-extraction is fixed: character.7z is 379MB (just the 30 pc/ subfolders + the 133MB master), down from 30GB.
+- For the user's effect-duration idea: confirmed viable for cooldown + CC/buff duration (small fork of bdo-data-extractor to emit active-skill Effects). Still NOT animation swing time.
+- For animation duration: the .paac index gives us skill→animation-file mapping. We'd need to extract the .paa files (referenced as 1_PC/1_PHM/PHM_01_01_Att_Skill_*.paa) to get the frame counts. OR parse the 133MB master package.
+- Next step for the user: extract the .paa animation files. They're at paths like `1_PC/1_PHM/PHM_01_01_Att_Skill_*.paa` — which means a folder `character/character/1_PC/1_PHM/` (or similar) in the PAZ. Need to extract that folder with White Desert. Should be much smaller than the action charts (individual .paa files are ~10-50KB each, ~700 per class × 31 classes = ~20k files = ~500MB-1GB).
+- Will update the guide with: (1) correct folder paths, (2) the .paac index format + parser, (3) the effect-duration fork option, (4) the .paa frame-count extraction step, (5) the full class-prefix mapping.
