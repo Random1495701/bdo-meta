@@ -82,7 +82,7 @@ const COLUMNS: ColumnDef[] = [
   { id: 'pveDmg', label: 'PvE', sortable: true, sortKey: 'damage', width: 'w-20' },
   { id: 'pvpDmg', label: 'PvP', sortable: true, sortKey: 'pvpDamage', width: 'w-20' },
   { id: 'dpc', label: 'DPC*', sortable: true, sortKey: 'dmgPerCd', width: 'w-20' },
-  { id: 'dps', label: 'DPS', sortable: true, sortKey: 'anim', width: 'w-20' },
+  { id: 'dps', label: 'DPS', sortable: true, sortKey: 'dps', width: 'w-20' },
   { id: 'anim', label: 'Anim', sortable: true, sortKey: 'anim', width: 'w-16' },
   { id: 'ccCounters', label: 'CC', sortable: true, sortKey: 'ccCounters', width: 'w-14' },
   { id: 'ccTypes', label: 'CC Types', sortable: false, sortKey: null, width: 'w-20' },

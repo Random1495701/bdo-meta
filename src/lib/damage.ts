@@ -54,8 +54,12 @@ export interface DamageCalculation {
 }
 
 // Parse a damage value string like "8246% x1" or "5208% x2, max 3 hits"
+// Also handles "1058% 1, max 11 hits" (without "x" separator — bdocodex sometimes
+// uses just a space between the percent and the multiplier).
 function parseDamageValue(value: string): { percent: number; multiplier: number; maxHits: number } | null {
-  const dmgMatch = value.match(/([\d,]+(?:\.\d+)?)%\s*x\s*(\d+)/i)
+  // Match "N% x N" OR "N% N" (where the second N is the multiplier).
+  // The "x" is optional — some bdocodex tooltips use "1058% 1" instead of "1058% x1".
+  const dmgMatch = value.match(/([\d,]+(?:\.\d+)?)%\s*(?:x\s*)?(\d+)/i)
   if (!dmgMatch) return null
   const percent = parseFloat(dmgMatch[1].replace(/,/g, ''))
   const multiplier = parseInt(dmgMatch[2], 10)
@@ -134,7 +138,8 @@ export function calculateDamage(
       parsed = parseDamageValue(row.value)
       phaseLabel = extractPhase(row.label)
     } else if (row.kind === 'note' && row.label) {
-      const dmgMatch = row.label.match(/([\d,]+(?:\.\d+)?)%\s*x\s*(\d+)/i)
+      // Use the same regex as parseDamageValue (handles both "x" and no-"x" formats)
+      const dmgMatch = row.label.match(/([\d,]+(?:\.\d+)?)%\s*(?:x\s*)?(\d+)/i)
       if (dmgMatch && row.label.toLowerCase().includes('damage')) {
         parsed = parseDamageValue(row.label)
         const phaseMatch = row.label.match(/^(.+?)\s+(?:hit\s+)?damage/i)
@@ -152,6 +157,24 @@ export function calculateDamage(
       pvpOnly: row.pvpOnly || false,
       pveOnly: row.pveOnly || false,
     })
+  }
+
+  // Extract PvP% from note rows if pvpDamagePercent is null.
+  // Some bdocodex tooltips store PvP% as note text like "48.25% attack damage before fully charged in PvP only"
+  // instead of a proper PvP row. We pick the highest value (usually the fully-charged state).
+  let effectivePvpPct = pvpDamagePercent
+  if (effectivePvpPct === null) {
+    for (const row of damageRows) {
+      if (row.kind === 'note' && row.label) {
+        const m = row.label.match(/(\d+(?:\.\d+)?)%\s*(?:attack\s+)?damage.*(?:in\s+PvP|PvP\s+only)/i)
+        if (m) {
+          const pct = parseFloat(m[1])
+          if (effectivePvpPct === null || pct > effectivePvpPct) {
+            effectivePvpPct = pct
+          }
+        }
+      }
+    }
   }
 
   // Detect special modes: REAL special modes have COMPLETELY DIFFERENT damage values
@@ -216,13 +239,13 @@ export function calculateDamage(
         return r
       })
       const phases = buildPhasesFromRows(uniqueRows)
-      const { pve, pvp } = computeTotal(phases, pvpDamagePercent)
+      const { pve, pvp } = computeTotal(phases, effectivePvpPct)
       modes.push({ modeName: 'Normal', phases, totalPvE: pve, totalPvP: pvp })
     }
   } else {
     // Single mode — no duplicate Attack 1
     const phases = buildPhasesFromRows(parsedRows)
-    const { pve, pvp } = computeTotal(phases, pvpDamagePercent)
+    const { pve, pvp } = computeTotal(phases, effectivePvpPct)
     modes.push({ modeName: 'Normal', phases, totalPvE: pve, totalPvP: pvp })
   }
 
@@ -236,7 +259,7 @@ export function calculateDamage(
     phases: bestMode.phases,
     totalPvE: bestMode.totalPvE,
     totalPvP: bestMode.totalPvP,
-    pvpDamagePercent,
+    pvpDamagePercent: effectivePvpPct,
     hasDamage: bestMode.phases.length > 0,
     hasSpecialMode,
     modes,
