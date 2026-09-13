@@ -3895,3 +3895,39 @@ Stage Summary:
 - PAZ guide fully updated: White Desert is the primary extractor throughout (§1, §6.1, §8.4, §12). sibercat/PAZ-Unpacker + AMGarkin/UnPAZ preserved as fallbacks in §6.2/§6.3 + §2.1.
 - Roadmap P0.DATA sub-items DATA.2 and DATA.3 now reference the White Desert workflow specifically.
 - Ready for the user to: (1) make sure they have White Desert v1.0.3 (or download from the releases page if on an older version), (2) install Go 1.26+ + run `go install github.com/idevelopthings/bdo-data-extractor@latest` for the structured-data half, (3) start with DATA.1 (the easy win — one `bdo-data-extractor build` command produces class_skills.json).
+
+---
+Task ID: PAZ-DURATION+EXTRACTION-2026-09-10
+Agent: orchestrator (z.ai code)
+Task: User reported (1) the PAZ extraction is 30GB — way too big, search queries too broad; (2) alternative idea: get animation duration from "effect duration" (buffs tied to skill animation phases) instead of parsing .pac frames.
+
+Work Log:
+- Investigated the effect-duration idea deeply by reading the bdo-data-extractor source:
+  * internal/tables/buffs.go (342 lines): Buff struct HAS a DurationMs field (i32), decoded from buff.dbss. SkillEffect has CooldownMs + buff-index list. DecodeSkillEffects maps skillKey → {cooldown, buffs}.
+  * internal/build/classskills.go (158 lines): buildClassSkills reads skillgroup.bss + skilltype.dbss + ui_skillgroup_*.bss, decodes every rank, but ONLY emits the Effects field for PASSIVE skills (line 140: `if header.Kind == model.SkillKindPassive`). Active combat skills get the rank metadata (name, kind, skillKey, skillNo) but NOT their buff-chain Effects/DurationMs.
+  * internal/build/items.go buildEffects(): emits StatMod with DurationMs per buff. But this is only called for consumables (itemType=2) + passive skills, not active combat skills.
+  * FORMATS.md line 613: `i32 DurationMs | milliseconds; negative values are preserved` — confirmed decoded for all 44k buffs.
+  * FORMATS.md line 778: skilltype.dbss has an "action configuration" block (animation, icon, presentation, combat behavior) explicitly "not decoded here" — this is where the true animation frame data lives in the binary tables, but the extractor doesn't decode it.
+- Verdict on the effect-duration idea:
+  * PARTIALLY VIABLE: The data IS in the binary tables (every skill has a buff-index list at skill.dbss @99, each buff has DurationMs). A small fork of bdo-data-extractor (removing the `if isPassive` guard in classskills.go, OR a separate Go program calling DecodeBuffs + DecodeSkillEffects) could emit combat-skill buff durations.
+  * BUT: DurationMs is the BUFF's effect duration (stun duration, self-buff uptime), NOT the animation swing time. For a combat skill like "Slash I" with a Stun buff, DurationMs = stun duration (e.g. 2000ms), not the swing animation (e.g. 833ms). For self-buffs it's the buff uptime. For instant-damage skills it may be 0.
+  * SO: effect-duration gives us CC durations + cooldowns (useful data we don't have), but NOT the animation swing time. The animation time is still in the skilltype.dbss "action configuration" (undecoded) OR the .pac files.
+  * RECOMMENDATION: pursue effect-duration as a SUPPLEMENT (gets us CC durations + cooldowns for free, no .pac needed), but keep .pac parsing as the source for animation swing time. OR: investigate the skilltype.dbss "action configuration" block more — it may contain the animation duration directly (undecoded but parseable with hex inspection, same as .pac but in a binary table).
+- Investigated the over-extraction (30GB):
+  * DB has 7,038 skills (3,485 max-rank). At ~30KB per .pac file, the actual needed .pac extraction is ~210MB, not 30GB.
+  * The 30GB comes from `character/skillaction/` containing animations for EVERYTHING (NPCs, monsters, mounts, environment, UI), not just player skills. The search `character/skillaction/` matched all of it.
+  * Similarly `ui_data/skill/` may contain UI assets, not just the per-skill tooltip XML.
+  * `items/new_icon/04_pc_skill/` is the correct icon folder but is also broad.
+- Found the solution: `bdo-data-extractor index` command produces `paz_dirs.json` — a clean sorted list of EVERY folder in the archive (just folders, no files). This is exactly what we need to map precise extraction targets. The command also supports `--only-dirs` to filter. Source: pipeline/index.go (Index() function).
+- Asked the user to either:
+  (a) Run `bdo-data-extractor index` and send me the resulting `paz_dirs.json` (a clean folder tree — small JSON, easy to paste), OR
+  (b) Screenshot the White Desert folder tree (top 2-3 levels), OR
+  (c) Just list the top-level folders they see in White Desert's left tree.
+  Then I can give them exact folder paths to extract, narrowing from 30GB to ~200-500MB.
+- Did NOT update the guide yet — waiting on the user's folder list to write the precise extraction targets. Will update §6 with the exact paths once we have them.
+
+Stage Summary:
+- Effect-duration idea: partially viable. Buff DurationMs is decoded for all 44k buffs, but bdo-data-extractor only emits it for passives + consumables, not active combat skills. A small fork would emit it. BUT DurationMs = buff effect duration (stun uptime, self-buff duration), NOT animation swing time. So it gives us CC durations + cooldowns for free (useful!), but not the animation timing. Animation timing still needs either the skilltype.dbss "action configuration" block (undecoded) or the .pac files.
+- 30GB over-extraction: confirmed. `character/skillaction/` has ALL game animations, not just player skills. Actual need is ~210MB (3,485 max-rank skills × ~30KB). Fix: use precise folder paths, which requires knowing the full folder tree.
+- Best path forward: user runs `bdo-data-extractor index` → sends me `paz_dirs.json` → I give them exact extraction targets. This also lets us see if there's a narrower subfolder for player-skill animations specifically.
+- Open question for the user: do they want me to (a) pursue the effect-duration path (small fork of bdo-data-extractor, gets CC durations + cooldowns but not animation time), (b) stick with .pac frame parsing (gets true animation time, needs the offset calibration), or (c) both (effect-duration for CC/cooldown, .pac for animation, .pac becomes optional if skilltype.dbss action-config can be decoded)?
