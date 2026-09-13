@@ -1,17 +1,4425 @@
 {
-  "65214": [
-    "I-Frame"
-  ],
-  "35696": [
-    "I-Frame"
-  ],
-  "42466": [
+  "57326": [
+    "Forward Guard",
     "Super Armor"
   ],
-  "6797": [
+  "57289": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57090": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "56749": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "56627": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55823": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55813": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55901": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "56319": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54943": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54928": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54823": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54797": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54786": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54863": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54852": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55173": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55050": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55044": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55047": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55041": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55136": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "55109": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54277": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "54724": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "53598": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "53109": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "52658": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "52482": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "51773": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "51768": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "51973": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "51205": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "51648": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "51650": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "51489": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50862": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50856": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50879": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50929": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50760": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50997": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50999": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50271": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50560": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "50064": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49157": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49541": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49540": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49542": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49537": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49536": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49539": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49538": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "49535": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65209": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65211": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65202": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65225": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65227": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65226": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65216": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65070": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65081": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65080": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65079": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65078": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65029": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65125": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65124": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65126": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65121": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65120": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65123": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65122": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65101": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65100": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65099": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65113": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65112": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65114": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65109": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65108": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65111": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65110": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65107": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "65106": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "64005": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "64261": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62637": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62636": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62639": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62638": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62633": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62632": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62635": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62634": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62629": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62628": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62631": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62630": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62625": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62624": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62627": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62626": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62640": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62605": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62604": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62607": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62606": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62601": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62600": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62603": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62602": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62597": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62596": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62599": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62598": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62593": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62592": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62595": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62594": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62621": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62620": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62623": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62622": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62617": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62616": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62619": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62618": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62613": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62612": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62615": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62614": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62609": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62608": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62611": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62610": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62509": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62508": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62511": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62510": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62505": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62504": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62507": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62506": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62501": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62500": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62503": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62502": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62497": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62496": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62499": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62498": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62525": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62524": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62527": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62526": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62521": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62520": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62523": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62522": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62517": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62516": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62519": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62518": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62513": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62512": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62515": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62514": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62477": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62476": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62479": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62478": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62473": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62472": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62475": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62474": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62469": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62468": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62471": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62470": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62465": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62464": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62467": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62466": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62493": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62492": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62495": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62494": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62489": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62488": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62491": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62490": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62485": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62484": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62487": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62486": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62481": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62480": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62483": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62482": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62573": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62572": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62575": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62574": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62569": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62568": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62571": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62570": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62565": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62564": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62567": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62566": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62561": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62560": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62563": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62562": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62589": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62588": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62591": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62590": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62585": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62584": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62587": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62586": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62581": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62580": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62583": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62582": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62577": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62576": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62579": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62578": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62541": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62540": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62543": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62542": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62537": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62536": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62539": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62538": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62533": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62532": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62535": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62534": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62529": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62528": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62531": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62530": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62557": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62556": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62559": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62558": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62553": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62552": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62555": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62554": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62549": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62548": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62551": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62550": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62545": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62544": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62547": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62546": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62861": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62860": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62863": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62862": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62857": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62859": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62858": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62848": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62875": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62874": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62865": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62864": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62845": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62844": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62847": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62846": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62804": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62801": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62803": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62802": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62125": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62124": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62127": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62126": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62121": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62120": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62123": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62122": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62117": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62116": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62119": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62118": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62113": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62112": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62115": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62114": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62141": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62140": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62143": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62142": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62137": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62136": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62139": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62138": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62133": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62132": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62135": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62134": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62129": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62128": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62131": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62130": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62109": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62108": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62111": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62110": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62105": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62104": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62107": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62106": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62101": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62103": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62102": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62189": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62188": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62191": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62190": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62185": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62184": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62187": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62186": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62181": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62180": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62183": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62182": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62177": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62176": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62179": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62178": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62205": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62204": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62207": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62206": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62201": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62200": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62203": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62202": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62197": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62196": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62199": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62198": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62193": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62192": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62195": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62194": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62157": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62156": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62159": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62158": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62153": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62152": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62155": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62154": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62149": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62148": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62151": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62150": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62145": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62144": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62147": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62146": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62173": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62172": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62175": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62174": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62169": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62168": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62171": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62170": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62165": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62164": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62167": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62166": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62161": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62160": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62163": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62162": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62381": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62380": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62383": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62382": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62377": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62376": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62379": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62378": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62373": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62372": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62375": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62374": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62369": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62368": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62371": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62370": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62397": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62396": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62399": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62398": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62393": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62392": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62395": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62394": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62389": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62388": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62391": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62390": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62385": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62384": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62387": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62386": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62349": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62348": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62351": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62350": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62345": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62344": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62347": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62346": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62341": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62340": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62343": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62342": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62337": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62336": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62339": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62338": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62365": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62364": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62367": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62366": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62361": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62360": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62363": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62362": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62357": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62356": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62359": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62358": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62353": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62352": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62355": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62354": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62445": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62444": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62447": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62446": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62441": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62440": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62443": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62442": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62437": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62436": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62439": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62438": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62433": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62432": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62435": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62434": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62461": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62460": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62463": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62462": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62457": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62456": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62459": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62458": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62453": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62452": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62455": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62454": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62449": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62448": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62451": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62450": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62413": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62412": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62415": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62414": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62409": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62408": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62411": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62410": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62405": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62404": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62407": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62406": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62401": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62400": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62403": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62402": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62429": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62428": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62431": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62430": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62425": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62424": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62427": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62426": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62421": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62420": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62423": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62422": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62417": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62416": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62419": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62418": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62253": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62252": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62255": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62254": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62249": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62248": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62251": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62250": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62245": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62244": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62247": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62246": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62241": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62240": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62243": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62242": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62269": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62268": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62271": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62270": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62265": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62264": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62267": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62266": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62261": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62260": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62263": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62262": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62257": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62256": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62259": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62258": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62221": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62220": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62223": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62222": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62217": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62216": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62219": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62218": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62213": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62212": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62215": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62214": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62209": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62208": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62211": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62210": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62237": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62236": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62239": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62238": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62233": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62232": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62235": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62234": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62229": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62228": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62231": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62230": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62225": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62224": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62227": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62226": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62317": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62316": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62319": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62318": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62313": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62312": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62315": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62314": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62309": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62308": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62311": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62310": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62305": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62304": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62307": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62306": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62333": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62332": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62335": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62334": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62329": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62328": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62331": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62330": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62325": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62324": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62327": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62326": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62321": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62320": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62323": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62322": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62285": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62284": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62287": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62286": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62281": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62280": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62283": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62282": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62277": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62276": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62279": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62278": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62273": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62272": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62275": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62274": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62301": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62300": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62303": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62302": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62297": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62296": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62299": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62298": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62293": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62292": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62295": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62294": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62289": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62288": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62291": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "62290": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "61701": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "60933": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "60421": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "59614": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "59789": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "59658": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "58371": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "58480": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "58295": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57350": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "57738": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "40475": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "39429": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "39685": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "38917": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "39173": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "38661": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "37381": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "37637": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "36869": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "37125": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "36357": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "36613": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "36101": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "35589": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "34821": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "35077": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "34309": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "34565": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "34053": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "33285": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "33029": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "47617": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "47710": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "47261": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "47449": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "47011": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "45153": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "45436": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "44735": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "44791": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "44736": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "44752": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "45015": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "44857": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "44824": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "44901": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "42687": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "42175": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "42410": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "41632": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "41915": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "41870": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "41865": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "41355": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "18104": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "18312": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "30725": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "30981": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "30213": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "30469": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7716": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7715": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7714": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7735": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7729": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8067": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7333": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7298": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7388": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7172": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7175": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7234": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7573": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7570": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6799": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6698": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6736": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7046": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7154": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6916": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "7008": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6351": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6176": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6148": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6218": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6230": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6577": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6620": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6521": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6523": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6522": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5807": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5803": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5777": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5859": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5674": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6025": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6018": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "6142": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5932": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5923": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5894": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5358": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5373": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5372": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5369": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5367": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5124": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5121": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5213": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5615": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5601": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5583": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5380": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "5487": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4773": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4772": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4774": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4771": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4658": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4619": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4719": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4868": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4885": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4507": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4501": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4594": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4479": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4067": [
     "Forward Guard"
   ],
-  "1899": [
-    "I-Frame"
+  "4089": [
+    "Forward Guard"
+  ],
+  "4091": [
+    "Forward Guard"
+  ],
+  "4090": [
+    "Forward Guard"
+  ],
+  "4047": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3844": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3204": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3230": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3291": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3125": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3089": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3144": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3165": [
+    "Forward Guard"
+  ],
+  "3164": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3161": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3163": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3157": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3156": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3159": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3158": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3458": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3332": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3441": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3404": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2701": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2689": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2688": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2690": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2787": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2687": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2686": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2953": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3052": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "3063": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2861": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2860": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2863": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2854": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2877": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2879": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2872": [
+    "Super Armor"
+  ],
+  "2830": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2925": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2924": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2927": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2920": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2922": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2919": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2918": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2932": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2928": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2887": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2905": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2201": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2273": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2272": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2251": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2247": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2269": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2271": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2270": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2102": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2052": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2048": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2079": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2078": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2152": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2169": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2170": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2489": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2488": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2487": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2486": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2553": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2554": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2549": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2548": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2550": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2547": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2501": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2366": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2308": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2415": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1790": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1755": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1545": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2037": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2036": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2039": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2038": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "2035": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1984": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1837": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1895": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1197": [
+    "Super Armor"
+  ],
+  "1196": [
+    "Super Armor"
+  ],
+  "1199": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1198": [
+    "Super Armor"
+  ],
+  "1195": [
+    "Super Armor"
+  ],
+  "1194": [
+    "Super Armor"
+  ],
+  "1213": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1212": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1215": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1214": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1209": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1208": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1210": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1205": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1204": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1207": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1206": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1201": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1200": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1203": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1202": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1162": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1261": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1260": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1263": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1262": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1257": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1259": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1258": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1253": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1252": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1255": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1254": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1249": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1248": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1251": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1250": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1277": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1276": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1279": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1278": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1273": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1272": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1275": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1274": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1269": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1268": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1271": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1270": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1265": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1264": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1267": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1266": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1229": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1228": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1231": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1230": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1225": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1224": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1227": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1226": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1221": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1220": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1223": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1222": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1217": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1216": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1219": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1218": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1245": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1244": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1247": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1246": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1241": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1240": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1243": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1242": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1237": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1236": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1239": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1238": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1233": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1232": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1235": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1234": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1070": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1064": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1067": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1066": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1060": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1056": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1074": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1034": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1053": [
+    "Super Armor"
+  ],
+  "1052": [
+    "Super Armor"
+  ],
+  "1054": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1088": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1116": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1110": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1453": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1452": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1450": [
+    "Forward Guard"
+  ],
+  "1445": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1460": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1462": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1421": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1419": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1428": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1522": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1485": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1494": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1325": [
+    "Forward Guard"
+  ],
+  "1321": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1320": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1323": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1322": [
+    "Forward Guard"
+  ],
+  "1317": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1316": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1319": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1318": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1313": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1312": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1315": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1314": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1331": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1293": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1292": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1295": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1294": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1289": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1288": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1291": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1290": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1285": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1284": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1287": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1286": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1281": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1280": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1283": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1282": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1309": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1308": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1311": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1310": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1305": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1304": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1307": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1306": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1301": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1300": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1303": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1302": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1297": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1296": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1299": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1298": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1397": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1396": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1398": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "1392": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "581": [
+    "Super Armor"
+  ],
+  "1019": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "772": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "792": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "789": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "833": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "167": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "159": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "204": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "202": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "35": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "4": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "102": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "122": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "114": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "93": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "94": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "85": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "87": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "86": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "424": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "418": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "399": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "393": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "392": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "395": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "394": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "388": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "408": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "293": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "306": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "361": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "360": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "359": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "358": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "379": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "373": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "374": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "15347": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "15313": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9860": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9769": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9732": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9797": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9818": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9814": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9810": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "10192": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9707": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9703": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9699": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9712": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9695": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9688": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9691": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9685": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9682": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9519": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9511": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9575": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9537": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8948": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8708": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8806": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8802": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8777": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8776": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8778": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8798": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8794": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8790": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9056": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "9043": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8631": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8630": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8627": [
+    "Forward Guard",
+    "Super Armor"
+  ],
+  "8600": [
+    "Forward Guard",
+    "Super Armor"
   ]
 }
