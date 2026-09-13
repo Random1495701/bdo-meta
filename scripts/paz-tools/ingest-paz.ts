@@ -105,6 +105,18 @@ async function main() {
   const animByAction = buildAnimMap(anims)
   console.log(`  ${animByAction.size} animation entries`)
 
+  // Load the skill → animation links (built by the skillNo → actionName matcher)
+  let skillAnimLinks: Record<string, number> = {}
+  try {
+    const linksRaw = JSON.parse(await readFile('./data/skill-animation-links.json', 'utf-8'))
+    skillAnimLinks = Object.fromEntries(
+      Object.entries(linksRaw).map(([k, v]: [string, any]) => [k, v.animationDurationMs as number])
+    )
+    console.log(`  ${Object.keys(skillAnimLinks).length} skillNo → animation links`)
+  } catch {
+    console.log('  (skill-animation-links.json not found — animations will be 0)')
+  }
+
   console.log('Loading skill-combat-data.json (cooldown + CC)...')
   const combat = JSON.parse(await readFile(combatPath, 'utf-8'))
   const combatByKey = new Map(combat.map((c: any) => [c.skillKey, c]))
@@ -134,10 +146,9 @@ async function main() {
       const combatData = combatByKey.get(rank.skillKey)
       if (combatData) matchedCombat++
 
-      // Animation: the .paac index maps actionName → .paa file. We don't have a
-      // direct skillNo → actionName mapping here, so we leave animationDurationMs
-      // unset (the existing DB value is preserved on upsert).
-      // A future enhancement: build a skillNo → actionName map from the .paac index.
+      // Animation: use the skill-animation-links.json (matched by class prefix + name normalization)
+      const animDurationMs = skillAnimLinks[String(skillNo)] || 0
+      if (animDurationMs > 0) matchedAnim++
 
       skills.push({
         skillId: skillNo,
@@ -154,9 +165,9 @@ async function main() {
         ccDurations: combatData && Object.keys(combatData.ccDurations).length > 0
           ? combatData.ccDurations
           : null,
-        // animationDurationMs would come from animByAction — needs the actionName match
-        // (left as a follow-up since the mapping is non-trivial)
-        pazSource: 'skill.dbss + buff.dbss',
+        // animationDurationMs from the .paa files (via skill-animation-links)
+        animationDurationMs: animDurationMs > 0 ? animDurationMs : undefined,
+        pazSource: 'skill.dbss + buff.dbss + .paa',
       })
     }
   }

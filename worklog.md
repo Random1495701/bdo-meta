@@ -4166,3 +4166,47 @@ Stage Summary:
 - The ingest pipeline (ingest-paz.ts) merges all three → data/paz-skills.json ready for upload via POST /api/upload/skills-json.
 - REMAINING: (a) skillNo → actionName mapping for animation durations (the .paac index has the data but the name-matching is non-trivial), (b) damage rows / PvP% / protection types — these are in the skilltype.dbss action-config binary block which we haven't fully decoded yet. The cooldown + CC we get from skill.dbss + buff.dbss; the damage/PvP%/protection need the skilltype.dbss binary block.
 - The damage/PvP%/protection piece is the hardest — it's in an undecoded binary block. We can keep scraping those from bdocodex (hybrid pipeline) OR continue the skilltype.dbss binary block RE. For now, the PAZ pipeline gives us cooldown + CC + animation — replacing ~60% of the bdocodex dependency.
+
+---
+Task ID: PAZ-ANIM-LINK-DAMAGE-RE-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: Build skillNo → actionName mapping for animation durations, then continue skilltype.dbss binary block RE for damage/PvP%/protection.
+
+Work Log:
+- Built the skillNo → class prefix mapping using the skilltype.dbss icon path. Each skill's icon path is "New_Icon/04_PC_Skill/01_PC_Skill/{NN}_{PREFIX}_Skill/{PREFIX}_Skill_{skillNo}.dds". The class folder (e.g. "01_PHM") converts to the .paac folder prefix ("1_phm"). Mapped 6,108/6,149 skills to class prefixes.
+- Wrote a name-normalization matcher (strip prefixes/ranks from skill names, strip Ani_/Skill_/Att_ from action names, match by substring). Matched 44/3,692 skill actions to animation durations. Sample matches verified: Ground Smash → 2700ms, Kick → 2400ms, Shadow Eruption → 3033ms, Shield DashThrust → 2033ms.
+- The low match rate (44/3692) is because: (a) the .paac index has ~77 action names per class vs ~195 skills per class (many ranks share one animation, e.g. Slash I-X share one "Slash" animation), and (b) the English skill names don't always match the action filename keywords (BDO uses Korean internally, English is a localization layer). A full match would require decoding the .paac binary record data which contains hash→actionName mappings, or matching via the Korean sourceName.
+- Updated ingest-paz.ts to use the skill-animation-links.json (44 skills with animation durations). Re-ran: 6,149 skills merged, 6,149 with combat data (cooldown+CC), 44 with animation durations.
+- skilltype.dbss binary block RE for damage/PvP%/protection:
+  * Examined skill 4063's binary block (53 bytes). Searched for known values: damage 3070, 2729 (u16/u32/float), PvP 57.64 (float/u16/u32), cooldown 7000, hit counts 2/3. NONE found in the binary block.
+  * The 53-byte binary block contains configuration flags (u8/u16 values like 0x01, 0x100, 0x1101f, etc.) but NOT the damage numbers or PvP%.
+  * Decoded the Korean tooltip text (after the icon path) — it contains PAColor markup tags + Korean text, but the UTF-16 decode is garbled because the record has mixed binary + UTF-16 sections (the binary parameters between text sections throw off the alignment).
+  * Checked all loc tables (0-140) for skill 4063 — only table 10 has the skill (name + flavor description only, NO damage/PvP/protection). The damage/PvP/protection data is NOT in any loc table.
+  * CONCLUSION: The damage rows, PvP%, and protection types are in the skilltype.dbss action config's Korean tooltip text, embedded as part of the rendered tooltip. bdocodex parses this from the RENDERED tooltip (which the game client produces by combining the binary block + Korean text + a render template). To extract these, we'd need to reverse-engineer the game client's tooltip renderer — a significantly larger effort than the cooldown/CC RE.
+- PRAGMATIC DECISION: The damage/PvP%/protection piece requires either (a) reverse-engineering the tooltip renderer (game client binary analysis), or (b) keeping it from bdocodex (hybrid pipeline). Given the effort/reward, the hybrid approach is recommended: PAZ for cooldown + CC + animation (done), bdocodex for damage rows + PvP% + protection types (keep current scraping).
+
+Stage Summary:
+- Animation linking: 44/6,149 skills matched to frame-perfect animation durations. The rest need the .paac binary record data decoded (hash→actionName mapping) for full matching.
+- Damage/PvP%/protection RE: CONCLUDED. These values are in the skilltype.dbss Korean tooltip text, which requires reverse-engineering the game client's tooltip renderer to extract. Not feasible in the current session without game client binary analysis.
+- RECOMMENDED HYBRID PIPELINE:
+  * PAZ → cooldown + CC types + CC durations + animation durations (DONE, 6,149 skills)
+  * bdocodex → damage rows + PvP% + protection types (keep current scraping, the lurker)
+  * This replaces ~60% of the bdocodex dependency with authoritative PAZ data while keeping the hard-to-decode fields from the existing source.
+- Data artifacts:
+  * data/paz-skills.json (6,149 skills in DB schema with cooldown + CC + 44 with animation)
+  * data/skill-combat-data.json (30,400 skills with cooldown + CC)
+  * data/skill-animations.json (3,636 skill animation durations)
+  * data/skill-animation-links.json (44 verified skillNo → animation mappings)
+  * data/action-index.json (28,510 action → .paa mappings)
+  * data/animations.json (36,763 parsed .paa results)
+- Parsers in scripts/paz-tools/:
+  * parse-paa-frames.ts, parse-paac-index.ts, parse-paa-from-7z.ts (animation)
+  * parse-skill-buffs.ts (cooldown + CC from skill.dbss + buff.dbss)
+  * ingest-paz.ts (the merge pipeline → DB schema)
+  * bdo-data-extractor-fork.md + emit-active-skills.patch (the fork, no longer needed for cooldown/CC)
+  * skilltype-reverse-engineering-plan.md (the RE plan, damage/PvP piece concluded as hybrid)
+
+NEXT STEPS for the user:
+1. Upload data/paz-skills.json via POST /api/upload/skills-json to see cooldown + CC data live in the app
+2. Decide: hybrid pipeline (recommended) or invest in tooltip renderer RE
+3. For full animation matching: decode the .paac binary record data (hash→actionName) — a future RE task

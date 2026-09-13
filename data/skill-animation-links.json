@@ -1,0 +1,266 @@
+{
+  "577": {
+    "skillName": "Ultimate: Ground Smash",
+    "actionName": "Ani_Battle_Skill_GroundSmash2",
+    "paaPath": "1_PC/1_PHM/PHM_01_01_Att_Skill_GroundChop_02.paa",
+    "animationDurationMs": 2700
+  },
+  "1023": {
+    "skillName": "Ground Smash I",
+    "actionName": "Ani_Battle_Skill_GroundSmash2",
+    "paaPath": "1_PC/1_PHM/PHM_01_01_Att_Skill_GroundChop_02.paa",
+    "animationDurationMs": 2700
+  },
+  "1133": {
+    "skillName": "Ground Smash II",
+    "actionName": "Ani_Battle_Skill_GroundSmash2",
+    "paaPath": "1_PC/1_PHM/PHM_01_01_Att_Skill_GroundChop_02.paa",
+    "animationDurationMs": 2700
+  },
+  "1134": {
+    "skillName": "Ground Smash III",
+    "actionName": "Ani_Battle_Skill_GroundSmash2",
+    "paaPath": "1_PC/1_PHM/PHM_01_01_Att_Skill_GroundChop_02.paa",
+    "animationDurationMs": 2700
+  },
+  "1030": {
+    "skillName": "Kick",
+    "actionName": "Ani_Aro_Battle_Att_Normal_Kick_F_01",
+    "paaPath": "1_PC/1_PHM/PHM_02_01_Att_Normal_Kick_F_00.paa",
+    "animationDurationMs": 2400
+  },
+  "1730": {
+    "skillName": "Flow: Knee Kick",
+    "actionName": "Ani_Aro_Battle_Att_Skill_KneeKick",
+    "paaPath": "1_PC/1_PHM/PHM_02_01_Att_Skill_KneeKick_00.paa",
+    "animationDurationMs": 1600
+  },
+  "2836": {
+    "skillName": "Absolute: Ground Smash",
+    "actionName": "Ani_Battle_Skill_GroundSmash2",
+    "paaPath": "1_PC/1_PHM/PHM_01_01_Att_Skill_GroundChop_02.paa",
+    "animationDurationMs": 2700
+  },
+  "2841": {
+    "skillName": "Absolute: Kick",
+    "actionName": "Ani_Aro_Battle_Att_Normal_Kick_F_01",
+    "paaPath": "1_PC/1_PHM/PHM_02_01_Att_Normal_Kick_F_00.paa",
+    "animationDurationMs": 2400
+  },
+  "1050": {
+    "skillName": "Shadow Eruption I",
+    "actionName": "Ani_Skill_ShadowEruption",
+    "paaPath": "1_PC/2_PHW/PHW_06_01_Att_Skill_GroundChop_00.paa",
+    "animationDurationMs": 3033
+  },
+  "1188": {
+    "skillName": "Shadow Eruption II",
+    "actionName": "Ani_Skill_ShadowEruption",
+    "paaPath": "1_PC/2_PHW/PHW_06_01_Att_Skill_GroundChop_00.paa",
+    "animationDurationMs": 3033
+  },
+  "1189": {
+    "skillName": "Shadow Eruption III",
+    "actionName": "Ani_Skill_ShadowEruption",
+    "paaPath": "1_PC/2_PHW/PHW_06_01_Att_Skill_GroundChop_00.paa",
+    "animationDurationMs": 3033
+  },
+  "1500": {
+    "skillName": "Ultimate: Shadow Eruption",
+    "actionName": "Ani_Skill_ShadowEruption",
+    "paaPath": "1_PC/2_PHW/PHW_06_01_Att_Skill_GroundChop_00.paa",
+    "animationDurationMs": 3033
+  },
+  "2871": {
+    "skillName": "Absolute: Shadow Eruption",
+    "actionName": "Ani_Skill_ShadowEruption",
+    "paaPath": "1_PC/2_PHW/PHW_06_01_Att_Skill_GroundChop_00.paa",
+    "animationDurationMs": 3033
+  },
+  "1070": {
+    "skillName": "Scratch I",
+    "actionName": "Ani_Skill_Scratcher_Jump_L",
+    "paaPath": "1_PC/5_PBW/PBW_01_01_Att_Jump_L_00.paa",
+    "animationDurationMs": 3433
+  },
+  "1232": {
+    "skillName": "Scratch II",
+    "actionName": "Ani_Skill_Scratcher_Jump_L",
+    "paaPath": "1_PC/5_PBW/PBW_01_01_Att_Jump_L_00.paa",
+    "animationDurationMs": 3433
+  },
+  "1233": {
+    "skillName": "Scratch III",
+    "actionName": "Ani_Skill_Scratcher_Jump_L",
+    "paaPath": "1_PC/5_PBW/PBW_01_01_Att_Jump_L_00.paa",
+    "animationDurationMs": 3433
+  },
+  "1073": {
+    "skillName": "Roaring I",
+    "actionName": "Ani_Haetae_Ride_Skill_Roaring2_Ing",
+    "paaPath": "1_PC/5_PBW/PBW_00_01_PSC_Riding_Skill_Att_Vomit_B_01.paa",
+    "animationDurationMs": 2000
+  },
+  "1241": {
+    "skillName": "Roaring II",
+    "actionName": "Ani_Haetae_Ride_Skill_Roaring2_Ing",
+    "paaPath": "1_PC/5_PBW/PBW_00_01_PSC_Riding_Skill_Att_Vomit_B_01.paa",
+    "animationDurationMs": 2000
+  },
+  "1242": {
+    "skillName": "Roaring III",
+    "actionName": "Ani_Haetae_Ride_Skill_Roaring2_Ing",
+    "paaPath": "1_PC/5_PBW/PBW_00_01_PSC_Riding_Skill_Att_Vomit_B_01.paa",
+    "animationDurationMs": 2000
+  },
+  "1244": {
+    "skillName": "Roaring V",
+    "actionName": "Ani_Haetae_Ride_Skill_Roaring2_Ing",
+    "paaPath": "1_PC/5_PBW/PBW_00_01_PSC_Riding_Skill_Att_Vomit_B_01.paa",
+    "animationDurationMs": 2000
+  },
+  "1245": {
+    "skillName": "Roaring VI",
+    "actionName": "Ani_Haetae_Ride_Skill_Roaring2_Ing",
+    "paaPath": "1_PC/5_PBW/PBW_00_01_PSC_Riding_Skill_Att_Vomit_B_01.paa",
+    "animationDurationMs": 2000
+  },
+  "2926": {
+    "skillName": "Absolute: Scratch",
+    "actionName": "Ani_Skill_Scratcher_Jump_L",
+    "paaPath": "1_PC/5_PBW/PBW_01_01_Att_Jump_L_00.paa",
+    "animationDurationMs": 3433
+  },
+  "2928": {
+    "skillName": "Absolute: Roaring",
+    "actionName": "Ani_Haetae_Ride_Skill_Roaring2_Ing",
+    "paaPath": "1_PC/5_PBW/PBW_00_01_PSC_Riding_Skill_Att_Vomit_B_01.paa",
+    "animationDurationMs": 2000
+  },
+  "1619": {
+    "skillName": "Backstab",
+    "actionName": "Ani_Aro_Skill_Backstab_Swing_2",
+    "paaPath": "1_PC/6_PKM/PKM_04_01_Att_Skill_Backstab_Swing_01.paa",
+    "animationDurationMs": 4967
+  },
+  "1485": {
+    "skillName": "Shield Throw I",
+    "actionName": "Ani_Skill_ShieldThrow_L_End",
+    "paaPath": "1_PC/7_PVW/PVW_01_01_Skill_Shield_ThrowAtt_End_00.paa",
+    "animationDurationMs": 2767
+  },
+  "1486": {
+    "skillName": "Shield Throw II",
+    "actionName": "Ani_Skill_ShieldThrow_L_End",
+    "paaPath": "1_PC/7_PVW/PVW_01_01_Skill_Shield_ThrowAtt_End_00.paa",
+    "animationDurationMs": 2767
+  },
+  "3204": {
+    "skillName": "Absolute: Shield Throw",
+    "actionName": "Ani_Skill_ShieldThrow_L_End",
+    "paaPath": "1_PC/7_PVW/PVW_01_01_Skill_Shield_ThrowAtt_End_00.paa",
+    "animationDurationMs": 2767
+  },
+  "786": {
+    "skillName": "Earthquake I",
+    "actionName": "Ani_Training_Skill_A_06",
+    "paaPath": "1_PC/8_PWM/PWM_04_01_Att_Skill_Earthquake_End_00.paa",
+    "animationDurationMs": 2667
+  },
+  "787": {
+    "skillName": "Earthquake II",
+    "actionName": "Ani_Training_Skill_A_06",
+    "paaPath": "1_PC/8_PWM/PWM_04_01_Att_Skill_Earthquake_End_00.paa",
+    "animationDurationMs": 2667
+  },
+  "788": {
+    "skillName": "Earthquake III",
+    "actionName": "Ani_Training_Skill_A_06",
+    "paaPath": "1_PC/8_PWM/PWM_04_01_Att_Skill_Earthquake_End_00.paa",
+    "animationDurationMs": 2667
+  },
+  "822": {
+    "skillName": "Lightning I",
+    "actionName": "Ani_PMYF_CS_Skill_Lightning_A",
+    "paaPath": "1_PC/28_PMYF/PMYF_01_01_Att_Skill_Lightning_A_00.paa",
+    "animationDurationMs": 4833
+  },
+  "823": {
+    "skillName": "Lightning II",
+    "actionName": "Ani_PMYF_CS_Skill_Lightning_A",
+    "paaPath": "1_PC/28_PMYF/PMYF_01_01_Att_Skill_Lightning_A_00.paa",
+    "animationDurationMs": 4833
+  },
+  "824": {
+    "skillName": "Lightning III",
+    "actionName": "Ani_PMYF_CS_Skill_Lightning_A",
+    "paaPath": "1_PC/28_PMYF/PMYF_01_01_Att_Skill_Lightning_A_00.paa",
+    "animationDurationMs": 4833
+  },
+  "826": {
+    "skillName": "Lightning V",
+    "actionName": "Ani_PMYF_CS_Skill_Lightning_A",
+    "paaPath": "1_PC/28_PMYF/PMYF_01_01_Att_Skill_Lightning_A_00.paa",
+    "animationDurationMs": 4833
+  },
+  "909": {
+    "skillName": "Teleport I",
+    "actionName": "Megu_Ani_Skill_Avoid_Teleport_End",
+    "paaPath": "1_PC/27_PKOW/PKOW_01_01_Att_Skill_Avoid_Teleport_End_00.paa",
+    "animationDurationMs": 2333
+  },
+  "910": {
+    "skillName": "Teleport II",
+    "actionName": "Megu_Ani_Skill_Avoid_Teleport_End",
+    "paaPath": "1_PC/27_PKOW/PKOW_01_01_Att_Skill_Avoid_Teleport_End_00.paa",
+    "animationDurationMs": 2333
+  },
+  "911": {
+    "skillName": "Teleport III",
+    "actionName": "Megu_Ani_Skill_Avoid_Teleport_End",
+    "paaPath": "1_PC/27_PKOW/PKOW_01_01_Att_Skill_Avoid_Teleport_End_00.paa",
+    "animationDurationMs": 2333
+  },
+  "2208": {
+    "skillName": "Ultimate: Teleport",
+    "actionName": "Megu_Ani_Skill_Avoid_Teleport_End",
+    "paaPath": "1_PC/27_PKOW/PKOW_01_01_Att_Skill_Avoid_Teleport_End_00.paa",
+    "animationDurationMs": 2333
+  },
+  "3130": {
+    "skillName": "Absolute: Earthquake",
+    "actionName": "Ani_Training_Skill_A_06",
+    "paaPath": "1_PC/8_PWM/PWM_04_01_Att_Skill_Earthquake_End_00.paa",
+    "animationDurationMs": 2667
+  },
+  "3133": {
+    "skillName": "Absolute: Lightning",
+    "actionName": "Ani_PMYF_CS_Skill_Lightning_A",
+    "paaPath": "1_PC/28_PMYF/PMYF_01_01_Att_Skill_Lightning_A_00.paa",
+    "animationDurationMs": 4833
+  },
+  "2799": {
+    "skillName": "Rising Dragon I",
+    "actionName": "Ani_Skill_RisingDragon_Combo_X_02_End",
+    "paaPath": "1_PC/16_PCW/PCW_01_01_Skill_Att_RisingDragon_Combo_02_End_X.paa",
+    "animationDurationMs": 4133
+  },
+  "2800": {
+    "skillName": "Rising Dragon II",
+    "actionName": "Ani_Skill_RisingDragon_Combo_X_02_End",
+    "paaPath": "1_PC/16_PCW/PCW_01_01_Skill_Att_RisingDragon_Combo_02_End_X.paa",
+    "animationDurationMs": 4133
+  },
+  "2801": {
+    "skillName": "Rising Dragon III",
+    "actionName": "Ani_Skill_RisingDragon_Combo_X_02_End",
+    "paaPath": "1_PC/16_PCW/PCW_01_01_Skill_Att_RisingDragon_Combo_02_End_X.paa",
+    "animationDurationMs": 4133
+  },
+  "6033": {
+    "skillName": "Core: Rising Dragon",
+    "actionName": "Ani_Skill_RisingDragon_Combo_X_02_End",
+    "paaPath": "1_PC/16_PCW/PCW_01_01_Skill_Att_RisingDragon_Combo_02_End_X.paa",
+    "animationDurationMs": 4133
+  }
+}
