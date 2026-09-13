@@ -75,11 +75,14 @@ All prior roadmaps moved to `docs/archive/`:
 ### P0.DATA — PAZ-based true skill data + animation speed ⭐ (user priority)
 **Source**: User request 2026-09-10. Replaces bdocodex scraping with frame-accurate data from the BDO game files.
 **Why P0**: The user explicitly wants this. It eliminates the bdocodex dependency (bot challenges, stale data, ~37% missing PvP%) and gives us **frame-perfect** animation durations instead of video-based ones.
-**Guide**: See `docs/PAZ_EXTRACTION_GUIDE.md` (fully rewritten 2026-09-10).
+**Guide**: See `docs/PAZ_EXTRACTION_GUIDE.md` (fully rewritten 2026-09-10, uses White Desert as the primary extractor).
+**Tools**:
+- **White Desert** (`Ayley/white-desert`, v1.0.3) — the user's existing PAZ extractor. Rust engine + Avalonia UI. Handles raw extraction + hex inspection (`.pac` offset calibration) + XML preview (tooltip format verification).
+- **`bdo-data-extractor`** (`idevelopthings/bdo-data-extractor`, Go CLI) — decodes the binary tables (`skillgroup.bss`, `skilltype.dbss`, `ui_skillgroup_*.bss`, `classskilllist.bss`, `skill.dbss`→`buff.dbss`) into `class_skills.json` + `character_progression.json` + the `.loc` localization dump.
 **Sub-items**:
 - **DATA.1** Run `bdo-data-extractor` to produce `class_skills.json` (skill groups, ranks, class grids, kind, passive effects) — replaces bdocodex skill roster + class trees. Effort: S (1h, one-time per patch).
-- **DATA.2** Extract `.pac` action files from `character/skillaction/{prefix}_skill_*.pac` and parse frame count from header → `animationDurationMs = frame_count / 60 * 1000`. No public parser; write a minimal TS header reader (frame count is at a fixed offset). Effort: M (3h).
-- **DATA.3** Extract skill tooltip XML (`ui_data/skill/skill_*.xml`) and parse damage rows, CC types, protection types, cooldowns, PvP% — these are NOT in the binary tables, only in the tooltip XML. Effort: M (3h).
+- **DATA.2** Use White Desert to extract `.pac` action files from `character/skillaction/{prefix}_skill_*.pac`, then parse frame count from header → `animationDurationMs = frame_count / 60 * 1000`. Calibrate the frame-count offset using White Desert's built-in hex editor (§8.4 of the guide). No public parser; write a minimal TS header reader. Effort: M (3h).
+- **DATA.3** Use White Desert to extract skill tooltip XML (`ui_data/skill/skill_*.xml`) and parse damage rows, CC types, protection types, cooldowns, PvP% — these are NOT in the binary tables, only in the tooltip XML. Verify tag names in White Desert's XML preview before writing the parser. Effort: M (3h).
 - **DATA.4** Build `scripts/ingest-paz.ts` that merges extractor JSON + parsed XML + parsed .pac durations into our DB schema, upserting by `skillId`. Wire to the existing `POST /api/upload/skills-json` or a new `POST /api/ingest/paz`. Effort: M (3h).
 - **DATA.5** After first successful PAZ ingest, retire the lurker (keep `scripts/sync-lurker.ts` as icon-URL fallback only). Effort: S (30min).
 **Total effort**: L (~10h one-time, then ~1h per BDO patch).

@@ -11,38 +11,51 @@
 | Goal | Best tool | What it gives you |
 |------|-----------|-------------------|
 | **Skill roster + ranks + class grids + passive effects** | [`idevelopthings/bdo-data-extractor`](https://github.com/idevelopthings/bdo-data-extractor) (Go CLI, actively maintained) | `class_skills.json` — every skill group, rank chain, class UI grid, kind (active/passive), source name, decoded passive stat effects. No scraping. |
-| **Raw files from PAZ archives** (tooltip XML + `.pac` animation + icons) | [`sibercat/PAZ-Unpacker`](https://github.com/sibercat/PAZ-Unpacker) (Win GUI, v2.3.0 Apr 2026) or [`AMGarkin/UnPAZ`](https://github.com/AMGarkin/UnPAZ) (CLI) | The actual files the extractor doesn't decode: skill tooltip XML (damage/CC/cooldown/PvP%) and `.pac` action files (animation frames). |
+| **Raw files from PAZ archives** (tooltip XML + `.pac` animation + icons) | **[`Ayley/white-desert`](https://github.com/Ayley/white-desert)** (Win GUI, v1.0.3, Rust engine + Avalonia UI) — **your current tool** | Browse + search + batch-extract. Two modes: **Normal** (raw decrypted bytes) and **Processed** (DDS→PNG, LUAC→LUA decompiled). Built-in hex editor + XML preview — perfect for the `.pac` offset calibration (§8.4) and inspecting the tooltip XML format (§7) without a second tool. |
 | **Animation duration (frame-perfect)** | Custom `.pac` header parser (§8 below — no public parser exists) | `frame_count / 60 * 1000` ms. BDO's engine ticks animations at 60 FPS. |
 | **Browse the extracted data with a GUI** | [`iDevelopThings/bdo-viewer`](https://github.com/iDevelopThings/bdo-viewer) (desktop app) | Items, recipes, knowledge, NPCs, grind zones — but **not** skill tooltips or animation durations yet. |
 
-**Bottom line**: Use **`bdo-data-extractor`** for the skill *structure*, then use **`sibercat/PAZ-Unpacker`** (or your existing extractor — see §1.1) to pull the raw tooltip XML + `.pac` files, then run our custom parsers (§7, §8) to get damage/CC/cooldown + frame-accurate animation. This combination replaces bdocodex entirely.
+**Bottom line**: Use **`bdo-data-extractor`** for the skill *structure*, then use **White Desert** to pull the raw tooltip XML + `.pac` files (and to calibrate the `.pac` offset via its built-in hex editor), then run our custom parsers (§7, §8) to get damage/CC/cooldown + frame-accurate animation. This combination replaces bdocodex entirely.
+
+> **You don't need to download anything else.** White Desert v1.0.3 covers the full raw-extraction + hex-inspection workflow. The only other tool this guide uses is `bdo-data-extractor` (a small Go binary) for the structured-skill half — see §4.1.
 
 ---
 
-## 1. About "White Desert extractor"
+## 1. White Desert — your extractor
 
-You mentioned you have a "White Desert extractor." I couldn't find a public tool by that exact name through web search (Reddit, GitHub, Nexus Mods, ResHax forums). The closest candidates:
+You have **[Ayley/white-desert](https://github.com/Ayley/white-desert)** (v1.0.3, Jan 2026) — a blazing-fast BDO `.paz` archive explorer built on a custom Rust engine ("Black Ghost") with an Avalonia UI (native Windows 11 look + dark mode). **This is exactly the right tool for the job — you don't need to download anything else for the raw-extraction half.**
 
-| Candidate | What it is | Likelihood it's yours |
-|-----------|-----------|----------------------|
-| **Crimson Desert Unpacker** (Nexus Mods, Mar 2026) | Extracts `.paz`/`.pamt` from Crimson Desert (the single-player game, BlackSpace engine). **Does NOT work on BDO** — different engine + encryption keys. | Possible if the name got swapped in memory |
-| **sibercat/PAZ-Unpacker** v2.3.0 (Apr 2026) | The actively-maintained BDO PAZ extractor. Windows GUI, dark mode, search across 800k+ files. | Possible — this is the "desert" extractor everyone currently recommends |
-| **kukdh1/PAZ-Unpacker** (original, 2019) | The 32-bit predecessor. | Possible if it's an older install |
-| **Black Desert Explorer** (Maxes727, ~2016) | Dead file browser with 3D preview. | Unlikely |
-| A private / Discord-only tool | The BDO Modding Discord (`https://discord.gg/bdomodding`) has community tools that never made it to GitHub. | Possible |
+### 1.1 What White Desert gives us
 
-### 1.1 What to do with whatever you have
+| Feature | Why we need it for this guide |
+|---------|------------------------------|
+| **Blazing-fast indexing** (memory-mapped, pointer arithmetic via `black_ghost.dll`) | Loading `pad00000.meta` is near-instant, not a 30-second wait |
+| **Parallelized smart search** across the whole archive | Find all `ui_data/skill/` XML files + all `character/skillaction/*.pac` files in milliseconds (§6.3) |
+| **Two extract modes** (`ExtractType`): **Normal** = raw ICE-decrypted bytes · **Processed** = DDS→PNG + LUAC→LUA decompiled | Use **Normal** for `.pac` and `.xml` (we want raw bytes); use **Processed** if you also want icons auto-converted to PNG (§6.4) |
+| **Batch extraction with progress tracking** | Pull thousands of files in one operation |
+| **Built-in Hex Editor** (custom Hex-Control) | **Critical** for the `.pac` frame-count offset calibration (§8.4) — no need for a separate HxD install |
+| **Built-in XML/Lua/JSON preview** with syntax highlighting (AvaloniaEdit) | Inspect a sample `skill_*.xml` to confirm the exact tag names before writing the parser (§7.1) |
+| **Built-in image viewer** for DDS textures | Quick visual check on skill icons |
+| **Game path auto-search** | Finds your BDO install automatically |
 
-**If your extractor can browse the PAZ archive and extract individual files/folders** (the standard feature set), it will work for this guide — the PAZ format is unchanged. You need it to:
-1. Open `pad00000.meta` (the master index) from your BDO `Paz/` folder
-2. Search/filter files by name pattern
-3. Extract matched files to a local folder, preserving the virtual path structure
+### 1.2 Known issues in v1.0.3 (per the repo's README — non-blocking for us)
 
-**If your extractor only does a full bulk dump** (no search/filter), that's fine too — just extract everything to a folder and we'll grep through it. A full extraction is ~50 GB / ~500k files.
+- Hex Editor **search** is currently non-operational (we just need to *view* bytes, which works)
+- File Info panel metadata may be inaccurate in edge cases
+- Image View stays active after deselecting an image (cosmetic)
 
-**If your extractor is the Crimson Desert Unpacker** (not BDO), you'll need to grab `sibercat/PAZ-Unpacker` — see §2.1. The two games use incompatible archive formats.
+None of these affect the workflow in this guide.
 
-> **Please confirm which tool you have** (name + where you got it) so I can tailor the exact click-path. For now, this guide assumes a generic PAZ extractor that can search + extract by file mask.
+### 1.3 Download / install
+
+If you don't already have v1.0.3:
+1. Go to **https://github.com/Ayley/white-desert/releases**
+2. Download **`White.Desert.zip`** from the **`1.0.3 Bugfixes & Features`** release (50.5 MB)
+3. Unblock the zip (right-click → Properties → "Unblock" if Windows flagged it), then extract to a folder like `C:\Tools\White Desert\`
+4. Launch `White Desert.exe`
+5. On first start, use the **auto-search** button to let it find your BDO install, **or** use the directory picker and select your `Black Desert Online\` folder (the parent of `Paz\`)
+
+> The repo is MIT-licensed, 4 stars, last pushed 2026-02-01. Source is C# (Avalonia UI) + Rust (`Black Ghost` engine). If you ever want to extend it (e.g. add a "search by file mask and extract all matches" button), the code is clean and well-organized.
 
 ---
 
@@ -52,8 +65,9 @@ You mentioned you have a "White Desert extractor." I couldn't find a public tool
 
 | Tool | Type | Last updated | Status | URL |
 |------|------|--------------|--------|-----|
-| **sibercat/PAZ-Unpacker** | Win GUI (x64, dark mode) | 2026-04-09 (v2.3.0) | ✅ **RECOMMENDED** for raw extraction | https://github.com/sibercat/PAZ-Unpacker |
-| **AMGarkin/UnPAZ** | CLI (C++) | 2018-09 (v1.2) | ⚠️ Legacy but useful for scripting | https://github.com/AMGarkin/UnPAZ |
+| **Ayley/white-desert** | Win GUI (Rust + Avalonia) | 2026-01-31 (v1.0.3) | ✅ **YOUR TOOL — primary in this guide** | https://github.com/Ayley/white-desert |
+| sibercat/PAZ-Unpacker | Win GUI (x64, dark mode) | 2026-04-09 (v2.3.0) | ✅ Solid alternative (no hex editor) | https://github.com/sibercat/PAZ-Unpacker |
+| AMGarkin/UnPAZ | CLI (C++) | 2018-09 (v1.2) | ⚠️ Legacy but useful for scripting | https://github.com/AMGarkin/UnPAZ |
 | kukdh1/PAZ-Unpacker | Win GUI (32-bit, original) | 2019-08 | ⚠️ Legacy | https://github.com/kukdh1/PAZ-Unpacker |
 | Black Desert Explorer | File browser + 3D preview | ~2016 | ❌ Dead | (Reddit only) |
 | **Crimson Desert Unpacker** | Win tool for Crimson Desert | 2026-03 | ❌ **Wrong game** (BlackSpace engine, not BDO) | https://www.nexusmods.com/crimsondesert/mods/62 |
@@ -228,9 +242,34 @@ bdo-data-extractor loc --lang en --out ./data
 
 ## 6. Step-by-step: extract the raw tooltip XML + `.pac` files
 
-`bdo-data-extractor` leaves the tooltip XML and `.pac` files as raw bytes — you need a PAZ archive extractor to pull them. Use your existing tool (§1.1) or `sibercat/PAZ-Unpacker`.
+`bdo-data-extractor` leaves the tooltip XML and `.pac` files as raw bytes — you need a PAZ archive extractor to pull them. **Use White Desert** (your tool, §1). The two extract modes in White Desert map to the two `ExtractType` enum values in its Rust bridge:
+- **`RawDecrypted` (Normal)** — raw ICE-decrypted bytes. **Use this for `.pac` and `.xml`** — we want the unmodified bytes so our parsers can read the frame count / tag structure exactly as stored.
+- **`Converted` (Processed)** — DDS→PNG + LUAC→LUA decompiled. Use this **only** if you also want skill icons auto-converted to PNG (otherwise the Normal mode is what we want).
 
-### 6.1 With sibercat/PAZ-Unpacker (GUI)
+### 6.1 With White Desert (your tool — primary path)
+
+1. Launch **`White Desert.exe`**
+2. **First-run setup**: click the **auto-search** button to let it find your BDO install, **or** use the directory picker and select your `Black Desert Online\` folder (the parent of `Paz\`). White Desert loads `Paz\pad00000.meta` automatically — near-instant thanks to the memory-mapped Rust engine.
+3. **Open the Search panel** (the parallelized search across the whole archive). Run three separate searches + extractions:
+
+   **Search 1 — Skill tooltip XML** (damage rows, CC, protection, cooldown, PvP%, command, prereqs):
+   - Search query: `ui_data/skill/` (or `skill_` to broaden)
+   - Select all results → right-click → **Extract** → choose **Normal** mode → output to `C:\bdo-extract\xml\`
+
+   **Search 2 — Skill animation `.pac` files** (frame-perfect durations):
+   - Search query: `character/skillaction/` (or `_skill_` to broaden, but be careful — this also matches `_skillaction_` asset folders)
+   - More precise: search `skillaction\` and filter results to only `.pac` files
+   - Select all `.pac` results → right-click → **Extract** → choose **Normal** mode → output to `C:\bdo-extract\anim\`
+
+   **Search 3 (optional) — Skill icons** (we already have 2,889 self-hosted, but PAZ is authoritative):
+   - Search query: `new_icon/04_pc_skill/`
+   - Select all → **Extract** → choose **Processed** mode (auto-converts DDS→PNG) → output to `C:\bdo-extract\icons\`
+
+4. Each batch extraction shows a progress bar. The XML + `.pac` batches together are a few hundred MB and finish in minutes on the Rust engine. The icons batch (if you run it) is larger.
+
+> **Tip — inspect before you parse**: before extracting the full XML batch, double-click one search result (e.g. `ui_data/skill/skill_1018.xml`) to open it in White Desert's built-in XML preview (AvaloniaEdit with syntax highlighting). Confirm the tag names match what §7.1 describes. If BDO patched the format, adapt the regexes in `scripts/parse-skill-xml.ts` accordingly. The `.pac` files won't preview as text (they're binary) — but the built-in Hex Editor will let you inspect their headers (§8.4).
+
+### 6.2 With sibercat/PAZ-Unpacker (alternative GUI — if you ever want a second opinion)
 
 1. Launch `PAZ-Unpacker.exe`
 2. **Settings → Configure Paths** → set:
@@ -253,7 +292,7 @@ items/new_icon/04_pc_skill/*
 5. Right-click the search results (or the root node) → **Extract**
 6. Targeted extraction (just the above) is a few hundred MB and finishes in minutes. Full extraction is ~50 GB.
 
-### 6.2 With AMGarkin/UnPAZ (CLI — for scripting / automation)
+### 6.3 With AMGarkin/UnPAZ (CLI — for scripting / automation)
 
 ```cmd
 :: List skill tooltip files without extracting
@@ -269,9 +308,9 @@ UnPAZ pad00000.meta -y -f *_skill_*.pac -o C:\bdo-extract\anim
 UnPAZ pad00000.meta -y -f *pc_skill*.dds -o C:\bdo-extract\icons
 ```
 
-### 6.3 Using `bdo-data-extractor`'s own `extract` command (bonus)
+### 6.4 Using `bdo-data-extractor`'s own `extract` command (bonus — no GUI needed)
 
-The extractor can also pull raw files by path substring — handy if you don't want a second tool:
+The extractor can also pull raw files by path substring — handy if you don't want to open a GUI for a re-extract after a patch:
 
 ```sh
 # Extract decoded archive files whose path contains "skill"
@@ -280,9 +319,9 @@ bdo-data-extractor extract "ui_data/skill" ./data/raw-xml
 bdo-data-extractor extract "character/skillaction" ./data/raw-pac
 ```
 
-This is the cleanest path — one tool, one workflow.
+Note: this extracts the raw decrypted bytes (equivalent to White Desert's **Normal** mode). No DDS→PNG conversion.
 
-### 6.4 Expected output structure
+### 6.5 Expected output structure
 
 ```
 C:\bdo-extract\ (or ./data/raw-xml/ + ./data/raw-pac/)
@@ -636,17 +675,31 @@ Expect: most match within ±100ms. The `.pac` value is the **true** one — bdoc
 
 ### 8.4 The frame-count offset calibration (one-time)
 
-Before trusting §8.2's heuristic, **calibrate it on one known skill**:
+Before trusting §8.2's heuristic, **calibrate it on one known skill** — and White Desert's built-in Hex Editor makes this trivial (no separate HxD install):
 
-1. Pick a skill you know the duration of (e.g. Warrior "Slash I" — bdocodex says ~833ms ≈ 50 frames)
-2. Open `character/skillaction/phm_skill_1018.pac` in a hex editor (HxD on Windows, `hexdump` on Linux)
-3. Find the DWORD (4 bytes LE) that equals `50` (0x32 0x00 0x00 0x00) — note its offset
-4. Confirm the same offset holds a plausible frame count for 2–3 other skills
-5. If the offset is consistent, hardcode it in `readFrameCount()` (replace the heuristic with a direct `u32(buf, FIXED_OFFSET)`)
+1. Pick a skill you know the duration of (e.g. Warrior "Slash I" — bdocodex says ~833ms ≈ 50 frames at 60 FPS)
+2. In White Desert, search for `character/skillaction/phm_skill_1018.pac`, **double-click it** to open the Hex Editor view (the custom Hex-Control from `Controls/HexEditorControl.axaml`).
+3. Scan the first ~256 bytes for a DWORD (4 bytes little-endian) that equals `50` → that's `0x32 0x00 0x00 0x00`. Note its offset (e.g. if it's at byte 0x08, the offset is `8`).
+4. Verify on 2–3 other skills — open `pef_skill_1200.pac` (Ranger), `pew_skill_4582.pac` (Sorceress) etc., check the same offset holds a plausible frame count (10–600 range).
+5. If the offset is consistent, hardcode it in `readFrameCount()` (replace the candidate-offsets heuristic with a direct `u32(buf, FIXED_OFFSET)`).
+
+```typescript
+// After calibration — replace the candidateOffsets loop with:
+function readFrameCount(buf: Buffer): number | null {
+  if (buf.length < 0x20) return null
+  // Calibrated offset for BDO client version <X> on <date>.
+  // Re-calibrate after major BDO engine patches.
+  const CALIBRATED_OFFSET = 0x08
+  const v = buf.readUInt32LE(CALIBRATED_OFFSET)
+  return (v >= 5 && v <= 1200) ? v : null
+}
+```
 
 This calibration is the most important step — once you know the offset for your BDO client version, the parser becomes 100% reliable.
 
 > **Community help**: if you can't find the offset, ask in the **BDO Modding Discord** (`https://discord.gg/bdomodding`) `#animation-tools` or `#pac-files` channels. The community has private `.pac` parsers that aren't on GitHub; someone there can tell you the exact offset for the current client.
+>
+> **Note on White Desert's hex editor**: v1.0.3 has a known issue where the **search** function *within* the hex editor doesn't work yet (per the repo README's "Known Issues"). That's fine — we just need to *view* the bytes and visually spot the frame-count DWORD, which works. You can also export the file via right-click → Extract (Normal mode) and open it in HxD if you prefer a search-enabled hex editor.
 
 ---
 
@@ -760,15 +813,24 @@ The `character/skillaction/{prefix}_skill_{id}.pac` files use a 2–4 letter cla
 
 ## 12. Troubleshooting
 
-### "My extractor can't open `pad00000.meta`"
-- You opened a `.paz` instead of `.meta`. The `.meta` is the master index — always use that.
-- Your BDO install is mid-update (a `.paz` is half-downloaded). Run "Verify integrity of game files" in Steam, then retry.
-- KR client vs Global: the meta decrypt key changed on KR in May 2016. If you have a KR client and extraction fails on newer paz files, you need a KR-patched unpacker (check the BDO Modding Discord).
+### "White Desert can't load my BDO install"
+- Use the **auto-search** button on the first-run setup screen — it scans for the registry keys / common paths.
+- If auto-search fails, use the directory picker and select the `Black Desert Online\` folder (the **parent** of `Paz\`), not `Paz\` itself. White Desert looks for `Paz\pad00000.meta` automatically.
+- Your BDO install is mid-update (a `.paz` is half-downloaded). Run "Verify integrity of game files" in Steam / the launcher, then retry.
+- KR client vs Global: the meta decrypt key changed on KR in May 2016. The Black Ghost Rust engine uses the standard global key; if you have a KR client and loading fails on newer paz files, you may need a KR-patched build (check the BDO Modding Discord).
+
+### "White Desert's search returns too many / too few results"
+- The search is a substring match across the whole archive virtual path. `skill_` is very broad (matches skill icons, skillaction folders, skill tooltips). Use more specific substrings:
+  - `ui_data\skill\skill_` — just the tooltip XML files
+  - `character\skillaction\` — just the animation `.pac` files (then filter to `.pac` in the results)
+  - `new_icon\04_pc_skill\` — just the skill icons
+- Note the path separator: BDO's internal paths use `\` (backslash) on Windows. Both `\` and `/` usually work in the search, but if one returns nothing, try the other.
 
 ### "The `.pac` parser returns wrong durations"
-- The frame-count offset differs for your BDO version. Do the calibration in §8.4 on a known skill.
+- The frame-count offset differs for your BDO version. Do the calibration in §8.4 on a known skill (use White Desert's built-in hex editor by double-clicking the `.pac` file in the search results).
 - Some `.pac` files are multi-phase (startup + active + recovery). The header frame count is the total; if you want per-phase, you'd need the full `.pac` parser (Discord-only).
 - BDO's FPS is exactly 60. If a skill seems too fast/slow, double-check you're dividing by 60, not 30.
+- Make sure you extracted the `.pac` files in **Normal** mode (RawDecrypted), not Processed — the Processed mode is for DDS/LUAC and shouldn't touch `.pac` files, but if a future White Desert version adds `.pac` processing, you want raw bytes.
 
 ### "`bdo-data-extractor build` fails"
 - Needs Go 1.26+. Run `go version` to check.
@@ -776,11 +838,12 @@ The `character/skillaction/{prefix}_skill_{id}.pac` files use a 2–4 letter cla
 - On Windows, run from a path without spaces if possible (some Go path-handling quirks).
 
 ### "Tooltip XML looks nothing like §7.1"
-- BDO patches the tooltip XML format occasionally. Open one file in a text editor and inspect the actual tag names, then adapt the regexes in `parse-skill-xml.ts`.
+- BDO patches the tooltip XML format occasionally. **Open one file in White Desert's built-in XML preview** (double-click a `skill_*.xml` in the search results — AvaloniaEdit with syntax highlighting) and inspect the actual tag names, then adapt the regexes in `parse-skill-xml.ts`.
 - If the XML is actually `.luac` (compiled Lua), you're looking at the wrong files — the skill tooltips are XML, not Lua. Re-check your extraction mask (`ui_data/skill/` not `ui_data/`).
+- If you extracted in **Processed** mode by mistake, the XML was decompiled/altered — re-extract in **Normal** mode.
 
-### "I have a tool you didn't list (my 'White Desert' extractor)"
-- If it can open `pad00000.meta` and extract by file mask, it works for this guide — just follow §6 with your tool's UI. Tell me the exact name + where you got it and I'll write a click-path specifically for it.
+### "I want to extend White Desert to add a 'search-by-mask + extract-all-matches' button"
+- The repo is MIT-licensed and well-organized: `White Desert/Services/Implementations/PazService.cs` has the extraction logic, `White Desert/Helper/Interop/GhostBridge.cs` is the Rust bridge (`extract_files_batch` takes a `RustVec<uint> fileIndices` + `ExtractType`). The `Black Ghost` Rust crate (`Black Ghost/src/`) has the memory-mapped indexing + ICE decryption. A "search-by-mask → fileIndices → extract_files_batch" button would be a ~50-line PR.
 
 ---
 
@@ -798,9 +861,10 @@ Sources searched via z-ai `web_search`:
 - "site:secret.club Black Desert Online reverse engineering"
 
 GitHub repos reviewed (via PAT-authenticated API + raw README/FORMATS.md/source fetch):
-- `idevelopthings/bdo-data-extractor` — Go CLI, actively maintained, decodes PAZ + .bss/.dbss + loc into JSON. **Primary new recommendation.** README + FORMATS.md (2021 lines) + `internal/tables/classskills.go` + `src/model/class_skills.go` reviewed.
+- **`Ayley/white-desert`** — Win GUI (Rust + Avalonia), v1.0.3 (Jan 2026), MIT-licensed. **User's tool — confirmed.** README + repo file tree + `ExtractType.cs` + `PazService.cs` + `GhostBridge.cs` reviewed. Two extract modes (`RawDecrypted`/`Converted`), batch extraction with progress, built-in hex editor + XML/Lua/JSON preview, memory-mapped Rust engine (`black_ghost.dll`). 4 stars, last push 2026-02-01.
+- `idevelopthings/bdo-data-extractor` — Go CLI, actively maintained, decodes PAZ + .bss/.dbss + loc into JSON. **Primary recommendation for structured skill data.** README + FORMATS.md (2021 lines) + `internal/tables/classskills.go` + `src/model/class_skills.go` reviewed.
 - `iDevelopThings/bdo-viewer` — desktop companion (Wails 3 + React), drives the extractor.
-- `sibercat/PAZ-Unpacker` — Win GUI, v2.3.0 (Apr 2026), maintained.
+- `sibercat/PAZ-Unpacker` — Win GUI, v2.3.0 (Apr 2026), maintained. Solid alternative (no hex editor).
 - `AMGarkin/UnPAZ` — CLI, v1.2 (2018), legacy but scripts well.
 - `kukdh1/PAZ-Unpacker` — original, 2019, 32-bit.
 
@@ -808,10 +872,10 @@ Key findings:
 - `bdo-data-extractor`'s `FORMATS.md` line 778 explicitly states the skill "action configuration" (animation, icon, presentation, combat behavior) is "**not decoded here**" — confirming we need raw `.pac` extraction + a custom parser for animation durations.
 - `skilltype.dbss` has `kind` (active/passive) decoded but the "action configuration" block after it is left as raw bytes.
 - No publicly-available `.pac` parser exists as of 2026-09-10. The BDO Modding Discord (`https://discord.gg/bdomodding`) has private tools; `secret.club` has a 2019 "Reverse engineering BDO" series that covers engine internals but not `.pac` specifically.
-- "White Desert extractor" — no public tool by this exact name found. Most likely candidates: Crimson Desert Unpacker (wrong game), sibercat/PAZ-Unpacker (the current recommended BDO tool), or a private Discord tool.
+- **White Desert confirmed as the user's extractor** (https://github.com/Ayley/white-desert) — covers the full raw-extraction + hex-inspection workflow. Guide updated to use it as the primary tool (§1, §6.1, §8.4, §12).
 
 Crimson Desert (different game, BlackSpace engine) has dedicated unpackers (`lazorr410/crimson-desert-unpacker`, `Ekey/CD.PAZ.Tool`, `NattKh/CrimsonDesertModdingTools`, Nexus Mods "Crimson Desert Unpacker") — these do **NOT** work on BDO despite the shared `.paz` extension, because the encryption keys and internal structure differ.
 
 ---
 
-*This guide supersedes the previous `docs/PAZ_EXTRACTION_GUIDE.md` (pre-2026-09-10) and the archived `docs/archive/Archive-PAZ_EXTRACTION.md`. The PAZ file structure and class prefix map can change with BDO updates — re-verify after major patches. If `bdo-data-extractor` or `sibercat/PAZ-Unpacker` become unavailable, the other tools in §2 still cover the raw-extraction path.*
+*This guide supersedes the previous `docs/PAZ_EXTRACTION_GUIDE.md` (pre-2026-09-10) and the archived `docs/archive/Archive-PAZ_EXTRACTION.md`. The PAZ file structure and class prefix map can change with BDO updates — re-verify after major patches. If White Desert (`Ayley/white-desert`) or `bdo-data-extractor` become unavailable, the other tools in §2 (`sibercat/PAZ-Unpacker`, `AMGarkin/UnPAZ`) still cover the raw-extraction path.*

@@ -3857,3 +3857,41 @@ Stage Summary:
 - Animation truth: BDO ticks at 60 FPS, duration_ms = frame_count / 60 * 1000. Frame-count offset in .pac varies by BDO client version — the parser includes a scanning heuristic + a one-time calibration step (open one known .pac in a hex editor, find the DWORD matching the known frame count, hardcode that offset).
 - "White Desert extractor" identified as likely either Crimson Desert Unpacker (wrong game) or sibercat/PAZ-Unpacker (current BDO tool) or a private Discord tool — guide works with any extractor that can open pad00000.meta + extract by mask; user asked to confirm.
 - The PAZ initiative (P0.DATA) is now the top roadmap priority, scheduled as Sprint 1 in docs/ROADMAP.md.
+
+---
+Task ID: WHITE-DESERT-CONFIRM-2026-09-10
+Agent: orchestrator (z.ai code)
+Task: User provided the link to their "White Desert extractor" (https://github.com/Ayley/white-desert). Confirm what it is, whether it works for the BDO PAZ extraction guide, and tell the user if they need anything else.
+
+Work Log:
+- Fetched repo metadata via PAT-authenticated GitHub API: full_name=Ayley/white-desert, description="Blazing fast BDO .paz file explorer powered by a custom Rust-interop engine and FluentAvalonia", 4 stars, language C#, pushed 2026-02-01, default_branch master, MIT license.
+- Fetched + read README.md (59 lines): confirms it's a BDO .paz archive explorer + extractor with: blazing-fast indexing via Rust "Black Ghost" engine (memory-mapped, pointer arithmetic), modern Windows 11 Avalonia UI with dark mode, hex editor (custom Hex-Control), text/script preview with syntax highlighting (Lua/XML/JSON via AvaloniaEdit), image viewer, parallelized smart search, batch extraction with progress. Known issues: hex-editor search non-operational, file-info edge cases, image-view persistence — none blocking for our use case.
+- Fetched latest releases: 1.0.3 (Jan 31 2026), 1.0.2, 1.0.1, 1.0.0. Asset: White.Desert.zip (50.5 MB).
+- Fetched repo file tree (118 paths) + read key source files via raw GitHub:
+  * White Desert/Helper/Interop/ExtractType.cs — enum with RawDecrypted=0 / Converted=1 (the two extract modes)
+  * White Desert/Services/Implementations/PazService.cs — Initialize() loads Paz\pad00000.meta via GhostBridge.load_bdo_index; GetFilesInFolder + extract_files_batch(RustVec<uint> fileIndices, ExtractType, ProgressCallback)
+  * White Desert/Helper/Interop/GhostBridge.cs — Rust bridge (black_ghost.dll): load_bdo_index, get_file_content, decompile_lua, extract_files_batch, free_bdo_index, free_file_content
+- Confirmed: White Desert is exactly the right tool for the raw-extraction half of the PAZ guide. It can: (1) open pad00000.meta via auto-search or directory picker, (2) parallel-search the whole archive by substring, (3) batch-extract with two modes (Normal=raw decrypted bytes for .pac/.xml; Processed=DDS→PNG + LUAC→LUA for icons), (4) inspect any file in a built-in hex editor (perfect for the .pac frame-count offset calibration §8.4 — no separate HxD needed), (5) preview XML files with syntax highlighting (perfect for verifying the tooltip XML format §7.1 before writing the parser).
+- Conclusion: the user does NOT need to download anything else for raw extraction. The only other tool the guide uses is `bdo-data-extractor` (small Go binary) for the structured-skill half (decoding .bss/.dbss binary tables — White Desert doesn't do that).
+
+Guide updates (docs/PAZ_EXTRACTION_GUIDE.md, 820→881 lines):
+- TL;DR table: "Raw files from PAZ archives" row now points to Ayley/white-desert as the primary tool (was sibercat/PAZ-Unpacker). Added "You don't need to download anything else" note.
+- §1 "About White Desert extractor" (was the speculative candidates section) — fully rewritten as "White Desert — your extractor": §1.1 feature-to-guide-need table, §1.2 known v1.0.3 issues, §1.3 download/install steps.
+- §2.1 tool inventory: Ayley/white-desert moved to top as "YOUR TOOL — primary in this guide"; sibercat demoted to "Solid alternative (no hex editor)".
+- §6.1 (was sibercat/PAZ-Unpacker GUI steps) — fully rewritten as "With White Desert (your tool — primary path)": explains the two extract modes (RawDecrypted=Normal for .pac/.xml, Converted=Processed for icons), 3-search workflow (tooltip XML → Normal mode, .pac animations → Normal mode, icons → Processed mode), tip to inspect XML in built-in preview + .pac in built-in hex editor before parsing.
+- §6.2 = sibercat (now demoted to alternative), §6.3 = AMGarkin/UnPAZ CLI (renumbered from 6.2), §6.4 = bdo-data-extractor's own extract command (renumbered from 6.3, now notes it extracts raw bytes equivalent to White Desert Normal mode), §6.5 = expected output structure (renumbered from 6.4).
+- §8.4 calibration: rewritten to use White Desert's built-in hex editor (double-click .pac in search results → Hex Editor view) instead of HxD. Added a post-calibration code snippet showing the hardcoded-offset version of readFrameCount(). Added note about the v1.0.3 hex-editor search limitation (viewing works, search within hex editor doesn't — fine for our visual-spot-the-DWORD use case).
+- §12 troubleshooting: 5 White-Desert-specific entries replaced the generic ones: "White Desert can't load my BDO install" (auto-search, directory picker, mid-update, KR client), "White Desert's search returns too many/few results" (substring match, path separators), ".pac parser returns wrong durations" (use hex editor for calibration, extract in Normal not Processed), "Tooltip XML looks nothing like §7.1" (use built-in XML preview, re-extract in Normal if accidentally Processed), and a bonus "I want to extend White Desert" entry pointing to the relevant source files for a PR.
+- §13 research log: added Ayley/white-desert as the first reviewed repo with full details (v1.0.3, Rust+Avalonia, MIT, ExtractType enum, PazService, GhostBridge, black_ghost.dll). Updated the closing note to mention White Desert as the primary tool with sibercat/AMGarkin as fallbacks.
+- 32 White Desert mentions across the guide; sibercat preserved as a fallback (4 mentions).
+
+Cross-reference updates:
+- docs/ROADMAP.md P0.DATA section: added a "Tools" subsection listing White Desert (raw extraction + hex/XML inspection) and bdo-data-extractor (binary table decoding). DATA.2 and DATA.3 sub-items now explicitly say "Use White Desert to extract..." and reference the §8.4 calibration + §7.1 XML-preview steps.
+- docs/PROJECT.md "BDO Game Files" section: step 2 now points to Ayley/white-desert (was sibercat/PAZ-Unpacker) and notes the hex editor + XML preview usage.
+
+Stage Summary:
+- White Desert (Ayley/white-desert v1.0.3) confirmed as the user's tool — it's a complete BDO .paz extractor with a Rust engine, Avalonia UI, two extract modes (Normal/Processed), built-in hex editor, and XML preview. Perfect for the guide.
+- **User does NOT need to download anything else.** White Desert covers raw extraction + hex inspection + XML preview. The only other tool is bdo-data-extractor (Go CLI, ~10MB binary) for the structured-binary-table half — that's a separate concern from PAZ extraction.
+- PAZ guide fully updated: White Desert is the primary extractor throughout (§1, §6.1, §8.4, §12). sibercat/PAZ-Unpacker + AMGarkin/UnPAZ preserved as fallbacks in §6.2/§6.3 + §2.1.
+- Roadmap P0.DATA sub-items DATA.2 and DATA.3 now reference the White Desert workflow specifically.
+- Ready for the user to: (1) make sure they have White Desert v1.0.3 (or download from the releases page if on an older version), (2) install Go 1.26+ + run `go install github.com/idevelopthings/bdo-data-extractor@latest` for the structured-data half, (3) start with DATA.1 (the easy win — one `bdo-data-extractor build` command produces class_skills.json).

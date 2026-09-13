@@ -147,9 +147,10 @@ for the full workflow:
 
 1. Use [`bdo-data-extractor`](https://github.com/idevelopthings/bdo-data-extractor) (Go CLI)
    to decode the binary tables → `class_skills.json` (skill groups, ranks, class grids, kind).
-2. Use [`sibercat/PAZ-Unpacker`](https://github.com/sibercat/PAZ-Unpacker) (or your existing
-   PAZ extractor) to pull the raw tooltip XML (`ui_data/skill/`) and `.pac` animation files
-   (`character/skillaction/`).
+2. Use [`Ayley/white-desert`](https://github.com/Ayley/white-desert) (Win GUI, v1.0.3 —
+   your existing PAZ extractor) to pull the raw tooltip XML (`ui_data/skill/`) and `.pac` animation files
+   (`character/skillaction/`). White Desert's built-in hex editor + XML preview are used for the
+   `.pac` offset calibration and tooltip-format verification.
 3. Run the parsers in the guide to extract damage/CC/cooldown/PvP% (from XML) and
    frame-accurate `animationDurationMs` (from `.pac` frame count / 60).
 4. Merge into the DB via `POST /api/upload/skills-json` (or the planned
