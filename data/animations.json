@@ -1,0 +1,13 @@
+[
+  {
+    "file": "/home/z/my-project/upload/phm_01_01_att_skill_shield_dashthrust_01.paa",
+    "actionName": "01_Att_Skill_Shield_Dashthrust",
+    "animationDurationSec": 1,
+    "animationDurationMs": 1000,
+    "frameCount": 30,
+    "boneCount": 144,
+    "parseOk": true,
+    "bytesConsumed": 51922,
+    "fileSize": 51922
+  }
+]

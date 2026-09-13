@@ -4030,3 +4030,45 @@ Stage Summary:
 - For animation duration: the .paac index gives us skill→animation-file mapping. We'd need to extract the .paa files (referenced as 1_PC/1_PHM/PHM_01_01_Att_Skill_*.paa) to get the frame counts. OR parse the 133MB master package.
 - Next step for the user: extract the .paa animation files. They're at paths like `1_PC/1_PHM/PHM_01_01_Att_Skill_*.paa` — which means a folder `character/character/1_PC/1_PHM/` (or similar) in the PAZ. Need to extract that folder with White Desert. Should be much smaller than the action charts (individual .paa files are ~10-50KB each, ~700 per class × 31 classes = ~20k files = ~500MB-1GB).
 - Will update the guide with: (1) correct folder paths, (2) the .paac index format + parser, (3) the effect-duration fork option, (4) the .paa frame-count extraction step, (5) the full class-prefix mapping.
+
+---
+Task ID: PAAC-PAA-FORK-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: User uploaded a .paa file (phm_01_01_att_skill_shield_dashthrust_01.paa). Write the bdo-data-extractor fork to emit active-skill Effects, and reverse-engineer the skilltype.dbss action-config block for damage/CC/PvP%. Also research other tools/forums.
+
+Work Log:
+- Analyzed the uploaded .paa file (51,922 bytes). Magic = "PAR " (Pearl Abyss Resource, NOT "Par archive" as the `file` command misidentified it). Cross-referenced with the XeNTaX forum archive (https://github.com/XeNTaXBackup) which has a thread "Black Desert Online File Formats (PAB, PAC, PAA)" documenting the format.
+- PAA format verified (parsed all 144 bones cleanly to EOF, parseOk=true):
+  * 0x00-0x03: "PAR " magic
+  * 0x04-0x07: version/flags (02 02 00 01)
+  * 0x08-0x0F: 8-byte signature (incrementing 02-09)
+  * 0x10-0x11: boneCount (u16 LE) = 144
+  * 0x12-0x15: animationDuration (float LE, SECONDS) = 1.0 → 1000ms ← THE FIELD
+  * 0x16-0x19: 4 unknown bytes
+  * 0x1A+: per-bone keyframe data (u32 boneHash + 3 keyframe tables: scale ×8, rotation ×10, position ×8 bytes each)
+  * Keyframe timing: u16 / 33 = frame index; BDO animation framerate = 30 FPS (NumFrames = animationDuration × 30 = 30 frames for this skill)
+- Wrote scripts/paz-tools/parse-paa-frames.ts — parses .paa files, extracts animationDurationMs + frameCount + boneCount, validates by parsing all bones and confirming EOF is reached exactly. Tested: 1/1 OK on the user's file (boneCount=144, durationMs=1000, frames=30, parseOk=true).
+- Wrote scripts/paz-tools/parse-paac-index.ts — parses the .paac action-chart index files to extract action-name → .paa-file-path mappings. Tested across all 31 class files: 28,510 total action entries, 3,692 skill-tagged. Each class has ~700-1100 actions, ~75-210 skills.
+- Wrote scripts/paz-tools/bdo-data-extractor-fork.md — the 5-line fork patch to emit active-skill Effects (removes the `if header.Kind == model.SkillKindPassive` guard in internal/build/classskills.go line 140). Three apply methods documented (git apply / manual edit / upstream PR). The fork gives us cooldown (skill.dbss @95) + buff DurationMs (CC/buff duration) for ALL active combat skills, not just passives.
+- Researched other BDO extraction tools/forums:
+  * XeNTaX backup (github.com/XeNTaXBackup) — found two key threads: "MMO Black Desert Online" (10909) and "Black Desert Online File Formats (PAB, PAC, PAA)" (11849). The latter has the complete PAB/PAC/PAA format documentation from 2013-2021 community reverse-engineering. PAA animation format was cracked by user "PeterZ" with help from "Joschka" (Noesis author) in Jan 2021.
+  * Durik256/Noesis-Plugins (github) — has fmt_pam.py, a Noesis plugin for BDO .pam files using the "PAR " magic. Confirms the PAR header structure.
+  * Reddit r/blackdesertonline (Aug 2024) — "PvP Damage Formula Reversed + PvP Damage Calculator" post states "Results mostly come from gamecode analysis", confirming bdocodex/garmoth got damage/CC/PvP% by reverse-engineering the client binary, not just data tables.
+  * No public .paac parser exists (the .paac action-chart index is a custom PABR-framed format I cracked from scratch).
+  * bdo-data-extractor's FORMATS.md line 778 explicitly says the skilltype.dbss action-config block (animation, icon, presentation, combat behavior) is "not decoded here" — this is the damage/CC/PvP% reverse-engineering target.
+  * GitHub search for "PAR" magic + BDO: only the XeNTaX backup markdown files. No standalone BDO .paa parser on GitHub.
+  * ychwu/bdo-toolkit (github) — passive read-only BDO packet parsing toolkit, not a file-format parser.
+- Wrote scripts/paz-tools/skilltype-reverse-engineering-plan.md — 4-phase plan to decode the skilltype.dbss action-config block:
+  * Phase 1 (user): extract 6 binary tables from gamecommondata/binary/ (skilltype.dbss, skilltypeoffset.dbss, skill.dbss, skilloffset.dbss, buff.dbss, buffoffset.dbss) — a few MB total.
+  * Phase 2 (us): map record boundaries using skilltypeoffset.dbss (PABR offset index gives [u16 key, u32 offset, u32 size] per skill). Match Korean sourceName to find each skill's action-config start.
+  * Phase 3 (us): cross-reference with known bdocodex values for 5-10 well-known skills. Search the action-config bytes for the known cooldown/PvP%/damage/CC values. When a value is found at a consistent offset across multiple skills, we've decoded that field.
+  * Phase 4 (us): write scripts/parse-skilltype-action-config.ts, validate against our existing bdocodex-scraped DB (95%+ match = success).
+  * Alternative: keep damage/CC/PvP% from bdocodex (hybrid pipeline — PAZ for structure+cooldown+animation, bdocodex for damage rows+PvP%+protection types).
+
+Stage Summary:
+- PAA format CRACKED: animationDurationMs = readFloatLE(0x12) × 1000. Validated against the user's file (Shield DashThrust = 1000ms = 1.0s = 30 frames at 30 FPS). Parser at scripts/paz-tools/parse-paa-frames.ts, works.
+- PAAC index format CRACKED: PABR-framed, string table at u64 offset in last 8 bytes, parses action-name → .paa-file pairs. Parser at scripts/paz-tools/parse-paac-index.ts, parsed all 31 class files (28,510 actions, 3,692 skills).
+- bdo-data-extractor fork WRITTEN: scripts/paz-tools/bdo-data-extractor-fork.md. 5-line patch removes the `if isPassive` guard so active combat skills get their Effects (cooldown + CC/buff duration) emitted to class_skills.json. Three apply methods documented.
+- skilltype.dbss reverse-engineering PLAN WRITTEN: scripts/paz-tools/skilltype-reverse-engineering-plan.md. 4-phase plan to decode the damage/CC/PvP% action-config block, with a hybrid-bdocodex fallback if it's too hard.
+- Tools researched: XeNTaX backup forum archive (found the PAA format docs), Durik256/Noesis-Plugins fmt_pam.py (confirmed PAR magic), Reddit PvP formula thread (confirmed bdocodex used gamecode analysis). No existing public BDO .paa or .paac parser on GitHub — we're the first.
+- Next steps for the user: (1) apply the fork + re-run bdo-data-extractor build, (2) extract the 6 binary tables from gamecommondata/binary/ for the skilltype.dbss reverse-engineering, (3) extract the .paa animation files (folder 1_PC/ — ~500MB-1GB for all classes). Once all three are in, we have the complete pipeline for PAZ-sourced skill data + frame-perfect animation durations, with the damage/CC/PvP% as the final reverse-engineering target.
