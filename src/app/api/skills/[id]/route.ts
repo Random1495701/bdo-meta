@@ -122,6 +122,12 @@ export async function GET(
     damagePerCooldownPvP: (damage.totalPvP != null && damage.totalPvP > 0 && skill.cooldownSec && skill.cooldownSec > 0)
       ? Math.round(damage.totalPvP / skill.cooldownSec)
       : null,
+    damagePerSecond: (damage.totalPvE > 0 && skill.animationDurationMs && skill.animationDurationMs > 0)
+      ? Math.round(damage.totalPvE / (skill.animationDurationMs / 1000))
+      : null,
+    damagePerSecondPvP: (damage.totalPvP != null && damage.totalPvP > 0 && skill.animationDurationMs && skill.animationDurationMs > 0)
+      ? Math.round(damage.totalPvP / (skill.animationDurationMs / 1000))
+      : null,
     ccTypes,
     ccCounters,
     ccCounterDisplay,

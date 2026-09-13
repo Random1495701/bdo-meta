@@ -4244,3 +4244,40 @@ Stage Summary:
 - #2 TOOLTIP TABLES FOUND: commandtooltip.dbss + tooltiptable.dbss (in gamecommondata/binary/) are the most likely source of damage/PvP%/protection text. NOT in the current uploads — need the user to extract these 4 files with White Desert.
 - #3 ANIMATION MATCHING DONE: 2,004/6,149 skills matched to frame-perfect animation durations via BT_ strings from skill.dbss. 1,956 skills updated in DB. The PAZ animation values are 30-50% shorter than bdocodex video-based values (which include hanging time) — confirming the .paa approach is more accurate.
 - NEXT STEP for the user: extract commandtooltip.dbss + commandtooltipoffset.dbss + tooltiptable.dbss + tooltiptableoffset.dbss from gamecommondata/binary/ with White Desert. These 4 files likely contain the damage rows + PvP% + protection type tooltip text that would let us fully replace bdocodex.
+
+---
+Task ID: DPS-FEATURE-TOOLTIP-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: (1) Upload tooltip tables, (2) Add DPS column + DPS info in tooltips now that we have animation duration.
+
+Work Log:
+- Received + analyzed the 4 tooltip table files:
+  * tooltiptable.dbss (883KB) — PABR-framed, 3244 records, string table has 786KB of Korean tooltip TEXT templates with {p0}% x {p1} placeholders
+  * tooltiptableoffset.dbss (55KB) — PABR offset index
+  * commandtooltip.dbss (3.8MB) — PABR-framed, but string table is 0 bytes (different format)
+  * commandtooltipoffset.dbss (92KB) — PABR offset index
+- Analyzed tooltiptable: found 143 damage templates with "{p0}% x {p1}" format (the {p0}/{p1}/{p2} are parameter placeholders filled from the binary record data). Also found PvP damage templates: "PVP 시 {p0},{p1} 타격의 피해 적용 비율" = "PvP damage application rate". Protection keywords NOT found in English (likely in Korean: 슈퍼 아머 = Super Armor, 전방 가드 = Forward Guard).
+- CONCLUSION on tooltip tables: the tooltiptable.dbss has the tooltip TEXT TEMPLATES (with placeholders). The binary record data (before the string table) has the actual parameter values (damage numbers, PvP%, protection flags). Decoding the full tooltip requires: (1) matching a skill to a tooltiptable entry, (2) reading the binary parameters, (3) filling the template. This is the tooltip renderer — a significant RE effort. The damage/PvP%/protection values ARE in this table, but extracting them requires the binary record structure + the skill→tooltip-entry mapping.
+- This is promising but complex — the templates are there, the parameters are in the binary data. A full decode would replace bdocodex entirely for damage/PvP%/protection. Marked as a future RE task.
+
+DPS Feature (DONE):
+- Added `damagePerSecond` + `damagePerSecondPvP` to the Skill interface (src/lib/skills.ts)
+- Added DPS computation to the skills list API (src/app/api/skills/route.ts): DPS = totalPvE / (animationDurationMs / 1000). PvP DPS = totalPvP / (animationDurationMs / 1000).
+- Added DPS computation to the skill detail API (src/app/api/skills/[id]/route.ts).
+- Added 'dps' to the SortOption type + the sort dropdown in the header (src/components/skills/header.tsx): "DPS (Dmg / Animation)"
+- Added 'dps' sort handling in the API (computes DPS for all max-rank skills, sorts by PvP DPS preferred, PvE fallback).
+- Added DPS column to the skill table (src/components/skills/skill-table.tsx): pink text with Zap icon, tooltip shows both PvP and PvE DPS + "frame-perfect" note. Column is sortable.
+- Added DPS stat card to the skill detail drawer (src/components/skills/skill-detail-drawer.tsx): "PvP DPS" with pink accent, hint shows PvE DPS.
+- Added DPS to skill cards (src/components/skills/skill-card.tsx): pink Zap icon with DPS/s value.
+- Fixed the ColumnId type to include 'dps'. Lint passes. TypeScript clean for src/ files.
+- Verified API returns correct DPS values:
+  * Prime: Scars of Dusk III: DPS=6526/s (PvE: 36708 / 5.625s)
+  * Prime: Heavy Strike III: DPS=6155/s (PvE: 21339 / 3.467s)
+  * Prime: Pulverize: DPS=4696/s (PvE: 15497 / 3.3s)
+  * Absolute: Charging Slash: DPS=3954/s (PvE: 13839 / 3.5s)
+  * Prime: Shield Strike: DPS=3532/s (PvE: 17073 / 4.834s)
+
+Stage Summary:
+- DPS feature COMPLETE: column in table view, stat card in detail drawer, icon on skill cards, sortable in API + header dropdown. Uses frame-perfect animationDurationMs from PAZ .paa files (not bdocodex video-based). Pink color to distinguish from cyan DPC.
+- Tooltip tables analyzed: tooltiptable.dbss has 143 damage templates + PvP damage templates in Korean with {p0}/{p1} placeholders. The parameter values are in the binary record data. Full decode is a future RE task.
+- DB stats: 7,224 skills, 4,417 with animation (frame-perfect from PAZ), 4,712 with cooldown, 5,050 with CC. The DPS is computed for any skill with both damage data (from bdocodex) AND animation duration (from PAZ).

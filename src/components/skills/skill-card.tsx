@@ -145,6 +145,21 @@ function DamageRow({ skill }: { skill: Skill }) {
           {formatDamage(dpc)}/s
         </div>
       )}
+      {(() => {
+        // DPS — damage per second based on frame-perfect animation duration
+        const dps = skill.damagePerSecondPvP ?? skill.damagePerSecond
+        const dpsIsPvP = skill.damagePerSecondPvP != null && skill.damagePerSecondPvP > 0
+        if (dps == null || dps <= 0) return null
+        return (
+          <div
+            className="flex items-center gap-1 text-[10px] font-bold tabular-nums text-pink-400"
+            title={`${dpsIsPvP ? 'PvP' : 'PvE'} damage per second: ${dps.toLocaleString()}%${dpsIsPvP && skill.damagePerSecond != null && skill.damagePerSecond > 0 ? ` (PvE DPS: ${skill.damagePerSecond.toLocaleString()}%)` : ''}`}
+          >
+            <Zap className="size-3 text-pink-400/80" />
+            {formatDamage(dps)}/s
+          </div>
+        )
+      })()}
     </div>
   )
 }

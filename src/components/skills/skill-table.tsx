@@ -55,6 +55,7 @@ type ColumnId =
   | 'pveDmg'
   | 'pvpDmg'
   | 'dpc'
+  | 'dps'
   | 'anim'
   | 'ccCounters'
   | 'ccTypes'
@@ -81,6 +82,7 @@ const COLUMNS: ColumnDef[] = [
   { id: 'pveDmg', label: 'PvE', sortable: true, sortKey: 'damage', width: 'w-20' },
   { id: 'pvpDmg', label: 'PvP', sortable: true, sortKey: 'pvpDamage', width: 'w-20' },
   { id: 'dpc', label: 'DPC*', sortable: true, sortKey: 'dmgPerCd', width: 'w-20' },
+  { id: 'dps', label: 'DPS', sortable: true, sortKey: 'anim', width: 'w-20' },
   { id: 'anim', label: 'Anim', sortable: true, sortKey: 'anim', width: 'w-16' },
   { id: 'ccCounters', label: 'CC', sortable: true, sortKey: 'ccCounters', width: 'w-14' },
   { id: 'ccTypes', label: 'CC Types', sortable: false, sortKey: null, width: 'w-20' },
@@ -529,6 +531,40 @@ export const SkillTable = React.memo(function SkillTable({
                                     <div className="text-cyan-300">PvP DPC: {dpcPvP != null ? `${dpcPvP.toLocaleString()}/s` : '—'}</div>
                                     <div className="text-amber-300/70">PvE DPC: {dpcPvE != null ? `${dpcPvE.toLocaleString()}/s` : '—'}</div>
                                     <div className="text-amber-200/40">Showing {dpcLabel} DPC (primary)</div>
+                                  </div>
+                                </TooltipContent>
+                              </Tooltip>
+                            ) : (
+                              <span className="text-amber-200/50">—</span>
+                            )}
+                          </TableCell>
+                        )
+                      }
+                      case 'dps': {
+                        // DPS — damage per second based on animation duration (frame-perfect from PAZ).
+                        // Primary: PvP DPS (pink), secondary: PvE DPS (amber). Tooltip shows both.
+                        const dpsPvP = skill.damagePerSecondPvP
+                        const dpsPvE = skill.damagePerSecond
+                        const dpsVal = dpsPvP ?? dpsPvE
+                        const dpsLabel = dpsPvP != null && dpsPvP > 0 ? 'PvP' : 'PvE'
+                        const tooltip = `PvP DPS: ${dpsPvP != null ? dpsPvP.toLocaleString() + '/s' : '—'}\nPvE DPS: ${dpsPvE != null ? dpsPvE.toLocaleString() + '/s' : '—'}\nBased on frame-perfect animation duration`
+                        return (
+                          <TableCell key={col.id} className="py-1.5">
+                            {dpsVal != null && dpsVal > 0 ? (
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span
+                                    className="cursor-help font-mono font-bold tabular-nums text-pink-300"
+                                    title={tooltip}
+                                  >
+                                    {formatDamage(dpsVal)}/s
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent side="top" className="max-w-[220px]">
+                                  <div className="space-y-0.5 text-[10px]">
+                                    <div className="text-pink-300">PvP DPS: {dpsPvP != null ? `${dpsPvP.toLocaleString()}/s` : '—'}</div>
+                                    <div className="text-amber-300/70">PvE DPS: {dpsPvE != null ? `${dpsPvE.toLocaleString()}/s` : '—'}</div>
+                                    <div className="text-amber-200/40">Total dmg ÷ anim duration (frame-perfect)</div>
                                   </div>
                                 </TooltipContent>
                               </Tooltip>
