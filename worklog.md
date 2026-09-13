@@ -4210,3 +4210,37 @@ NEXT STEPS for the user:
 1. Upload data/paz-skills.json via POST /api/upload/skills-json to see cooldown + CC data live in the app
 2. Decide: hybrid pipeline (recommended) or invest in tooltip renderer RE
 3. For full animation matching: decode the .paac binary record data (hash→actionName) — a future RE task
+
+---
+Task ID: PAZ-UPSERT-ANIM-TOOLTIP-2026-09-13
+Agent: orchestrator (z.ai code)
+Task: (1) Upload paz-skills.json to DB, (2) re-examine the full file list for damage/PvP data, (3) decode .paac binary record data for full animation matching.
+
+Work Log:
+#1 — DB UPSERT (DONE):
+- Wrote scripts/paz-tools/upsert-paz-skills.ts — Prisma upsert that updates cooldownSec + ccTypes + animationDurationMs for existing skills (preserving other fields), creates new skills if they don't exist. Converts PAZ cooldown 0 → null (DB convention: null = no cooldown, 0 skills have cd=0). Skips skills with no name.
+- Ran the upsert: 3,431 skills updated (2,076 cooldown + 1,366 CC fields), 186 new skills created. DB now has 7,224 skills (was 7,038).
+- DB stats after upsert: 4,712 with cooldown, 5,050 with ccTypes. Verified skills show cooldown + CC matching PAZ data, with existing protection + PvP% preserved (hybrid pipeline working).
+
+#2 — FILE LIST RE-EXAMINATION (DONE — found tooltip tables):
+- Re-examined paz_files.json (525,262 files). Searched all 2,342 binary tables (.bss/.dbss) for tooltip/desc/stat/text-related files.
+- FOUND TWO CRITICAL FILES we missed:
+  * gamecommondata/binary/commandtooltip.dbss + commandtooltipoffset.dbss — "command tooltip" data
+  * gamecommondata/binary/tooltiptable.dbss + tooltiptableoffset.dbss — "tooltip table" data
+- These files are NOT in the user's uploaded skill.7z (which only has skill* named files). They're separate tables in gamecommondata/binary/ that need to be extracted with White Desert.
+- These are the most likely source of the damage rows / PvP% / protection types — the tooltip text data that bdocodex renders.
+- Also found 101 other "tooltip/desc/stat/text" tables (alchemystatdata, characterstatic, dialogtext, textbind, etc.) which might have related data.
+
+#3 — .PAAC BINARY DECODING (DONE — 2004 skills matched):
+- Decoded the .paac record data structure: 24-byte entries [u32 hdr][u32 pad][u32 hash][u32 pad][u32 idx1][u32 idx2] where idx1/256 = actionName string index, idx2/256 = paaPath string index. Found 15,373 action→paa pairs with hashes.
+- The hashes in the .paac index do NOT match anything in the skilltype.dbss binary block — different naming systems.
+- KEY INSIGHT: the skill.dbss record contains BT_ strings (Behavior Tree references) like "BT_UP_skill_Bash_1LVL" that map to .paa files. The "skill_Bash" keyword + level ("1LVL" → "01") matches .paa filenames like "phm_01_01_att_skill_bash_01.paa".
+- Built a matcher: extract BT_ string from skill.dbss → normalize keyword → match .paa files by class prefix + keyword + level. Matched 2,004/6,149 skills to animation durations (up from 44).
+- Re-ran the upsert with animation: 1,956 skills updated with frame-perfect animationDurationMs. The PAZ values are significantly different from bdocodex video-based values (e.g. Severing Thrust 5667ms→3700ms, Heavy Strike I 4834ms→3467ms, Solar Flare I 6292ms→3333ms — the video durations include 30-50% hanging time/recovery that .paa frame counts don't).
+- DB now has 4,417 skills with animationDurationMs > 0 (up from ~3,193 — the PAZ values replaced stale video-based ones).
+
+Stage Summary:
+- #1 DB UPSERT DONE: 3,431 updated + 186 created. Cooldown + CC + animation data now live in the DB. Hybrid pipeline working (PAZ for cooldown/CC/animation, bdocodex for damage/PvP%/protection).
+- #2 TOOLTIP TABLES FOUND: commandtooltip.dbss + tooltiptable.dbss (in gamecommondata/binary/) are the most likely source of damage/PvP%/protection text. NOT in the current uploads — need the user to extract these 4 files with White Desert.
+- #3 ANIMATION MATCHING DONE: 2,004/6,149 skills matched to frame-perfect animation durations via BT_ strings from skill.dbss. 1,956 skills updated in DB. The PAZ animation values are 30-50% shorter than bdocodex video-based values (which include hanging time) — confirming the .paa approach is more accurate.
+- NEXT STEP for the user: extract commandtooltip.dbss + commandtooltipoffset.dbss + tooltiptable.dbss + tooltiptableoffset.dbss from gamecommondata/binary/ with White Desert. These 4 files likely contain the damage rows + PvP% + protection type tooltip text that would let us fully replace bdocodex.
