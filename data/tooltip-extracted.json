@@ -1,0 +1,98 @@
+{
+  "4": {
+    "damage": 4830,
+    "pvpPct": null
+  },
+  "6": {
+    "damage": 3530,
+    "pvpPct": null
+  },
+  "53": {
+    "damage": 54544,
+    "pvpPct": null
+  },
+  "56": {
+    "damage": 28692,
+    "pvpPct": null
+  },
+  "65": {
+    "damage": 66434,
+    "pvpPct": null
+  },
+  "75": {
+    "damage": 116055,
+    "pvpPct": null
+  },
+  "81": {
+    "damage": 165304,
+    "pvpPct": null
+  },
+  "121": {
+    "damage": 246820,
+    "pvpPct": null
+  },
+  "145": {
+    "damage": null,
+    "pvpPct": 74.16
+  },
+  "163": {
+    "damage": 83003,
+    "pvpPct": null
+  },
+  "166": {
+    "damage": null,
+    "pvpPct": 85.19
+  },
+  "182": {
+    "damage": 92558,
+    "pvpPct": null
+  },
+  "184": {
+    "damage": null,
+    "pvpPct": 93.72
+  },
+  "219": {
+    "damage": null,
+    "pvpPct": 111.5
+  },
+  "302": {
+    "damage": null,
+    "pvpPct": 153.67
+  },
+  "305": {
+    "damage": null,
+    "pvpPct": 155.63
+  },
+  "328": {
+    "damage": null,
+    "pvpPct": 105.09
+  },
+  "331": {
+    "damage": null,
+    "pvpPct": 168.48
+  },
+  "333": {
+    "damage": null,
+    "pvpPct": 169.6
+  },
+  "337": {
+    "damage": null,
+    "pvpPct": 171.62
+  },
+  "678": {
+    "damage": null,
+    "pvpPct": 343.08
+  },
+  "1107": {
+    "damage": null,
+    "pvpPct": 556.99
+  },
+  "1445": {
+    "damage": null,
+    "pvpPct": 725.32
+  },
+  "1542": {
+    "damage": null,
+    "pvpPct": 772.86
+  }
+}
