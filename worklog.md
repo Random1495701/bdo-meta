@@ -3886,3 +3886,41 @@ Stage Summary:
   2. Build a complete tooltip renderer that mimics bdocodex's server-side renderer
   3. OR find an alternative data source (Pearl Abyss API, if one exists)
 - PRACTICAL PATH: Use bdocodex tip.php API (already cached 6,984 skills in DB) as the primary source for damage/PvP%/description. Use PAZ data for animation, cooldown, CC, multi-attack phases (already independent). Re-sync from bdocodex when patches release.
+
+---
+Task ID: 16-CORRECT-FORMAT-BREAKTHROUGH
+Agent: orchestrator (z.ai code)
+Task: Found the CORRECT PABR string table format from bdo-data-extractor Go source
+
+Work Log:
+- Cloned bdo-data-extractor GitHub repo (https://github.com/idevelopthings/bdo-data-extractor)
+- Read FORMATS.md (100KB) — tooltiptable.dbss is NOT documented (not even in "Unmapped" section)
+- Read Go source (internal/bss/strings.go) — found the CORRECT PABR string table format:
+  [u32 count][u8 sep] then count × ([u32 byteLen][bytes][u8 sep])
+  (NOT null-terminated u16 as I was parsing!)
+- Re-parsed strings: 4,355 CLEAN strings (exactly matching the count) — NO NOISE!
+  strings[0] = "타격 피해 {p0}% {p1}, 최대 {p2}타격" (damage template) ✓
+- Re-parsed sub-records with CORRECT field order: [u32 hash@0][u32 str_id@4][u32 p1@8][u32 p2@12][u32 p3@16][u8 pad@20]
+  (I had u0 and u4 SWAPPED — u4 is str_id, not u0!)
+- For str_id=0 (damage template), p2 (byte offset 12) = DAMAGE VALUE, p3 (byte offset 16) = MULTIPLIER
+- The p1 field (byte offset 8) = skill_hash (links damage record to a specific skill)
+- Found 659 unique damage values in the tooltiptable
+- 305 of these match bdocodex damage values
+- 427 skills matched by damage value — ALL VERIFIED CORRECT:
+  * skill 111 (Slash VIII): PAZ 3616% = bdocodex 3616% ✓
+  * skill 112 (Slash IX): PAZ 3860% = bdocodex 3860% ✓
+  * skill 1303 (Heuklang: Trample): PAZ 3722% x2 = bdocodex 3722% x2 ✓
+  * skill 1726 (Balance Strike I): PAZ 4055% = bdocodex 4055% ✓
+- The skill_hash (p1, byte offset 8) does NOT appear in skilltype.dbss or skill.dbss
+  — it's computed at runtime from skill properties using an unknown hash function
+- Also confirmed: skilltype.dbss has SkillTypeHeader + opaque "action/presentation configuration"
+  (the bdo-data-extractor consumes the action config as opaque — it has damage values
+  that I searched but didn't find at expected positions)
+
+Stage Summary:
+- CORRECT FORMAT DECODED: PABR string table = [u32 count][u8 sep][u32 byteLen][bytes][u8 sep] per string
+- CORRECT SUB-RECORD FORMAT: [hash@0][str_id@4][skill_hash@8][damage%@12][mult@16][pad@20]
+- 427 skills with VERIFIED PAZ damage values (6.1% of 6,984)
+- Damage values confirmed at byte offset 12 within sub-records with damage template str_ids
+- BLOCKER REMAINS: skill_hash (byte offset 8) is computed from skill properties using unknown function
+- The bdo-data-extractor (open source Go tool) does NOT parse tooltiptable.dbss — confirms it's unmapped territory
