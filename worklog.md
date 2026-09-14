@@ -4004,3 +4004,28 @@ Stage Summary:
 - Loc files only have name + description — no damage values
 - stringtable.bss has symbolic UI keys — no damage values
 - Lua scripts show the API (getDamage, getHitCount, etc.) but the implementation is C++
+
+---
+Task ID: 19-INLINE-STRINGS-BREAKTHROUGH
+Agent: orchestrator (z.ai code)
+Task: Found inline strings in tooltiptable records causing variable param alignment
+
+Work Log:
+- Searched ALL bdocodex damage values as u32 in tooltiptable.dbss: 2706/4507 (60%) found!
+- Analyzed relative offsets: most common is rel=4 (str_id position, 1364 values) — these are COINCIDENTAL matches (damage_value == str_id by chance)
+- BUT: 1016 values at rel=25, 259 at rel=46, 32 at rel=67 — these have damage_value ≠ str_id, meaning REAL param matches
+- Parsed record @3179 (str_id=151, "추가 타격 피해 {p0}% x {p1}"): found TWO damage entries [hash][152%][x2] and [hash][153%][x2]
+- Records have INLINE STRINGS that push damage values to non-aligned byte positions
+- Record structure: [hash][str_id][param_count][0][0][hash1][damage1][mult1]...[hash2][damage2][mult2]...
+- The bdo-data-extractor FORMATS.md confirms: "Records are byte-packed C++ object dumps: fixed scalars, fixed arrays, and length-prefixed strings/lists in declaration order"
+- Also searched BlackDesert64.exe (47MB): protected with VMProtect (.vm_sec section), all strings encrypted, 461 exported functions but NONE tooltip/skill related
+- ICE key bytes NOT found in .exe (VMProtect encrypts everything)
+
+Stage Summary:
+- Damage values ARE in tooltiptable.dbss as u32 params within variable-length records
+- Records have [hash][str_id][param_count][0][0][sub_entries...] where each sub_entry = [hash][damage%][multiplier]
+- The sub_entry hash links to additional metadata records
+- 2706/4507 bdocodex damage values found as u32 (but ~1364 are coincidental str_id matches)
+- ~1342 real param matches at various offsets (rel=25, 46, 67, etc.)
+- The .exe is VMProtect-protected — can't decompile to find the hash function
+- Next step: parse ALL 2304 records with their internal sub_entry structure to extract ALL damage values
