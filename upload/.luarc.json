@@ -1,0 +1,9 @@
+{
+  "runtime.version": "Lua 5.1",
+  "workspace.library": [
+    "${workspaceFolder}/.lualib"
+  ],
+  "workspace.preloadFileSize": 100000,
+  "workspace.maxPreload": 500000,
+  "completion.workspaceWord": true
+}
