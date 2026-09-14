@@ -3924,3 +3924,37 @@ Stage Summary:
 - Damage values confirmed at byte offset 12 within sub-records with damage template str_ids
 - BLOCKER REMAINS: skill_hash (byte offset 8) is computed from skill properties using unknown function
 - The bdo-data-extractor (open source Go tool) does NOT parse tooltiptable.dbss — confirms it's unmapped territory
+
+---
+Task ID: 17-VARIABLE-LENGTH-RECORDS-AND-ICE
+Agent: orchestrator (z.ai code)
+Task: Variable-length record parsing + ICE cipher for commandtooltip.dbss
+
+Work Log:
+- Cloned bdo-data-extractor (https://github.com/idevelopthings/bdo-data-extractor)
+- Read FORMATS.md (100KB) — tooltiptable.dbss is NOT documented (not even in "Unmapped" section)
+- Read Go source (internal/bss/strings.go) — found CORRECT PABR string table format:
+  [u32 count][u8 sep] then count × ([u32 byteLen][bytes][u8 sep])
+- Re-parsed strings: 4,355 CLEAN strings (exactly matching count)
+- Read Go source (internal/tables/classskills.go) — found SkillTypeHeader format:
+  [u32 SkillKey][i64 charCount][UTF-16 SourceName][i64 charCount][UTF-16 SourceGroupName][u32 Kind]
+  The remaining bytes are "action/presentation configuration" consumed as OPAQUE
+- CRITICAL: The tooltiptable.dbss has VARIABLE-LENGTH records (NOT fixed 21-byte as I assumed for 8+ sessions!)
+  - 9 different record sizes: 13, 21, 29, 42, 46, 63, 67, 84, 105 bytes
+  - The offset index (tooltiptableoffset.dbss) defines record boundaries: 2,304 records
+  - Each record: [u32 hash][u32 str_id][variable params...]
+  - params[0] = param_count, params[1-3] = metadata (0, 0, hash/flag), params[4+] = template params
+  - params[4] values are SEQUENTIAL IDs (491, 256, 2736, 3163, 5497...) — NOT damage values
+  - The actual damage values are NOT directly in the params — they may be in a separate parameter table referenced by the hash/flag
+- Found ICE cipher in bdo-data-extractor (internal/paz/ice.go) with BDO_ICE_KEY = [0x51,0xF3,0x0F,0x11,0x04,0x24,0x6A,0x00]
+- Ported ICE cipher to Python and tried decrypting commandtooltip.dbss (3.8MB, non-PABR, divisible by 8)
+  - Decryption did NOT produce PABR — either bug in my port or file uses different encryption/key
+- The bdo-data-extractor does NOT parse tooltiptable.dbss — confirms it's unmapped territory
+
+Stage Summary:
+- CORRECT PABR string table format decoded (4,355 clean strings)
+- VARIABLE-LENGTH record format discovered (9 sizes, offset-indexed)
+- Record params have [param_count][0][0][hash/flag][params...] layout
+- Damage values NOT directly in params — likely in a separate parameter table
+- ICE cipher found but commandtooltip.dbss decryption failed (possible bug)
+- Need: Lua scripts (tooltip renderer), stringtable.bss, or .loc files to understand param mapping
