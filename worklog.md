@@ -3844,3 +3844,45 @@ Stage Summary:
 - PvP%, description, and protection extraction: NOT achieved — the linking mechanism between damage data records and tooltip text string refs is unknown (only 29 out of 4,606 sub-records are hash-linked)
 - The tooltiptable.dbss has a complex relational structure: templates (hashes) are shared across multiple skills, with damage values stored in parallel arrays indexed by skill/rank. Without understanding the rank/level indexing, full extraction is not possible.
 - Files: data/paz-damage-genuine.json (790 verified), data/paz-damage-combined.json (1,114 total), scripts/paz-tools/extract-tooltiptable-full.py (full pipeline)
+
+---
+Task ID: 15-TOOLTIP-FORMAT-DEEP-RE
+Agent: orchestrator (z.ai code)
+Task: Deep RE of tooltiptable.dbss — understand why we can't map skills to damage values
+
+Work Log:
+- Re-extracted skill.7z (session was reset, files were gone)
+- Re-parsed string table: 5,510 strings (Korean templates)
+- Re-parsed sub-records: 4,606 entries (21 bytes each)
+- CRITICAL FINDING: Only 2 unique str_ids are used in sub-records (0 and 564) — the VAST MAJORITY of sub-records have u0 as a HASH, not a str_id. So the "string ref vs data record" split was wrong — ALL records are data records with [hash][value1][value2][value3][value4][pad]
+- Examined sub-records around byte 26619 (where damage value 1252 was found for Bow Skill VI):
+  * u4 values are SEQUENTIAL: 1247, 1248, 1249, ..., 1252, 1253, ..., 1266
+  * Some u4 values match bdocodex skill IDs (1247=Surging Tide III, 1248=Surging Tide IV)
+  * Some u4 values are damage values (1252 is NOT a skill ID, IS Bow Skill VI's damage)
+  * The u0 (hash) values are ALL DIFFERENT per sub-record
+  * u8 values (0, 2, 1, 0, 2, 2, 0, 2, ...) look like multipliers
+- The tooltiptable stores data in a FLAT ARRAY indexed by sequential ID. Each entry has a unique hash (u0) that identifies... something (skill? template? data type?). The hash does NOT appear in skill.dbss, skilltype.dbss, or the offset index.
+- Searched for hash 0x9C2F5F8D (from Bow Skill VI's damage sub-record) in:
+  * skill.dbss: NOT FOUND
+  * skilltype.dbss: NOT FOUND
+  * tooltiptableoffset.dbss: NOT FOUND
+  * ALL skilltype.dbss records: NOT FOUND
+- The hash is likely COMPUTED at runtime from some skill property (BT_ string, skill key, etc.) using a proprietary hash function that we haven't identified.
+- Checked bdo-data-extractor fork docs: the Go tool extracts skill metadata (name, level, cooldown from skill.dbss@99 → buff.dbss) but does NOT extract tooltip/damage data. Bdocodex has their OWN proprietary tooltip parser.
+- bdocodex tip.php returns full rendered tooltip HTML (damage values, PvP%, protection, description) — this is their BACKEND renderer, not raw file parsing.
+- bdolytics.com: 403 Forbidden (can't access their API)
+
+Stage Summary:
+- The tooltiptable.dbss IS the correct file for damage values, but the format uses a HASH-BASED LINKING system:
+  * Each sub-record has [u32 hash][u32 sequential_id][u32 param1][...]
+  * The hash uniquely identifies the data record
+  * The hash does NOT appear in any skill record (skill.dbss, skilltype.dbss)
+  * The hash is likely computed from a skill property using a proprietary function
+- Without the hash function, we CANNOT map skills to their tooltip data records.
+- Other websites (bdocodex, bdolytics) have proprietary parsers built over months/years of RE effort.
+- The 790 verified damage matches from the previous extraction were genuine but only 15.8% coverage.
+- For 100% bdocodex independence, we would need to either:
+  1. Reverse-engineer the hash function (compute hash from skill properties → match against sub-record hashes)
+  2. Build a complete tooltip renderer that mimics bdocodex's server-side renderer
+  3. OR find an alternative data source (Pearl Abyss API, if one exists)
+- PRACTICAL PATH: Use bdocodex tip.php API (already cached 6,984 skills in DB) as the primary source for damage/PvP%/description. Use PAZ data for animation, cooldown, CC, multi-attack phases (already independent). Re-sync from bdocodex when patches release.
