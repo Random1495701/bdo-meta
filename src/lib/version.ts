@@ -5,7 +5,7 @@
 // These values are injected at build time via next.config.ts or fallback to hardcoded.
 // To update: run `bun run scripts/sync-version.ts` or re-deploy.
 
-export const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION || 'v5.9.29'
+export const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION || 'v5.9.30'
 export const APP_VERSION_DATE = process.env.NEXT_PUBLIC_APP_VERSION_DATE || '2026-09-14'
 
 // All available git tags (for the version dropdown).
@@ -25,5 +25,5 @@ export const GIT_TAGS = [
   'v5.8.2', 'v5.8.3', 'v5.8.4', 'v5.8.5', 'v5.8.6', 'v5.8.7',
   'v5.9.0', 'v5.9.1', 'v5.9.2', 'v5.9.3', 'v5.9.4', 'v5.9.5',
   'v5.9.6', 'v5.9.7', 'v5.9.8', 'v5.9.9', 'v5.9.10', 'v5.9.11',
-  'v5.9.12', 'v5.9.27', 'v5.9.28', 'v5.9.29'
+  'v5.9.12', 'v5.9.27', 'v5.9.28', 'v5.9.29', 'v5.9.30'
 ]
