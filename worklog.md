@@ -3814,3 +3814,33 @@ Stage Summary:
 - LURKER IS DISABLED ON LAUNCH — verified at 3 levels: (1) no auto-start code, (2) no lock/process, (3) API + browser both report running:false / "Lurker active" absent.
 - App verified end-to-end via Agent Browser: page renders, tabs switch (Matchups→Arena of Solare), real data flows from /api/stats, no errors.
 - Ready to resume work. Roadmap v7 backlog: P0.1 (mobile tab overflow), P0.2 (next/image migration), P1.1 (dynamic tab loading), P1.3 (locked/main skills toggle — user-requested), P1.4 (unified empty/error states), P2.5 (skill tree virtualization), P2.8 (PvP% backfill completion), P2.10 (combo expansion to 23 classes).
+
+---
+Task ID: 14-TOOLTIP-FULL-EXTRACTION
+Agent: orchestrator (z.ai code)
+Task: Complete the tooltip extraction pipeline — extract ALL damage rows, PvP%, description from PAZ
+
+Work Log:
+- Session was reset — rebuilt from binary files (re-extracted skill.7z, re-parsed tooltiptable.dbss)
+- Re-parsed string table: 5,192 clean Korean tooltip templates
+- Re-parsed sub-records: 4,606 entries (1,362 string refs + 3,244 data records)
+- Discovered TWO types of 21-byte sub-records:
+  * String ref: [u32 str_id][u32 hash][u32 damage_pct at u8][u32 mult at u12][u32 ??][u8 pad]
+  * Data record: [u32 hash][u32 skill_id_or_index at u4][u32 ?? at u8][...]
+- CRITICAL FINDING: Data record u4 values are NOT all damage values — 2,902/3,692 (78.5%) are actually skill IDs/indices, not damage percentages
+- FILTERED to 790 GENUINE damage matches where u4 is NOT a skill ID — ALL 10 samples verified ✓:
+  * Skill 17 (Jolt Wave III): PAZ=1266% matches bdocodex 1266% ✓
+  * Skill 97 (Bow Skill VI): PAZ=1252% matches bdocodex 1252% ✓
+  * Skill 105 (Elastic Force VIII): PAZ=980% matches bdocodex 980% ✓
+- Also extracted 387 matches from string ref records (u8 as damage value)
+- COMBINED: 1,114 unique skills with PAZ-sourced damage values (15.8% of 7,038)
+- PvP% and description extraction FAILED: string ref records and data records are in SEPARATE blocks of the tooltiptable. The hash-linking between data records (hash at u0) and string refs (hash at u4) only works for 29 groups (0.6%). For the remaining 99.4%, there's no hash linkage.
+- Verified that PAZ damage values ARE correct when matched: skill 32 (Heuklang: Void Lightning) PAZ=3607% matches bdocodex=3607% ✓
+
+Stage Summary:
+- 1,114 skills with PAZ-sourced damage values (790 from data records + 387 from string refs, minus overlap)
+- This is 15.8% of 7,038 skills — NOT 100% independence
+- The remaining 5,924 skills keep bdocodex-sourced damage (cached in DB)
+- PvP%, description, and protection extraction: NOT achieved — the linking mechanism between damage data records and tooltip text string refs is unknown (only 29 out of 4,606 sub-records are hash-linked)
+- The tooltiptable.dbss has a complex relational structure: templates (hashes) are shared across multiple skills, with damage values stored in parallel arrays indexed by skill/rank. Without understanding the rank/level indexing, full extraction is not possible.
+- Files: data/paz-damage-genuine.json (790 verified), data/paz-damage-combined.json (1,114 total), scripts/paz-tools/extract-tooltiptable-full.py (full pipeline)
