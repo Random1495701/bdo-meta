@@ -3958,3 +3958,49 @@ Stage Summary:
 - Damage values NOT directly in params — likely in a separate parameter table
 - ICE cipher found but commandtooltip.dbss decryption failed (possible bug)
 - Need: Lua scripts (tooltip renderer), stringtable.bss, or .loc files to understand param mapping
+
+---
+Task ID: 18-LUA-SCRIPTS-AND-SKILLTYPE-ACTION-CONFIG
+Agent: orchestrator (z.ai code)
+Task: Use Lua scripts + stringtable.bss + loc files to find damage value storage
+
+Work Log:
+- Extracted luacscript.7z (3,433 compiled Lua scripts), dbssnew.7z (stringtable.bss + tooltiptable files), Locandeverything.7z (116 loc tables), ui_data.7z (25 XML files)
+- Found TOOLTIP LUA SCRIPTS in luacscript/x64/widget/tooltip/:
+  * panel_tooltip_skill.luac — skill tooltip renderer
+  * panel_tooltip_skillgroup.luac — skill group tooltip
+  * panel_tooltip_common.luac — common tooltip
+- Extracted STRING CONSTANTS from Lua bytecode — found KEY function names:
+  * getSkillTypeStaticStatus — gets skill type data from skilltype.dbss
+  * skillTypeStaticWrapper / skillTypeStaticStatusWrapper — wrapper object
+  * __eSkillTypeParam_Normal, __eSkillTypeParam_Inherit, __eSkillTypeParam_Awaken — THREE param types (Normal/Succession/Awakening)
+  * getDamage, getMaxDamage, getMinDamage, getHitCount, getMaxCount — damage/hit data retrieval
+  * getAttackResult, getAttackResultValue, getAttackType — attack data
+  * linkToolTipSkillTypeSS — links tooltip to skill type
+  * setTooltipData, tooltipDataType — tooltip data setting
+  * SkillCommandTooltip — skill command tooltip function
+- Found stringtable.bss: 7.2MB PABR, 92,897 strings — symbolic UI keys (LUA_*, like LUA_EDANIA_SYSTEM_TOOLTIP_6)
+- Loc table 10 (skills): 29,358 entries with ONLY name + description (fields 0, 16777216, 33554432) — NO damage values
+- Loc tables have 116 files — checked several, none contain damage values
+- Full hex dump of skill 97 (Bow Skill VI) skilltype action config (249 bytes):
+  * Contains icon path "New_Icon/04_PC_Skill/01_PC_Skill/03_PEW_Skill/PEW_Skill_1002.dds"
+  * Contains class name "RANGER_01" in UTF-16LE
+  * Exhaustive search for damage values (1252, 150, 76.89) as u32/u16/float/scaled — ZERO matches
+  * The damage values are NOT in the skilltype.dbss action config
+- CONCLUSION: The C++ getDamage() function does NOT read from skilltype.dbss directly.
+  It likely uses the skill key to look up a tooltiptable.dbss record, then reads damage
+  from that record's params. The tooltiptable IS the source, but the skill→tooltiptable
+  linking mechanism uses an unknown hash function.
+- commandtooltip.dbss is encrypted (non-PABR, high entropy). ICE decryption attempt failed
+  (my Python ICE port has a bug — the Go source is correct but my port doesn't produce PABR)
+- bdo-data-extractor's FORMATS.md does NOT document tooltiptable.dbss — it's unmapped
+
+Stage Summary:
+- The damage values ARE in tooltiptable.dbss (confirmed by bdocodex tip.php output)
+- The linking mechanism: skill key → [UNKNOWN HASH FUNCTION] → tooltiptable record hash → damage params
+- The hash function is in the game's C++ code (not in Lua scripts or binary tables)
+- Without decompiling the game's .exe, I cannot find the hash function
+- The bdo-data-extractor (open source Go tool) does NOT parse tooltiptable.dbss — confirming this is hard RE work
+- Loc files only have name + description — no damage values
+- stringtable.bss has symbolic UI keys — no damage values
+- Lua scripts show the API (getDamage, getHitCount, etc.) but the implementation is C++
