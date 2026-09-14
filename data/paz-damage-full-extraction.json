@@ -1,0 +1,542 @@
+{
+  "1134": {
+    "name": "Ground Smash III",
+    "matches": [
+      {
+        "record_offset": 31886,
+        "str_id": 1499,
+        "text": "기술 종료 시 {p0}초간 치명타 확률 증가 +{p1}%",
+        "sub_hash": 1068081152,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 35918,
+        "str_id": 1687,
+        "text": "점프 중 사용 시 {p0}초간 이동 속도 증가 +{p1}%",
+        "sub_hash": 1432058112,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 45158,
+        "str_id": 2114,
+        "text": "{p2}, {p3}, {p4} 타격 피해 {p0}% x {p1}",
+        "sub_hash": 1289797120,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 56729,
+        "str_id": 2646,
+        "text": "낙하 높이에 따라 기술의 총 피해량이 최대 {p0}%까지 상승합니다.",
+        "sub_hash": 2175069440,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "1872": {
+    "name": "Spirit's Shackles",
+    "matches": [
+      {
+        "record_offset": 1205,
+        "str_id": 57,
+        "text": "이동 중 타격 피해 {p0}% x {p1}, 최대 {p2}타격",
+        "sub_hash": 2784139520,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 12251,
+        "str_id": 580,
+        "text": "악시안의 치명타 확률 + {p0}%",
+        "sub_hash": 3458108928,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 21785,
+        "str_id": 1028,
+        "text": "기술 사용 시 {p0}초간 경직 저항 증가 +{p1}%",
+        "sub_hash": 622905600,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 27014,
+        "str_id": 1271,
+        "text": "{p0}초간 경직 저항 무시 +{p1}%",
+        "sub_hash": 1162072320,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 60320,
+        "str_id": 2816,
+        "text": "PVP에서 {p0}인 이상 타격 시 {p1}%씩 피해가 감소되며, 최소 ",
+        "sub_hash": 3960607744,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "2290": {
+    "name": "Kriegsmesser Training VII",
+    "matches": [
+      {
+        "record_offset": 31886,
+        "str_id": 1499,
+        "text": "기술 종료 시 {p0}초간 치명타 확률 증가 +{p1}%",
+        "sub_hash": 1068081152,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 35918,
+        "str_id": 1687,
+        "text": "점프 중 사용 시 {p0}초간 이동 속도 증가 +{p1}%",
+        "sub_hash": 1432058112,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 45158,
+        "str_id": 2114,
+        "text": "{p2}, {p3}, {p4} 타격 피해 {p0}% x {p1}",
+        "sub_hash": 1289797120,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 56729,
+        "str_id": 2646,
+        "text": "낙하 높이에 따라 기술의 총 피해량이 최대 {p0}%까지 상승합니다.",
+        "sub_hash": 2175069440,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 31886,
+        "str_id": 1499,
+        "text": "기술 종료 시 {p0}초간 치명타 확률 증가 +{p1}%",
+        "sub_hash": 1068081152,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1536,
+        "bdocodex_mult": 1
+      }
+    ]
+  },
+  "2721": {
+    "name": "Roaring Tiger IV",
+    "matches": [
+      {
+        "record_offset": 67124,
+        "str_id": 3130,
+        "text": "\\n각각의 오행의 영역 근처에 적이 있을 때, 해당 영역에 맞는 기술을 ",
+        "sub_hash": 1698909440,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 2048,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "2823": {
+    "name": "Swift Earthquake",
+    "matches": [
+      {
+        "record_offset": 45116,
+        "str_id": 2112,
+        "text": "{p2} 타격 피해 {p0}% x {p1}, 최대 {p3}타격",
+        "sub_hash": 1093331456,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1280,
+        "bdocodex_mult": 6
+      }
+    ]
+  },
+  "2825": {
+    "name": "Swift Earthquake",
+    "matches": [
+      {
+        "record_offset": 45116,
+        "str_id": 2112,
+        "text": "{p2} 타격 피해 {p0}% x {p1}, 최대 {p3}타격",
+        "sub_hash": 1093331456,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1280,
+        "bdocodex_mult": 6
+      }
+    ]
+  },
+  "2830": {
+    "name": "Legendary Beast's Claw",
+    "matches": [
+      {
+        "record_offset": 67124,
+        "str_id": 3130,
+        "text": "\\n각각의 오행의 영역 근처에 적이 있을 때, 해당 영역에 맞는 기술을 ",
+        "sub_hash": 1698909440,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 2048,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "3041": {
+    "name": "Absolute: Somersault",
+    "matches": [
+      {
+        "record_offset": 67124,
+        "str_id": 3130,
+        "text": "\\n각각의 오행의 영역 근처에 적이 있을 때, 해당 영역에 맞는 기술을 ",
+        "sub_hash": 1698909440,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 2048,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "3146": {
+    "name": "Absolute: Earth's Response",
+    "matches": [
+      {
+        "record_offset": 45116,
+        "str_id": 2112,
+        "text": "{p2} 타격 피해 {p0}% x {p1}, 최대 {p3}타격",
+        "sub_hash": 1093331456,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1280,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "3548": {
+    "name": "Black Spirit: Raging Thunder III",
+    "matches": [
+      {
+        "record_offset": 197,
+        "str_id": 9,
+        "text": "타격 성공 시 {p0}초간 바운드 저항 감소 {p1}%",
+        "sub_hash": 2614708480,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 512,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 890,
+        "str_id": 42,
+        "text": "추가 타격 성공 시 최대 신성력의 {p0}%만큼 추가 피해",
+        "sub_hash": 3671264000,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 512,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 1373,
+        "str_id": 65,
+        "text": "타격 피해 {p0}% x {p1}",
+        "sub_hash": 4178443264,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 512,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 2591,
+        "str_id": 123,
+        "text": "날아차기 타격 피해 {p0}% x {p1}",
+        "sub_hash": 464469504,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 512,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 2738,
+        "str_id": 130,
+        "text": "주변 타격 피해 {p0}% x {p1}",
+        "sub_hash": 2670592512,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 512,
+        "bdocodex_mult": 1
+      }
+    ]
+  },
+  "3831": {
+    "name": "Black Spirit: Cymbidium II",
+    "matches": [
+      {
+        "record_offset": 1205,
+        "str_id": 57,
+        "text": "이동 중 타격 피해 {p0}% x {p1}, 최대 {p2}타격",
+        "sub_hash": 2784139520,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 12251,
+        "str_id": 580,
+        "text": "악시안의 치명타 확률 + {p0}%",
+        "sub_hash": 3458108928,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 21785,
+        "str_id": 1028,
+        "text": "기술 사용 시 {p0}초간 경직 저항 증가 +{p1}%",
+        "sub_hash": 622905600,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 27014,
+        "str_id": 1271,
+        "text": "{p0}초간 경직 저항 무시 +{p1}%",
+        "sub_hash": 1162072320,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 60320,
+        "str_id": 2816,
+        "text": "PVP에서 {p0}인 이상 타격 시 {p1}%씩 피해가 감소되며, 최소 ",
+        "sub_hash": 3960607744,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1024,
+        "bdocodex_mult": 1
+      }
+    ]
+  },
+  "5793": {
+    "name": "Command: Fianchetto III",
+    "matches": [
+      {
+        "record_offset": 2654,
+        "str_id": 126,
+        "text": "타격 성공 시 {p0}초간 이동 속도 감소 {p1}%",
+        "sub_hash": 3850073344,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 3956,
+        "str_id": 188,
+        "text": "{p2} 회전 공격 시 {p0}초간 치명타 확률 증가 +{p1}%",
+        "sub_hash": 3371124480,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 4250,
+        "str_id": 202,
+        "text": "마그의 공격 피해 {p0}%",
+        "sub_hash": 3978841344,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 6329,
+        "str_id": 301,
+        "text": "타격 성공 시 {p0}초간 기절 저항 감소 {p1}%",
+        "sub_hash": 1642614528,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 1
+      },
+      {
+        "record_offset": 7673,
+        "str_id": 364,
+        "text": "{p1} 타격 치명타 확률 +{p0}%",
+        "sub_hash": 3671499520,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 1
+      }
+    ]
+  },
+  "6506": {
+    "name": "Wave Lash IV",
+    "matches": [
+      {
+        "record_offset": 45116,
+        "str_id": 2112,
+        "text": "{p2} 타격 피해 {p0}% x {p1}, 최대 {p3}타격",
+        "sub_hash": 1093331456,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1280,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "6717": {
+    "name": "Black Spirit: Crow's Mark III",
+    "matches": [
+      {
+        "record_offset": 239,
+        "str_id": 11,
+        "text": "일반 타격 피해 {p0}% x {p1}",
+        "sub_hash": 4029354240,
+        "position": "val1",
+        "multiplier": 0,
+        "bdocodex_pct": 3163,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "6855": {
+    "name": "Blazing Strike I",
+    "matches": [
+      {
+        "record_offset": 45116,
+        "str_id": 2112,
+        "text": "{p2} 타격 피해 {p0}% x {p1}, 최대 {p3}타격",
+        "sub_hash": 1093331456,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 1280,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "7542": {
+    "name": "Cloudcarve II",
+    "matches": [
+      {
+        "record_offset": 2654,
+        "str_id": 126,
+        "text": "타격 성공 시 {p0}초간 이동 속도 감소 {p1}%",
+        "sub_hash": 3850073344,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 3956,
+        "str_id": 188,
+        "text": "{p2} 회전 공격 시 {p0}초간 치명타 확률 증가 +{p1}%",
+        "sub_hash": 3371124480,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 4250,
+        "str_id": 202,
+        "text": "마그의 공격 피해 {p0}%",
+        "sub_hash": 3978841344,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 6329,
+        "str_id": 301,
+        "text": "타격 성공 시 {p0}초간 기절 저항 감소 {p1}%",
+        "sub_hash": 1642614528,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 2
+      },
+      {
+        "record_offset": 7673,
+        "str_id": 364,
+        "text": "{p1} 타격 치명타 확률 +{p0}%",
+        "sub_hash": 3671499520,
+        "position": "val2",
+        "multiplier": 1,
+        "bdocodex_pct": 768,
+        "bdocodex_mult": 2
+      }
+    ]
+  },
+  "7627": {
+    "name": "Prime: Sagoonja: Plum III",
+    "matches": [
+      {
+        "record_offset": 428,
+        "str_id": 20,
+        "text": "<표식 각인>\\n각인 타격 피해 {p0}% x 1\\nPVP 시 피해 적용",
+        "sub_hash": 3450515712,
+        "position": "val1",
+        "multiplier": 1,
+        "bdocodex_pct": 5497,
+        "bdocodex_mult": 3
+      }
+    ]
+  },
+  "7671": {
+    "name": "Black Spirit: Absolute: Stormfall",
+    "matches": [
+      {
+        "record_offset": 197,
+        "str_id": 9,
+        "text": "타격 성공 시 {p0}초간 바운드 저항 감소 {p1}%",
+        "sub_hash": 2614708480,
+        "position": "val1",
+        "multiplier": 1,
+        "bdocodex_pct": 2736,
+        "bdocodex_mult": 3
+      }
+    ]
+  }
+}

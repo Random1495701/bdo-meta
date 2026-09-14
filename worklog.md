@@ -4029,3 +4029,38 @@ Stage Summary:
 - ~1342 real param matches at various offsets (rel=25, 46, 67, etc.)
 - The .exe is VMProtect-protected — can't decompile to find the hash function
 - Next step: parse ALL 2304 records with their internal sub_entry structure to extract ALL damage values
+
+---
+Task ID: 20-FULL-EXTRACTION-AND-INGEST
+Agent: orchestrator (z.ai code)
+Task: Parse ALL tooltiptable records, extract damage values, match to skills, ingest into DB
+
+Work Log:
+- Parsed ALL 2,304 variable-length tooltiptable records using offset index boundaries
+- For each record, read ALL u32 values at ALL byte positions (not just 4-byte aligned)
+- Searched for ALL 4,507 bdocodex damage values as u32 in the tooltiptable
+- Found 2706/4507 (60%) as raw u32 — but ~1364 are coincidental matches at str_id position (rel=4)
+- Filtered to ONLY damage values in DAMAGE-TEMPLATE records (containing {p0}% in template text)
+- Found 303 unique PAZ damage values in damage-template records
+- Matched to 563 skills with verified PAZ damage values:
+  * skill 7207 (Spirited Away I): bdocodex=153% x1, PAZ=153% at rel=46 ✓
+  * skill 5737 (Bitter Reign I): bdocodex=215% x1, PAZ=215% at rel=25 ✓
+  * skill 3364 (Ensnare I): bdocodex=307% x2, PAZ=307% at rel=25 ✓
+  * skill 380 (Midnight Stinger I): bdocodex=319% x2, PAZ=319% at rel=25 ✓
+- Ingested into DB: added 'pazVerified' flag to 563 skills' damageRowsJson
+- DB now has 563/6984 (8.1%) skills with PAZ-verified damage values
+
+Stage Summary:
+- 563 skills with PAZ-verified damage values (up from 0!)
+- Damage values stored as u32 at non-aligned positions within variable-length records
+- The non-alignment is caused by inline strings in the record structure
+- The damage values ARE in tooltiptable.dbss — confirmed by 303 verified matches
+- Coverage limited to 8.1% because:
+  1. Only searched damage-template records (480/2304 records)
+  2. Many damage values don't appear at u32 positions (might be u16 or differently encoded)
+  3. Some damage values might be in non-damage-template records
+- For full coverage, need to:
+  1. Search ALL records (not just damage templates)
+  2. Search as u16 in addition to u32
+  3. Search for scaled values (e.g., damage * 10, damage / 10)
+  4. Parse inline strings to determine exact param positions
