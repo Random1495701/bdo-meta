@@ -4116,3 +4116,30 @@ Stage Summary:
 - 3,483/6,984 (49.9%) skills with PAZ-verified damage
 - Just shy of 50% coverage!
 - Remaining 50% likely in encrypted commandtooltip.dbss or computed at runtime
+
+---
+Task ID: 23-ICE-CIPHER-DEBUG-AND-COMMANDTOOLTIP
+Agent: orchestrator (z.ai code)
+Task: Debug ICE cipher using the REAL Go implementation + parse commandtooltip
+
+Work Log:
+- Downloaded and installed Go 1.23.4 (from go.dev)
+- Built bdo-data-extractor Go binary successfully
+- Used the REAL Go ICE cipher implementation (internal/paz/ice.go) to decrypt commandtooltip.dbss
+- RESULT: Even the Go implementation doesn't produce PABR! The file is NOT ICE-encrypted.
+- Test: encrypted "PABR" with ICE → got "2f5848497263d47e" — doesn't match file's first block "cd622bfc7fe9c8a4"
+- CONCLUSION: commandtooltip.dbss uses a DIFFERENT encryption (not ICE) or is just a non-PABR binary table
+- Parsed commandtooltipoffset.dbss using bdo-data-extractor's ParseOffsetIndex: 7,663 entries successfully parsed
+- Read first 5 commandtooltip records: all contain garbled data (high entropy, no meaningful Korean text)
+- The bdo-data-extractor source does NOT reference commandtooltip anywhere — it's unmapped territory
+- The FORMATS.md does NOT mention commandtooltip — it's not documented
+
+Stage Summary:
+- ICE cipher is correctly implemented in both Go and Python — the file is simply NOT ICE-encrypted
+- commandtooltip.dbss uses unknown encryption or format — can't decode it
+- The bdo-data-extractor tool doesn't handle commandtooltip at all
+- Current status: 3,483/6,984 (49.9%) skills with PAZ-verified damage from tooltiptable.dbss
+- The remaining 50% likely have damage values that are:
+  1. In commandtooltip.dbss (encrypted, can't access)
+  2. Computed at runtime by the C++ engine
+  3. Stored in a different encoding not yet tried
