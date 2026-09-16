@@ -1,0 +1,1213 @@
+[
+  {
+    "record_index": 0,
+    "icon_skill_id": 3859,
+    "matched_skill_id": 3859,
+    "matched_by": "icon_id",
+    "kr_name": "데구르르"
+  },
+  {
+    "record_index": 3,
+    "icon_skill_id": 8131,
+    "matched_skill_id": 8131,
+    "matched_by": "icon_id",
+    "kr_name": "융합 중력핵"
+  },
+  {
+    "record_index": 4,
+    "icon_skill_id": 744,
+    "matched_skill_id": 744,
+    "matched_by": "icon_id",
+    "kr_name": "천상의 울림 I"
+  },
+  {
+    "record_index": 7,
+    "icon_skill_id": 2449,
+    "matched_skill_id": 2449,
+    "matched_by": "icon_id",
+    "kr_name": "금강 I"
+  },
+  {
+    "record_index": 9,
+    "icon_skill_id": 6173,
+    "matched_skill_id": 6173,
+    "matched_by": "icon_id",
+    "kr_name": "아토르의 응징 I"
+  },
+  {
+    "record_index": 12,
+    "icon_skill_id": 1785,
+    "matched_skill_id": 1785,
+    "matched_by": "icon_id",
+    "kr_name": "망자 사냥 I"
+  },
+  {
+    "record_index": 13,
+    "icon_skill_id": 5130,
+    "matched_skill_id": 5130,
+    "matched_by": "icon_id",
+    "kr_name": "검은 피의 도륙"
+  },
+  {
+    "record_index": 22,
+    "icon_skill_id": 2700,
+    "matched_skill_id": 2700,
+    "matched_by": "icon_id",
+    "kr_name": "속박"
+  },
+  {
+    "record_index": 25,
+    "icon_skill_id": 4097,
+    "matched_skill_id": 4097,
+    "matched_by": "icon_id",
+    "kr_name": "강하게 더 세게!"
+  },
+  {
+    "record_index": 26,
+    "icon_skill_id": 8180,
+    "matched_skill_id": 8180,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 황금 파도 I"
+  },
+  {
+    "record_index": 27,
+    "icon_skill_id": 4232,
+    "matched_skill_id": 4232,
+    "matched_by": "icon_id",
+    "kr_name": "우리가 주인공! I"
+  },
+  {
+    "record_index": 29,
+    "icon_skill_id": 3276,
+    "matched_skill_id": 3276,
+    "matched_by": "icon_id",
+    "kr_name": "광란 I"
+  },
+  {
+    "record_index": 32,
+    "icon_skill_id": 6826,
+    "matched_skill_id": 6826,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 벼락불 파동 I"
+  },
+  {
+    "record_index": 34,
+    "icon_skill_id": 199,
+    "matched_skill_id": 199,
+    "matched_by": "icon_id",
+    "kr_name": "그림자 차기"
+  },
+  {
+    "record_index": 38,
+    "icon_skill_id": 765,
+    "matched_skill_id": 765,
+    "matched_by": "icon_id",
+    "kr_name": "천상의 창 I"
+  },
+  {
+    "record_index": 42,
+    "icon_skill_id": 1698,
+    "matched_skill_id": 1698,
+    "matched_by": "icon_id",
+    "kr_name": "망자 참수 I"
+  },
+  {
+    "record_index": 43,
+    "icon_skill_id": 1319,
+    "matched_skill_id": 1319,
+    "matched_by": "icon_id",
+    "kr_name": "장님 찌르기 I"
+  },
+  {
+    "record_index": 48,
+    "icon_skill_id": 5082,
+    "matched_skill_id": 5082,
+    "matched_by": "icon_id",
+    "kr_name": "사지 절단 I"
+  },
+  {
+    "record_index": 54,
+    "icon_skill_id": 90,
+    "matched_skill_id": 90,
+    "matched_by": "icon_id",
+    "kr_name": "분노 흡수"
+  },
+  {
+    "record_index": 56,
+    "icon_skill_id": 2490,
+    "matched_skill_id": 2490,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 흉포한 이빨"
+  },
+  {
+    "record_index": 58,
+    "icon_skill_id": 1319,
+    "matched_skill_id": 1319,
+    "matched_by": "icon_id",
+    "kr_name": "장님 찌르기 I"
+  },
+  {
+    "record_index": 60,
+    "icon_skill_id": 6840,
+    "matched_skill_id": 6840,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 마크타난의 날개"
+  },
+  {
+    "record_index": 62,
+    "icon_skill_id": 918,
+    "matched_skill_id": 918,
+    "matched_by": "icon_id",
+    "kr_name": "도깨비 걸음"
+  },
+  {
+    "record_index": 63,
+    "icon_skill_id": 6451,
+    "matched_skill_id": 6451,
+    "matched_by": "icon_id",
+    "kr_name": "바람결에 스민 서슬"
+  },
+  {
+    "record_index": 64,
+    "icon_skill_id": 909,
+    "matched_skill_id": 909,
+    "matched_by": "icon_id",
+    "kr_name": "공간 이동"
+  },
+  {
+    "record_index": 70,
+    "icon_skill_id": 1017,
+    "matched_skill_id": 1017,
+    "matched_by": "icon_id",
+    "kr_name": "회피 이동"
+  },
+  {
+    "record_index": 71,
+    "icon_skill_id": 3458,
+    "matched_skill_id": 3458,
+    "matched_by": "icon_id",
+    "kr_name": "광명의 태궁"
+  },
+  {
+    "record_index": 73,
+    "icon_skill_id": 8912,
+    "matched_skill_id": 8912,
+    "matched_by": "icon_id",
+    "kr_name": "흑정령 : 속사 I"
+  },
+  {
+    "record_index": 75,
+    "icon_skill_id": 8639,
+    "matched_skill_id": 8639,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 안개 흐뜨리기"
+  },
+  {
+    "record_index": 77,
+    "icon_skill_id": 2296,
+    "matched_skill_id": 2296,
+    "matched_by": "icon_id",
+    "kr_name": "자욱한 연무 I"
+  },
+  {
+    "record_index": 79,
+    "icon_skill_id": 9035,
+    "matched_skill_id": 9035,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 연사"
+  },
+  {
+    "record_index": 89,
+    "icon_skill_id": 9528,
+    "matched_skill_id": 9528,
+    "matched_by": "icon_id",
+    "kr_name": "뭉개주마 I"
+  },
+  {
+    "record_index": 92,
+    "icon_skill_id": 92,
+    "matched_skill_id": 92,
+    "matched_by": "icon_id",
+    "kr_name": "긴급 회피"
+  },
+  {
+    "record_index": 94,
+    "icon_skill_id": 1017,
+    "matched_skill_id": 1017,
+    "matched_by": "icon_id",
+    "kr_name": "회피 이동"
+  },
+  {
+    "record_index": 95,
+    "icon_skill_id": 1017,
+    "matched_skill_id": 1017,
+    "matched_by": "icon_id",
+    "kr_name": "회피 이동"
+  },
+  {
+    "record_index": 97,
+    "icon_skill_id": 8912,
+    "matched_skill_id": 8912,
+    "matched_by": "icon_id",
+    "kr_name": "속사 I"
+  },
+  {
+    "record_index": 98,
+    "icon_skill_id": 1023,
+    "matched_skill_id": 1023,
+    "matched_by": "icon_id",
+    "kr_name": "지면 강타 I"
+  },
+  {
+    "record_index": 100,
+    "icon_skill_id": 1017,
+    "matched_skill_id": 1017,
+    "matched_by": "icon_id",
+    "kr_name": "회피 이동"
+  },
+  {
+    "record_index": 101,
+    "icon_skill_id": 8991,
+    "matched_skill_id": 8991,
+    "matched_by": "icon_id",
+    "kr_name": "로켓 작열 I"
+  },
+  {
+    "record_index": 107,
+    "icon_skill_id": 91,
+    "matched_skill_id": 91,
+    "matched_by": "icon_id",
+    "kr_name": "분노 전이"
+  },
+  {
+    "record_index": 112,
+    "icon_skill_id": 993,
+    "matched_skill_id": 993,
+    "matched_by": "icon_id",
+    "kr_name": "전장의 울림"
+  },
+  {
+    "record_index": 115,
+    "icon_skill_id": 9575,
+    "matched_skill_id": 9575,
+    "matched_by": "icon_id",
+    "kr_name": "근두운"
+  },
+  {
+    "record_index": 116,
+    "icon_skill_id": 712,
+    "matched_skill_id": 712,
+    "matched_by": "icon_id",
+    "kr_name": "찍어 차기 I"
+  },
+  {
+    "record_index": 119,
+    "icon_skill_id": 1020,
+    "matched_skill_id": 1020,
+    "matched_by": "icon_id",
+    "kr_name": "강타 I"
+  },
+  {
+    "record_index": 121,
+    "icon_skill_id": 1025,
+    "matched_skill_id": 1025,
+    "matched_by": "icon_id",
+    "kr_name": "좌우 베기 I"
+  },
+  {
+    "record_index": 129,
+    "icon_skill_id": 1738,
+    "matched_skill_id": 1738,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 망자 가르기"
+  },
+  {
+    "record_index": 130,
+    "icon_skill_id": 1015,
+    "matched_skill_id": 1015,
+    "matched_by": "icon_id",
+    "kr_name": "우직한 칼날 바람 I"
+  },
+  {
+    "record_index": 132,
+    "icon_skill_id": 1008,
+    "matched_skill_id": 1008,
+    "matched_by": "icon_id",
+    "kr_name": "숨을 찢는 화살 I"
+  },
+  {
+    "record_index": 133,
+    "icon_skill_id": 2960,
+    "matched_skill_id": 2960,
+    "matched_by": "icon_id",
+    "kr_name": "운무림 I"
+  },
+  {
+    "record_index": 134,
+    "icon_skill_id": 2145,
+    "matched_skill_id": 2145,
+    "matched_by": "icon_id",
+    "kr_name": "희연무 I"
+  },
+  {
+    "record_index": 139,
+    "icon_skill_id": 1012,
+    "matched_skill_id": 1012,
+    "matched_by": "icon_id",
+    "kr_name": "회피 사격 I"
+  },
+  {
+    "record_index": 141,
+    "icon_skill_id": 2799,
+    "matched_skill_id": 2799,
+    "matched_by": "icon_id",
+    "kr_name": "기상 I"
+  },
+  {
+    "record_index": 147,
+    "icon_skill_id": 1006,
+    "matched_skill_id": 1006,
+    "matched_by": "icon_id",
+    "kr_name": "바람 모아쏘기 I"
+  },
+  {
+    "record_index": 150,
+    "icon_skill_id": 1388,
+    "matched_skill_id": 1388,
+    "matched_by": "icon_id",
+    "kr_name": "이동 사격 I"
+  },
+  {
+    "record_index": 155,
+    "icon_skill_id": 5891,
+    "matched_skill_id": 5891,
+    "matched_by": "icon_id",
+    "kr_name": "혜성 I"
+  },
+  {
+    "record_index": 158,
+    "icon_skill_id": 5902,
+    "matched_skill_id": 5902,
+    "matched_by": "icon_id",
+    "kr_name": "왕실 검술 : 속 I"
+  },
+  {
+    "record_index": 161,
+    "icon_skill_id": 1890,
+    "matched_skill_id": 1890,
+    "matched_by": "icon_id",
+    "kr_name": "대자연의 전율 I"
+  },
+  {
+    "record_index": 163,
+    "icon_skill_id": 1050,
+    "matched_skill_id": 1050,
+    "matched_by": "icon_id",
+    "kr_name": "그림자 분출 I"
+  },
+  {
+    "record_index": 165,
+    "icon_skill_id": 1055,
+    "matched_skill_id": 1055,
+    "matched_by": "icon_id",
+    "kr_name": "밤 까마귀 I"
+  },
+  {
+    "record_index": 167,
+    "icon_skill_id": 1052,
+    "matched_skill_id": 1052,
+    "matched_by": "icon_id",
+    "kr_name": "멸망의 꿈 I"
+  },
+  {
+    "record_index": 168,
+    "icon_skill_id": 7533,
+    "matched_skill_id": 7533,
+    "matched_by": "icon_id",
+    "kr_name": "사군자 : 죽 I"
+  },
+  {
+    "record_index": 171,
+    "icon_skill_id": 2061,
+    "matched_skill_id": 2061,
+    "matched_by": "icon_id",
+    "kr_name": "화월만개 I"
+  },
+  {
+    "record_index": 172,
+    "icon_skill_id": 2845,
+    "matched_skill_id": 2845,
+    "matched_by": "icon_id",
+    "kr_name": "전장을 꿰뚫는 창"
+  },
+  {
+    "record_index": 175,
+    "icon_skill_id": 1455,
+    "matched_skill_id": 1455,
+    "matched_by": "icon_id",
+    "kr_name": "추격 I"
+  },
+  {
+    "record_index": 176,
+    "icon_skill_id": 1056,
+    "matched_skill_id": 1056,
+    "matched_by": "icon_id",
+    "kr_name": "어둠의 연격 I"
+  },
+  {
+    "record_index": 177,
+    "icon_skill_id": 3357,
+    "matched_skill_id": 3357,
+    "matched_by": "icon_id",
+    "kr_name": "빗발치는 화살 I"
+  },
+  {
+    "record_index": 184,
+    "icon_skill_id": 1798,
+    "matched_skill_id": 1798,
+    "matched_by": "icon_id",
+    "kr_name": "휘몰아치는 어둠 I"
+  },
+  {
+    "record_index": 187,
+    "icon_skill_id": 585,
+    "matched_skill_id": 585,
+    "matched_by": "icon_id",
+    "kr_name": "어둠의 파도 I"
+  },
+  {
+    "record_index": 191,
+    "icon_skill_id": 1798,
+    "matched_skill_id": 1798,
+    "matched_by": "icon_id",
+    "kr_name": "상단 차기"
+  },
+  {
+    "record_index": 194,
+    "icon_skill_id": 2399,
+    "matched_skill_id": 2399,
+    "matched_by": "icon_id",
+    "kr_name": "정령의 유산 I"
+  },
+  {
+    "record_index": 196,
+    "icon_skill_id": 6794,
+    "matched_skill_id": 6794,
+    "matched_by": "icon_id",
+    "kr_name": "지천붕괴"
+  },
+  {
+    "record_index": 201,
+    "icon_skill_id": 1032,
+    "matched_skill_id": 1032,
+    "matched_by": "icon_id",
+    "kr_name": "공포의 군림자 I"
+  },
+  {
+    "record_index": 206,
+    "icon_skill_id": 1017,
+    "matched_skill_id": 1017,
+    "matched_by": "icon_id",
+    "kr_name": "회피 이동"
+  },
+  {
+    "record_index": 208,
+    "icon_skill_id": 1830,
+    "matched_skill_id": 1830,
+    "matched_by": "icon_id",
+    "kr_name": "황폐화 I"
+  },
+  {
+    "record_index": 210,
+    "icon_skill_id": 6465,
+    "matched_skill_id": 6465,
+    "matched_by": "icon_id",
+    "kr_name": "땅울음 I"
+  },
+  {
+    "record_index": 214,
+    "icon_skill_id": 1853,
+    "matched_skill_id": 1853,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 분열포"
+  },
+  {
+    "record_index": 217,
+    "icon_skill_id": 287,
+    "matched_skill_id": 287,
+    "matched_by": "icon_id",
+    "kr_name": "낙하하는 바위 I"
+  },
+  {
+    "record_index": 221,
+    "icon_skill_id": 8776,
+    "matched_skill_id": 8776,
+    "matched_by": "icon_id",
+    "kr_name": "도끼질"
+  },
+  {
+    "record_index": 223,
+    "icon_skill_id": 918,
+    "matched_skill_id": 918,
+    "matched_by": "icon_id",
+    "kr_name": "도깨비 걸음 I"
+  },
+  {
+    "record_index": 225,
+    "icon_skill_id": 6519,
+    "matched_skill_id": 6519,
+    "matched_by": "icon_id",
+    "kr_name": "폭풍해일 I"
+  },
+  {
+    "record_index": 226,
+    "icon_skill_id": 1227,
+    "matched_skill_id": 1227,
+    "matched_by": "icon_id",
+    "kr_name": "공간 벼락 I"
+  },
+  {
+    "record_index": 228,
+    "icon_skill_id": 8682,
+    "matched_skill_id": 8682,
+    "matched_by": "icon_id",
+    "kr_name": "깃털 구름"
+  },
+  {
+    "record_index": 232,
+    "icon_skill_id": 1055,
+    "matched_skill_id": 1055,
+    "matched_by": "icon_id",
+    "kr_name": "밤 까마귀"
+  },
+  {
+    "record_index": 235,
+    "icon_skill_id": 6682,
+    "matched_skill_id": 6682,
+    "matched_by": "icon_id",
+    "kr_name": "수면을 꿰뚫는 소살"
+  },
+  {
+    "record_index": 236,
+    "icon_skill_id": 1941,
+    "matched_skill_id": 1941,
+    "matched_by": "icon_id",
+    "kr_name": "신수 걸음"
+  },
+  {
+    "record_index": 239,
+    "icon_skill_id": 1222,
+    "matched_skill_id": 1222,
+    "matched_by": "icon_id",
+    "kr_name": "나무 오르기 I"
+  },
+  {
+    "record_index": 242,
+    "icon_skill_id": 2784,
+    "matched_skill_id": 2784,
+    "matched_by": "icon_id",
+    "kr_name": "파공 I"
+  },
+  {
+    "record_index": 250,
+    "icon_skill_id": 2761,
+    "matched_skill_id": 2761,
+    "matched_by": "icon_id",
+    "kr_name": "비상각"
+  },
+  {
+    "record_index": 253,
+    "icon_skill_id": 5881,
+    "matched_skill_id": 5881,
+    "matched_by": "icon_id",
+    "kr_name": "베어내는 고리"
+  },
+  {
+    "record_index": 257,
+    "icon_skill_id": 6454,
+    "matched_skill_id": 6454,
+    "matched_by": "icon_id",
+    "kr_name": "구름 찢기"
+  },
+  {
+    "record_index": 263,
+    "icon_skill_id": 2008,
+    "matched_skill_id": 2008,
+    "matched_by": "icon_id",
+    "kr_name": "용염진 I"
+  },
+  {
+    "record_index": 267,
+    "icon_skill_id": 2443,
+    "matched_skill_id": 2443,
+    "matched_by": "icon_id",
+    "kr_name": "섬전보 I"
+  },
+  {
+    "record_index": 268,
+    "icon_skill_id": 2483,
+    "matched_skill_id": 2483,
+    "matched_by": "icon_id",
+    "kr_name": "태백 차기 I"
+  },
+  {
+    "record_index": 283,
+    "icon_skill_id": 401,
+    "matched_skill_id": 401,
+    "matched_by": "icon_id",
+    "kr_name": "격풍 I"
+  },
+  {
+    "record_index": 286,
+    "icon_skill_id": 1275,
+    "matched_skill_id": 1275,
+    "matched_by": "icon_id",
+    "kr_name": "각수 I"
+  },
+  {
+    "record_index": 287,
+    "icon_skill_id": 2263,
+    "matched_skill_id": 2263,
+    "matched_by": "icon_id",
+    "kr_name": "할퀴는 광기 I"
+  },
+  {
+    "record_index": 290,
+    "icon_skill_id": 2672,
+    "matched_skill_id": 2481,
+    "matched_by": "krname",
+    "kr_name": "웅크린 늑대"
+  },
+  {
+    "record_index": 292,
+    "icon_skill_id": 2277,
+    "matched_skill_id": 2277,
+    "matched_by": "icon_id",
+    "kr_name": "솟구치는 어둠 I"
+  },
+  {
+    "record_index": 302,
+    "icon_skill_id": 3267,
+    "matched_skill_id": 3267,
+    "matched_by": "icon_id",
+    "kr_name": "대지의 상처"
+  },
+  {
+    "record_index": 308,
+    "icon_skill_id": 1455,
+    "matched_skill_id": 1455,
+    "matched_by": "icon_id",
+    "kr_name": "추격 I"
+  },
+  {
+    "record_index": 310,
+    "icon_skill_id": 1275,
+    "matched_skill_id": 1275,
+    "matched_by": "icon_id",
+    "kr_name": "각수 I"
+  },
+  {
+    "record_index": 316,
+    "icon_skill_id": 2050,
+    "matched_skill_id": 2050,
+    "matched_by": "icon_id",
+    "kr_name": "눈꽃덩이 I"
+  },
+  {
+    "record_index": 322,
+    "icon_skill_id": 6892,
+    "matched_skill_id": 6892,
+    "matched_by": "icon_id",
+    "kr_name": "마크타난의 숨결 I"
+  },
+  {
+    "record_index": 323,
+    "icon_skill_id": 2349,
+    "matched_skill_id": 2349,
+    "matched_by": "icon_id",
+    "kr_name": "어스름 I"
+  },
+  {
+    "record_index": 326,
+    "icon_skill_id": 2631,
+    "matched_skill_id": 2631,
+    "matched_by": "icon_id",
+    "kr_name": "섬전보 I"
+  },
+  {
+    "record_index": 331,
+    "icon_skill_id": 2718,
+    "matched_skill_id": 2718,
+    "matched_by": "icon_id",
+    "kr_name": "호포 I"
+  },
+  {
+    "record_index": 333,
+    "icon_skill_id": 2637,
+    "matched_skill_id": 2637,
+    "matched_by": "icon_id",
+    "kr_name": "금강 I"
+  },
+  {
+    "record_index": 334,
+    "icon_skill_id": 2732,
+    "matched_skill_id": 2732,
+    "matched_by": "icon_id",
+    "kr_name": "아랑유운"
+  },
+  {
+    "record_index": 336,
+    "icon_skill_id": 2788,
+    "matched_skill_id": 2788,
+    "matched_by": "icon_id",
+    "kr_name": "수장 I"
+  },
+  {
+    "record_index": 347,
+    "icon_skill_id": 776,
+    "matched_skill_id": 776,
+    "matched_by": "icon_id",
+    "kr_name": "징벌 I"
+  },
+  {
+    "record_index": 350,
+    "icon_skill_id": 736,
+    "matched_skill_id": 736,
+    "matched_by": "icon_id",
+    "kr_name": "방패 추격 I"
+  },
+  {
+    "record_index": 352,
+    "icon_skill_id": 1487,
+    "matched_skill_id": 1025,
+    "matched_by": "krname",
+    "kr_name": "좌우 베기 I"
+  },
+  {
+    "record_index": 369,
+    "icon_skill_id": 2894,
+    "matched_skill_id": 2894,
+    "matched_by": "icon_id",
+    "kr_name": "바위 밀치기"
+  },
+  {
+    "record_index": 374,
+    "icon_skill_id": 2125,
+    "matched_skill_id": 2125,
+    "matched_by": "icon_id",
+    "kr_name": "신인분격 I"
+  },
+  {
+    "record_index": 375,
+    "icon_skill_id": 7037,
+    "matched_skill_id": 7037,
+    "matched_by": "icon_id",
+    "kr_name": "대지를 가르는 포효 I"
+  },
+  {
+    "record_index": 383,
+    "icon_skill_id": 3423,
+    "matched_skill_id": 3423,
+    "matched_by": "icon_id",
+    "kr_name": "심판의 날개 I"
+  },
+  {
+    "record_index": 401,
+    "icon_skill_id": 6850,
+    "matched_skill_id": 6850,
+    "matched_by": "icon_id",
+    "kr_name": "벼락불 휩쓸기 I"
+  },
+  {
+    "record_index": 406,
+    "icon_skill_id": 2409,
+    "matched_skill_id": 2409,
+    "matched_by": "icon_id",
+    "kr_name": "재앙의 씨앗 I"
+  },
+  {
+    "record_index": 410,
+    "icon_skill_id": 9678,
+    "matched_skill_id": 9678,
+    "matched_by": "icon_id",
+    "kr_name": "선봉 추격"
+  },
+  {
+    "record_index": 416,
+    "icon_skill_id": 4230,
+    "matched_skill_id": 4230,
+    "matched_by": "icon_id",
+    "kr_name": "해와 달과 별 I"
+  },
+  {
+    "record_index": 426,
+    "icon_skill_id": 4231,
+    "matched_skill_id": 4231,
+    "matched_by": "icon_id",
+    "kr_name": "하늘 높이 소리쳐 I"
+  },
+  {
+    "record_index": 428,
+    "icon_skill_id": 7518,
+    "matched_skill_id": 7518,
+    "matched_by": "icon_id",
+    "kr_name": "나비돌개 I"
+  },
+  {
+    "record_index": 431,
+    "icon_skill_id": 6675,
+    "matched_skill_id": 6675,
+    "matched_by": "icon_id",
+    "kr_name": "백병전 : 제압 I"
+  },
+  {
+    "record_index": 436,
+    "icon_skill_id": 3339,
+    "matched_skill_id": 3339,
+    "matched_by": "icon_id",
+    "kr_name": "유성우 I"
+  },
+  {
+    "record_index": 444,
+    "icon_skill_id": 3949,
+    "matched_skill_id": 3949,
+    "matched_by": "icon_id",
+    "kr_name": "루트라곤의 부름 I"
+  },
+  {
+    "record_index": 445,
+    "icon_skill_id": 7589,
+    "matched_skill_id": 7589,
+    "matched_by": "icon_id",
+    "kr_name": "나비구름 I"
+  },
+  {
+    "record_index": 451,
+    "icon_skill_id": 3928,
+    "matched_skill_id": 3928,
+    "matched_by": "icon_id",
+    "kr_name": "밑둥 차기"
+  },
+  {
+    "record_index": 453,
+    "icon_skill_id": 5517,
+    "matched_skill_id": 5517,
+    "matched_by": "icon_id",
+    "kr_name": "불복의 모래시계 I"
+  },
+  {
+    "record_index": 454,
+    "icon_skill_id": 3891,
+    "matched_skill_id": 3891,
+    "matched_by": "icon_id",
+    "kr_name": "폴짝 I"
+  },
+  {
+    "record_index": 456,
+    "icon_skill_id": 3885,
+    "matched_skill_id": 3885,
+    "matched_by": "icon_id",
+    "kr_name": "힘내!"
+  },
+  {
+    "record_index": 458,
+    "icon_skill_id": 4102,
+    "matched_skill_id": 4102,
+    "matched_by": "icon_id",
+    "kr_name": "여름비 I"
+  },
+  {
+    "record_index": 464,
+    "icon_skill_id": 5068,
+    "matched_skill_id": 5068,
+    "matched_by": "icon_id",
+    "kr_name": "대지 강타 I"
+  },
+  {
+    "record_index": 465,
+    "icon_skill_id": 5094,
+    "matched_skill_id": 5094,
+    "matched_by": "icon_id",
+    "kr_name": "견고한 접근 I"
+  },
+  {
+    "record_index": 468,
+    "icon_skill_id": 5175,
+    "matched_skill_id": 5175,
+    "matched_by": "icon_id",
+    "kr_name": "용아귀 I"
+  },
+  {
+    "record_index": 478,
+    "icon_skill_id": 5751,
+    "matched_skill_id": 5751,
+    "matched_by": "icon_id",
+    "kr_name": "크라툼의 방호 I"
+  },
+  {
+    "record_index": 481,
+    "icon_skill_id": 5776,
+    "matched_skill_id": 5776,
+    "matched_by": "icon_id",
+    "kr_name": "명령 : 피어오르는 얼음가시 I"
+  },
+  {
+    "record_index": 482,
+    "icon_skill_id": 6703,
+    "matched_skill_id": 6703,
+    "matched_by": "icon_id",
+    "kr_name": "바람을 누비는 소살"
+  },
+  {
+    "record_index": 484,
+    "icon_skill_id": 5920,
+    "matched_skill_id": 5920,
+    "matched_by": "icon_id",
+    "kr_name": "쏟아지는 별조각 I"
+  },
+  {
+    "record_index": 490,
+    "icon_skill_id": 6155,
+    "matched_skill_id": 6155,
+    "matched_by": "icon_id",
+    "kr_name": "대붕괴 I"
+  },
+  {
+    "record_index": 494,
+    "icon_skill_id": 6929,
+    "matched_skill_id": 6929,
+    "matched_by": "icon_id",
+    "kr_name": "푸른 맹습 I"
+  },
+  {
+    "record_index": 495,
+    "icon_skill_id": 6272,
+    "matched_skill_id": 6272,
+    "matched_by": "icon_id",
+    "kr_name": "전력 투창 I"
+  },
+  {
+    "record_index": 496,
+    "icon_skill_id": 9001,
+    "matched_skill_id": 9001,
+    "matched_by": "icon_id",
+    "kr_name": "정밀 사격 I"
+  },
+  {
+    "record_index": 497,
+    "icon_skill_id": 6316,
+    "matched_skill_id": 6316,
+    "matched_by": "icon_id",
+    "kr_name": "신벌의 대리자 I"
+  },
+  {
+    "record_index": 506,
+    "icon_skill_id": 6690,
+    "matched_skill_id": 6690,
+    "matched_by": "icon_id",
+    "kr_name": "까마귀의 표적 I"
+  },
+  {
+    "record_index": 507,
+    "icon_skill_id": 6693,
+    "matched_skill_id": 6693,
+    "matched_by": "icon_id",
+    "kr_name": "선장의 명령 : 개시! I"
+  },
+  {
+    "record_index": 508,
+    "icon_skill_id": 7685,
+    "matched_skill_id": 7685,
+    "matched_by": "icon_id",
+    "kr_name": "피어오르리"
+  },
+  {
+    "record_index": 517,
+    "icon_skill_id": 7010,
+    "matched_skill_id": 7037,
+    "matched_by": "krname",
+    "kr_name": "대지를 가르는 포효 I"
+  },
+  {
+    "record_index": 521,
+    "icon_skill_id": 7594,
+    "matched_skill_id": 7594,
+    "matched_by": "icon_id",
+    "kr_name": "사군자 : 국 I"
+  },
+  {
+    "record_index": 546,
+    "icon_skill_id": 2880,
+    "matched_skill_id": 2880,
+    "matched_by": "icon_id",
+    "kr_name": "해방된 어둠"
+  },
+  {
+    "record_index": 550,
+    "icon_skill_id": 8807,
+    "matched_skill_id": 8807,
+    "matched_by": "icon_id",
+    "kr_name": "내리꽂기"
+  },
+  {
+    "record_index": 552,
+    "icon_skill_id": 8794,
+    "matched_skill_id": 8794,
+    "matched_by": "icon_id",
+    "kr_name": "쇠 : 서늘 I"
+  },
+  {
+    "record_index": 554,
+    "icon_skill_id": 8790,
+    "matched_skill_id": 8790,
+    "matched_by": "icon_id",
+    "kr_name": "흙 : 심음 I"
+  },
+  {
+    "record_index": 556,
+    "icon_skill_id": 8806,
+    "matched_skill_id": 8806,
+    "matched_by": "icon_id",
+    "kr_name": "불 : 번짐"
+  },
+  {
+    "record_index": 558,
+    "icon_skill_id": 8938,
+    "matched_skill_id": 8938,
+    "matched_by": "icon_id",
+    "kr_name": "펼쳐지는 죽음 I"
+  },
+  {
+    "record_index": 566,
+    "icon_skill_id": 9044,
+    "matched_skill_id": 9044,
+    "matched_by": "icon_id",
+    "kr_name": "후방 기동 포격 I"
+  },
+  {
+    "record_index": 569,
+    "icon_skill_id": 9554,
+    "matched_skill_id": 9554,
+    "matched_by": "icon_id",
+    "kr_name": "불살라주마 I"
+  },
+  {
+    "record_index": 570,
+    "icon_skill_id": 9558,
+    "matched_skill_id": 9558,
+    "matched_by": "icon_id",
+    "kr_name": "메다꽂히거라 I"
+  },
+  {
+    "record_index": 574,
+    "icon_skill_id": 9677,
+    "matched_skill_id": 9677,
+    "matched_by": "icon_id",
+    "kr_name": "세워 막기"
+  },
+  {
+    "record_index": 575,
+    "icon_skill_id": 9686,
+    "matched_skill_id": 9686,
+    "matched_by": "icon_id",
+    "kr_name": "빗겨 올려 베기 I"
+  },
+  {
+    "record_index": 577,
+    "icon_skill_id": 9700,
+    "matched_skill_id": 9700,
+    "matched_by": "icon_id",
+    "kr_name": "흐름 : 파고들어 베기 I"
+  },
+  {
+    "record_index": 579,
+    "icon_skill_id": 9708,
+    "matched_skill_id": 9708,
+    "matched_by": "icon_id",
+    "kr_name": "연계 : 으스러뜨리기"
+  },
+  {
+    "record_index": 586,
+    "icon_skill_id": 9769,
+    "matched_skill_id": 9769,
+    "matched_by": "icon_id",
+    "kr_name": "신성한 맹약"
+  },
+  {
+    "record_index": 588,
+    "icon_skill_id": 9796,
+    "matched_skill_id": 9796,
+    "matched_by": "icon_id",
+    "kr_name": "단연한 과죄"
+  },
+  {
+    "record_index": 589,
+    "icon_skill_id": 9822,
+    "matched_skill_id": 9822,
+    "matched_by": "icon_id",
+    "kr_name": "단죄 : 내리꽂는 절망 I"
+  },
+  {
+    "record_index": 590,
+    "icon_skill_id": 2835,
+    "matched_skill_id": 2835,
+    "matched_by": "icon_id",
+    "kr_name": "돌진 찌르기"
+  },
+  {
+    "record_index": 600,
+    "icon_skill_id": 2897,
+    "matched_skill_id": 2897,
+    "matched_by": "icon_id",
+    "kr_name": "포식자의 사냥"
+  },
+  {
+    "record_index": 602,
+    "icon_skill_id": 2838,
+    "matched_skill_id": 2838,
+    "matched_by": "icon_id",
+    "kr_name": "좌우 베기"
+  },
+  {
+    "record_index": 604,
+    "icon_skill_id": 2841,
+    "matched_skill_id": 2841,
+    "matched_by": "icon_id",
+    "kr_name": "발차기"
+  },
+  {
+    "record_index": 605,
+    "icon_skill_id": 2836,
+    "matched_skill_id": 2836,
+    "matched_by": "icon_id",
+    "kr_name": "지면 강타"
+  },
+  {
+    "record_index": 611,
+    "icon_skill_id": 2872,
+    "matched_skill_id": 2872,
+    "matched_by": "icon_id",
+    "kr_name": "그림자 표적"
+  },
+  {
+    "record_index": 616,
+    "icon_skill_id": 2898,
+    "matched_skill_id": 2898,
+    "matched_by": "icon_id",
+    "kr_name": "몰아치는 벼락"
+  },
+  {
+    "record_index": 622,
+    "icon_skill_id": 3103,
+    "matched_skill_id": 3103,
+    "matched_by": "icon_id",
+    "kr_name": "연막"
+  },
+  {
+    "record_index": 624,
+    "icon_skill_id": 3127,
+    "matched_skill_id": 3127,
+    "matched_by": "icon_id",
+    "kr_name": "맹독 수리검 던지기"
+  }
+]

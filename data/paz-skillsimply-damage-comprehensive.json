@@ -1,0 +1,4427 @@
+{
+  "source": "skillsimply.dbss",
+  "description": "ALL damage value matches (including likely false positives)",
+  "note": "This file includes matches with small damage values (5, 10, 15, 20, 30, 50, 100) which are LIKELY FALSE POSITIVES (coincidental matches with skill level, max rank, modifier fields, etc.). For real verified damage values, see paz-skillsimply-damage.json (strict filter, dmg>=100).",
+  "total_skills_with_any_match": 218,
+  "records": {
+    "31": {
+      "skillId": 31,
+      "name": "Heuklang: Leaf Slash",
+      "damage": 20,
+      "byte_offset": 23,
+      "record_idx": 28758,
+      "skillKey": 2031617,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1347,
+      "all_dmg_values": [
+        1347,
+        1347,
+        1347,
+        1347,
+        2735,
+        2735,
+        2735,
+        2735,
+        20,
+        2
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "300": {
+      "skillId": 300,
+      "name": "Weakling Hunt IV",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 28879,
+      "skillKey": 19660801,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1765,
+      "all_dmg_values": [
+        1765,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        29,
+        41,
+        58
+      ]
+    },
+    "743": {
+      "skillId": 743,
+      "name": "Ultimate: Divine Power",
+      "damage": 54,
+      "byte_offset": 23,
+      "record_idx": 28218,
+      "skillKey": 48693249,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2277,
+      "all_dmg_values": [
+        2277,
+        100,
+        54
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "889": {
+      "skillId": 889,
+      "name": "Concentrated Magic Arrow III",
+      "damage": 2,
+      "byte_offset": 29,
+      "record_idx": 28541,
+      "skillKey": 58261505,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 899,
+      "all_dmg_values": [
+        899,
+        40,
+        2
+      ],
+      "all_match_byte_offsets": [
+        29
+      ]
+    },
+    "957": {
+      "skillId": 957,
+      "name": "Ninjutsu: Shadow Explosion V",
+      "damage": 54,
+      "byte_offset": 23,
+      "record_idx": 28347,
+      "skillKey": 62717953,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2284,
+      "all_dmg_values": [
+        2284,
+        54,
+        5,
+        80
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "970": {
+      "skillId": 970,
+      "name": "Ankle Cutter V",
+      "damage": 2,
+      "byte_offset": 29,
+      "record_idx": 28432,
+      "skillKey": 63569921,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 706,
+      "all_dmg_values": [
+        706,
+        100,
+        2
+      ],
+      "all_match_byte_offsets": [
+        29
+      ]
+    },
+    "1072": {
+      "skillId": 1072,
+      "name": "Heuklang: Whiplash",
+      "damage": 20,
+      "byte_offset": 23,
+      "record_idx": 27854,
+      "skillKey": 70254593,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4092,
+      "all_dmg_values": [
+        4092,
+        76,
+        5016,
+        20,
+        5
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "1171": {
+      "skillId": 1171,
+      "name": "Frenzied Destroyer VI",
+      "damage": 2,
+      "byte_offset": 29,
+      "record_idx": 27760,
+      "skillKey": 76742657,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 880,
+      "all_dmg_values": [
+        880,
+        1607,
+        100,
+        2,
+        5,
+        70
+      ],
+      "all_match_byte_offsets": [
+        29
+      ]
+    },
+    "1236": {
+      "skillId": 1236,
+      "name": "Throat-Burn III",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 27818,
+      "skillKey": 81002497,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1340,
+      "all_dmg_values": [
+        1340,
+        1340,
+        35,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        45,
+        67,
+        71
+      ]
+    },
+    "1237": {
+      "skillId": 1237,
+      "name": "Heuklang: Throat-Burn",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 27817,
+      "skillKey": 81068033,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3144,
+      "all_dmg_values": [
+        3144,
+        50,
+        1,
+        8607,
+        100,
+        2
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        63
+      ]
+    },
+    "1305": {
+      "skillId": 1305,
+      "name": "Heuklang: Upward Claw",
+      "damage": 20,
+      "byte_offset": 23,
+      "record_idx": 28117,
+      "skillKey": 85524481,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2656,
+      "all_dmg_values": [
+        2656,
+        2656,
+        20,
+        2,
+        4903,
+        4903,
+        50,
+        9
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "1314": {
+      "skillId": 1314,
+      "name": "Blooming",
+      "damage": 80,
+      "byte_offset": 71,
+      "record_idx": 28082,
+      "skillKey": 86114305,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1227,
+      "all_dmg_values": [
+        1227,
+        100,
+        80
+      ],
+      "all_match_byte_offsets": [
+        71
+      ]
+    },
+    "1323": {
+      "skillId": 1323,
+      "name": "Blooming: Phantom",
+      "damage": 80,
+      "byte_offset": 63,
+      "record_idx": 28073,
+      "skillKey": 86704129,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1227,
+      "all_dmg_values": [
+        1227,
+        948,
+        30,
+        80
+      ],
+      "all_match_byte_offsets": [
+        63
+      ]
+    },
+    "1346": {
+      "skillId": 1346,
+      "name": "Summon Heuklang X",
+      "damage": 5,
+      "byte_offset": 76,
+      "record_idx": 28161,
+      "skillKey": 88211457,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 773,
+      "all_dmg_values": [
+        773,
+        5
+      ],
+      "all_match_byte_offsets": [
+        76
+      ]
+    },
+    "1347": {
+      "skillId": 1347,
+      "name": "Summon Heuklang XI",
+      "damage": 5,
+      "byte_offset": 76,
+      "record_idx": 28160,
+      "skillKey": 88276993,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 933,
+      "all_dmg_values": [
+        933,
+        5
+      ],
+      "all_match_byte_offsets": [
+        76
+      ]
+    },
+    "1412": {
+      "skillId": 1412,
+      "name": "Swirling Darkness III",
+      "damage": 25,
+      "byte_offset": 85,
+      "record_idx": 27982,
+      "skillKey": 92536833,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6614,
+      "all_dmg_values": [
+        6614,
+        7143,
+        25,
+        35
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "1448": {
+      "skillId": 1448,
+      "name": "Ultimate: Blasting Gust",
+      "damage": 5,
+      "byte_offset": 58,
+      "record_idx": 27946,
+      "skillKey": 94896129,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 515,
+      "all_dmg_values": [
+        515,
+        1123,
+        100,
+        5,
+        70
+      ],
+      "all_match_byte_offsets": [
+        58
+      ]
+    },
+    "1512": {
+      "skillId": 1512,
+      "name": "Slice X",
+      "damage": 54,
+      "byte_offset": 23,
+      "record_idx": 28008,
+      "skillKey": 99090433,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2241,
+      "all_dmg_values": [
+        2241,
+        2241,
+        2241,
+        54
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "1557": {
+      "skillId": 1557,
+      "name": "Dragon Bite III",
+      "damage": 518,
+      "byte_offset": 28,
+      "record_idx": 27371,
+      "skillKey": 102039553,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 725,
+      "all_dmg_values": [
+        725,
+        518,
+        1692,
+        84
+      ],
+      "all_match_byte_offsets": [
+        28
+      ]
+    },
+    "1574": {
+      "skillId": 1574,
+      "name": "Chaos: Red Moon III",
+      "damage": 40,
+      "byte_offset": 23,
+      "record_idx": 27326,
+      "skillKey": 103153665,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1121,
+      "all_dmg_values": [
+        1121,
+        1121,
+        1121,
+        1121,
+        30,
+        5,
+        40
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "1680": {
+      "skillId": 1680,
+      "name": "Shuriken: Flight III",
+      "damage": 6,
+      "byte_offset": 62,
+      "record_idx": 27262,
+      "skillKey": 110100481,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 744,
+      "all_dmg_values": [
+        744,
+        1523,
+        6
+      ],
+      "all_match_byte_offsets": [
+        62,
+        80
+      ]
+    },
+    "1730": {
+      "skillId": 1730,
+      "name": "Flow: Knee Kick",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 27305,
+      "skillKey": 113377281,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3905,
+      "all_dmg_values": [
+        3905,
+        100,
+        10,
+        10,
+        77
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "1755": {
+      "skillId": 1755,
+      "name": "Flow: Ankle Break",
+      "damage": 5,
+      "byte_offset": 85,
+      "record_idx": 27310,
+      "skillKey": 115015681,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5043,
+      "all_dmg_values": [
+        5043,
+        50,
+        10,
+        15,
+        5
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "1800": {
+      "skillId": 1800,
+      "name": "Blade of Darkness",
+      "damage": 25,
+      "byte_offset": 85,
+      "record_idx": 27608,
+      "skillKey": 117964801,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 5187,
+      "all_dmg_values": [
+        5187,
+        25,
+        42,
+        928,
+        42
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "1836": {
+      "skillId": 1836,
+      "name": "Seismic Blast III",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 27572,
+      "skillKey": 120324097,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 7347,
+      "all_dmg_values": [
+        7347,
+        100,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        107
+      ]
+    },
+    "1840": {
+      "skillId": 1840,
+      "name": "Titan Blow IV",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 27600,
+      "skillKey": 120586241,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4304,
+      "all_dmg_values": [
+        4304,
+        6733,
+        100,
+        41,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "1853": {
+      "skillId": 1853,
+      "name": "Flow: Split Shot",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 27587,
+      "skillKey": 121438209,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4695,
+      "all_dmg_values": [
+        4695,
+        100,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "1921": {
+      "skillId": 1921,
+      "name": "Allround Spinner IV",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 27487,
+      "skillKey": 125894657,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5309,
+      "all_dmg_values": [
+        5309,
+        5309,
+        100,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "1938": {
+      "skillId": 1938,
+      "name": "Skyreach",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 27506,
+      "skillKey": 127008769,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2816,
+      "all_dmg_values": [
+        2816,
+        5632,
+        100,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "1966": {
+      "skillId": 1966,
+      "name": "Sacrum Ferit IV",
+      "damage": 7,
+      "byte_offset": 28,
+      "record_idx": 27446,
+      "skillKey": 128843777,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5110,
+      "all_dmg_values": [
+        5110,
+        5110,
+        5110,
+        6998,
+        100,
+        80,
+        7
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "1978": {
+      "skillId": 1978,
+      "name": "Blitz Stab",
+      "damage": 7,
+      "byte_offset": 54,
+      "record_idx": 27466,
+      "skillKey": 129630209,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 6108,
+      "all_dmg_values": [
+        6108,
+        100,
+        7
+      ],
+      "all_match_byte_offsets": [
+        54,
+        72
+      ]
+    },
+    "1979": {
+      "skillId": 1979,
+      "name": "Ultimate: Blitz Stab",
+      "damage": 7,
+      "byte_offset": 54,
+      "record_idx": 27465,
+      "skillKey": 129695745,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 6108,
+      "all_dmg_values": [
+        6108,
+        100,
+        7
+      ],
+      "all_match_byte_offsets": [
+        54,
+        76
+      ]
+    },
+    "2007": {
+      "skillId": 2007,
+      "name": "Crosscut IV",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 27565,
+      "skillKey": 131530753,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1336,
+      "all_dmg_values": [
+        1336,
+        3555,
+        50,
+        10,
+        3,
+        1,
+        2802,
+        65
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        59,
+        107
+      ]
+    },
+    "2014": {
+      "skillId": 2014,
+      "name": "Searing Slam III",
+      "damage": 7,
+      "byte_offset": 28,
+      "record_idx": 27558,
+      "skillKey": 131989505,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 7875,
+      "all_dmg_values": [
+        7875,
+        50,
+        7
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "2064": {
+      "skillId": 2064,
+      "name": "Ice Fang",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 26878,
+      "skillKey": 135266305,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 3492,
+      "all_dmg_values": [
+        3492,
+        50,
+        10,
+        22
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2079": {
+      "skillId": 2079,
+      "name": "Hidden Dagger Jutsu",
+      "damage": 2,
+      "byte_offset": 64,
+      "record_idx": 26867,
+      "skillKey": 136249345,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5028,
+      "all_dmg_values": [
+        5028,
+        100,
+        2
+      ],
+      "all_match_byte_offsets": [
+        64
+      ]
+    },
+    "2103": {
+      "skillId": 2103,
+      "name": "Flow: Execution",
+      "damage": 58,
+      "byte_offset": 23,
+      "record_idx": 26843,
+      "skillKey": 137822209,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4025,
+      "all_dmg_values": [
+        4025,
+        100,
+        58
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "2115": {
+      "skillId": 2115,
+      "name": "Vacuum Slash",
+      "damage": 8,
+      "byte_offset": 54,
+      "record_idx": 26927,
+      "skillKey": 138608641,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 3000,
+      "all_dmg_values": [
+        3000,
+        5070,
+        100,
+        69,
+        8
+      ],
+      "all_match_byte_offsets": [
+        54,
+        72
+      ]
+    },
+    "2116": {
+      "skillId": 2116,
+      "name": "Flow: Mach Explosion",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26922,
+      "skillKey": 138674177,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2225,
+      "all_dmg_values": [
+        2225,
+        8052,
+        100,
+        95,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        59,
+        107
+      ]
+    },
+    "2182": {
+      "skillId": 2182,
+      "name": "Equilibrium Break IV",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26732,
+      "skillKey": 142999553,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 7714,
+      "all_dmg_values": [
+        7714,
+        50,
+        6,
+        7714,
+        7714,
+        50,
+        6,
+        2652,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        59,
+        107
+      ]
+    },
+    "2206": {
+      "skillId": 2206,
+      "name": "Flow: Voltaic Tett",
+      "damage": 8,
+      "byte_offset": 54,
+      "record_idx": 26740,
+      "skillKey": 144572417,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 2136,
+      "all_dmg_values": [
+        2136,
+        25,
+        8
+      ],
+      "all_match_byte_offsets": [
+        54,
+        76
+      ]
+    },
+    "2228": {
+      "skillId": 2228,
+      "name": "Aqua Jail Explosion IV",
+      "damage": 45,
+      "byte_offset": 85,
+      "record_idx": 26714,
+      "skillKey": 146014209,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3312,
+      "all_dmg_values": [
+        3312,
+        100,
+        20,
+        45,
+        2094,
+        52,
+        2094,
+        52
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2245": {
+      "skillId": 2245,
+      "name": "Bolide of Destruction III",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 26793,
+      "skillKey": 147128321,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 10202,
+      "all_dmg_values": [
+        10202,
+        100,
+        37,
+        846,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "2247": {
+      "skillId": 2247,
+      "name": "Flow: Aqua Bomb",
+      "damage": 5,
+      "byte_offset": 85,
+      "record_idx": 26795,
+      "skillKey": 147259393,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5878,
+      "all_dmg_values": [
+        5878,
+        50,
+        72,
+        5,
+        70
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2335": {
+      "skillId": 2335,
+      "name": "Kamasylvia Slash IV",
+      "damage": 2,
+      "byte_offset": 29,
+      "record_idx": 27123,
+      "skillKey": 153026561,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1599,
+      "all_dmg_values": [
+        1599,
+        2665,
+        2
+      ],
+      "all_match_byte_offsets": [
+        29
+      ]
+    },
+    "2362": {
+      "skillId": 2362,
+      "name": "Hidden Strike III",
+      "damage": 8,
+      "byte_offset": 58,
+      "record_idx": 27096,
+      "skillKey": 154796033,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1644,
+      "all_dmg_values": [
+        1644,
+        8
+      ],
+      "all_match_byte_offsets": [
+        58,
+        68
+      ]
+    },
+    "2420": {
+      "skillId": 2420,
+      "name": "Cluster of Despair",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 27162,
+      "skillKey": 158597121,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 5679,
+      "all_dmg_values": [
+        5679,
+        50,
+        10,
+        40
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2421": {
+      "skillId": 2421,
+      "name": "Grip of Grudge",
+      "damage": 57,
+      "byte_offset": 23,
+      "record_idx": 27161,
+      "skillKey": 158662657,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 8122,
+      "all_dmg_values": [
+        8122,
+        100,
+        57
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "2576": {
+      "skillId": 2576,
+      "name": "Spiral Cannon III",
+      "damage": 8,
+      "byte_offset": 63,
+      "record_idx": 26368,
+      "skillKey": 168820737,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2941,
+      "all_dmg_values": [
+        2941,
+        2522,
+        8
+      ],
+      "all_match_byte_offsets": [
+        63
+      ]
+    },
+    "2579": {
+      "skillId": 2579,
+      "name": "Endless Explosion III",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 26369,
+      "skillKey": 169017345,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3199,
+      "all_dmg_values": [
+        3199,
+        3199,
+        20,
+        29,
+        1132,
+        97
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "2658": {
+      "skillId": 2658,
+      "name": "Soul Basher III",
+      "damage": 10,
+      "byte_offset": 62,
+      "record_idx": 26386,
+      "skillKey": 174194689,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1004,
+      "all_dmg_values": [
+        1004,
+        1506,
+        10,
+        25
+      ],
+      "all_match_byte_offsets": [
+        62,
+        80
+      ]
+    },
+    "2661": {
+      "skillId": 2661,
+      "name": "Ankle Hook III",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26379,
+      "skillKey": 174391297,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 729,
+      "all_dmg_values": [
+        729,
+        729,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        29,
+        41,
+        63
+      ]
+    },
+    "2664": {
+      "skillId": 2664,
+      "name": "Martial Deva III",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26376,
+      "skillKey": 174587905,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 762,
+      "all_dmg_values": [
+        762,
+        70,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        29,
+        41,
+        63
+      ]
+    },
+    "2670": {
+      "skillId": 2670,
+      "name": "Flow: Deathstrike",
+      "damage": 10,
+      "byte_offset": 54,
+      "record_idx": 26374,
+      "skillKey": 174981121,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1015,
+      "all_dmg_values": [
+        1015,
+        10
+      ],
+      "all_match_byte_offsets": [
+        54,
+        72
+      ]
+    },
+    "2679": {
+      "skillId": 2679,
+      "name": "Flow: Blowdrive",
+      "damage": 10,
+      "byte_offset": 54,
+      "record_idx": 26397,
+      "skillKey": 175570945,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 796,
+      "all_dmg_values": [
+        796,
+        100,
+        10,
+        10,
+        34
+      ],
+      "all_match_byte_offsets": [
+        54,
+        72
+      ]
+    },
+    "2685": {
+      "skillId": 2685,
+      "name": "Flow: Recoil Slam",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26387,
+      "skillKey": 175964161,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1146,
+      "all_dmg_values": [
+        1146,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        107
+      ]
+    },
+    "2802": {
+      "skillId": 2802,
+      "name": "Rising Dragon IV",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26275,
+      "skillKey": 183631873,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 8723,
+      "all_dmg_values": [
+        8723,
+        50,
+        1,
+        12597,
+        50,
+        11
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        59,
+        107
+      ]
+    },
+    "2843": {
+      "skillId": 2843,
+      "name": "Absolute: Counter",
+      "damage": 57,
+      "byte_offset": 23,
+      "record_idx": 26617,
+      "skillKey": 186318849,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1436,
+      "all_dmg_values": [
+        1436,
+        1436,
+        1652,
+        100,
+        42,
+        57,
+        89
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "2867": {
+      "skillId": 2867,
+      "name": "Absolute: Dagger of Protection",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 26593,
+      "skillKey": 187891713,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 757,
+      "all_dmg_values": [
+        757,
+        757,
+        757,
+        2180,
+        10,
+        10
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2882": {
+      "skillId": 2882,
+      "name": "Absolute: Crow Flare",
+      "damage": 14,
+      "byte_offset": 85,
+      "record_idx": 26672,
+      "skillKey": 188874753,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1705,
+      "all_dmg_values": [
+        1705,
+        10,
+        10,
+        14
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2889": {
+      "skillId": 2889,
+      "name": "Absolute: Fearsome Tyrant",
+      "damage": 15,
+      "byte_offset": 85,
+      "record_idx": 26661,
+      "skillKey": 189333505,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1823,
+      "all_dmg_values": [
+        1823,
+        15,
+        85
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2890": {
+      "skillId": 2890,
+      "name": "Absolute: Storming Beast",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 26664,
+      "skillKey": 189399041,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2193,
+      "all_dmg_values": [
+        2193,
+        1424,
+        100,
+        10,
+        10,
+        10
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2893": {
+      "skillId": 2893,
+      "name": "Absolute: Headbutt",
+      "damage": 5,
+      "byte_offset": 28,
+      "record_idx": 26657,
+      "skillKey": 189595649,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2252,
+      "all_dmg_values": [
+        2252,
+        4505,
+        5
+      ],
+      "all_match_byte_offsets": [
+        28,
+        72
+      ]
+    },
+    "2902": {
+      "skillId": 2902,
+      "name": "Absolute: Weakling Hunt",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26684,
+      "skillKey": 190185473,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2628,
+      "all_dmg_values": [
+        2628,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        28,
+        37,
+        54
+      ]
+    },
+    "2903": {
+      "skillId": 2903,
+      "name": "Absolute: Corpse Storm",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26683,
+      "skillKey": 190251009,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2103,
+      "all_dmg_values": [
+        2103,
+        2103,
+        1607,
+        100,
+        1,
+        1,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        28,
+        37,
+        54
+      ]
+    },
+    "2924": {
+      "skillId": 2924,
+      "name": "Absolute: Void Lightning",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 26628,
+      "skillKey": 191627265,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1509,
+      "all_dmg_values": [
+        1509,
+        1509,
+        2664,
+        10,
+        10
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "2927": {
+      "skillId": 2927,
+      "name": "Absolute: Throat-Burn",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26629,
+      "skillKey": 191823873,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1572,
+      "all_dmg_values": [
+        1572,
+        1572,
+        50,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        63
+      ]
+    },
+    "2946": {
+      "skillId": 2946,
+      "name": "Moondance IX",
+      "damage": 8,
+      "byte_offset": 66,
+      "record_idx": 26482,
+      "skillKey": 193069057,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1090,
+      "all_dmg_values": [
+        1090,
+        1090,
+        1090,
+        1090,
+        1090,
+        1090,
+        1090,
+        8
+      ],
+      "all_match_byte_offsets": [
+        66
+      ]
+    },
+    "2947": {
+      "skillId": 2947,
+      "name": "Moondance X",
+      "damage": 8,
+      "byte_offset": 66,
+      "record_idx": 26481,
+      "skillKey": 193134593,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1214,
+      "all_dmg_values": [
+        1214,
+        1214,
+        1214,
+        1214,
+        1214,
+        1214,
+        1214,
+        8
+      ],
+      "all_match_byte_offsets": [
+        66
+      ]
+    },
+    "2981": {
+      "skillId": 2981,
+      "name": "Crescent Barrage V",
+      "damage": 8,
+      "byte_offset": 70,
+      "record_idx": 26443,
+      "skillKey": 195362817,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1620,
+      "all_dmg_values": [
+        1620,
+        1620,
+        1620,
+        8
+      ],
+      "all_match_byte_offsets": [
+        70
+      ]
+    },
+    "2997": {
+      "skillId": 2997,
+      "name": "Deadly Restraint III",
+      "damage": 8,
+      "byte_offset": 66,
+      "record_idx": 26459,
+      "skillKey": 196411393,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 583,
+      "all_dmg_values": [
+        583,
+        875,
+        8
+      ],
+      "all_match_byte_offsets": [
+        66
+      ]
+    },
+    "3041": {
+      "skillId": 3041,
+      "name": "Absolute: Somersault",
+      "damage": 2048,
+      "byte_offset": 62,
+      "record_idx": 26511,
+      "skillKey": 199294977,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2048,
+      "all_dmg_values": [
+        2048,
+        43
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "3058": {
+      "skillId": 3058,
+      "name": "Absolute: Soul Basher",
+      "damage": 10,
+      "byte_offset": 28,
+      "record_idx": 26530,
+      "skillKey": 200409089,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1222,
+      "all_dmg_values": [
+        1222,
+        1833,
+        10,
+        94
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        72
+      ]
+    },
+    "3059": {
+      "skillId": 3059,
+      "name": "Absolute: Ankle Hook",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26529,
+      "skillKey": 200474625,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 957,
+      "all_dmg_values": [
+        957,
+        957,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        107
+      ]
+    },
+    "3060": {
+      "skillId": 3060,
+      "name": "Absolute: Martial Deva",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 26524,
+      "skillKey": 200540161,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 915,
+      "all_dmg_values": [
+        915,
+        80,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        107
+      ]
+    },
+    "3062": {
+      "skillId": 3062,
+      "name": "Absolute: Thunder Pound",
+      "damage": 59,
+      "byte_offset": 23,
+      "record_idx": 26526,
+      "skillKey": 200671233,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1039,
+      "all_dmg_values": [
+        1039,
+        1039,
+        59
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "3108": {
+      "skillId": 3108,
+      "name": "Absolute: Fatal Blow",
+      "damage": 57,
+      "byte_offset": 23,
+      "record_idx": 25814,
+      "skillKey": 203685889,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3084,
+      "all_dmg_values": [
+        3084,
+        100,
+        57
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "3123": {
+      "skillId": 3123,
+      "name": "Absolute: Shadow Slash",
+      "damage": 56,
+      "byte_offset": 23,
+      "record_idx": 25835,
+      "skillKey": 204668929,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1648,
+      "all_dmg_values": [
+        1648,
+        5,
+        56
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "3124": {
+      "skillId": 3124,
+      "name": "Absolute: Shuriken Malice",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 25830,
+      "skillKey": 204734465,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2010,
+      "all_dmg_values": [
+        2010,
+        100,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        40,
+        59,
+        91
+      ]
+    },
+    "3125": {
+      "skillId": 3125,
+      "name": "Absolute: Shuriken Flight",
+      "damage": 18,
+      "byte_offset": 100,
+      "record_idx": 25829,
+      "skillKey": 204800001,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 812,
+      "all_dmg_values": [
+        812,
+        2100,
+        1,
+        18
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        40,
+        59,
+        91
+      ]
+    },
+    "3133": {
+      "skillId": 3133,
+      "name": "Absolute: Lightning",
+      "damage": 19,
+      "byte_offset": 85,
+      "record_idx": 25821,
+      "skillKey": 205324289,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1731,
+      "all_dmg_values": [
+        1731,
+        19
+      ],
+      "all_match_byte_offsets": [
+        85,
+        100
+      ]
+    },
+    "3135": {
+      "skillId": 3135,
+      "name": "Absolute: Lightning Chain",
+      "damage": 2,
+      "byte_offset": 91,
+      "record_idx": 25823,
+      "skillKey": 205455361,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 860,
+      "all_dmg_values": [
+        860,
+        2,
+        15,
+        40
+      ],
+      "all_match_byte_offsets": [
+        91
+      ]
+    },
+    "3143": {
+      "skillId": 3143,
+      "name": "Absolute: Fireball Explosion",
+      "damage": 56,
+      "byte_offset": 23,
+      "record_idx": 25903,
+      "skillKey": 205979649,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 2980,
+      "all_dmg_values": [
+        2980,
+        100,
+        56
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "3149": {
+      "skillId": 3149,
+      "name": "Spring Breeze III",
+      "damage": 8,
+      "byte_offset": 70,
+      "record_idx": 25894,
+      "skillKey": 206372865,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 634,
+      "all_dmg_values": [
+        634,
+        634,
+        634,
+        50,
+        8
+      ],
+      "all_match_byte_offsets": [
+        70
+      ]
+    },
+    "3170": {
+      "skillId": 3170,
+      "name": "Absolute: Cyclone Slash",
+      "damage": 58,
+      "byte_offset": 23,
+      "record_idx": 25877,
+      "skillKey": 207749121,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 954,
+      "all_dmg_values": [
+        954,
+        1444,
+        1263,
+        10,
+        58
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "3174": {
+      "skillId": 3174,
+      "name": "Absolute: Backstep Slash",
+      "damage": 2,
+      "byte_offset": 41,
+      "record_idx": 25873,
+      "skillKey": 208011265,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1113,
+      "all_dmg_values": [
+        1113,
+        50,
+        2
+      ],
+      "all_match_byte_offsets": [
+        41
+      ]
+    },
+    "3194": {
+      "skillId": 3194,
+      "name": "Absolute: Decapitation",
+      "damage": 6,
+      "byte_offset": 28,
+      "record_idx": 25885,
+      "skillKey": 209321985,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1268,
+      "all_dmg_values": [
+        1268,
+        1541,
+        100,
+        6,
+        88
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        72
+      ]
+    },
+    "3195": {
+      "skillId": 3195,
+      "name": "Absolute: Backstep Slash",
+      "damage": 2,
+      "byte_offset": 41,
+      "record_idx": 25884,
+      "skillKey": 209387521,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1114,
+      "all_dmg_values": [
+        1114,
+        50,
+        2
+      ],
+      "all_match_byte_offsets": [
+        41
+      ]
+    },
+    "3219": {
+      "skillId": 3219,
+      "name": "Absolute: Shining Dash",
+      "damage": 58,
+      "byte_offset": 23,
+      "record_idx": 25739,
+      "skillKey": 210960385,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1356,
+      "all_dmg_values": [
+        1356,
+        1356,
+        100,
+        58
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "3275": {
+      "skillId": 3275,
+      "name": "Flow: Mangler",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 25779,
+      "skillKey": 214630401,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3358,
+      "all_dmg_values": [
+        3358,
+        50,
+        10,
+        5
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "3292": {
+      "skillId": 3292,
+      "name": "Soul Raid",
+      "damage": 5,
+      "byte_offset": 85,
+      "record_idx": 25790,
+      "skillKey": 215744513,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 2129,
+      "all_dmg_values": [
+        2129,
+        5
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "3302": {
+      "skillId": 3302,
+      "name": "Absolute: Pendulum Kick II",
+      "damage": 8,
+      "byte_offset": 62,
+      "record_idx": 25752,
+      "skillKey": 216399873,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1848,
+      "all_dmg_values": [
+        1848,
+        8
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "3303": {
+      "skillId": 3303,
+      "name": "Absolute: Crescent Barrage",
+      "damage": 57,
+      "byte_offset": 23,
+      "record_idx": 25751,
+      "skillKey": 216465409,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2079,
+      "all_dmg_values": [
+        2079,
+        2079,
+        2079,
+        57
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "3308": {
+      "skillId": 3308,
+      "name": "Absolute: Three Point Stipple",
+      "damage": 8,
+      "byte_offset": 62,
+      "record_idx": 25742,
+      "skillKey": 216793089,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 803,
+      "all_dmg_values": [
+        803,
+        1605,
+        50,
+        8
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "3320": {
+      "skillId": 3320,
+      "name": "Absolute: Sacred Dance",
+      "damage": 8,
+      "byte_offset": 62,
+      "record_idx": 25762,
+      "skillKey": 217579521,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1750,
+      "all_dmg_values": [
+        1750,
+        700,
+        1750,
+        100,
+        8
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "3323": {
+      "skillId": 3323,
+      "name": "Absolute: Moondance",
+      "damage": 8,
+      "byte_offset": 62,
+      "record_idx": 25763,
+      "skillKey": 217776129,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1291,
+      "all_dmg_values": [
+        1291,
+        1291,
+        1291,
+        1291,
+        1291,
+        1291,
+        1291,
+        8
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "3421": {
+      "skillId": 3421,
+      "name": "Bolt of Radiance V",
+      "damage": 13,
+      "byte_offset": 58,
+      "record_idx": 26164,
+      "skillKey": 224198657,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5522,
+      "all_dmg_values": [
+        5522,
+        50,
+        13
+      ],
+      "all_match_byte_offsets": [
+        58,
+        76
+      ]
+    },
+    "3422": {
+      "skillId": 3422,
+      "name": "Absolute: Bolt of Radiance",
+      "damage": 13,
+      "byte_offset": 28,
+      "record_idx": 26167,
+      "skillKey": 224264193,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 9936,
+      "all_dmg_values": [
+        9936,
+        75,
+        13
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        72
+      ]
+    },
+    "3427": {
+      "skillId": 3427,
+      "name": "Breath of the Spirit",
+      "damage": 10,
+      "byte_offset": 23,
+      "record_idx": 26130,
+      "skillKey": 224591873,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 600,
+      "all_dmg_values": [
+        600,
+        400,
+        1000,
+        15,
+        10
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "3915": {
+      "skillId": 3915,
+      "name": "Watcher",
+      "damage": 15,
+      "byte_offset": 54,
+      "record_idx": 25660,
+      "skillKey": 256573441,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 15,
+      "all_dmg_values": [
+        15,
+        15,
+        15,
+        15,
+        100
+      ],
+      "all_match_byte_offsets": [
+        54
+      ]
+    },
+    "3926": {
+      "skillId": 3926,
+      "name": "Uproot III",
+      "damage": 27,
+      "byte_offset": 85,
+      "record_idx": 25680,
+      "skillKey": 257294337,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 7134,
+      "all_dmg_values": [
+        7134,
+        4077,
+        25,
+        27
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "4188": {
+      "skillId": 4188,
+      "name": "Prime: Ultimate: Blasting Gust",
+      "damage": 5,
+      "byte_offset": 28,
+      "record_idx": 25089,
+      "skillKey": 274464769,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4425,
+      "all_dmg_values": [
+        4425,
+        6014,
+        100,
+        63,
+        7,
+        5,
+        70
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "4220": {
+      "skillId": 4220,
+      "name": "Prime: Sword of Judgment IV",
+      "damage": 4219,
+      "byte_offset": 27,
+      "record_idx": 25057,
+      "skillKey": 276561921,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 9715,
+      "all_dmg_values": [
+        4219,
+        9715,
+        78,
+        84
+      ],
+      "all_match_byte_offsets": [
+        27,
+        75
+      ]
+    },
+    "4236": {
+      "skillId": 4236,
+      "name": "Prime: Regeneration",
+      "damage": 16,
+      "byte_offset": 54,
+      "record_idx": 24963,
+      "skillKey": 277610497,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 8127,
+      "all_dmg_values": [
+        8127,
+        50,
+        10,
+        16
+      ],
+      "all_match_byte_offsets": [
+        54,
+        61,
+        72
+      ]
+    },
+    "4477": {
+      "skillId": 4477,
+      "name": "Prime: Summon Heuklang",
+      "damage": 5,
+      "byte_offset": 28,
+      "record_idx": 25186,
+      "skillKey": 293404673,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1219,
+      "all_dmg_values": [
+        1219,
+        5
+      ],
+      "all_match_byte_offsets": [
+        28,
+        76
+      ]
+    },
+    "4504": {
+      "skillId": 4504,
+      "name": "Prime: Throat-Burn",
+      "damage": 4,
+      "byte_offset": 28,
+      "record_idx": 25130,
+      "skillKey": 295174145,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5583,
+      "all_dmg_values": [
+        5583,
+        5583,
+        100,
+        4
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "4568": {
+      "skillId": 4568,
+      "name": "Prime: Shadow Eruption IV",
+      "damage": 4,
+      "byte_offset": 54,
+      "record_idx": 25178,
+      "skillKey": 299368449,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 5018,
+      "all_dmg_values": [
+        5018,
+        25,
+        4
+      ],
+      "all_match_byte_offsets": [
+        54
+      ]
+    },
+    "4579": {
+      "skillId": 4579,
+      "name": "Prime: Abyssal Flame III",
+      "damage": 17,
+      "byte_offset": 28,
+      "record_idx": 25155,
+      "skillKey": 300089345,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5521,
+      "all_dmg_values": [
+        5521,
+        9237,
+        50,
+        17,
+        58
+      ],
+      "all_match_byte_offsets": [
+        28,
+        76
+      ]
+    },
+    "4640": {
+      "skillId": 4640,
+      "name": "Prime: Fox Claw III",
+      "damage": 58,
+      "byte_offset": 23,
+      "record_idx": 24592,
+      "skillKey": 304087041,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2460,
+      "all_dmg_values": [
+        2460,
+        4920,
+        50,
+        58,
+        77
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "4643": {
+      "skillId": 4643,
+      "name": "Prime: Fatal Blow III",
+      "damage": 2,
+      "byte_offset": 64,
+      "record_idx": 24593,
+      "skillKey": 304283649,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4565,
+      "all_dmg_values": [
+        4565,
+        100,
+        2
+      ],
+      "all_match_byte_offsets": [
+        64
+      ]
+    },
+    "4663": {
+      "skillId": 4663,
+      "name": "Prime: Danse Macabre",
+      "damage": 2,
+      "byte_offset": 64,
+      "record_idx": 24605,
+      "skillKey": 305594369,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5152,
+      "all_dmg_values": [
+        5152,
+        7484,
+        100,
+        2
+      ],
+      "all_match_byte_offsets": [
+        64
+      ]
+    },
+    "4689": {
+      "skillId": 4689,
+      "name": "Prime: Petal Swirl",
+      "damage": 2,
+      "byte_offset": 41,
+      "record_idx": 24702,
+      "skillKey": 307298305,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4606,
+      "all_dmg_values": [
+        4606,
+        25,
+        10,
+        10,
+        10,
+        2
+      ],
+      "all_match_byte_offsets": [
+        41
+      ]
+    },
+    "4898": {
+      "skillId": 4898,
+      "name": "Prime: Crescent Barrage III",
+      "damage": 58,
+      "byte_offset": 23,
+      "record_idx": 24849,
+      "skillKey": 320995329,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4370,
+      "all_dmg_values": [
+        4370,
+        5098,
+        50,
+        58
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "4944": {
+      "skillId": 4944,
+      "name": "Prime: Meteor Shower: Areal",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 24959,
+      "skillKey": 324009985,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4576,
+      "all_dmg_values": [
+        4576,
+        8951,
+        50,
+        1,
+        95
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        111
+      ]
+    },
+    "4954": {
+      "skillId": 4954,
+      "name": "Prime: Lightning Storm: High Voltage",
+      "damage": 3,
+      "byte_offset": 28,
+      "record_idx": 24953,
+      "skillKey": 324665345,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 9266,
+      "all_dmg_values": [
+        9266,
+        100,
+        3
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "4959": {
+      "skillId": 4959,
+      "name": "Prime: Earthquake: Evade",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 24948,
+      "skillKey": 324993025,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 10184,
+      "all_dmg_values": [
+        10184,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        111
+      ]
+    },
+    "4963": {
+      "skillId": 4963,
+      "name": "Prime: Voltaic Pulse",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 24912,
+      "skillKey": 325255169,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 8910,
+      "all_dmg_values": [
+        8910,
+        100,
+        20,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        91
+      ]
+    },
+    "4964": {
+      "skillId": 4964,
+      "name": "Prime: Voltaic Pulse",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 24907,
+      "skillKey": 325320705,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 8910,
+      "all_dmg_values": [
+        8910,
+        100,
+        20,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        91
+      ]
+    },
+    "4991": {
+      "skillId": 4991,
+      "name": "Prime: Fireball III",
+      "damage": 3,
+      "byte_offset": 54,
+      "record_idx": 24916,
+      "skillKey": 327090177,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 6951,
+      "all_dmg_values": [
+        6951,
+        3
+      ],
+      "all_match_byte_offsets": [
+        54
+      ]
+    },
+    "5122": {
+      "skillId": 5122,
+      "name": "Axe Throw III",
+      "damage": 20,
+      "byte_offset": 62,
+      "record_idx": 24121,
+      "skillKey": 335675393,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 762,
+      "all_dmg_values": [
+        762,
+        20,
+        20,
+        20,
+        78
+      ],
+      "all_match_byte_offsets": [
+        62,
+        80
+      ]
+    },
+    "5123": {
+      "skillId": 5123,
+      "name": "Absolute: Axe Throw",
+      "damage": 20,
+      "byte_offset": 28,
+      "record_idx": 24120,
+      "skillKey": 335740929,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1548,
+      "all_dmg_values": [
+        1548,
+        20,
+        20,
+        20,
+        78
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        72,
+        100
+      ]
+    },
+    "5129": {
+      "skillId": 5129,
+      "name": "Black Blood Slaughter III",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 24110,
+      "skillKey": 336134145,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1486,
+      "all_dmg_values": [
+        1486,
+        50,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        45,
+        115
+      ]
+    },
+    "5130": {
+      "skillId": 5130,
+      "name": "Absolute: Black Blood Slaughter",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 24113,
+      "skillKey": 336199681,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4408,
+      "all_dmg_values": [
+        4408,
+        50,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        91,
+        109
+      ]
+    },
+    "5157": {
+      "skillId": 5157,
+      "name": "Glorious Advance IV",
+      "damage": 20,
+      "byte_offset": 28,
+      "record_idx": 24082,
+      "skillKey": 337969153,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4863,
+      "all_dmg_values": [
+        4863,
+        4863,
+        4863,
+        50,
+        20,
+        14
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "5161": {
+      "skillId": 5161,
+      "name": "Scornful Slash IV",
+      "damage": 20,
+      "byte_offset": 28,
+      "record_idx": 24078,
+      "skillKey": 338231297,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 7352,
+      "all_dmg_values": [
+        7352,
+        7352,
+        20,
+        8
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "5167": {
+      "skillId": 5167,
+      "name": "God Incinerator III",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 24076,
+      "skillKey": 338624513,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6745,
+      "all_dmg_values": [
+        6745,
+        50,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "5168": {
+      "skillId": 5168,
+      "name": "Infernal Steps",
+      "damage": 32,
+      "byte_offset": 61,
+      "record_idx": 24103,
+      "skillKey": 338690049,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1847,
+      "all_dmg_values": [
+        1847,
+        50,
+        32
+      ],
+      "all_match_byte_offsets": [
+        61
+      ]
+    },
+    "5209": {
+      "skillId": 5209,
+      "name": "Prime: Beast Demolisher",
+      "damage": 32,
+      "byte_offset": 61,
+      "record_idx": 24183,
+      "skillKey": 341377025,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2275,
+      "all_dmg_values": [
+        2275,
+        2275,
+        2275,
+        50,
+        32
+      ],
+      "all_match_byte_offsets": [
+        61
+      ]
+    },
+    "5211": {
+      "skillId": 5211,
+      "name": "Prime: Axe Throw",
+      "damage": 20,
+      "byte_offset": 28,
+      "record_idx": 24185,
+      "skillKey": 341508097,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2668,
+      "all_dmg_values": [
+        2668,
+        20,
+        20,
+        20,
+        69
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76,
+        100
+      ]
+    },
+    "5306": {
+      "skillId": 5306,
+      "name": "Prime: Frigid Fog: Control III",
+      "damage": 58,
+      "byte_offset": 23,
+      "record_idx": 24006,
+      "skillKey": 347734017,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 8817,
+      "all_dmg_values": [
+        8817,
+        50,
+        58
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "5308": {
+      "skillId": 5308,
+      "name": "Prime: Lightning III",
+      "damage": 3,
+      "byte_offset": 54,
+      "record_idx": 24000,
+      "skillKey": 347865089,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4023,
+      "all_dmg_values": [
+        4023,
+        4023,
+        3
+      ],
+      "all_match_byte_offsets": [
+        54
+      ]
+    },
+    "5387": {
+      "skillId": 5387,
+      "name": "Prime: Sweeping Kick III",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 24361,
+      "skillKey": 353042433,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 3660,
+      "all_dmg_values": [
+        3660,
+        3660,
+        25,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        107
+      ]
+    },
+    "5390": {
+      "skillId": 5390,
+      "name": "Prime: Soul Basher III",
+      "damage": 10,
+      "byte_offset": 54,
+      "record_idx": 24358,
+      "skillKey": 353239041,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3272,
+      "all_dmg_values": [
+        3272,
+        3272,
+        5222,
+        50,
+        10,
+        59
+      ],
+      "all_match_byte_offsets": [
+        54
+      ]
+    },
+    "5394": {
+      "skillId": 5394,
+      "name": "Prime: Hidden Claw IV",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 24386,
+      "skillKey": 353501185,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4949,
+      "all_dmg_values": [
+        4949,
+        3660,
+        3660,
+        100,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        107
+      ]
+    },
+    "5403": {
+      "skillId": 5403,
+      "name": "Prime: Somersault",
+      "damage": 57,
+      "byte_offset": 23,
+      "record_idx": 24377,
+      "skillKey": 354091009,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4997,
+      "all_dmg_values": [
+        4997,
+        57
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "5440": {
+      "skillId": 5440,
+      "name": "Prime: Predatory Hunt",
+      "damage": 30,
+      "byte_offset": 85,
+      "record_idx": 24432,
+      "skillKey": 356515841,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6490,
+      "all_dmg_values": [
+        6490,
+        10916,
+        100,
+        30,
+        15,
+        63
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "5547": {
+      "skillId": 5547,
+      "name": "Chosen Blade V",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 24201,
+      "skillKey": 363528193,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1428,
+      "all_dmg_values": [
+        1428,
+        50,
+        6
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "5651": {
+      "skillId": 5651,
+      "name": "Retribution",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 23679,
+      "skillKey": 370343937,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2762,
+      "all_dmg_values": [
+        2762,
+        5606,
+        50,
+        10,
+        96
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "5670": {
+      "skillId": 5670,
+      "name": "Prime: Binding Spirals",
+      "damage": 2,
+      "byte_offset": 61,
+      "record_idx": 23628,
+      "skillKey": 371589121,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3069,
+      "all_dmg_values": [
+        3069,
+        3069,
+        3263,
+        50,
+        2
+      ],
+      "all_match_byte_offsets": [
+        61
+      ]
+    },
+    "5687": {
+      "skillId": 5687,
+      "name": "Prime: Quicksand IV",
+      "damage": 2,
+      "byte_offset": 61,
+      "record_idx": 23643,
+      "skillKey": 372703233,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4320,
+      "all_dmg_values": [
+        4320,
+        50,
+        2
+      ],
+      "all_match_byte_offsets": [
+        61
+      ]
+    },
+    "5812": {
+      "skillId": 5812,
+      "name": "Countergambit III",
+      "damage": 48,
+      "byte_offset": 23,
+      "record_idx": 23514,
+      "skillKey": 380895233,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1197,
+      "all_dmg_values": [
+        1197,
+        1197,
+        48
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "5890": {
+      "skillId": 5890,
+      "name": "Swooping Ring IV",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 23920,
+      "skillKey": 386007041,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 7544,
+      "all_dmg_values": [
+        7544,
+        50,
+        4,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        107
+      ]
+    },
+    "5894": {
+      "skillId": 5894,
+      "name": "Comet IV",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 23916,
+      "skillKey": 386269185,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 7570,
+      "all_dmg_values": [
+        7570,
+        100,
+        1,
+        77
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        107
+      ]
+    },
+    "5913": {
+      "skillId": 5913,
+      "name": "Royal Fencing: Lunge",
+      "damage": 15,
+      "byte_offset": 85,
+      "record_idx": 23925,
+      "skillKey": 387514369,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5078,
+      "all_dmg_values": [
+        5078,
+        50,
+        15,
+        5,
+        24
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "5916": {
+      "skillId": 5916,
+      "name": "Star's Ring",
+      "damage": 2,
+      "byte_offset": 62,
+      "record_idx": 23922,
+      "skillKey": 387710977,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1128,
+      "all_dmg_values": [
+        1128,
+        1128,
+        50,
+        2,
+        50
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "5964": {
+      "skillId": 5964,
+      "name": "Prime: Fianchetto III",
+      "damage": 2,
+      "byte_offset": 62,
+      "record_idx": 23968,
+      "skillKey": 390856705,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2322,
+      "all_dmg_values": [
+        2322,
+        8360,
+        25,
+        2,
+        88
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "5969": {
+      "skillId": 5969,
+      "name": "Prime: Frozen Darkness",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 23995,
+      "skillKey": 391184385,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 8397,
+      "all_dmg_values": [
+        8397,
+        1632,
+        100,
+        88,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        91,
+        109
+      ]
+    },
+    "5988": {
+      "skillId": 5988,
+      "name": "Prime: Passed Pawn III",
+      "damage": 20,
+      "byte_offset": 85,
+      "record_idx": 23946,
+      "skillKey": 392429569,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 774,
+      "all_dmg_values": [
+        774,
+        20,
+        4
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "6133": {
+      "skillId": 6133,
+      "name": "Elvia: Eternal Sword Dance",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 23833,
+      "skillKey": 401932289,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3356,
+      "all_dmg_values": [
+        3356,
+        3356,
+        100,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "6202": {
+      "skillId": 6202,
+      "name": "Ator's Mark IV",
+      "damage": 40,
+      "byte_offset": 23,
+      "record_idx": 23179,
+      "skillKey": 406454273,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2862,
+      "all_dmg_values": [
+        2862,
+        40,
+        15
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "6283": {
+      "skillId": 6283,
+      "name": "Prime: Ator's Mark III",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 23096,
+      "skillKey": 411762689,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 12868,
+      "all_dmg_values": [
+        12868,
+        100,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        107
+      ]
+    },
+    "6297": {
+      "skillId": 6297,
+      "name": "Prime: Illusion Expansion",
+      "damage": 30,
+      "byte_offset": 85,
+      "record_idx": 23110,
+      "skillKey": 412680193,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 10030,
+      "all_dmg_values": [
+        10030,
+        30,
+        36
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "6312": {
+      "skillId": 6312,
+      "name": "Enlightening Bolt III",
+      "damage": 30,
+      "byte_offset": 85,
+      "record_idx": 23063,
+      "skillKey": 413663233,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4260,
+      "all_dmg_values": [
+        4260,
+        30,
+        7,
+        4314,
+        33
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "6330": {
+      "skillId": 6330,
+      "name": "Flow: Aftershock",
+      "damage": 15,
+      "byte_offset": 85,
+      "record_idx": 23081,
+      "skillKey": 414842881,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 15,
+      "all_dmg_values": [
+        15,
+        30,
+        2478,
+        32
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "6458": {
+      "skillId": 6458,
+      "name": "Autumn Blaze",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 23419,
+      "skillKey": 423231489,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4637,
+      "all_dmg_values": [
+        4637,
+        4637,
+        100,
+        10,
+        61,
+        943,
+        97
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "6460": {
+      "skillId": 6460,
+      "name": "Dark Nebula",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 23413,
+      "skillKey": 423362561,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4271,
+      "all_dmg_values": [
+        4271,
+        6407,
+        100,
+        29,
+        36
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "6464": {
+      "skillId": 6464,
+      "name": "Magma Bomb",
+      "damage": 8,
+      "byte_offset": 72,
+      "record_idx": 23470,
+      "skillKey": 423624705,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6295,
+      "all_dmg_values": [
+        6295,
+        100,
+        8
+      ],
+      "all_match_byte_offsets": [
+        72
+      ]
+    },
+    "6545": {
+      "skillId": 6545,
+      "name": "Absolute: Tidal Slash",
+      "damage": 57,
+      "byte_offset": 23,
+      "record_idx": 23344,
+      "skillKey": 428933121,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 2481,
+      "all_dmg_values": [
+        2481,
+        100,
+        57
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "6553": {
+      "skillId": 6553,
+      "name": "Sea Prowler IV",
+      "damage": 25,
+      "byte_offset": 58,
+      "record_idx": 23336,
+      "skillKey": 429457409,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2008,
+      "all_dmg_values": [
+        2008,
+        25,
+        78
+      ],
+      "all_match_byte_offsets": [
+        58,
+        76
+      ]
+    },
+    "6558": {
+      "skillId": 6558,
+      "name": "Ocean Melancholy IV",
+      "damage": 25,
+      "byte_offset": 62,
+      "record_idx": 23335,
+      "skillKey": 429785089,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1880,
+      "all_dmg_values": [
+        1880,
+        25,
+        95
+      ],
+      "all_match_byte_offsets": [
+        62,
+        80
+      ]
+    },
+    "6697": {
+      "skillId": 6697,
+      "name": "Wave-breaker Patraca",
+      "damage": 25,
+      "byte_offset": 72,
+      "record_idx": 22781,
+      "skillKey": 438894593,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2714,
+      "all_dmg_values": [
+        2714,
+        25,
+        61
+      ],
+      "all_match_byte_offsets": [
+        72
+      ]
+    },
+    "6698": {
+      "skillId": 6698,
+      "name": "Flow: Earth-render Patraca",
+      "damage": 4,
+      "byte_offset": 62,
+      "record_idx": 22784,
+      "skillKey": 438960129,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 7692,
+      "all_dmg_values": [
+        7692,
+        50,
+        4
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "6731": {
+      "skillId": 6731,
+      "name": "Prime: Cap'n's Orders: Open Fire!",
+      "damage": 4,
+      "byte_offset": 62,
+      "record_idx": 22871,
+      "skillKey": 441122817,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 9598,
+      "all_dmg_values": [
+        9598,
+        100,
+        4
+      ],
+      "all_match_byte_offsets": [
+        62
+      ]
+    },
+    "6762": {
+      "skillId": 6762,
+      "name": "Marked Bloom",
+      "damage": 32,
+      "byte_offset": 64,
+      "record_idx": 22845,
+      "skillKey": 443154433,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 9194,
+      "all_dmg_values": [
+        9194,
+        100,
+        32,
+        5,
+        70
+      ],
+      "all_match_byte_offsets": [
+        64
+      ]
+    },
+    "6763": {
+      "skillId": 6763,
+      "name": "Flow: Grand Bloom",
+      "damage": 5,
+      "byte_offset": 85,
+      "record_idx": 22844,
+      "skillKey": 443219969,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1545,
+      "all_dmg_values": [
+        1545,
+        3813,
+        100,
+        5,
+        96
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "6769": {
+      "skillId": 6769,
+      "name": "Flow: Dark Execution",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 22861,
+      "skillKey": 443613185,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4326,
+      "all_dmg_values": [
+        4326,
+        1442,
+        50,
+        82
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "6771": {
+      "skillId": 6771,
+      "name": "Flame's Calling",
+      "damage": 25,
+      "byte_offset": 76,
+      "record_idx": 22863,
+      "skillKey": 443744257,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4172,
+      "all_dmg_values": [
+        4172,
+        25
+      ],
+      "all_match_byte_offsets": [
+        76
+      ]
+    },
+    "6988": {
+      "skillId": 6988,
+      "name": "Impale",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 23027,
+      "skillKey": 457965569,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1987,
+      "all_dmg_values": [
+        1987,
+        7946,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    },
+    "7154": {
+      "skillId": 7154,
+      "name": "Fatal Attraction",
+      "damage": 16,
+      "byte_offset": 72,
+      "record_idx": 22929,
+      "skillKey": 468844545,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2756,
+      "all_dmg_values": [
+        2756,
+        4479,
+        50,
+        16
+      ],
+      "all_match_byte_offsets": [
+        72
+      ]
+    },
+    "7170": {
+      "skillId": 7170,
+      "name": "Absolute: Bared Claws",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 22397,
+      "skillKey": 469893121,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 738,
+      "all_dmg_values": [
+        738,
+        1476,
+        50,
+        51,
+        10,
+        50
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "7520": {
+      "skillId": 7520,
+      "name": "Kaleidoscope Swirl III",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 22616,
+      "skillKey": 492830721,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1516,
+      "all_dmg_values": [
+        1516,
+        2527,
+        50,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        45,
+        67,
+        115
+      ]
+    },
+    "7521": {
+      "skillId": 7521,
+      "name": "Absolute: Kaleidoscope Swirl",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 22615,
+      "skillKey": 492896257,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2698,
+      "all_dmg_values": [
+        2698,
+        4497,
+        50,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        59,
+        91
+      ]
+    },
+    "7525": {
+      "skillId": 7525,
+      "name": "Sagoonja: Plum IV",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 22611,
+      "skillKey": 493158401,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 2338,
+      "all_dmg_values": [
+        2338,
+        50,
+        3
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "7582": {
+      "skillId": 7582,
+      "name": "Cloudrise V",
+      "damage": 2,
+      "byte_offset": 29,
+      "record_idx": 22526,
+      "skillKey": 496893953,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1742,
+      "all_dmg_values": [
+        1742,
+        2904,
+        100,
+        2
+      ],
+      "all_match_byte_offsets": [
+        29
+      ]
+    },
+    "7744": {
+      "skillId": 7744,
+      "name": "Elvia: Purging Flame",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 22061,
+      "skillKey": 507510785,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 5376,
+      "all_dmg_values": [
+        5376,
+        5376,
+        100,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        59,
+        107
+      ]
+    },
+    "8039": {
+      "skillId": 8039,
+      "name": "Gravity Field IV",
+      "damage": 31,
+      "byte_offset": 58,
+      "record_idx": 22201,
+      "skillKey": 526843905,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 3482,
+      "all_dmg_values": [
+        3482,
+        3482,
+        50,
+        31
+      ],
+      "all_match_byte_offsets": [
+        58,
+        76
+      ]
+    },
+    "8040": {
+      "skillId": 8040,
+      "name": "Absolute: Gravity Field",
+      "damage": 31,
+      "byte_offset": 28,
+      "record_idx": 22196,
+      "skillKey": 526909441,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6625,
+      "all_dmg_values": [
+        6625,
+        6625,
+        50,
+        31
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        72
+      ]
+    },
+    "8713": {
+      "skillId": 8713,
+      "name": "Prime: Cloud General",
+      "damage": 20,
+      "byte_offset": 85,
+      "record_idx": 30082,
+      "skillKey": 571015169,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3683,
+      "all_dmg_values": [
+        3683,
+        20,
+        61,
+        973,
+        32
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "8714": {
+      "skillId": 8714,
+      "name": "Prime: Cloudveil",
+      "damage": 15,
+      "byte_offset": 85,
+      "record_idx": 30085,
+      "skillKey": 571080705,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6616,
+      "all_dmg_values": [
+        6616,
+        6616,
+        6616,
+        6616,
+        15,
+        39
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "8738": {
+      "skillId": 8738,
+      "name": "Prime: Autumnal Blitz",
+      "damage": 33,
+      "byte_offset": 28,
+      "record_idx": 30061,
+      "skillKey": 572653569,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2188,
+      "all_dmg_values": [
+        2188,
+        11124,
+        100,
+        33,
+        5
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        100
+      ]
+    },
+    "8767": {
+      "skillId": 8767,
+      "name": "Prime: Four Seasons",
+      "damage": 4,
+      "byte_offset": 85,
+      "record_idx": 30064,
+      "skillKey": 574554113,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2600,
+      "all_dmg_values": [
+        2600,
+        11289,
+        100,
+        4,
+        29
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "8769": {
+      "skillId": 8769,
+      "name": "Elements: Generate",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 30154,
+      "skillKey": 574685185,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1945,
+      "all_dmg_values": [
+        1945,
+        7,
+        2,
+        10
+      ],
+      "all_match_byte_offsets": [
+        65,
+        85
+      ]
+    },
+    "8776": {
+      "skillId": 8776,
+      "name": "Sundering Sweep",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 30147,
+      "skillKey": 575143937,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5252,
+      "all_dmg_values": [
+        5252,
+        50,
+        1,
+        1945,
+        7
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        59,
+        107
+      ]
+    },
+    "8777": {
+      "skillId": 8777,
+      "name": "Winged Kick",
+      "damage": 2,
+      "byte_offset": 65,
+      "record_idx": 30146,
+      "skillKey": 575209473,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2176,
+      "all_dmg_values": [
+        2176,
+        2176,
+        50,
+        2,
+        4
+      ],
+      "all_match_byte_offsets": [
+        65
+      ]
+    },
+    "8909": {
+      "skillId": 8909,
+      "name": "Revolver Mastery IX",
+      "damage": 4,
+      "byte_offset": 69,
+      "record_idx": 30018,
+      "skillKey": 583860225,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2465,
+      "all_dmg_values": [
+        2465,
+        2465,
+        2465,
+        2465,
+        4
+      ],
+      "all_match_byte_offsets": [
+        69
+      ]
+    },
+    "8910": {
+      "skillId": 8910,
+      "name": "Revolver Mastery X",
+      "damage": 4,
+      "byte_offset": 69,
+      "record_idx": 30021,
+      "skillKey": 583925761,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2900,
+      "all_dmg_values": [
+        2900,
+        2900,
+        2900,
+        2900,
+        4,
+        1450,
+        1450,
+        1450,
+        50
+      ],
+      "all_match_byte_offsets": [
+        69
+      ]
+    },
+    "8911": {
+      "skillId": 8911,
+      "name": "Absolute: Revolver Mastery",
+      "damage": 4,
+      "byte_offset": 65,
+      "record_idx": 30020,
+      "skillKey": 583991297,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3412,
+      "all_dmg_values": [
+        3412,
+        3412,
+        3412,
+        3412,
+        4,
+        1706,
+        1706,
+        1706,
+        50
+      ],
+      "all_match_byte_offsets": [
+        65
+      ]
+    },
+    "8914": {
+      "skillId": 8914,
+      "name": "Quick Draw III",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 30045,
+      "skillKey": 584187905,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4945,
+      "all_dmg_values": [
+        4945,
+        50,
+        82,
+        4356,
+        50,
+        72
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "8930": {
+      "skillId": 8930,
+      "name": "Sunset Piercer III",
+      "damage": 21,
+      "byte_offset": 89,
+      "record_idx": 30001,
+      "skillKey": 585236481,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4996,
+      "all_dmg_values": [
+        4996,
+        100,
+        21,
+        4534,
+        100,
+        21
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "8963": {
+      "skillId": 8963,
+      "name": "Flow: Evasive Fire",
+      "damage": 35,
+      "byte_offset": 58,
+      "record_idx": 30221,
+      "skillKey": 587399169,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 1549,
+      "all_dmg_values": [
+        1549,
+        50,
+        35,
+        2324,
+        50,
+        43
+      ],
+      "all_match_byte_offsets": [
+        58
+      ]
+    },
+    "8964": {
+      "skillId": 8964,
+      "name": "Absolute: Flow: Evasive Fire",
+      "damage": 35,
+      "byte_offset": 28,
+      "record_idx": 30216,
+      "skillKey": 587464705,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 5164,
+      "all_dmg_values": [
+        5164,
+        50,
+        35,
+        7747,
+        50,
+        43
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        72
+      ]
+    },
+    "8995": {
+      "skillId": 8995,
+      "name": "Rocket's Red Glare V",
+      "damage": 35,
+      "byte_offset": 28,
+      "record_idx": 30189,
+      "skillKey": 589496321,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 9798,
+      "all_dmg_values": [
+        9798,
+        100,
+        15,
+        10,
+        50,
+        8819,
+        100,
+        15,
+        15,
+        30,
+        871,
+        35
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "9005": {
+      "skillId": 9005,
+      "name": "Dead Eye Shot V",
+      "damage": 35,
+      "byte_offset": 28,
+      "record_idx": 30175,
+      "skillKey": 590151681,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 13569,
+      "all_dmg_values": [
+        13569,
+        100,
+        92,
+        10,
+        50,
+        12212,
+        100,
+        92,
+        15,
+        30,
+        871,
+        35
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76,
+        85
+      ]
+    },
+    "9042": {
+      "skillId": 9042,
+      "name": "Iron Blackjack V",
+      "damage": 35,
+      "byte_offset": 28,
+      "record_idx": 30271,
+      "skillKey": 592576513,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6588,
+      "all_dmg_values": [
+        6588,
+        10550,
+        100,
+        65,
+        61,
+        10,
+        50,
+        6588,
+        9496,
+        100,
+        65,
+        61,
+        15,
+        30,
+        871,
+        35
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "9048": {
+      "skillId": 9048,
+      "name": "Evasive Maneuver V",
+      "damage": 35,
+      "byte_offset": 28,
+      "record_idx": 30261,
+      "skillKey": 592969729,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 8895,
+      "all_dmg_values": [
+        8895,
+        100,
+        69,
+        10,
+        50,
+        8006,
+        100,
+        87,
+        15,
+        30,
+        871,
+        35
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "9539": {
+      "skillId": 9539,
+      "name": "Pierce III",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 29968,
+      "skillKey": 625147905,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 4824,
+      "all_dmg_values": [
+        4824,
+        50,
+        6
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "9552": {
+      "skillId": 9552,
+      "name": "Extend III",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 29983,
+      "skillKey": 625999873,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4802,
+      "all_dmg_values": [
+        4802,
+        50,
+        87
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "9556": {
+      "skillId": 9556,
+      "name": "Scorch III",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 29979,
+      "skillKey": 626262017,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 3459,
+      "all_dmg_values": [
+        3459,
+        4913,
+        50,
+        99
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "9560": {
+      "skillId": 9560,
+      "name": "Impale III",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 29975,
+      "skillKey": 626524161,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 8034,
+      "all_dmg_values": [
+        8034,
+        50,
+        52
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "9571": {
+      "skillId": 9571,
+      "name": "Again III",
+      "damage": 50,
+      "byte_offset": 23,
+      "record_idx": 29936,
+      "skillKey": 627245057,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 4334,
+      "all_dmg_values": [
+        4334,
+        50,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        23,
+        29,
+        41
+      ]
+    },
+    "9572": {
+      "skillId": 9572,
+      "name": "Once Again!",
+      "damage": 1,
+      "byte_offset": 8,
+      "record_idx": 29931,
+      "skillKey": 627310593,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6192,
+      "all_dmg_values": [
+        6192,
+        50,
+        1
+      ],
+      "all_match_byte_offsets": [
+        8,
+        14,
+        37,
+        107
+      ]
+    },
+    "9618": {
+      "skillId": 9618,
+      "name": "Unleashed: Tusita's Gourd",
+      "damage": 10,
+      "byte_offset": 85,
+      "record_idx": 29822,
+      "skillKey": 630325249,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 3668,
+      "all_dmg_values": [
+        3668,
+        3668,
+        10,
+        78
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "9619": {
+      "skillId": 9619,
+      "name": "Stretch!",
+      "damage": 5,
+      "byte_offset": 89,
+      "record_idx": 29821,
+      "skillKey": 630390785,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 10095,
+      "all_dmg_values": [
+        10095,
+        100,
+        66,
+        5
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "9621": {
+      "skillId": 9621,
+      "name": "Hold It!",
+      "damage": 5,
+      "byte_offset": 89,
+      "record_idx": 29815,
+      "skillKey": 630521857,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 6905,
+      "all_dmg_values": [
+        6905,
+        100,
+        6,
+        5
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "9623": {
+      "skillId": 9623,
+      "name": "Pierce!",
+      "damage": 5,
+      "byte_offset": 89,
+      "record_idx": 29817,
+      "skillKey": 630652929,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 7557,
+      "all_dmg_values": [
+        7557,
+        100,
+        33,
+        5
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "9625": {
+      "skillId": 9625,
+      "name": "Crush!",
+      "damage": 5,
+      "byte_offset": 89,
+      "record_idx": 29811,
+      "skillKey": 630784001,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 9001,
+      "all_dmg_values": [
+        9001,
+        100,
+        75,
+        5
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "9628": {
+      "skillId": 9628,
+      "name": "Extend!",
+      "damage": 5,
+      "byte_offset": 89,
+      "record_idx": 29808,
+      "skillKey": 630980609,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 9206,
+      "all_dmg_values": [
+        9206,
+        100,
+        29,
+        5
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "9630": {
+      "skillId": 9630,
+      "name": "Scorch!",
+      "damage": 5,
+      "byte_offset": 89,
+      "record_idx": 29810,
+      "skillKey": 631111681,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 5142,
+      "all_dmg_values": [
+        5142,
+        7805,
+        100,
+        79,
+        5
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "9632": {
+      "skillId": 9632,
+      "name": "Impale!",
+      "damage": 5,
+      "byte_offset": 89,
+      "record_idx": 29775,
+      "skillKey": 631242753,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 13705,
+      "all_dmg_values": [
+        13705,
+        100,
+        15,
+        5
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "9634": {
+      "skillId": 9634,
+      "name": "It Ain't Over!",
+      "damage": 5,
+      "byte_offset": 89,
+      "record_idx": 29777,
+      "skillKey": 631373825,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 8463,
+      "all_dmg_values": [
+        8463,
+        100,
+        44,
+        5
+      ],
+      "all_match_byte_offsets": [
+        89
+      ]
+    },
+    "9647": {
+      "skillId": 9647,
+      "name": "Heaven's Pivot III",
+      "damage": 8,
+      "byte_offset": 61,
+      "record_idx": 29764,
+      "skillKey": 632225793,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 12758,
+      "all_dmg_values": [
+        12758,
+        100,
+        8,
+        5,
+        3087,
+        9
+      ],
+      "all_match_byte_offsets": [
+        61
+      ]
+    },
+    "9685": {
+      "skillId": 9685,
+      "name": "Absolute: Rising Slash",
+      "damage": 5,
+      "byte_offset": 85,
+      "record_idx": 29878,
+      "skillKey": 634716161,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 6034,
+      "all_dmg_values": [
+        6034,
+        50,
+        5,
+        38
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "9694": {
+      "skillId": 9694,
+      "name": "Twin Rising Slash III",
+      "damage": 38,
+      "byte_offset": 23,
+      "record_idx": 29873,
+      "skillKey": 635305985,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2783,
+      "all_dmg_values": [
+        2783,
+        2783,
+        20,
+        38
+      ],
+      "all_match_byte_offsets": [
+        23
+      ]
+    },
+    "9707": {
+      "skillId": 9707,
+      "name": "Absolute: Combo: Crushing Descent",
+      "damage": 5,
+      "byte_offset": 85,
+      "record_idx": 29829,
+      "skillKey": 636157953,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 10003,
+      "all_dmg_values": [
+        10003,
+        100,
+        5
+      ],
+      "all_match_byte_offsets": [
+        85
+      ]
+    },
+    "9734": {
+      "skillId": 9734,
+      "name": "Impelling Thrust III",
+      "damage": 38,
+      "byte_offset": 58,
+      "record_idx": 29439,
+      "skillKey": 637927425,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 2997,
+      "all_dmg_values": [
+        2997,
+        20,
+        38
+      ],
+      "all_match_byte_offsets": [
+        58,
+        76
+      ]
+    },
+    "9735": {
+      "skillId": 9735,
+      "name": "Absolute: Impelling Thrust",
+      "damage": 38,
+      "byte_offset": 28,
+      "record_idx": 29438,
+      "skillKey": 637992961,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 5656,
+      "all_dmg_values": [
+        5656,
+        20,
+        38
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        72
+      ]
+    },
+    "9783": {
+      "skillId": 9783,
+      "name": "Sacra: Impelling Thrust III",
+      "damage": 38,
+      "byte_offset": 28,
+      "record_idx": 29422,
+      "skillKey": 641138689,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 2138,
+      "all_dmg_values": [
+        2138,
+        5656,
+        20,
+        38
+      ],
+      "all_match_byte_offsets": [
+        28,
+        54,
+        76
+      ]
+    },
+    "9821": {
+      "skillId": 9821,
+      "name": "Purga: Seething Hatred IV",
+      "damage": 29,
+      "byte_offset": 40,
+      "record_idx": 29508,
+      "skillKey": 643629057,
+      "isNew": true,
+      "main_dmg_from_bdocodex": 1919,
+      "all_dmg_values": [
+        1919,
+        15800,
+        100,
+        55,
+        29
+      ],
+      "all_match_byte_offsets": [
+        40
+      ]
+    }
+  }
+}

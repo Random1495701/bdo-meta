@@ -1,0 +1,11 @@
+{
+  "records_parsed": 625,
+  "match_by_both": 463,
+  "match_by_icon_skill_id_only": 53,
+  "match_by_krname_only": 7,
+  "match_by_neither": 102,
+  "mismatched_id_vs_krname": 55,
+  "paz_overlap": 350,
+  "new_paz_candidates": 173,
+  "paz_total_verified": 3483
+}

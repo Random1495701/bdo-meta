@@ -1,0 +1,53 @@
+{
+  "source": "skillsimply.dbss",
+  "description": "Damage values extracted from skillsimply.dbss records by skillKey match",
+  "extraction_method": "For each DB skill with class_skills.json skillKey, find skillsimply record by marker; scan all u32 LE values at every byte offset; accept match only if value >= 100 AND value appears in skill's bdocodex damageRows.",
+  "filter_criteria": "damage value >= 100 to filter coincidental small-number matches",
+  "total_skills_extracted": 3,
+  "new_matches_not_in_paz_comprehensive": 0,
+  "yield_note": "YIELD IS LOW (0.1%). skillsimply.dbss does NOT contain the missing 50% of damage values. Most \"matches\" in a naive scan are coincidental small-number matches.",
+  "records": {
+    "1557": {
+      "skillId": 1557,
+      "name": "Dragon Bite III",
+      "damage": 518,
+      "byte_offset": 28,
+      "record_idx": 27371,
+      "skillKey": 102039553,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 725,
+      "all_dmg_values": [
+        1692,
+        725,
+        518
+      ]
+    },
+    "3041": {
+      "skillId": 3041,
+      "name": "Absolute: Somersault",
+      "damage": 2048,
+      "byte_offset": 62,
+      "record_idx": 26511,
+      "skillKey": 199294977,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 2048,
+      "all_dmg_values": [
+        2048
+      ]
+    },
+    "4220": {
+      "skillId": 4220,
+      "name": "Prime: Sword of Judgment IV",
+      "damage": 4219,
+      "byte_offset": 27,
+      "record_idx": 25057,
+      "skillKey": 276561921,
+      "isNew": false,
+      "main_dmg_from_bdocodex": 9715,
+      "all_dmg_values": [
+        9715,
+        4219
+      ]
+    }
+  }
+}
