@@ -1,0 +1,128 @@
+[
+  {
+    "skillId": 3507,
+    "name": "Black Spirit: Charging Wind I",
+    "base_name": "Charging Wind I",
+    "from_skillId": 4116,
+    "from_name": "Prime: Charging Wind I",
+    "from_class": 4,
+    "pvp": 47.33
+  },
+  {
+    "skillId": 3508,
+    "name": "Black Spirit: Charging Wind II",
+    "base_name": "Charging Wind II",
+    "from_skillId": 4169,
+    "from_name": "Prime: Charging Wind II",
+    "from_class": 4,
+    "pvp": 47.33
+  },
+  {
+    "skillId": 3509,
+    "name": "Black Spirit: Charging Wind III",
+    "base_name": "Charging Wind III",
+    "from_skillId": 4186,
+    "from_name": "Prime: Charging Wind III",
+    "from_class": 4,
+    "pvp": 47.33
+  },
+  {
+    "skillId": 3607,
+    "name": "Black Spirit: Roaring I",
+    "base_name": "Roaring I",
+    "from_skillId": 1242,
+    "from_name": "Roaring III",
+    "from_class": 16,
+    "pvp": 153.67
+  },
+  {
+    "skillId": 3608,
+    "name": "Black Spirit: Roaring II",
+    "base_name": "Roaring II",
+    "from_skillId": 1242,
+    "from_name": "Roaring III",
+    "from_class": 16,
+    "pvp": 153.67
+  },
+  {
+    "skillId": 3610,
+    "name": "Black Spirit: Roaring IV",
+    "base_name": "Roaring IV",
+    "from_skillId": 4490,
+    "from_name": "Prime: Roaring IV",
+    "from_class": 16,
+    "pvp": 57.44
+  },
+  {
+    "skillId": 3611,
+    "name": "Black Spirit: Roaring V",
+    "base_name": "Roaring V",
+    "from_skillId": 1245,
+    "from_name": "Roaring VI",
+    "from_class": 16,
+    "pvp": 75.46
+  },
+  {
+    "skillId": 5655,
+    "name": "Black Spirit: Serpent's Coil I",
+    "base_name": "Serpent's Coil I",
+    "from_skillId": 5646,
+    "from_name": "Serpent's Coil II",
+    "from_class": 1,
+    "pvp": 34.73
+  },
+  {
+    "skillId": 8746,
+    "name": "Black Spirit: Spring Frost I",
+    "base_name": "Spring Frost I",
+    "from_skillId": 8673,
+    "from_name": "Spring Frost III",
+    "from_class": 33,
+    "pvp": 38.2
+  },
+  {
+    "skillId": 8747,
+    "name": "Black Spirit: Spring Frost II",
+    "base_name": "Spring Frost II",
+    "from_skillId": 8673,
+    "from_name": "Spring Frost III",
+    "from_class": 33,
+    "pvp": 38.2
+  },
+  {
+    "skillId": 8751,
+    "name": "Black Spirit: Taeguk I",
+    "base_name": "Taeguk I",
+    "from_skillId": 8668,
+    "from_name": "Taeguk III",
+    "from_class": 33,
+    "pvp": 43.15
+  },
+  {
+    "skillId": 8752,
+    "name": "Black Spirit: Taeguk II",
+    "base_name": "Taeguk II",
+    "from_skillId": 8668,
+    "from_name": "Taeguk III",
+    "from_class": 33,
+    "pvp": 43.15
+  },
+  {
+    "skillId": 8756,
+    "name": "Black Spirit: Prime: Taeguk I",
+    "base_name": "Taeguk I",
+    "from_skillId": 8668,
+    "from_name": "Taeguk III",
+    "from_class": 33,
+    "pvp": 43.15
+  },
+  {
+    "skillId": 8757,
+    "name": "Black Spirit: Prime: Taeguk II",
+    "base_name": "Taeguk II",
+    "from_skillId": 8668,
+    "from_name": "Taeguk III",
+    "from_class": 33,
+    "pvp": 43.15
+  }
+]

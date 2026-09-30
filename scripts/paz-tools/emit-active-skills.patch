@@ -1,0 +1,20 @@
+--- a/internal/build/classskills.go	2026-09-13 17:31:54.938624549 +0000
++++ b/internal/build/classskills.go	2026-09-13 17:33:51.488266820 +0000
+@@ -135,11 +135,14 @@
+ 			if resolved.Name == "" && localized.Name != "" {
+ 				resolved.Name = localized.Name
+ 			}
++			// Fork: emit Effects for ALL skills (active + passive), not just passives.
++			// BDO Meta needs the cooldown (skill.dbss @95) + CC/buff DurationMs
++			// for every active combat skill, which the upstream extractor omits.
+ 			if header.Kind == model.SkillKindPassive {
+ 				isPassive = true
+-				if effect, exists := effects[skillKey]; exists {
+-					resolvedRank.Effects = b.buildEffects(buffs, effect)
+-				}
++			}
++			if effect, exists := effects[skillKey]; exists {
++				resolvedRank.Effects = b.buildEffects(buffs, effect)
+ 			}
+ 			resolved.Ranks = append(resolved.Ranks, resolvedRank)
+ 		}

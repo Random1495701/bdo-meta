@@ -1,0 +1,494 @@
+{
+  "3462": {
+    "cost": 10,
+    "name": "Black Spirit: Pulverize"
+  },
+  "3466": {
+    "cost": 25,
+    "name": "Black Spirit: Merciless"
+  },
+  "3467": {
+    "cost": 50,
+    "name": "Black Spirit: Slashing the Dead"
+  },
+  "3472": {
+    "cost": 200,
+    "name": "Black Spirit: Grave Digging I"
+  },
+  "3473": {
+    "cost": 200,
+    "name": "Black Spirit: Grave Digging II"
+  },
+  "3474": {
+    "cost": 200,
+    "name": "Black Spirit: Grave Digging III"
+  },
+  "3475": {
+    "cost": 200,
+    "name": "Black Spirit: Grave Digging IV"
+  },
+  "3488": {
+    "cost": 25,
+    "name": "Black Spirit: Violation"
+  },
+  "3491": {
+    "cost": 10,
+    "name": "Black Spirit: Turn-back Slash"
+  },
+  "3495": {
+    "cost": 50,
+    "name": "Black Spirit: Grim Reaper's Judgment"
+  },
+  "3527": {
+    "cost": 25,
+    "name": "Black Spirit: Waltz of Wind"
+  },
+  "3531": {
+    "cost": 10,
+    "name": "Black Spirit: Elven Rage"
+  },
+  "3536": {
+    "cost": 10,
+    "name": "Black Spirit: Devastation"
+  },
+  "3540": {
+    "cost": 25,
+    "name": "Black Spirit: Titan Blow"
+  },
+  "3541": {
+    "cost": 50,
+    "name": "Black Spirit: Flow: Slugfest"
+  },
+  "3546": {
+    "cost": 200,
+    "name": "Black Spirit: Raging Thunder I"
+  },
+  "3547": {
+    "cost": 200,
+    "name": "Black Spirit: Raging Thunder II"
+  },
+  "3548": {
+    "cost": 200,
+    "name": "Black Spirit: Raging Thunder III"
+  },
+  "3549": {
+    "cost": 200,
+    "name": "Black Spirit: Raging Thunder IV"
+  },
+  "3550": {
+    "cost": 200,
+    "name": "Black Spirit: Raging Thunder V"
+  },
+  "3551": {
+    "cost": 200,
+    "name": "Black Spirit: Raging Thunder VI"
+  },
+  "3552": {
+    "cost": 200,
+    "name": "Black Spirit: Absolute: Raging Thunder"
+  },
+  "3555": {
+    "cost": 100,
+    "name": "Black Spirit: Giant Leap"
+  },
+  "3575": {
+    "cost": 100,
+    "name": "Black Spirit: Judgment of Light I"
+  },
+  "3576": {
+    "cost": 100,
+    "name": "Black Spirit: Judgment of Light II"
+  },
+  "3577": {
+    "cost": 100,
+    "name": "Black Spirit: Judgment of Light III"
+  },
+  "3578": {
+    "cost": 100,
+    "name": "Black Spirit: Absolute: Judgment of Light"
+  },
+  "3589": {
+    "cost": 10,
+    "name": "Black Spirit: Verdict: Lancia Iustitiae"
+  },
+  "3590": {
+    "cost": 25,
+    "name": "Black Spirit: Terra Sancta"
+  },
+  "3591": {
+    "cost": 50,
+    "name": "Black Spirit: Promptness"
+  },
+  "3594": {
+    "cost": 25,
+    "name": "Black Spirit: Echo Pierce"
+  },
+  "3597": {
+    "cost": 10,
+    "name": "Black Spirit: Moonlight Strike"
+  },
+  "3600": {
+    "cost": 50,
+    "name": "Black Spirit: Skybound Stab"
+  },
+  "3624": {
+    "cost": 50,
+    "name": "Black Spirit: Pyrostorm"
+  },
+  "3625": {
+    "cost": 10,
+    "name": "Black Spirit: Flow: Dash Slash"
+  },
+  "3626": {
+    "cost": 25,
+    "name": "Black Spirit: Flame Rush"
+  },
+  "3662": {
+    "cost": 50,
+    "name": "Black Spirit: Hellfire"
+  },
+  "3666": {
+    "cost": 10,
+    "name": "Black Spirit: Cataclysm"
+  },
+  "3669": {
+    "cost": 25,
+    "name": "Black Spirit: Water Sphere"
+  },
+  "3681": {
+    "cost": 10,
+    "name": "Black Spirit: Equilibrium Break"
+  },
+  "3684": {
+    "cost": 25,
+    "name": "Black Spirit: Detonative Flow"
+  },
+  "3687": {
+    "cost": 50,
+    "name": "Black Spirit: Thunder Storm"
+  },
+  "3692": {
+    "cost": 200,
+    "name": "Black Spirit: Ninjutsu: Shadow Clone I"
+  },
+  "3693": {
+    "cost": 200,
+    "name": "Black Spirit: Ninjutsu: Shadow Clone II"
+  },
+  "3694": {
+    "cost": 200,
+    "name": "Black Spirit: Ninjutsu: Shadow Clone III"
+  },
+  "3695": {
+    "cost": 200,
+    "name": "Black Spirit: Absolute: Shadow Clone"
+  },
+  "3711": {
+    "cost": 10,
+    "name": "Black Spirit: Sudden Decapitation"
+  },
+  "3712": {
+    "cost": 50,
+    "name": "Black Spirit: Sura ChaoSpree"
+  },
+  "3716": {
+    "cost": 25,
+    "name": "Black Spirit: Bloodthirst: Katana Shower"
+  },
+  "3726": {
+    "cost": 10,
+    "name": "Black Spirit: Lunar Dash"
+  },
+  "3730": {
+    "cost": 25,
+    "name": "Black Spirit: Sah Spree of Sonan"
+  },
+  "3731": {
+    "cost": 50,
+    "name": "Black Spirit: Chain Crash: Sah Chakram"
+  },
+  "3735": {
+    "cost": 10,
+    "name": "Black Spirit: Petal Swirl"
+  },
+  "3736": {
+    "cost": 25,
+    "name": "Black Spirit: Flow: Cloud Stab"
+  },
+  "3740": {
+    "cost": 50,
+    "name": "Black Spirit: Moonrise"
+  },
+  "3774": {
+    "cost": 25,
+    "name": "Black Spirit: Spirit Hunt"
+  },
+  "3777": {
+    "cost": 50,
+    "name": "Black Spirit: Shattering Darkness"
+  },
+  "3778": {
+    "cost": 10,
+    "name": "Black Spirit: Grip of Grudge"
+  },
+  "3791": {
+    "cost": 10,
+    "name": "Black Spirit: Ferocious Assault"
+  },
+  "3795": {
+    "cost": 25,
+    "name": "Black Spirit: Ultimate Crush"
+  },
+  "3799": {
+    "cost": 50,
+    "name": "Black Spirit: Skull Crusher"
+  },
+  "3818": {
+    "cost": 10,
+    "name": "Black Spirit: Hurricane Sweep"
+  },
+  "3821": {
+    "cost": 25,
+    "name": "Black Spirit: Spiral Torpedo"
+  },
+  "3824": {
+    "cost": 50,
+    "name": "Black Spirit: Sea Burial"
+  },
+  "3838": {
+    "cost": 25,
+    "name": "Black Spirit: Bleeding Hearts"
+  },
+  "3839": {
+    "cost": 50,
+    "name": "Black Spirit: Flow: Mangler"
+  },
+  "3985": {
+    "cost": 10,
+    "name": "Black Spirit: Full Bloom"
+  },
+  "3986": {
+    "cost": 50,
+    "name": "Black Spirit: Righteous Smite"
+  },
+  "3987": {
+    "cost": 25,
+    "name": "Black Spirit: Ultimate: Zephyr Leap"
+  },
+  "4015": {
+    "cost": 75,
+    "name": "Black Spirit: Flailing Blades I"
+  },
+  "4017": {
+    "cost": 10,
+    "name": "Black Spirit: Eradication"
+  },
+  "5184": {
+    "cost": 100,
+    "name": "Black Spirit: Infernal Nemesis"
+  },
+  "5231": {
+    "cost": 50,
+    "name": "Black Spirit: Cleansing Flame"
+  },
+  "5234": {
+    "cost": 25,
+    "name": "Black Spirit: God Incinerator"
+  },
+  "5235": {
+    "cost": 10,
+    "name": "Black Spirit: Scalding Thorn"
+  },
+  "5445": {
+    "cost": 100,
+    "name": "Black Spirit: Prime: Fearsome Tyrant I"
+  },
+  "5446": {
+    "cost": 100,
+    "name": "Black Spirit: Prime: Fearsome Tyrant II"
+  },
+  "5447": {
+    "cost": 100,
+    "name": "Black Spirit: Prime: Fearsome Tyrant III"
+  },
+  "5448": {
+    "cost": 200,
+    "name": "Black Spirit: Prime: Raging Thunder I"
+  },
+  "5449": {
+    "cost": 200,
+    "name": "Black Spirit: Prime: Raging Thunder II"
+  },
+  "5450": {
+    "cost": 200,
+    "name": "Black Spirit: Prime: Raging Thunder III"
+  },
+  "5654": {
+    "cost": 100,
+    "name": "Black Spirit: Paradise Surge"
+  },
+  "5714": {
+    "cost": 10,
+    "name": "Black Spirit: Crown Kick"
+  },
+  "5717": {
+    "cost": 25,
+    "name": "Black Spirit: Dune Slash"
+  },
+  "5720": {
+    "cost": 50,
+    "name": "Black Spirit: Collapse"
+  },
+  "5926": {
+    "cost": 10,
+    "name": "Black Spirit: Royal Fencing: Remise"
+  },
+  "5930": {
+    "cost": 25,
+    "name": "Black Spirit: Swooping Ring"
+  },
+  "5931": {
+    "cost": 50,
+    "name": "Black Spirit: Star's Call"
+  },
+  "6367": {
+    "cost": 10,
+    "name": "Black Spirit: Impaling Flash"
+  },
+  "6368": {
+    "cost": 25,
+    "name": "Black Spirit: Flow: Interrogate"
+  },
+  "6369": {
+    "cost": 50,
+    "name": "Black Spirit: Ator's Spear"
+  },
+  "6734": {
+    "cost": 50,
+    "name": "Black Spirit: Ocean's Allure"
+  },
+  "6735": {
+    "cost": 25,
+    "name": "Black Spirit: Close Quarters: Charge"
+  },
+  "6739": {
+    "cost": 10,
+    "name": "Black Spirit: Close Quarters: Suppress"
+  },
+  "6968": {
+    "cost": 200,
+    "name": "Black Spirit: Blazing Strike I"
+  },
+  "6969": {
+    "cost": 200,
+    "name": "Black Spirit: Blazing Strike II"
+  },
+  "6970": {
+    "cost": 200,
+    "name": "Black Spirit: Blazing Strike III"
+  },
+  "6971": {
+    "cost": 200,
+    "name": "Black Spirit: Blazing Strike IV"
+  },
+  "6972": {
+    "cost": 200,
+    "name": "Black Spirit: Absolute: Blazing Strike"
+  },
+  "6973": {
+    "cost": 200,
+    "name": "Black Spirit: Prime: Blazing Strike I"
+  },
+  "6974": {
+    "cost": 200,
+    "name": "Black Spirit: Prime: Blazing Strike II"
+  },
+  "6975": {
+    "cost": 200,
+    "name": "Black Spirit: Prime: Blazing Strike III"
+  },
+  "7057": {
+    "cost": 50,
+    "name": "Black Spirit: Fate Beckons"
+  },
+  "7061": {
+    "cost": 25,
+    "name": "Black Spirit: Tip of the Scale"
+  },
+  "7062": {
+    "cost": 10,
+    "name": "Black Spirit: Storm Piercer"
+  },
+  "7382": {
+    "cost": 10,
+    "name": "Black Spirit: Twirling Rhapsody"
+  },
+  "7383": {
+    "cost": 25,
+    "name": "Black Spirit: Twirling Retreat"
+  },
+  "7386": {
+    "cost": 50,
+    "name": "Black Spirit: Emberclaw Crush"
+  },
+  "7737": {
+    "cost": 10,
+    "name": "Black Spirit: Moonlit Blast"
+  },
+  "7738": {
+    "cost": 25,
+    "name": "Black Spirit: Flow: River's End"
+  },
+  "7743": {
+    "cost": 50,
+    "name": "Black Spirit: Soul Shower"
+  },
+  "8044": {
+    "cost": 10,
+    "name": "Black Spirit: Hammer Spin"
+  },
+  "8073": {
+    "cost": 25,
+    "name": "Black Spirit: One Giant Leap"
+  },
+  "8207": {
+    "cost": 50,
+    "name": "Black Spirit: Hammer Smash"
+  },
+  "8819": {
+    "cost": 10,
+    "name": "Black Spirit: Fire: Blaze"
+  },
+  "8820": {
+    "cost": 25,
+    "name": "Black Spirit: Water: Current"
+  },
+  "8821": {
+    "cost": 50,
+    "name": "Black Spirit: Wood: Bend"
+  },
+  "9029": {
+    "cost": 10,
+    "name": "Black Spirit: Dead Eye Shot"
+  },
+  "9030": {
+    "cost": 25,
+    "name": "Black Spirit: Beautiful Demolition"
+  },
+  "9031": {
+    "cost": 50,
+    "name": "Black Spirit: Bombs Burstin' in Air"
+  },
+  "9652": {
+    "cost": 10,
+    "name": "Black Spirit: Buddha's Finger"
+  },
+  "9653": {
+    "cost": 50,
+    "name": "Black Spirit: Scorch It All!"
+  },
+  "9654": {
+    "cost": 25,
+    "name": "Black Spirit: Upheaval"
+  }
+}

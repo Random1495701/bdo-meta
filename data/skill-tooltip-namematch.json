@@ -1,0 +1,4160 @@
+{
+  "33": {
+    "name": "Heuklang: Scratch",
+    "krName": "흑랑 : 할퀴기",
+    "keyword": "흑랑 : 할퀴기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "63": {
+    "name": "Dark Maneuver XXX",
+    "krName": "어둠의 결정",
+    "keyword": "어둠의 결정",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "89": {
+    "name": "Rage Absorption (Innate)",
+    "krName": "분노 흡수(고유)",
+    "keyword": "분노 흡수(고유)",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "90": {
+    "name": "Black Spirit Illusion",
+    "krName": "흑정령의 환영",
+    "keyword": "흑정령의 환영",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "92": {
+    "name": "Emergency Escape",
+    "krName": "긴급 회피",
+    "keyword": "긴급 회피",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "94": {
+    "name": "Ultimate: Dark Flame",
+    "krName": "극 : 어둠의 업화",
+    "keyword": "어둠의 업화",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "121": {
+    "name": "Quaking Fury",
+    "krName": "분노의 진동",
+    "keyword": "분노의 진동",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "163": {
+    "name": "Dark Backstep",
+    "krName": "어둠의 뒷걸음",
+    "keyword": "어둠의 뒷걸음",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "201": {
+    "name": "Ultimate: Whirlwind Cut",
+    "krName": "극 : 돌개 베기",
+    "keyword": "돌개 베기",
+    "matching_strings": 2,
+    "sub_records": 3
+  },
+  "202": {
+    "name": "Whirlwind Cut: Cyclone",
+    "krName": "돌개 베기 : 선풍",
+    "keyword": "돌개 베기 : 선풍",
+    "matching_strings": 2,
+    "sub_records": 3
+  },
+  "243": {
+    "name": "Ultimate: Elastic Force",
+    "krName": "극 : 힘의 탄력",
+    "keyword": "힘의 탄력",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "296": {
+    "name": "Ultimate: Fierce Strike",
+    "krName": "극 : 맹렬한 공격",
+    "keyword": "맹렬한 공격",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "329": {
+    "name": "Claw Scar",
+    "krName": "발톱의 흔적",
+    "keyword": "발톱의 흔적",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "348": {
+    "name": "Bloody Calamity",
+    "krName": "핏빛 재앙",
+    "keyword": "핏빛 재앙",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "371": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "374": {
+    "name": "Ultimate: Evasive Shot",
+    "krName": "극 : 회피 사격",
+    "keyword": "회피 사격",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "375": {
+    "name": "Ultimate: Charging Wind",
+    "krName": "극 : 바람 모아쏘기",
+    "keyword": "바람 모아쏘기",
+    "matching_strings": 4,
+    "sub_records": 5
+  },
+  "376": {
+    "name": "Ultimate: Forward Slash",
+    "krName": "극 : 전진 검술",
+    "keyword": "전진 검술",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "378": {
+    "name": "Ultimate: Midnight Stinger",
+    "krName": "극 : 긴밤 지르기",
+    "keyword": "긴밤 지르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "381": {
+    "name": "Flow: Call from Sky",
+    "krName": "흐름 : 하늘의 부름",
+    "keyword": "흐름 : 하늘의 부름",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "385": {
+    "name": "Scars of Dusk",
+    "krName": "황혼의 상처",
+    "keyword": "황혼의 상처",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "389": {
+    "name": "Ultimate: Frenzied Destroyer",
+    "krName": "극 : 광분의 파괴자",
+    "keyword": "광분의 파괴자",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "579": {
+    "name": "Force Slash",
+    "krName": "기운 날리기",
+    "keyword": "기운 날리기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "700": {
+    "name": "Ninjutsu: Block Jump",
+    "krName": "인술 : 나무토막 분신",
+    "keyword": "인술 : 나무토막 분신",
+    "matching_strings": 4,
+    "sub_records": 5
+  },
+  "726": {
+    "name": "Ultimate: Flurry of Kicks",
+    "krName": "극 : 연속 차기",
+    "keyword": "연속 차기",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "736": {
+    "name": "Shield Chase I",
+    "krName": "방패 추격 I",
+    "keyword": "방패 추격 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "743": {
+    "name": "Ultimate: Divine Power",
+    "krName": "극 : 거룩한 힘",
+    "keyword": "거룩한 힘",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "753": {
+    "name": "Ultimate: Righteous Charge",
+    "krName": "극 : 정의로운 돌진",
+    "keyword": "정의로운 돌진",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "770": {
+    "name": "Ultimate: Sword of Judgment",
+    "krName": "극 : 단죄의 검",
+    "keyword": "단죄의 검",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "771": {
+    "name": "Ultimate: Sharp Light",
+    "krName": "극 : 날카로운 빛",
+    "keyword": "날카로운 빛",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "772": {
+    "name": "Judgment of Light I",
+    "krName": "빛의 심판 I",
+    "keyword": "빛의 심판 I",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "773": {
+    "name": "Judgment of Light II",
+    "krName": "빛의 심판 II",
+    "keyword": "빛의 심판 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "774": {
+    "name": "Judgment of Light III",
+    "krName": "빛의 심판 III",
+    "keyword": "빛의 심판 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "784": {
+    "name": "Flow: Spinning Shield",
+    "krName": "흐름 : 회전하는 방패",
+    "keyword": "흐름 : 회전하는 방패",
+    "matching_strings": 3,
+    "sub_records": 4
+  },
+  "785": {
+    "name": "Flow: Sharp Counter",
+    "krName": "흐름 : 날카로운 반격",
+    "keyword": "흐름 : 날카로운 반격",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "846": {
+    "name": "Ultimate: Blizzard",
+    "krName": "극 : 눈보라",
+    "keyword": "눈보라",
+    "matching_strings": 5,
+    "sub_records": 5
+  },
+  "898": {
+    "name": "Sage's Memory",
+    "krName": "현자의 기억",
+    "keyword": "현자의 기억",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "921": {
+    "name": "Flow: Sky Stepping",
+    "krName": "흐름 : 하늘 딛음",
+    "keyword": "흐름 : 하늘 딛음",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "999": {
+    "name": "Tendon Cutter",
+    "krName": "힘줄 자르기",
+    "keyword": "힘줄 자르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1004": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1017": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1019": {
+    "name": "Guard",
+    "krName": "방어 태세",
+    "keyword": "방어 태세",
+    "matching_strings": 15,
+    "sub_records": 16
+  },
+  "1030": {
+    "name": "Kick",
+    "krName": "발차기",
+    "keyword": "발차기",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "1075": {
+    "name": "Summon Heuklang I",
+    "krName": "흑랑 소환 I",
+    "keyword": "흑랑 소환 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1170": {
+    "name": "Frenzied Destroyer V",
+    "krName": "광분의 파괴자 V",
+    "keyword": "광분의 파괴자 V",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1171": {
+    "name": "Frenzied Destroyer VI",
+    "krName": "광분의 파괴자 VI",
+    "keyword": "광분의 파괴자 VI",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1209": {
+    "name": "Imminent Doom",
+    "krName": "당겨진 멸망",
+    "keyword": "당겨진 멸망",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1270": {
+    "name": "Retaliation: Decapitation",
+    "krName": "파훼 : 참수",
+    "keyword": "파훼 : 참수",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1278": {
+    "name": "Carver: Typhoon",
+    "krName": "각수 : 태풍",
+    "keyword": "각수 : 태풍",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1283": {
+    "name": "Charged Stub Arrow",
+    "krName": "특편전",
+    "keyword": "특편전",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1289": {
+    "name": "Tiger Blade",
+    "krName": "사인검",
+    "keyword": "사인검",
+    "matching_strings": 14,
+    "sub_records": 14
+  },
+  "1448": {
+    "name": "Ultimate: Blasting Gust",
+    "krName": "극 : 단명의 질풍",
+    "keyword": "단명의 질풍",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1449": {
+    "name": "Ultimate: Descending Current",
+    "krName": "극 : 바람을 타는 깃",
+    "keyword": "바람을 타는 깃",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "1455": {
+    "name": "Chase I",
+    "krName": "추격 I",
+    "keyword": "추격 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1465": {
+    "name": "Rising Storm: Blaze",
+    "krName": "용오름 : 화",
+    "keyword": "용오름 : 화",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1484": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1500": {
+    "name": "Ultimate: Shadow Eruption",
+    "krName": "극 : 그림자 분출",
+    "keyword": "그림자 분출",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1520": {
+    "name": "Ultimate: Whirlwind Cut",
+    "krName": "극 : 돌개 베기",
+    "keyword": "돌개 베기",
+    "matching_strings": 2,
+    "sub_records": 3
+  },
+  "1521": {
+    "name": "Whirlwind Cut: Cyclone",
+    "krName": "돌개 베기 : 선풍",
+    "keyword": "돌개 베기 : 선풍",
+    "matching_strings": 2,
+    "sub_records": 3
+  },
+  "1526": {
+    "name": "Retaliation: Decapitation",
+    "krName": "파훼 : 참수",
+    "keyword": "파훼 : 참수",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1538": {
+    "name": "Carver: Typhoon",
+    "krName": "각수 : 태풍",
+    "keyword": "각수 : 태풍",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1543": {
+    "name": "Charged Stub Arrow",
+    "krName": "특편전",
+    "keyword": "특편전",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "1554": {
+    "name": "Tiger Blade",
+    "krName": "사인검",
+    "keyword": "사인검",
+    "matching_strings": 14,
+    "sub_records": 14
+  },
+  "1591": {
+    "name": "Chase I",
+    "krName": "추격 I",
+    "keyword": "추격 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1726": {
+    "name": "Balance Strike I",
+    "krName": "균형 치기 I",
+    "keyword": "균형 치기 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1727": {
+    "name": "Balance Strike II",
+    "krName": "균형 치기 II",
+    "keyword": "균형 치기 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1728": {
+    "name": "Balance Strike III",
+    "krName": "균형 치기 III",
+    "keyword": "균형 치기 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1768": {
+    "name": "Merciless IV",
+    "krName": "무자비 IV",
+    "keyword": "무자비 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1785": {
+    "name": "Dead Hunt I",
+    "krName": "망자 사냥 I",
+    "keyword": "망자 사냥 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1788": {
+    "name": "Dead Hunt IV",
+    "krName": "망자 사냥 IV",
+    "keyword": "망자 사냥 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1791": {
+    "name": "Wings of the Crow",
+    "krName": "까마귀 날개",
+    "keyword": "까마귀 날개",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1800": {
+    "name": "Blade of Darkness",
+    "krName": "어둠의 칼날",
+    "keyword": "어둠의 칼날",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "1810": {
+    "name": "Cartian's Nightmare IV",
+    "krName": "카르티안의 악몽 IV",
+    "keyword": "카르티안의 악몽 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1828": {
+    "name": "Ground Lifting II",
+    "krName": "지면 들어올리기 II",
+    "keyword": "지면 들어올리기 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1829": {
+    "name": "Ground Lifting III",
+    "krName": "지면 들어올리기 III",
+    "keyword": "지면 들어올리기 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1837": {
+    "name": "Titan Blow I",
+    "krName": "거신의 일격 I",
+    "keyword": "거신의 일격 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1840": {
+    "name": "Titan Blow IV",
+    "krName": "거신의 일격 IV",
+    "keyword": "거신의 일격 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1842": {
+    "name": "Flame Buster II",
+    "krName": "화염철포 II",
+    "keyword": "화염철포 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1843": {
+    "name": "Flame Buster III",
+    "krName": "화염철포 III",
+    "keyword": "화염철포 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1852": {
+    "name": "Flow: Shooting Mobility",
+    "krName": "흐름 : 기동 사격",
+    "keyword": "흐름 : 기동 사격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1853": {
+    "name": "Flow: Split Shot",
+    "krName": "흐름 : 분열포",
+    "keyword": "흐름 : 분열포",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1854": {
+    "name": "Flow: Ancient Power",
+    "krName": "흐름 : 고대의 힘",
+    "keyword": "흐름 : 고대의 힘",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1872": {
+    "name": "Spirit's Shackles",
+    "krName": "정령의 속박",
+    "keyword": "정령의 속박",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1882": {
+    "name": "Elven Rage IV",
+    "krName": "정령의 분노 IV",
+    "keyword": "정령의 분노 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1889": {
+    "name": "Vine Knot",
+    "krName": "덩굴 매듭",
+    "keyword": "덩굴 매듭",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1899": {
+    "name": "Heuklang: Berserk",
+    "krName": "흑랑 : 폭주",
+    "keyword": "흑랑 : 폭주",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1910": {
+    "name": "Skybound Stab I",
+    "krName": "비천 I",
+    "keyword": "비천 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1911": {
+    "name": "Skybound Stab II",
+    "krName": "비천 II",
+    "keyword": "비천 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1912": {
+    "name": "Skybound Stab III",
+    "krName": "비천 III",
+    "keyword": "비천 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1918": {
+    "name": "Allround Spinner I",
+    "krName": "팔방 연환격 I",
+    "keyword": "팔방 연환격 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1921": {
+    "name": "Allround Spinner IV",
+    "krName": "팔방 연환격 IV",
+    "keyword": "팔방 연환격 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1922": {
+    "name": "Echo Pierce I",
+    "krName": "공명찌르기 I",
+    "keyword": "공명찌르기 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1923": {
+    "name": "Legendary Beast Dance I",
+    "krName": "사방신무 I",
+    "keyword": "사방신무 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1926": {
+    "name": "Legendary Beast Dance IV",
+    "krName": "사방신무 IV",
+    "keyword": "사방신무 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1927": {
+    "name": "Cloud Stomping",
+    "krName": "구름 밟기",
+    "keyword": "구름 밟기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1928": {
+    "name": "Echo Pierce II",
+    "krName": "공명찌르기 II",
+    "keyword": "공명찌르기 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1929": {
+    "name": "Echo Pierce III",
+    "krName": "공명찌르기 III",
+    "keyword": "공명찌르기 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1934": {
+    "name": "Flow: Ascension",
+    "krName": "흐름 : 승천",
+    "keyword": "흐름 : 승천",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1937": {
+    "name": "Flow: Intimidation",
+    "krName": "흐름 : 엄포",
+    "keyword": "흐름 : 엄포",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1941": {
+    "name": "Legendary Beast's Power",
+    "krName": "신수 걸음",
+    "keyword": "신수 걸음",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1955": {
+    "name": "Purificatione I",
+    "krName": "정화의 방패 I",
+    "keyword": "정화의 방패 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1956": {
+    "name": "Purificatione II",
+    "krName": "정화의 방패 II",
+    "keyword": "정화의 방패 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1957": {
+    "name": "Purificatione III",
+    "krName": "정화의 방패 III",
+    "keyword": "정화의 방패 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1978": {
+    "name": "Blitz Stab",
+    "krName": "전격 찌르기",
+    "keyword": "전격 찌르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1979": {
+    "name": "Ultimate: Blitz Stab",
+    "krName": "극 : 전격 찌르기",
+    "keyword": "전격 찌르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "1980": {
+    "name": "Death Line Chase",
+    "krName": "사선 추격",
+    "keyword": "사선 추격",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "1981": {
+    "name": "Flow: Lucem Fluxum",
+    "krName": "흐름 : 빛의 폭렬",
+    "keyword": "흐름 : 빛의 폭렬",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2003": {
+    "name": "Spinner IV",
+    "krName": "연환격 IV",
+    "keyword": "연환격 IV",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2007": {
+    "name": "Crosscut IV",
+    "krName": "횡참 IV",
+    "keyword": "횡참 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2016": {
+    "name": "Projection II",
+    "krName": "파극쇄 II",
+    "keyword": "파극쇄 II",
+    "matching_strings": 3,
+    "sub_records": 2
+  },
+  "2017": {
+    "name": "Projection III",
+    "krName": "파극쇄 III",
+    "keyword": "파극쇄 III",
+    "matching_strings": 3,
+    "sub_records": 2
+  },
+  "2040": {
+    "name": "Tenacious Edge I",
+    "krName": "집요한 창날 I",
+    "keyword": "집요한 창날 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2043": {
+    "name": "Tenacious Edge IV",
+    "krName": "집요한 창날 IV",
+    "keyword": "집요한 창날 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2047": {
+    "name": "Moonrise IV",
+    "krName": "달오름 IV",
+    "keyword": "달오름 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2059": {
+    "name": "Petal Drill II",
+    "krName": "서릿불꽃 II",
+    "keyword": "서릿불꽃 II",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "2060": {
+    "name": "Petal Drill III",
+    "krName": "서릿불꽃 III",
+    "keyword": "서릿불꽃 III",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "2061": {
+    "name": "Petal Bloom I",
+    "krName": "화월만개 I",
+    "keyword": "화월만개 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2062": {
+    "name": "Petal Bloom II",
+    "krName": "화월만개 II",
+    "keyword": "화월만개 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2063": {
+    "name": "Petal Bloom III",
+    "krName": "화월만개 III",
+    "keyword": "화월만개 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2078": {
+    "name": "Covert: Cut Throat",
+    "krName": "암행 : 숨통 긋기",
+    "keyword": "암행 : 숨통 긋기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2088": {
+    "name": "Sudden Decapitation I",
+    "krName": "단명참 I",
+    "keyword": "단명참 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2091": {
+    "name": "Sudden Decapitation IV",
+    "krName": "단명참 IV",
+    "keyword": "단명참 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2113": {
+    "name": "Bloodthirst: Katana Shower IV",
+    "krName": "살 : 검강 폭우 IV",
+    "keyword": "살 : 검강 폭우 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2121": {
+    "name": "Sah Spree of Sonan I",
+    "krName": "소난 사하무 I",
+    "keyword": "소난 사하무 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2124": {
+    "name": "Sah Spree of Sonan IV",
+    "krName": "소난 사하무 IV",
+    "keyword": "소난 사하무 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2125": {
+    "name": "Wheel of Wrath I",
+    "krName": "신인분격 I",
+    "keyword": "신인분격 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2126": {
+    "name": "Wheel of Wrath II",
+    "krName": "신인분격 II",
+    "keyword": "신인분격 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2127": {
+    "name": "Wheel of Wrath III",
+    "krName": "신인분격 III",
+    "keyword": "신인분격 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2141": {
+    "name": "Lunar Dash II",
+    "krName": "월쇄 II",
+    "keyword": "월쇄 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2142": {
+    "name": "Lunar Dash III",
+    "krName": "월쇄 III",
+    "keyword": "월쇄 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2145": {
+    "name": "Lethal Spin Spree I",
+    "krName": "희연무 I",
+    "keyword": "희연무 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2148": {
+    "name": "Lethal Spin Spree IV",
+    "krName": "희연무 IV",
+    "keyword": "희연무 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2150": {
+    "name": "Crimson Eclipse",
+    "krName": "진홍의 삭",
+    "keyword": "진홍의 삭",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2161": {
+    "name": "Delighted Blast II",
+    "krName": "경탄추 II",
+    "keyword": "경탄추 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2162": {
+    "name": "Delighted Blast III",
+    "krName": "경탄추 III",
+    "keyword": "경탄추 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2179": {
+    "name": "Equilibrium Break I",
+    "krName": "균형 붕괴 I",
+    "keyword": "균형 붕괴 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2182": {
+    "name": "Equilibrium Break IV",
+    "krName": "균형 붕괴 IV",
+    "keyword": "균형 붕괴 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2184": {
+    "name": "Detonative Flow II",
+    "krName": "폭류 II",
+    "keyword": "폭류 II",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "2190": {
+    "name": "Thunder Storm I",
+    "krName": "뇌전 폭풍 I",
+    "keyword": "뇌전 폭풍 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2191": {
+    "name": "Thunder Storm II",
+    "krName": "뇌전 폭풍 II",
+    "keyword": "뇌전 폭풍 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2192": {
+    "name": "Thunder Storm III",
+    "krName": "뇌전 폭풍 III",
+    "keyword": "뇌전 폭풍 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2208": {
+    "name": "Ultimate: Teleport",
+    "krName": "극 : 공간 이동",
+    "keyword": "공간 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2225": {
+    "name": "Aqua Jail Explosion I",
+    "krName": "수막 폭렬 I",
+    "keyword": "수막 폭렬 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2228": {
+    "name": "Aqua Jail Explosion IV",
+    "krName": "수막 폭렬 IV",
+    "keyword": "수막 폭렬 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2230": {
+    "name": "Chilling Wave II",
+    "krName": "차가운 파도 II",
+    "keyword": "차가운 파도 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2231": {
+    "name": "Chilling Wave III",
+    "krName": "차가운 파도 III",
+    "keyword": "차가운 파도 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2237": {
+    "name": "Water Sphere II",
+    "krName": "물구슬 II",
+    "keyword": "물구슬 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2238": {
+    "name": "Water Sphere III",
+    "krName": "물구슬 III",
+    "keyword": "물구슬 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2243": {
+    "name": "Bolide of Destruction I",
+    "krName": "파멸의 불덩이 I",
+    "keyword": "파멸의 불덩이 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2244": {
+    "name": "Bolide of Destruction II",
+    "krName": "파멸의 불덩이 II",
+    "keyword": "파멸의 불덩이 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2245": {
+    "name": "Bolide of Destruction III",
+    "krName": "파멸의 불덩이 III",
+    "keyword": "파멸의 불덩이 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2248": {
+    "name": "Flow: Arne's Guidance",
+    "krName": "흐름 : 아네의 인도",
+    "keyword": "흐름 : 아네의 인도",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2258": {
+    "name": "Vedir's Dogma",
+    "krName": "베디르의 독선",
+    "keyword": "베디르의 독선",
+    "matching_strings": 2,
+    "sub_records": 3
+  },
+  "2298": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2305": {
+    "name": "Nocturne",
+    "krName": "야상곡",
+    "keyword": "야상곡",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2342": {
+    "name": "Lunacy of Vedir",
+    "krName": "베디르의 광기",
+    "keyword": "베디르의 광기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2351": {
+    "name": "Chain: Dusk",
+    "krName": "연 : 어스름",
+    "keyword": "연 : 어스름",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2378": {
+    "name": "Imperious Command",
+    "krName": "오만한 명령",
+    "keyword": "오만한 명령",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2406": {
+    "name": "Shattering Darkness I",
+    "krName": "비산하는 어둠 I",
+    "keyword": "비산하는 어둠 I",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "2407": {
+    "name": "Shattering Darkness II",
+    "krName": "비산하는 어둠 II",
+    "keyword": "비산하는 어둠 II",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "2408": {
+    "name": "Shattering Darkness III",
+    "krName": "비산하는 어둠 III",
+    "keyword": "비산하는 어둠 III",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "2412": {
+    "name": "Flow: Spirit Blaze",
+    "krName": "흐름 : 정령 산화",
+    "keyword": "흐름 : 정령 산화",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2414": {
+    "name": "Flow: Root of Catastrophe",
+    "krName": "흐름 : 뿌리내린 재앙",
+    "keyword": "흐름 : 뿌리내린 재앙",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2420": {
+    "name": "Cluster of Despair",
+    "krName": "빗발치는 절망",
+    "keyword": "빗발치는 절망",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2423": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2443": {
+    "name": "Flash Step I",
+    "krName": "섬전보 I",
+    "keyword": "섬전보 I",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2444": {
+    "name": "Flash Step II",
+    "krName": "섬전보 II",
+    "keyword": "섬전보 II",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2452": {
+    "name": "Flow: Mass Destruction",
+    "krName": "흐름 : 초전박살",
+    "keyword": "흐름 : 초전박살",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2481": {
+    "name": "Crouching Wolf",
+    "krName": "웅크린 늑대",
+    "keyword": "웅크린 늑대",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2482": {
+    "name": "Flow: Prey Hunt",
+    "krName": "흐름 : 먹이 사냥",
+    "keyword": "흐름 : 먹이 사냥",
+    "matching_strings": 9,
+    "sub_records": 9
+  },
+  "2490": {
+    "name": "Flow: Savage Fang",
+    "krName": "흐름 : 흉포한 이빨",
+    "keyword": "흐름 : 흉포한 이빨",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "2541": {
+    "name": "Wolf's Hunger",
+    "krName": "아랑포식",
+    "keyword": "아랑포식",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2549": {
+    "name": "Combo: Venom Fang",
+    "krName": "연계 : 독니",
+    "keyword": "연계 : 독니",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2550": {
+    "name": "Combo: Final Blow",
+    "krName": "연계 : 혼신의 일격",
+    "keyword": "연계 : 혼신의 일격",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2551": {
+    "name": "Combo: Hurricane",
+    "krName": "연계 : 돌개바람",
+    "keyword": "연계 : 돌개바람",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2553": {
+    "name": "Flow: Deathstrike",
+    "krName": "흐름 : 숨통 끊기",
+    "keyword": "흐름 : 숨통 끊기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2554": {
+    "name": "Flow: Bombardment",
+    "krName": "흐름 : 폭잠",
+    "keyword": "흐름 : 폭잠",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2558": {
+    "name": "Awakening: Enlightened Gardbrace",
+    "krName": "각성 : 독문 투신갑",
+    "keyword": "각성 : 독문 투신갑",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2570": {
+    "name": "Skull Crusher I",
+    "krName": "도끼 찍기 I",
+    "keyword": "도끼 찍기 I",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "2573": {
+    "name": "Skull Crusher IV",
+    "krName": "도끼 찍기 IV",
+    "keyword": "도끼 찍기 IV",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "2574": {
+    "name": "Spiral Cannon I",
+    "krName": "나선탄 I",
+    "keyword": "나선탄 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2575": {
+    "name": "Spiral Cannon II",
+    "krName": "나선탄 II",
+    "keyword": "나선탄 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2576": {
+    "name": "Spiral Cannon III",
+    "krName": "나선탄 III",
+    "keyword": "나선탄 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2580": {
+    "name": "Rampaging Predator I",
+    "krName": "굶주린 맹수 I",
+    "keyword": "굶주린 맹수 I",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "2581": {
+    "name": "Rampaging Predator II",
+    "krName": "굶주린 맹수 II",
+    "keyword": "굶주린 맹수 II",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "2582": {
+    "name": "Rampaging Predator III",
+    "krName": "굶주린 맹수 III",
+    "keyword": "굶주린 맹수 III",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "2587": {
+    "name": "Succession: Rising Blast Combo",
+    "krName": "전승 : 연각",
+    "keyword": "전승 : 연각",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2591": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2631": {
+    "name": "Flash Step I",
+    "krName": "섬전보 I",
+    "keyword": "섬전보 I",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2632": {
+    "name": "Flash Step II",
+    "krName": "섬전보 II",
+    "keyword": "섬전보 II",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2644": {
+    "name": "Flow: Crosswind",
+    "krName": "흐름 : 맞바람",
+    "keyword": "흐름 : 맞바람",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2645": {
+    "name": "Ferocious Assault",
+    "krName": "맹포한 습격",
+    "keyword": "맹포한 습격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2651": {
+    "name": "Flow: Mass Destruction",
+    "krName": "흐름 : 초전박살",
+    "keyword": "흐름 : 초전박살",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2670": {
+    "name": "Flow: Deathstrike",
+    "krName": "흐름 : 숨통 끊기",
+    "keyword": "흐름 : 숨통 끊기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2671": {
+    "name": "Flow: Savage Fang",
+    "krName": "흐름 : 흉포한 이빨",
+    "keyword": "흐름 : 흉포한 이빨",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "2673": {
+    "name": "Flow: Prey Hunt",
+    "krName": "흐름 : 먹이 사냥",
+    "keyword": "흐름 : 먹이 사냥",
+    "matching_strings": 9,
+    "sub_records": 9
+  },
+  "2679": {
+    "name": "Flow: Blowdrive",
+    "krName": "흐름 : 제천",
+    "keyword": "흐름 : 제천",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2685": {
+    "name": "Flow: Recoil Slam",
+    "krName": "흐름 : 끊어 치기",
+    "keyword": "흐름 : 끊어 치기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2686": {
+    "name": "Flow: Bombardment",
+    "krName": "흐름 : 폭잠",
+    "keyword": "흐름 : 폭잠",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2689": {
+    "name": "Combo: Splinter Thud",
+    "krName": "연계 : 무간",
+    "keyword": "연계 : 무간",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2690": {
+    "name": "Combo: Bolster Thump",
+    "krName": "연계 : 염옥",
+    "keyword": "연계 : 염옥",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2717": {
+    "name": "Flow: Sky Rammer",
+    "krName": "흐름 : 낙화",
+    "keyword": "흐름 : 낙화",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2745": {
+    "name": "Ultimate: Maehwa's Will",
+    "krName": "극 : 매화의 정신",
+    "keyword": "매화의 정신",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2750": {
+    "name": "Sage's Rage",
+    "krName": "현자의 심장",
+    "keyword": "현자의 심장",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2775": {
+    "name": "Nature's Wrath",
+    "krName": "자연의 진노",
+    "keyword": "자연의 진노",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2781": {
+    "name": "Rapid Stream I",
+    "krName": "급류 I",
+    "keyword": "급류 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2784": {
+    "name": "Wave Orb I",
+    "krName": "파공 I",
+    "keyword": "파공 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2785": {
+    "name": "Wave Orb II",
+    "krName": "파공 II",
+    "keyword": "파공 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2786": {
+    "name": "Wave Orb III",
+    "krName": "파공 III",
+    "keyword": "파공 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2791": {
+    "name": "Rapid Stream IV",
+    "krName": "급류 IV",
+    "keyword": "급류 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2798": {
+    "name": "Dragon Strike",
+    "krName": "용권 강타",
+    "keyword": "용권 강타",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2799": {
+    "name": "Rising Dragon I",
+    "krName": "기상 I",
+    "keyword": "기상 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2802": {
+    "name": "Rising Dragon IV",
+    "krName": "기상 IV",
+    "keyword": "기상 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2803": {
+    "name": "Hurricane Sweep",
+    "krName": "소용돌이",
+    "keyword": "소용돌이",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2831": {
+    "name": "Absolute: Slash",
+    "krName": "진 : 검술 수련",
+    "keyword": "검술 수련",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2837": {
+    "name": "Absolute: Deep Thrust",
+    "krName": "진 : 깊게 찌르기",
+    "keyword": "깊게 찌르기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2839": {
+    "name": "Absolute: Charging Slash",
+    "krName": "진 : 질주 베기",
+    "keyword": "질주 베기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2840": {
+    "name": "Absolute: Shield Strike",
+    "krName": "진 : 방패 치기",
+    "keyword": "방패 치기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2841": {
+    "name": "Absolute: Kick",
+    "krName": "진 : 발차기",
+    "keyword": "발차기",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2844": {
+    "name": "Absolute: Shield Charge",
+    "krName": "진 : 방패 진공",
+    "keyword": "방패 진공",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2847": {
+    "name": "Absolute: Forward Slash",
+    "krName": "진 : 전진 검술",
+    "keyword": "전진 검술",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2848": {
+    "name": "Absolute: Scars of Dusk",
+    "krName": "진 : 황혼의 상처",
+    "keyword": "황혼의 상처",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2852": {
+    "name": "Absolute: Take Down",
+    "krName": "진 : 잡아메치기",
+    "keyword": "잡아메치기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2853": {
+    "name": "Absolute: Bow Skill",
+    "krName": "진 : 활 숙련도",
+    "keyword": "활 숙련도",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "2854": {
+    "name": "Absolute: Dash Kick",
+    "krName": "진 : 돌진 차기",
+    "keyword": "돌진 차기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2855": {
+    "name": "Absolute: Charging Wind",
+    "krName": "진 : 바람 모아쏘기",
+    "keyword": "바람 모아쏘기",
+    "matching_strings": 4,
+    "sub_records": 5
+  },
+  "2860": {
+    "name": "Absolute: Evasive Shot",
+    "krName": "진 : 회피 사격",
+    "keyword": "회피 사격",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2863": {
+    "name": "Absolute: Evasive Explosion Shot",
+    "krName": "진 : 회피 폭발사격",
+    "keyword": "회피 폭발사격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2864": {
+    "name": "Absolute: Round Kick",
+    "krName": "진 : 회전 차기",
+    "keyword": "회전 차기",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "2865": {
+    "name": "Absolute: Blasting Gust",
+    "krName": "진 : 단명의 질풍",
+    "keyword": "단명의 질풍",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2866": {
+    "name": "Absolute: Descending Current",
+    "krName": "진 : 바람을 타는 깃",
+    "keyword": "바람을 타는 깃",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "2870": {
+    "name": "Absolute: Signs of Agony",
+    "krName": "진 : 고통의 표식",
+    "keyword": "고통의 표식",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2871": {
+    "name": "Absolute: Shadow Eruption",
+    "krName": "진 : 그림자 분출",
+    "keyword": "그림자 분출",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2873": {
+    "name": "Absolute: Dream of Doom",
+    "krName": "진 : 멸망의 꿈",
+    "keyword": "멸망의 꿈",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2874": {
+    "name": "Absolute: Sinister Energy",
+    "krName": "진 : 사악한 기운",
+    "keyword": "사악한 기운",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2877": {
+    "name": "Absolute: Dark Flame",
+    "krName": "진 : 어둠의 업화",
+    "keyword": "어둠의 업화",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "2883": {
+    "name": "Absolute: Beak Kick",
+    "krName": "진 : 부리 차기",
+    "keyword": "부리 차기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2885": {
+    "name": "Absolute: Midnight Stinger",
+    "krName": "진 : 긴밤 지르기",
+    "keyword": "긴밤 지르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2886": {
+    "name": "Absolute: Bloody Calamity",
+    "krName": "진 : 핏빛 재앙",
+    "keyword": "핏빛 재앙",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2887": {
+    "name": "Absolute: Rushing Crow",
+    "krName": "진 : 까마귀 돌진",
+    "keyword": "까마귀 돌진",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2889": {
+    "name": "Absolute: Fearsome Tyrant",
+    "krName": "진 : 공포의 군림자",
+    "keyword": "공포의 군림자",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2891": {
+    "name": "Absolute: Smack Down",
+    "krName": "진 : 찍어 메치기",
+    "keyword": "찍어 메치기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2893": {
+    "name": "Absolute: Headbutt",
+    "krName": "진 : 박치기",
+    "keyword": "박치기",
+    "matching_strings": 5,
+    "sub_records": 5
+  },
+  "2895": {
+    "name": "Absolute: Fierce Strike",
+    "krName": "진 : 맹렬한 공격",
+    "keyword": "맹렬한 공격",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2896": {
+    "name": "Absolute: Frenzied Destroyer",
+    "krName": "진 : 광분의 파괴자",
+    "keyword": "광분의 파괴자",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2897": {
+    "name": "Absolute: Predatory Hunt",
+    "krName": "진 : 포식자의 사냥",
+    "keyword": "포식자의 사냥",
+    "matching_strings": 8,
+    "sub_records": 8
+  },
+  "2898": {
+    "name": "Absolute: Raging Thunder",
+    "krName": "진 : 몰아치는 벼락",
+    "keyword": "몰아치는 벼락",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2899": {
+    "name": "Absolute: Elastic Force",
+    "krName": "진 : 힘의 탄력",
+    "keyword": "힘의 탄력",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2902": {
+    "name": "Absolute: Weakling Hunt",
+    "krName": "진 : 약자 사냥",
+    "keyword": "약자 사냥",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2905": {
+    "name": "Absolute: Wrath of Beast",
+    "krName": "진 : 야수의 진노",
+    "keyword": "야수의 진노",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2906": {
+    "name": "Absolute: Ire of Beast",
+    "krName": "진 : 야수의 격노",
+    "keyword": "야수의 격노",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2907": {
+    "name": "Absolute: Beast Roar",
+    "krName": "진 : 야수의 외침",
+    "keyword": "야수의 외침",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2915": {
+    "name": "Absolute: Bolt Wave",
+    "krName": "진 : 벽력장",
+    "keyword": "벽력장",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2917": {
+    "name": "Absolute: Flurry of Kicks",
+    "krName": "진 : 연속 차기",
+    "keyword": "연속 차기",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "2918": {
+    "name": "Absolute: Evasive Attack",
+    "krName": "진 : 회피 공격",
+    "keyword": "회피 공격",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2919": {
+    "name": "Absolute: Tree Climb",
+    "krName": "진 : 나무 오르기",
+    "keyword": "나무 오르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2924": {
+    "name": "Absolute: Void Lightning",
+    "krName": "진 : 공간 벼락",
+    "keyword": "공간 벼락",
+    "matching_strings": 5,
+    "sub_records": 5
+  },
+  "2926": {
+    "name": "Absolute: Scratch",
+    "krName": "진 : 할퀴기",
+    "keyword": "할퀴기",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "2927": {
+    "name": "Absolute: Throat-Burn",
+    "krName": "진 : 숨통 태우기",
+    "keyword": "숨통 태우기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2928": {
+    "name": "Absolute: Roaring",
+    "krName": "진 : 사자후",
+    "keyword": "사자후",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2930": {
+    "name": "Absolute: Whiplash",
+    "krName": "진 : 채찍 휘두르기",
+    "keyword": "채찍 휘두르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2931": {
+    "name": "Absolute: Upward Claw",
+    "krName": "진 : 발톱 올려치기",
+    "keyword": "발톱 올려치기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2932": {
+    "name": "Absolute: Lightning of Earth",
+    "krName": "진 : 땅의 벼락",
+    "keyword": "땅의 벼락",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2933": {
+    "name": "Absolute: Fearful Trembling",
+    "krName": "진 : 공포의 고동",
+    "keyword": "공포의 고동",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "2937": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "2961": {
+    "name": "Flow: Nimbus Stride",
+    "krName": "흐름 : 운무림",
+    "keyword": "흐름 : 운무림",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3031": {
+    "name": "Absolute: Fist of True Strength",
+    "krName": "진 : 진공 강타",
+    "keyword": "진공 강타",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3032": {
+    "name": "Absolute: Triple Flying Kick",
+    "krName": "진 : 삼연각",
+    "keyword": "삼연각",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3034": {
+    "name": "Absolute: Mass Destruction",
+    "krName": "진 : 초전박살",
+    "keyword": "초전박살",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3035": {
+    "name": "Absolute: Ankle Hook",
+    "krName": "진 : 호미걸이",
+    "keyword": "호미걸이",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3037": {
+    "name": "Absolute: Taebaek Kick",
+    "krName": "진 : 태백 차기",
+    "keyword": "태백 차기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3038": {
+    "name": "Absolute: Hidden Claw",
+    "krName": "진 : 드러낸 발톱",
+    "keyword": "드러낸 발톱",
+    "matching_strings": 6,
+    "sub_records": 7
+  },
+  "3039": {
+    "name": "Absolute: Rage Hammer",
+    "krName": "진 : 거대한 진노",
+    "keyword": "거대한 진노",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3040": {
+    "name": "Absolute: Wolf's Fang",
+    "krName": "진 : 낭아신장",
+    "keyword": "낭아신장",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3042": {
+    "name": "Absolute: Massive Suppression",
+    "krName": "진 : 묵직한 압박",
+    "keyword": "묵직한 압박",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3043": {
+    "name": "Absolute: Twisted Collision",
+    "krName": "진 : 마루오름",
+    "keyword": "마루오름",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3044": {
+    "name": "Absolute: Knee Hammer",
+    "krName": "진 : 무릎 망치",
+    "keyword": "무릎 망치",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3045": {
+    "name": "Absolute: Rock Smash",
+    "krName": "진 : 바위 깨기",
+    "keyword": "바위 깨기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3046": {
+    "name": "Absolute: Tornado Kick",
+    "krName": "진 : 진공 회축",
+    "keyword": "진공 회축",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3050": {
+    "name": "Absolute: Wolf's Hunger",
+    "krName": "진 : 아랑포식",
+    "keyword": "아랑포식",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3051": {
+    "name": "Absolute: Crimson Fang",
+    "krName": "진 : 붉은 송곳니",
+    "keyword": "붉은 송곳니",
+    "matching_strings": 7,
+    "sub_records": 7
+  },
+  "3052": {
+    "name": "Absolute: Explosive Blow",
+    "krName": "진 : 폭렬 강타",
+    "keyword": "폭렬 강타",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3054": {
+    "name": "Absolute: Fist of True Strength",
+    "krName": "진 : 진공 강타",
+    "keyword": "진공 강타",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3055": {
+    "name": "Absolute: Triple Flying Kick",
+    "krName": "진 : 삼연각",
+    "keyword": "삼연각",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3058": {
+    "name": "Absolute: Soul Basher",
+    "krName": "진 : 칠진각",
+    "keyword": "칠진각",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3059": {
+    "name": "Absolute: Ankle Hook",
+    "krName": "진 : 호미걸이",
+    "keyword": "호미걸이",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3061": {
+    "name": "Absolute: Hidden Claw",
+    "krName": "진 : 드러낸 발톱",
+    "keyword": "드러낸 발톱",
+    "matching_strings": 6,
+    "sub_records": 7
+  },
+  "3062": {
+    "name": "Absolute: Thunder Pound",
+    "krName": "진 : 초호장",
+    "keyword": "초호장",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3065": {
+    "name": "Absolute: Rib Crusher",
+    "krName": "진 : 늑골 차기",
+    "keyword": "늑골 차기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3066": {
+    "name": "Absolute: Tornado Kick",
+    "krName": "진 : 진공 회축",
+    "keyword": "진공 회축",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3068": {
+    "name": "Absolute: Twisted Collision",
+    "krName": "진 : 마루오름",
+    "keyword": "마루오름",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3070": {
+    "name": "Absolute: Rage Hammer",
+    "krName": "진 : 거대한 진노",
+    "keyword": "거대한 진노",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3075": {
+    "name": "Absolute: Unveiled Dagger",
+    "krName": "진 : 드러난 비수",
+    "keyword": "드러난 비수",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3080": {
+    "name": "Absolute: Lunacy of Vedir",
+    "krName": "진 : 베디르의 광기",
+    "keyword": "베디르의 광기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3083": {
+    "name": "Absolute: Ravage Rake",
+    "krName": "진 : 할퀴는 광기",
+    "keyword": "할퀴는 광기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3088": {
+    "name": "Absolute: Kamasylvia Slash",
+    "krName": "진 : 카마실비아의 참",
+    "keyword": "카마실비아의 참",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3089": {
+    "name": "Absolute: Wheel of Fortune",
+    "krName": "진 : 운명의 수레바퀴",
+    "keyword": "운명의 수레바퀴",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3090": {
+    "name": "Absolute: Obsidian Ashes",
+    "krName": "진 : 칠흑의 잿더미",
+    "keyword": "칠흑의 잿더미",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3092": {
+    "name": "Absolute: Nocturne",
+    "krName": "진 : 야상곡",
+    "keyword": "야상곡",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3101": {
+    "name": "Absolute: Wind Slash",
+    "krName": "진 : 바람 베기",
+    "keyword": "바람 베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3102": {
+    "name": "Absolute: Wind Slash",
+    "krName": "진 : 바람 베기",
+    "keyword": "바람 베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3103": {
+    "name": "Absolute: Kunai Throw",
+    "krName": "진 : 수리검 던지기",
+    "keyword": "수리검 던지기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3105": {
+    "name": "Absolute: Throwing Kick",
+    "krName": "진 : 후려 차기",
+    "keyword": "후려 차기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3107": {
+    "name": "Absolute: Death's Descent",
+    "krName": "진 : 타계 낙하",
+    "keyword": "타계 낙하",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3108": {
+    "name": "Absolute: Fatal Blow",
+    "krName": "진 : 급소 찌르기",
+    "keyword": "급소 찌르기",
+    "matching_strings": 5,
+    "sub_records": 5
+  },
+  "3109": {
+    "name": "Absolute: Shadow Explosion",
+    "krName": "진 : 그림자 폭발",
+    "keyword": "그림자 폭발",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3110": {
+    "name": "Absolute: Fox Claw",
+    "krName": "진 : 여우 발톱",
+    "keyword": "여우 발톱",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3111": {
+    "name": "Absolute: Shadow Stomp",
+    "krName": "진 : 그림자 밟기",
+    "keyword": "그림자 밟기",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3113": {
+    "name": "Absolute: Crescent Slash",
+    "krName": "진 : 초승달 베기",
+    "keyword": "초승달 베기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3114": {
+    "name": "Absolute: Heart Aiming",
+    "krName": "진 : 심장 노리기",
+    "keyword": "심장 노리기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3116": {
+    "name": "Absolute: Shadow Clone",
+    "krName": "진 : 그림자 분파",
+    "keyword": "그림자 분파",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3119": {
+    "name": "Absolute: Shackles",
+    "krName": "진 : 속박의 덫",
+    "keyword": "속박의 덫",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3123": {
+    "name": "Absolute: Shadow Slash",
+    "krName": "진 : 그림자 베기",
+    "keyword": "그림자 베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3127": {
+    "name": "Absolute: Tendon Cutter",
+    "krName": "진 : 힘줄 자르기",
+    "keyword": "힘줄 자르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3128": {
+    "name": "Absolute: Blade Spin",
+    "krName": "진 : 회전 칼날",
+    "keyword": "회전 칼날",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3131": {
+    "name": "Absolute: Meteor Shower",
+    "krName": "진 : 유성 낙하",
+    "keyword": "유성 낙하",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3132": {
+    "name": "Absolute: Fireball",
+    "krName": "진 : 화염구",
+    "keyword": "화염구",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3134": {
+    "name": "Absolute: Residual Lightning",
+    "krName": "진 : 잔류 번개",
+    "keyword": "잔류 번개",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3135": {
+    "name": "Absolute: Lightning Chain",
+    "krName": "진 : 번개 사슬",
+    "keyword": "번개 사슬",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3136": {
+    "name": "Absolute: Lightning Storm",
+    "krName": "진 : 번개 폭풍",
+    "keyword": "번개 폭풍",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3138": {
+    "name": "Absolute: Frigid Fog",
+    "krName": "진 : 차가운 안개",
+    "keyword": "차가운 안개",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3139": {
+    "name": "Absolute: Blizzard",
+    "krName": "진 : 눈보라",
+    "keyword": "눈보라",
+    "matching_strings": 5,
+    "sub_records": 5
+  },
+  "3150": {
+    "name": "Ultimate: Spring Breeze",
+    "krName": "극 : 봄바람",
+    "keyword": "봄바람",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3154": {
+    "name": "Absolute: Whirlwind Cut",
+    "krName": "진 : 돌개 베기",
+    "keyword": "돌개 베기",
+    "matching_strings": 2,
+    "sub_records": 3
+  },
+  "3165": {
+    "name": "Absolute: Blind Thrust",
+    "krName": "진 : 장님 찌르기",
+    "keyword": "장님 찌르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3169": {
+    "name": "Absolute: Rising Storm",
+    "krName": "진 : 용오름",
+    "keyword": "용오름",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3170": {
+    "name": "Absolute: Cyclone Slash",
+    "krName": "진 : 선풍참",
+    "keyword": "선풍참",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3176": {
+    "name": "Absolute: Whirlwind Cut",
+    "krName": "진 : 돌개 베기",
+    "keyword": "돌개 베기",
+    "matching_strings": 2,
+    "sub_records": 3
+  },
+  "3187": {
+    "name": "Absolute: Blind Thrust",
+    "krName": "진 : 장님 찌르기",
+    "keyword": "장님 찌르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3191": {
+    "name": "Absolute: Red Moon",
+    "krName": "진 : 붉은 달",
+    "keyword": "붉은 달",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3192": {
+    "name": "Absolute: Cyclone Slash",
+    "krName": "진 : 선풍참",
+    "keyword": "선풍참",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3197": {
+    "name": "Absolute: Forward Slash",
+    "krName": "진 : 전진 검술",
+    "keyword": "전진 검술",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3198": {
+    "name": "Absolute: Charging Slash",
+    "krName": "진 : 질주 베기",
+    "keyword": "질주 베기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3202": {
+    "name": "Absolute: Sword of Judgment",
+    "krName": "진 : 단죄의 검",
+    "keyword": "단죄의 검",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3203": {
+    "name": "Absolute: Shield Strike",
+    "krName": "진 : 방패 치기",
+    "keyword": "방패 치기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3204": {
+    "name": "Absolute: Shield Throw",
+    "krName": "진 : 방패 던지기",
+    "keyword": "방패 던지기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3205": {
+    "name": "Absolute: Just Counter",
+    "krName": "진 : 정의의 반격",
+    "keyword": "정의의 반격",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3207": {
+    "name": "Absolute: Judgment of Light",
+    "krName": "진 : 빛의 심판",
+    "keyword": "빛의 심판",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "3209": {
+    "name": "Absolute: Sharp Light",
+    "krName": "진 : 날카로운 빛",
+    "keyword": "날카로운 빛",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3210": {
+    "name": "Absolute: Flurry of Kicks",
+    "krName": "진 : 연속 차기",
+    "keyword": "연속 차기",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3214": {
+    "name": "Absolute: Divine Power",
+    "krName": "진 : 거룩한 힘",
+    "keyword": "거룩한 힘",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3229": {
+    "name": "Absolute: Maehwa's Will",
+    "krName": "진 : 매화의 정신",
+    "keyword": "매화의 정신",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3230": {
+    "name": "Absolute: Charged Stub Arrow",
+    "krName": "진 : 특편전",
+    "keyword": "특편전",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3231": {
+    "name": "Absolute: Charged Stub Arrow",
+    "krName": "진 : 특편전",
+    "keyword": "특편전",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3258": {
+    "name": "Absolute: Mass Destruction",
+    "krName": "진 : 초전박살",
+    "keyword": "초전박살",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3285": {
+    "name": "Deadly Dance II",
+    "krName": "죽음의 무도 II",
+    "keyword": "죽음의 무도 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3286": {
+    "name": "Deadly Dance III",
+    "krName": "죽음의 무도 III",
+    "keyword": "죽음의 무도 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3287": {
+    "name": "Tailspin I",
+    "krName": "강림 I",
+    "keyword": "강림 I",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "3288": {
+    "name": "Tailspin II",
+    "krName": "강림 II",
+    "keyword": "강림 II",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "3289": {
+    "name": "Tailspin III",
+    "krName": "강림 III",
+    "keyword": "강림 III",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "3301": {
+    "name": "Absolute: Pendulum Kick",
+    "krName": "진 : 탄각추",
+    "keyword": "탄각추",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3308": {
+    "name": "Absolute: Three Point Stipple",
+    "krName": "진 : 삼점정격",
+    "keyword": "삼점정격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3321": {
+    "name": "Absolute: Spring Breeze",
+    "krName": "진 : 봄바람",
+    "keyword": "봄바람",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3326": {
+    "name": "Cymbidium Trail",
+    "krName": "화의 낙인",
+    "keyword": "화의 낙인",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "3338": {
+    "name": "Absolute: Spirit Arrow",
+    "krName": "진 : 정령의 화살",
+    "keyword": "정령의 화살",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3347": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3376": {
+    "name": "Absolute: Volant Kick",
+    "krName": "진 : 날개 차기",
+    "keyword": "날개 차기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3380": {
+    "name": "Absolute: Purging Shot",
+    "krName": "진 : 추락하는 어둠",
+    "keyword": "추락하는 어둠",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3415": {
+    "name": "Piercing Cry",
+    "krName": "날카로운 비명",
+    "keyword": "날카로운 비명",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3416": {
+    "name": "Absolute: Piercing Cry",
+    "krName": "진 : 날카로운 비명",
+    "keyword": "날카로운 비명",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3427": {
+    "name": "Breath of the Spirit",
+    "krName": "정령의 숨결",
+    "keyword": "정령의 숨결",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "3431": {
+    "name": "Exhale",
+    "krName": "숨결 던지기",
+    "keyword": "숨결 던지기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3447": {
+    "name": "Steady Breath",
+    "krName": "숨결 다스리기",
+    "keyword": "숨결 다스리기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3459": {
+    "name": "Rage Absorption",
+    "krName": "분노 흡수",
+    "keyword": "분노 흡수",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3840": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3916": {
+    "name": "Spear of Sylvia I",
+    "krName": "실비아의 창 I",
+    "keyword": "실비아의 창 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3919": {
+    "name": "Spear of Sylvia IV",
+    "krName": "실비아의 창 IV",
+    "keyword": "실비아의 창 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3925": {
+    "name": "Uproot II",
+    "krName": "뿌리 오름 II",
+    "keyword": "뿌리 오름 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3926": {
+    "name": "Uproot III",
+    "krName": "뿌리 오름 III",
+    "keyword": "뿌리 오름 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3927": {
+    "name": "Flow: Light's Trail",
+    "krName": "흐름 : 빛의 인도",
+    "keyword": "흐름 : 빛의 인도",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3928": {
+    "name": "Low Sweep",
+    "krName": "밑둥 차기",
+    "keyword": "밑둥 차기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3932": {
+    "name": "Luthraghon's Call IV",
+    "krName": "루트라곤의 부름 IV",
+    "keyword": "루트라곤의 부름 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "3944": {
+    "name": "Full Bloom I",
+    "krName": "만개하는 살 I",
+    "keyword": "만개하는 살 I",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3945": {
+    "name": "Full Bloom II",
+    "krName": "만개하는 살 II",
+    "keyword": "만개하는 살 II",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "3946": {
+    "name": "Full Bloom III",
+    "krName": "만개하는 살 III",
+    "keyword": "만개하는 살 III",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "4042": {
+    "name": "Wolf's Explosive Fangs",
+    "krName": "낭아연환장",
+    "keyword": "낭아연환장",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4059": {
+    "name": "Thrashing Wolf",
+    "krName": "칠진연각",
+    "keyword": "칠진연각",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4095": {
+    "name": "Rage Absorption (Innate)",
+    "krName": "분노 흡수(고유)",
+    "keyword": "분노 흡수(고유)",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4097": {
+    "name": "Do it Better!",
+    "krName": "강하게 더 세게!",
+    "keyword": "강하게 더 세게!",
+    "matching_strings": 3,
+    "sub_records": 1
+  },
+  "4100": {
+    "name": "Earth's Tremble",
+    "krName": "땅의 메아리",
+    "keyword": "땅의 메아리",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4101": {
+    "name": "Forest's Echo",
+    "krName": "숲의 파동",
+    "keyword": "숲의 파동",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4107": {
+    "name": "Succession: Feathers of Lemoria",
+    "krName": "전승 : 레모리아의 깃",
+    "keyword": "전승 : 레모리아의 깃",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4135": {
+    "name": "Succession: Valkyrie's Vow",
+    "krName": "전승 : 발키리의 맹세",
+    "keyword": "전승 : 발키리의 맹세",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4143": {
+    "name": "Prime: Just Counter",
+    "krName": "강 : 정의의 반격",
+    "keyword": "강 : 정의의 반격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4148": {
+    "name": "Prime: Judgment of Light I",
+    "krName": "강 : 빛의 심판 I",
+    "keyword": "강 : 빛의 심판 I",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "4177": {
+    "name": "Prime: Dragon Bite",
+    "krName": "강 : 역극",
+    "keyword": "강 : 역극",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4214": {
+    "name": "Prime: Judgment of Light II",
+    "krName": "강 : 빛의 심판 II",
+    "keyword": "강 : 빛의 심판 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4215": {
+    "name": "Prime: Judgment of Light III",
+    "krName": "강 : 빛의 심판 III",
+    "keyword": "강 : 빛의 심판 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4229": {
+    "name": "Sun's Fury",
+    "krName": "태양의 분노",
+    "keyword": "태양의 분노",
+    "matching_strings": 3,
+    "sub_records": 1
+  },
+  "4475": {
+    "name": "Succession: Power of the Beast",
+    "krName": "전승 : 신수의 힘",
+    "keyword": "전승 : 신수의 힘",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4477": {
+    "name": "Prime: Summon Heuklang",
+    "krName": "강 : 흑랑 소환",
+    "keyword": "강 : 흑랑 소환",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "4563": {
+    "name": "Succession: Abyssal Contract",
+    "krName": "전승 : 심연의 계약",
+    "keyword": "전승 : 심연의 계약",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4595": {
+    "name": "Prime: Rushing Crow",
+    "krName": "강 : 까마귀 돌진",
+    "keyword": "강 : 까마귀 돌진",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4603": {
+    "name": "Succession: Beak Kick",
+    "krName": "전승 : 부리 차기",
+    "keyword": "전승 : 부리 차기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4604": {
+    "name": "Succession: Ultimate: Shadow Eruption",
+    "krName": "전승 : 극 : 그림자 분출",
+    "keyword": "전승 : 극 : 그림자 분출",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4629": {
+    "name": "Succession: Lament of Silence",
+    "krName": "전승 : 침묵의 비가",
+    "keyword": "전승 : 침묵의 비가",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4630": {
+    "name": "Prime: Ninjutsu Commence",
+    "krName": "강 : 인술 전개",
+    "keyword": "강 : 인술 전개",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4659": {
+    "name": "Prime: Shackles",
+    "krName": "강 : 속박의 덫",
+    "keyword": "강 : 속박의 덫",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "4660": {
+    "name": "Prime: Crescent Slash",
+    "krName": "강 : 초승달 베기",
+    "keyword": "강 : 초승달 베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4661": {
+    "name": "Prime: Ankle Cutter",
+    "krName": "강 : 발목 베기",
+    "keyword": "강 : 발목 베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4662": {
+    "name": "Prime: Shadow Explosion",
+    "krName": "강 : 그림자 폭발",
+    "keyword": "강 : 그림자 폭발",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "4663": {
+    "name": "Prime: Danse Macabre",
+    "krName": "강 : 살무",
+    "keyword": "강 : 살무",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4664": {
+    "name": "Prime: Wheel of Wrath",
+    "krName": "강 : 신인분격",
+    "keyword": "강 : 신인분격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4690": {
+    "name": "Succession: Shadow of Darkness",
+    "krName": "전승 : 암흑의 그림자",
+    "keyword": "전승 : 암흑의 그림자",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4693": {
+    "name": "Prime: Shadow Blade",
+    "krName": "강 : 그림자 칼날",
+    "keyword": "강 : 그림자 칼날",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4720": {
+    "name": "Prime: Fox Claw",
+    "krName": "강 : 여우 발톱",
+    "keyword": "강 : 여우 발톱",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "4721": {
+    "name": "Prime: Fatal Blow",
+    "krName": "강 : 급소 찌르기",
+    "keyword": "강 : 급소 찌르기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "4725": {
+    "name": "Prime: Dark Frenzy",
+    "krName": "강 : 난무",
+    "keyword": "강 : 난무",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4778": {
+    "name": "Prime: Moonlight Strike",
+    "krName": "강 : 월광타",
+    "keyword": "강 : 월광타",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4780": {
+    "name": "Succession: Wrath of Vedir",
+    "krName": "전승 : 베디르의 분노",
+    "keyword": "전승 : 베디르의 분노",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4832": {
+    "name": "Succession: Guard",
+    "krName": "전승 : 방어 태세",
+    "keyword": "전승 : 방어 태세",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4836": {
+    "name": "Succession: Flow: Spinning Shield",
+    "krName": "전승 : 흐름 : 회전하는 방패",
+    "keyword": "전승 : 흐름 : 회전하는 방패",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4840": {
+    "name": "Succession: Ultimate: Dark Flame",
+    "krName": "전승 : 극 : 어둠의 업화",
+    "keyword": "전승 : 극 : 어둠의 업화",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4846": {
+    "name": "Spirit Combustion XXI",
+    "krName": "정령의 잔재",
+    "keyword": "정령의 잔재",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4884": {
+    "name": "Succession: Heavenly Waltz",
+    "krName": "전승 : 하늘의 춤사위",
+    "keyword": "전승 : 하늘의 춤사위",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4933": {
+    "name": "Succession: Elemental Revelation",
+    "krName": "전승 : 원소의 발현",
+    "keyword": "전승 : 원소의 발현",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4935": {
+    "name": "Prime: Elemental Flow",
+    "krName": "강 : 원소의 흐름",
+    "keyword": "강 : 원소의 흐름",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "4963": {
+    "name": "Prime: Voltaic Pulse",
+    "krName": "강 : 전류 파동",
+    "keyword": "강 : 전류 파동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "4964": {
+    "name": "Prime: Voltaic Pulse",
+    "krName": "강 : 전류 파동",
+    "keyword": "강 : 전류 파동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "4965": {
+    "name": "Prime: Aqua Jail Explosion",
+    "krName": "강 : 수막폭렬",
+    "keyword": "강 : 수막폭렬",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4966": {
+    "name": "Prime: Aqua Jail Explosion",
+    "krName": "강 : 수막폭렬",
+    "keyword": "강 : 수막폭렬",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "4967": {
+    "name": "Prime: Bolide of Destruction",
+    "krName": "강 : 파멸의 불덩이",
+    "keyword": "강 : 파멸의 불덩이",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "4968": {
+    "name": "Prime: Bolide of Destruction",
+    "krName": "강 : 파멸의 불덩이",
+    "keyword": "강 : 파멸의 불덩이",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "4981": {
+    "name": "Prime: Elemental Flow",
+    "krName": "강 : 원소의 흐름",
+    "keyword": "강 : 원소의 흐름",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "5014": {
+    "name": "Absolute: Fierce Disdain",
+    "krName": "진 : 맹렬한 기만",
+    "keyword": "맹렬한 기만",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5052": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5091": {
+    "name": "Absolute: Black Blood Circle",
+    "krName": "진 : 검은 피의 영역",
+    "keyword": "검은 피의 영역",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5108": {
+    "name": "Absolute: Strike Down",
+    "krName": "진 : 내려 찍기",
+    "keyword": "내려 찍기",
+    "matching_strings": 5,
+    "sub_records": 5
+  },
+  "5123": {
+    "name": "Absolute: Axe Throw",
+    "krName": "진 : 도끼 날리기",
+    "keyword": "도끼 날리기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5125": {
+    "name": "Foretold Encounter",
+    "krName": "예고된 격돌",
+    "keyword": "예고된 격돌",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5153": {
+    "name": "Omua's Blessing",
+    "krName": "오므아의 손길",
+    "keyword": "오므아의 손길",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5154": {
+    "name": "Glorious Advance I",
+    "krName": "영광스러운 거행 I",
+    "keyword": "영광스러운 거행 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5157": {
+    "name": "Glorious Advance IV",
+    "krName": "영광스러운 거행 IV",
+    "keyword": "영광스러운 거행 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5165": {
+    "name": "God Incinerator I",
+    "krName": "멸신의 불길 I",
+    "keyword": "멸신의 불길 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5166": {
+    "name": "God Incinerator II",
+    "krName": "멸신의 불길 II",
+    "keyword": "멸신의 불길 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5167": {
+    "name": "God Incinerator III",
+    "krName": "멸신의 불길 III",
+    "keyword": "멸신의 불길 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5172": {
+    "name": "Cleansing Flame IV",
+    "krName": "정화의 불꽃 IV",
+    "keyword": "정화의 불꽃 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5240": {
+    "name": "Succession: Juggernaut",
+    "krName": "전승 : 진격",
+    "keyword": "전승 : 진격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5321": {
+    "name": "Succession: Crescent Slash",
+    "krName": "전승 : 초승달 베기",
+    "keyword": "전승 : 초승달 베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5322": {
+    "name": "Succession: Ankle Cutter",
+    "krName": "전승 : 발목 베기",
+    "keyword": "전승 : 발목 베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5328": {
+    "name": "Succession: Striker's Vigor",
+    "krName": "전승 : 격투가의 기백",
+    "keyword": "전승 : 격투가의 기백",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5357": {
+    "name": "Prime: Roaring Tiger",
+    "krName": "강 : 호포",
+    "keyword": "강 : 호포",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5358": {
+    "name": "Prime: Wolf's Fang",
+    "krName": "강 : 낭아신장",
+    "keyword": "강 : 낭아신장",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5359": {
+    "name": "Prime: Rage Hammer",
+    "krName": "강 : 거대한 진노",
+    "keyword": "강 : 거대한 진노",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5360": {
+    "name": "Prime: Wolf's Hunger",
+    "krName": "강 : 아랑포식",
+    "keyword": "강 : 아랑포식",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5365": {
+    "name": "Succession: Ankle Hook",
+    "krName": "전승 : 호미걸이",
+    "keyword": "전승 : 호미걸이",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5367": {
+    "name": "Succession: Flow: Bombardment",
+    "krName": "전승 : 흐름 : 폭잠",
+    "keyword": "전승 : 흐름 : 폭잠",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5368": {
+    "name": "Succession: Flow: Savage Fang",
+    "krName": "전승 : 흐름 : 흉포한 이빨",
+    "keyword": "전승 : 흐름 : 흉포한 이빨",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5369": {
+    "name": "Succession: Combo: Final Blow",
+    "krName": "전승 : 연계 : 혼신의 일격",
+    "keyword": "전승 : 연계 : 혼신의 일격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5370": {
+    "name": "Succession: Crouching Wolf",
+    "krName": "전승 : 웅크린 늑대",
+    "keyword": "전승 : 웅크린 늑대",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5373": {
+    "name": "Succession: Mystic's Force",
+    "krName": "전승 : 미스틱의 기상",
+    "keyword": "전승 : 미스틱의 기상",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5403": {
+    "name": "Prime: Somersault",
+    "krName": "강 : 등각",
+    "keyword": "강 : 등각",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5404": {
+    "name": "Prime: Roaring Tiger",
+    "krName": "강 : 호포",
+    "keyword": "강 : 호포",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5406": {
+    "name": "Prime: Rage Hammer",
+    "krName": "강 : 거대한 진노",
+    "keyword": "강 : 거대한 진노",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5409": {
+    "name": "Succession: Ghost Step",
+    "krName": "전승 : 도깨비 걸음",
+    "keyword": "전승 : 도깨비 걸음",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5440": {
+    "name": "Prime: Predatory Hunt",
+    "krName": "강 : 포식자의 사냥",
+    "keyword": "강 : 포식자의 사냥",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "5441": {
+    "name": "Prime: Lava Piercer",
+    "krName": "강 : 용암 뚫기",
+    "keyword": "강 : 용암 뚫기",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "5443": {
+    "name": "Prime: Ancient Wave",
+    "krName": "강 : 고대의 파동",
+    "keyword": "강 : 고대의 파동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5459": {
+    "name": "Succession: Weakling Hunt",
+    "krName": "전승 : 약자 사냥",
+    "keyword": "전승 : 약자 사냥",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "5465": {
+    "name": "Succession: Crouching Wolf",
+    "krName": "전승 : 웅크린 늑대",
+    "keyword": "전승 : 웅크린 늑대",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5467": {
+    "name": "Absorb Heuklang",
+    "krName": "흑랑 흡수",
+    "keyword": "흑랑 흡수",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5493": {
+    "name": "Absolute: Hourglass of Death",
+    "krName": "진 : 낙명의 모래시계",
+    "keyword": "낙명의 모래시계",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5516": {
+    "name": "Absolute: Haladie Throw",
+    "krName": "진 : 금계 투척",
+    "keyword": "금계 투척",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5583": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5598": {
+    "name": "Absolute: Aal's Breath",
+    "krName": "진 : 아알의 숨결",
+    "keyword": "아알의 숨결",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5603": {
+    "name": "Absolute: Haladie Assault",
+    "krName": "진 : 금계 습격",
+    "keyword": "금계 습격",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5604": {
+    "name": "Arid Assault",
+    "krName": "메마른 습격",
+    "keyword": "메마른 습격",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "5616": {
+    "name": "Succession: Dark Tornado",
+    "krName": "전승 : 검은 회오리",
+    "keyword": "전승 : 검은 회오리",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5625": {
+    "name": "Inquisition I",
+    "krName": "추궁의 칼날 I",
+    "keyword": "추궁의 칼날 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5628": {
+    "name": "Inquisition IV",
+    "krName": "추궁의 칼날 IV",
+    "keyword": "추궁의 칼날 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5636": {
+    "name": "Ensnaring Sands IV",
+    "krName": "포박하는 모래늪 IV",
+    "keyword": "포박하는 모래늪 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5638": {
+    "name": "Dune Slash I",
+    "krName": "사구 베기 I",
+    "keyword": "사구 베기 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5639": {
+    "name": "Dune Slash II",
+    "krName": "사구 베기 II",
+    "keyword": "사구 베기 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5646": {
+    "name": "Serpent's Coil II",
+    "krName": "뱀의 똬리 II",
+    "keyword": "뱀의 똬리 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5647": {
+    "name": "Serpent's Coil III",
+    "krName": "뱀의 똬리 III",
+    "keyword": "뱀의 똬리 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5652": {
+    "name": "Paradise Surge",
+    "krName": "낙원의 쇄도",
+    "keyword": "낙원의 쇄도",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5667": {
+    "name": "Prime: Aal's Breath",
+    "krName": "강 : 아알의 숨결",
+    "keyword": "강 : 아알의 숨결",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5701": {
+    "name": "Way of Aal",
+    "krName": "인도자",
+    "keyword": "인도자",
+    "matching_strings": 4,
+    "sub_records": 4
+  },
+  "5727": {
+    "name": "Absolute: Command: Passed Pawn",
+    "krName": "진 : 명령 : 부름받든 보병",
+    "keyword": "명령 : 부름받든 보병",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5728": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "5730": {
+    "name": "Winter's Bulwark",
+    "krName": "엄동의 방진",
+    "keyword": "엄동의 방진",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "5736": {
+    "name": "Absolute: Command: Stamma's Mate",
+    "krName": "진 : 명령 : 격돌하는 기병",
+    "keyword": "명령 : 격돌하는 기병",
+    "matching_strings": 3,
+    "sub_records": 4
+  },
+  "5751": {
+    "name": "Quoratum's Protection I",
+    "krName": "크라툼의 방호 I",
+    "keyword": "크라툼의 방호 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5769": {
+    "name": "Absolute: Icy Thorns",
+    "krName": "진 : 얼음가시",
+    "keyword": "얼음가시",
+    "matching_strings": 4,
+    "sub_records": 5
+  },
+  "5780": {
+    "name": "Absolute: Command: Blooming Icy Thorns",
+    "krName": "진 : 명령 : 피어오르는 얼음가시",
+    "keyword": "명령 : 피어오르는 얼음가시",
+    "matching_strings": 3,
+    "sub_records": 4
+  },
+  "5809": {
+    "name": "Absolute: Storming Star",
+    "krName": "진 : 몰아치는 샛별",
+    "keyword": "몰아치는 샛별",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5838": {
+    "name": "Absolute: Quoratum's Protection",
+    "krName": "진 : 크라툼의 방호",
+    "keyword": "크라툼의 방호",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "5880": {
+    "name": "Break Orbit",
+    "krName": "궤도 이탈",
+    "keyword": "궤도 이탈",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "5887": {
+    "name": "Swooping Ring I",
+    "krName": "덮치는 고리 I",
+    "keyword": "덮치는 고리 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5890": {
+    "name": "Swooping Ring IV",
+    "krName": "덮치는 고리 IV",
+    "keyword": "덮치는 고리 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5895": {
+    "name": "Frozen Ring I",
+    "krName": "얼어붙는 고리 I",
+    "keyword": "얼어붙는 고리 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5898": {
+    "name": "Frozen Ring IV",
+    "krName": "얼어붙는 고리 IV",
+    "keyword": "얼어붙는 고리 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5900": {
+    "name": "Royal Fencing: Remise II",
+    "krName": "왕실 검술 : 연 II",
+    "keyword": "왕실 검술 : 연 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5901": {
+    "name": "Royal Fencing: Remise III",
+    "krName": "왕실 검술 : 연 III",
+    "keyword": "왕실 검술 : 연 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5906": {
+    "name": "Starfall II",
+    "krName": "쏟아지는 별조각 II",
+    "keyword": "쏟아지는 별조각 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5907": {
+    "name": "Starfall III",
+    "krName": "쏟아지는 별조각 III",
+    "keyword": "쏟아지는 별조각 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5941": {
+    "name": "Prime: Passed Pawn I",
+    "krName": "강 : 부름받든 보병 I",
+    "keyword": "강 : 부름받든 보병 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5977": {
+    "name": "Prime: Passed Pawn II",
+    "krName": "강 : 부름받든 보병 II",
+    "keyword": "강 : 부름받든 보병 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5988": {
+    "name": "Prime: Passed Pawn III",
+    "krName": "강 : 부름받든 보병 III",
+    "keyword": "강 : 부름받든 보병 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "5999": {
+    "name": "Prime: Storming Star",
+    "krName": "강 : 몰아치는 샛별",
+    "keyword": "강 : 몰아치는 샛별",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6142": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "6190": {
+    "name": "Absolute: Rift Chain",
+    "krName": "진 : 균열의 연결고리",
+    "keyword": "균열의 연결고리",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6192": {
+    "name": "Flow: Illusion Detonation",
+    "krName": "흐름 : 허상 작렬",
+    "keyword": "흐름 : 허상 작렬",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6272": {
+    "name": "Spear Bolt I",
+    "krName": "전력 투창 I",
+    "keyword": "전력 투창 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6308": {
+    "name": "Spear Bolt II",
+    "krName": "전력 투창 II",
+    "keyword": "전력 투창 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6309": {
+    "name": "Spear Bolt III",
+    "krName": "전력 투창 III",
+    "keyword": "전력 투창 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6323": {
+    "name": "Upsurge IV",
+    "krName": "솟아오르는 힘 IV",
+    "keyword": "솟아오르는 힘 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6327": {
+    "name": "Lightning Prison IV",
+    "krName": "단죄하는 뇌옥 IV",
+    "keyword": "단죄하는 뇌옥 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6328": {
+    "name": "Flow: Judgment",
+    "krName": "흐름 : 불호령",
+    "keyword": "흐름 : 불호령",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6332": {
+    "name": "Lightning Surge",
+    "krName": "번개 쇄도",
+    "keyword": "번개 쇄도",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6338": {
+    "name": "Bolt",
+    "krName": "섬광화",
+    "keyword": "섬광화",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "6351": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "6458": {
+    "name": "Autumn Blaze",
+    "krName": "추풍낙엽",
+    "keyword": "추풍낙엽",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6465": {
+    "name": "Giant Leap",
+    "krName": "거인의 도약",
+    "keyword": "거인의 도약",
+    "matching_strings": 3,
+    "sub_records": 3
+  },
+  "6488": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "6496": {
+    "name": "Absolute: Wave Breaker",
+    "krName": "진 : 파도가르기",
+    "keyword": "파도가르기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6524": {
+    "name": "Absolute: Storm Surge",
+    "krName": "진 : 폭풍해일",
+    "keyword": "폭풍해일",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6591": {
+    "name": "Absolute: Ocean's Pearl",
+    "krName": "진 : 너울구슬",
+    "keyword": "너울구슬",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6690": {
+    "name": "Crow's Mark I",
+    "krName": "까마귀의 표적 I",
+    "keyword": "까마귀의 표적 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6691": {
+    "name": "Crow's Mark II",
+    "krName": "까마귀의 표적 II",
+    "keyword": "까마귀의 표적 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6692": {
+    "name": "Crow's Mark III",
+    "krName": "까마귀의 표적 III",
+    "keyword": "까마귀의 표적 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6697": {
+    "name": "Wave-breaker Patraca",
+    "krName": "파도를 헤치는 소살",
+    "keyword": "파도를 헤치는 소살",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6703": {
+    "name": "Wind-piercer Patraca",
+    "krName": "바람을 누비는 소살",
+    "keyword": "바람을 누비는 소살",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6796": {
+    "name": "Prime: Heart Aiming",
+    "krName": "강 : 심장 노리기",
+    "keyword": "강 : 심장 노리기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6797": {
+    "name": "Alert Stance",
+    "krName": "주시 태세",
+    "keyword": "주시 태세",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "6800": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "6825": {
+    "name": "Absolute: Brimbolt Strike",
+    "krName": "진 : 벼락불 작렬",
+    "keyword": "벼락불 작렬",
+    "matching_strings": 7,
+    "sub_records": 4
+  },
+  "6826": {
+    "name": "Flow: Brimbolt Wave",
+    "krName": "흐름 : 벼락불 파동",
+    "keyword": "흐름 : 벼락불 파동",
+    "matching_strings": 3,
+    "sub_records": 2
+  },
+  "6978": {
+    "name": "Succession: Flow: Brimbolt Wave",
+    "krName": "전승 : 흐름 : 벼락불 파동",
+    "keyword": "전승 : 흐름 : 벼락불 파동",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7042": {
+    "name": "Aerial Burst",
+    "krName": "휘날리는 폭압",
+    "keyword": "휘날리는 폭압",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7155": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "7329": {
+    "name": "Emberclaw Torrent I",
+    "krName": "여우풀이 I",
+    "keyword": "여우풀이 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7332": {
+    "name": "Emberclaw Torrent IV",
+    "krName": "여우풀이 IV",
+    "keyword": "여우풀이 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7340": {
+    "name": "Twirling Foxflare IV",
+    "krName": "도리깨연풍 IV",
+    "keyword": "도리깨연풍 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7341": {
+    "name": "Flow: Foxflare Encore",
+    "krName": "흐름 : 노대바람",
+    "keyword": "흐름 : 노대바람",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "7342": {
+    "name": "Emberclaw Crush I",
+    "krName": "피어오름 I",
+    "keyword": "피어오름 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7343": {
+    "name": "Emberclaw Crush II",
+    "krName": "피어오름 II",
+    "keyword": "피어오름 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7344": {
+    "name": "Emberclaw Crush III",
+    "krName": "피어오름 III",
+    "keyword": "피어오름 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7352": {
+    "name": "Foxflare Cleave",
+    "krName": "앞발찢기",
+    "keyword": "앞발찢기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7353": {
+    "name": "Foxflare Fleche",
+    "krName": "인중치기",
+    "keyword": "인중치기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7355": {
+    "name": "Twirling Retreat",
+    "krName": "마파람사위",
+    "keyword": "마파람사위",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7363": {
+    "name": "Foxflare Stroke",
+    "krName": "꾸지람",
+    "keyword": "꾸지람",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7364": {
+    "name": "Fan Kick",
+    "krName": "발따귀",
+    "keyword": "발따귀",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "7365": {
+    "name": "Foxflare Ambush",
+    "krName": "나빌레라",
+    "keyword": "나빌레라",
+    "matching_strings": 3,
+    "sub_records": 1
+  },
+  "7506": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "7526": {
+    "name": "Absolute: Sagoonja: Plum",
+    "krName": "진 : 사군자 : 매",
+    "keyword": "사군자 : 매",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7531": {
+    "name": "Absolute: Stormfall",
+    "krName": "진 : 소낙비",
+    "keyword": "소낙비",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7536": {
+    "name": "Absolute: Sagoonja: Bamboo",
+    "krName": "진 : 사군자 : 죽",
+    "keyword": "사군자 : 죽",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "7545": {
+    "name": "Absolute: Cloudcarve",
+    "krName": "진 : 구렁나비",
+    "keyword": "구렁나비",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7546": {
+    "name": "Flow: Stormbolt",
+    "krName": "흐름 : 낙뢰",
+    "keyword": "흐름 : 낙뢰",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "7558": {
+    "name": "Absolute: Cloud Flower",
+    "krName": "진 : 구름꽃",
+    "keyword": "구름꽃",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7577": {
+    "name": "Absolute: Fan Kick",
+    "krName": "진 : 발따귀",
+    "keyword": "발따귀",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "7583": {
+    "name": "Absolute: Cloudrise",
+    "krName": "진 : 먹구름",
+    "keyword": "먹구름",
+    "matching_strings": 8,
+    "sub_records": 7
+  },
+  "7585": {
+    "name": "Flitting Step",
+    "krName": "신선걸음",
+    "keyword": "신선걸음",
+    "matching_strings": 2,
+    "sub_records": 3
+  },
+  "7597": {
+    "name": "Absolute: Sagoonja: Chrysanth",
+    "krName": "진 : 사군자 : 국",
+    "keyword": "사군자 : 국",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7606": {
+    "name": "Absolute: Sagoonja: Orchid",
+    "krName": "진 : 사군자 : 난",
+    "keyword": "사군자 : 난",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7607": {
+    "name": "Prime: Sagoonja: Bamboo",
+    "krName": "강 : 사군자 : 죽",
+    "keyword": "강 : 사군자 : 죽",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7608": {
+    "name": "Prime: Sagoonja: Chrysanth",
+    "krName": "강 : 사군자 : 국",
+    "keyword": "강 : 사군자 : 국",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7609": {
+    "name": "Prime: Cloudcarve",
+    "krName": "강 : 구렁나비",
+    "keyword": "강 : 구렁나비",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7610": {
+    "name": "Prime: Thunderstroke",
+    "krName": "강 : 묵뢰",
+    "keyword": "강 : 묵뢰",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7662": {
+    "name": "Prime: Quiet Waters",
+    "krName": "강 : 상선약수",
+    "keyword": "강 : 상선약수",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7665": {
+    "name": "Thundercall",
+    "krName": "마파람",
+    "keyword": "마파람",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "7685": {
+    "name": "Bloomburst",
+    "krName": "피어오르리",
+    "keyword": "피어오르리",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7689": {
+    "name": "Flow: Seocheon Field",
+    "krName": "흐름 : 파종",
+    "keyword": "흐름 : 파종",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7707": {
+    "name": "Soul Shower II",
+    "krName": "꽃물림 II",
+    "keyword": "꽃물림 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7708": {
+    "name": "Soul Shower III",
+    "krName": "꽃물림 III",
+    "keyword": "꽃물림 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7713": {
+    "name": "Flow: Death's Proclamation",
+    "krName": "흐름 : 천도",
+    "keyword": "흐름 : 천도",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7714": {
+    "name": "Sahee's Descent I",
+    "krName": "사희 강림 I",
+    "keyword": "사희 강림 I",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7715": {
+    "name": "Sahee's Descent II",
+    "krName": "사희 강림 II",
+    "keyword": "사희 강림 II",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "7716": {
+    "name": "Sahee's Descent III",
+    "krName": "사희 강림 III",
+    "keyword": "사희 강림 III",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "8000": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "8065": {
+    "name": "Absolute: Attraction",
+    "krName": "진 : 인력 생성",
+    "keyword": "인력 생성",
+    "matching_strings": 1,
+    "sub_records": 2
+  },
+  "8162": {
+    "name": "Hammer Spin IV",
+    "krName": "풍차 돌리기 IV",
+    "keyword": "풍차 돌리기 IV",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "8600": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "8625": {
+    "name": "Absolute: Flow: Rising Slash",
+    "krName": "진 : 흐름 : 올려베기",
+    "keyword": "흐름 : 올려베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "8652": {
+    "name": "Absolute: Summer Breeze",
+    "krName": "진 : 여름바람",
+    "keyword": "여름바람",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "8674": {
+    "name": "Absolute: Spring Frost",
+    "krName": "진 : 봄서리",
+    "keyword": "봄서리",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "8683": {
+    "name": "Wind Shear",
+    "krName": "걷어내기",
+    "keyword": "걷어내기",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "8713": {
+    "name": "Prime: Cloud General",
+    "krName": "강 : 구름장수",
+    "keyword": "강 : 구름장수",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "8739": {
+    "name": "Prime: Spring Frost",
+    "krName": "강 : 봄서리",
+    "keyword": "강 : 봄서리",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "8745": {
+    "name": "Prime: Unsa's Heir",
+    "krName": "강 : 운사의 후예",
+    "keyword": "강 : 운사의 후예",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "8827": {
+    "name": "Elemental Circle",
+    "krName": "오행의 영역",
+    "keyword": "오행의 영역",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "8900": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "8945": {
+    "name": "Absolute: Run 'N Gun",
+    "krName": "진 : 기동 사격",
+    "keyword": "기동 사격",
+    "matching_strings": 6,
+    "sub_records": 3
+  },
+  "9033": {
+    "name": "Flow: Pocket Ace",
+    "krName": "흐름 : 숨겨진 카드",
+    "keyword": "흐름 : 숨겨진 카드",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "9605": {
+    "name": "Fighting Buddha",
+    "krName": "투전승불",
+    "keyword": "투전승불",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "9665": {
+    "name": "Evasion",
+    "krName": "회피 이동",
+    "keyword": "회피 이동",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "9727": {
+    "name": "Absolute: Crossing Slash",
+    "krName": "진 : 겹쳐 베기",
+    "keyword": "겹쳐 베기",
+    "matching_strings": 2,
+    "sub_records": 2
+  },
+  "9743": {
+    "name": "Absolute: Horizon Slash",
+    "krName": "진 : 지평선 베기",
+    "keyword": "지평선 베기",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "9769": {
+    "name": "Sacramentum",
+    "krName": "신성한 맹약",
+    "keyword": "신성한 맹약",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "9796": {
+    "name": "Purgatum",
+    "krName": "단연한 과죄",
+    "keyword": "단연한 과죄",
+    "matching_strings": 3,
+    "sub_records": 2
+  },
+  "9848": {
+    "name": "Rage Absorption",
+    "krName": "분노 흡수",
+    "keyword": "분노 흡수",
+    "matching_strings": 1,
+    "sub_records": 1
+  },
+  "9857": {
+    "name": "Purga: Mark of Purification",
+    "krName": "단죄 : 정화의 낙인",
+    "keyword": "단죄 : 정화의 낙인",
+    "matching_strings": 2,
+    "sub_records": 1
+  },
+  "9859": {
+    "name": "Purga: Judgment of Justice",
+    "krName": "단죄 : 정의의 심판",
+    "keyword": "단죄 : 정의의 심판",
+    "matching_strings": 2,
+    "sub_records": 1
+  }
+}

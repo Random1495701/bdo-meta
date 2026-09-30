@@ -1,0 +1,6746 @@
+[
+  {
+    "skillId": 1785,
+    "skillName": "Dead Hunt I",
+    "btString": "BT_ARO_Skill_Bash_Attack_1_1LV",
+    "base": "phw_04_01_att_skill_bash",
+    "primaryAnimMs": 2900,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "phw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Bash_02",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "phw_04_01_att_skill_bash_03.paa",
+        "actionName": "Ani_Aro_Battle_Bash_03",
+        "durationMs": 3433
+      },
+      {
+        "phase": 4,
+        "file": "phw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Bash_04",
+        "durationMs": 2900
+      }
+    ]
+  },
+  {
+    "skillId": 1786,
+    "skillName": "Dead Hunt II",
+    "btString": "BT_ARO_Skill_Bash_Attack_1_2LV",
+    "base": "phw_04_01_att_skill_bash",
+    "primaryAnimMs": 2900,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "phw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Bash_02",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "phw_04_01_att_skill_bash_03.paa",
+        "actionName": "Ani_Aro_Battle_Bash_03",
+        "durationMs": 3433
+      },
+      {
+        "phase": 4,
+        "file": "phw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Bash_04",
+        "durationMs": 2900
+      }
+    ]
+  },
+  {
+    "skillId": 1787,
+    "skillName": "Dead Hunt III",
+    "btString": "BT_ARO_Skill_Bash_Attack_1_3LV",
+    "base": "phw_04_01_att_skill_bash",
+    "primaryAnimMs": 2900,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "phw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Bash_02",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "phw_04_01_att_skill_bash_03.paa",
+        "actionName": "Ani_Aro_Battle_Bash_03",
+        "durationMs": 3433
+      },
+      {
+        "phase": 4,
+        "file": "phw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Bash_04",
+        "durationMs": 2900
+      }
+    ]
+  },
+  {
+    "skillId": 1788,
+    "skillName": "Dead Hunt IV",
+    "btString": "BT_ARO_Skill_Bash_Attack_1_4LV",
+    "base": "phw_04_01_att_skill_bash",
+    "primaryAnimMs": 2900,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "phw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Bash_02",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "phw_04_01_att_skill_bash_03.paa",
+        "actionName": "Ani_Aro_Battle_Bash_03",
+        "durationMs": 3433
+      },
+      {
+        "phase": 4,
+        "file": "phw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Bash_04",
+        "durationMs": 2900
+      }
+    ]
+  },
+  {
+    "skillId": 6079,
+    "skillName": "Core: Dead Hunt",
+    "btString": "BT_ARO_Skill_Bash_Attack_1_Jin",
+    "base": "phw_04_01_att_skill_bash",
+    "primaryAnimMs": 2900,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "phw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Bash_02",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "phw_04_01_att_skill_bash_03.paa",
+        "actionName": "Ani_Aro_Battle_Bash_03",
+        "durationMs": 3433
+      },
+      {
+        "phase": 4,
+        "file": "phw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Bash_04",
+        "durationMs": 2900
+      }
+    ]
+  },
+  {
+    "skillId": 5418,
+    "skillName": "<PAColor0xffeb9261>Prime: Frenzied Destroyer I<PAOldColor>",
+    "btString": "BT_UP_skill_EarthQuake_START_1LV",
+    "base": "pgm_05_01_att_skill_earthquake",
+    "primaryAnimMs": 1033,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pgm_05_01_att_skill_earthquake_01.paa",
+        "actionName": "Ani_Training_Skill_A_04",
+        "durationMs": 1233
+      },
+      {
+        "phase": 2,
+        "file": "pgm_05_01_att_skill_earthquake_02.paa",
+        "actionName": "Ani_Training_Skill_A_05",
+        "durationMs": 1433
+      },
+      {
+        "phase": 3,
+        "file": "pgm_05_01_att_skill_earthquake_03.paa",
+        "actionName": "Ani_Battle_Skill_EarthQuake_3",
+        "durationMs": 1400
+      }
+    ]
+  },
+  {
+    "skillId": 5419,
+    "skillName": "<PAColor0xffeb9261>Prime: Frenzied Destroyer II<PAOldColor>",
+    "btString": "BT_UP_skill_EarthQuake_START_2LV",
+    "base": "pgm_05_01_att_skill_earthquake",
+    "primaryAnimMs": 1033,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pgm_05_01_att_skill_earthquake_01.paa",
+        "actionName": "Ani_Training_Skill_A_04",
+        "durationMs": 1233
+      },
+      {
+        "phase": 2,
+        "file": "pgm_05_01_att_skill_earthquake_02.paa",
+        "actionName": "Ani_Training_Skill_A_05",
+        "durationMs": 1433
+      },
+      {
+        "phase": 3,
+        "file": "pgm_05_01_att_skill_earthquake_03.paa",
+        "actionName": "Ani_Battle_Skill_EarthQuake_3",
+        "durationMs": 1400
+      }
+    ]
+  },
+  {
+    "skillId": 5420,
+    "skillName": "<PAColor0xffeb9261>Prime: Frenzied Destroyer III<PAOldColor>",
+    "btString": "BT_UP_skill_EarthQuake_START_3LV",
+    "base": "pgm_05_01_att_skill_earthquake",
+    "primaryAnimMs": 1033,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pgm_05_01_att_skill_earthquake_01.paa",
+        "actionName": "Ani_Training_Skill_A_04",
+        "durationMs": 1233
+      },
+      {
+        "phase": 2,
+        "file": "pgm_05_01_att_skill_earthquake_02.paa",
+        "actionName": "Ani_Training_Skill_A_05",
+        "durationMs": 1433
+      },
+      {
+        "phase": 3,
+        "file": "pgm_05_01_att_skill_earthquake_03.paa",
+        "actionName": "Ani_Battle_Skill_EarthQuake_3",
+        "durationMs": 1400
+      }
+    ]
+  },
+  {
+    "skillId": 5421,
+    "skillName": "<PAColor0xffeb9261>Prime: Frenzied Destroyer IV<PAOldColor>",
+    "btString": "BT_UP_skill_EarthQuake_START_4LV",
+    "base": "pgm_05_01_att_skill_earthquake",
+    "primaryAnimMs": 1033,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pgm_05_01_att_skill_earthquake_01.paa",
+        "actionName": "Ani_Training_Skill_A_04",
+        "durationMs": 1233
+      },
+      {
+        "phase": 2,
+        "file": "pgm_05_01_att_skill_earthquake_02.paa",
+        "actionName": "Ani_Training_Skill_A_05",
+        "durationMs": 1433
+      },
+      {
+        "phase": 3,
+        "file": "pgm_05_01_att_skill_earthquake_03.paa",
+        "actionName": "Ani_Battle_Skill_EarthQuake_3",
+        "durationMs": 1400
+      }
+    ]
+  },
+  {
+    "skillId": 1923,
+    "skillName": "Legendary Beast Dance I",
+    "btString": "BT_ARO_Skill_Bash_A_1Lv",
+    "base": "pbw_04_01_att_skill_bash",
+    "primaryAnimMs": 3933,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pbw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Att_Bash_02",
+        "durationMs": 3667
+      },
+      {
+        "phase": 4,
+        "file": "pbw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Att_Bash_04",
+        "durationMs": 3933
+      }
+    ]
+  },
+  {
+    "skillId": 1924,
+    "skillName": "Legendary Beast Dance II",
+    "btString": "BT_ARO_Skill_Bash_A_2Lv",
+    "base": "pbw_04_01_att_skill_bash",
+    "primaryAnimMs": 3933,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pbw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Att_Bash_02",
+        "durationMs": 3667
+      },
+      {
+        "phase": 4,
+        "file": "pbw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Att_Bash_04",
+        "durationMs": 3933
+      }
+    ]
+  },
+  {
+    "skillId": 1925,
+    "skillName": "Legendary Beast Dance III",
+    "btString": "BT_ARO_Skill_Bash_A_3Lv",
+    "base": "pbw_04_01_att_skill_bash",
+    "primaryAnimMs": 3933,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pbw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Att_Bash_02",
+        "durationMs": 3667
+      },
+      {
+        "phase": 4,
+        "file": "pbw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Att_Bash_04",
+        "durationMs": 3933
+      }
+    ]
+  },
+  {
+    "skillId": 1926,
+    "skillName": "Legendary Beast Dance IV",
+    "btString": "BT_ARO_Skill_Bash_A_4Lv",
+    "base": "pbw_04_01_att_skill_bash",
+    "primaryAnimMs": 3933,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pbw_04_01_att_skill_bash_02.paa",
+        "actionName": "Ani_Aro_Battle_Att_Bash_02",
+        "durationMs": 3667
+      },
+      {
+        "phase": 4,
+        "file": "pbw_04_01_att_skill_bash_04.paa",
+        "actionName": "Ani_Aro_Battle_Att_Bash_04",
+        "durationMs": 3933
+      }
+    ]
+  },
+  {
+    "skillId": 2040,
+    "skillName": "Tenacious Edge I",
+    "btString": "BT_ARO_Skill_3Combo_Attack_F_1LV",
+    "base": "pkm_01_01_att_skill_3combo_bash",
+    "primaryAnimMs": 2567,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pkm_01_01_att_skill_3combo_bash_00.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_00",
+        "durationMs": 3300
+      },
+      {
+        "phase": 1,
+        "file": "pkm_01_01_att_skill_3combo_bash_01.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_01",
+        "durationMs": 2567
+      },
+      {
+        "phase": 2,
+        "file": "pkm_01_01_att_skill_3combo_bash_02.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_02",
+        "durationMs": 4233
+      }
+    ]
+  },
+  {
+    "skillId": 2041,
+    "skillName": "Tenacious Edge II",
+    "btString": "BT_ARO_Skill_3Combo_Attack_F_2LV",
+    "base": "pkm_01_01_att_skill_3combo_bash",
+    "primaryAnimMs": 2567,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pkm_01_01_att_skill_3combo_bash_00.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_00",
+        "durationMs": 3300
+      },
+      {
+        "phase": 1,
+        "file": "pkm_01_01_att_skill_3combo_bash_01.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_01",
+        "durationMs": 2567
+      },
+      {
+        "phase": 2,
+        "file": "pkm_01_01_att_skill_3combo_bash_02.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_02",
+        "durationMs": 4233
+      }
+    ]
+  },
+  {
+    "skillId": 2042,
+    "skillName": "Tenacious Edge III",
+    "btString": "BT_ARO_Skill_3Combo_Attack_F_3LV",
+    "base": "pkm_01_01_att_skill_3combo_bash",
+    "primaryAnimMs": 2567,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pkm_01_01_att_skill_3combo_bash_00.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_00",
+        "durationMs": 3300
+      },
+      {
+        "phase": 1,
+        "file": "pkm_01_01_att_skill_3combo_bash_01.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_01",
+        "durationMs": 2567
+      },
+      {
+        "phase": 2,
+        "file": "pkm_01_01_att_skill_3combo_bash_02.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_02",
+        "durationMs": 4233
+      }
+    ]
+  },
+  {
+    "skillId": 2043,
+    "skillName": "Tenacious Edge IV",
+    "btString": "BT_ARO_Skill_3Combo_Attack_F_4LV",
+    "base": "pkm_01_01_att_skill_3combo_bash",
+    "primaryAnimMs": 2567,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pkm_01_01_att_skill_3combo_bash_00.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_00",
+        "durationMs": 3300
+      },
+      {
+        "phase": 1,
+        "file": "pkm_01_01_att_skill_3combo_bash_01.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_01",
+        "durationMs": 2567
+      },
+      {
+        "phase": 2,
+        "file": "pkm_01_01_att_skill_3combo_bash_02.paa",
+        "actionName": "Ani_Battle_Skill_3Combo_Bash_02",
+        "durationMs": 4233
+      }
+    ]
+  },
+  {
+    "skillId": 2044,
+    "skillName": "Moonrise I",
+    "btString": "BT_ARO_Skill_Lunge_Upper_B_C_1Lv",
+    "base": "pkm_05_01_att_skill_lunge",
+    "primaryAnimMs": 4700,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pkm_05_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack2",
+        "durationMs": 4700
+      },
+      {
+        "phase": 2,
+        "file": "pkm_05_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack3",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 2045,
+    "skillName": "Moonrise II",
+    "btString": "BT_ARO_Skill_Lunge_Upper_B_C_2Lv",
+    "base": "pkm_05_01_att_skill_lunge",
+    "primaryAnimMs": 4700,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pkm_05_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack2",
+        "durationMs": 4700
+      },
+      {
+        "phase": 2,
+        "file": "pkm_05_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack3",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 2046,
+    "skillName": "Moonrise III",
+    "btString": "BT_ARO_Skill_Lunge_Upper_B_C_3Lv",
+    "base": "pkm_05_01_att_skill_lunge",
+    "primaryAnimMs": 4700,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pkm_05_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack2",
+        "durationMs": 4700
+      },
+      {
+        "phase": 2,
+        "file": "pkm_05_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack3",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 2047,
+    "skillName": "Moonrise IV",
+    "btString": "BT_ARO_Skill_Lunge_Upper_B_C_4Lv",
+    "base": "pkm_05_01_att_skill_lunge",
+    "primaryAnimMs": 4700,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pkm_05_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack2",
+        "durationMs": 4700
+      },
+      {
+        "phase": 2,
+        "file": "pkm_05_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack3",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 2064,
+    "skillName": "Ice Fang",
+    "btString": "BT_ARO_Skill_Lunge_Front_Start",
+    "base": "pkm_05_01_att_skill_lunge",
+    "primaryAnimMs": 4700,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pkm_05_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack2",
+        "durationMs": 4700
+      },
+      {
+        "phase": 2,
+        "file": "pkm_05_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Two_Skill_LungeAttack3",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 720,
+    "skillName": "Just Counter I",
+    "btString": "BT_Skill_Lunge_A_1LV",
+    "base": "pvw_01_01_att_skill_lunge",
+    "primaryAnimMs": 3033,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pvw_01_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Skill_Lunge_B",
+        "durationMs": 3033
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Skill_Lunge_C",
+        "durationMs": 3600
+      }
+    ]
+  },
+  {
+    "skillId": 721,
+    "skillName": "Just Counter II",
+    "btString": "BT_Skill_Lunge_A_2LVd",
+    "base": "pvw_01_01_att_skill_lunge",
+    "primaryAnimMs": 3033,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pvw_01_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Skill_Lunge_B",
+        "durationMs": 3033
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Skill_Lunge_C",
+        "durationMs": 3600
+      }
+    ]
+  },
+  {
+    "skillId": 722,
+    "skillName": "Just Counter III",
+    "btString": "BT_Skill_Lunge_A_3LV",
+    "base": "pvw_01_01_att_skill_lunge",
+    "primaryAnimMs": 3033,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pvw_01_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Skill_Lunge_B",
+        "durationMs": 3033
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Skill_Lunge_C",
+        "durationMs": 3600
+      }
+    ]
+  },
+  {
+    "skillId": 732,
+    "skillName": "Sword of Judgment I",
+    "btString": "BT_Skill_RotationBash_A_1LVkoH",
+    "base": "pvw_01_01_att_skill_rotationbash",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pvw_01_01_att_skill_rotationbash_00.paa",
+        "actionName": "Ani_Skill_RotationBash_A",
+        "durationMs": 3133
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_rotationbash_02.paa",
+        "actionName": "Ani_Skill_RotationBash_C",
+        "durationMs": 3800
+      }
+    ]
+  },
+  {
+    "skillId": 733,
+    "skillName": "Sword of Judgment II",
+    "btString": "BT_Skill_RotationBash_A_2LV",
+    "base": "pvw_01_01_att_skill_rotationbash",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pvw_01_01_att_skill_rotationbash_00.paa",
+        "actionName": "Ani_Skill_RotationBash_A",
+        "durationMs": 3133
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_rotationbash_02.paa",
+        "actionName": "Ani_Skill_RotationBash_C",
+        "durationMs": 3800
+      }
+    ]
+  },
+  {
+    "skillId": 734,
+    "skillName": "Sword of Judgment III",
+    "btString": "BT_Skill_RotationBash_A_3LV",
+    "base": "pvw_01_01_att_skill_rotationbash",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pvw_01_01_att_skill_rotationbash_00.paa",
+        "actionName": "Ani_Skill_RotationBash_A",
+        "durationMs": 3133
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_rotationbash_02.paa",
+        "actionName": "Ani_Skill_RotationBash_C",
+        "durationMs": 3800
+      }
+    ]
+  },
+  {
+    "skillId": 735,
+    "skillName": "Sword of Judgment IV",
+    "btString": "BT_Skill_RotationBash_A_4LV",
+    "base": "pvw_01_01_att_skill_rotationbash",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pvw_01_01_att_skill_rotationbash_00.paa",
+        "actionName": "Ani_Skill_RotationBash_A",
+        "durationMs": 3133
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_rotationbash_02.paa",
+        "actionName": "Ani_Skill_RotationBash_C",
+        "durationMs": 3800
+      }
+    ]
+  },
+  {
+    "skillId": 3202,
+    "skillName": "Absolute: Sword of Judgment",
+    "btString": "BT_Skill_RotationBash_A_5LV",
+    "base": "pvw_01_01_att_skill_rotationbash",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pvw_01_01_att_skill_rotationbash_00.paa",
+        "actionName": "Ani_Skill_RotationBash_A",
+        "durationMs": 3133
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_rotationbash_02.paa",
+        "actionName": "Ani_Skill_RotationBash_C",
+        "durationMs": 3800
+      }
+    ]
+  },
+  {
+    "skillId": 3205,
+    "skillName": "Absolute: Just Counter",
+    "btString": "BT_Skill_Lunge_A_4LVt",
+    "base": "pvw_01_01_att_skill_lunge",
+    "primaryAnimMs": 3033,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pvw_01_01_att_skill_lunge_01.paa",
+        "actionName": "Ani_Skill_Lunge_B",
+        "durationMs": 3033
+      },
+      {
+        "phase": 2,
+        "file": "pvw_01_01_att_skill_lunge_02.paa",
+        "actionName": "Ani_Skill_Lunge_C",
+        "durationMs": 3600
+      }
+    ]
+  },
+  {
+    "skillId": 2121,
+    "skillName": "Sah Spree of Sonan I",
+    "btString": "BT_ARO_Skill_Combo_C_1Lv",
+    "base": "pnw_05_01_att_skill_combob",
+    "primaryAnimMs": 4300,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnw_05_01_att_skill_combob_01.paa",
+        "actionName": "Ani_Aro_Skill_ComboB_01",
+        "durationMs": 2500
+      },
+      {
+        "phase": 2,
+        "file": "pnw_05_01_att_skill_combob_02.paa",
+        "actionName": "Ani_Aro_Skill_ComboB_02",
+        "durationMs": 3067
+      }
+    ]
+  },
+  {
+    "skillId": 2122,
+    "skillName": "Sah Spree of Sonan II",
+    "btString": "BT_ARO_Skill_Combo_C_2Lv",
+    "base": "pnw_05_01_att_skill_combob",
+    "primaryAnimMs": 4300,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnw_05_01_att_skill_combob_01.paa",
+        "actionName": "Ani_Aro_Skill_ComboB_01",
+        "durationMs": 2500
+      },
+      {
+        "phase": 2,
+        "file": "pnw_05_01_att_skill_combob_02.paa",
+        "actionName": "Ani_Aro_Skill_ComboB_02",
+        "durationMs": 3067
+      }
+    ]
+  },
+  {
+    "skillId": 2123,
+    "skillName": "Sah Spree of Sonan III",
+    "btString": "BT_ARO_Skill_Combo_C_3Lv",
+    "base": "pnw_05_01_att_skill_combob",
+    "primaryAnimMs": 4300,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnw_05_01_att_skill_combob_01.paa",
+        "actionName": "Ani_Aro_Skill_ComboB_01",
+        "durationMs": 2500
+      },
+      {
+        "phase": 2,
+        "file": "pnw_05_01_att_skill_combob_02.paa",
+        "actionName": "Ani_Aro_Skill_ComboB_02",
+        "durationMs": 3067
+      }
+    ]
+  },
+  {
+    "skillId": 2124,
+    "skillName": "Sah Spree of Sonan IV",
+    "btString": "BT_ARO_Skill_Combo_C_4Lv",
+    "base": "pnw_05_01_att_skill_combob",
+    "primaryAnimMs": 4300,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnw_05_01_att_skill_combob_01.paa",
+        "actionName": "Ani_Aro_Skill_ComboB_01",
+        "durationMs": 2500
+      },
+      {
+        "phase": 2,
+        "file": "pnw_05_01_att_skill_combob_02.paa",
+        "actionName": "Ani_Aro_Skill_ComboB_02",
+        "durationMs": 3067
+      }
+    ]
+  },
+  {
+    "skillId": 1682,
+    "skillName": "Ninja Step I",
+    "btString": "BT_Skill_FastSwing_L_1",
+    "base": "pnw_01_01_att_skill_fastswing",
+    "primaryAnimMs": 1900,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pnw_01_01_att_skill_fastswing_00.paa",
+        "actionName": "Ani_Battle_Skill_FastSwing_00",
+        "durationMs": 1667
+      },
+      {
+        "phase": 2,
+        "file": "pnw_01_01_att_skill_fastswing_02.paa",
+        "actionName": "Ani_Battle_Skill_FastSwing_02",
+        "durationMs": 2233
+      }
+    ]
+  },
+  {
+    "skillId": 1683,
+    "skillName": "Ninja Step II",
+    "btString": "BT_Skill_FastSwing_L_2r",
+    "base": "pnw_01_01_att_skill_fastswing",
+    "primaryAnimMs": 1900,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pnw_01_01_att_skill_fastswing_00.paa",
+        "actionName": "Ani_Battle_Skill_FastSwing_00",
+        "durationMs": 1667
+      },
+      {
+        "phase": 2,
+        "file": "pnw_01_01_att_skill_fastswing_02.paa",
+        "actionName": "Ani_Battle_Skill_FastSwing_02",
+        "durationMs": 2233
+      }
+    ]
+  },
+  {
+    "skillId": 1684,
+    "skillName": "Ninja Step III",
+    "btString": "BT_Skill_FastSwing_L_3",
+    "base": "pnw_01_01_att_skill_fastswing",
+    "primaryAnimMs": 1900,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pnw_01_01_att_skill_fastswing_00.paa",
+        "actionName": "Ani_Battle_Skill_FastSwing_00",
+        "durationMs": 1667
+      },
+      {
+        "phase": 2,
+        "file": "pnw_01_01_att_skill_fastswing_02.paa",
+        "actionName": "Ani_Battle_Skill_FastSwing_02",
+        "durationMs": 2233
+      }
+    ]
+  },
+  {
+    "skillId": 2773,
+    "skillName": "Dragonize",
+    "btString": "BT_ARO_Skill_Buff",
+    "base": "pcw_06_01_att_skill_buff",
+    "primaryAnimMs": 4000,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pcw_06_01_att_skill_buff_00.paa",
+        "actionName": "Ani_Aro_Battle_Att_Buff_00",
+        "durationMs": 1800
+      },
+      {
+        "phase": 2,
+        "file": "pcw_06_01_att_skill_buff_02.paa",
+        "actionName": "Ani_Aro_Battle_Att_Buff_02",
+        "durationMs": 3733
+      }
+    ]
+  },
+  {
+    "skillId": 5374,
+    "skillName": "<PAColor0xffeb9261>Prime: Amplify Martial Spirit<PAOldColor>",
+    "btString": "BT_UP_Skill_Buff",
+    "base": "pcw_06_01_att_skill_buff",
+    "primaryAnimMs": 4000,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pcw_06_01_att_skill_buff_00.paa",
+        "actionName": "Ani_Aro_Battle_Att_Buff_00",
+        "durationMs": 1800
+      },
+      {
+        "phase": 2,
+        "file": "pcw_06_01_att_skill_buff_02.paa",
+        "actionName": "Ani_Aro_Battle_Att_Buff_02",
+        "durationMs": 3733
+      }
+    ]
+  },
+  {
+    "skillId": 5139,
+    "skillName": "Rockslide I",
+    "btString": "BT_Skill_LeapJump_1q5",
+    "base": "pgw_05_01_att_skill_leapjump",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pgw_05_01_att_skill_leapjump_01.paa",
+        "actionName": "Ani_Skill_LeapJump_01",
+        "durationMs": 2333
+      },
+      {
+        "phase": 2,
+        "file": "pgw_05_01_att_skill_leapjump_02.paa",
+        "actionName": "Ani_Skill_LeapJump_02",
+        "durationMs": 2933
+      }
+    ]
+  },
+  {
+    "skillId": 5140,
+    "skillName": "Rockslide II",
+    "btString": "BT_Skill_LeapJump_2",
+    "base": "pgw_05_01_att_skill_leapjump",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pgw_05_01_att_skill_leapjump_01.paa",
+        "actionName": "Ani_Skill_LeapJump_01",
+        "durationMs": 2333
+      },
+      {
+        "phase": 2,
+        "file": "pgw_05_01_att_skill_leapjump_02.paa",
+        "actionName": "Ani_Skill_LeapJump_02",
+        "durationMs": 2933
+      }
+    ]
+  },
+  {
+    "skillId": 5141,
+    "skillName": "Rockslide III",
+    "btString": "BT_Skill_LeapJump_3",
+    "base": "pgw_05_01_att_skill_leapjump",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pgw_05_01_att_skill_leapjump_01.paa",
+        "actionName": "Ani_Skill_LeapJump_01",
+        "durationMs": 2333
+      },
+      {
+        "phase": 2,
+        "file": "pgw_05_01_att_skill_leapjump_02.paa",
+        "actionName": "Ani_Skill_LeapJump_02",
+        "durationMs": 2933
+      }
+    ]
+  },
+  {
+    "skillId": 5604,
+    "skillName": "Arid Assault",
+    "btString": "BT_Skill_ATT_Ground_Teleport2_Att",
+    "base": "pam_01_01_att_skill_att_shadowbash",
+    "primaryAnimMs": 2533,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pam_01_01_att_skill_att_shadowbash_01.paa",
+        "actionName": "Ani_Skill_ShadowBash_01",
+        "durationMs": 2533
+      },
+      {
+        "phase": 2,
+        "file": "pam_01_01_att_skill_att_shadowbash_02.paa",
+        "actionName": "Ani_Skill_ShadowBash_02",
+        "durationMs": 3267
+      }
+    ]
+  },
+  {
+    "skillId": 5652,
+    "skillName": "Paradise Surge",
+    "btString": "BT_ARO_Skill_SlidingAtt_Start_C",
+    "base": "pam_04_01_att_skill_slidingatt",
+    "primaryAnimMs": 4367,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pam_04_01_att_skill_slidingatt_00.paa",
+        "actionName": "Ani_Aro_Skill_SlidingAtt_Att",
+        "durationMs": 4367
+      },
+      {
+        "phase": 1,
+        "file": "pam_04_01_att_skill_slidingatt_01.paa",
+        "actionName": "Ani_Aro_Skill_SlidingAtt_01",
+        "durationMs": 3100
+      }
+    ]
+  },
+  {
+    "skillId": 6470,
+    "skillName": "Silent Breach",
+    "btString": "BT_ARO_Skill_SlidingAtt_Upper1",
+    "base": "pam_04_01_att_skill_slidingatt",
+    "primaryAnimMs": 4367,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pam_04_01_att_skill_slidingatt_00.paa",
+        "actionName": "Ani_Aro_Skill_SlidingAtt_Att",
+        "durationMs": 4367
+      },
+      {
+        "phase": 1,
+        "file": "pam_04_01_att_skill_slidingatt_01.paa",
+        "actionName": "Ani_Aro_Skill_SlidingAtt_01",
+        "durationMs": 3100
+      }
+    ]
+  },
+  {
+    "skillId": 5730,
+    "skillName": "Winter's Bulwark",
+    "btString": "BT_SKILL_Buff_01",
+    "base": "ppw_01_01_att_skill_buff",
+    "primaryAnimMs": 2467,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_buff_00.paa",
+        "actionName": "Ani_Battle_Skill_Buff",
+        "durationMs": 2000
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_buff_01.paa",
+        "actionName": "Ani_Battle_Skill_Buff_01",
+        "durationMs": 2467
+      }
+    ]
+  },
+  {
+    "skillId": 5731,
+    "skillName": "Command: Stamma's Mate I",
+    "btString": "BT_SKILL_Shield_Ground_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5732,
+    "skillName": "Command: Stamma's Mate II",
+    "btString": "BT_SKILL_Shield_Ground_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5733,
+    "skillName": "Command: Stamma's Mate III",
+    "btString": "BT_SKILL_Shield_Ground_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5734,
+    "skillName": "Command: Stamma's Mate IV",
+    "btString": "BT_SKILL_Shield_Ground_4Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5735,
+    "skillName": "Command: Stamma's Mate V",
+    "btString": "BT_SKILL_Shield_Ground_5LviQ",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5736,
+    "skillName": "Absolute: Command: Stamma's Mate",
+    "btString": "BT_SKILL_Shield_Ground_Jin",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5748,
+    "skillName": "Command: Rime Ice I",
+    "btString": "BT_SKILL_Shield_Shoot_Start_1Lv5",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5749,
+    "skillName": "Command: Rime Ice II",
+    "btString": "BT_SKILL_Shield_Shoot_Start_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5750,
+    "skillName": "Command: Rime Ice III",
+    "btString": "BT_SKILL_Shield_Shoot_Start_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5752,
+    "skillName": "Face the Darkness I",
+    "btString": "BT_SKILL_Shield_Attack_A_00_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5753,
+    "skillName": "Face the Darkness II",
+    "btString": "BT_SKILL_Shield_Attack_A_00_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5754,
+    "skillName": "Face the Darkness III",
+    "btString": "BT_SKILL_Shield_Attack_A_00_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5755,
+    "skillName": "Face the Darkness IV",
+    "btString": "BT_SKILL_Shield_Attack_A_00_4LvzF",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5756,
+    "skillName": "Face the Darkness V",
+    "btString": "BT_SKILL_Shield_Attack_A_00_5Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5757,
+    "skillName": "Face the Darkness VI",
+    "btString": "BT_SKILL_Shield_Attack_A_00_6Lvs",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5758,
+    "skillName": "Absolute: Face the Darkness",
+    "btString": "BT_SKILL_Shield_Attack_A_00_JinI",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5759,
+    "skillName": "Vengeful Star I",
+    "btString": "BT_SKILL_Shield_Attack_B_00_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5760,
+    "skillName": "Vengeful Star II",
+    "btString": "BT_SKILL_Shield_Attack_B_00_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5761,
+    "skillName": "Vengeful Star III",
+    "btString": "BT_SKILL_Shield_Attack_B_00_3Lva",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5762,
+    "skillName": "Vengeful Star IV",
+    "btString": "BT_SKILL_Shield_Attack_B_00_4Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5763,
+    "skillName": "Vengeful Star V",
+    "btString": "BT_SKILL_Shield_Attack_B_00_5Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5764,
+    "skillName": "Absolute: Vengeful Star",
+    "btString": "BT_SKILL_Shield_Attack_B_00_Jin",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5765,
+    "skillName": "Icy Thorns I",
+    "btString": "BT_SKILL_Shield_Attack_C_01_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5766,
+    "skillName": "Icy Thorns II",
+    "btString": "BT_SKILL_Shield_Attack_C_01_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5767,
+    "skillName": "Icy Thorns III",
+    "btString": "BT_SKILL_Shield_Attack_C_01_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5768,
+    "skillName": "Icy Thorns IV",
+    "btString": "BT_SKILL_Shield_Attack_C_01_4LvX",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5769,
+    "skillName": "Absolute: Icy Thorns",
+    "btString": "BT_SKILL_Shield_Attack_C_01_Jin",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5770,
+    "skillName": "Command: Frozen Earth I",
+    "btString": "BT_SKILL_Shield_Attack_D_00_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5771,
+    "skillName": "Command: Frozen Earth II",
+    "btString": "BT_SKILL_Shield_Attack_D_00_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5772,
+    "skillName": "Command: Frozen Earth III",
+    "btString": "BT_SKILL_Shield_Attack_D_00_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5773,
+    "skillName": "Command: Frozen Earth IV",
+    "btString": "BT_SKILL_Shield_Attack_D_00_4Lvrv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5774,
+    "skillName": "Command: Frozen Earth V",
+    "btString": "BT_SKILL_Shield_Attack_D_00_5Lveq",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5775,
+    "skillName": "Absolute: Command: Frozen Earth",
+    "btString": "BT_SKILL_Shield_Attack_D_00_Jin",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5776,
+    "skillName": "Command: Blooming Icy Thorns I",
+    "btString": "BT_SKILL_Shield_Charge_Attack_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5777,
+    "skillName": "Command: Blooming Icy Thorns II",
+    "btString": "BT_SKILL_Shield_Charge_Attack_2Lvt",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5778,
+    "skillName": "Command: Blooming Icy Thorns III",
+    "btString": "BT_SKILL_Shield_Charge_Attack_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5779,
+    "skillName": "Command: Blooming Icy Thorns IV",
+    "btString": "BT_SKILL_Shield_Charge_Attack_4Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5780,
+    "skillName": "Absolute: Command: Blooming Icy Thorns",
+    "btString": "BT_SKILL_Shield_Charge_Attack_Jin",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5781,
+    "skillName": "Quoratum's Ascension I",
+    "btString": "BT_SKILL_Shield_Combo_00_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5782,
+    "skillName": "Quoratum's Ascension II",
+    "btString": "BT_SKILL_Shield_Combo_00_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5783,
+    "skillName": "Quoratum's Ascension III",
+    "btString": "BT_SKILL_Shield_Combo_00_3Lv1l",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5835,
+    "skillName": "Quoratum's Ascension IV",
+    "btString": "BT_SKILL_Shield_Combo_00_4Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5791,
+    "skillName": "Command: Fianchetto I",
+    "btString": "BT_SKILL_Ground_1Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5792,
+    "skillName": "Command: Fianchetto II",
+    "btString": "BT_SKILL_Ground_2Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5793,
+    "skillName": "Command: Fianchetto III",
+    "btString": "BT_SKILL_Ground_3Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5794,
+    "skillName": "Command: Fianchetto IV",
+    "btString": "BT_SKILL_Ground_4Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5795,
+    "skillName": "Command: Fianchetto V",
+    "btString": "BT_SKILL_Ground_5Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5796,
+    "skillName": "Absolute: Command: Fianchetto",
+    "btString": "BT_SKILL_Ground_Jin",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5797,
+    "skillName": "Command: Frozen Darkness I",
+    "btString": "BT_SKILL_Ground_3_1Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5798,
+    "skillName": "Command: Frozen Darkness II",
+    "btString": "BT_SKILL_Ground_3_2Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5799,
+    "skillName": "Command: Frozen Darkness III",
+    "btString": "BT_SKILL_Ground_3_3Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5800,
+    "skillName": "Command: Frozen Darkness IV",
+    "btString": "BT_SKILL_Ground_3_4Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5801,
+    "skillName": "Command: Frozen Darkness V",
+    "btString": "BT_SKILL_Ground_3_5Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5802,
+    "skillName": "Absolute: Command: Frozen Darkness",
+    "btString": "BT_SKILL_Ground_3_Jin",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5815,
+    "skillName": "Quoratum's Binding I",
+    "btString": "BT_SKILL_Buff_1Lv",
+    "base": "ppw_01_01_att_skill_buff",
+    "primaryAnimMs": 2467,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_buff_00.paa",
+        "actionName": "Ani_Battle_Skill_Buff",
+        "durationMs": 2000
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_buff_01.paa",
+        "actionName": "Ani_Battle_Skill_Buff_01",
+        "durationMs": 2467
+      }
+    ]
+  },
+  {
+    "skillId": 5816,
+    "skillName": "Quoratum's Binding II",
+    "btString": "BT_SKILL_Buff_2Lv",
+    "base": "ppw_01_01_att_skill_buff",
+    "primaryAnimMs": 2467,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_buff_00.paa",
+        "actionName": "Ani_Battle_Skill_Buff",
+        "durationMs": 2000
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_buff_01.paa",
+        "actionName": "Ani_Battle_Skill_Buff_01",
+        "durationMs": 2467
+      }
+    ]
+  },
+  {
+    "skillId": 5817,
+    "skillName": "Quoratum's Binding III",
+    "btString": "BT_SKILL_Buff_3Lv",
+    "base": "ppw_01_01_att_skill_buff",
+    "primaryAnimMs": 2467,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_buff_00.paa",
+        "actionName": "Ani_Battle_Skill_Buff",
+        "durationMs": 2000
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_buff_01.paa",
+        "actionName": "Ani_Battle_Skill_Buff_01",
+        "durationMs": 2467
+      }
+    ]
+  },
+  {
+    "skillId": 5818,
+    "skillName": "Absolute: Quoratum's Binding",
+    "btString": "BT_SKILL_Buff_Jin",
+    "base": "ppw_01_01_att_skill_buff",
+    "primaryAnimMs": 2467,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_buff_00.paa",
+        "actionName": "Ani_Battle_Skill_Buff",
+        "durationMs": 2000
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_buff_01.paa",
+        "actionName": "Ani_Battle_Skill_Buff_01",
+        "durationMs": 2467
+      }
+    ]
+  },
+  {
+    "skillId": 5830,
+    "skillName": "Absolute: Command: Rime Ice",
+    "btString": "BT_SKILL_Shield_Shoot_Start_Jin",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5836,
+    "skillName": "Absolute: Quoratum's Ascension",
+    "btString": "BT_SKILL_Shield_Combo_00_Jin",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5834,
+    "skillName": "Quoratum's Guard",
+    "btString": "BT_SKILL_Shield_Buff_",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5940,
+    "skillName": "<PAColor0xffeb9261>Prime: Distorted Guard<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Buff",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5951,
+    "skillName": "<PAColor0xffeb9261>Prime: Icy Thorns I<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Attack_C_01_1LvF",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5952,
+    "skillName": "<PAColor0xffeb9261>Prime: Icy Thorns II<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Attack_C_01_2Lvu",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5953,
+    "skillName": "<PAColor0xffeb9261>Prime: Icy Thorns III<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Attack_C_01_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5954,
+    "skillName": "<PAColor0xffeb9261>Prime: Icy Thorns IV<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Attack_C_01_4LvO",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5955,
+    "skillName": "<PAColor0xffeb9261>Prime: Stamma's Mate I<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Ground_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5956,
+    "skillName": "<PAColor0xffeb9261>Prime: Stamma's Mate II<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Ground_2LvN",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5957,
+    "skillName": "<PAColor0xffeb9261>Prime: Stamma's Mate III<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Ground_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5958,
+    "skillName": "<PAColor0xffeb9261>Prime: Stamma's Mate IV<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Ground_4Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5959,
+    "skillName": "<PAColor0xffeb9261>Prime: Quoratum's Ascension I<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Combo_00_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5960,
+    "skillName": "<PAColor0xffeb9261>Prime: Quoratum's Ascension II<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Combo_00_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5961,
+    "skillName": "<PAColor0xffeb9261>Prime: Quoratum's Ascension III<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Combo_00_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5962,
+    "skillName": "<PAColor0xffeb9261>Prime: Fianchetto I<PAOldColor>",
+    "btString": "BT_UP_SKILL_Ground_1LvWC",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5963,
+    "skillName": "<PAColor0xffeb9261>Prime: Fianchetto II<PAOldColor>",
+    "btString": "BT_UP_SKILL_Ground_2Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5964,
+    "skillName": "<PAColor0xffeb9261>Prime: Fianchetto III<PAOldColor>",
+    "btString": "BT_UP_SKILL_Ground_3Lv",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5965,
+    "skillName": "<PAColor0xffeb9261>Prime: Entangling Icy Thorns I<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Charge_Attack_1Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5966,
+    "skillName": "<PAColor0xffeb9261>Prime: Entangling Icy Thorns II<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Charge_Attack_2Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5967,
+    "skillName": "<PAColor0xffeb9261>Prime: Entangling Icy Thorns III<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Charge_Attack_3Lv",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5969,
+    "skillName": "<PAColor0xffeb9261>Prime: Frozen Darkness<PAOldColor>",
+    "btString": "BT_UP_SKILL_Ground_3_",
+    "base": "ppw_01_01_att_skill_ground",
+    "primaryAnimMs": 3867,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_ground_00.paa",
+        "actionName": "Ani_Skill_Ground_00",
+        "durationMs": 3867
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_ground_01.paa",
+        "actionName": "Ani_Skill_Ground_01",
+        "durationMs": 2967
+      },
+      {
+        "phase": 2,
+        "file": "ppw_01_01_att_skill_ground_02.paa",
+        "actionName": "Ani_Skill_Ground_02",
+        "durationMs": 4967
+      }
+    ]
+  },
+  {
+    "skillId": 5970,
+    "skillName": "<PAColor0xffeb9261>Prime: Frozen Earth<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_Attack_D_00",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 5974,
+    "skillName": "<PAColor0xffeb9261>Prime: Star's Call<PAOldColor>",
+    "btString": "BT_UP_SKILL_Shield_ReGroup",
+    "base": "ppw_01_01_att_skill_shield_b",
+    "primaryAnimMs": 3800,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "ppw_01_01_att_skill_shield_b_00.paa",
+        "actionName": "Ani_Skill_Shield_B_00",
+        "durationMs": 2933
+      },
+      {
+        "phase": 1,
+        "file": "ppw_01_01_att_skill_shield_b_01.paa",
+        "actionName": "Ani_Skill_Shield_B_01",
+        "durationMs": 3133
+      }
+    ]
+  },
+  {
+    "skillId": 6860,
+    "skillName": "Omnislash I",
+    "btString": "BT_Skill_Combo_B_01_1Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6861,
+    "skillName": "Omnislash II",
+    "btString": "BT_Skill_Combo_B_01_2Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6862,
+    "skillName": "Omnislash III",
+    "btString": "BT_Skill_Combo_B_01_3Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6863,
+    "skillName": "Absolute: Omnislash",
+    "btString": "BT_Skill_Combo_B_01_Jin",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6864,
+    "skillName": "Skewer I",
+    "btString": "BT_Skill_Combo_A_01_1Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6865,
+    "skillName": "Skewer II",
+    "btString": "BT_Skill_Combo_A_01_2Lv2xL",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6866,
+    "skillName": "Skewer III",
+    "btString": "BT_Skill_Combo_A_01_3Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6867,
+    "skillName": "Skewer IV",
+    "btString": "BT_Skill_Combo_A_01_4Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6868,
+    "skillName": "Absolute: Skewer",
+    "btString": "BT_Skill_Combo_A_01_Jinp",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6869,
+    "skillName": "Flow: Asphyxiate I",
+    "btString": "BT_Skill_Combo_A_02_1Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6870,
+    "skillName": "Flow: Asphyxiate II",
+    "btString": "BT_Skill_Combo_A_02_2Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6871,
+    "skillName": "Absolute: Flow: Asphyxiate",
+    "btString": "BT_Skill_Combo_A_02_Jin",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6912,
+    "skillName": "<PAColor0xffeb9261>Prime: Omnislash I<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_B_01_1Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6913,
+    "skillName": "<PAColor0xffeb9261>Prime: Omnislash II<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_B_01_2Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6914,
+    "skillName": "<PAColor0xffeb9261>Prime: Omnislash III<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_B_01_3Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6921,
+    "skillName": "<PAColor0xffeb9261>Prime: Skewer<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_A_01",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6989,
+    "skillName": "Tip of the Scale I",
+    "btString": "BT_Aro_Skill_Combo_Alpha_01_1Lv0u",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6990,
+    "skillName": "Tip of the Scale II",
+    "btString": "BT_Aro_Skill_Combo_Alpha_01_2LvE",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6991,
+    "skillName": "Tip of the Scale III",
+    "btString": "BT_Aro_Skill_Combo_Alpha_01_3Lvc",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6992,
+    "skillName": "Tip of the Scale IV",
+    "btString": "BT_Aro_Skill_Combo_Alpha_01_4Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6993,
+    "skillName": "Spiteful Soul I",
+    "btString": "BT_Aro_Skill_Combo_Beta_01_1Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6994,
+    "skillName": "Spiteful Soul II",
+    "btString": "BT_Aro_Skill_Combo_Beta_01_2Lv06",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6995,
+    "skillName": "Spiteful Soul III",
+    "btString": "BT_Aro_Skill_Combo_Beta_01_3Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6996,
+    "skillName": "Spiteful Soul IV",
+    "btString": "BT_Aro_Skill_Combo_Beta_01_4Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6997,
+    "skillName": "Savage Decree I",
+    "btString": "BT_Aro_Skill_Combo_Gamma_01_1Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6998,
+    "skillName": "Savage Decree II",
+    "btString": "BT_Aro_Skill_Combo_Gamma_01_2Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 6999,
+    "skillName": "Savage Decree III",
+    "btString": "BT_Aro_Skill_Combo_Gamma_01_3Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7002,
+    "skillName": "Storm Piercer",
+    "btString": "BT_Aro_Skill_Combo_Zeta_01_3LvP",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7021,
+    "skillName": "Tip of the Scale I",
+    "btString": "BT_Aro_Skill_Combo_Alpha_02_Dragon_1Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7022,
+    "skillName": "Tip of the Scale II",
+    "btString": "BT_Aro_Skill_Combo_Alpha_02_Dragon_2LvE",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7023,
+    "skillName": "Tip of the Scale III",
+    "btString": "BT_Aro_Skill_Combo_Alpha_02_Dragon_3Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7024,
+    "skillName": "Tip of the Scale IV",
+    "btString": "BT_Aro_Skill_Combo_Alpha_02_Dragon_4Lva",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7025,
+    "skillName": "Spiteful Soul I",
+    "btString": "BT_Aro_Skill_Combo_Beta_01_Dragon_1Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7026,
+    "skillName": "Spiteful Soul II",
+    "btString": "BT_Aro_Skill_Combo_Beta_01_Dragon_2Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7027,
+    "skillName": "Spiteful Soul III",
+    "btString": "BT_Aro_Skill_Combo_Beta_01_Dragon_3Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7028,
+    "skillName": "Spiteful Soul IV",
+    "btString": "BT_Aro_Skill_Combo_Beta_01_Dragon_4Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7029,
+    "skillName": "Savage Decree I",
+    "btString": "BT_Aro_Skill_Combo_Gamma_01_Dragon_1Lv5",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7030,
+    "skillName": "Savage Decree II",
+    "btString": "BT_Aro_Skill_Combo_Gamma_01_Dragon_2Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7031,
+    "skillName": "Savage Decree III",
+    "btString": "BT_Aro_Skill_Combo_Gamma_01_Dragon_3Lv",
+    "base": "pqw_05_01_att_skill_combo_f",
+    "primaryAnimMs": 2933,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pqw_05_01_att_skill_combo_f_01.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_01",
+        "durationMs": 2933
+      },
+      {
+        "phase": 3,
+        "file": "pqw_05_01_att_skill_combo_f_03.paa",
+        "actionName": "Ani_Aro_Skill_Combo_F_03",
+        "durationMs": 2833
+      }
+    ]
+  },
+  {
+    "skillId": 7518,
+    "skillName": "Kaleidoscope Swirl I",
+    "btString": "BT_Skill_Throw_Fan_B_Lv1",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7519,
+    "skillName": "Kaleidoscope Swirl II",
+    "btString": "BT_Skill_Throw_Fan_B_Lv2",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7520,
+    "skillName": "Kaleidoscope Swirl III",
+    "btString": "BT_Skill_Throw_Fan_B_Lv3",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7521,
+    "skillName": "Absolute: Kaleidoscope Swirl",
+    "btString": "BT_Skill_Throw_Fan_B_Lv4",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7527,
+    "skillName": "Stormfall I",
+    "btString": "BT_Skill_WhirlWind_Start_Lv1B",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7528,
+    "skillName": "Stormfall II",
+    "btString": "BT_Skill_WhirlWind_Start_Lv2",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7529,
+    "skillName": "Stormfall III",
+    "btString": "BT_Skill_WhirlWind_Start_Lv3",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7530,
+    "skillName": "Stormfall IV",
+    "btString": "BT_Skill_WhirlWind_Start_Lv41",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7531,
+    "skillName": "Absolute: Stormfall",
+    "btString": "BT_Skill_WhirlWind_Start_Lv5",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7533,
+    "skillName": "Sagoonja: Bamboo I",
+    "btString": "BT_Skill_Throw_Sword_A_Lv1",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7534,
+    "skillName": "Sagoonja: Bamboo II",
+    "btString": "BT_Skill_Throw_Sword_A_Lv2",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7535,
+    "skillName": "Sagoonja: Bamboo III",
+    "btString": "BT_Skill_Throw_Sword_A_Lv3",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7536,
+    "skillName": "Absolute: Sagoonja: Bamboo",
+    "btString": "BT_Skill_Throw_Sword_A_Lv4",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7578,
+    "skillName": "Cloudrise I",
+    "btString": "BT_Skill_WhirlWind_A_Lv1",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7579,
+    "skillName": "Cloudrise II",
+    "btString": "BT_Skill_WhirlWind_A_Lv2",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7580,
+    "skillName": "Cloudrise III",
+    "btString": "BT_Skill_WhirlWind_A_Lv3",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7581,
+    "skillName": "Cloudrise IV",
+    "btString": "BT_Skill_WhirlWind_A_Lv43",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7582,
+    "skillName": "Cloudrise V",
+    "btString": "BT_Skill_WhirlWind_A_Lv5",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7583,
+    "skillName": "Absolute: Cloudrise",
+    "btString": "BT_Skill_WhirlWind_A_Lv6",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7546,
+    "skillName": "Flow: Stormbolt",
+    "btString": "BT_Skill_WhirlWind_A_Flow",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7547,
+    "skillName": "Thunderstroke I",
+    "btString": "BT_Skill_WhirlWind_A_3_Lv1",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7548,
+    "skillName": "Thunderstroke II",
+    "btString": "BT_Skill_WhirlWind_A_3_Lv2",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7549,
+    "skillName": "Thunderstroke III",
+    "btString": "BT_Skill_WhirlWind_A_3_Lv3",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7550,
+    "skillName": "Absolute: Thunderstroke",
+    "btString": "BT_Skill_WhirlWind_A_3_Lv4x",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7555,
+    "skillName": "Cloud Flower I",
+    "btString": "BT_Skill_Throw_Fan_C_Lv1",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7556,
+    "skillName": "Cloud Flower II",
+    "btString": "BT_Skill_Throw_Fan_C_Lv2",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7557,
+    "skillName": "Cloud Flower III",
+    "btString": "BT_Skill_Throw_Fan_C_Lv3",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7558,
+    "skillName": "Absolute: Cloud Flower",
+    "btString": "BT_Skill_Throw_Fan_C_Lv4gHj",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7559,
+    "skillName": "Wingbeat I",
+    "btString": "BT_Skill_Throw_Fan_C_Flow_End_Lv1",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7560,
+    "skillName": "Wingbeat II",
+    "btString": "BT_Skill_Throw_Fan_C_Flow_End_Lv2L",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7561,
+    "skillName": "Absolute: Wingbeat",
+    "btString": "BT_Skill_Throw_Fan_C_Flow_End_Lv3",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7603,
+    "skillName": "Sagoonja: Orchid I",
+    "btString": "BT_Skill_Throw_Sword_B_1Lv",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7604,
+    "skillName": "Sagoonja: Orchid II",
+    "btString": "BT_Skill_Throw_Sword_B_2Lv",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7605,
+    "skillName": "Sagoonja: Orchid III",
+    "btString": "BT_Skill_Throw_Sword_B_3Lv",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7598,
+    "skillName": "Bamboo-zled I",
+    "btString": "BT_Skill_Throw_Sword_A_Flow_Lv1",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7599,
+    "skillName": "Bamboo-zled II",
+    "btString": "BT_Skill_Throw_Sword_A_Flow_Lv2",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7600,
+    "skillName": "Absolute: Bamboo-zled",
+    "btString": "BT_Skill_Throw_Sword_A_Flow_Lv3F",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7606,
+    "skillName": "Absolute: Sagoonja: Orchid",
+    "btString": "BT_Skill_Throw_Sword_B_4Lv",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7607,
+    "skillName": "<PAColor0xffeb9261>Prime: Sagoonja: Bamboo<PAOldColor>",
+    "btString": "BT_UP_Skill_Throw_Sword_A",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7610,
+    "skillName": "<PAColor0xffeb9261>Prime: Thunderstroke<PAOldColor>",
+    "btString": "BT_UP_Skill_WhirlWind_A_3",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7611,
+    "skillName": "<PAColor0xffeb9261>Prime: Kaleidoscope Swirl<PAOldColor>",
+    "btString": "BT_UP_Skill_Throw_Fan_By",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7612,
+    "skillName": "<PAColor0xffeb9261>Prime: Wingbeat<PAOldColor>",
+    "btString": "BT_UP_Skill_Throw_Fan_C_Flow_End",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7613,
+    "skillName": "<PAColor0xffeb9261>Prime: Sagoonja: Orchid I<PAOldColor>",
+    "btString": "BT_UP_Skill_Throw_Sword_B_1Lv2",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7614,
+    "skillName": "<PAColor0xffeb9261>Prime: Sagoonja: Orchid II<PAOldColor>",
+    "btString": "BT_UP_Skill_Throw_Sword_B_2Lv",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7615,
+    "skillName": "<PAColor0xffeb9261>Prime: Sagoonja: Orchid III<PAOldColor>",
+    "btString": "BT_UP_Skill_Throw_Sword_B_3Lv",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7616,
+    "skillName": "<PAColor0xffeb9261>Prime: Sagoonja: Orchid IV<PAOldColor>",
+    "btString": "BT_UP_Skill_Throw_Sword_B_4Lv",
+    "base": "pmyf_01_01_att_skill_throw_fan_a_end",
+    "primaryAnimMs": 2633,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+        "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+        "durationMs": 2367
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+        "durationMs": 2633
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+        "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+        "durationMs": 4900
+      }
+    ]
+  },
+  {
+    "skillId": 7628,
+    "skillName": "<PAColor0xffeb9261>Prime: Stormfall I<PAOldColor>",
+    "btString": "BT_UP_Skill_WhirlWind_Start_Lv1",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7629,
+    "skillName": "<PAColor0xffeb9261>Prime: Stormfall II<PAOldColor>",
+    "btString": "BT_UP_Skill_WhirlWind_Start_Lv2S",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7630,
+    "skillName": "<PAColor0xffeb9261>Prime: Stormfall III<PAOldColor>",
+    "btString": "BT_UP_Skill_WhirlWind_Start_Lv3",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7631,
+    "skillName": "<PAColor0xffeb9261>Prime: Cloudrise I<PAOldColor>",
+    "btString": "BT_UP_Skill_WhirlWind_A_Lv1",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7632,
+    "skillName": "<PAColor0xffeb9261>Prime: Cloudrise II<PAOldColor>",
+    "btString": "BT_UP_Skill_WhirlWind_A_Lv2",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7633,
+    "skillName": "<PAColor0xffeb9261>Prime: Cloudrise III<PAOldColor>",
+    "btString": "BT_UP_Skill_WhirlWind_A_Lv3",
+    "base": "pmyf_01_01_att_skill_whirlwind_a",
+    "primaryAnimMs": 7500,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_01",
+        "durationMs": 7500
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_02",
+        "durationMs": 4267
+      },
+      {
+        "phase": 3,
+        "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+        "actionName": "Ani_Skill_WhirlWind_A_03",
+        "durationMs": 6800
+      }
+    ]
+  },
+  {
+    "skillId": 7634,
+    "skillName": "<PAColor0xffeb9261>Prime: Butterfly Dream<PAOldColor>",
+    "btString": "BT_UP_Skill_Buff",
+    "base": "pmyf_01_01_att_skill_buff",
+    "primaryAnimMs": 3000,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_buff_00.paa",
+        "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+        "durationMs": 3000
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_buff_01.paa",
+        "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+        "durationMs": 2133
+      }
+    ]
+  },
+  {
+    "skillId": 7689,
+    "skillName": "Flow: Seocheon Field",
+    "btString": "BT_ARO_Skill_G_01_Slotp",
+    "base": "pmyf_02_01_att_skill_g",
+    "primaryAnimMs": 5800,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_02_01_att_skill_g_01.paa",
+        "actionName": "Ani_Aro_Skill_G_01",
+        "durationMs": 4067
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_02_01_att_skill_g_02.paa",
+        "actionName": "Ani_Aro_Skill_G_02",
+        "durationMs": 5800
+      }
+    ]
+  },
+  {
+    "skillId": 7710,
+    "skillName": "Mark of the Moon I",
+    "btString": "BT_ARO_Skill_H_Lv1",
+    "base": "pmyf_02_01_att_skill_h",
+    "primaryAnimMs": 5800,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_02_01_att_skill_h_01.paa",
+        "actionName": "Ani_Aro_Skill_H_01",
+        "durationMs": 5800
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_02_01_att_skill_h_02.paa",
+        "actionName": "Ani_Aro_Skill_H_02",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 7711,
+    "skillName": "Mark of the Moon II",
+    "btString": "BT_ARO_Skill_H_Lv2",
+    "base": "pmyf_02_01_att_skill_h",
+    "primaryAnimMs": 5800,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_02_01_att_skill_h_01.paa",
+        "actionName": "Ani_Aro_Skill_H_01",
+        "durationMs": 5800
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_02_01_att_skill_h_02.paa",
+        "actionName": "Ani_Aro_Skill_H_02",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 7712,
+    "skillName": "Mark of the Moon III",
+    "btString": "BT_ARO_Skill_H_Lv3",
+    "base": "pmyf_02_01_att_skill_h",
+    "primaryAnimMs": 5800,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_02_01_att_skill_h_01.paa",
+        "actionName": "Ani_Aro_Skill_H_01",
+        "durationMs": 5800
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_02_01_att_skill_h_02.paa",
+        "actionName": "Ani_Aro_Skill_H_02",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 7713,
+    "skillName": "Flow: Death's Proclamation",
+    "btString": "BT_ARO_Skill_H_Flow",
+    "base": "pmyf_02_01_att_skill_h",
+    "primaryAnimMs": 5800,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pmyf_02_01_att_skill_h_01.paa",
+        "actionName": "Ani_Aro_Skill_H_01",
+        "durationMs": 5800
+      },
+      {
+        "phase": 2,
+        "file": "pmyf_02_01_att_skill_h_02.paa",
+        "actionName": "Ani_Aro_Skill_H_02",
+        "durationMs": 5433
+      }
+    ]
+  },
+  {
+    "skillId": 7717,
+    "skillName": "Lunar Serenade",
+    "btString": "BT_ARO_Skill_Buff",
+    "base": "pmyf_01_01_att_skill_buff",
+    "primaryAnimMs": 3000,
+    "phases": [
+      {
+        "phase": 0,
+        "file": "pmyf_01_01_att_skill_buff_00.paa",
+        "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+        "durationMs": 3000
+      },
+      {
+        "phase": 1,
+        "file": "pmyf_01_01_att_skill_buff_01.paa",
+        "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+        "durationMs": 2133
+      }
+    ]
+  },
+  {
+    "skillId": 8036,
+    "skillName": "Gravity Field I",
+    "btString": "BT_Skill_I_01_Lv1",
+    "base": "pnyw_01_01_att_skill_i",
+    "primaryAnimMs": 2667,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnyw_01_01_att_skill_i_01.paa",
+        "actionName": "Ani_Skill_I_01",
+        "durationMs": 2667
+      },
+      {
+        "phase": 2,
+        "file": "pnyw_01_01_att_skill_i_02.paa",
+        "actionName": "Ani_Skill_I_02",
+        "durationMs": 2667
+      }
+    ]
+  },
+  {
+    "skillId": 8037,
+    "skillName": "Gravity Field II",
+    "btString": "BT_Skill_I_01_Lv2",
+    "base": "pnyw_01_01_att_skill_i",
+    "primaryAnimMs": 2667,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnyw_01_01_att_skill_i_01.paa",
+        "actionName": "Ani_Skill_I_01",
+        "durationMs": 2667
+      },
+      {
+        "phase": 2,
+        "file": "pnyw_01_01_att_skill_i_02.paa",
+        "actionName": "Ani_Skill_I_02",
+        "durationMs": 2667
+      }
+    ]
+  },
+  {
+    "skillId": 8038,
+    "skillName": "Gravity Field III",
+    "btString": "BT_Skill_I_01_Lv3",
+    "base": "pnyw_01_01_att_skill_i",
+    "primaryAnimMs": 2667,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnyw_01_01_att_skill_i_01.paa",
+        "actionName": "Ani_Skill_I_01",
+        "durationMs": 2667
+      },
+      {
+        "phase": 2,
+        "file": "pnyw_01_01_att_skill_i_02.paa",
+        "actionName": "Ani_Skill_I_02",
+        "durationMs": 2667
+      }
+    ]
+  },
+  {
+    "skillId": 8039,
+    "skillName": "Gravity Field IV",
+    "btString": "BT_Skill_I_01_Lv4",
+    "base": "pnyw_01_01_att_skill_i",
+    "primaryAnimMs": 2667,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnyw_01_01_att_skill_i_01.paa",
+        "actionName": "Ani_Skill_I_01",
+        "durationMs": 2667
+      },
+      {
+        "phase": 2,
+        "file": "pnyw_01_01_att_skill_i_02.paa",
+        "actionName": "Ani_Skill_I_02",
+        "durationMs": 2667
+      }
+    ]
+  },
+  {
+    "skillId": 8040,
+    "skillName": "Absolute: Gravity Field",
+    "btString": "BT_Skill_I_01_Lv5",
+    "base": "pnyw_01_01_att_skill_i",
+    "primaryAnimMs": 2667,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnyw_01_01_att_skill_i_01.paa",
+        "actionName": "Ani_Skill_I_01",
+        "durationMs": 2667
+      },
+      {
+        "phase": 2,
+        "file": "pnyw_01_01_att_skill_i_02.paa",
+        "actionName": "Ani_Skill_I_02",
+        "durationMs": 2667
+      }
+    ]
+  },
+  {
+    "skillId": 8163,
+    "skillName": "Hammerfall I",
+    "btString": "BT_ARO_Skill_E_01_Swap_Lv1_",
+    "base": "pnyw_04_01_att_skill_e",
+    "primaryAnimMs": 3700,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnyw_04_01_att_skill_e_01.paa",
+        "actionName": "Ani_Aro_Att_Skill_E_01",
+        "durationMs": 3700
+      },
+      {
+        "phase": 2,
+        "file": "pnyw_04_01_att_skill_e_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_E_02",
+        "durationMs": 4633
+      }
+    ]
+  },
+  {
+    "skillId": 8164,
+    "skillName": "Hammerfall II",
+    "btString": "BT_ARO_Skill_E_01_Swap_Lv2",
+    "base": "pnyw_04_01_att_skill_e",
+    "primaryAnimMs": 3700,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnyw_04_01_att_skill_e_01.paa",
+        "actionName": "Ani_Aro_Att_Skill_E_01",
+        "durationMs": 3700
+      },
+      {
+        "phase": 2,
+        "file": "pnyw_04_01_att_skill_e_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_E_02",
+        "durationMs": 4633
+      }
+    ]
+  },
+  {
+    "skillId": 8165,
+    "skillName": "Hammerfall III",
+    "btString": "BT_ARO_Skill_E_01_Swap_Lv3",
+    "base": "pnyw_04_01_att_skill_e",
+    "primaryAnimMs": 3700,
+    "phases": [
+      {
+        "phase": 1,
+        "file": "pnyw_04_01_att_skill_e_01.paa",
+        "actionName": "Ani_Aro_Att_Skill_E_01",
+        "durationMs": 3700
+      },
+      {
+        "phase": 2,
+        "file": "pnyw_04_01_att_skill_e_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_E_02",
+        "durationMs": 4633
+      }
+    ]
+  },
+  {
+    "skillId": 8612,
+    "skillName": "Cloudveil I",
+    "btString": "BT_Skill_Combo_A_01_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8613,
+    "skillName": "Cloudveil II",
+    "btString": "BT_Skill_Combo_A_01_2Lv2xL",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8614,
+    "skillName": "Cloudveil III",
+    "btString": "BT_Skill_Combo_A_01_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8615,
+    "skillName": "Absolute: Cloudveil",
+    "btString": "BT_Skill_Combo_A_01_4Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8616,
+    "skillName": "Downpour I",
+    "btString": "BT_Skill_Combo_G_01_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8617,
+    "skillName": "Downpour II",
+    "btString": "BT_Skill_Combo_G_01_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8618,
+    "skillName": "Absolute: Downpour",
+    "btString": "BT_Skill_Combo_G_01_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8619,
+    "skillName": "Flow: Blinding Slash I",
+    "btString": "BT_Skill_Combo_B_02_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8620,
+    "skillName": "Flow: Blinding Slash II",
+    "btString": "BT_Skill_Combo_B_02_2LvU",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8621,
+    "skillName": "Absolute: Flow: Blinding Slash",
+    "btString": "BT_Skill_Combo_B_02_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8622,
+    "skillName": "Chain: Shade Slash",
+    "btString": "BT_Skill_Combo_B_039",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8623,
+    "skillName": "Flow: Rising Slash I",
+    "btString": "BT_Skill_Combo_F_02_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8624,
+    "skillName": "Flow: Rising Slash II",
+    "btString": "BT_Skill_Combo_F_02_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8625,
+    "skillName": "Absolute: Flow: Rising Slash",
+    "btString": "BT_Skill_Combo_F_02_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8626,
+    "skillName": "Chain: Ricochet",
+    "btString": "BT_Skill_Combo_F_03",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8627,
+    "skillName": "Flow: Twin Slash I",
+    "btString": "BT_Skill_Combo_G_02_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8628,
+    "skillName": "Flow: Twin Slash II",
+    "btString": "BT_Skill_Combo_G_02_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8629,
+    "skillName": "Absolute: Flow: Twin Slash",
+    "btString": "BT_Skill_Combo_G_02_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8630,
+    "skillName": "Chain: Final Slash",
+    "btString": "BT_Skill_Combo_G_0341",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8632,
+    "skillName": "Fog Cleave I",
+    "btString": "BT_Skill_Combo_H_01_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8633,
+    "skillName": "Fog Cleave II",
+    "btString": "BT_Skill_Combo_H_01_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8634,
+    "skillName": "Fog Cleave III",
+    "btString": "BT_Skill_Combo_H_01_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8635,
+    "skillName": "Absolute: Fog Cleave",
+    "btString": "BT_Skill_Combo_H_01_4Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8636,
+    "skillName": "Deep Haze I",
+    "btString": "BT_Skill_Combo_C_01_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8637,
+    "skillName": "Deep Haze II",
+    "btString": "BT_Skill_Combo_C_01_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8638,
+    "skillName": "Absolute: Deep Haze",
+    "btString": "BT_Skill_Combo_C_01_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8639,
+    "skillName": "Flow: Fog Scatter",
+    "btString": "BT_Skill_Combo_C_03n",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8640,
+    "skillName": "Blade Waltz I",
+    "btString": "BT_Skill_Combo_E_01_1Lvzi",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8641,
+    "skillName": "Blade Waltz II",
+    "btString": "BT_Skill_Combo_E_01_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8642,
+    "skillName": "Absolute: Blade Waltz",
+    "btString": "BT_Skill_Combo_E_01_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8648,
+    "skillName": "Summer Breeze I",
+    "btString": "BT_Skill_C_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8649,
+    "skillName": "Summer Breeze II",
+    "btString": "BT_Skill_C_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8650,
+    "skillName": "Summer Breeze III",
+    "btString": "BT_Skill_C_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8651,
+    "skillName": "Summer Breeze IV",
+    "btString": "BT_Skill_C_4Lv4",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8652,
+    "skillName": "Absolute: Summer Breeze",
+    "btString": "BT_Skill_C_5Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8653,
+    "skillName": "Fogbloom I",
+    "btString": "BT_Skill_Combo_F_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8654,
+    "skillName": "Fogbloom II",
+    "btString": "BT_Skill_Combo_F_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8655,
+    "skillName": "Fogbloom III",
+    "btString": "BT_Skill_Combo_F_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8656,
+    "skillName": "Absolute: Fogbloom",
+    "btString": "BT_Skill_Combo_F_4Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8714,
+    "skillName": "<PAColor0xffeb9261>Prime: Cloudveil<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_A_01",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8715,
+    "skillName": "<PAColor0xffeb9261>Prime: Flow: Blinding Slash<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_B_02",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8717,
+    "skillName": "<PAColor0xffeb9261>Prime: Flow: Rising Slash I<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_F_02_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8719,
+    "skillName": "<PAColor0xffeb9261>Prime: Flow: Rising Slash III<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_F_02_3Lv5",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8720,
+    "skillName": "<PAColor0xffeb9261>Prime: Flow: Twin Slash I<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_G_02_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8721,
+    "skillName": "<PAColor0xffeb9261>Prime: Flow: Twin Slash II<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_G_02_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8722,
+    "skillName": "<PAColor0xffeb9261>Prime: Flow: Twin Slash III<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_G_02_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8723,
+    "skillName": "<PAColor0xffeb9261>Prime: Fog Cleave I<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_H_01_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8724,
+    "skillName": "<PAColor0xffeb9261>Prime: Fog Cleave II<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_H_01_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8725,
+    "skillName": "<PAColor0xffeb9261>Prime: Fog Cleave III<PAOldColor>",
+    "btString": "BT_UP_Skill_Combo_H_01_3Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8730,
+    "skillName": "<PAColor0xffeb9261>Prime: Summer Breeze I<PAOldColor>",
+    "btString": "BT_UP_Skill_C_1Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8731,
+    "skillName": "<PAColor0xffeb9261>Prime: Summer Breeze II<PAOldColor>",
+    "btString": "BT_UP_Skill_C_2Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8732,
+    "skillName": "<PAColor0xffeb9261>Prime: Summer Breeze III<PAOldColor>",
+    "btString": "BT_UP_Skill_C_3LvCyw",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8733,
+    "skillName": "<PAColor0xffeb9261>Prime: Summer Breeze IV<PAOldColor>",
+    "btString": "BT_UP_Skill_C_4Lv",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8760,
+    "skillName": "Flow: Oblique Cleave",
+    "btString": "BT_Skill_Combo_H_04",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8776,
+    "skillName": "Sundering Sweep",
+    "btString": "BT_ARO_SKILL_Combo_Att_01",
+    "base": "prsa_02_01_att_skill_combo_b",
+    "primaryAnimMs": 4800,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "prsa_02_01_att_skill_combo_b_02.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+        "durationMs": 4700
+      },
+      {
+        "phase": 4,
+        "file": "prsa_02_01_att_skill_combo_b_04.paa",
+        "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+        "durationMs": 4833
+      }
+    ]
+  },
+  {
+    "skillId": 8938,
+    "skillName": "Hell's Spread I",
+    "btString": "BT_Skill_Combo_D_1Lv",
+    "base": "pwge_05_01_att_skill_combo_f",
+    "primaryAnimMs": 3067,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pwge_05_01_att_skill_combo_f_02.paa",
+        "actionName": "Ani_Skill_Combo_F_02",
+        "durationMs": 4600
+      },
+      {
+        "phase": 4,
+        "file": "pwge_05_01_att_skill_combo_f_04.paa",
+        "actionName": "Ani_Skill_Combo_F_04",
+        "durationMs": 5033
+      }
+    ]
+  },
+  {
+    "skillId": 8939,
+    "skillName": "Hell's Spread II",
+    "btString": "BT_Skill_Combo_D_2Lv",
+    "base": "pwge_05_01_att_skill_combo_f",
+    "primaryAnimMs": 3067,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pwge_05_01_att_skill_combo_f_02.paa",
+        "actionName": "Ani_Skill_Combo_F_02",
+        "durationMs": 4600
+      },
+      {
+        "phase": 4,
+        "file": "pwge_05_01_att_skill_combo_f_04.paa",
+        "actionName": "Ani_Skill_Combo_F_04",
+        "durationMs": 5033
+      }
+    ]
+  },
+  {
+    "skillId": 8940,
+    "skillName": "Hell's Spread III",
+    "btString": "BT_Skill_Combo_D_3Lv",
+    "base": "pwge_05_01_att_skill_combo_f",
+    "primaryAnimMs": 3067,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pwge_05_01_att_skill_combo_f_02.paa",
+        "actionName": "Ani_Skill_Combo_F_02",
+        "durationMs": 4600
+      },
+      {
+        "phase": 4,
+        "file": "pwge_05_01_att_skill_combo_f_04.paa",
+        "actionName": "Ani_Skill_Combo_F_04",
+        "durationMs": 5033
+      }
+    ]
+  },
+  {
+    "skillId": 8941,
+    "skillName": "Absolute: Hell's Spread",
+    "btString": "BT_Skill_Combo_D_4Lv",
+    "base": "pwge_05_01_att_skill_combo_f",
+    "primaryAnimMs": 3067,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pwge_05_01_att_skill_combo_f_02.paa",
+        "actionName": "Ani_Skill_Combo_F_02",
+        "durationMs": 4600
+      },
+      {
+        "phase": 4,
+        "file": "pwge_05_01_att_skill_combo_f_04.paa",
+        "actionName": "Ani_Skill_Combo_F_04",
+        "durationMs": 5033
+      }
+    ]
+  },
+  {
+    "skillId": 8946,
+    "skillName": "Doom 'N Gloom I",
+    "btString": "BT_Skill_Combo_F_1Lv",
+    "base": "pwge_05_01_att_skill_combo_f",
+    "primaryAnimMs": 3067,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pwge_05_01_att_skill_combo_f_02.paa",
+        "actionName": "Ani_Skill_Combo_F_02",
+        "durationMs": 4600
+      },
+      {
+        "phase": 4,
+        "file": "pwge_05_01_att_skill_combo_f_04.paa",
+        "actionName": "Ani_Skill_Combo_F_04",
+        "durationMs": 5033
+      }
+    ]
+  },
+  {
+    "skillId": 8947,
+    "skillName": "Doom 'N Gloom II",
+    "btString": "BT_Skill_Combo_F_2Lv",
+    "base": "pwge_05_01_att_skill_combo_f",
+    "primaryAnimMs": 3067,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pwge_05_01_att_skill_combo_f_02.paa",
+        "actionName": "Ani_Skill_Combo_F_02",
+        "durationMs": 4600
+      },
+      {
+        "phase": 4,
+        "file": "pwge_05_01_att_skill_combo_f_04.paa",
+        "actionName": "Ani_Skill_Combo_F_04",
+        "durationMs": 5033
+      }
+    ]
+  },
+  {
+    "skillId": 8948,
+    "skillName": "Doom 'N Gloom III",
+    "btString": "BT_Skill_Combo_F_3Lv",
+    "base": "pwge_05_01_att_skill_combo_f",
+    "primaryAnimMs": 3067,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pwge_05_01_att_skill_combo_f_02.paa",
+        "actionName": "Ani_Skill_Combo_F_02",
+        "durationMs": 4600
+      },
+      {
+        "phase": 4,
+        "file": "pwge_05_01_att_skill_combo_f_04.paa",
+        "actionName": "Ani_Skill_Combo_F_04",
+        "durationMs": 5033
+      }
+    ]
+  },
+  {
+    "skillId": 8949,
+    "skillName": "Absolute: Doom 'N Gloom",
+    "btString": "BT_Skill_Combo_F_4Lv",
+    "base": "pwge_05_01_att_skill_combo_f",
+    "primaryAnimMs": 3067,
+    "phases": [
+      {
+        "phase": 2,
+        "file": "pwge_05_01_att_skill_combo_f_02.paa",
+        "actionName": "Ani_Skill_Combo_F_02",
+        "durationMs": 4600
+      },
+      {
+        "phase": 4,
+        "file": "pwge_05_01_att_skill_combo_f_04.paa",
+        "actionName": "Ani_Skill_Combo_F_04",
+        "durationMs": 5033
+      }
+    ]
+  }
+]

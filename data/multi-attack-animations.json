@@ -1,0 +1,4204 @@
+{
+  "pvw_05_01_att_skill_lunge": [
+    {
+      "suffix": 0,
+      "file": "pvw_05_01_att_skill_lunge_00.paa",
+      "actionName": "Ani_Aro_Att_Skill_Dash_Lunge_00",
+      "durationMs": 6467
+    },
+    {
+      "suffix": 1,
+      "file": "pvw_05_01_att_skill_lunge_01.paa",
+      "actionName": "Ani_Aro_Att_Skill_Dash_Lunge_01",
+      "durationMs": 4633
+    }
+  ],
+  "pvw_01_01_att_skill_lunge": [
+    {
+      "suffix": 1,
+      "file": "pvw_01_01_att_skill_lunge_01.paa",
+      "actionName": "Ani_Skill_Lunge_B",
+      "durationMs": 3033
+    },
+    {
+      "suffix": 2,
+      "file": "pvw_01_01_att_skill_lunge_02.paa",
+      "actionName": "Ani_Skill_Lunge_C",
+      "durationMs": 3600
+    }
+  ],
+  "pmyf_02_01_att_skill_a_ing": [
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_ing_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_ing_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Ing_01",
+      "durationMs": 2000
+    }
+  ],
+  "pmyf_02_01_att_skill_a_start": [
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_a_start_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_start_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Start_01",
+      "durationMs": 2767
+    }
+  ],
+  "pmyf_01_01_att_skill_avoid_r_start": [
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_Start_01",
+      "durationMs": 1000
+    }
+  ],
+  "pmyf_02_01_att_skill_buff": [
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_buff_00.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_00",
+      "durationMs": 2300
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_buff_01.paa",
+      "actionName": "Ani_Aro_Skill_Buff_01",
+      "durationMs": 2733
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_buff_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_01",
+      "durationMs": 2733
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_buff_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_01",
+      "durationMs": 2733
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_buff_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_01",
+      "durationMs": 2733
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_buff_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_01",
+      "durationMs": 2733
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_buff_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_Buff_01",
+      "durationMs": 2733
+    }
+  ],
+  "pmyf_01_01_att_skill_buff": [
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_Skill_Buff_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_PMYF_CS_Skill_Buff_01",
+      "durationMs": 2133
+    }
+  ],
+  "pvw_01_01_att_skill_rotationbash": [
+    {
+      "suffix": 0,
+      "file": "pvw_01_01_att_skill_rotationbash_00.paa",
+      "actionName": "Ani_Skill_RotationBash_A",
+      "durationMs": 3133
+    },
+    {
+      "suffix": 2,
+      "file": "pvw_01_01_att_skill_rotationbash_02.paa",
+      "actionName": "Ani_Skill_RotationBash_C",
+      "durationMs": 3800
+    }
+  ],
+  "pmyf_01_01_att_skill_whirlwind_a": [
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_01",
+      "durationMs": 7500
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_01",
+      "durationMs": 7500
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_01",
+      "durationMs": 7500
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_01",
+      "durationMs": 7500
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_01",
+      "durationMs": 7500
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_01",
+      "durationMs": 7500
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_01",
+      "durationMs": 7500
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_01.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_01",
+      "durationMs": 7500
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_02.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_02",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    },
+    {
+      "suffix": 3,
+      "file": "pmyf_01_01_att_skill_whirlwind_a_03.paa",
+      "actionName": "Ani_Skill_WhirlWind_A_03",
+      "durationMs": 6800
+    }
+  ],
+  "pmyf_01_01_att_skill_avoid_l_start": [
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_00.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_00",
+      "durationMs": 1100
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_start_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_Start_01",
+      "durationMs": 1000
+    }
+  ],
+  "pvw_01_01_att_skill_whirlwind": [
+    {
+      "suffix": 1,
+      "file": "pvw_01_01_att_skill_whirlwind_01.paa",
+      "actionName": "Ani_Skill_Whirlwind_01",
+      "durationMs": 2933
+    },
+    {
+      "suffix": 2,
+      "file": "pvw_01_01_att_skill_whirlwind_02.paa",
+      "actionName": "Ani_Skill_Whirlwind_02",
+      "durationMs": 3100
+    },
+    {
+      "suffix": 3,
+      "file": "pvw_01_01_att_skill_whirlwind_03.paa",
+      "actionName": "Ani_Skill_Whirlwind_03",
+      "durationMs": 2933
+    }
+  ],
+  "pmyf_02_01_att_skill_a_att": [
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_a_att_01.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_a_att_02.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_02",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_a_att_02.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_02",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_a_att_02.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_02",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_a_att_02.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_02",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_a_att_02.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_02",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_a_att_02.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_02",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_a_att_02.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_02",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_a_att_02.paa",
+      "actionName": "Woosa_Ani_Aro_Skill_A_Att_02",
+      "durationMs": 3333
+    }
+  ],
+  "pkow_02_01_att_skill_b": [
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_b_01.paa",
+      "actionName": "Megu_Ani_Aro_Skill_B_01",
+      "durationMs": 6867
+    },
+    {
+      "suffix": 2,
+      "file": "pkow_02_01_att_skill_b_02.paa",
+      "actionName": "Ani_Aro_Skill_B_02",
+      "durationMs": 4867
+    }
+  ],
+  "pmyf_01_01_att_skill_throw_fan_a_end": [
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_a_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_A_End_02",
+      "durationMs": 4900
+    }
+  ],
+  "pmyf_01_01_att_skill_throw_fan_c_end": [
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_00.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End",
+      "durationMs": 4267
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_01",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_01_01_att_skill_throw_fan_c_end_02.paa",
+      "actionName": "Woosa_Ani_Skill_Throw_Fan_C_End_02",
+      "durationMs": 3667
+    }
+  ],
+  "ppw_01_01_att_skill_shield_a": [
+    {
+      "suffix": 1,
+      "file": "ppw_01_01_att_skill_shield_a_01.paa",
+      "actionName": "Ani_Training_Shield_A_01",
+      "durationMs": 3500
+    },
+    {
+      "suffix": 2,
+      "file": "ppw_01_01_att_skill_shield_a_02.paa",
+      "actionName": "Ani_Training_Shield_A_02",
+      "durationMs": 3933
+    },
+    {
+      "suffix": 2,
+      "file": "ppw_01_01_att_skill_shield_a_02.paa",
+      "actionName": "Ani_Training_Shield_A_02",
+      "durationMs": 3933
+    }
+  ],
+  "pfw_05_01_att_skill_grab_drift_l_start": [
+    {
+      "suffix": 0,
+      "file": "pfw_05_01_att_skill_grab_drift_l_start_00.paa",
+      "actionName": "Ani_Aro_Skill_Grab_Drift_L_Dash_Start_00",
+      "durationMs": 1233
+    },
+    {
+      "suffix": 1,
+      "file": "pfw_05_01_att_skill_grab_drift_l_start_01.paa",
+      "actionName": "Ani_Aro_Skill_Grab_Drift_L_Dash_Start_01",
+      "durationMs": 1233
+    }
+  ],
+  "pkww_01_01_att_skill_4combo_bash": [
+    {
+      "suffix": 2,
+      "file": "pkww_01_01_att_skill_4combo_bash_02.paa",
+      "actionName": "Ani_Battle_Skill_4Combo_02",
+      "durationMs": 4633
+    },
+    {
+      "suffix": 2,
+      "file": "pkww_01_01_att_skill_4combo_bash_02.paa",
+      "actionName": "Ani_Battle_Skill_4Combo_02",
+      "durationMs": 4633
+    },
+    {
+      "suffix": 3,
+      "file": "pkww_01_01_att_skill_4combo_bash_03.paa",
+      "actionName": "Ani_Battle_Skill_4Combo_03",
+      "durationMs": 6667
+    }
+  ],
+  "pfw_01_01_att_skill_bash_a": [
+    {
+      "suffix": 1,
+      "file": "pfw_01_01_att_skill_bash_a_01.paa",
+      "actionName": "Ani_Skill_Bash_A_01",
+      "durationMs": 2467
+    },
+    {
+      "suffix": 2,
+      "file": "pfw_01_01_att_skill_bash_a_02.paa",
+      "actionName": "Ani_Skill_Bash_A_02",
+      "durationMs": 2933
+    }
+  ],
+  "pfw_01_01_att_skill_move_sliding_f_cancle_a": [
+    {
+      "suffix": 1,
+      "file": "pfw_01_01_att_skill_move_sliding_f_cancle_a_01.paa",
+      "actionName": "Ani_Skill_Move_Sliding_F_Cancle_A_01",
+      "durationMs": 2733
+    },
+    {
+      "suffix": 2,
+      "file": "pfw_01_01_att_skill_move_sliding_f_cancle_a_02.paa",
+      "actionName": "Ani_Skill_Move_Sliding_F_Cancle_A_02",
+      "durationMs": 2933
+    }
+  ],
+  "pfw_01_01_att_skill_throw_bomb": [
+    {
+      "suffix": 1,
+      "file": "pfw_01_01_att_skill_throw_bomb_01.paa",
+      "actionName": "Ani_Skill_Throw_Bomb_01",
+      "durationMs": 1333
+    },
+    {
+      "suffix": 2,
+      "file": "pfw_01_01_att_skill_throw_bomb_02.paa",
+      "actionName": "Ani_Skill_Throw_Bomb_02",
+      "durationMs": 1300
+    }
+  ],
+  "pmyf_01_01_att_skill_avoid_r_end": [
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_00.paa",
+      "actionName": "Ani_Skill_Avoid_R_End",
+      "durationMs": 1433
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_r_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_R_End_01",
+      "durationMs": 1933
+    }
+  ],
+  "pfw_05_01_att_skill_move_sliding_l_jump_shoot_end": [
+    {
+      "suffix": 0,
+      "file": "pfw_05_01_att_skill_move_sliding_l_jump_shoot_end_00.paa",
+      "actionName": "Ani_Aro_Skill_Move_Sliding_L_Jump_Shoot_End",
+      "durationMs": 900
+    },
+    {
+      "suffix": 1,
+      "file": "pfw_05_01_att_skill_move_sliding_l_jump_shoot_end_01.paa",
+      "actionName": "Ani_Aro_Skill_Sliding_L_Jump_Shoot_End_01",
+      "durationMs": 900
+    }
+  ],
+  "pqw_05_01_att_skill_combo_a": [
+    {
+      "suffix": 2,
+      "file": "pqw_05_01_att_skill_combo_a_02.paa",
+      "actionName": "Ani_Aro_Skill_Combo_A_02",
+      "durationMs": 2867
+    },
+    {
+      "suffix": 3,
+      "file": "pqw_05_01_att_skill_combo_a_03.paa",
+      "actionName": "Ani_Aro_Skill_Combo_A_03",
+      "durationMs": 4167
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 5,
+      "file": "pqw_05_01_att_skill_combo_a_05.paa",
+      "actionName": "Ani_PQW_Aro_Skill_Combo_A_05",
+      "durationMs": 3700
+    }
+  ],
+  "pnyw_01_01_att_skill_cancle_l": [
+    {
+      "suffix": 2,
+      "file": "pnyw_01_01_att_skill_cancle_l_02.paa",
+      "actionName": "Ani_Skill_Cancle_L_02",
+      "durationMs": 3233
+    },
+    {
+      "suffix": 4,
+      "file": "pnyw_01_01_att_skill_cancle_l_04.paa",
+      "actionName": "Ani_Skill_Cancle_L_04",
+      "durationMs": 3000
+    }
+  ],
+  "pnyw_04_01_att_skill_e": [
+    {
+      "suffix": 1,
+      "file": "pnyw_04_01_att_skill_e_01.paa",
+      "actionName": "Ani_Aro_Att_Skill_E_01",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 2,
+      "file": "pnyw_04_01_att_skill_e_02.paa",
+      "actionName": "Ani_Aro_Att_Skill_E_02",
+      "durationMs": 4633
+    }
+  ],
+  "pnyw_01_01_att_skill_i": [
+    {
+      "suffix": 1,
+      "file": "pnyw_01_01_att_skill_i_01.paa",
+      "actionName": "Ani_Skill_I_01",
+      "durationMs": 2667
+    },
+    {
+      "suffix": 2,
+      "file": "pnyw_01_01_att_skill_i_02.paa",
+      "actionName": "Ani_Skill_I_02",
+      "durationMs": 2667
+    }
+  ],
+  "pnyw_01_01_att_skill_cancle_r": [
+    {
+      "suffix": 1,
+      "file": "pnyw_01_01_att_skill_cancle_r_01.paa",
+      "actionName": "Ani_Skill_Cancle_R_01",
+      "durationMs": 3400
+    },
+    {
+      "suffix": 2,
+      "file": "pnyw_01_01_att_skill_cancle_r_02.paa",
+      "actionName": "Ani_Skill_Cancle_R_02",
+      "durationMs": 2933
+    },
+    {
+      "suffix": 3,
+      "file": "pnyw_01_01_att_skill_cancle_r_03.paa",
+      "actionName": "Ani_Skill_Cancle_R_03",
+      "durationMs": 3267
+    }
+  ],
+  "pnyw_01_01_att_skill_cancle_b": [
+    {
+      "suffix": 1,
+      "file": "pnyw_01_01_att_skill_cancle_b_01.paa",
+      "actionName": "Ani_Skill_Cancle_B_01",
+      "durationMs": 1267
+    },
+    {
+      "suffix": 2,
+      "file": "pnyw_01_01_att_skill_cancle_b_02.paa",
+      "actionName": "Ani_Skill_Cancle_B_02",
+      "durationMs": 2400
+    }
+  ],
+  "pem_03_01_att_skill_kickshot": [
+    {
+      "suffix": 0,
+      "file": "pem_03_01_att_skill_kickshot_00.paa",
+      "actionName": "Ani_Training_Skill_A_04",
+      "durationMs": 5667
+    },
+    {
+      "suffix": 1,
+      "file": "pem_03_01_att_skill_kickshot_01.paa",
+      "actionName": "Ani_Battle_Skill_Att_KickShot_01",
+      "durationMs": 6567
+    }
+  ],
+  "pem_03_01_att_skill_gildong_att": [
+    {
+      "suffix": 2,
+      "file": "pem_03_01_att_skill_gildong_att_02.paa",
+      "actionName": "Ani_Battle_Skill_Att_Gildong_Att_02",
+      "durationMs": 800
+    },
+    {
+      "suffix": 4,
+      "file": "pem_03_01_att_skill_gildong_att_04.paa",
+      "actionName": "Ani_Battle_Skill_Att_Gildong_Att_04",
+      "durationMs": 800
+    },
+    {
+      "suffix": 5,
+      "file": "pem_03_01_att_skill_gildong_att_05.paa",
+      "actionName": "Ani_Battle_Skill_Att_Gildong_Att_05",
+      "durationMs": 3667
+    }
+  ],
+  "pem_03_01_att_skill_uppershotting": [
+    {
+      "suffix": 0,
+      "file": "pem_03_01_att_skill_uppershotting_00.paa",
+      "actionName": "Ani_Training_Skill_A_03",
+      "durationMs": 4667
+    },
+    {
+      "suffix": 1,
+      "file": "pem_03_01_att_skill_uppershotting_01.paa",
+      "actionName": "Ani_Training_Skill_A_03_1",
+      "durationMs": 3300
+    }
+  ],
+  "pem_05_01_att_skill_jumpatt_01_start": [
+    {
+      "suffix": 0,
+      "file": "pem_05_01_att_skill_jumpatt_01_start_00.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_JumpAtt_01_Start",
+      "durationMs": 900
+    },
+    {
+      "suffix": 1,
+      "file": "pem_05_01_att_skill_jumpatt_01_start_01.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_JumpAtt_01_Start_01",
+      "durationMs": 900
+    }
+  ],
+  "pem_05_01_att_skill_jumpatt_01_end": [
+    {
+      "suffix": 0,
+      "file": "pem_05_01_att_skill_jumpatt_01_end_00.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_JumpAtt_01_End",
+      "durationMs": 1567
+    },
+    {
+      "suffix": 1,
+      "file": "pem_05_01_att_skill_jumpatt_01_end_01.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_JumpAtt_01_End_01",
+      "durationMs": 1567
+    }
+  ],
+  "pcm_06_01_att_skill_hitrepeatedly_att_stand": [
+    {
+      "suffix": 0,
+      "file": "pcm_06_01_att_skill_hitrepeatedly_att_stand_00.paa",
+      "actionName": "Ani_Aro_Skill_HitRepeatedly_Att_Stand_00",
+      "durationMs": 4600
+    },
+    {
+      "suffix": 2,
+      "file": "pcm_06_01_att_skill_hitrepeatedly_att_stand_02.paa",
+      "actionName": "Ani_Aro_Skill_HitRepeatedly_Att_Stand_02",
+      "durationMs": 4567
+    }
+  ],
+  "pcm_01_01_att_skill_buff_roar": [
+    {
+      "suffix": 0,
+      "file": "pcm_01_01_att_skill_buff_roar_00.paa",
+      "actionName": "Ani_Skill_Att_Buff_Roar",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pcm_01_01_att_skill_buff_roar_01.paa",
+      "actionName": "Ani_Sus_Buff",
+      "durationMs": 2000
+    }
+  ],
+  "pcm_06_01_att_skill_bash_m": [
+    {
+      "suffix": 1,
+      "file": "pcm_06_01_att_skill_bash_m_01.paa",
+      "actionName": "Ani_Aro_Skill_Bash_M_01",
+      "durationMs": 5567
+    },
+    {
+      "suffix": 3,
+      "file": "pcm_06_01_att_skill_bash_m_03.paa",
+      "actionName": "Ani_Aro_Skill_Bash_M_03",
+      "durationMs": 4767
+    }
+  ],
+  "pww_05_01_att_skill_normal_casting_start": [
+    {
+      "suffix": 1,
+      "file": "pww_05_01_att_skill_normal_casting_start_01.paa",
+      "actionName": "Ani_Aro_Skill_Cast_Start_02",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 2,
+      "file": "pww_05_01_att_skill_normal_casting_start_02.paa",
+      "actionName": "Ani_Aro_Skill_Cast_Start_03",
+      "durationMs": 1367
+    }
+  ],
+  "pwm_04_01_att_skill_stand_casting_r_start": [
+    {
+      "suffix": 0,
+      "file": "pwm_04_01_att_skill_stand_casting_r_start_00.paa",
+      "actionName": "Ani_Battle_Skill_Stand_Casting_R_Start_00",
+      "durationMs": 6333
+    },
+    {
+      "suffix": 1,
+      "file": "pwm_04_01_att_skill_stand_casting_r_start_01.paa",
+      "actionName": "Ani_Battle_Skill_Stand_Casting_R_Start_01",
+      "durationMs": 2700
+    }
+  ],
+  "pwm_04_01_att_skill_stand_casting_l_start": [
+    {
+      "suffix": 0,
+      "file": "pwm_04_01_att_skill_stand_casting_l_start_00.paa",
+      "actionName": "Ani_Battle_Skill_Stand_Casting_L_Start_00",
+      "durationMs": 12000
+    },
+    {
+      "suffix": 3,
+      "file": "pwm_04_01_att_skill_stand_casting_l_start_03.paa",
+      "actionName": "Ani_Battle_Skill_Stand_Casting_L_Start_03",
+      "durationMs": 2933
+    },
+    {
+      "suffix": 3,
+      "file": "pwm_04_01_att_skill_stand_casting_l_start_03.paa",
+      "actionName": "Ani_Battle_Skill_Stand_Casting_L_Start_03",
+      "durationMs": 2933
+    }
+  ],
+  "pwm_04_01_att_skill_stand_casting_shot": [
+    {
+      "suffix": 0,
+      "file": "pwm_04_01_att_skill_stand_casting_shot_00.paa",
+      "actionName": "Ani_Battle_Skill_Stand_Casting_Shot_00",
+      "durationMs": 4000
+    },
+    {
+      "suffix": 0,
+      "file": "pwm_04_01_att_skill_stand_casting_shot_00.paa",
+      "actionName": "Ani_Battle_Skill_Stand_Casting_Shot_00",
+      "durationMs": 4000
+    },
+    {
+      "suffix": 1,
+      "file": "pwm_04_01_att_skill_stand_casting_shot_01.paa",
+      "actionName": "Ani_Battle_Skill_Stand_Casting_Shot_01",
+      "durationMs": 4000
+    }
+  ],
+  "pkww_04_01_att_skill_3combo_r": [
+    {
+      "suffix": 1,
+      "file": "pkww_04_01_att_skill_3combo_r_01.paa",
+      "actionName": "Ani_Aro_Skill_3Combo_R_01",
+      "durationMs": 1133
+    },
+    {
+      "suffix": 2,
+      "file": "pkww_04_01_att_skill_3combo_r_02.paa",
+      "actionName": "Ani_Aro_Skill_3Combo_R_02",
+      "durationMs": 1133
+    }
+  ],
+  "pkww_04_01_att_skill_raise_bash": [
+    {
+      "suffix": 0,
+      "file": "pkww_04_01_att_skill_raise_bash_00.paa",
+      "actionName": "Ani_Aro_Skill_Raise_Bash_00",
+      "durationMs": 4067
+    },
+    {
+      "suffix": 1,
+      "file": "pkww_04_01_att_skill_raise_bash_01.paa",
+      "actionName": "Ani_Aro_Skill_Raise_Bash_01",
+      "durationMs": 4733
+    }
+  ],
+  "pkm_01_01_att_skill_4combo_bash": [
+    {
+      "suffix": 0,
+      "file": "pkm_01_01_att_skill_4combo_bash_00.paa",
+      "actionName": "Ani_Battle_Skill_4Combo_00",
+      "durationMs": 2867
+    },
+    {
+      "suffix": 0,
+      "file": "pkm_01_01_att_skill_4combo_bash_00.paa",
+      "actionName": "Ani_Battle_Skill_4Combo_00",
+      "durationMs": 2867
+    },
+    {
+      "suffix": 3,
+      "file": "pkm_01_01_att_skill_4combo_bash_03.paa",
+      "actionName": "Ani_Battle_Skill_4Combo_03",
+      "durationMs": 3933
+    }
+  ],
+  "pkww_01_01_att_skill_3combo_bash": [
+    {
+      "suffix": 0,
+      "file": "pkww_01_01_att_skill_3combo_bash_00.paa",
+      "actionName": "Ani_Battle_Skill_3Combo_Bash_00",
+      "durationMs": 6333
+    },
+    {
+      "suffix": 2,
+      "file": "pkww_01_01_att_skill_3combo_bash_02.paa",
+      "actionName": "Ani_Battle_Skill_3Combo_Bash_02",
+      "durationMs": null
+    }
+  ],
+  "pdkl_02_02_att_skill_change": [
+    {
+      "suffix": 1,
+      "file": "pdkl_02_02_att_skill_change_01.paa",
+      "actionName": "Ani_Skill_Change_Dark_End",
+      "durationMs": 2733
+    },
+    {
+      "suffix": 2,
+      "file": "pdkl_02_02_att_skill_change_02.paa",
+      "actionName": "Ani_Skill_Dark_Change",
+      "durationMs": 2000
+    }
+  ],
+  "pdkl_02_01_att_skill_buff": [
+    {
+      "suffix": 0,
+      "file": "pdkl_02_01_att_skill_buff_00.paa",
+      "actionName": "Ani_Skill_Buff_00",
+      "durationMs": 4800
+    },
+    {
+      "suffix": 1,
+      "file": "pdkl_02_01_att_skill_buff_01.paa",
+      "actionName": "Ani_Skill_Buff_01",
+      "durationMs": 5867
+    }
+  ],
+  "pdkl_02_01_att_skill_evade_l_ing": [
+    {
+      "suffix": 0,
+      "file": "pdkl_02_01_att_skill_evade_l_ing_00.paa",
+      "actionName": "Ani_Skill_Light_Evade_L_Ing_00",
+      "durationMs": 500
+    },
+    {
+      "suffix": 1,
+      "file": "pdkl_02_01_att_skill_evade_l_ing_01.paa",
+      "actionName": "Ani_Skill_Light_Evade_L_Ing_01",
+      "durationMs": 833
+    }
+  ],
+  "pdkl_02_01_att_skill_evade_f_ing": [
+    {
+      "suffix": 0,
+      "file": "pdkl_02_01_att_skill_evade_f_ing_00.paa",
+      "actionName": "Ani_Skill_Light_Evade_F_Ing_00",
+      "durationMs": 500
+    },
+    {
+      "suffix": 1,
+      "file": "pdkl_02_01_att_skill_evade_f_ing_01.paa",
+      "actionName": "Ani_Skill_Light_Evade_F_Ing_01",
+      "durationMs": 833
+    },
+    {
+      "suffix": 2,
+      "file": "pdkl_02_01_att_skill_evade_f_ing_02.paa",
+      "actionName": "Ani_Skill_Light_Evade_F_Ing_02",
+      "durationMs": 833
+    }
+  ],
+  "pmyf_01_01_att_skill_avoid_l_end": [
+    {
+      "suffix": 0,
+      "file": "pmyf_01_01_att_skill_avoid_l_end_00.paa",
+      "actionName": "Ani_Skill_Avoid_L_End",
+      "durationMs": 1433
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_End_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_01_01_att_skill_avoid_l_end_01.paa",
+      "actionName": "Woosa_Ani_Skill_Avoid_L_End_01",
+      "durationMs": 1933
+    }
+  ],
+  "pam_04_01_att_skill_slidingatt": [
+    {
+      "suffix": 0,
+      "file": "pam_04_01_att_skill_slidingatt_00.paa",
+      "actionName": "Ani_Aro_Skill_SlidingAtt_Att",
+      "durationMs": 4367
+    },
+    {
+      "suffix": 1,
+      "file": "pam_04_01_att_skill_slidingatt_01.paa",
+      "actionName": "Ani_Aro_Skill_SlidingAtt_01",
+      "durationMs": 3100
+    }
+  ],
+  "pam_01_01_att_skill_blastoff": [
+    {
+      "suffix": 1,
+      "file": "pam_01_01_att_skill_blastoff_01.paa",
+      "actionName": "Ani_Skill_Blastoff_01",
+      "durationMs": 2600
+    },
+    {
+      "suffix": 2,
+      "file": "pam_01_01_att_skill_blastoff_02.paa",
+      "actionName": "Ani_Training_Skill_A_03",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 2,
+      "file": "pam_01_01_att_skill_blastoff_02.paa",
+      "actionName": "Ani_Training_Skill_A_03",
+      "durationMs": 2367
+    }
+  ],
+  "pam_01_01_att_skill_att_shadowbash": [
+    {
+      "suffix": 1,
+      "file": "pam_01_01_att_skill_att_shadowbash_01.paa",
+      "actionName": "Ani_Skill_ShadowBash_01",
+      "durationMs": 2533
+    },
+    {
+      "suffix": 1,
+      "file": "pam_01_01_att_skill_att_shadowbash_01.paa",
+      "actionName": "Ani_Training_Skill_A_01",
+      "durationMs": 2533
+    },
+    {
+      "suffix": 2,
+      "file": "pam_01_01_att_skill_att_shadowbash_02.paa",
+      "actionName": "Ani_Skill_ShadowBash_02",
+      "durationMs": 3267
+    }
+  ],
+  "pam_01_01_att_skill_teleport_f": [
+    {
+      "suffix": 0,
+      "file": "pam_01_01_att_skill_teleport_f_00.paa",
+      "actionName": "Ani_Skill_Teleport_F_00",
+      "durationMs": 2233
+    },
+    {
+      "suffix": 1,
+      "file": "pam_01_01_att_skill_teleport_f_01.paa",
+      "actionName": "Ani_Skill_Teleport_F_01",
+      "durationMs": 2500
+    }
+  ],
+  "pam_04_01_att_skill_teleport_r": [
+    {
+      "suffix": 0,
+      "file": "pam_04_01_att_skill_teleport_r_00.paa",
+      "actionName": "Ani_Aro_Att_Teleport_R_Start",
+      "durationMs": 2400
+    },
+    {
+      "suffix": 1,
+      "file": "pam_04_01_att_skill_teleport_r_01.paa",
+      "actionName": "Ani_Aro_Att_Teleport_R_End",
+      "durationMs": 2533
+    }
+  ],
+  "ppw_01_01_att_skill_ground": [
+    {
+      "suffix": 0,
+      "file": "ppw_01_01_att_skill_ground_00.paa",
+      "actionName": "Ani_Skill_Ground_00",
+      "durationMs": 3867
+    },
+    {
+      "suffix": 1,
+      "file": "ppw_01_01_att_skill_ground_01.paa",
+      "actionName": "Ani_Skill_Ground_01",
+      "durationMs": 2967
+    },
+    {
+      "suffix": 2,
+      "file": "ppw_01_01_att_skill_ground_02.paa",
+      "actionName": "Ani_Skill_Ground_02",
+      "durationMs": 4967
+    }
+  ],
+  "ppw_01_01_att_skill_normal_l": [
+    {
+      "suffix": 1,
+      "file": "ppw_01_01_att_skill_normal_l_01.paa",
+      "actionName": "Ani_Skill_Normal_L_01",
+      "durationMs": 2100
+    },
+    {
+      "suffix": 3,
+      "file": "ppw_01_01_att_skill_normal_l_03.paa",
+      "actionName": "Ani_Skill_Normal_L_03",
+      "durationMs": 2300
+    }
+  ],
+  "ppw_01_01_att_skill_shield_d": [
+    {
+      "suffix": 0,
+      "file": "ppw_01_01_att_skill_shield_d_00.paa",
+      "actionName": "Ani_Skill_Shield_D_00",
+      "durationMs": 3567
+    },
+    {
+      "suffix": 1,
+      "file": "ppw_01_01_att_skill_shield_d_01.paa",
+      "actionName": "Ani_Skill_Shield_D_01",
+      "durationMs": 3933
+    }
+  ],
+  "ppw_01_01_att_skill_buff": [
+    {
+      "suffix": 0,
+      "file": "ppw_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_Battle_Skill_Buff",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "ppw_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_Battle_Skill_Buff_01",
+      "durationMs": 2467
+    }
+  ],
+  "ppw_05_01_att_skill_scythe_throw_d": [
+    {
+      "suffix": 1,
+      "file": "ppw_05_01_att_skill_scythe_throw_d_01.paa",
+      "actionName": "Ani_Aro_Att_Skill_Scythe_Throw_D_01",
+      "durationMs": 1600
+    },
+    {
+      "suffix": 3,
+      "file": "ppw_05_01_att_skill_scythe_throw_d_03.paa",
+      "actionName": "Ani_Aro_Att_Skill_Scythe_Throw_D_03",
+      "durationMs": 3267
+    }
+  ],
+  "ppw_01_01_att_skill_normal_combo_b": [
+    {
+      "suffix": 0,
+      "file": "ppw_01_01_att_skill_normal_combo_b_00.paa",
+      "actionName": "Ani_Training_Combo_B",
+      "durationMs": 2200
+    },
+    {
+      "suffix": 1,
+      "file": "ppw_01_01_att_skill_normal_combo_b_01.paa",
+      "actionName": "Ani_Skill_Combo_B_1",
+      "durationMs": 2200
+    }
+  ],
+  "ppw_05_01_att_skill_shoot": [
+    {
+      "suffix": 0,
+      "file": "ppw_05_01_att_skill_shoot_00.paa",
+      "actionName": "Ani_Aro_Att_Skill_Shoot_00",
+      "durationMs": 1667
+    },
+    {
+      "suffix": 1,
+      "file": "ppw_05_01_att_skill_shoot_01.paa",
+      "actionName": "Ani_Aro_Att_Skill_Shoot_01",
+      "durationMs": 2100
+    }
+  ],
+  "ppw_01_01_att_skill_shield_b": [
+    {
+      "suffix": 0,
+      "file": "ppw_01_01_att_skill_shield_b_00.paa",
+      "actionName": "Ani_Skill_Shield_B_00",
+      "durationMs": 2933
+    },
+    {
+      "suffix": 1,
+      "file": "ppw_01_01_att_skill_shield_b_01.paa",
+      "actionName": "Ani_Skill_Shield_B_01",
+      "durationMs": 3133
+    }
+  ],
+  "pgm_05_01_att_skill_earthquake": [
+    {
+      "suffix": 1,
+      "file": "pgm_05_01_att_skill_earthquake_01.paa",
+      "actionName": "Ani_Training_Skill_A_04",
+      "durationMs": 1233
+    },
+    {
+      "suffix": 2,
+      "file": "pgm_05_01_att_skill_earthquake_02.paa",
+      "actionName": "Ani_Training_Skill_A_05",
+      "durationMs": 1433
+    },
+    {
+      "suffix": 3,
+      "file": "pgm_05_01_att_skill_earthquake_03.paa",
+      "actionName": "Ani_Battle_Skill_EarthQuake_3",
+      "durationMs": 1400
+    }
+  ],
+  "pgb_00_01_att_skill_bash": [
+    {
+      "suffix": 1,
+      "file": "pgb_00_01_att_skill_bash_01.paa",
+      "actionName": "Ani_Beast_Skill_Bash_1",
+      "durationMs": 1333
+    },
+    {
+      "suffix": 2,
+      "file": "pgb_00_01_att_skill_bash_02.paa",
+      "actionName": "Ani_Beast_Skill_Bash_2",
+      "durationMs": 1300
+    },
+    {
+      "suffix": 3,
+      "file": "pgb_00_01_att_skill_bash_03.paa",
+      "actionName": "Ani_Beast_Skill_Bash_3",
+      "durationMs": 1333
+    }
+  ],
+  "pgm_05_01_att_skill_shout": [
+    {
+      "suffix": 0,
+      "file": "pgm_05_01_att_skill_shout_00.paa",
+      "actionName": "Ani_Evade",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pgm_05_01_att_skill_shout_01.paa",
+      "actionName": "Ani_Tutorial_Attack_2",
+      "durationMs": 3567
+    }
+  ],
+  "pkow_02_01_att_skill_avoid_r": [
+    {
+      "suffix": 0,
+      "file": "pkow_02_01_att_skill_avoid_r_00.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_R_00",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_avoid_r_01.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_R_01",
+      "durationMs": 1200
+    },
+    {
+      "suffix": 2,
+      "file": "pkow_02_01_att_skill_avoid_r_02.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_R_02",
+      "durationMs": 3200
+    }
+  ],
+  "pkow_02_01_att_skill_avoid_l": [
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_avoid_l_01.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_L_01",
+      "durationMs": 1200
+    },
+    {
+      "suffix": 2,
+      "file": "pkow_02_01_att_skill_avoid_l_02.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_L_02",
+      "durationMs": 3200
+    }
+  ],
+  "pkow_02_01_att_skill_combo_a": [
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_combo_a_01.paa",
+      "actionName": "Ani_Aro_Skill_Combo_A_01",
+      "durationMs": 4200
+    },
+    {
+      "suffix": 3,
+      "file": "pkow_02_01_att_skill_combo_a_03.paa",
+      "actionName": "Ani_Aro_Skill_Combo_A_03",
+      "durationMs": 3933
+    }
+  ],
+  "pkow_02_01_att_skill_cancle_a_r": [
+    {
+      "suffix": 1,
+      "file": "pkow_02_01_att_skill_cancle_a_r_01.paa",
+      "actionName": "Ani_Aro_Skill_Cancle_A_R_01",
+      "durationMs": 3767
+    },
+    {
+      "suffix": 2,
+      "file": "pkow_02_01_att_skill_cancle_a_r_02.paa",
+      "actionName": "Ani_Aro_Skill_Cancle_A_R_02",
+      "durationMs": 3133
+    }
+  ],
+  "pkow_01_01_att_skill_combo_d": [
+    {
+      "suffix": 1,
+      "file": "pkow_01_01_att_skill_combo_d_01.paa",
+      "actionName": "Ani_Skill_Combo_D_01",
+      "durationMs": 4600
+    },
+    {
+      "suffix": 3,
+      "file": "pkow_01_01_att_skill_combo_d_03.paa",
+      "actionName": "Ani_Skill_Combo_D_03",
+      "durationMs": 4467
+    }
+  ],
+  "pkow_01_01_att_skill_avoid_att_r": [
+    {
+      "suffix": 0,
+      "file": "pkow_01_01_att_skill_avoid_att_r_00.paa",
+      "actionName": "Ani_Skill_Avoid_Att_R",
+      "durationMs": 4133
+    },
+    {
+      "suffix": 1,
+      "file": "pkow_01_01_att_skill_avoid_att_r_01.paa",
+      "actionName": "Ani_Skill_Avoid_Turn_R",
+      "durationMs": 3867
+    }
+  ],
+  "pkow_01_01_att_skill_combo_f": [
+    {
+      "suffix": 1,
+      "file": "pkow_01_01_att_skill_combo_f_01.paa",
+      "actionName": "Ani_Skill_Combo_F_R_01",
+      "durationMs": 3600
+    },
+    {
+      "suffix": 2,
+      "file": "pkow_01_01_att_skill_combo_f_02.paa",
+      "actionName": "Ani_Skill_Combo_F_R_02",
+      "durationMs": 3867
+    }
+  ],
+  "pkow_01_01_att_skill_combo_e": [
+    {
+      "suffix": 1,
+      "file": "pkow_01_01_att_skill_combo_e_01.paa",
+      "actionName": "Ani_Skill_Combo_E_01",
+      "durationMs": 3700
+    },
+    {
+      "suffix": 3,
+      "file": "pkow_01_01_att_skill_combo_e_03.paa",
+      "actionName": "Ani_Skill_Combo_E_03",
+      "durationMs": 3933
+    }
+  ],
+  "pkow_01_01_att_skill_combo_a": [
+    {
+      "suffix": 1,
+      "file": "pkow_01_01_att_skill_combo_a_01.paa",
+      "actionName": "Ani_Skill_Combo_A_01",
+      "durationMs": 2367
+    },
+    {
+      "suffix": 3,
+      "file": "pkow_01_01_att_skill_combo_a_03.paa",
+      "actionName": "Ani_Skill_Combo_A_03",
+      "durationMs": 2600
+    }
+  ],
+  "pmyf_02_01_att_skill_f_att": [
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_f_att_00.paa",
+      "actionName": "Ani_Aro_Skill_F_Att_00",
+      "durationMs": 3133
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_f_att_01.paa",
+      "actionName": "Ani_Aro_Skill_F_Att_01",
+      "durationMs": 6500
+    }
+  ],
+  "pmyf_02_01_att_skill_h": [
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_h_01.paa",
+      "actionName": "Ani_Aro_Skill_H_01",
+      "durationMs": 5800
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_h_02.paa",
+      "actionName": "Ani_Aro_Skill_H_02",
+      "durationMs": 5433
+    }
+  ],
+  "pmyf_02_01_att_skill_air_inbook_ing": [
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_air_inbook_ing_00.paa",
+      "actionName": "Ani_Aro_Skill_Air_InBook_Ing_00",
+      "durationMs": 1400
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_air_inbook_ing_01.paa",
+      "actionName": "Ani_Aro_Skill_Air_InBook_Ing_01",
+      "durationMs": 1233
+    }
+  ],
+  "pmyf_02_01_att_skill_g": [
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_g_01.paa",
+      "actionName": "Ani_Aro_Skill_G_01",
+      "durationMs": 4067
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_g_02.paa",
+      "actionName": "Ani_Aro_Skill_G_02",
+      "durationMs": 5800
+    }
+  ],
+  "pmyf_02_01_att_skill_combo_a": [
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_combo_a_01.paa",
+      "actionName": "Ani_Aro_Skill_Combo_A_01",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_combo_a_02.paa",
+      "actionName": "Ani_Aro_Skill_Combo_A_02",
+      "durationMs": 3500
+    }
+  ],
+  "pmyf_02_01_att_skill_combo_e": [
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_combo_e_01.paa",
+      "actionName": "Ani_Aro_Skill_Combo_E_01",
+      "durationMs": 3000
+    },
+    {
+      "suffix": 2,
+      "file": "pmyf_02_01_att_skill_combo_e_02.paa",
+      "actionName": "Ani_Aro_Skill_Combo_E_02",
+      "durationMs": 4100
+    }
+  ],
+  "pmyf_02_01_att_skill_avoid_b_end": [
+    {
+      "suffix": 0,
+      "file": "pmyf_02_01_att_skill_avoid_b_end_00.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_B_End",
+      "durationMs": 1600
+    },
+    {
+      "suffix": 1,
+      "file": "pmyf_02_01_att_skill_avoid_b_end_01.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_B_End_01",
+      "durationMs": 2867
+    }
+  ],
+  "pbw_04_01_att_skill_bash": [
+    {
+      "suffix": 2,
+      "file": "pbw_04_01_att_skill_bash_02.paa",
+      "actionName": "Ani_Aro_Battle_Att_Bash_02",
+      "durationMs": 3667
+    },
+    {
+      "suffix": 4,
+      "file": "pbw_04_01_att_skill_bash_04.paa",
+      "actionName": "Ani_Aro_Battle_Att_Bash_04",
+      "durationMs": 3933
+    }
+  ],
+  "pbw_01_01_att_skill": [
+    {
+      "suffix": 1,
+      "file": "pbw_01_01_att_skill_01.paa",
+      "actionName": "Ani_Skill_TurnKick_Combination",
+      "durationMs": 1800
+    },
+    {
+      "suffix": 2,
+      "file": "pbw_01_01_att_skill_02.paa",
+      "actionName": "Ani_Skill_TurnKick",
+      "durationMs": 1500
+    },
+    {
+      "suffix": 6,
+      "file": "pbw_01_01_att_skill_06.paa",
+      "actionName": "Ani_Skill_UsePipe_Buff",
+      "durationMs": 6933
+    }
+  ],
+  "ppm_06_01_att_skill_teleport_l_end": [
+    {
+      "suffix": 0,
+      "file": "ppm_06_01_att_skill_teleport_l_end_00.paa",
+      "actionName": "Ani_Battle_Att_Skill_Teleport_L_End",
+      "durationMs": 1500
+    },
+    {
+      "suffix": 1,
+      "file": "ppm_06_01_att_skill_teleport_l_end_01.paa",
+      "actionName": "Ani_Battle_Att_Skill_Teleport_L_End_01",
+      "durationMs": 1733
+    }
+  ],
+  "pkm_04_01_att_skill_bash": [
+    {
+      "suffix": 1,
+      "file": "pkm_04_01_att_skill_bash_01.paa",
+      "actionName": "Ani_Aro_Skill_Bash_1",
+      "durationMs": 5267
+    },
+    {
+      "suffix": 2,
+      "file": "pkm_04_01_att_skill_bash_02.paa",
+      "actionName": "Ani_Aro_Skill_Bash_2",
+      "durationMs": 4300
+    },
+    {
+      "suffix": 3,
+      "file": "pkm_04_01_att_skill_bash_03.paa",
+      "actionName": "Ani_Aro_Skill_Bash_3",
+      "durationMs": 5233
+    }
+  ],
+  "pkm_01_01_att_skill_3combo_bash": [
+    {
+      "suffix": 0,
+      "file": "pkm_01_01_att_skill_3combo_bash_00.paa",
+      "actionName": "Ani_Battle_Skill_3Combo_Bash_00",
+      "durationMs": 3300
+    },
+    {
+      "suffix": 1,
+      "file": "pkm_01_01_att_skill_3combo_bash_01.paa",
+      "actionName": "Ani_Battle_Skill_3Combo_Bash_01",
+      "durationMs": 2567
+    },
+    {
+      "suffix": 2,
+      "file": "pkm_01_01_att_skill_3combo_bash_02.paa",
+      "actionName": "Ani_Battle_Skill_3Combo_Bash_02",
+      "durationMs": 4233
+    }
+  ],
+  "pkm_05_01_att_skill_lunge": [
+    {
+      "suffix": 1,
+      "file": "pkm_05_01_att_skill_lunge_01.paa",
+      "actionName": "Ani_Two_Skill_LungeAttack2",
+      "durationMs": 4700
+    },
+    {
+      "suffix": 2,
+      "file": "pkm_05_01_att_skill_lunge_02.paa",
+      "actionName": "Ani_Two_Skill_LungeAttack3",
+      "durationMs": 5433
+    }
+  ],
+  "pkm_04_01_att_skill_buff": [
+    {
+      "suffix": 0,
+      "file": "pkm_04_01_att_skill_buff_00.paa",
+      "actionName": "Ani_Aro_Skill_Buff",
+      "durationMs": 2067
+    },
+    {
+      "suffix": 1,
+      "file": "pkm_04_01_att_skill_buff_01.paa",
+      "actionName": "Ani_Aro_Skill_Buff_01",
+      "durationMs": 700
+    }
+  ],
+  "pdw_01_01_att_skill_ground_att": [
+    {
+      "suffix": 2,
+      "file": "pdw_01_01_att_skill_ground_att_02.paa",
+      "actionName": "Ani_Battle_Skill_Ground_Att2",
+      "durationMs": 4500
+    },
+    {
+      "suffix": 3,
+      "file": "pdw_01_01_att_skill_ground_att_03.paa",
+      "actionName": "Ani_Battle_Skill_GroundBomb",
+      "durationMs": 6833
+    }
+  ],
+  "pdw_05_01_att_skill_magic_knifethrow": [
+    {
+      "suffix": 2,
+      "file": "pdw_05_01_att_skill_magic_knifethrow_02.paa",
+      "actionName": "Ani_Aro_Battle_Skill_KnifeThrow_03",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 4,
+      "file": "pdw_05_01_att_skill_magic_knifethrow_04.paa",
+      "actionName": "Ani_Aro_Battle_Skill_KnifeThrow_05",
+      "durationMs": 4667
+    }
+  ],
+  "pdw_05_01_att_skill_comboatt": [
+    {
+      "suffix": 1,
+      "file": "pdw_05_01_att_skill_comboatt_01.paa",
+      "actionName": "Ani_Aro_Battle_Skill_ComboAtt_01",
+      "durationMs": 3633
+    },
+    {
+      "suffix": 3,
+      "file": "pdw_05_01_att_skill_comboatt_03.paa",
+      "actionName": "Ani_Aro_Battle_Skill_ComboAtt_03",
+      "durationMs": 2533
+    }
+  ],
+  "pqw_05_01_att_skill_jumpatt_a_start": [
+    {
+      "suffix": 0,
+      "file": "pqw_05_01_att_skill_jumpatt_a_start_00.paa",
+      "actionName": "Ani_Aro_Skill_JumpAtt_A_Start",
+      "durationMs": 1233
+    },
+    {
+      "suffix": 1,
+      "file": "pqw_05_01_att_skill_jumpatt_a_start_01.paa",
+      "actionName": "Ani_Aro_Skill_JumpAtt_A_Start_01",
+      "durationMs": 1233
+    }
+  ],
+  "pqw_05_01_att_skill_combo_f": [
+    {
+      "suffix": 1,
+      "file": "pqw_05_01_att_skill_combo_f_01.paa",
+      "actionName": "Ani_Aro_Skill_Combo_F_01",
+      "durationMs": 2933
+    },
+    {
+      "suffix": 3,
+      "file": "pqw_05_01_att_skill_combo_f_03.paa",
+      "actionName": "Ani_Aro_Skill_Combo_F_03",
+      "durationMs": 2833
+    }
+  ],
+  "pqw_05_01_att_skill_combo_c": [
+    {
+      "suffix": 2,
+      "file": "pqw_05_01_att_skill_combo_c_02.paa",
+      "actionName": "Ani_Aro_Skill_Combo_C_02",
+      "durationMs": 2767
+    },
+    {
+      "suffix": 3,
+      "file": "pqw_05_01_att_skill_combo_c_03.paa",
+      "actionName": "Ani_Aro_Skill_Combo_C_03",
+      "durationMs": 3367
+    }
+  ],
+  "pqw_05_01_att_skill_avoid_dash_ing": [
+    {
+      "suffix": 1,
+      "file": "pqw_05_01_att_skill_avoid_dash_ing_01.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_Dash_F_Ing_01",
+      "durationMs": 567
+    },
+    {
+      "suffix": 2,
+      "file": "pqw_05_01_att_skill_avoid_dash_ing_02.paa",
+      "actionName": "Ani_Aro_Skill_Avoid_Dash_F_Ing_02",
+      "durationMs": 567
+    }
+  ],
+  "psw_01_01_att_skill_sword_att": [
+    {
+      "suffix": 0,
+      "file": "psw_01_01_att_skill_sword_att_00.paa",
+      "actionName": "Ani_Training_Skill_A_04",
+      "durationMs": 3867
+    },
+    {
+      "suffix": 3,
+      "file": "psw_01_01_att_skill_sword_att_03.paa",
+      "actionName": "Ani_Training_Skill_A_06",
+      "durationMs": 6867
+    }
+  ],
+  "pwge_05_01_att_skill_combo_e": [
+    {
+      "suffix": 1,
+      "file": "pwge_05_01_att_skill_combo_e_01.paa",
+      "actionName": "Ani_Skill_Combo_E_01",
+      "durationMs": 3133
+    },
+    {
+      "suffix": 3,
+      "file": "pwge_05_01_att_skill_combo_e_03.paa",
+      "actionName": "Ani_Skill_Combo_E_03",
+      "durationMs": 4700
+    }
+  ],
+  "pwge_05_01_att_skill_combo_f": [
+    {
+      "suffix": 2,
+      "file": "pwge_05_01_att_skill_combo_f_02.paa",
+      "actionName": "Ani_Skill_Combo_F_02",
+      "durationMs": 4600
+    },
+    {
+      "suffix": 4,
+      "file": "pwge_05_01_att_skill_combo_f_04.paa",
+      "actionName": "Ani_Skill_Combo_F_04",
+      "durationMs": 5033
+    }
+  ],
+  "pwge_05_01_att_skill_combo_a": [
+    {
+      "suffix": 1,
+      "file": "pwge_05_01_att_skill_combo_a_01.paa",
+      "actionName": "Ani_Skill_Combo_A_01",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 3,
+      "file": "pwge_05_01_att_skill_combo_a_03.paa",
+      "actionName": "Ani_Skill_Combo_A_03",
+      "durationMs": 3000
+    }
+  ],
+  "pcw_06_01_att_skill_revolution": [
+    {
+      "suffix": 0,
+      "file": "pcw_06_01_att_skill_revolution_00.paa",
+      "actionName": "Ani_Aro_Battle_Att_Revolution",
+      "durationMs": 5700
+    },
+    {
+      "suffix": 1,
+      "file": "pcw_06_01_att_skill_revolution_01.paa",
+      "actionName": "Ani_Aro_Battle_Att_Revolution_1",
+      "durationMs": 4633
+    }
+  ],
+  "pcw_06_01_att_skill_combo": [
+    {
+      "suffix": 1,
+      "file": "pcw_06_01_att_skill_combo_01.paa",
+      "actionName": "Ani_Aro_Battle_Att_Combo_01",
+      "durationMs": 5500
+    },
+    {
+      "suffix": 2,
+      "file": "pcw_06_01_att_skill_combo_02.paa",
+      "actionName": "Ani_Aro_Battle_Att_Combo_02",
+      "durationMs": 4300
+    }
+  ],
+  "pcw_06_01_att_skill_buff": [
+    {
+      "suffix": 0,
+      "file": "pcw_06_01_att_skill_buff_00.paa",
+      "actionName": "Ani_Aro_Battle_Att_Buff_00",
+      "durationMs": 1800
+    },
+    {
+      "suffix": 2,
+      "file": "pcw_06_01_att_skill_buff_02.paa",
+      "actionName": "Ani_Aro_Battle_Att_Buff_02",
+      "durationMs": 3733
+    }
+  ],
+  "phw_04_01_att_skill_bash": [
+    {
+      "suffix": 2,
+      "file": "phw_04_01_att_skill_bash_02.paa",
+      "actionName": "Ani_Aro_Battle_Bash_02",
+      "durationMs": 2933
+    },
+    {
+      "suffix": 3,
+      "file": "phw_04_01_att_skill_bash_03.paa",
+      "actionName": "Ani_Aro_Battle_Bash_03",
+      "durationMs": 3433
+    },
+    {
+      "suffix": 4,
+      "file": "phw_04_01_att_skill_bash_04.paa",
+      "actionName": "Ani_Aro_Battle_Bash_04",
+      "durationMs": 2900
+    }
+  ],
+  "phm_01_01_att_skill_smashbomber": [
+    {
+      "suffix": 0,
+      "file": "phm_01_01_att_skill_smashbomber_00.paa",
+      "actionName": "Ani_Battle_Skill_SmashBomber",
+      "durationMs": 3233
+    },
+    {
+      "suffix": 1,
+      "file": "phm_01_01_att_skill_smashbomber_01.paa",
+      "actionName": "Ani_Battle_Skill_SmashBomber_1",
+      "durationMs": 2867
+    }
+  ],
+  "pgw_05_01_att_skill_leapjump": [
+    {
+      "suffix": 1,
+      "file": "pgw_05_01_att_skill_leapjump_01.paa",
+      "actionName": "Ani_Skill_LeapJump_01",
+      "durationMs": 2333
+    },
+    {
+      "suffix": 2,
+      "file": "pgw_05_01_att_skill_leapjump_02.paa",
+      "actionName": "Ani_Skill_LeapJump_02",
+      "durationMs": 2933
+    }
+  ],
+  "pgw_05_01_att_skill_combo_d": [
+    {
+      "suffix": 1,
+      "file": "pgw_05_01_att_skill_combo_d_01.paa",
+      "actionName": "Ani_Skill_Combo_D_01",
+      "durationMs": 4000
+    },
+    {
+      "suffix": 4,
+      "file": "pgw_05_01_att_skill_combo_d_04.paa",
+      "actionName": "Ani_Skill_Combo_D_04",
+      "durationMs": 2100
+    }
+  ],
+  "pgw_05_01_att_skill_combo_c": [
+    {
+      "suffix": 1,
+      "file": "pgw_05_01_att_skill_combo_c_01.paa",
+      "actionName": "Ani_Skill_Combo_C_01",
+      "durationMs": 1567
+    },
+    {
+      "suffix": 2,
+      "file": "pgw_05_01_att_skill_combo_c_02.paa",
+      "actionName": "Ani_Skill_Combo_C_02",
+      "durationMs": 2200
+    }
+  ],
+  "pnw_01_01_att_skill_lunge": [
+    {
+      "suffix": 0,
+      "file": "pnw_01_01_att_skill_lunge_00.paa",
+      "actionName": "Ani_Training_Skill_A_02",
+      "durationMs": 2567
+    },
+    {
+      "suffix": 1,
+      "file": "pnw_01_01_att_skill_lunge_01.paa",
+      "actionName": "Ani_Battle_Skill_Lunge_01",
+      "durationMs": 2267
+    }
+  ],
+  "pnw_05_01_att_skill_combob": [
+    {
+      "suffix": 1,
+      "file": "pnw_05_01_att_skill_combob_01.paa",
+      "actionName": "Ani_Aro_Skill_ComboB_01",
+      "durationMs": 2500
+    },
+    {
+      "suffix": 2,
+      "file": "pnw_05_01_att_skill_combob_02.paa",
+      "actionName": "Ani_Aro_Skill_ComboB_02",
+      "durationMs": 3067
+    }
+  ],
+  "pnw_05_01_att_skill_chakramthrow_start": [
+    {
+      "suffix": 0,
+      "file": "pnw_05_01_att_skill_chakramthrow_start_00.paa",
+      "actionName": "Ani_Aro_Skill_ChakramThrow_Start",
+      "durationMs": 1500
+    },
+    {
+      "suffix": 1,
+      "file": "pnw_05_01_att_skill_chakramthrow_start_01.paa",
+      "actionName": "Ani_Aro_Skill_ChakramThrowing_Start",
+      "durationMs": 1500
+    }
+  ],
+  "pnw_01_01_att_skill_fastswing": [
+    {
+      "suffix": 0,
+      "file": "pnw_01_01_att_skill_fastswing_00.paa",
+      "actionName": "Ani_Battle_Skill_FastSwing_00",
+      "durationMs": 1667
+    },
+    {
+      "suffix": 2,
+      "file": "pnw_01_01_att_skill_fastswing_02.paa",
+      "actionName": "Ani_Battle_Skill_FastSwing_02",
+      "durationMs": 2233
+    }
+  ],
+  "pnm_01_01_att_skill_dash_fullswing_end": [
+    {
+      "suffix": 0,
+      "file": "pnm_01_01_att_skill_dash_fullswing_end_00.paa",
+      "actionName": "Ani_Battle_Att_Skill_Dash_FullSwing_End",
+      "durationMs": 5333
+    },
+    {
+      "suffix": 1,
+      "file": "pnm_01_01_att_skill_dash_fullswing_end_01.paa",
+      "actionName": "Ani_Battle_Att_Skill_Dash_FullSwing_M_End",
+      "durationMs": 4900
+    },
+    {
+      "suffix": 1,
+      "file": "pnm_01_01_att_skill_dash_fullswing_end_01.paa",
+      "actionName": "Ani_Training_Skill_A_07",
+      "durationMs": 4900
+    }
+  ],
+  "pnm_01_01_att_skill_shadow": [
+    {
+      "suffix": 0,
+      "file": "pnm_01_01_att_skill_shadow_00.paa",
+      "actionName": "Ani_Battle_Att_Skill_Shadow_0",
+      "durationMs": 1467
+    },
+    {
+      "suffix": 1,
+      "file": "pnm_01_01_att_skill_shadow_01.paa",
+      "actionName": "Ani_Battle_Att_Skill_Shadow",
+      "durationMs": 1400
+    }
+  ],
+  "pnm_01_01_att_skill_lunge": [
+    {
+      "suffix": 0,
+      "file": "pnm_01_01_att_skill_lunge_00.paa",
+      "actionName": "Ani_Battle_Skill_Lunge_00",
+      "durationMs": 2567
+    },
+    {
+      "suffix": 1,
+      "file": "pnm_01_01_att_skill_lunge_01.paa",
+      "actionName": "Ani_Battle_Skill_Lunge_01",
+      "durationMs": 2267
+    }
+  ],
+  "pnm_05_01_att_skill_bash": [
+    {
+      "suffix": 0,
+      "file": "pnm_05_01_att_skill_bash_00.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_Bash_00",
+      "durationMs": 4733
+    },
+    {
+      "suffix": 1,
+      "file": "pnm_05_01_att_skill_bash_01.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_Bash_01",
+      "durationMs": 6133
+    },
+    {
+      "suffix": 2,
+      "file": "pnm_05_01_att_skill_bash_02.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_Bash_02",
+      "durationMs": 5967
+    },
+    {
+      "suffix": 3,
+      "file": "pnm_05_01_att_skill_bash_03.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_Bash_03",
+      "durationMs": 7133
+    }
+  ],
+  "pnm_05_01_att_skill_comboi": [
+    {
+      "suffix": 1,
+      "file": "pnm_05_01_att_skill_comboi_01.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_ComboI_01",
+      "durationMs": 4600
+    },
+    {
+      "suffix": 2,
+      "file": "pnm_05_01_att_skill_comboi_02.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_ComboI_02",
+      "durationMs": 4367
+    },
+    {
+      "suffix": 3,
+      "file": "pnm_05_01_att_skill_comboi_03.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_ComboI_03",
+      "durationMs": 6500
+    }
+  ],
+  "pnm_05_03_att_skill_combo": [
+    {
+      "suffix": 1,
+      "file": "pnm_05_03_att_skill_combo_01.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_ComboI_01_3",
+      "durationMs": 3567
+    },
+    {
+      "suffix": 2,
+      "file": "pnm_05_03_att_skill_combo_02.paa",
+      "actionName": "Ani_Aro_Battle_Att_Skill_ComboI_02_3",
+      "durationMs": 5667
+    }
+  ],
+  "pnm_01_01_att_skill_fastswing": [
+    {
+      "suffix": 1,
+      "file": "pnm_01_01_att_skill_fastswing_01.paa",
+      "actionName": "Ani_Battle_Skill_FastSwing_01",
+      "durationMs": 1900
+    },
+    {
+      "suffix": 2,
+      "file": "pnm_01_01_att_skill_fastswing_02.paa",
+      "actionName": "Ani_Battle_Skill_FastSwing_02",
+      "durationMs": 2233
+    }
+  ],
+  "plw_02_01_att_skill_rider_f_dash_ing": [
+    {
+      "suffix": 0,
+      "file": "plw_02_01_att_skill_rider_f_dash_ing_00.paa",
+      "actionName": "Ani_Skill_Rider_F_Dash_Ing",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "plw_02_01_att_skill_rider_f_dash_ing_01.paa",
+      "actionName": "Ani_Skill_Rider_F_Dash_Ing_01",
+      "durationMs": 1000
+    }
+  ],
+  "plw_02_01_att_skill_dash_l_end": [
+    {
+      "suffix": 0,
+      "file": "plw_02_01_att_skill_dash_l_end_00.paa",
+      "actionName": "Ani_Skill_Dash_L_End",
+      "durationMs": 867
+    },
+    {
+      "suffix": 1,
+      "file": "plw_02_01_att_skill_dash_l_end_01.paa",
+      "actionName": "Ani_Skill_Dash_L_End_01",
+      "durationMs": 1000
+    }
+  ],
+  "plw_02_01_att_skill_dash_r_end": [
+    {
+      "suffix": 0,
+      "file": "plw_02_01_att_skill_dash_r_end_00.paa",
+      "actionName": "Ani_Skill_Dash_R_End",
+      "durationMs": 867
+    },
+    {
+      "suffix": 1,
+      "file": "plw_02_01_att_skill_dash_r_end_01.paa",
+      "actionName": "Ani_Skill_Dash_R_End_01",
+      "durationMs": 867
+    }
+  ],
+  "pgms_05_01_att_skill_e": [
+    {
+      "suffix": 0,
+      "file": "pgms_05_01_att_skill_e_00.paa",
+      "actionName": "Ani_Skill_Att_E_00",
+      "durationMs": 1667
+    },
+    {
+      "suffix": 1,
+      "file": "pgms_05_01_att_skill_e_01.paa",
+      "actionName": "Ani_Skill_Att_E_01",
+      "durationMs": 1867
+    }
+  ],
+  "pgms_05_01_att_skill_avoid_ing": [
+    {
+      "suffix": 0,
+      "file": "pgms_05_01_att_skill_avoid_ing_00.paa",
+      "actionName": "Ani_Skill_Blink_Ing_00",
+      "durationMs": 1000
+    },
+    {
+      "suffix": 1,
+      "file": "pgms_05_01_att_skill_avoid_ing_01.paa",
+      "actionName": "Ani_Skill_Blink_Ing_01",
+      "durationMs": 500
+    }
+  ],
+  "pgms_05_01_att_skill_avoid_b": [
+    {
+      "suffix": 0,
+      "file": "pgms_05_01_att_skill_avoid_b_00.paa",
+      "actionName": "Ani_Skill_Avoid_B_00",
+      "durationMs": 2267
+    },
+    {
+      "suffix": 1,
+      "file": "pgms_05_01_att_skill_avoid_b_01.paa",
+      "actionName": "Ani_Skill_Avoid_B_01",
+      "durationMs": 2500
+    }
+  ],
+  "pgms_05_01_att_skill_avoid_end": [
+    {
+      "suffix": 0,
+      "file": "pgms_05_01_att_skill_avoid_end_00.paa",
+      "actionName": "Ani_Skill_Blink_End_00",
+      "durationMs": 1467
+    },
+    {
+      "suffix": 1,
+      "file": "pgms_05_01_att_skill_avoid_end_01.paa",
+      "actionName": "Ani_Skill_Blink_End_01",
+      "durationMs": 3333
+    }
+  ],
+  "pgms_05_01_att_skill_roll_f": [
+    {
+      "suffix": 0,
+      "file": "pgms_05_01_att_skill_roll_f_00.paa",
+      "actionName": "Ani_Skill_Att_Roll_F_00",
+      "durationMs": 2000
+    },
+    {
+      "suffix": 1,
+      "file": "pgms_05_01_att_skill_roll_f_01.paa",
+      "actionName": "Ani_Skill_Att_Roll_F_01",
+      "durationMs": 1933
+    }
+  ],
+  "pjkd_01_01_att_skill_combo_b": [
+    {
+      "suffix": 1,
+      "file": "pjkd_01_01_att_skill_combo_b_01.paa",
+      "actionName": "Ani_Skill_Combo_B_01",
+      "durationMs": 2933
+    },
+    {
+      "suffix": 2,
+      "file": "pjkd_01_01_att_skill_combo_b_02.paa",
+      "actionName": "Ani_Skill_Combo_B_02",
+      "durationMs": 4167
+    }
+  ],
+  "pjkd_01_01_att_skill_combo_c": [
+    {
+      "suffix": 1,
+      "file": "pjkd_01_01_att_skill_combo_c_01.paa",
+      "actionName": "Ani_Skill_Combo_C_01",
+      "durationMs": 4933
+    },
+    {
+      "suffix": 2,
+      "file": "pjkd_01_01_att_skill_combo_c_02.paa",
+      "actionName": "Ani_Skill_Combo_C_02",
+      "durationMs": 3800
+    }
+  ],
+  "pjkd_01_01_att_skill_air_move_dash_ing": [
+    {
+      "suffix": 0,
+      "file": "pjkd_01_01_att_skill_air_move_dash_ing_00.paa",
+      "actionName": "Ani_Skill_Air_Move_Fast_Ing_00",
+      "durationMs": 1800
+    },
+    {
+      "suffix": 1,
+      "file": "pjkd_01_01_att_skill_air_move_dash_ing_01.paa",
+      "actionName": "Ani_Skill_Air_Move_Fast_Ing_01",
+      "durationMs": 3200
+    }
+  ],
+  "pjkd_01_01_att_skill_combo_e": [
+    {
+      "suffix": 1,
+      "file": "pjkd_01_01_att_skill_combo_e_01.paa",
+      "actionName": "Ani_Skill_Combo_E_01",
+      "durationMs": 3167
+    },
+    {
+      "suffix": 2,
+      "file": "pjkd_01_01_att_skill_combo_e_02.paa",
+      "actionName": "Ani_Skill_Combo_E_02",
+      "durationMs": 3533
+    }
+  ],
+  "prsa_01_01_att_skill_combo_g": [
+    {
+      "suffix": 1,
+      "file": "prsa_01_01_att_skill_combo_g_01.paa",
+      "actionName": "Ani_Skill_Combo_G_01",
+      "durationMs": 5533
+    },
+    {
+      "suffix": 2,
+      "file": "prsa_01_01_att_skill_combo_g_02.paa",
+      "actionName": "Ani_Skill_Combo_G_02",
+      "durationMs": 4400
+    },
+    {
+      "suffix": 3,
+      "file": "prsa_01_01_att_skill_combo_g_03.paa",
+      "actionName": "Ani_Skill_Combo_G_03",
+      "durationMs": 4067
+    }
+  ],
+  "prsa_01_01_att_skill_counteratt_r": [
+    {
+      "suffix": 1,
+      "file": "prsa_01_01_att_skill_counteratt_r_01.paa",
+      "actionName": "Ani_Skill_CounterAtt_R_01",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 3,
+      "file": "prsa_01_01_att_skill_counteratt_r_03.paa",
+      "actionName": "Ani_Skill_CounterAtt_R_03",
+      "durationMs": 3367
+    }
+  ],
+  "prsa_01_01_att_skill_buff": [
+    {
+      "suffix": 0,
+      "file": "prsa_01_01_att_skill_buff_00.paa",
+      "actionName": "Ani_Skill_Buff_00",
+      "durationMs": 2833
+    },
+    {
+      "suffix": 1,
+      "file": "prsa_01_01_att_skill_buff_01.paa",
+      "actionName": "Ani_Skill_Buff_01",
+      "durationMs": 3533
+    }
+  ],
+  "prsa_02_01_att_skill_combo_b": [
+    {
+      "suffix": 2,
+      "file": "prsa_02_01_att_skill_combo_b_02.paa",
+      "actionName": "Ani_Aro_Att_Skill_Combo_B_02",
+      "durationMs": 4700
+    },
+    {
+      "suffix": 4,
+      "file": "prsa_02_01_att_skill_combo_b_04.paa",
+      "actionName": "Ani_Aro_Att_Skill_Combo_B_04",
+      "durationMs": 4833
+    }
+  ],
+  "prsa_01_01_att_skill_counteratt_l": [
+    {
+      "suffix": 1,
+      "file": "prsa_01_01_att_skill_counteratt_l_01.paa",
+      "actionName": "Ani_Skill_CounterAtt_L_01",
+      "durationMs": 3333
+    },
+    {
+      "suffix": 2,
+      "file": "prsa_01_01_att_skill_counteratt_l_02.paa",
+      "actionName": "Ani_Skill_CounterAtt_L_02",
+      "durationMs": 4167
+    }
+  ],
+  "prsa_02_01_att_skill_combo_d": [
+    {
+      "suffix": 2,
+      "file": "prsa_02_01_att_skill_combo_d_02.paa",
+      "actionName": "Ani_Aro_Att_Skill_Combo_D_02",
+      "durationMs": 4033
+    },
+    {
+      "suffix": 3,
+      "file": "prsa_02_01_att_skill_combo_d_03.paa",
+      "actionName": "Ani_Aro_Att_Skill_Combo_D_03",
+      "durationMs": 4267
+    }
+  ],
+  "prsa_01_01_att_skill_combo_e": [
+    {
+      "suffix": 1,
+      "file": "prsa_01_01_att_skill_combo_e_01.paa",
+      "actionName": "Ani_Skill_Combo_E_01",
+      "durationMs": 5767
+    },
+    {
+      "suffix": 3,
+      "file": "prsa_01_01_att_skill_combo_e_03.paa",
+      "actionName": "Ani_Skill_Combo_E_03",
+      "durationMs": 5000
+    }
+  ],
+  "prsa_01_01_att_skill_h": [
+    {
+      "suffix": 0,
+      "file": "prsa_01_01_att_skill_h_00.paa",
+      "actionName": "Ani_Skill_H_00",
+      "durationMs": 5067
+    },
+    {
+      "suffix": 3,
+      "file": "prsa_01_01_att_skill_h_03.paa",
+      "actionName": "Ani_Skill_H_03",
+      "durationMs": 5600
+    }
+  ],
+  "prsa_02_01_att_skill_d_att": [
+    {
+      "suffix": 0,
+      "file": "prsa_02_01_att_skill_d_att_00.paa",
+      "actionName": "Ani_Aro_Att_Skill_D_Att_00",
+      "durationMs": 5200
+    },
+    {
+      "suffix": 1,
+      "file": "prsa_02_01_att_skill_d_att_01.paa",
+      "actionName": "Ani_Aro_Att_Skill_D_Att_01",
+      "durationMs": 4600
+    }
+  ],
+  "pew_03_01_att_skill_backshot_avoid_l": [
+    {
+      "suffix": 0,
+      "file": "pew_03_01_att_skill_backshot_avoid_l_00.paa",
+      "actionName": "Ani_Battle_Skill_BackShot_Avoid_L",
+      "durationMs": 1933
+    },
+    {
+      "suffix": 1,
+      "file": "pew_03_01_att_skill_backshot_avoid_l_01.paa",
+      "actionName": "Ani_Battle_BackMove_AvoidShot_L",
+      "durationMs": 1633
+    }
+  ],
+  "pew_05_01_att_skill_low": [
+    {
+      "suffix": 1,
+      "file": "pew_05_01_att_skill_low_01.paa",
+      "actionName": "Ani_Aro_Battle_Skill_Low_01",
+      "durationMs": 2633
+    },
+    {
+      "suffix": 2,
+      "file": "pew_05_01_att_skill_low_02.paa",
+      "actionName": "Ani_Aro_Battle_Skill_Low_02",
+      "durationMs": 1833
+    }
+  ]
+}

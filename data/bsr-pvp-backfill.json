@@ -1,0 +1,117 @@
+[
+  {
+    "skillId": 3546,
+    "fromSkillId": 1044,
+    "pvpDamagePercent": 58.42
+  },
+  {
+    "skillId": 3547,
+    "fromSkillId": 1175,
+    "pvpDamagePercent": 58.42
+  },
+  {
+    "skillId": 3548,
+    "fromSkillId": 1176,
+    "pvpDamagePercent": 58.42
+  },
+  {
+    "skillId": 3549,
+    "fromSkillId": 1177,
+    "pvpDamagePercent": 58.42
+  },
+  {
+    "skillId": 3550,
+    "fromSkillId": 1178,
+    "pvpDamagePercent": 58.42
+  },
+  {
+    "skillId": 3609,
+    "fromSkillId": 1242,
+    "pvpDamagePercent": 153.67
+  },
+  {
+    "skillId": 3646,
+    "fromSkillId": 822,
+    "pvpDamagePercent": 50.19
+  },
+  {
+    "skillId": 3647,
+    "fromSkillId": 823,
+    "pvpDamagePercent": 50.19
+  },
+  {
+    "skillId": 3648,
+    "fromSkillId": 824,
+    "pvpDamagePercent": 50.19
+  },
+  {
+    "skillId": 3649,
+    "fromSkillId": 825,
+    "pvpDamagePercent": 50.19
+  },
+  {
+    "skillId": 3674,
+    "fromSkillId": 2193,
+    "pvpDamagePercent": 31.26
+  },
+  {
+    "skillId": 3675,
+    "fromSkillId": 2194,
+    "pvpDamagePercent": 31.26
+  },
+  {
+    "skillId": 3676,
+    "fromSkillId": 2195,
+    "pvpDamagePercent": 31.26
+  },
+  {
+    "skillId": 3811,
+    "fromSkillId": 2799,
+    "pvpDamagePercent": 26.11
+  },
+  {
+    "skillId": 3812,
+    "fromSkillId": 2800,
+    "pvpDamagePercent": 26.11
+  },
+  {
+    "skillId": 3813,
+    "fromSkillId": 2801,
+    "pvpDamagePercent": 26.11
+  },
+  {
+    "skillId": 5656,
+    "fromSkillId": 5646,
+    "pvpDamagePercent": 34.73
+  },
+  {
+    "skillId": 5866,
+    "fromSkillId": 5862,
+    "pvpDamagePercent": 80.92
+  },
+  {
+    "skillId": 5867,
+    "fromSkillId": 5863,
+    "pvpDamagePercent": 80.92
+  },
+  {
+    "skillId": 8753,
+    "fromSkillId": 8668,
+    "pvpDamagePercent": 43.15
+  },
+  {
+    "skillId": 8758,
+    "fromSkillId": 8736,
+    "pvpDamagePercent": 38.22
+  },
+  {
+    "skillId": 9648,
+    "fromSkillId": 9606,
+    "pvpDamagePercent": 36.75
+  },
+  {
+    "skillId": 9649,
+    "fromSkillId": 9607,
+    "pvpDamagePercent": 36.75
+  }
+]

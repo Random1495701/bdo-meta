@@ -1,0 +1,19 @@
+{
+  "strings_count": 4793,
+  "sub_records_count": 3243,
+  "damage_templates": 581,
+  "pvp_templates": 77,
+  "bsr_templates": 16,
+  "protection_strings": {
+    "forward_guard": 0,
+    "super_armor": 61,
+    "i_frame": 39
+  },
+  "skill_mapping_status": {
+    "total_skills_in_db": 7224,
+    "skills_with_valid_u32_76": 486,
+    "skills_with_u32_76_zero": 27855,
+    "skills_with_u32_76_too_large": 1977,
+    "note": "The u32@76 field does NOT reliably map skills to tooltip records. The actual skill\u2192tooltip mapping requires further RE."
+  }
+}

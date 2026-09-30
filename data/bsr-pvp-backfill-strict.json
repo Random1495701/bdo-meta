@@ -1,0 +1,38 @@
+[
+  {
+    "skillId": 3507,
+    "name": "Black Spirit: Charging Wind I",
+    "base_name": "Charging Wind I",
+    "from_skillId": 4116,
+    "from_name": "Prime: Charging Wind I",
+    "from_class": 4,
+    "pvp": 47.33
+  },
+  {
+    "skillId": 3508,
+    "name": "Black Spirit: Charging Wind II",
+    "base_name": "Charging Wind II",
+    "from_skillId": 4169,
+    "from_name": "Prime: Charging Wind II",
+    "from_class": 4,
+    "pvp": 47.33
+  },
+  {
+    "skillId": 3509,
+    "name": "Black Spirit: Charging Wind III",
+    "base_name": "Charging Wind III",
+    "from_skillId": 4186,
+    "from_name": "Prime: Charging Wind III",
+    "from_class": 4,
+    "pvp": 47.33
+  },
+  {
+    "skillId": 3610,
+    "name": "Black Spirit: Roaring IV",
+    "base_name": "Roaring IV",
+    "from_skillId": 4490,
+    "from_name": "Prime: Roaring IV",
+    "from_class": 16,
+    "pvp": 57.44
+  }
+]

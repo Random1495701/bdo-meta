@@ -1,0 +1,12 @@
+[
+  {
+    "skillId": 5467,
+    "name": "Absorb Heuklang",
+    "classId": 16,
+    "fromSkillId": 231,
+    "fromName": "Absorb Heuklang VI",
+    "matchKind": "baseName",
+    "hasDamageRows": true,
+    "hasPvpPct": false
+  }
+]

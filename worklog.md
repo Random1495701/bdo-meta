@@ -4454,3 +4454,43 @@ Stage Summary:
 - Hash function remains UNKNOWN — it's a custom C++ function inside BlackDesert64.exe (VMProtect-encrypted)
 - Without the hash function, the brute-force scan approach (current 3,483 matches) is the ceiling
 - Skill→record linkage requires either: (a) finding a non-VMProtect version of BDO.exe, (b) runtime tracing via debugger, (c) the algorithm being published by PA/community
+
+---
+Task ID: 11-SKILLTYPE-CRACK
+Agent: main (skilltype.dbss action_config crack)
+Task: Crack the action_config block in skilltype.dbss to find damage/PvP% data
+
+Work Log:
+- Extracted skill.7z via py7zr — all 24 files now in /tmp/skill-extract/
+- Found classskills.go (the Go reference) in /home/z/my-project/upload/
+- Decoded skilltypeoffset.dbss: PABR + u32 count=30328 + 12-byte entries [u32 key][u32 offset][u32 size] + u64 trailer
+- Parsed all 30,328 entries → 30,328 unique records in skilltype.dbss
+- Decoded SkillTypeHeader layout (correct!): [u32 SkillKey @ 0][i64 charCount1 @ 4][UTF-16LE SourceName][i64 charCount2][UTF-16LE GroupName][u32 Kind][action_config...]
+- All 30,328 records parse cleanly with readable Korean source_names (e.g. '사신의 분노', '[이벤트] 행복의 기운')
+- Used class_skills.json as bridge → built skillId→SkillKey→skilltype_record map: 100% match (6,149/6,149)
+- For the 7 known PvP skills (2951, 1016, 1180, 1490, 5762, 7198, 3344), located their skilltype records via SkillKey
+- Dumped full action_config bytes (250-300 bytes each)
+- Searched exhaustively for known damage values (293, 586, 313, 625, 398, 1194, 1915) and PvP% (82.32, 50, 42.51, 70, 92.48, 45.41, 85) as u32/u16/float/×10/×100/×1000/raw/divided encodings
+- Found NO direct matches in the action_config
+- Analyzed action_config structure:
+  * Bytes 0-3: header bytes (varies, but contains a partial skill-id-like u16)
+  * Bytes 4-39: flags + zero padding
+  * Bytes 40-43: SkillKey (verified for skillId=2951: 0x0b870001 matches offset-index key)
+  * Bytes 44-55: zeros separator
+  * Bytes 56+: ASCII icon path (variable length, e.g. "New_Icon/04_PC_Skill/01_PC_Skill/17_PSW_Skill/PSW_Skill_2951.dds")
+  * After icon path: structured data with alternating u32 fields
+- The post-icon-path floats are mostly around -50000 to -55500 (0xc7xxxxxx prefix) → these are MEMORY ADDRESSES / HASHES, not damage values
+- The plausible positive floats (~1300-1600 range) don't match the bdocodex damage values exactly
+- CONCLUSION: skilltype.dbss action_config does NOT contain easily extractable damage/PvP% values. The data is either:
+  (a) Encoded as complex C++ structures that require more reverse-engineering
+  (b) Stored as references to other tables (e.g. commandtooltip.dbss which is encrypted)
+  (c) Computed at runtime by the C++ engine from the action_config params
+
+Stage Summary:
+- CRACKED SkillTypeHeader parser: 30,328/30,328 records parsed (100%)
+- CRACKED SkillKey linkage: 6,149/6,149 DB skills linked via class_skills.json (100%)
+- Skilltype action_config structure decoded: [header][SkillKey][separator][icon_path][structured_data]
+- Damage/PvP% values NOT found in action_config — they're not stored as raw values
+- 6,149 skillId→SkillKey→record mappings saved implicitly in class_skills.json
+- New file produced: data/skilltype-damage-found.json (715 skills with byte-level damage matches, mostly false positives — see Task 5 of this session)
+- The path forward requires either: (a) decoding the structured_data block which uses complex C++ types we haven't reverse-engineered, or (b) accepting that bdocodex values come from runtime-computed getDamage() in the C++ engine, not from static PAZ data
