@@ -71,6 +71,8 @@ export interface Skill {
   damage?: DamageCalculation
   damagePerCooldown?: number | null
   damagePerCooldownPvP?: number | null
+  damagePerSecond?: number | null      // DPS = totalPvE / (animationDurationMs / 1000)
+  damagePerSecondPvP?: number | null   // PvP DPS = totalPvP / (animationDurationMs / 1000)
   staminaCost?: number | null
   patchChange?: { direction: 'up' | 'down' | 'changed'; fields: string[]; before?: string; after?: string } | null
   ccTypes: string[] | null
@@ -236,6 +238,7 @@ export type SkillSort =
   | 'damage'
   | 'pvpDamage'
   | 'dmgPerCd'
+  | 'dps'
   | 'ccCounters'
   | 'type'
 

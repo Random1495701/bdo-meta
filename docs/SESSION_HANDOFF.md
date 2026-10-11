@@ -49,7 +49,7 @@ v5.5.3 (auto-derived from git tags via `src/lib/version.ts`)
 - `src/components/skills/session-reset-banner.tsx` — Auto-detects session resets
 - `scripts/sync-version.ts` — Syncs version.ts with git tags
 - `scripts/restore-db.ts` — Auto-runs PA Wiki import + compute-max-rank after restore
-- `docs/ROADMAP_MASTER.md` — 3-tier roadmap (36 items)
+- `docs/ROADMAP.md` — **single final roadmap** (all previous roadmaps archived in `docs/archive/`)
 - `docs/SPEC_DEDUP_LOGIC.md` — Spec logic documentation
 - `docs/OCR_VLM_PLAN.md` — Lean OCR approach
 

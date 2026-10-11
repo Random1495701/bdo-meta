@@ -667,6 +667,16 @@ export function SkillDetailDrawer() {
                       accent="cyan"
                       hint={`PvP damage per cooldown second. PvE DPC: ${skill.damagePerCooldown != null && skill.damagePerCooldown > 0 ? formatDamage(skill.damagePerCooldown) + '/s' : '—'}`}
                     />
+                    {/* 6b. PvP DPS (primary) — PvE DPS in the hint. Frame-perfect from PAZ. */}
+                    <StatCard
+                      icon={<Gauge className="size-3" />}
+                      label="PvP DPS"
+                      value={skill.damagePerSecondPvP != null && skill.damagePerSecondPvP > 0
+                        ? `${formatDamage(skill.damagePerSecondPvP)}/s`
+                        : '—'}
+                      accent="pink"
+                      hint={`PvP damage per second (total ÷ animation duration). PvE DPS: ${skill.damagePerSecond != null && skill.damagePerSecond > 0 ? formatDamage(skill.damagePerSecond) + '/s' : '—'}`}
+                    />
                     {/* Secondary stats */}
                     <StatCard
                       icon={<Gauge className="size-3" />}

@@ -293,4 +293,4 @@ The **P1 items** — dynamic tab loading, dependency audit, the user-requested "
 
 The P2/P3 items are polish — they improve the experience incrementally but aren't blocking. They should be slotted in around the larger P0/P1 work.
 
-The new `ROADMAP_v7.md` integrates all of the above into a prioritized, effort-tagged plan.
+The findings above are integrated into the prioritized, effort-tagged plan in `docs/ROADMAP.md` (the single final roadmap; the v7 audit roadmap is archived in `docs/archive/Archive-ROADMAP_v7.md`).

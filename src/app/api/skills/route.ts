@@ -95,6 +95,12 @@ function serializeSkill(s: any, includeDamageRows = true) {
     damagePerCooldownPvP: (damage.totalPvP != null && damage.totalPvP > 0 && s.cooldownSec && s.cooldownSec > 0)
       ? Math.round(damage.totalPvP / s.cooldownSec)
       : null,
+    damagePerSecond: (damage.totalPvE > 0 && s.animationDurationMs && s.animationDurationMs > 0)
+      ? Math.round(damage.totalPvE / (s.animationDurationMs / 1000))
+      : null,
+    damagePerSecondPvP: (damage.totalPvP != null && damage.totalPvP > 0 && s.animationDurationMs && s.animationDurationMs > 0)
+      ? Math.round(damage.totalPvP / (s.animationDurationMs / 1000))
+      : null,
     ccTypes,
     ccCounters,
     ccCounterDisplay,
@@ -531,6 +537,8 @@ export async function GET(req: NextRequest) {
     damage: { skillId: order },
     pvpDamage: { skillId: order },
     ccCounters: { skillId: order },
+    // 'dps' is also computed (damage / animationDuration) — handled specially below.
+    dps: { skillId: order },
     // 'type' uses a multi-flag orderBy for a stable type-priority sort.
     type: typeOrderBy(order),
   }
@@ -539,7 +547,7 @@ export async function GET(req: NextRequest) {
   // For computed sorts (damage, pvpDamage, ccCounters, dmgPerCd, type),
   // we can't use DB orderBy — the final findMany just uses skillId ordering
   // and we sort filteredIds manually above.
-  const effectiveOrderBy = ['damage', 'pvpDamage', 'ccCounters', 'dmgPerCd', 'type'].includes(sort)
+  const effectiveOrderBy = ['damage', 'pvpDamage', 'ccCounters', 'dmgPerCd', 'dps', 'type'].includes(sort)
     ? { skillId: 'asc' as const }
     : orderBy
 
@@ -607,12 +615,13 @@ export async function GET(req: NextRequest) {
     // Apply damage range filter post-query (since damage is computed, not stored).
     // Also pre-compute PvP damage and CC counters when sorting by those columns.
     let filteredIds = specFilteredIds
-    const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage' || sort === 'dmgPerCd'
+    const needsDmg = !!minDamage || !!maxDamage || sort === 'damage' || sort === 'pvpDamage' || sort === 'dmgPerCd' || sort === 'dps'
     const needsCC = sort === 'ccCounters' || pvpOnlyFilter
     let dmgPvEMap: Map<number, number> | null = null
     let dmgPvPMap: Map<number, number> | null = null
     let ccMap: Map<number, number> | null = null
     let cooldownMap: Map<number, number> | null = null
+    let animMap: Map<number, number> | null = null
     if (needsDmg || needsCC) {
       const skills = await db.skill.findMany({
         where: { skillId: { in: maxRankSkillIds } },
@@ -622,18 +631,21 @@ export async function GET(req: NextRequest) {
           pvpDamagePercent: true,
           ccTypes: true,
           cooldownSec: true,
+          animationDurationMs: true,
         },
       })
       dmgPvEMap = new Map<number, number>()
       dmgPvPMap = new Map<number, number>()
       ccMap = new Map<number, number>()
       cooldownMap = new Map<number, number>()
+      animMap = new Map<number, number>()
       for (const s of skills) {
         const rows = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
         const dmg = calculateDamage(rows, s.pvpDamagePercent)
         dmgPvEMap.set(s.skillId, dmg.totalPvE)
         dmgPvPMap.set(s.skillId, dmg.totalPvP ?? 0)
         cooldownMap.set(s.skillId, s.cooldownSec ?? 0)
+        animMap.set(s.skillId, s.animationDurationMs ?? 0)
 
         // Exclude PvE-only CCs from the counter calculation
         const pveOnlySet = new Set<string>()
@@ -713,6 +725,24 @@ export async function GET(req: NextRequest) {
         const dpcA = cda > 0 ? da / cda : da
         const dpcB = cdb > 0 ? db_ / cdb : db_
         return dir * (dpcA - dpcB)
+      })
+    } else if (sort === 'dps') {
+      // Damage per second: total damage / animation duration in seconds.
+      // Uses frame-perfect animationDurationMs from PAZ .paa files.
+      filteredIds = [...filteredIds].sort((a, b) => {
+        const daPvE = dmgPvEMap!.get(a) ?? 0
+        const dbPvE = dmgPvEMap!.get(b) ?? 0
+        const daPvP = dmgPvPMap?.get(a) ?? 0
+        const dbPvP = dmgPvPMap?.get(b) ?? 0
+        const ana = animMap?.get(a) ?? 0
+        const anb = animMap?.get(b) ?? 0
+        // Prefer PvP DPS; fall back to PvE
+        const da = daPvP > 0 ? daPvP : daPvE
+        const db_ = dbPvP > 0 ? dbPvP : dbPvE
+        // DPS = damage / (animationMs / 1000). If no animation, DPS = 0 (can't compute)
+        const dpsA = ana > 0 ? da / (ana / 1000) : 0
+        const dpsB = anb > 0 ? db_ / (anb / 1000) : 0
+        return dir * (dpsA - dpsB)
       })
     } else if (sort === 'name') {
       filteredIds = [...filteredIds].sort((a, b) => {

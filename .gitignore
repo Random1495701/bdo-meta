@@ -78,3 +78,12 @@ scripts/dev.pid
 scripts/lurker.lock
 bun.lock
 ui-audit-screenshots/
+
+# PAZ extraction session — do not push large intermediate files
+upload/
+data/animations.json
+data/skill-combat-data.json
+data/action-index.json
+data/skill-animations.json
+data/skill-animation-links.json
+data/paz-skills.json
