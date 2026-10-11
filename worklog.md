@@ -4914,3 +4914,55 @@ Stage Summary:
   - `SkillCommandTooltip` (the command-tooltip function — worklog line 3981)
   - `tooltipDataType` (the tooltip-data schema — worklog line 3980)
   Running these through `unluac` (https://sourceforge.net/projects/unluac/) or `luadec` (https://github.com/HansPetterTveit/luadec) should yield readable Lua source. The `linkToolTipSkillTypeSS(skillKey)` function body will show HOW the Lua code resolves the tooltiptable.dbss record for a given skill — likely via a C++ FFI binding like `ToClient_getToolTipData(skillKey, hash)` that takes a string key, hashes it via the BDO custom hash function, and looks it up in tooltiptable.dbss. If the hashing is done in Lua (not in C++ FFI), we can directly read the algorithm; if it's in C++ FFI, we have the function name to grep the VMProtect-stripped BlackDesert64.exe binary for. **Secondary lead**: dynamic analysis (hook the running BDO client's Lua function calls) — this is what bdocodex did per their Reddit comment "results mostly come from gamecode analysis". This requires running a live BDO client with a debugger, which is outside the curl-accessible sandbox scope but is the most reliable path. **Tertiary lead**: try the 8 iSayZes sheet-name test vectors against more obscure hash algorithms not yet tested — e.g., **xxhash3 (128-bit truncated to 32)**, **T1HA** (the "Fast Positive Hash"), **tsl::robin_map hash**, **FNV1a 64-bit truncated**, **Murmur2 + Murmur2a**, **Murmur3_x86_32 with seed = sheet_field** (since sheet_field values are 0-7, easy to enumerate), **CRC-32 with sheetname+hash as input**, **Murmur3 with sheetname-as-seed**. These are still unlikely to match given that two independent RE projects already failed, but the seed=sheet_field variant hasn't been tried yet.
+
+---
+Task ID: 18-NO-SCRIPT-LIST
+Agent: general-purpose
+Task: List 246 no-script skills with bdocodex links for manual verification
+
+Work Log:
+- Read last 100 lines of /home/z/my-project/worklog.md for context (Tasks 1-17 covered bdocodex endpoints, PAZ extraction, dbss binary RE, hash function testing).
+- Verified /tmp/gcd-extract/gamecommondata/binary/ already populated (gamecommondata.7z extracted in a prior task) — all .dbss files present including skill.dbss, skilloffset.dbss, tooltiptable.dbss.
+- Wrote /home/z/my-project/run_no_script.py implementing the identification logic:
+  1. Parse skilloffset.dbss (PABR header + u32 count + 12-byte rows of (key, offset, size)) to build sk_key_to_entry dict.
+  2. Load class_skills.json bridge to map skillNo -> skillKey.
+  3. SQL query custom.db for max-rank displayed skills (post-default-filter: not NEW_CLASS, not "Not in use", not Evasion/Evasive) with non-empty damageRowsJson.
+  4. Build tt_u32_set from tooltiptable.dbss (PAZ-verified set) — skip skills whose damage values are already in this set.
+  5. For each remaining skill, fetch skill.dbss record and search for `DAM_` effect script (try UTF-16-BE first then UTF-16-LE).
+  6. If no script found → add to no_script_skills list.
+- Discovered a tuple-unpack bug in the original task script (the stored tuple has 13 elements but the table-rendering loop tried to unpack 14 with two `_` placeholders for kr+cls). Fixed by removing the extra `_` (no krName was being stored in the append tuple, only cls).
+- Script printed: "Found 246 no-script skills" — matches the expected count.
+- Saved /home/z/my-project/NO_SCRIPT_SKILLS.md (304 lines, 246 skill table rows confirmed by grep).
+- Markdown structure: header + totals + per-class breakdown + sorted skill table (skillId, name, class, type flags, bdocodex damages, pvp%, command, bdocodex link) + "What to look for" checklist.
+
+Per-class breakdown (31 classes represented, range 2-13 skills/class):
+  - Sage: 13, Seraph: 13 (top)
+  - Guardian: 12
+  - Mystic, Ranger, Warrior, Drakania, Hashashin: 10 each
+  - Dosa, Wizard, Ninja, Maegu, Nova, Scholar, Deadeye: 8-9 each
+  - Archer, Berserker, Dark Knight, Tamer, Woosa, Kunoichi, Striker, Valkyrie: 6-8 each
+  - Corsair, Lahn, Maehwa: 6 each
+  - Musa, Sorceress, Wukong: 5 each
+  - Shai, Witch: 2 each (bottom)
+  → Spread is broad — no single class is overrepresented. Sage and Seraph (newer classes) lead, but every class has at least 2 no-script skills.
+
+Flag pattern analysis (KEY INSIGHT — what kind of skills these are):
+  - BSR (Black Spirit Rage only): 96 skills (39%)
+  - BSR + Awakening: 81 skills (33%)
+  - Awakening only: 41 skills (17%)
+  - (main, no special flag): 24 skills (10%)
+  - Succession: 3 skills (1.2%)
+  - Awakening + Flow: 1 skill (0.4%)
+  → **178 of 246 (72%) are Black Spirit Rage skills** (BSR=1, the "100% Rage" skills auto-activated when consuming Black Spirit's Rage). BSR skills appear to use a different effect-script lookup — likely they piggyback on the parent skill's DAM_ script since their command always says "Auto-activated when using <parent>".
+  → **123 of 246 (50%) are Awakening skills** (Awaken=1). Awakening skills are known to have different skill.dbss record layouts (per prior task notes) and the DAM_ pattern may live in skilltype.dbss action_config instead.
+  → **0 passive skills** — passives are correctly excluded since they have no damage values.
+  → Only 24 "main" skills (no BSR/Awk flag) — these are the most interesting cases to investigate on bdocodex (e.g., Wukong's "Soaring Nimbus" sid 9658, "Fighting Buddha: Incomplete" sid 9659).
+
+Files saved:
+  - /home/z/my-project/NO_SCRIPT_SKILLS.md — 246-row markdown table for manual bdocodex verification
+  - /home/z/my-project/run_no_script.py — Python script (re-runnable, fixed unpack bug)
+
+Next steps (for user):
+  - Open bdocodex links for the 24 "main" (non-BSR, non-Awakening) skills first — these are the most likely to reveal whether our parser is mis-categorizing normal skills or whether there's a genuine "no-script" subclass we're missing.
+  - For the 178 BSR skills: spot-check 5-10 to confirm the parent skill already has a DAM_ script in skill.dbss (the BSR variant likely reuses it).
+  - For the 123 Awakening skills: cross-reference with skilltype.dbss action_config — the script may live there per the prior task findings.
