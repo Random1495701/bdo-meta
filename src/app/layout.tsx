@@ -23,7 +23,7 @@ const garamond = EB_Garamond({
 export const metadata: Metadata = {
   title: "BDO Meta — Black Desert Online Skill Database",
   description:
-    "Live Black Desert Online skill database with animation durations extracted via ffprobe.",
+    "Live Black Desert Online skill database with animation durations from PAZ game files.",
   icons: {
     icon: "/favicon.svg",
   },

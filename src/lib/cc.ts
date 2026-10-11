@@ -111,7 +111,6 @@ export const NON_CC_EFFECTS: Record<string, { category: string; symbol: string; 
   'Shock': { category: 'DoT', symbol: '⚡', color: '#facc15' },
   'Burn': { category: 'DoT', symbol: '🔥', color: '#f97316' },
   'Poison': { category: 'DoT', symbol: '☠', color: '#84cc16' },
-  'Blind': { category: 'Debuff', symbol: '👁', color: '#64748b' },
 }
 
 export const CC_ALIASES: Record<string, string> = {

@@ -655,7 +655,7 @@ export function SkillDetailDrawer() {
                       label="Animation"
                       value={formatAnimDuration(skill.animationDurationMs)}
                       accent="amber"
-                      hint="Extracted via ffprobe from the bdocodex preview video"
+                      hint="Animation duration from PAZ .paa files (frame-accurate)"
                     />
                     {/* 6. PvP DPC (primary) — PvE DPC in the hint */}
                     <StatCard
@@ -1108,7 +1108,7 @@ export function SkillDetailDrawer() {
                             {formatAnimDuration(skill.animationDurationMs)}
                           </span>
                           <span className="text-amber-200/40">
-                            (measured from preview video via ffprobe)
+                            (from PAZ .paa animation files — frame-accurate)
                           </span>
                         </p>
                       )}
@@ -1142,7 +1142,7 @@ export function SkillDetailDrawer() {
                   <span className="text-amber-700/50">·</span>
                   <span className="rounded-sm bg-amber-900/20 px-1 text-[9px] text-amber-400/60" title="Damage, CC, protection, cooldown data from bdocodex.com tip.php">bdocodex</span>
                   {skill.animationDurationMs && (
-                    <span className="rounded-sm bg-purple-900/20 px-1 text-[9px] text-purple-400/60" title="Animation duration from ffprobe on preview video">ffprobe</span>
+                    <span className="rounded-sm bg-emerald-900/20 px-1 text-[9px] text-emerald-400/60" title="Animation duration from PAZ .paa files">PAZ</span>
                   )}
                   {skill.krName && (
                     <span className="rounded-sm bg-cyan-900/20 px-1 text-[9px] text-cyan-400/60" title="Korean name from bdocodex KR endpoint">KR</span>
