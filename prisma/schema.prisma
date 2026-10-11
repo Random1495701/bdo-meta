@@ -76,6 +76,7 @@ model Skill {
   pazDataJson         String?  // JSON: {damages[], pvp_pct, protections[], cc_types[], crit_rate, max_targets, attack_modifiers[], script}
   pazVerified         Boolean  @default(false) // true = PAZ data extracted and verified
   pazSource           String?  // 'effect_script' (from skill.dbss) | 'tooltiptable_brute_force' (legacy)
+  animationPazVerified Boolean @default(false) // true = animationDurationMs came from PAZ .paa files
   syncedAt            DateTime @default(now())
 
   bdoClass            BdoClass? @relation(fields: [classId], references: [id])
