@@ -428,7 +428,8 @@ export function SyncFooter() {
             </DialogContent>
           </Dialog>
 
-          {/* Lurker dropdown — gold-themed */}
+          {/* Lurker dropdown — disabled: set SHOW_LURKER_TOOLS=true to re-enable */}
+          {false && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -506,8 +507,10 @@ export function SyncFooter() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          )}
 
-          {/* Fast sync dropdown */}
+          {/* Fast sync dropdown — disabled: set SHOW_LURKER_TOOLS=true to re-enable */}
+          {false && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -573,30 +576,8 @@ export function SyncFooter() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          )}
         </div>
-      </div>
-
-      {/* Attribution */}
-      <div className="border-t border-amber-900/40 bg-bdo-ink px-4 py-1.5 text-[10px] text-amber-200/40 lg:px-6">
-        Data source:{' '}
-        <a
-          href="https://bdocodex.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bdo-link"
-        >
-          bdocodex.com
-        </a>{' '}
-        · Animation durations via{' '}
-        <a
-          href="https://ffmpeg.org/ffprobe.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bdo-link"
-        >
-          ffprobe
-        </a>
-        {' '}· Lurker v2 solves JS challenge + endpoint rotation + PID lock
       </div>
     </footer>
   )

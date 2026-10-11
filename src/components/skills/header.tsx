@@ -221,7 +221,7 @@ export function Header() {
                 <span className="ml-2 font-mono text-xs text-amber-400/60">{APP_VERSION}</span>
               </h1>
               <p className="hidden text-[11px] text-amber-200/50 sm:block">
-                Black Desert Online skill database — synced from bdocodex.com
+                Black Desert Online skill database
               </p>
             </div>
           </div>

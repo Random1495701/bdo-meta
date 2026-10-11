@@ -23,7 +23,7 @@ const garamond = EB_Garamond({
 export const metadata: Metadata = {
   title: "BDO Meta — Black Desert Online Skill Database",
   description:
-    "Live Black Desert Online skill database synced from bdocodex.com, including animation durations extracted via ffprobe.",
+    "Live Black Desert Online skill database with animation durations extracted via ffprobe.",
   icons: {
     icon: "/favicon.svg",
   },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "BDO Meta",
     description:
-      "Live Black Desert Online skill database synced from bdocodex.com",
+      "Live Black Desert Online skill database",
     siteName: "BDO Meta",
     type: "website",
   },
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BDO Meta",
     description:
-      "Live Black Desert Online skill database synced from bdocodex.com",
+      "Live Black Desert Online skill database",
   },
 };
 
