@@ -155,17 +155,11 @@ def extract_from_script(script):
             result['all_numeric_calls'].append({'func': base_func, 'first_arg': args[0], 'all_args': args})
         # Damage functions: any function containing "DAM_ATT" or starting with "DAM_"
         is_damage_func = ('DAM_ATT' in base_func) or base_func.startswith('DAM_') or base_func.startswith('ADD_DAM_')
-        # ALSO: any function with numeric first arg >= 100 that isn't a known non-damage function
-        # This catches class-specific damage functions like DOUBLE_TAKE_DOWN(1517), BUSTER_TRAINING_I(962), etc.
+        # ALSO: ANY function with numeric first arg >= 100 that isn't a known non-damage function
+        # This catches class-specific damage functions like BASIG_ATT_ELFMAN(1097), PROUD_ORDER_2(515,...), etc.
         if not is_damage_func and args and isinstance(args[0], (int, float)) and args[0] >= 100:
             if base_func not in NON_DAMAGE_FUNCS:
-                # Check if the function name suggests damage (contains ATTACK, TRAINING, TAKE_DOWN, etc.)
-                damage_keywords = ('ATTACK', 'TRAINING', 'TAKE_DOWN', 'DAM', 'STRIKE', 'SLASH', 'STAB', 
-                                   'PUNCH', 'KICK', 'SMASH', 'BURST', 'BLAST', 'STORM', 'FANG',
-                                   'BLADE', 'SPEAR', 'LANCE', 'BUSTER', 'RENSIA', 'KERISPEAR',
-                                   'SKYSTAFF', 'GLOOM', 'REVENGE', 'WRAITH', 'TITAN', 'GIANT')
-                if any(kw in base_func.upper() for kw in damage_keywords):
-                    is_damage_func = True
+                is_damage_func = True  # broad: any function with first arg >= 100 is potential damage
         if is_damage_func:
             if base_func == 'DAM_ATT_X' and len(args) >= 3:
                 result['damages'].append({'func': base_func, 'attack_index': args[0], 'damage': args[1], 'hits': args[2]})
