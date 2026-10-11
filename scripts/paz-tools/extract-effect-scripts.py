@@ -28,35 +28,52 @@ def load_skill_dbss():
     return sk_data, sk_key_to_entry
 
 def decode_effect_script(rec, search_start=128):
-    dam_pattern_be = b'\x00D\x00A\x00M\x00_'
-    idx = rec.find(dam_pattern_be, search_start)
-    if idx >= 0:
-        start_idx = idx
-        while start_idx >= 2:
-            ch = struct.unpack('>H', rec[start_idx-2:start_idx])[0]
-            if ch == 0 or (ch < 32 and ch != 10 and ch != 13): break
-            start_idx -= 2
-        end_idx = idx
-        while end_idx + 1 < len(rec):
-            ch = struct.unpack('>H', rec[end_idx:end_idx+2])[0]
-            if ch == 0 or (ch < 32 and ch != 10 and ch != 13): break
-            end_idx += 2
-        return rec[start_idx:end_idx].decode('utf-16-be', errors='replace'), start_idx, 'utf-16-be'
-    dam_pattern_le = b'D\x00A\x00M\x00_\x00'
-    idx = rec.find(dam_pattern_le, search_start)
-    if idx >= 0:
-        start_idx = idx
-        while start_idx >= 2:
-            ch = struct.unpack('<H', rec[start_idx-2:start_idx])[0]
-            if ch == 0: break
-            start_idx -= 2
-        end_idx = idx
-        while end_idx + 1 < len(rec):
-            ch = struct.unpack('<H', rec[end_idx:end_idx+2])[0]
-            if ch == 0: break
-            end_idx += 2
-        return rec[start_idx:end_idx].decode('utf-16-le', errors='replace'), start_idx, 'utf-16-le'
-    return None, None, None
+    """Find ALL UTF-16BE ASCII effect-script strings in the record and concatenate them.
+    This catches both DAM_ functions AND class-specific functions like BUSTER_TRAINING_I(962)."""
+    strings = []
+    i = search_start
+    while i < len(rec) - 1:
+        # Check for start of a UTF-16BE ASCII string: [0x00][printable ASCII]
+        if rec[i] == 0 and i + 1 < len(rec) and 0x20 <= rec[i+1] < 0x7F:
+            j = i
+            chars = []
+            while j + 1 < len(rec):
+                if rec[j] == 0 and 0x20 <= rec[j+1] < 0x7F:
+                    chars.append(chr(rec[j+1]))
+                    j += 2
+                elif rec[j] == 0 and rec[j+1] in (0x0a, 0x0d):
+                    chars.append('\n' if rec[j+1] == 0x0a else '\r')
+                    j += 2
+                else:
+                    break
+            s = ''.join(chars)
+            # Only keep strings that look like effect script lines (contain '(' or known keywords)
+            if len(s) >= 4 and ('(' in s or 'DAM' in s or 'ATT' in s or 'SKILL' in s):
+                strings.append(s)
+            i = j if j > i else i + 2
+        else:
+            i += 1
+    
+    if not strings:
+        # Fallback: try the old DAM_-only approach
+        dam_pattern_be = b'\x00D\x00A\x00M\x00_'
+        idx = rec.find(dam_pattern_be, search_start)
+        if idx >= 0:
+            start_idx = idx
+            while start_idx >= 2:
+                ch = struct.unpack('>H', rec[start_idx-2:start_idx])[0]
+                if ch == 0 or (ch < 32 and ch != 10 and ch != 13): break
+                start_idx -= 2
+            end_idx = idx
+            while end_idx + 1 < len(rec):
+                ch = struct.unpack('>H', rec[end_idx:end_idx+2])[0]
+                if ch == 0 or (ch < 32 and ch != 10 and ch != 13): break
+                end_idx += 2
+            return rec[start_idx:end_idx].decode('utf-16-be', errors='replace'), start_idx, 'utf-16-be'
+        return None, None, None
+    
+    full_script = '\n'.join(strings)
+    return full_script, search_start, 'utf-16-be-multi'
 
 def parse_effect_script(script):
     calls = []
@@ -118,35 +135,51 @@ def extract_from_script(script):
     result = {
         'damages': [], 'pvp_pct': None, 'protections': [], 'cc_types': [],
         'crit_rate': None, 'max_targets': None, 'attack_modifiers': [],
+        'all_numeric_calls': [],  # all function calls with numeric first arg (for cross-ref)
+    }
+    # Known non-damage functions (don't treat their first arg as damage even if >= 100)
+    NON_DAMAGE_FUNCS = {
+        'HIT_TARGET', 'CRI_POINT', 'WP_ATT_RECOV', 'SP_ATT_RECOV', 'HP_ATT_RECOV',
+        'MP_ATT_RECOV', 'USE_SKILL_WP_RECOV', 'USE_SKILL_LAST_WP_RECOV',
+        'WP_LAST_ATT_RECOV', 'ALL_AP_UP', 'ALL_DP_UP', 'ALL_EVA_UP', 'HP_UP',
+        'USE_SKILL_HP_MAX_UP', 'COLLISION_1', 'COLLISION_2', 'COLLISION_3', 'COLLISION_4',
+        'ATT_COUNT_FRAGMENTS', 'COOLTIME', 'ATT_PERCENT_INCRE', 'SUCC_ATT_EVA_PERCENT_DECRE_ALL',
+        'USE_SKILL_MOV_PERCENT_INCRE', 'USE_SKILL_DEP_POINT_INCRE_ALL', 'MOV_LENGTH_ADD',
     }
     for c in calls:
         raw_func = c['func']
         args = c['args']
-        # Normalize the function name (strip attack-index prefix and trailing variant)
         base_func, attack_index, variant = normalize_func(raw_func)
+        # Save all numeric first-arg calls (for cross-reference / debugging)
+        if args and isinstance(args[0], (int, float)):
+            result['all_numeric_calls'].append({'func': base_func, 'first_arg': args[0], 'all_args': args})
         # Damage functions: any function containing "DAM_ATT" or starting with "DAM_"
-        # This catches: DAM_ATT_2, DAM_ATT_X, ADD_DAM_ATT_2, NO_2_DAM_ATT_2, RUN_ATT_DAM_ATT,
-        # STOP_ATT_LAST_DAM_ATT_1, DAM_ATT_MAX, DAM_BLOOD_*, etc.
         is_damage_func = ('DAM_ATT' in base_func) or base_func.startswith('DAM_') or base_func.startswith('ADD_DAM_')
+        # ALSO: any function with numeric first arg >= 100 that isn't a known non-damage function
+        # This catches class-specific damage functions like DOUBLE_TAKE_DOWN(1517), BUSTER_TRAINING_I(962), etc.
+        if not is_damage_func and args and isinstance(args[0], (int, float)) and args[0] >= 100:
+            if base_func not in NON_DAMAGE_FUNCS:
+                # Check if the function name suggests damage (contains ATTACK, TRAINING, TAKE_DOWN, etc.)
+                damage_keywords = ('ATTACK', 'TRAINING', 'TAKE_DOWN', 'DAM', 'STRIKE', 'SLASH', 'STAB', 
+                                   'PUNCH', 'KICK', 'SMASH', 'BURST', 'BLAST', 'STORM', 'FANG',
+                                   'BLADE', 'SPEAR', 'LANCE', 'BUSTER', 'RENSIA', 'KERISPEAR',
+                                   'SKYSTAFF', 'GLOOM', 'REVENGE', 'WRAITH', 'TITAN', 'GIANT')
+                if any(kw in base_func.upper() for kw in damage_keywords):
+                    is_damage_func = True
         if is_damage_func:
             if base_func == 'DAM_ATT_X' and len(args) >= 3:
-                # DAM_ATT_X(attack_idx, dmg, hits)
                 result['damages'].append({'func': base_func, 'attack_index': args[0], 'damage': args[1], 'hits': args[2]})
             elif base_func == 'DAM_ATT_MAX' and len(args) >= 3:
-                # DAM_ATT_MAX(dmg, ?, max_hits)
                 result['damages'].append({'func': base_func, 'damage': args[0], 'hits': args[1], 'max_hits': args[2]})
             elif base_func.startswith('DAM_BLOOD') and len(args) >= 3:
-                # DAM_BLOOD(something, count, dmg) — args order varies
                 result['damages'].append({'func': base_func, 'args': args})
             elif len(args) >= 2 and isinstance(args[0], (int, float)):
-                # DAM_ATT_2(dmg, hits) or variants
                 dmg_entry = {'func': base_func, 'damage': args[0], 'hits': args[1]}
                 if attack_index is not None: dmg_entry['attack_index'] = attack_index
                 if variant is not None: dmg_entry['variant'] = variant
                 if len(args) > 2: dmg_entry['extra_args'] = args[2:]
                 result['damages'].append(dmg_entry)
             elif len(args) >= 1 and isinstance(args[0], (int, float)):
-                # Single-arg damage function (like STOP_ATT_LAST_DAM_ATT_1(dmg) )
                 dmg_entry = {'func': base_func, 'damage': args[0], 'hits': 1}
                 if attack_index is not None: dmg_entry['attack_index'] = attack_index
                 if variant is not None: dmg_entry['variant'] = variant
@@ -157,6 +190,8 @@ def extract_from_script(script):
                 result['pvp_pct'] = float(args[0])
         elif base_func == 'SKILL_ING_GUARD': result['protections'].append('Forward Guard')
         elif base_func == 'SKILL_ING_SUPER_ARMOR': result['protections'].append('Super Armor')
+        elif base_func == 'SUPER_ARMOR': result['protections'].append('Super Armor')  # alt form
+        elif base_func == 'GUARD': result['protections'].append('Forward Guard')  # alt form
         elif base_func == 'CRI_POINT':
             if args and isinstance(args[0], (int, float)): result['crit_rate'] = int(args[0])
         elif base_func == 'HIT_TARGET':

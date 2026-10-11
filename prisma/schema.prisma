@@ -71,6 +71,11 @@ model Skill {
   animationDurationMs Int?     // video duration in ms = animation duration proxy
   tooltipRawHtml      String?  // raw tooltip HTML
   addonsJson          String?  // JSON: [{type, effect, ...}]
+  // PAZ-extracted data (from skill.dbss effect scripts — UTF-16BE encoded)
+  // Authoritative source, replaces bdocodex-sourced values when present
+  pazDataJson         String?  // JSON: {damages[], pvp_pct, protections[], cc_types[], crit_rate, max_targets, attack_modifiers[], script}
+  pazVerified         Boolean  @default(false) // true = PAZ data extracted and verified
+  pazSource           String?  // 'effect_script' (from skill.dbss) | 'tooltiptable_brute_force' (legacy)
   syncedAt            DateTime @default(now())
 
   bdoClass            BdoClass? @relation(fields: [classId], references: [id])
