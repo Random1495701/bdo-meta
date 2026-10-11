@@ -10,7 +10,7 @@ Output: data/paz-effect-scripts.json mapping skillId → {damages, pvp_pct, prot
 import struct, json, re
 from pathlib import Path
 
-GCD = '/tmp/gcd-extract/gamecommondata/binary'
+GCD = '/tmp/gcd-oct/gamecommondata/binary'
 OUT = '/home/z/my-project/data/paz-effect-scripts.json'
 
 def load_skill_dbss():

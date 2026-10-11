@@ -27922,17 +27922,17 @@
     "damages": [
       {
         "func": "DAM_ATT_2",
-        "damage": 3007,
+        "damage": 3365,
         "hits": 1
       },
       {
         "func": "RENSIA_SHIELD_1_DAM_ATT2",
-        "damage": 3007,
+        "damage": 3365,
         "hits": 2,
         "variant": 2
       }
     ],
-    "pvp_pct": 36.66,
+    "pvp_pct": 32.75,
     "protections": [],
     "cc_types": [],
     "crit_rate": null,
@@ -27940,23 +27940,23 @@
     "attack_modifiers": [
       "AIR_ATT"
     ],
-    "script": "DAM_ATT_2(3007,1);\nRENSIA_SHIELD_1_DAM_ATT2_2(3007,2);\nHIT_TARGET(10);\nHP_ATT_RECOV(500);COOLTIME();\nSUCC_ATT_DEP_POINT_DECRE_ALL(10,10);COOLTIME();\nGUARD();COOLTIME();\nSUCC_ATT_TURN();ONLY_PVE();\nSUCC_ATT_STUN();ONLY_PVE();COOLTIME();\nAIR_ATT();\nCOOLTIME_DAM();\nDECRE_PVP_DAM_2(36.66);\n"
+    "script": "DAM_ATT_2(3365,1);\nRENSIA_SHIELD_1_DAM_ATT2_2(3365,2);\nHIT_TARGET(10);\nHP_ATT_RECOV(500);COOLTIME();\nSUCC_ATT_DEP_POINT_DECRE_ALL(10,10);COOLTIME();\nGUARD();COOLTIME();\nSUCC_ATT_TURN();ONLY_PVE();\nSUCC_ATT_STUN();ONLY_PVE();COOLTIME();\nAIR_ATT();\nCOOLTIME_DAM();\nDECRE_PVP_DAM_2(32.75);\n"
   },
   "1956": {
     "damages": [
       {
         "func": "DAM_ATT_2",
-        "damage": 3755,
+        "damage": 4202,
         "hits": 1
       },
       {
         "func": "RENSIA_SHIELD_1_DAM_ATT2",
-        "damage": 3755,
+        "damage": 4202,
         "hits": 2,
         "variant": 2
       }
     ],
-    "pvp_pct": 36.66,
+    "pvp_pct": 32.75,
     "protections": [],
     "cc_types": [],
     "crit_rate": null,
@@ -27964,23 +27964,23 @@
     "attack_modifiers": [
       "AIR_ATT"
     ],
-    "script": "DAM_ATT_2(3755,1);\nRENSIA_SHIELD_1_DAM_ATT2_2(3755,2);\nHIT_TARGET(10);\nHP_ATT_RECOV(600);COOLTIME();\nSUCC_ATT_DEP_POINT_DECRE_ALL(10,15);COOLTIME();\nGUARD();COOLTIME();\nSUCC_ATT_TURN();ONLY_PVE();\nSUCC_ATT_STUN();ONLY_PVE();COOLTIME();\nAIR_ATT();\nCOOLTIME_DAM();\nDECRE_PVP_DAM_2(36.66);\n"
+    "script": "DAM_ATT_2(4202,1);\nRENSIA_SHIELD_1_DAM_ATT2_2(4202,2);\nHIT_TARGET(10);\nHP_ATT_RECOV(600);COOLTIME();\nSUCC_ATT_DEP_POINT_DECRE_ALL(10,15);COOLTIME();\nGUARD();COOLTIME();\nSUCC_ATT_TURN();ONLY_PVE();\nSUCC_ATT_STUN();ONLY_PVE();COOLTIME();\nAIR_ATT();\nCOOLTIME_DAM();\nDECRE_PVP_DAM_2(32.75);\n"
   },
   "1957": {
     "damages": [
       {
         "func": "DAM_ATT_2",
-        "damage": 4500,
+        "damage": 5036,
         "hits": 1
       },
       {
         "func": "RENSIA_SHIELD_1_DAM_ATT2",
-        "damage": 4500,
+        "damage": 5036,
         "hits": 2,
         "variant": 2
       }
     ],
-    "pvp_pct": 36.66,
+    "pvp_pct": 32.75,
     "protections": [],
     "cc_types": [],
     "crit_rate": null,
@@ -27988,7 +27988,7 @@
     "attack_modifiers": [
       "AIR_ATT"
     ],
-    "script": "DAM_ATT_2(4500,1);\nRENSIA_SHIELD_1_DAM_ATT2_2(4500,2);\nHIT_TARGET(10);\nHP_ATT_RECOV(700);COOLTIME();\nSUCC_ATT_DEP_POINT_DECRE_ALL(10,20);COOLTIME();\nGUARD();COOLTIME();\nSUCC_ATT_TURN();ONLY_PVE();\nSUCC_ATT_STUN();ONLY_PVE();COOLTIME();\nAIR_ATT();\nCOOLTIME_DAM();\nDECRE_PVP_DAM_2(36.66);\n"
+    "script": "DAM_ATT_2(5036,1);\nRENSIA_SHIELD_1_DAM_ATT2_2(5036,2);\nHIT_TARGET(10);\nHP_ATT_RECOV(700);COOLTIME();\nSUCC_ATT_DEP_POINT_DECRE_ALL(10,20);COOLTIME();\nGUARD();COOLTIME();\nSUCC_ATT_TURN();ONLY_PVE();\nSUCC_ATT_STUN();ONLY_PVE();COOLTIME();\nAIR_ATT();\nCOOLTIME_DAM();\nDECRE_PVP_DAM_2(32.75);\n"
   },
   "1958": {
     "damages": [
@@ -28453,16 +28453,16 @@
     "damages": [
       {
         "func": "ENSELRA_HOLY_DAM_ATT_2",
-        "damage": 1883,
+        "damage": 2343,
         "hits": 1
       },
       {
         "func": "DAM_ATT_LAST",
-        "damage": 4708,
+        "damage": 5858,
         "hits": 2
       }
     ],
-    "pvp_pct": 23.2,
+    "pvp_pct": 18.64,
     "protections": [],
     "cc_types": [],
     "crit_rate": 100,
@@ -28470,22 +28470,22 @@
     "attack_modifiers": [
       "DOWN_ATT"
     ],
-    "script": "ENSELRA_HOLY_DAM_ATT_2(1883,1);\nDAM_ATT_LAST(4708,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nUSE_SKILL_ATT_POINT_INCRE_PHY(10,32);\nSUPER_ARMOR();\nENSELRA_HOLY_1_HOLY_ATTACK_1_AVOID();\nENSELRA_HOLY_SUCC_ATT_STIFFNESS();ONLY_PVE();\nLAST_SUCC_ATT_KNOCKDOWN();ONLY_PVE();\nDOWN_ATT();\nDECRE_PVP_DAM_2(23.2);\nENSELRA_HOLY_2();\nVALKYRIE_AGERO_ECHO();\n"
+    "script": "ENSELRA_HOLY_DAM_ATT_2(2343,1);\nDAM_ATT_LAST(5858,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nUSE_SKILL_ATT_POINT_INCRE_PHY(10,32);\nSUPER_ARMOR();\nENSELRA_HOLY_1_HOLY_ATTACK_1_AVOID();\nENSELRA_HOLY_SUCC_ATT_STIFFNESS();ONLY_PVE();\nLAST_SUCC_ATT_KNOCKDOWN();ONLY_PVE();\nDOWN_ATT();\nDECRE_PVP_DAM_2(18.64);\nENSELRA_HOLY_2();\nVALKYRIE_AGERO_ECHO();\n"
   },
   "1976": {
     "damages": [
       {
         "func": "ENSELRA_HOLY_DAM_ATT_2",
-        "damage": 2458,
+        "damage": 3059,
         "hits": 1
       },
       {
         "func": "DAM_ATT_LAST",
-        "damage": 6146,
+        "damage": 7647,
         "hits": 2
       }
     ],
-    "pvp_pct": 23.2,
+    "pvp_pct": 18.64,
     "protections": [],
     "cc_types": [],
     "crit_rate": 100,
@@ -28493,22 +28493,22 @@
     "attack_modifiers": [
       "DOWN_ATT"
     ],
-    "script": "ENSELRA_HOLY_DAM_ATT_2(2458,1);\nDAM_ATT_LAST(6146,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nUSE_SKILL_ATT_POINT_INCRE_PHY(10,32);\nSUPER_ARMOR();\nENSELRA_HOLY_1_HOLY_ATTACK_1_AVOID();\nENSELRA_HOLY_SUCC_ATT_STIFFNESS();ONLY_PVE();\nLAST_SUCC_ATT_KNOCKDOWN();ONLY_PVE();\nDOWN_ATT();\nDECRE_PVP_DAM_2(23.2);\nENSELRA_HOLY_2();\nVALKYRIE_AGERO_ECHO();\n"
+    "script": "ENSELRA_HOLY_DAM_ATT_2(3059,1);\nDAM_ATT_LAST(7647,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nUSE_SKILL_ATT_POINT_INCRE_PHY(10,32);\nSUPER_ARMOR();\nENSELRA_HOLY_1_HOLY_ATTACK_1_AVOID();\nENSELRA_HOLY_SUCC_ATT_STIFFNESS();ONLY_PVE();\nLAST_SUCC_ATT_KNOCKDOWN();ONLY_PVE();\nDOWN_ATT();\nDECRE_PVP_DAM_2(18.64);\nENSELRA_HOLY_2();\nVALKYRIE_AGERO_ECHO();\n"
   },
   "1977": {
     "damages": [
       {
         "func": "ENSELRA_HOLY_DAM_ATT_2",
-        "damage": 3027,
+        "damage": 3767,
         "hits": 1
       },
       {
         "func": "DAM_ATT_LAST",
-        "damage": 7567,
+        "damage": 9416,
         "hits": 2
       }
     ],
-    "pvp_pct": 23.2,
+    "pvp_pct": 18.64,
     "protections": [],
     "cc_types": [],
     "crit_rate": 100,
@@ -28516,13 +28516,13 @@
     "attack_modifiers": [
       "DOWN_ATT"
     ],
-    "script": "ENSELRA_HOLY_DAM_ATT_2(3027,1);\nDAM_ATT_LAST(7567,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nUSE_SKILL_ATT_POINT_INCRE_PHY(10,32);\nSUPER_ARMOR();\nENSELRA_HOLY_1_HOLY_ATTACK_1_AVOID();\nENSELRA_HOLY_SUCC_ATT_STIFFNESS();ONLY_PVE();\nLAST_SUCC_ATT_KNOCKDOWN();ONLY_PVE();\nDOWN_ATT();\nDECRE_PVP_DAM_2(23.2);\nENSELRA_HOLY_2();\nVALKYRIE_AGERO_ECHO();\n"
+    "script": "ENSELRA_HOLY_DAM_ATT_2(3767,1);\nDAM_ATT_LAST(9416,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nUSE_SKILL_ATT_POINT_INCRE_PHY(10,32);\nSUPER_ARMOR();\nENSELRA_HOLY_1_HOLY_ATTACK_1_AVOID();\nENSELRA_HOLY_SUCC_ATT_STIFFNESS();ONLY_PVE();\nLAST_SUCC_ATT_KNOCKDOWN();ONLY_PVE();\nDOWN_ATT();\nDECRE_PVP_DAM_2(18.64);\nENSELRA_HOLY_2();\nVALKYRIE_AGERO_ECHO();\n"
   },
   "1978": {
     "damages": [
       {
         "func": "DAM_ATT_2",
-        "damage": 6719,
+        "damage": 8568,
         "hits": 2
       },
       {
@@ -28534,7 +28534,7 @@
         ]
       }
     ],
-    "pvp_pct": 26.09,
+    "pvp_pct": 20.46,
     "protections": [],
     "cc_types": [
       "Knockdown"
@@ -28544,17 +28544,17 @@
     "attack_modifiers": [
       "DOWN_ATT"
     ],
-    "script": "DAM_ATT_2(6719,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nDAM_BLOOD(9,3,50);\nSUCC_ATT_EVA_PERCENT_DECRE_ALL(10,12);\nSUCC_ATT_KNOCKDOWN();\nDOWN_ATT();\nDECRE_PVP_DAM_2(26.09);\n"
+    "script": "DAM_ATT_2(8568,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nDAM_BLOOD(9,3,50);\nSUCC_ATT_EVA_PERCENT_DECRE_ALL(10,12);\nSUCC_ATT_KNOCKDOWN();\nDOWN_ATT();\nDECRE_PVP_DAM_2(20.46);\n"
   },
   "1979": {
     "damages": [
       {
         "func": "DAM_ATT_2",
-        "damage": 6719,
+        "damage": 8568,
         "hits": 2
       }
     ],
-    "pvp_pct": 26.09,
+    "pvp_pct": 20.46,
     "protections": [],
     "cc_types": [
       "Knockback"
@@ -28564,17 +28564,17 @@
     "attack_modifiers": [
       "DOWN_ATT"
     ],
-    "script": "DAM_ATT_2(6719,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nSUCC_ATT_KNOCKBACK();ONLY_PVE();\nDOWN_ATT();\nDOWN_SMASH();\nDECRE_PVP_DAM_2(26.09);\n"
+    "script": "DAM_ATT_2(8568,2);\nCRI_POINT(100);\nHIT_TARGET(10);\nSUCC_ATT_KNOCKBACK();ONLY_PVE();\nDOWN_ATT();\nDOWN_SMASH();\nDECRE_PVP_DAM_2(20.46);\n"
   },
   "1982": {
     "damages": [
       {
         "func": "DAM_ATT_2",
-        "damage": 7171,
+        "damage": 9020,
         "hits": 2
       }
     ],
-    "pvp_pct": 30.15,
+    "pvp_pct": 23.97,
     "protections": [
       "Super Armor"
     ],
@@ -28585,7 +28585,7 @@
       "AIR_ATT",
       "DOWN_ATT"
     ],
-    "script": "DAM_ATT_2(7171,2);\nCRI_POINT(50);\nHIT_TARGET(10);\nSUCC_ATT_EVA_PERCENT_DECRE_ALL(10,12);\nSKILL_ING_SUPER_ARMOR();\nAIR_ATT();\nDOWN_ATT();\nDECRE_PVP_DAM_2(30.15);\n"
+    "script": "DAM_ATT_2(9020,2);\nCRI_POINT(50);\nHIT_TARGET(10);\nSUCC_ATT_EVA_PERCENT_DECRE_ALL(10,12);\nSKILL_ING_SUPER_ARMOR();\nAIR_ATT();\nDOWN_ATT();\nDECRE_PVP_DAM_2(23.97);\n"
   },
   "1983": {
     "damages": [
@@ -91479,7 +91479,7 @@
     "attack_modifiers": [
       "DOWN_ATT"
     ],
-    "script": "DAM_ATT_X(1,2692,5);\nDAM_ATT_X(2,4486,2);\nWHIRLWIND_FLOW_PM_DAM(5759);\nCRI_POINT(100);\nHIT_TARGET(10);\nSKILL_ING_SUPER_ARMOR();\nBEFORE_ATT_STUN();\nDOWN_ATT();\nDECRE_PVP_DAM_2(32.95);\nCLOUD_SUMMON_PM();\n"
+    "script": "DAM_ATT_X(1,2692,5);\nDAM_ATT_X(2,4486,2);\nWHIRLWIND_FLOW_PM_DAM(5759);\nCRI_POINT(100);\nHIT_TARGET(10);\nSKILL_ING_SUPER_ARMOR();\nBEFORE_ATT_STUN();\nDOWN_ATT();\nDECRE_PVP_DAM_2(32.95);\nCLOUD_SUMMON_PM();\nCLOUD_EFFECT();\nCLOUD_SUMMON_PM_ATT(3205,1,7);\nCRI_POINT(100);\nDECRE_PVP_DAM_2(32.95);\n"
   },
   "7632": {
     "damages": [
@@ -91506,7 +91506,7 @@
     "attack_modifiers": [
       "DOWN_ATT"
     ],
-    "script": "DAM_ATT_X(1,3228,5);\nDAM_ATT_X(2,5381,2);\nWHIRLWIND_FLOW_PM_DAM(6902);\nCRI_POINT(100);\nHIT_TARGET(10);\nSKILL_ING_SUPER_ARMOR();\nBEFORE_ATT_STUN();\nDOWN_ATT();\nDECRE_PVP_DAM_2(32.95);\nCLOUD_SUMMON_PM();\n"
+    "script": "DAM_ATT_X(1,3228,5);\nDAM_ATT_X(2,5381,2);\nWHIRLWIND_FLOW_PM_DAM(6902);\nCRI_POINT(100);\nHIT_TARGET(10);\nSKILL_ING_SUPER_ARMOR();\nBEFORE_ATT_STUN();\nDOWN_ATT();\nDECRE_PVP_DAM_2(32.95);\nCLOUD_SUMMON_PM();\nCLOUD_EFFECT();\nCLOUD_SUMMON_PM_ATT(3843,1,7);\nCRI_POINT(100);\nDECRE_PVP_DAM_2(32.95);\n"
   },
   "7633": {
     "damages": [
@@ -91533,7 +91533,7 @@
     "attack_modifiers": [
       "DOWN_ATT"
     ],
-    "script": "DAM_ATT_X(1,4370,5);\nDAM_ATT_X(2,7283,2);\nWHIRLWIND_FLOW_PM_DAM(9348);\nCRI_POINT(100);\nHIT_TARGET(10);\nSKILL_ING_SUPER_ARMOR();\nBEFORE_ATT_STUN();\nDOWN_ATT();\nDECRE_PVP_DAM_2(32.95);\nCLOUD_SUMMON_PM();\n"
+    "script": "DAM_ATT_X(1,4370,5);\nDAM_ATT_X(2,7283,2);\nWHIRLWIND_FLOW_PM_DAM(9348);\nCRI_POINT(100);\nHIT_TARGET(10);\nSKILL_ING_SUPER_ARMOR();\nBEFORE_ATT_STUN();\nDOWN_ATT();\nDECRE_PVP_DAM_2(32.95);\nCLOUD_SUMMON_PM();\nCLOUD_EFFECT();\nCLOUD_SUMMON_PM_ATT(5202,1,7);\nCRI_POINT(100);\nDECRE_PVP_DAM_2(32.95);\n"
   },
   "7538": {
     "damages": [
