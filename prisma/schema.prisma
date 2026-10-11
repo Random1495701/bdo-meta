@@ -77,6 +77,8 @@ model Skill {
   pazVerified         Boolean  @default(false) // true = PAZ data extracted and verified
   pazSource           String?  // 'effect_script' (from skill.dbss) | 'tooltiptable_brute_force' (legacy)
   animationPazVerified Boolean @default(false) // true = animationDurationMs came from PAZ .paa files
+  pazName             String?  // English skill name from PAZ LOC files (loc_en.json type 10)
+  pazDescription       String?  // English skill description from PAZ LOC files
   syncedAt            DateTime @default(now())
 
   bdoClass            BdoClass? @relation(fields: [classId], references: [id])
