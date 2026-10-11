@@ -201,6 +201,31 @@ def extract_from_script(script):
         elif base_func in ('SUCC_ATT_AIRBORNE',): result['cc_types'].append('Float')
         elif base_func in ('SUCC_ATT_BOUND', 'FIRST_SUCC_ATT_BOUND'): result['cc_types'].append('Bound')
         elif base_func in ('SUCC_ATT_STIFFNESS',): result['cc_types'].append('Stiffness')
+        elif base_func == 'SUCC_ATT_STUN': result['cc_types'].append('Stun')
+        elif base_func == 'SUCC_ATT_PUSH' or base_func == 'SIDEATTACK_PUSH': result['cc_types'].append('Push')
+        elif base_func == 'SUCC_ATT_PULL': result['cc_types'].append('Pull')
+        elif base_func == 'SUCC_ATT_TURN': result['cc_types'].append('Spin')
+        elif base_func == 'DOWN_SMASH' or base_func == 'ATT_SUCC_DOWN_SMASH': result['cc_types'].append('Down Smash')
+        elif base_func == 'SUCC_ATT_MOV_PERCENT_DECRE': result['cc_types'].append('Movement Speed Decrease')
+        elif base_func == 'SUCC_ATT_EVA_PERCENT_DECRE_ALL': result['cc_types'].append('Evasion Decrease')
+        elif base_func == 'SUCC_ATT_DEP_POINT_DECRE_ALL': result['cc_types'].append('Debuff Point Decrease')
+        # Resource recovery per hit
+        elif base_func == 'WP_ATT_RECOV':
+            if args and isinstance(args[0], (int, float)): result.setdefault('wp_recover_per_hit', args[0])
+        elif base_func == 'HP_ATT_RECOV':
+            if args and isinstance(args[0], (int, float)): result.setdefault('hp_recover_per_hit', args[0])
+        elif base_func == 'MP_ATT_RECOV':
+            if args and isinstance(args[0], (int, float)): result.setdefault('mp_recover_per_hit', args[0])
+        elif base_func == 'SP_ATT_RECOV':
+            if args and isinstance(args[0], (int, float)): result.setdefault('sp_recover_per_hit', args[0])
+        elif base_func == 'ALL_AP_UP':
+            if args and isinstance(args[0], (int, float)): result.setdefault('all_ap_up', args[0])
+        elif base_func == 'ALL_DP_UP':
+            if args and isinstance(args[0], (int, float)): result.setdefault('all_dp_up', args[0])
+        elif base_func == 'ALL_EVA_UP':
+            if args and isinstance(args[0], (int, float)): result.setdefault('all_eva_up', args[0])
+        elif base_func == 'HP_UP':
+            if args and isinstance(args[0], (int, float)): result.setdefault('hp_up', args[0])
         elif base_func in ('DOWN_ATT', 'AIR_ATT', 'BACK_ATT', 'BACK_ATT_DEFENCE', 'BACK_ATT_DOWN_SMASH', 'BACK_ATT_KNOCKBACK'):
             result['attack_modifiers'].append(base_func)
     return result
