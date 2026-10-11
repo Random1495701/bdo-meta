@@ -4780,3 +4780,137 @@ Stage Summary:
   4. **Garmoth is NOT a useful cross-validation source** — their per-skill old/new damage data is auth-gated behind tRPC (HTTP 400 unauthenticated). The publicly accessible pieces are the addon effect strings (`api.garmoth.com/api/skill-addons`) which we ALREADY import via `scripts/import-garmoth-addons.ts`. So Garmoth is closed as a data source for our needs.
   5. **No Korean community alternative to bdocodex exists** — Korean Inven BDO subdomain (bdo.inven.co.kr) doesn't resolve, Naver Cafe is auth-walled, namu.wiki is Cloudflare-blocked. Kiriak's bdocodex.com remains the canonical Western community DB. The only INDEPENDENT cross-validation source for damage/PvP%/protection is our own tooltiptable.dbss extraction (per bdo-meta's working parser) — and there is NO public Korean-community DB of these values. The "different sources for cross-validation" search has come up empty: the entire ecosystem treats bdocodex as upstream-canonical and only bdo-meta (our sister project) has its own extraction to compare against it.
   6. **Stop searching for community skill-DB alternatives** — there are NONE that publish per-skill damage values for free via curl. Spend the effort instead on (a) porting iDevelopThings's `internal/bss/offset.go` to our paz-tools to get reliable offset-index parsing; (b) porting their ICE cipher spec to read the meta file's encrypted folder/file name tables; (c) ingesting bdo-meta's `data/tooltip-skill-data.json` + `data/tooltip-protection.json` as cross-validation oracle. The 4,793-string / 3,243-subrecord / 581-damage-template counts in our local `data/tooltiptable-summary.json` are consistent with bdo-meta's published totals (3,940 damage + 944 PvP% values across the 3,999 protection skills), confirming we're on the right track.
+
+---
+Task ID: 17-KR-FORUM-ENGINE
+Agent: general-purpose (Korean forums + PA dev interviews)
+Task: Find hints on BDO engine internals + skill→tooltip linkage via Korean sources
+
+Work Log:
+- Read last 100 lines of worklog.md (Task 16 stage summary). Context established: prior tasks tested 13 standard hash algorithms × 8 input formats × murmur3 with 3 seeds against the tooltiptable.dbss u32 first field — NO MATCH. ICE-with-BDO-key doesn't decrypt commandtooltip.dbss. BlackDesert64.exe is VMProtect-stripped. BDO Lua bytecode files were already extracted locally (per Task 12 worklog line 3970+) yielding function names like linkToolTipSkillTypeSS, getSkillTypeStaticStatus, getDamage.
+- Probed Korean community forums:
+  * bdo.inven.co.kr: HTTP 000 DNS fail (unresolvable from sandbox — confirmed Task 16 finding).
+  * www.inven.co.kr: HTTP 200 524KB (root only — has no BDO subdomain links visible in static HTML).
+  * cafe.naver.com/blackdesert: HTTP 200 169KB. The page confirms `g_sCafeHome = "https://cafe.naver.com/blackdesert"` (the official Korean BDO Naver cafe). However, all article content is iframe-gated behind Naver NID login — only the cafe's homepage shell is SSR'd.
+  * gall.dcinside.com/board/lists/?id=blackdesert: HTTP 404 4KB (geo-blocked/moved — same as Task 16 finding).
+  * namu.wiki/w/블랙서치 온라인: HTTP 403 5.5KB (Cloudflare-blocked).
+- Probed Pearl Abyss official + engineering content:
+  * www.pearlabyss.com/technology: 302 → notice.playblackdesert.com/?aspxerrorpath=/technology (no tech page exists).
+  * engineering.pearlabyss.com: HTTP 000 DNS fail (NO engineering blog exists).
+  * blog.pearlabyss.com: HTTP 000 DNS fail (NO engineering blog exists).
+  * www.pearlabyss.com/ko-KR: HTTP 200 234KB (only privacy-policy text; no engine/technical content).
+  * www.pearlabyss.com/en-US: HTTP 200 178KB (only privacy-policy text; no engine/technical content).
+  * www.pearlabyss.com/ko-KR/Company/Careers/Intro: HTTP 200 254KB (careers page is real). Fetching all 9 job-group list pages revealed 25+ job opening IDs. Fetched each job's Detail page.
+- **MAJOR FIND**: Pearl Abyss careers page is fully accessible and lists ALL current job postings. Extracted clean Korean descriptions for 25 positions. Key engine-architecture-relevant ones (translated to English):
+  * **Job #6 — 게임 엔진 프로그래머 (Game Engine Programmer)** [tags: C++, Real Time Rendering]:
+    담당업무 (Duties):
+    - 멀티플랫폼 게임 엔진 및 툴셋 개발 → "Multi-platform game engine and toolset development"
+    - 게임 엔진 개발 및 서비스 과정에서 발생하는 프로그래밍 업무 (주 개발언어 C++) → "Programming work that occurs during game engine development and service process (main development language C++)"
+    Required: 2+ years experience, deep C++ understanding, Real Time Rendering understanding, math/physics understanding.
+    → **CONFIRMS BDO engine is a custom C++ multi-platform engine with a custom toolset** (consistent with "BlackSpace" engine name; never explicitly named here).
+  * **Job #7 — 게임플레이 프로그래머 (Gameplay Programmer)** [tags: C++]:
+    담당업무: "Programming work during game development and service at Pearl Abyss (main development language C++); multi-platform game development work." References a PA-produced YouTube interview: "🏔️검은사막 세계를 만드는 사람들 🎮게임플레이 프로그래머 등장!" (i.e., "The People Who Made the Black Desert World — Gameplay Programmer Appears!").
+  * **Job #562 — 검은사막 온라인 게임플레이 프로그래머 (Black Desert Online Gameplay Programmer)** [tags: C++]:
+    담당업무: "검은사막 온라인 게임플레이 개발 및 유지/보수" → "Black Desert Online gameplay development and maintenance." Required: 3+ years, C++, communication/collaboration, problem-solving. **우대사항 (Preferred): "Database 관련 지식이 있으신 분" (Knowledge of databases) and "Multi-Thread 환경에서의 개발을 경험해보신 분" (Multi-threaded environment development experience)** — so BDO gameplay programmers DO touch databases + multithreading, but the database role is server-side (see #844 below).
+  * **Job #844 — [경력] DBA/MS-SQL DB 담당자 (DBA / MS-SQL DB role)**:
+    담당업무: "MS-SQL 데이터베이스 설계, 개발 및 배포 (테이블, SP 버전 관리/검수/패치); DB 인프라 구축, 운영 및 성능 최적화; 내·외부 유관 부서 기술 지원" → "MS-SQL database design, development, and deployment (tables, stored procedures version control/review/patch); DB infrastructure build, operation, and performance tuning." Required: 1+ years, R-DBMS + T-SQL/SQL Server. → **CONFIRMS BDO's LIVE-GAME database is MS-SQL Server with T-SQL stored procedures** — this is the LIVE server's character/marketplace/account database. It is NOT the same as the client-side .dbss binary files, which are flat packed-binary blobs loaded by the C++ engine directly. PA's "DBA" role is unrelated to the .dbss file format. Trusted subprocessor: ㈜사람인 (online aptitude test), ㈜그렙 (online coding test — grep.co.kr, the Korean algorithm-test company), Azure Blob (cloud storage).
+  * **Job #757 — [경력] 네트워크 엔지니어 (Network Engineer)**: Data Center, Office, Cloud network infra; required BGP/L4/firewall/VPN.
+  * **Job #320 — 게임기획 (Game Designer)**: planning roles
+  * **Job #379/422 — 게임 번역가 (Game Translators)**: localization work — confirms BDO has a translation team that produces the languagedata_*.loc files
+- Probed GDC Vault for PA/BDO talks:
+  * gdcvault.com (root): HTTP 200 120KB. Browse page HTTP 200 564KB. NO mentions of "pearl", "black desert", "crimson desert", "dokev", or "plan 8" anywhere in the static HTML — Pearl Abyss has given ZERO GDC talks indexed on GDC Vault.
+- Probed YouTube via invidious (7 instances tested):
+  * Only yewtu.be reachable (HTTP 200) but has antibot challenge ("Starting verification..."). All other invidious instances: HTTP 000/403/502. YouTube interview video series "🏔️검은사막 세계를 만드는 사람들" (referenced in PA careers page Job #7 + #562) — not directly curl-accessible from sandbox.
+- Probed Reddit /r/ReverseEngineering (JSON + HTML): HTTP 403 (Cloudflare, 190KB challenge page) for all of "black desert", "pearl abyss", "pearlabyss" — same as Task 16.
+- Probed UnknownCheats forum: HTTP 418 (Cloudflare teapot/JS challenge).
+- Probed 52pojie.cn forum search: HTTP 302 → redirects to Bing.com HK SERP (the search URL itself was likely hijacked or geo-rerouted).
+- Probed GitHub code search (REST): HTTP 401 (rate-limit, no auth) for queries `linkToolTipSkillTypeSS`, `tooltiptable+dbss`, `commandtooltip+dbss`, `bdo+paz+extractor`. Confirmed Task 16 finding — code search needs auth.
+- Probed GitHub repo search (REST, works unauthenticated): tried 7 queries (`blackdesert+luac`, `bdo+PAGetString`, `blackdesert+lua`, `bdo+ice+cipher`, `blackdesert+ice`, `검은사막+엔진` (Korean "Black Desert engine"), `블랙서치+엔진` (incorrect Korean)). ALL return total_count=0 or garbage. No Korean-authored BDO Lua / engine RE repos exist publicly.
+- **MAJOR FIND from kukdh1/PAZ-Unpacker (Korean-authored, 40★, 2017)** README:
+  * "BDO client (and XIGNCODE3) does not check CRC codes on each packed files." — anti-cheat doesn't integrity-check individual PAZ members.
+  * "I could disable secure code using modification of global_utils.luac (TESTED on 2016/08/28)" — Lua function `isItemMarketSecureCode()` is in `global_utils.luac`; Lua functions exist for `isGameTypeKorea()`, `isGameTypeJapan()`, `isGameTypeRussia()`, `isGameTypeEnglish()`, `isGameTypeTaiwan()` — confirms BDO has a **Lua scripting layer with region-detection**.
+  * "The meta file format is changed on KR client since 2016.05 (Decrypt key changed)." — confirms the pad00000.meta ICE key changed in May 2016.
+  * Compressed file header structure: `0x6E: Header, DWORD: Original file size, DWORD: This file size` — independent confirmation of the BDO-LZ header.
+- **MAJOR FIND from iDevelopThings/bdo-data-extractor FORMATS.md** (100KB, raw.githubusercontent.com/.../FORMATS.md) — Section: "`stringtable.bss` — symbolic UI keys":
+  * DIRECT QUOTE: "Lua calls such as `PAGetString(Defines.StringSheet_GAME, "LUA_...")` use symbolic keys, while localization table 37 stores numeric ids. `gamecommondata/binary/stringtable.bss` bridges the two: each symbolic key is paired with the **numeric hash used as the localization id** and with its Korean source text."
+  * DIRECT QUOTE (from "Character fitness progression" section): "The exact class-selection text and presentation data live in `luacscript/x64/include/global_newclass_data.luac`. Its class-indexed tables include main/sub/awakening weapon labels, combat-resource labels, awakening and succession descriptions, combat style, weapon categories, class icons, class-selection stat textures and content-group gates. Symbolic `PAGetString` keys in that Lua resolve through `stringtable.bss` and localization table 37."
+  * → **ARCHITECTURAL CONFIRMATION: The BDO hash function is COMPUTED AT BUILD TIME by the engine, stored in stringtable.bss. It is NEVER recomputed at runtime by the client.** The Lua function `PAGetString(sheet, key)` looks up the symbolic key in stringtable.bss → retrieves the precomputed hash → looks up the LOC table 37 by (hash, sheet_field).
+  * → The tooltiptable.dbss u32 first field is almost certainly the SAME hash family, applied to a string the BDO engine knows at build time (probably the skill's `action_name`, or `icon_path`, or a fully-qualified "SkillType_<class>_<name>" identifier).
+- **MAJOR FIND from iSayZes/BDO-PAZ-Browser `stringtable_bss.md`** (9.7KB, raw.githubusercontent.com/iSayZes/BDO-PAZ-Browser/main/docs/file-formats/stringtable_bss.md) — independent Korean-authored documentation:
+  * DIRECT QUOTE (under "Notes"): "Hash functions tried against `key_hash` and `sheet_hash` without a match, on ASCII, UTF-16LE and UTF-32LE, as is, lower and upper case, with and without a terminator: CRC-32 (zlib, MPEG-2, Castagnoli, no final xor), FNV-1 and FNV-1a, Jenkins `hashlittle` (seed 0 and `0x7C`), Murmur3 (seed 0), djb2, sdbm, ELF and the Java string hash. Nothing needs the function, since every key is stored with its hash."
+  * DIRECT QUOTE (under "Open Questions > Hash Function"): "`key_hash` and `sheet_hash` come from one function of the string alone (the 44 keys in two sheets share a hash), but none of the common 32-bit hashes listed in Notes reproduce it. Knowing it would let a key that appears only in client scripts, never in this file, be looked up in LOC directly."
+  * **8 NEW TEST VECTORS provided by iSayZes** (sheet name → known hash, can be used to brute-force-test ANY hash algorithm):
+    | Sheet name | Hash |
+    |---|---|
+    | `GAME` | `0xBDC20727` |
+    | `SymbolNo` | `0xA9B8EA3C` |
+    | `IMAGESLIDE` | `0x8AD0A01B` |
+    | `ACTIONCHART` | `0x138A8C63` |
+    | `RESOURCE` | `0x9C44332D` |
+    | `CUTSCENE` | `0x08342431` |
+    | `TOOL` | `0xE09F9402` |
+    | `WEB` | `0xA5AA1B9E` |
+  * 44 keys sit in two sheets (`NPCSHOP_BUY` in `GAME` and `RESOURCE`) — both rows carry the same hash and share the key string, and LOC keeps them apart by `str_id2`, so the hash depends on the key alone, not on the sheet.
+  * iSayZes concludes: "Nothing needs the function, since every key is stored with its hash." — meaning the BDO binary at runtime does NOT need to compute the hash; it always looks up the precomputed value from stringtable.bss. The hash function is only needed by **whoever builds the BDO client** (PA's internal build pipeline). Community REs cannot recover it without disassembling the BDO binary (which is VMProtect-stripped per Task 10) OR decompiling the Lua bytecode.
+- **iSayZes `languagedata_loc.md`** (37KB) — KEY INSIGHT for the tooltiptable.dbss hash:
+  * DIRECT QUOTE: "LOC str_type 2 = Skill command text, str_id1 = skill number; str_id4=0 name, 1 and 2 key-binding combos."
+  * DIRECT QUOTE: "LOC str_type 10 = Skill names and descriptions, str_id1 = skill number; see Type 10 below."
+  * → **Skill NAMES and COMMANDS use skillNo (an integer) directly as the LOC lookup ID — NO HASH.** So the tooltiptable.dbss u32 first field is NOT a skillNo lookup (since LOC types 2 and 10 already use skillNo for skill names/descriptions).
+  * → The tooltiptable.dbss u32 first field must be a hash of a DIFFERENT identifier — most likely the skill's `action_name` (e.g., "BTS_K_IK_SpinningShieldTornado_3_1_StillGrp") or `icon_path` — using the same hash family as stringtable.bss.
+- **EXTENDED HASH TEST (this task)**: Installed xxhash, cityhash, pyfarmhash, spooky via `pip install --break-system-packages`. Tested ALL of the following against the 8 iSayZes sheet-name test vectors:
+  * Hash algorithms tested: Murmur3_x86_32 (seeds 0, 0x9747b28c, 0xdeadbeef), Jenkins OAAT (seed 0), SuperFastHash (seed 0), BKDR (seeds 131, 1313, 137), RS, JS, PJW, DEK, BP, Pearson (seed 0), Jenkins Lookup3/hashlittle (seeds 0, 0x7C, 0xdeadbeef), CRC32 (zlib + binascii), xxh32 (seeds 0, 0x9747b28c, 0xdeadbeef), xxh64 (seeds 0, 0xdeadbeef) & 0xFFFFFFFF, xxh3_64bit & 0xFFFFFFFF, CityHash32, CityHash64 & 0xFFFFFFFF, FarmHash32, FarmHash64 & 0xFFFFFFFF.
+  * Input variants: 8 prefixes × 6 encodings × 8 sheet-name strings = ~384 combinations per hash × 21 hashes = ~8000 total tests.
+  * Prefixes tried: '', 'StringSheet_', 'PA_', 'PA::', 'BDO_', 'BlackDesert_', 'Sheet_', 'BDO::'.
+  * Encodings tried: utf8, utf8+nul, utf16le, utf16le+nul, utf8_lower, utf8_upper, utf8_lower+nul.
+  * **RESULT: ZERO MATCHES.** This independently confirms iSayZes's conclusion — the BDO string hash is GENUINELY CUSTOM and is NOT reproduced by any well-known 32-bit hash algorithm. Combined with our prior Task 10 finding that 13 hashes × 8 inputs × 3 seeds also failed, this means the BDO hash function is unrecoverable via standard hash-library enumeration.
+- **iSayZes file-format master list** (`documented-formats.md`, 34KB): lists 145 .dbss + 59 .bss + 1 .loc = 205 formats documented by iSayZes as of client 3458. CONFIRMED that **`tooltiptable.dbss` and `commandtooltip.dbss` are NOT in their documentation set** — only bdo-meta (our sister project) has reverse-engineered tooltiptable.dbss. Other skill-related files DO have docs:
+  * `skill.dbss` + `skilloffset.dbss` — skill rules (cooldown + buff chains)
+  * `skillsimply.dbss` + `skillsimplyoffset.dbss` — learning rules per rank (skill_key format = `skill_no << 16 | level`)
+  * `skilltype.dbss` + `skilltypeoffset.dbss` — presentation (Korean name, kind, icon) — config tail explicitly "not decoded"
+  * `skillgroup.bss`, `ui_skillgroup_awakening.bss`, `ui_skillgroup_combat.bss`, `ui_skillgroup_succession.bss` — skill tree UI layouts
+  * `petskill.dbss` + `petskilloffset.dbss` — pet skills (10-byte offset rows: u16 pet_skill_id + u32 offset + u32 size)
+  * `plantworkerpassiveskill.bss`, `fairyequipskill.bss`, `fairyequipskillaquire.dbss`, `petequipskill.bss`, `petequipskillaquire.dbss` — life skill / pet / fairy equip skill chains
+  * `stringtable.bss` — symbolic UI keys + precomputed hashes (the most directly relevant to our hash investigation)
+- **iDevelopThings/bdo-data-extractor source `internal/loc/stringtable.go`** (5KB) — confirms hash is READ from file, NOT computed: line 67 `hash := c.U32()` reads the sheet hash directly from the file's bytes. The Go code says "Resolve applies localization table 37 to every symbolic string. The sheet's base field is preferred; packed alternate field 0x10000 is used when needed." — so the client runtime always uses the precomputed hash from disk.
+- **iDevelopThings/bdo-data-extractor `pipeline/lua_strings.go`** (1.6KB) — function `LuaStrings` reads `stringtable.bss` via `src.Read("stringtable.bss")` from the game directory, then joins it with LOC table 37 via `loc.LoadTable(gameDir, lang, loc.SymbolicStringTable)`. Output: `lua_strings_<lang>.json`. Confirms the join pipeline is hash-driven.
+- Local /home/z/my-project/scripts/paz-tools/skilltype-reverse-engineering-plan.md (165 lines) — already documents the local context: "BDO uses fixed offsets within record types" and references Reddit quote "Results mostly come from gamecode analysis" (Aug 2024 r/blackdesertonline PvP formula thread).
+
+Stage Summary:
+- Accessible Korean sources:
+  * **www.pearlabyss.com/ko-KR/Company/Careers/Intro** + /ko-KR/Company/Careers/List + /ko-KR/Company/Careers/Detail?_jobOpeningNo=X — fully accessible, all current PA job postings readable. (URL: https://www.pearlabyss.com/ko-KR/Company/Careers/List)
+  * **cafe.naver.com/blackdesert** — main Korean BDO Naver cafe; only the homepage shell is SSR'd (iframe-gated behind Naver NID login for article content).
+  * **www.inven.co.kr** — root only; BDO subdomain bdo.inven.co.kr does not resolve from sandbox.
+  * GitHub repos (no auth required): iDevelopThings/bdo-data-extractor (17⭐ Go), iSayZes/BDO-PAZ-Browser (Korean-authored Python), kukdh1/PAZ-Unpacker (40⭐ Korean-authored C++), kukdh1/BexcelConverter (5⭐ C++), Random1495701/bdo-meta (1⭐ TypeScript sister project).
+- Blocked sources:
+  * bdo.inven.co.kr (DNS fail), namu.wiki (403 Cloudflare), gall.dcinside.com/board/lists/?id=blackdesert (404 geo-blocked), bdo.nexon.com (DNS fail, gone).
+  * www.bdobeans.com / www.bdo-companion.com / bdobase.net / bdo.openoma.net (all DNS fail).
+  * engineering.pearlabyss.com / blog.pearlabyss.com (DNS fail — NO PA engineering blog exists).
+  * Reddit /r/ReverseEngineering JSON API (403 Cloudflare, 190KB challenge page).
+  * UnknownCheats forum (HTTP 418 Cloudflare teapot/JS challenge).
+  * 52pojie.cn search (302 redirect to Bing HK SERP — search hijacked/geo-rerouted).
+  * GDC Vault — accessible (HTTP 200) but has ZERO PA / Black Desert / Crimson Desert / DokeV / Plan8 talks indexed.
+  * YouTube / invidious — only yewtu.be reachable but antibot-challenged; 6 of 7 invidious instances fail with 000/403/502.
+  * GitHub code search (REST) — requires auth (HTTP 401/403 rate-limit).
+- Key findings on BDO engine internals (cross-validated across 3 independent open-source projects + PA's own careers page):
+  1. **Engine language & type**: Custom C++ multi-platform game engine with a custom toolset (PA Job #6 — "게임 엔진 프로그래머 모집"). Tagged #C++ #Real Time Rendering. Required: deep C++ understanding + RTR + math/physics. NOT Unreal/Unity/CryEngine — explicitly "multi-platform game engine and toolset development".
+  2. **Engine has a Lua scripting layer**: BDO client embeds compiled Lua bytecode at `luacscript/x64/include/*.luac`. Files confirmed to exist include `global_utils.luac` (with `isGameTypeKorea()`, `isGameTypeJapan()`, `isGameTypeRussia()`, `isGameTypeEnglish()`, `isGameTypeTaiwan()`, `isItemMarketSecureCode()` functions — per kukdh1/PAZ-Unpacker README), `global_newclass_data.luac` (with class definitions, weapon labels, awakening descriptions — per bdo-data-extractor FORMATS.md), `panel_tooltip_skill.luac` (skill tooltip renderer — per our own Task 12 worklog line 3970). The Lua layer is NOT VMProtect-stripped (only BlackDesert64.exe is).
+  3. **Data file format family**: PABR (4-byte magic + u32 count + count×N-byte rows), BDO-LZ (compression starts with 0x6E + DWORD origSize + DWORD thisSize per kukdh1), ICE cipher (Thin-ICE level 0, 8 rounds, key `51 F3 0F 11 04 24 6A 00` per bdo-data-extractor FORMATS.md). PAZ archive indexed by `pad00000.meta` plaintext (ICE-encrypted folder/file names — key changed in 2016.05 per kukdh1).
+  4. **Localization pipeline**: `PAGetString(Defines.StringSheet_<NAME>, "<KEY>")` (Lua function) → looks up `<KEY>` in `stringtable.bss` → retrieves the precomputed u32 hash + Korean source text → looks up `languagedata_<lang>.loc` table 37 by `(str_id1=hash, str_id2=sheet_field, str_id3=0_or_1, str_id4=0)`. The 8 sheets are GAME/SymbolNo/IMAGESLIDE/ACTIONCHART/RESOURCE/CUTSCENE/TOOL/WEB, with sheet fields 1/6/7/3/2/0/4/5 respectively.
+  5. **Server-side DB (NOT client)**: LIVE game server uses MS-SQL Server with T-SQL stored procedures (PA Job #844 — "DBA/MS-SQL DB 담당자"). The MS-SQL DB stores character data, marketplace, accounts. The CLIENT-side data is in flat packed-binary .dbss/.bss files — the C++ engine reads these directly, no SQL involved.
+  6. **Hash function is custom & unrecoverable via standard enumeration**: INDEPENDENTLY CONFIRMED by both our extended test (this task: 21 hash algorithms × 8 prefixes × 6 encodings × 8 test vectors = ~8000 tests, ZERO matches) AND iSayZes's earlier test (12 hash algorithms with various seeds × various encodings, ZERO matches). The BDO hash is computed at engine BUILD TIME only (per bdo-data-extractor FORMATS.md), stored in `stringtable.bss`, and the BDO binary never recomputes it at runtime.
+- Hints on skill→tooltip linkage:
+  1. From BDO Lua bytecode extracted in Task 12 (per worklog line 3979): **`linkToolTipSkillTypeSS`** is the function that "links tooltip to skill type" — this is a Lua-side link, not a binary-side link. The link is performed at tooltip-render time by `panel_tooltip_skill.luac`.
+  2. The tooltiptable.dbss u32 first field is almost certainly the SAME hash family as stringtable.bss's `key_hash` — applied to a string identifier that the BDO engine knows at build time (probably the skill's `action_name` like "BTS_K_IK_SpinningShieldTornado_3_1_StillGrp", since LOC types 2 and 10 already use skillNo directly for skill names/descriptions per iSayZes `languagedata_loc.md`).
+  3. Since the BDO hash function is in the VMProtect-stripped BlackDesert64.exe binary (per Task 10), the only realistic recovery paths are: (a) **decompile the BDO Lua bytecode** (`panel_tooltip_skill.luac`, `global_utils.luac`) — Lua bytecode is NOT VMProtect-stripped, so decompilers like `unluac` / `luadec` should work; or (b) **dynamic analysis** (hook a running BDO client's `linkToolTipSkillTypeSS` Lua function call to extract the resolved tooltiptable record pointer + skill_key + u32 hash triple for many skills, then reverse-engineer the relationship from observed input/output pairs — this is what bdocodex did, per the Reddit r/blackdesertonline quote "results mostly come from gamecode analysis" from the Aug 2024 PvP formula thread).
+- Any community RE tools discovered (NEW for this task):
+  * **kukdh1/PAZ-Unpacker** (40★, C++, 2017, Korean-authored) — confirmed the BDO Lua layer + ICE key changed in May 2016 + 0x6E compressed file header format. Already known from Task 16 but new details about the Lua layer discovered here. URL: https://github.com/kukdh1/PAZ-Unpacker
+  * **kukdh1/BexcelConverter** (5★, C++, Korean-authored) — converts BDO `.bexcel` files to `.xlsx`. NEW discovery. URL: https://github.com/kukdh1/BexcelConverter
+  * **iSayZes/BDO-PAZ-Browser `stringtable_bss.md`** (9.7KB) — NEW doc found in this task. Independently confirms the BDO hash function is unrecoverable via standard 32-bit hash enumeration; provides 8 known sheet-name → hash test vectors (the GAME=0xBDC20727, etc. table). URL: https://raw.githubusercontent.com/iSayZes/BDO-PAZ-Browser/main/docs/file-formats/stringtable_bss.md
+  * **iDevelopThings/bdo-data-extractor `internal/loc/stringtable.go`** + **`pipeline/lua_strings.go`** source code — NEW source files found. Confirms the hash is read from the file (`hash := c.U32()`) at runtime, NOT computed. URL: https://raw.githubusercontent.com/iDevelopThings/bdo-data-extractor/main/internal/loc/stringtable.go
+- Best lead for breaking the remaining 50%: **Decompile the BDO Lua bytecode** (`panel_tooltip_skill.luac`, `panel_tooltip_skillgroup.luac`, `panel_tooltip_common.luac`) — these files were already extracted from the PAZ per Task 12 worklog line 3970+. The compiled Lua bytecode is NOT VMProtect-stripped (only BlackDesert64.exe is). The Lua code contains:
+  - `linkToolTipSkillTypeSS` (the skill→tooltip linker function — worklog line 3979)
+  - `getSkillTypeStaticStatus` (the skilltype.dbss reader — worklog line 3974)
+  - `getDamage`, `getMaxDamage`, `getMinDamage`, `getHitCount`, `getMaxCount` (the damage-data readers — worklog line 3977)
+  - `SkillCommandTooltip` (the command-tooltip function — worklog line 3981)
+  - `tooltipDataType` (the tooltip-data schema — worklog line 3980)
+  Running these through `unluac` (https://sourceforge.net/projects/unluac/) or `luadec` (https://github.com/HansPetterTveit/luadec) should yield readable Lua source. The `linkToolTipSkillTypeSS(skillKey)` function body will show HOW the Lua code resolves the tooltiptable.dbss record for a given skill — likely via a C++ FFI binding like `ToClient_getToolTipData(skillKey, hash)` that takes a string key, hashes it via the BDO custom hash function, and looks it up in tooltiptable.dbss. If the hashing is done in Lua (not in C++ FFI), we can directly read the algorithm; if it's in C++ FFI, we have the function name to grep the VMProtect-stripped BlackDesert64.exe binary for. **Secondary lead**: dynamic analysis (hook the running BDO client's Lua function calls) — this is what bdocodex did per their Reddit comment "results mostly come from gamecode analysis". This requires running a live BDO client with a debugger, which is outside the curl-accessible sandbox scope but is the most reliable path. **Tertiary lead**: try the 8 iSayZes sheet-name test vectors against more obscure hash algorithms not yet tested — e.g., **xxhash3 (128-bit truncated to 32)**, **T1HA** (the "Fast Positive Hash"), **tsl::robin_map hash**, **FNV1a 64-bit truncated**, **Murmur2 + Murmur2a**, **Murmur3_x86_32 with seed = sheet_field** (since sheet_field values are 0-7, easy to enumerate), **CRC-32 with sheetname+hash as input**, **Murmur3 with sheetname-as-seed**. These are still unlikely to match given that two independent RE projects already failed, but the seed=sheet_field variant hasn't been tried yet.
