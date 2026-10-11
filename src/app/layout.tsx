@@ -32,7 +32,6 @@ export const metadata: Metadata = {
     "Black Desert Online",
     "skills",
     "meta",
-    "bdocodex",
     "animation",
     "database",
     "BDO Meta",
