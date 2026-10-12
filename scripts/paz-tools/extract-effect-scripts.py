@@ -199,7 +199,8 @@ def extract_from_script(script):
         elif base_func == 'SUCC_ATT_PUSH' or base_func == 'SIDEATTACK_PUSH': result['cc_types'].append('Push')
         elif base_func == 'SUCC_ATT_PULL': result['cc_types'].append('Pull')
         elif base_func == 'SUCC_ATT_TURN': result['cc_types'].append('Spin')
-        elif base_func == 'DOWN_SMASH' or base_func == 'ATT_SUCC_DOWN_SMASH': result['cc_types'].append('Down Smash')
+        # DOWN_SMASH / AIR_SMASH are damage modifiers, NOT CC — move to attack_modifiers
+        elif base_func in ('DOWN_SMASH', 'ATT_SUCC_DOWN_SMASH', 'AIR_SMASH'): result['attack_modifiers'].append(base_func)
         elif base_func == 'SUCC_ATT_MOV_PERCENT_DECRE': result['cc_types'].append('Movement Speed Decrease')
         elif base_func == 'SUCC_ATT_EVA_PERCENT_DECRE_ALL': result['cc_types'].append('Evasion Decrease')
         elif base_func == 'SUCC_ATT_DEP_POINT_DECRE_ALL': result['cc_types'].append('Debuff Point Decrease')

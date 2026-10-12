@@ -206,12 +206,21 @@ function ClassChip({
 }
 
 export function ClassBar() {
+  // Hydration-safe: don't read persisted store state until after mount
+  // (zustand persists to localStorage on client, but server has empty state)
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+
   const classIds = useSkillStore((s) => s.filters.classIds) ?? []
   const toggleClass = useSkillStore((s) => s.toggleClass)
   const clearClasses = useSkillStore((s) => s.clearClasses)
   const specs = useSkillStore((s) => s.filters.specs) ?? []
   const toggleSpec = useSkillStore((s) => s.toggleSpec)
   const scrollRef = React.useRef<HTMLDivElement>(null)
+
+  // Use empty state for SSR + first client render to avoid hydration mismatch
+  const safeClassIds = mounted ? classIds : []
+  const safeSpecs = mounted ? specs : []
 
   // Wheel-scroll support: when hovering over the class bar, vertical wheel
   // scrolls translate to horizontal scroll. Also supports shift+wheel.
@@ -302,8 +311,8 @@ export function ClassBar() {
   const totalCount = statsQuery.data?.total ?? 0
   const classes = classesQuery.data?.classes ?? []
   // "All Classes" is active when nothing is selected.
-  const allActive = classIds.length === 0
-  const selectedCount = classIds.length
+  const allActive = safeClassIds.length === 0
+  const selectedCount = safeClassIds.length
 
   return (
     <div className="sticky top-[97px] z-20 border-b border-amber-900/50 bg-bdo-ink/95 backdrop-blur supports-[backdrop-filter]:bg-bdo-ink/85">
@@ -382,8 +391,8 @@ export function ClassBar() {
                     key={c.id}
                     cls={c}
                     count={countMap.get(c.id) ?? c.skillCount ?? 0}
-                    active={classIds.includes(c.id)}
-                    specs={specs}
+                    active={safeClassIds.includes(c.id)}
+                    specs={safeSpecs}
                     onClick={() => {
                       // Clicking the class icon selects it + activates appropriate specs
                       if (!classIds.includes(c.id)) {
