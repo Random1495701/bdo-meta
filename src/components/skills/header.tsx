@@ -228,10 +228,6 @@ export function Header() {
           </div>
 
           <div className="ml-auto flex flex-wrap items-center gap-2">
-            <div className="hidden items-center md:flex">
-              <UpdatedIndicator />
-            </div>
-
             <ViewModeToggle />
 
             <Button
