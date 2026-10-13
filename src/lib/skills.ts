@@ -100,6 +100,9 @@ export interface Skill {
   animationDurationMs: number | null
   syncedAt: string
   bdocodexUrl: string
+  // PAZ multi-state mode info (Deadeye bullets, Dosa elements, etc.)
+  hasPazModes?: boolean
+  pazModes?: { name: string; totalPvE: number; totalPvP: number | null }[]
 }
 
 export interface SkillListResponse {

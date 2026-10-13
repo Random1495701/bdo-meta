@@ -77,7 +77,7 @@ export async function GET(
   }
 
   const damageRows: DamageRow[] | null = skill.damageRowsJson ? JSON.parse(skill.damageRowsJson) : null
-  const damage = calculateDamage(damageRows, skill.pvpDamagePercent)
+  const damage = calculateDamage(damageRows, skill.pvpDamagePercent, skill.pazDataJson)
   const ccTypes = splitCsv(skill.ccTypes)
 
   // Determine which CCs are PvE-only by checking damage rows
@@ -163,6 +163,10 @@ export async function GET(
     animationDurationMs: skill.animationDurationMs,
     syncedAt: skill.syncedAt,
     bdocodexUrl: `https://bdocodex.com/us/skill/${skill.skillId}/`,
+    hasPazModes: !!(damage.hasSpecialMode && damage.modes.length > 1),
+    pazModes: (damage.hasSpecialMode && damage.modes.length > 1)
+      ? damage.modes.map(m => ({ name: m.modeName, totalPvE: m.totalPvE, totalPvP: m.totalPvP }))
+      : undefined,
   }
 
   return NextResponse.json(serialized)

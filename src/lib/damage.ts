@@ -1,5 +1,5 @@
 // BDO Skill Damage Calculator
-// Parses damage rows from bdocodex tooltip data and computes total damage values.
+// Parses damage rows from bdocodex tooltip data AND PAZ effect scripts.
 //
 // Damage format: "X% x N, max Z hits" where:
 // - X = damage percentage
@@ -14,6 +14,8 @@
 //
 // Special modes: Some skills have multiple sets of damage rows (normal + special mode).
 // We separate these into different stat sheets with mode indicators.
+// PAZ modes: Deadeye (PWGE_REAL/FANTASY/SHOTGUN), Dosa (CLOUD_ARMY), etc.
+// When pazDataJson.modes exists, we use PAZ mode data instead of the bdocodex heuristic.
 //
 // "Maximum N targets" (separate row, [target] kind) is NOT part of the damage formula.
 
@@ -119,10 +121,134 @@ function computeTotal(phases: PhaseDamage[], pvpDamagePercent: number | null): {
   return { pve, pvp }
 }
 
+// PAZ mode data structure (from pazDataJson)
+interface PazDamageEntry {
+  func?: string
+  damage: number
+  hits?: number
+  attack_index?: number
+  variant?: number
+  extra_args?: number[]
+  max_hits?: number
+  mode?: string
+}
+
+interface PazMode {
+  name: string
+  damages: PazDamageEntry[]
+  pvp_pct?: number | null
+}
+
+interface PazData {
+  damages?: PazDamageEntry[]
+  modes?: PazMode[]
+  pvp_pct?: number | null
+  protections?: string[]
+  cc_types?: string[]
+  crit_rate?: number | null
+  max_targets?: number | null
+  attack_modifiers?: string[]
+  script?: string
+}
+
+// Build DamageMode[] from PAZ modes (when pazDataJson.modes exists)
+function buildModesFromPaz(pazModes: PazMode[], defaultPvp: number | null): DamageMode[] {
+  const result: DamageMode[] = []
+  for (const mode of pazModes) {
+    const phases: PhaseDamage[] = []
+    let phaseIdx = 0
+    for (const d of mode.damages) {
+      const percent = d.damage
+      const multiplier = d.hits ?? 1
+      const maxHits = d.max_hits ?? 1
+      const totalPerHit = percent * multiplier
+      const totalMax = totalPerHit * maxHits
+      phases.push({
+        phase: d.attack_index != null ? `Attack ${d.attack_index}` : `Attack ${++phaseIdx}`,
+        percent,
+        multiplier,
+        maxHits,
+        totalPerHit,
+        totalMax,
+        pvpOnly: false,
+        pveOnly: false,
+      })
+    }
+    const pvpPct = mode.pvp_pct ?? defaultPvp
+    const { pve, pvp } = computeTotal(phases, pvpPct)
+    result.push({ modeName: mode.name, phases, totalPvE: pve, totalPvP: pvp })
+  }
+  return result
+}
+
+// Build a single DamageMode from flat PAZ damages (no mode splitting)
+function buildModeFromPazDamages(damages: PazDamageEntry[], pvpPct: number | null): DamageMode {
+  const phases: PhaseDamage[] = []
+  let phaseIdx = 0
+  for (const d of damages) {
+    const percent = d.damage
+    const multiplier = d.hits ?? 1
+    const maxHits = d.max_hits ?? 1
+    const totalPerHit = percent * multiplier
+    const totalMax = totalPerHit * maxHits
+    phases.push({
+      phase: d.attack_index != null ? `Attack ${d.attack_index}` : `Attack ${++phaseIdx}`,
+      percent,
+      multiplier,
+      maxHits,
+      totalPerHit,
+      totalMax,
+      pvpOnly: false,
+      pveOnly: false,
+    })
+  }
+  const { pve, pvp } = computeTotal(phases, pvpPct)
+  return { modeName: 'Normal', phases, totalPvE: pve, totalPvP: pvp }
+}
+
+// Main entry: calculate damage from either PAZ data or bdocodex rows
 export function calculateDamage(
   damageRows: DamageRow[] | null,
   pvpDamagePercent: number | null,
+  pazDataJson?: string | null,
 ): DamageCalculation {
+  // Check for PAZ modes first — if pazDataJson has modes, use those instead of bdocodex heuristic
+  if (pazDataJson) {
+    try {
+      const paz: PazData = JSON.parse(pazDataJson)
+      // PAZ modes take priority — they're authoritative (from game files)
+      if (paz.modes && paz.modes.length > 1) {
+        const modes = buildModesFromPaz(paz.modes, paz.pvp_pct ?? pvpDamagePercent)
+        const bestMode = modes.reduce((best, m) => m.totalPvE > best.totalPvE ? m : best, modes[0])
+        return {
+          phases: bestMode.phases,
+          totalPvE: bestMode.totalPvE,
+          totalPvP: bestMode.totalPvP,
+          pvpDamagePercent: paz.pvp_pct ?? pvpDamagePercent,
+          hasDamage: bestMode.phases.length > 0,
+          hasSpecialMode: true,
+          modes,
+        }
+      }
+      // Single mode — use PAZ damages if available
+      if (paz.damages && paz.damages.length > 0) {
+        const pvpPct = paz.pvp_pct ?? pvpDamagePercent
+        const mode = buildModeFromPazDamages(paz.damages, pvpPct)
+        return {
+          phases: mode.phases,
+          totalPvE: mode.totalPvE,
+          totalPvP: mode.totalPvP,
+          pvpDamagePercent: pvpPct,
+          hasDamage: mode.phases.length > 0,
+          hasSpecialMode: false,
+          modes: [mode],
+        }
+      }
+    } catch {
+      // Fall through to bdocodex calculation
+    }
+  }
+
   if (!damageRows || damageRows.length === 0) {
     return { phases: [], totalPvE: 0, totalPvP: null, pvpDamagePercent, hasDamage: false, hasSpecialMode: false, modes: [] }
   }

@@ -48,7 +48,7 @@ function splitCsv(s: string | null): string[] | null {
 
 function serializeSkill(s: any, includeDamageRows = true) {
   const damageRows: DamageRow[] | null = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
-  const damage = calculateDamage(damageRows, s.pvpDamagePercent)
+  const damage = calculateDamage(damageRows, s.pvpDamagePercent, s.pazDataJson)
   const ccTypes = splitCsv(s.ccTypes)
 
   // Determine which CCs are PvE-only by checking damage rows
@@ -137,6 +137,11 @@ function serializeSkill(s: any, includeDamageRows = true) {
     patchChange: null,
     syncedAt: s.syncedAt,
     bdocodexUrl: `https://bdocodex.com/us/skill/${s.skillId}/`,
+    // PAZ mode info for multi-state skills (Deadeye bullets, Dosa elements, etc.)
+    hasPazModes: !!(damage.hasSpecialMode && damage.modes.length > 1),
+    pazModes: (damage.hasSpecialMode && damage.modes.length > 1)
+      ? damage.modes.map(m => ({ name: m.modeName, totalPvE: m.totalPvE, totalPvP: m.totalPvP }))
+      : undefined,
   }
 }
 
@@ -641,7 +646,7 @@ export async function GET(req: NextRequest) {
       animMap = new Map<number, number>()
       for (const s of skills) {
         const rows = s.damageRowsJson ? JSON.parse(s.damageRowsJson) : null
-        const dmg = calculateDamage(rows, s.pvpDamagePercent)
+        const dmg = calculateDamage(rows, s.pvpDamagePercent, s.pazDataJson)
         dmgPvEMap.set(s.skillId, dmg.totalPvE)
         dmgPvPMap.set(s.skillId, dmg.totalPvP ?? 0)
         cooldownMap.set(s.skillId, s.cooldownSec ?? 0)
