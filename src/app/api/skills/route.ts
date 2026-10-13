@@ -251,7 +251,6 @@ export async function GET(req: NextRequest) {
         'poison': ['Poison'],
         'bleeding': ['Bleeding'],
         'shock': ['Shock'],
-        'blind': ['Blind'],
         'down smash': ['Down Smash'],
         'air smash': ['Air Smash'],
         'smash': ['Down Smash', 'Air Smash', 'Smash'],

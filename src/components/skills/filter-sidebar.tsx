@@ -742,7 +742,7 @@ export function FilterSidebar() {
           <section>
             <SectionTitle
               icon={<Film className="size-3.5" />}
-              hint="Measured via ffprobe from the bdocodex preview video"
+              hint="Animation duration from PAZ .paa files"
             >
               Animation Duration (ms)
             </SectionTitle>
@@ -785,7 +785,7 @@ export function FilterSidebar() {
             <ToggleRow
               icon={<Film className="size-4" />}
               label="Has animation duration"
-              hint="Skill has been measured by ffprobe"
+              hint="Skill has PAZ .paa animation data"
               checked={!!filters.hasAnim}
               onToggle={toggleHasAnim}
             />
