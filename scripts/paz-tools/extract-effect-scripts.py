@@ -133,10 +133,21 @@ def normalize_func(func_name):
 def extract_from_script(script):
     calls = parse_effect_script(script)
     result = {
-        'damages': [], 'pvp_pct': None, 'protections': [], 'cc_types': [],
+        'damages': [], 'modes': [], 'pvp_pct': None, 'protections': [], 'cc_types': [],
         'crit_rate': None, 'max_targets': None, 'attack_modifiers': [],
         'all_numeric_calls': [],  # all function calls with numeric first arg (for cross-ref)
     }
+    # State markers for multi-state skills (Deadeye bullets, Dosa elements, etc.)
+    STATE_MARKERS = {
+        'PWGE_REAL': 'Real', 'PWGE_FANTASY': 'Fantasy', 'PWGE_REAL_SHOTGUN': 'Shotgun',
+        'PWGE_LIMIT': 'Limit', 'PWGE_ARO_SKILL_MARNI': 'Marni',
+        'PWGE_BULLET_CHANAGE': 'Bullet Change', 'PWGE_WINDMILL_FUSION': 'Windmill',
+        'MODE_POWER': 'Power', 'CLOUD_ARMY_EFFECT': 'Cloud Army',
+        'DAMEGE_DIVISION_NEW': 'Division',
+    }
+    current_mode = 'Default'
+    mode_damages = {}  # mode_name -> list of damage entries
+    mode_pvp = {}       # mode_name -> pvp_pct
     # Known non-damage functions (don't treat their first arg as damage even if >= 100)
     NON_DAMAGE_FUNCS = {
         'HIT_TARGET', 'CRI_POINT', 'WP_ATT_RECOV', 'SP_ATT_RECOV', 'HP_ATT_RECOV',
@@ -150,38 +161,47 @@ def extract_from_script(script):
         raw_func = c['func']
         args = c['args']
         base_func, attack_index, variant = normalize_func(raw_func)
+        # Check for state markers (PWGE_REAL, PWGE_FANTASY, etc.)
+        if base_func in STATE_MARKERS:
+            current_mode = STATE_MARKERS[base_func]
+            continue
         # Save all numeric first-arg calls (for cross-reference / debugging)
         if args and isinstance(args[0], (int, float)):
             result['all_numeric_calls'].append({'func': base_func, 'first_arg': args[0], 'all_args': args})
         # Damage functions: any function containing "DAM_ATT" or starting with "DAM_"
         is_damage_func = ('DAM_ATT' in base_func) or base_func.startswith('DAM_') or base_func.startswith('ADD_DAM_')
+        # Also check for PRSA-specific damage functions (Dosa class)
+        if 'PRSA_DAM_ATT' in base_func or 'AWAKEN_PRSA_NORMAL_ATT' in base_func or 'AWAKEN_PRSA_PASSIVE_FIVE_PHASES' in base_func:
+            is_damage_func = True
         # ALSO: ANY function with numeric first arg >= 100 that isn't a known non-damage function
-        # This catches class-specific damage functions like BASIG_ATT_ELFMAN(1097), PROUD_ORDER_2(515,...), etc.
         if not is_damage_func and args and isinstance(args[0], (int, float)) and args[0] >= 100:
             if base_func not in NON_DAMAGE_FUNCS:
-                is_damage_func = True  # broad: any function with first arg >= 100 is potential damage
+                is_damage_func = True
         if is_damage_func:
             if base_func == 'DAM_ATT_X' and len(args) >= 3:
-                result['damages'].append({'func': base_func, 'attack_index': args[0], 'damage': args[1], 'hits': args[2]})
+                d = {'func': base_func, 'attack_index': args[0], 'damage': args[1], 'hits': args[2], 'mode': current_mode}
             elif base_func == 'DAM_ATT_MAX' and len(args) >= 3:
-                result['damages'].append({'func': base_func, 'damage': args[0], 'hits': args[1], 'max_hits': args[2]})
+                d = {'func': base_func, 'damage': args[0], 'hits': args[1], 'max_hits': args[2], 'mode': current_mode}
             elif base_func.startswith('DAM_BLOOD') and len(args) >= 3:
-                result['damages'].append({'func': base_func, 'args': args})
+                d = {'func': base_func, 'args': args, 'mode': current_mode}
             elif len(args) >= 2 and isinstance(args[0], (int, float)):
-                dmg_entry = {'func': base_func, 'damage': args[0], 'hits': args[1]}
-                if attack_index is not None: dmg_entry['attack_index'] = attack_index
-                if variant is not None: dmg_entry['variant'] = variant
-                if len(args) > 2: dmg_entry['extra_args'] = args[2:]
-                result['damages'].append(dmg_entry)
+                d = {'func': base_func, 'damage': args[0], 'hits': args[1], 'mode': current_mode}
+                if attack_index is not None: d['attack_index'] = attack_index
+                if variant is not None: d['variant'] = variant
+                if len(args) > 2: d['extra_args'] = args[2:]
             elif len(args) >= 1 and isinstance(args[0], (int, float)):
-                dmg_entry = {'func': base_func, 'damage': args[0], 'hits': 1}
-                if attack_index is not None: dmg_entry['attack_index'] = attack_index
-                if variant is not None: dmg_entry['variant'] = variant
-                if len(args) > 1: dmg_entry['extra_args'] = args[1:]
-                result['damages'].append(dmg_entry)
+                d = {'func': base_func, 'damage': args[0], 'hits': 1, 'mode': current_mode}
+                if attack_index is not None: d['attack_index'] = attack_index
+                if variant is not None: d['variant'] = variant
+                if len(args) > 1: d['extra_args'] = args[1:]
+            else:
+                continue
+            result['damages'].append(d)
+            mode_damages.setdefault(current_mode, []).append(d)
         elif base_func == 'DECRE_PVP_DAM_2' or base_func == 'DECRE_PVP_DAM':
             if args and isinstance(args[0], (int, float)):
                 result['pvp_pct'] = float(args[0])
+                mode_pvp[current_mode] = float(args[0])
         elif base_func == 'SKILL_ING_GUARD': result['protections'].append('Forward Guard')
         elif base_func == 'SKILL_ING_SUPER_ARMOR': result['protections'].append('Super Armor')
         elif base_func == 'SUPER_ARMOR': result['protections'].append('Super Armor')  # alt form
@@ -222,6 +242,16 @@ def extract_from_script(script):
             if args and isinstance(args[0], (int, float)): result.setdefault('hp_up', args[0])
         elif base_func in ('DOWN_ATT', 'AIR_ATT', 'BACK_ATT', 'BACK_ATT_DEFENCE', 'BACK_ATT_DOWN_SMASH', 'BACK_ATT_KNOCKBACK'):
             result['attack_modifiers'].append(base_func)
+    # Build modes list if multiple modes detected
+    if len(mode_damages) > 1:
+        for mode_name, dmgs in mode_damages.items():
+            result['modes'].append({
+                'name': mode_name,
+                'damages': [{'damage': d['damage'], 'hits': d.get('hits', 1),
+                             'max_hits': d.get('max_hits'), 'attack_index': d.get('attack_index'),
+                             'variant': d.get('variant')} for d in dmgs],
+                'pvp_pct': mode_pvp.get(mode_name),
+            })
     return result
 
 if __name__ == '__main__':
